@@ -1,0 +1,24 @@
+<label
+  class="inline-flex items-center gap-3 cursor-pointer select-none"
+  [class.cursor-not-allowed]="isDisabled()"
+  [class.opacity-50]="isDisabled()"
+>
+  <button
+    type="button"
+    role="switch"
+    [attr.aria-checked]="checked()"
+    [attr.aria-label]="ariaLabel() || label()"
+    [disabled]="isDisabled()"
+    [class]="trackClasses()"
+    (click)="toggle()"
+  >
+    <span
+      [class]="thumbClasses()"
+      aria-hidden="true"
+    ></span>
+  </button>
+
+  @if (label()) {
+    <span class="text-sm font-medium text-surface-800">{{ label() }}</span>
+  }
+</label>

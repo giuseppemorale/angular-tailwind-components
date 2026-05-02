@@ -1,0 +1,26 @@
+<div class="w-full">
+  @if (showLabel()) {
+    <div class="flex justify-between items-center mb-1.5">
+      @if (label()) {
+        <span class="text-sm font-medium text-surface-700">{{ label() }}</span>
+      }
+      @if (showValue()) {
+        <span class="text-sm font-medium text-surface-600">{{ clampedValue() }}%</span>
+      }
+    </div>
+  }
+
+  <div
+    [class]="trackClasses()"
+    role="progressbar"
+    [attr.aria-valuenow]="clampedValue()"
+    [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="100"
+    [attr.aria-label]="label() || 'Progress'"
+  >
+    <div
+      [class]="barClasses()"
+      [style.width.%]="indeterminate() ? 100 : clampedValue()"
+    ></div>
+  </div>
+</div>

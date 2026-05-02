@@ -1,0 +1,53 @@
+<div class="atc-input-wrapper flex flex-col gap-1.5">
+  @if (label()) {
+    <label
+      [for]="inputId()"
+      class="text-sm font-medium text-surface-700"
+      [class.text-danger-600]="hasError()"
+    >
+      {{ label() }}
+      @if (required()) {
+        <span class="text-danger-500 ml-0.5">*</span>
+      }
+    </label>
+  }
+
+  <div class="relative">
+    @if (prefixIcon()) {
+      <span class="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 pointer-events-none">
+        <ng-content select="[atcPrefix]" />
+      </span>
+    }
+
+    <input
+      [id]="inputId()"
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [readonly]="readonly()"
+      [attr.aria-invalid]="hasError() || null"
+      [attr.aria-describedby]="helperText() || errorText() ? inputId() + '-helper' : null"
+      [value]="value()"
+      [class]="inputClasses()"
+      (input)="onInputChange($event)"
+      (blur)="onBlur()"
+    />
+
+    @if (suffixIcon()) {
+      <span class="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 pointer-events-none">
+        <ng-content select="[atcSuffix]" />
+      </span>
+    }
+  </div>
+
+  @if (helperText() && !hasError()) {
+    <p [id]="inputId() + '-helper'" class="text-xs text-surface-500">
+      {{ helperText() }}
+    </p>
+  }
+  @if (errorText() && hasError()) {
+    <p [id]="inputId() + '-helper'" class="text-xs text-danger-600">
+      {{ errorText() }}
+    </p>
+  }
+</div>

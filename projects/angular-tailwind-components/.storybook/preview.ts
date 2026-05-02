@@ -1,14 +1,11 @@
-import type { Preview } from '@storybook/angular'
-import { setCompodocJson } from "@storybook/addon-docs/angular";
-import docJson from "../documentation.json";
-setCompodocJson(docJson);
+import type { Preview } from '@storybook/angular';
 
 const preview: Preview = {
   parameters: {
     controls: {
       matchers: {
-       color: /(background|color)$/i,
-       date: /Date$/i,
+        color: /(background|color)$/i,
+        date: /Date$/i,
       },
     },
   },

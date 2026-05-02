@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "types": [],
+    "paths": {
+      "angular-tailwind-components": [
+        "../../projects/angular-tailwind-components/src/public-api.ts"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    ".storybook/*.ts",
+    "../../storybook/**/*.ts"
+  ],
+  "exclude": ["**/*.spec.ts"]
+}

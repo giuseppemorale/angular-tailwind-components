@@ -56,7 +56,7 @@ rl.question(question, answer => {
 
     // 4. Git operations
     console.log('\nCommitting changes...');
-    execSync(`git add ."`, { stdio: 'inherit' });
+    execSync(`git add .`, { stdio: 'inherit' });
     execSync(`git commit -m "Release ${newVersion}"`, { stdio: 'inherit' });
 
     console.log('Pushing to repository...');

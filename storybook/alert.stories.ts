@@ -9,8 +9,8 @@ const meta: Meta<TailwindAlert> = {
     severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] },
     title: { control: 'text' },
     dismissible: { control: 'boolean' },
-    bordered: { control: 'boolean' },
-  },
+    bordered: { control: 'boolean' }
+  }
 };
 export default meta;
 type Story = StoryObj<TailwindAlert>;
@@ -19,17 +19,17 @@ export const AllSeverities: Story = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-3">
-        <tailwind-alert severity="info" title="Information">This is an informational alert.</tailwind-alert>
-        <tailwind-alert severity="success" title="Success">Your action was completed successfully.</tailwind-alert>
-        <tailwind-alert severity="warning" title="Warning">Please review before proceeding.</tailwind-alert>
-        <tailwind-alert severity="danger" title="Error">An error occurred during the operation.</tailwind-alert>
+        <tailwind-alert severity="info" title="Information" message="This is an informational alert." />
+        <tailwind-alert severity="success" title="Success" message="Your action was completed successfully." />
+        <tailwind-alert severity="warning" title="Warning" message="Please review before proceeding." />
+        <tailwind-alert severity="danger" title="Error" message="An error occurred during the operation." />
       </div>
-    `,
-  }),
+    `
+  })
 };
 
 export const Dismissible: Story = {
   render: () => ({
-    template: `<tailwind-alert severity="info" title="Dismissible" [dismissible]="true">Click the X to dismiss this alert.</tailwind-alert>`,
-  }),
+    template: `<tailwind-alert severity="info" title="Dismissible" [dismissible]="true" message="Click the X to dismiss this alert." />`
+  })
 };

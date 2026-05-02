@@ -11,13 +11,15 @@ export class TailwindAlert {
   readonly severity = input<TailwindSeverity>('info');
   /** Alert title */
   readonly title = input<string>('');
+  /** Alert message */
+  readonly message = input<string>('');
   /** Whether the alert can be dismissed */
   readonly dismissible = input<boolean>(false);
   /** Whether to show a border on the left */
   readonly bordered = input<boolean>(true);
 
   /** Emitted when the alert is dismissed */
-  onDismiss = output<void>();
+  readonly onDismiss = output<void>();
 
   /** Internal dismissed state */
   readonly dismissed = signal(false);

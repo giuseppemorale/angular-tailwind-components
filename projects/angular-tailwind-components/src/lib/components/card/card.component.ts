@@ -14,4 +14,8 @@ export class TailwindCard {
   readonly headerBg = input<boolean>(false);
   /** Custom padding class for the body */
   readonly bodyPadding = input<string>('p-6');
+  /** Whether the card has a header */
+  readonly hasHeader = input<boolean>(true);
+  /** Whether the card has a footer */
+  readonly hasFooter = input<boolean>(true);
 }

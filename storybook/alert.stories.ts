@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcAlert } from 'angular-tailwind-components';
+import { AtcAlert } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<AtcAlert> = {
   title: 'Components/Alert',

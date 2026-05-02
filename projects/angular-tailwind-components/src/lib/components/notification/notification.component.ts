@@ -3,7 +3,6 @@ import { AtcSeverity } from '../../models';
 
 @Component({
   selector: 'atc-notification',
-  standalone: true,
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss',
 })

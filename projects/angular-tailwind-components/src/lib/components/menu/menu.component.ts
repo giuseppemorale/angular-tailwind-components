@@ -10,7 +10,6 @@ export interface AtcMenuItem {
 
 @Component({
   selector: 'atc-menu',
-  standalone: true,
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   host: {

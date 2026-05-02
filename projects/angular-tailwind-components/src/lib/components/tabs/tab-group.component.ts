@@ -3,7 +3,6 @@ import { AtcTab } from './tab.component';
 
 @Component({
   selector: 'atc-tab-group',
-  standalone: true,
   templateUrl: './tab-group.component.html',
   styleUrl: './tab-group.component.scss',
 })

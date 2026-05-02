@@ -3,7 +3,6 @@ import { AtcPosition } from '../../models';
 
 @Component({
   selector: 'atc-drawer',
-  standalone: true,
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.scss',
 })

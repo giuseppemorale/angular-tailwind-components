@@ -2,7 +2,6 @@ import { Component, input, signal } from '@angular/core';
 
 @Component({
   selector: 'atc-tab',
-  standalone: true,
   templateUrl: './tab.component.html',
   styleUrl: './tab.component.scss',
 })

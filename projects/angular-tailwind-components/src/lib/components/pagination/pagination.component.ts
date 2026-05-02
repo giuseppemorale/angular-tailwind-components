@@ -2,7 +2,6 @@ import { Component, computed, input, model, output } from '@angular/core';
 
 @Component({
   selector: 'atc-pagination',
-  standalone: true,
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })

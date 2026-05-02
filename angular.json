@@ -34,7 +34,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": "projects/angular-tailwind-components/.storybook",
-            "browserTarget": "storybook-host:build",
+            "browserTarget": "angular-tailwind-components:build-storybook-app",
             "tsConfig": "projects/angular-tailwind-components/tsconfig.storybook.json",
             "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
             "compodoc": false,
@@ -45,97 +45,20 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": "projects/angular-tailwind-components/.storybook",
-            "browserTarget": "storybook-host:build",
+            "browserTarget": "angular-tailwind-components:build-storybook-app",
             "tsConfig": "projects/angular-tailwind-components/tsconfig.storybook.json",
             "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
             "compodoc": false,
             "outputDir": "storybook-static"
           }
-        }
-      }
-    },
-    "storybook-host": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "inlineTemplate": true,
-          "inlineStyle": true,
-          "skipTests": true
         },
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:pipe": {
-          "skipTests": true
-        },
-        "@schematics/angular:resolver": {
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "skipTests": true
-        }
-      },
-      "root": "projects/storybook-host",
-      "sourceRoot": "projects/storybook-host/src",
-      "prefix": "app",
-      "architect": {
-        "build": {
+        "build-storybook-app": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "projects/storybook-host/src/main.ts",
-            "tsConfig": "projects/storybook-host/tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/storybook-host/public"
-              }
-            ],
-            "styles": ["projects/storybook-host/src/styles.css"]
-          },
-          "configurations": {
-            "production": {
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
-                }
-              ],
-              "outputHashing": "all"
-            },
-            "development": {
-              "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "storybook-host:build:production"
-            },
-            "development": {
-              "buildTarget": "storybook-host:build:development"
-            }
-          },
-          "defaultConfiguration": "development"
+            "browser": "projects/angular-tailwind-components/storybook-entry.ts",
+            "tsConfig": "projects/angular-tailwind-components/tsconfig.storybook.json",
+            "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"]
+          }
         }
       }
     }

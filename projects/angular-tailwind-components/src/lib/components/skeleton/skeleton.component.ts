@@ -3,7 +3,6 @@ import { AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-skeleton',
-  standalone: true,
   templateUrl: './skeleton.component.html',
   styleUrl: './skeleton.component.scss',
 })

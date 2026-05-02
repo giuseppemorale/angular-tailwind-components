@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcInput } from 'angular-tailwind-components';
+import { AtcInput } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<AtcInput> = {
   title: 'Components/Input',

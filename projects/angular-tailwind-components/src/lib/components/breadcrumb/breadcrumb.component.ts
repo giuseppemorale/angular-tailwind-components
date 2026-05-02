@@ -7,7 +7,6 @@ export interface AtcBreadcrumbItem {
 
 @Component({
   selector: 'atc-breadcrumb',
-  standalone: true,
   templateUrl: './breadcrumb.component.html',
   styleUrl: './breadcrumb.component.scss',
 })

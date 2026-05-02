@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcToggle } from 'angular-tailwind-components';
+import { AtcToggle } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<AtcToggle> = {
   title: 'Components/Toggle',

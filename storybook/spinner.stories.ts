@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcSpinner } from 'angular-tailwind-components';
+import { AtcSpinner } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<AtcSpinner> = {
   title: 'Components/Spinner',

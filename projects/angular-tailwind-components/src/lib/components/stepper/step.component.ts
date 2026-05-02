@@ -2,7 +2,6 @@ import { Component, input, signal } from '@angular/core';
 
 @Component({
   selector: 'atc-step',
-  standalone: true,
   templateUrl: './step.component.html',
   styleUrl: './step.component.scss',
 })

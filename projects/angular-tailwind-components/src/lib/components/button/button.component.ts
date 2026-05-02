@@ -4,7 +4,6 @@ import { AtcSize, AtcVariant } from '../../models';
 
 @Component({
   selector: 'atc-button',
-  standalone: true,
   imports: [NgClass],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',

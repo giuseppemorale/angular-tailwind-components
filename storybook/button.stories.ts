@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcButton } from 'angular-tailwind-components';
+import { AtcButton } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<AtcButton> = {
   title: 'Components/Button',

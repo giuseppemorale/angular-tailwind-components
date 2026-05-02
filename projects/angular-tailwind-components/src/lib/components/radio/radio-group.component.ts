@@ -4,7 +4,6 @@ import { AtcOption, AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-radio-group',
-  standalone: true,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

@@ -10,7 +10,6 @@ export interface AtcTableColumn<T = any> {
 
 @Component({
   selector: 'atc-table',
-  standalone: true,
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })

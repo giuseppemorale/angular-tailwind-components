@@ -3,14 +3,13 @@ import { AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-spinner',
-  standalone: true,
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss',
 })
 export class AtcSpinner {
   /** Size variant */
   size = input<AtcSize>('md');
-  /** Color — uses Tailwind text color class */
+  /** Color â€” uses Tailwind text color class */
   color = input<string>('text-primary-600');
   /** Optional label text */
   label = input<string>('');

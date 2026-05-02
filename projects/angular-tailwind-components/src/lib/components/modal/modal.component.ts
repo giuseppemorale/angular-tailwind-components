@@ -12,7 +12,6 @@ import { AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-modal',
-  standalone: true,
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
 })

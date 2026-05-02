@@ -2,7 +2,6 @@ import { Component, input, signal } from '@angular/core';
 
 @Component({
   selector: 'atc-accordion-item',
-  standalone: true,
   templateUrl: './accordion-item.component.html',
   styleUrl: './accordion-item.component.scss',
 })

@@ -3,7 +3,6 @@ import { AtcSeverity, AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-progress-bar',
-  standalone: true,
   templateUrl: './progress-bar.component.html',
   styleUrl: './progress-bar.component.scss',
 })

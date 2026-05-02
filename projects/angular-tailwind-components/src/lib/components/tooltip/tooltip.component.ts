@@ -11,7 +11,6 @@ import { AtcPosition } from '../../models';
 
 @Component({
   selector: 'atc-tooltip',
-  standalone: true,
   templateUrl: './tooltip.component.html',
   styleUrl: './tooltip.component.scss',
 })

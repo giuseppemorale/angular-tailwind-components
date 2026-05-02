@@ -3,7 +3,6 @@ import { AtcSeverity } from '../../models';
 
 @Component({
   selector: 'atc-tag',
-  standalone: true,
   templateUrl: './tag.component.html',
   styleUrl: './tag.component.scss',
 })

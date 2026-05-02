@@ -10,7 +10,6 @@ export interface AtcDateTimeValue {
 
 @Component({
   selector: 'atc-datetime-picker',
-  standalone: true,
   imports: [AtcDatePicker, AtcTimePicker],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AtcDateTimePicker), multi: true }],
   templateUrl: './datetime-picker.component.html',

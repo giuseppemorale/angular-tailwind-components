@@ -3,7 +3,6 @@ import { AtcAccordionItem } from './accordion-item.component';
 
 @Component({
   selector: 'atc-accordion',
-  standalone: true,
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.scss',
 })

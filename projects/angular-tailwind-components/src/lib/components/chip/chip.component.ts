@@ -3,7 +3,6 @@ import { AtcSeverity, AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-chip',
-  standalone: true,
   templateUrl: './chip.component.html',
   styleUrl: './chip.component.scss',
 })

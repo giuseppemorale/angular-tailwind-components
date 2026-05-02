@@ -3,7 +3,6 @@ import { AtcStep } from './step.component';
 
 @Component({
   selector: 'atc-stepper',
-  standalone: true,
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
 })

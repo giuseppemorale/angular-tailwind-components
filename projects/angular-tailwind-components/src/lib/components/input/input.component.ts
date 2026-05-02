@@ -4,7 +4,6 @@ import { AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-input',
-  standalone: true,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

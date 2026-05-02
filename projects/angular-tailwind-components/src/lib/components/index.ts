@@ -11,6 +11,8 @@ export * from './alert/alert.component';
 export * from './spinner/spinner.component';
 
 // Batch 2 — Intermediate
+export * from './modal/modal.service';
+export * from './modal/modal-container.component';
 export * from './modal/modal.component';
 export * from './tabs/tab.component';
 export * from './tabs/tab-group.component';

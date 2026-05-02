@@ -3,7 +3,6 @@ import { AtcSeverity, AtcSize } from '../../models';
 
 @Component({
   selector: 'atc-badge',
-  standalone: true,
   templateUrl: './badge.component.html',
   styleUrl: './badge.component.scss',
 })

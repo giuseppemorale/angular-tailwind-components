@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcProgressBar } from 'angular-tailwind-components';
+import { AtcProgressBar } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<AtcProgressBar> = {
   title: 'Components/ProgressBar',

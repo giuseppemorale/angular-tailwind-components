@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'atc-date-picker',
-  standalone: true,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AtcDatePicker), multi: true }],
   templateUrl: './date-picker.component.html',
   styleUrl: './date-picker.component.scss',

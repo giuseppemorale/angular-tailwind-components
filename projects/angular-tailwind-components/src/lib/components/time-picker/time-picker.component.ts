@@ -3,7 +3,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'atc-time-picker',
-  standalone: true,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AtcTimePicker), multi: true }],
   templateUrl: './time-picker.component.html',
   styleUrl: './time-picker.component.scss',

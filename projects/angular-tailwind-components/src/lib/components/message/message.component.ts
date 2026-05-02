@@ -3,7 +3,6 @@ import { AtcSeverity } from '../../models';
 
 @Component({
   selector: 'atc-message',
-  standalone: true,
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })

@@ -2,7 +2,6 @@ import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'atc-card',
-  standalone: true,
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })

@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindSelect } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSelect> = {
-  title: 'Components/Select',
+  title: 'Forms/Select',
   component: TailwindSelect,
   tags: ['autodocs'],
+  parameters: { docs: { story: { height: '300px' } } },
 };
 export default meta;
 type Story = StoryObj<TailwindSelect>;

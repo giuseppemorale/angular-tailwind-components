@@ -2,24 +2,24 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindCheckbox } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindCheckbox> = {
-  title: 'Components/Checkbox',
+  title: 'Forms/Checkbox',
   component: TailwindCheckbox,
   tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-    checked: { control: 'boolean' },
-  },
+    checked: { control: 'boolean' }
+  }
 };
 export default meta;
 type Story = StoryObj<TailwindCheckbox>;
 
 export const Default: Story = {
-  render: (args) => ({
+  render: args => ({
     props: args,
-    template: `<tailwind-checkbox [label]="label" [size]="size"></tailwind-checkbox>`,
+    template: `<tailwind-checkbox [label]="label" [size]="size" [checked]="checked"></tailwind-checkbox>`
   }),
-  args: { label: 'Accept terms and conditions', size: 'md' },
+  args: { label: 'Accept terms and conditions', size: 'md', checked: false }
 };
 
 export const States: Story = {
@@ -30,8 +30,8 @@ export const States: Story = {
         <tailwind-checkbox label="Checked" [checked]="true" />
         <tailwind-checkbox label="Small" size="sm" />
         <tailwind-checkbox label="Large" size="lg" />
-      </div>`,
-  }),
+      </div>`
+  })
 };
 
 export const CheckboxGroup: Story = {
@@ -43,6 +43,6 @@ export const CheckboxGroup: Story = {
         <tailwind-checkbox label="TypeScript" />
         <tailwind-checkbox label="Tailwind CSS" />
         <tailwind-checkbox label="Storybook" />
-      </div>`,
-  }),
+      </div>`
+  })
 };

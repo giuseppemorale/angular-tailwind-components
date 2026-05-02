@@ -14,10 +14,10 @@ export class TailwindDatePicker implements ControlValueAccessor {
   readonly pickerId = input<string>(`tailwind-date-${nextDateId++}`);
 
   readonly value = model<string>('');
-  isDisabled = signal(false);
-  showCalendar = signal(false);
-  viewMonth = signal(new Date().getMonth());
-  viewYear = signal(new Date().getFullYear());
+  readonly isDisabled = signal(false);
+  readonly showCalendar = signal(false);
+  readonly viewMonth = signal(new Date().getMonth());
+  readonly viewYear = signal(new Date().getFullYear());
 
   readonly weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 

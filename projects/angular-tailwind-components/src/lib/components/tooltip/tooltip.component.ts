@@ -24,7 +24,7 @@ export class TailwindTooltip {
   /** Delay before hiding (ms) */
   readonly hideDelay = input<number>(100);
 
-  isVisible = signal(false);
+  readonly isVisible = signal(false);
   private showTimeout: ReturnType<typeof setTimeout> | null = null;
   private hideTimeout: ReturnType<typeof setTimeout> | null = null;
 

@@ -12,7 +12,7 @@ export class TailwindTimePicker implements ControlValueAccessor {
   readonly step = input<number>(60);
   readonly pickerId = input<string>(`tailwind-time-${nextTimeId++}`);
   readonly value = model<string>('');
-  isDisabled = signal(false);
+  readonly isDisabled = signal(false);
   private onChange: (v: string) => void = () => {};
   onTouched: () => void = () => {};
 

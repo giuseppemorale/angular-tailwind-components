@@ -20,7 +20,7 @@ export class TailwindAlert {
   dismissed$ = output<void>();
 
   /** Internal dismissed state */
-  dismissed = signal(false);
+  readonly dismissed = signal(false);
 
   readonly computedClasses = computed(() => {
     const base = 'flex gap-3 p-4 rounded-lg';

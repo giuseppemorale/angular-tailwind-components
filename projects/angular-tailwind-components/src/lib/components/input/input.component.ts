@@ -44,7 +44,7 @@ export class TailwindInput implements ControlValueAccessor {
   readonly value = model<string>('');
 
   /** Internal disabled state */
-  isDisabled = signal(false);
+  readonly isDisabled = signal(false);
 
   /** Computed input classes */
   readonly inputClasses = computed(() => {

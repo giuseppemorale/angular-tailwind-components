@@ -28,9 +28,9 @@ export class TailwindModal {
   readonly closeOnEscape = input<boolean>(true);
 
   /** Open/close state */
-  isOpen = signal(false);
+  readonly isOpen = signal(false);
   /** Visibility for animation */
-  isVisible = signal(false);
+  readonly isVisible = signal(false);
 
   /** Emitted when the modal is closed */
   readonly closed = output<void>();

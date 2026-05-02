@@ -16,7 +16,7 @@ export class TailwindTab {
   readonly tabId = input<string>(`tailwind-tab-${nextTabId++}`);
 
   /** Whether this tab is the currently active one (set by parent) */
-  isActive = signal(false);
+  readonly isActive = signal(false);
 }
 
 let nextTabId = 0;

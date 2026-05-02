@@ -5,6 +5,7 @@ const meta: Meta<TailwindMenu> = {
   title: 'Components/Menu',
   component: TailwindMenu,
   tags: ['autodocs'],
+  parameters: { docs: { story: { height: '320px' } } },
 };
 export default meta;
 type Story = StoryObj<TailwindMenu>;
@@ -13,17 +14,19 @@ export const Default: Story = {
   render: () => ({
     props: {
       items: [
-        { label: 'Profile', icon: 'Ã°Å¸â€˜Â¤' },
-        { label: 'Settings', icon: 'Ã¢Å¡â„¢Ã¯Â¸Â' },
-        { label: 'Help', icon: 'Ã¢Ââ€œ' },
-        { type: 'divider' },
-        { label: 'Sign out', icon: 'Ã°Å¸Å¡Âª', danger: true },
+        { label: 'Profile', value: 'profile' },
+        { label: 'Settings', value: 'settings' },
+        { label: 'Help', value: 'help' },
+        { divider: true },
+        { label: 'Sign out', value: 'signout' },
       ],
     },
     template: `
       <div style="padding:20px">
         <tailwind-menu [items]="items">
-          <tailwind-button>Open Menu Ã¢â€“Â¾</tailwind-button>
+          <tailwind-menu-trigger>
+            <tailwind-button>Open Menu â–¾</tailwind-button>
+          </tailwind-menu-trigger>
         </tailwind-menu>
       </div>`,
   }),
@@ -33,17 +36,40 @@ export const WithDisabled: Story = {
   render: () => ({
     props: {
       items: [
-        { label: 'Edit', icon: 'Ã¢Å“ÂÃ¯Â¸Â' },
-        { label: 'Duplicate', icon: 'Ã°Å¸â€œâ€¹', disabled: true },
-        { label: 'Archive', icon: 'Ã°Å¸â€œÂ¦' },
-        { type: 'divider' },
-        { label: 'Delete', icon: 'Ã°Å¸â€”â€˜Ã¯Â¸Â', danger: true },
+        { label: 'Edit', value: 'edit' },
+        { label: 'Duplicate', value: 'duplicate', disabled: true },
+        { label: 'Archive', value: 'archive' },
+        { divider: true },
+        { label: 'Delete', value: 'delete' },
       ],
     },
     template: `
       <div style="padding:20px">
         <tailwind-menu [items]="items">
-          <tailwind-button variant="outline">Actions Ã¢â€“Â¾</tailwind-button>
+          <tailwind-menu-trigger>
+            <tailwind-button variant="outline">Actions â–¾</tailwind-button>
+          </tailwind-menu-trigger>
+        </tailwind-menu>
+      </div>`,
+  }),
+};
+
+export const AlignRight: Story = {
+  render: () => ({
+    props: {
+      items: [
+        { label: 'View', value: 'view' },
+        { label: 'Download', value: 'download' },
+        { divider: true },
+        { label: 'Delete', value: 'delete' },
+      ],
+    },
+    template: `
+      <div style="padding:20px; display:flex; justify-content:flex-end">
+        <tailwind-menu [items]="items" align="right">
+          <tailwind-menu-trigger>
+            <tailwind-button variant="ghost">â‹®</tailwind-button>
+          </tailwind-menu-trigger>
         </tailwind-menu>
       </div>`,
   }),

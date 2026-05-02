@@ -4,7 +4,8 @@ import { TailwindTable } from '../projects/angular-tailwind-components/src/publi
 const meta: Meta<TailwindTable> = {
   title: 'Components/Table',
   component: TailwindTable,
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  parameters: { docs: { story: { height: '500px' } } }
 };
 export default meta;
 type Story = StoryObj<TailwindTable>;

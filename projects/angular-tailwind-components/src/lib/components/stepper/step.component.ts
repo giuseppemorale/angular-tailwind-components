@@ -9,6 +9,6 @@ export class TailwindStep {
   label = input.required<string>();
   readonly description = input<string>('');
   readonly optional = input<boolean>(false);
-  completed = signal(false);
-  isActive = signal(false);
+  readonly completed = signal(false);
+  readonly isActive = signal(false);
 }

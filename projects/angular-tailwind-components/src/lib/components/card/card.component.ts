@@ -14,15 +14,4 @@ export class TailwindCard {
   readonly headerBg = input<boolean>(false);
   /** Custom padding class for the body */
   readonly bodyPadding = input<string>('p-6');
-
-  /** Track content projection slots */
-  hasHeader = false;
-  hasFooter = false;
-
-  ngAfterContentInit(): void {
-    // Content projection slots are determined by the template
-    // They will render if content is projected into them
-    this.hasHeader = true;
-    this.hasFooter = true;
-  }
 }

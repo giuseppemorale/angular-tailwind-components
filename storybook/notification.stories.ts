@@ -34,3 +34,29 @@ export const AllSeverities: Story = {
       </div>`,
   }),
 };
+
+export const WithActions: Story = {
+  render: () => ({
+    template: `
+      <div class="flex flex-col gap-3 max-w-lg">
+        <tailwind-notification severity="warning" title="Storage almost full">
+          You are using 4.8 GB of your 5 GB storage limit.
+          <tailwind-notification-actions>
+            <div class="flex gap-2 mt-2">
+              <tailwind-button size="sm" variant="outline">Manage storage</tailwind-button>
+              <tailwind-button size="sm" variant="ghost">Dismiss</tailwind-button>
+            </div>
+          </tailwind-notification-actions>
+        </tailwind-notification>
+        <tailwind-notification severity="info" title="New update available">
+          Version 2.0 includes performance improvements and new features.
+          <tailwind-notification-actions>
+            <div class="flex gap-2 mt-2">
+              <tailwind-button size="sm">Update now</tailwind-button>
+              <tailwind-button size="sm" variant="ghost">Later</tailwind-button>
+            </div>
+          </tailwind-notification-actions>
+        </tailwind-notification>
+      </div>`,
+  }),
+};

@@ -5,6 +5,7 @@ const meta: Meta<TailwindTooltip> = {
   title: 'Components/Tooltip',
   component: TailwindTooltip,
   tags: ['autodocs'],
+  parameters: { docs: { story: { height: '150px' } } },
   argTypes: {
     position: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
   },

@@ -26,7 +26,7 @@ export class TailwindToggle implements ControlValueAccessor {
   readonly checked = model<boolean>(false);
 
   /** Internal disabled state */
-  isDisabled = signal(false);
+  readonly isDisabled = signal(false);
 
   /** Track (background) classes */
   readonly trackClasses = computed(() => {

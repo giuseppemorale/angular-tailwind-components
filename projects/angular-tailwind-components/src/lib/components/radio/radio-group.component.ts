@@ -32,7 +32,7 @@ export class TailwindRadioGroup implements ControlValueAccessor {
   readonly value = model<string>('');
 
   /** Internal disabled state */
-  isDisabled = signal(false);
+  readonly isDisabled = signal(false);
 
   /** Radio button outer ring size */
   readonly radioSizeClass = computed(() => {

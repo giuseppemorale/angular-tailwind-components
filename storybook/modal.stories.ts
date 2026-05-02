@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TailwindModalService, TailwindModalContainer } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindModalService, TailwindModalContainer, TailwindButton } from '../projects/angular-tailwind-components/src/public-api';
 import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'tailwind-modal-story',
-  imports: [TailwindModalContainer],
+  imports: [TailwindModalContainer, TailwindButton],
   template: `
     <div class="flex flex-wrap gap-3">
       <tailwind-button (click)="openSimple()">Simple Modal</tailwind-button>
@@ -36,7 +36,7 @@ class ModalStoryComponent {
       confirmLabel: 'Delete',
       cancelLabel: 'Cancel',
     });
-    this.result = confirmed ? 'confirmed Ã¢Å“â€œ' : 'cancelled Ã¢Å“â€”';
+    this.result = confirmed ? 'confirmed ✓' : 'cancelled ✗';
   }
 
   async openLarge() {
@@ -57,6 +57,11 @@ const meta: Meta = {
   title: 'Components/Modal',
   component: ModalStoryComponent,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      story: { height: '400px' },
+    },
+  },
 };
 export default meta;
 type Story = StoryObj;

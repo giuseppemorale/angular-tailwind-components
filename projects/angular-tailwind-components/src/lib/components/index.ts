@@ -27,7 +27,6 @@ export * from './tag/tag.component';
 
 // Batch 3 — Advanced
 export * from './table/table.component';
-export * from './form/form.component';
 export * from './date-picker/date-picker.component';
 export * from './time-picker/time-picker.component';
 export * from './datetime-picker/datetime-picker.component';

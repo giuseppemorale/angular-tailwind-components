@@ -38,7 +38,7 @@ export class TailwindSelect implements ControlValueAccessor {
   readonly value = model<string>('');
 
   /** Internal disabled state */
-  isDisabled = signal(false);
+  readonly isDisabled = signal(false);
 
   /** Computed select classes */
   readonly selectClasses = computed(() => {

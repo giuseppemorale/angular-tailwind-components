@@ -16,7 +16,7 @@ export class TailwindMenu {
   readonly align = input<'left' | 'right'>('left');
   readonly selected = output<TailwindMenuItem>();
 
-  isOpen = signal(false);
+  readonly isOpen = signal(false);
 
   toggle(): void { this.isOpen.update(v => !v); }
 

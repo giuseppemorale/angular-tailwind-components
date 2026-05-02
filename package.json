@@ -8,7 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "storybook": "ng run angular-tailwind-components:storybook",
-    "build-storybook": "ng run angular-tailwind-components:build-storybook"
+    "build:storybook": "ng run angular-tailwind-components:build-storybook",
+    "prettier:write": "prettier --write projects/**/*.{ts,html,scss}",
+    "prettier:check": "prettier --check ."
   },
   "private": true,
   "packageManager": "npm@11.13.0",

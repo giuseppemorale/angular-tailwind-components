@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindDateTimePicker } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindDateTimePicker> = {
-  title: 'Components/DateTimePicker',
+  title: 'Forms/DateTimePicker',
   component: TailwindDateTimePicker,
   tags: ['autodocs'],
+  parameters: { docs: { story: { height: '380px' } } },
 };
 export default meta;
 type Story = StoryObj<TailwindDateTimePicker>;

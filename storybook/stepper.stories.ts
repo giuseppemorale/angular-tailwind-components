@@ -4,6 +4,7 @@ import { TailwindStepper, TailwindStep } from '../projects/angular-tailwind-comp
 const meta: Meta = {
   title: 'Components/Stepper',
   tags: ['autodocs'],
+  parameters: { docs: { story: { height: '350px' } } },
 };
 export default meta;
 type Story = StoryObj;
@@ -15,7 +16,7 @@ export const Default: Story = {
         <tailwind-step label="Account" description="Create your account">
           <div class="space-y-3">
             <tailwind-input label="Email" placeholder="email@example.com" />
-            <tailwind-input label="Password" type="password" placeholder="Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢Ã¢â‚¬Â¢" />
+            <tailwind-input label="Password" type="password" placeholder="ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢" />
           </div>
         </tailwind-step>
         <tailwind-step label="Profile" description="Set up your profile">

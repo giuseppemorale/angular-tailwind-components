@@ -15,9 +15,9 @@ export type { TailwindDateTimeValue };
 })
 export class TailwindDateTimePicker implements ControlValueAccessor {
   readonly label = input<string>('');
-  dateValue = signal('');
-  timeValue = signal('');
-  isDisabled = signal(false);
+  readonly dateValue = signal('');
+  readonly timeValue = signal('');
+  readonly isDisabled = signal(false);
   private onChange: (v: TailwindDateTimeValue) => void = () => {};
   private onTouched: () => void = () => {};
 

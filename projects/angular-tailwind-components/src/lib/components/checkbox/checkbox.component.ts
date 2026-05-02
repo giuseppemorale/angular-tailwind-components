@@ -28,7 +28,7 @@ export class TailwindCheckbox implements ControlValueAccessor {
   readonly checked = model<boolean>(false);
 
   /** Internal disabled state */
-  isDisabled = signal(false);
+  readonly isDisabled = signal(false);
 
   /** Box size class based on size input */
   readonly boxSizeClass = computed(() => {

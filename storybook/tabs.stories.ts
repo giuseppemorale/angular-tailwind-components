@@ -4,6 +4,7 @@ import { TailwindTabGroup, TailwindTab } from '../projects/angular-tailwind-comp
 const meta: Meta = {
   title: 'Components/Tabs',
   tags: ['autodocs'],
+  parameters: { docs: { story: { height: '300px' } } },
 };
 export default meta;
 type Story = StoryObj;

@@ -29,10 +29,10 @@ export class TailwindTable {
   readonly selectionChanged = output<Set<number>>();
 
   // --- Internal State ---
-  sortKey = signal<string>('');
-  sortDir = signal<'asc' | 'desc'>('asc');
-  selectedRows = signal<Set<number>>(new Set());
-  currentPage = signal<number>(1);
+  readonly sortKey = signal<string>('');
+  readonly sortDir = signal<'asc' | 'desc'>('asc');
+  readonly selectedRows = signal<Set<number>>(new Set());
+  readonly currentPage = signal<number>(1);
 
   // --- Computed ---
   readonly sortedData = computed(() => {

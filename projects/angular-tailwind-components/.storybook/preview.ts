@@ -1,7 +1,8 @@
 import type { Preview } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import {
-  TailwindAccordion, TailwindAccordionItem,
+  TailwindAccordion,
+  TailwindAccordionItem,
   TailwindAlert,
   TailwindBadge,
   TailwindBreadcrumb,
@@ -12,7 +13,6 @@ import {
   TailwindDatePicker,
   TailwindDateTimePicker,
   TailwindDrawer,
-  TailwindForm,
   TailwindInput,
   TailwindMenu,
   TailwindMessage,
@@ -25,18 +25,21 @@ import {
   TailwindSelect,
   TailwindSkeleton,
   TailwindSpinner,
-  TailwindStep, TailwindStepper,
-  TailwindTab, TailwindTabGroup,
+  TailwindStep,
+  TailwindStepper,
+  TailwindTab,
+  TailwindTabGroup,
   TailwindTable,
   TailwindTag,
   TailwindTimePicker,
   TailwindToastContainer,
   TailwindToggle,
-  TailwindTooltip,
+  TailwindTooltip
 } from '../src/public-api';
 
 const ALL_COMPONENTS = [
-  TailwindAccordion, TailwindAccordionItem,
+  TailwindAccordion,
+  TailwindAccordionItem,
   TailwindAlert,
   TailwindBadge,
   TailwindBreadcrumb,
@@ -47,7 +50,6 @@ const ALL_COMPONENTS = [
   TailwindDatePicker,
   TailwindDateTimePicker,
   TailwindDrawer,
-  TailwindForm,
   TailwindInput,
   TailwindMenu,
   TailwindMessage,
@@ -60,30 +62,38 @@ const ALL_COMPONENTS = [
   TailwindSelect,
   TailwindSkeleton,
   TailwindSpinner,
-  TailwindStep, TailwindStepper,
-  TailwindTab, TailwindTabGroup,
+  TailwindStep,
+  TailwindStepper,
+  TailwindTab,
+  TailwindTabGroup,
   TailwindTable,
   TailwindTag,
   TailwindTimePicker,
   TailwindToastContainer,
   TailwindToggle,
-  TailwindTooltip,
+  TailwindTooltip
 ];
 
 const preview: Preview = {
   decorators: [
     moduleMetadata({
-      imports: ALL_COMPONENTS,
-    }),
+      imports: ALL_COMPONENTS
+    })
   ],
   parameters: {
+    layout: 'padded',
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i,
-      },
+        date: /Date$/i
+      }
     },
-  },
+    docs: {
+      story: {
+        height: '300px'
+      }
+    }
+  }
 };
 
 export default preview;

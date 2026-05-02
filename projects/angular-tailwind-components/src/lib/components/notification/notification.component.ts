@@ -12,7 +12,7 @@ export class TailwindNotification {
   readonly dismissible = input<boolean>(true);
   readonly showActions = input<boolean>(false);
   dismissed$ = output<void>();
-  dismissed = signal(false);
+  readonly dismissed = signal(false);
 
   readonly computedClasses = computed(() => {
     const variantMap: Record<TailwindSeverity, string> = {

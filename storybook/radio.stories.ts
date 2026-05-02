@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindRadioGroup } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindRadioGroup> = {
-  title: 'Components/RadioGroup',
+  title: 'Forms/RadioGroup',
   component: TailwindRadioGroup,
   tags: ['autodocs'],
 };
@@ -14,9 +14,9 @@ export const Default: Story = {
     props: {
       ...args,
       options: [
-        { value: 'free', label: 'Free Ã¢â‚¬â€ $0/month' },
-        { value: 'pro', label: 'Pro Ã¢â‚¬â€ $12/month' },
-        { value: 'enterprise', label: 'Enterprise Ã¢â‚¬â€ Contact us' },
+        { value: 'free', label: 'Free ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â $0/month' },
+        { value: 'pro', label: 'Pro ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â $12/month' },
+        { value: 'enterprise', label: 'Enterprise ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Contact us' },
       ],
     },
     template: `<tailwind-radio-group [label]="label" [options]="options" style="max-width:320px;display:block"></tailwind-radio-group>`,

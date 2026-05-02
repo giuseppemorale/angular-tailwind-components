@@ -4,6 +4,7 @@ import { TailwindAccordion, TailwindAccordionItem } from '../projects/angular-ta
 const meta: Meta = {
   title: 'Components/Accordion',
   tags: ['autodocs'],
+  parameters: { docs: { story: { height: '300px' } } },
 };
 export default meta;
 type Story = StoryObj;

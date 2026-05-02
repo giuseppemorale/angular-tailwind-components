@@ -15,7 +15,7 @@
   <div class="relative">
     @if (prefixIcon()) {
       <span class="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 pointer-events-none">
-        <ng-content select="[atcPrefix]" />
+        <ng-content select="tailwind-prefix" />
       </span>
     }
 
@@ -35,7 +35,7 @@
 
     @if (suffixIcon()) {
       <span class="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 pointer-events-none">
-        <ng-content select="[atcSuffix]" />
+        <ng-content select="tailwind-suffix" />
       </span>
     }
   </div>

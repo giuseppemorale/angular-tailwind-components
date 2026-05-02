@@ -17,9 +17,9 @@ export class TailwindDrawer {
   readonly closeOnBackdrop = input<boolean>(true);
 
   /** Open/close state */
-  isOpen = signal(false);
+  readonly isOpen = signal(false);
   /** Visibility for animation */
-  isVisible = signal(false);
+  readonly isVisible = signal(false);
 
   /** Emitted when closed */
   readonly closed = output<void>();

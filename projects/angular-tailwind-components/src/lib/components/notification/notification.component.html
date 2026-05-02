@@ -2,18 +2,23 @@
   <div [class]="computedClasses()" role="alert">
     <div class="flex gap-3">
       <div class="flex-1 min-w-0">
-        @if (title()) { <p class="text-sm font-semibold mb-0.5">{{ title() }}</p> }
+        @if (title()) {
+          <p class="text-sm font-semibold mb-0.5">{{ title() }}</p>
+        }
         <p class="text-sm"><ng-content /></p>
         @if (showActions()) {
-          <div class="flex gap-2 mt-3">
-            <ng-content select="[atcNotificationActions]" />
-          </div>
+          <ng-content select="tailwind-notification-actions" />
         }
       </div>
       @if (dismissible()) {
-        <button type="button" (click)="dismiss()" class="shrink-0 p-1 -m-1 rounded-lg opacity-60 hover:opacity-100 transition-opacity cursor-pointer" aria-label="Dismiss">
+        <button
+          type="button"
+          (click)="dismiss()"
+          class="shrink-0 p-1 -m-1 rounded-lg opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+          aria-label="Dismiss">
           <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+            <path
+              d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
           </svg>
         </button>
       }

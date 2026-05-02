@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TailwindToastService, TailwindToastContainer } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindToastService, TailwindToastContainer, TailwindButton } from '../projects/angular-tailwind-components/src/public-api';
 import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'tailwind-toast-story',
-  imports: [TailwindToastContainer],
+  imports: [TailwindToastContainer, TailwindButton],
   template: `
     <div class="flex flex-wrap gap-3">
       <tailwind-button variant="success" (click)="showSuccess()">Success</tailwind-button>
@@ -27,6 +27,11 @@ const meta: Meta = {
   title: 'Components/Toast',
   component: ToastStoryComponent,
   tags: ['autodocs'],
+  parameters: {
+    docs: {
+      story: { height: '300px' },
+    },
+  },
 };
 export default meta;
 type Story = StoryObj;

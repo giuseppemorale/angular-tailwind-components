@@ -4,7 +4,7 @@ import { TailwindCard } from '../projects/angular-tailwind-components/src/public
 const meta: Meta<TailwindCard> = {
   title: 'Components/Card',
   component: TailwindCard,
-  tags: ['autodocs'],
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<TailwindCard>;
@@ -13,14 +13,16 @@ export const Default: Story = {
   render: () => ({
     template: `
       <tailwind-card style="max-width:400px">
-        <div slot="header"><h3 class="font-semibold text-surface-900">Card Title</h3></div>
+        <tailwind-card-header><h3 class="font-semibold text-surface-900">Card Title</h3></tailwind-card-header>
         <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
-        <div slot="footer" class="flex justify-end gap-2">
-          <tailwind-button variant="ghost" size="sm">Cancel</tailwind-button>
-          <tailwind-button size="sm">Confirm</tailwind-button>
-        </div>
-      </tailwind-card>`,
-  }),
+        <tailwind-card-footer>
+          <div class="flex justify-end gap-2">
+            <tailwind-button variant="ghost" size="sm">Cancel</tailwind-button>
+            <tailwind-button size="sm">Confirm</tailwind-button>
+          </div>
+        </tailwind-card-footer>
+      </tailwind-card>`
+  })
 };
 
 export const Elevated: Story = {
@@ -36,6 +38,6 @@ export const Elevated: Story = {
         <tailwind-card style="max-width:300px" [hoverable]="true">
           <p class="text-surface-600 text-sm">Hoverable card</p>
         </tailwind-card>
-      </div>`,
-  }),
+      </div>`
+  })
 };

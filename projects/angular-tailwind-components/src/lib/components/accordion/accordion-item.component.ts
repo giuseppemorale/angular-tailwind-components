@@ -8,7 +8,7 @@ import { Component, input, signal } from '@angular/core';
 export class TailwindAccordionItem {
   title = input.required<string>();
   readonly disabled = input<boolean>(false);
-  isExpanded = signal(false);
+  readonly isExpanded = signal(false);
 
   toggle(): void {
     if (!this.disabled()) this.isExpanded.update(v => !v);

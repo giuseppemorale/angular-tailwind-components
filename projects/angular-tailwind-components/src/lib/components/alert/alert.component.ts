@@ -17,7 +17,7 @@ export class TailwindAlert {
   readonly bordered = input<boolean>(true);
 
   /** Emitted when the alert is dismissed */
-  dismissed$ = output<void>();
+  onDismiss = output<void>();
 
   /** Internal dismissed state */
   readonly dismissed = signal(false);
@@ -39,6 +39,6 @@ export class TailwindAlert {
 
   dismiss(): void {
     this.dismissed.set(true);
-    this.dismissed$.emit();
+    this.onDismiss.emit();
   }
 }

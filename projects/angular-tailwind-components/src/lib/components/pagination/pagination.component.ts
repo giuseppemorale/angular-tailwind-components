@@ -14,7 +14,7 @@ export class TailwindPagination {
   readonly showSummary = input<boolean>(false);
   readonly summaryTemplate = input<string>('Showing {start}-{end} of {total}');
 
-  readonly pageChanged = output<number>();
+  readonly onPageChange = output<number>();
 
   readonly totalPages = computed(() => Math.ceil(this.totalItems() / this.pageSize()));
 
@@ -55,7 +55,7 @@ export class TailwindPagination {
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
-      this.pageChanged.emit(page);
+      this.onPageChange.emit(page);
     }
   }
 }

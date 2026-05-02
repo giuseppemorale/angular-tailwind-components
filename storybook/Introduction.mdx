@@ -43,7 +43,7 @@ import { TailwindButton, TailwindInput, TailwindToggle } from 'angular-tailwind-
   template: `
     <tailwind-input label="Email" placeholder="you@example.com" [(value)]="email" />
     <tailwind-toggle label="Notifications" [(checked)]="notifications" />
-    <tailwind-button variant="primary" (clicked)="submit()">Submit</tailwind-button>
+    <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
   `
 })
 export class ExampleComponent {

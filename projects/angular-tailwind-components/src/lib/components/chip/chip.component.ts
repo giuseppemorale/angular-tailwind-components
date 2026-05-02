@@ -10,7 +10,7 @@ export class TailwindChip {
   readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('neutral');
   readonly size = input<TailwindSize>('md');
   readonly removable = input<boolean>(false);
-  readonly removed = output<void>();
+  readonly onRemove = output<void>();
 
   readonly computedClasses = computed(() => {
     const variantMap: Record<string, string> = {

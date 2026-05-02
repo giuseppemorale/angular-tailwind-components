@@ -32,7 +32,7 @@ describe('TailwindAlert', () => {
     fixture.detectChanges();
 
     const spy = vi.fn();
-    component.dismissed$.subscribe(spy);
+    component.onDismiss.subscribe(spy);
 
     const button = fixture.nativeElement.querySelector('button');
     button?.click();

@@ -34,16 +34,16 @@ Or define your own theme tokens following the design system schema.
 
 ```typescript
 import { Component } from '@angular/core';
-import { AtcButton, AtcInput, AtcToggle } from 'angular-tailwind-components';
+import { TailwindButton, TailwindInput, TailwindToggle } from 'angular-tailwind-components';
 
 @Component({
   selector: 'app-example',
   standalone: true,
-  imports: [AtcButton, AtcInput, AtcToggle],
+  imports: [TailwindButton, TailwindInput, TailwindToggle],
   template: `
-    <atc-input label="Email" placeholder="you@example.com" [(value)]="email" />
-    <atc-toggle label="Notifications" [(checked)]="notifications" />
-    <atc-button variant="primary" (clicked)="submit()">Submit</atc-button>
+    <tailwind-input label="Email" placeholder="you@example.com" [(value)]="email" />
+    <tailwind-toggle label="Notifications" [(checked)]="notifications" />
+    <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
   `
 })
 export class ExampleComponent {

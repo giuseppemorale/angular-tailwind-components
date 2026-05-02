@@ -25,7 +25,7 @@ export class TailwindButton {
   readonly iconOnly = input<boolean>(false);
 
   /** Emitted when the button is clicked (not disabled/loading) */
-  readonly clicked = output<MouseEvent>();
+  readonly onClick = output<MouseEvent>();
 
   /** Computed Tailwind classes based on variant, size, and state */
   readonly computedClasses = computed(() => {
@@ -82,7 +82,7 @@ export class TailwindButton {
 
   handleClick(event: MouseEvent): void {
     if (!this.disabled() && !this.loading()) {
-      this.clicked.emit(event);
+      this.onClick.emit(event);
     }
   }
 }

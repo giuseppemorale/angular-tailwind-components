@@ -21,7 +21,7 @@ describe('TailwindButton', () => {
 
   it('should emit clicked event when clicked', () => {
     const spy = vi.fn();
-    component.clicked.subscribe(spy);
+    component.onClick.subscribe(spy);
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     button.click();
@@ -34,7 +34,7 @@ describe('TailwindButton', () => {
     fixture.detectChanges();
 
     const spy = vi.fn();
-    component.clicked.subscribe(spy);
+    component.onClick.subscribe(spy);
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     button.click();
@@ -47,7 +47,7 @@ describe('TailwindButton', () => {
     fixture.detectChanges();
 
     const spy = vi.fn();
-    component.clicked.subscribe(spy);
+    component.onClick.subscribe(spy);
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     button.click();

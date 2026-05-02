@@ -14,7 +14,7 @@ export type { TailwindMenuItem };
 export class TailwindMenu {
   readonly items = input<TailwindMenuItem[]>([]);
   readonly align = input<'left' | 'right'>('left');
-  readonly selected = output<TailwindMenuItem>();
+  readonly onSelect = output<TailwindMenuItem>();
 
   readonly isOpen = signal(false);
 
@@ -24,7 +24,7 @@ export class TailwindMenu {
 
   selectItem(item: TailwindMenuItem): void {
     if (!item.disabled) {
-      this.selected.emit(item);
+      this.onSelect.emit(item);
       this.isOpen.set(false);
     }
   }

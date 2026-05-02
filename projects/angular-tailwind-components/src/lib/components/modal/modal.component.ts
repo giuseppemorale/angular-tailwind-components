@@ -24,7 +24,7 @@ export class TailwindModal {
   readonly isVisible = signal(false);
 
   /** Emitted when the modal is closed */
-  readonly closed = output<void>();
+  readonly onClose = output<void>();
 
   /** Reference to the modal panel for focus management */
   private modalPanel = viewChild<ElementRef>('modalPanel');
@@ -67,7 +67,7 @@ export class TailwindModal {
     this.isVisible.set(false);
     setTimeout(() => {
       this.isOpen.set(false);
-      this.closed.emit();
+      this.onClose.emit();
     }, 200);
   }
 }

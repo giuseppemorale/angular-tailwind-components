@@ -22,7 +22,7 @@ export class TailwindDrawer {
   readonly isVisible = signal(false);
 
   /** Emitted when closed */
-  readonly closed = output<void>();
+  readonly onClose = output<void>();
 
   readonly panelClasses = computed(() => {
     const base = [
@@ -56,7 +56,7 @@ export class TailwindDrawer {
     this.isVisible.set(false);
     setTimeout(() => {
       this.isOpen.set(false);
-      this.closed.emit();
+      this.onClose.emit();
     }, 300);
   }
 }

@@ -11,7 +11,7 @@ export class TailwindNotification {
   readonly severity = input<TailwindSeverity>('info');
   readonly dismissible = input<boolean>(true);
   readonly showActions = input<boolean>(false);
-  dismissed$ = output<void>();
+  onDismiss = output<void>();
   readonly dismissed = signal(false);
 
   readonly computedClasses = computed(() => {
@@ -26,6 +26,6 @@ export class TailwindNotification {
 
   dismiss(): void {
     this.dismissed.set(true);
-    this.dismissed$.emit();
+    this.onDismiss.emit();
   }
 }

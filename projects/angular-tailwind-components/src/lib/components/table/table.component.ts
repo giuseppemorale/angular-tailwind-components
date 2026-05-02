@@ -25,8 +25,8 @@ export class TailwindTable {
   readonly paginationSummaryTemplate = input<string>('Showing {start} to {end} of {total} results');
 
   // --- Outputs ---
-  readonly sortChanged = output<{ key: string; direction: 'asc' | 'desc' }>();
-  readonly selectionChanged = output<Set<number>>();
+  readonly onSortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
+  readonly onSelectionChange = output<Set<number>>();
 
   // --- Internal State ---
   readonly sortKey = signal<string>('');
@@ -68,7 +68,7 @@ export class TailwindTable {
       this.sortDir.set('asc');
     }
     this.currentPage.set(1); // Reset to first page on sort
-    this.sortChanged.emit({ key: this.sortKey(), direction: this.sortDir() });
+    this.onSortChange.emit({ key: this.sortKey(), direction: this.sortDir() });
   }
 
   toggleSelection(index: number): void {
@@ -78,6 +78,6 @@ export class TailwindTable {
       else next.add(index);
       return next;
     });
-    this.selectionChanged.emit(this.selectedRows());
+    this.onSelectionChange.emit(this.selectedRows());
   }
 }

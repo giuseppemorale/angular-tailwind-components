@@ -3,6 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindDatePicker } from '../date-picker/date-picker.component';
 import { TailwindTimePicker } from '../time-picker/time-picker.component';
 import { TailwindDateTimeValue } from './interfaces/datetime-value.interface';
+import { TailwindComponent } from '../tailwind.component';
 
 export type { TailwindDateTimeValue };
 
@@ -13,7 +14,7 @@ export type { TailwindDateTimeValue };
   templateUrl: './datetime-picker.component.html',
   styleUrl: './datetime-picker.component.scss'
 })
-export class TailwindDateTimePicker implements ControlValueAccessor {
+export class TailwindDateTimePicker extends TailwindComponent implements ControlValueAccessor  {
   readonly label = input<string>('');
   readonly dateValue = signal('');
   readonly timeValue = signal('');

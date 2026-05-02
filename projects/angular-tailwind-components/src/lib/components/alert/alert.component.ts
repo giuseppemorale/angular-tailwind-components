@@ -1,12 +1,13 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { TailwindSeverity } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
   styleUrl: './alert.component.scss'
 })
-export class TailwindAlert {
+export class TailwindAlert extends TailwindComponent {
   /** Severity / color variant */
   readonly severity = input<TailwindSeverity>('info');
   /** Alert title */

@@ -1,12 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 import { TailwindSeverity } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-message',
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss'
 })
-export class TailwindMessage {
+export class TailwindMessage extends TailwindComponent {
   readonly severity = input<TailwindSeverity>('info');
 
   readonly computedClasses = computed(() => {

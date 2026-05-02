@@ -1,12 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 import { TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-spinner',
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss'
 })
-export class TailwindSpinner {
+export class TailwindSpinner extends TailwindComponent {
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Color ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â uses Tailwind text color class */

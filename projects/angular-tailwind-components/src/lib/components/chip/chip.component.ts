@@ -1,12 +1,13 @@
 import { Component, computed, input, output } from '@angular/core';
 import { TailwindSeverity, TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-chip',
   templateUrl: './chip.component.html',
   styleUrl: './chip.component.scss'
 })
-export class TailwindChip {
+export class TailwindChip extends TailwindComponent {
   readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('neutral');
   readonly size = input<TailwindSize>('md');
   readonly removable = input<boolean>(false);

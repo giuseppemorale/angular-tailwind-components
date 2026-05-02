@@ -1,6 +1,7 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-toggle',
@@ -14,7 +15,7 @@ import { TailwindSize } from '../../models';
   templateUrl: './toggle.component.html',
   styleUrl: './toggle.component.scss'
 })
-export class TailwindToggle implements ControlValueAccessor {
+export class TailwindToggle extends TailwindComponent implements ControlValueAccessor  {
   /** Label text */
   readonly label = input<string>('');
   /** Aria label for accessibility */

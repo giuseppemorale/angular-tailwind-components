@@ -1,5 +1,6 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-date-picker',
@@ -7,12 +8,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   templateUrl: './date-picker.component.html',
   styleUrl: './date-picker.component.scss'
 })
-export class TailwindDatePicker implements ControlValueAccessor {
+export class TailwindDatePicker extends TailwindComponent implements ControlValueAccessor  {
   readonly label = input<string>('');
   readonly placeholder = input<string>('Select date');
   readonly format = input<string>('yyyy-MM-dd');
-  readonly pickerId = input<string>(`tailwind-date-${nextDateId++}`);
-
+  
   readonly value = model<string>('');
   readonly isDisabled = signal(false);
   readonly showCalendar = signal(false);
@@ -123,4 +123,3 @@ export class TailwindDatePicker implements ControlValueAccessor {
   }
 }
 
-let nextDateId = 0;

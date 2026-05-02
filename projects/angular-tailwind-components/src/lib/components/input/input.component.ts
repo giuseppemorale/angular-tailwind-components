@@ -1,6 +1,7 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-input',
@@ -14,7 +15,7 @@ import { TailwindSize } from '../../models';
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss'
 })
-export class TailwindInput implements ControlValueAccessor {
+export class TailwindInput extends TailwindComponent implements ControlValueAccessor  {
   /** Label text */
   readonly label = input<string>('');
   /** Placeholder text */
@@ -26,7 +27,7 @@ export class TailwindInput implements ControlValueAccessor {
   /** Whether the input is required */
   readonly required = input<boolean>(false);
   /** Whether the input is readonly */
-  readonly = input<boolean>(false);
+  readonly readonly = input<boolean>(false);
   /** Helper text shown below input */
   readonly helperText = input<string>('');
   /** Error text shown when hasError is true */
@@ -37,8 +38,6 @@ export class TailwindInput implements ControlValueAccessor {
   readonly prefixIcon = input<boolean>(false);
   /** Whether the input has a suffix icon slot */
   readonly suffixIcon = input<boolean>(false);
-  /** Unique ID for the input */
-  readonly inputId = input<string>(`tailwind-input-${nextId++}`);
 
   /** Two-way bound value */
   readonly value = model<string>('');
@@ -105,4 +104,3 @@ export class TailwindInput implements ControlValueAccessor {
   }
 }
 
-let nextId = 0;

@@ -1,6 +1,7 @@
 import { Component, computed, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TailwindSize, TailwindVariant } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-button',
@@ -8,7 +9,7 @@ import { TailwindSize, TailwindVariant } from '../../models';
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class TailwindButton {
+export class TailwindButton extends TailwindComponent {
   /** Visual style variant */
   readonly variant = input<TailwindVariant>('primary');
   /** Size of the button */

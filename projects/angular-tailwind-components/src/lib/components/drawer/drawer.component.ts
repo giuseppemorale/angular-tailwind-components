@@ -1,12 +1,13 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { TailwindPosition } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-drawer',
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.scss'
 })
-export class TailwindDrawer {
+export class TailwindDrawer extends TailwindComponent {
   /** Drawer title */
   readonly title = input<string>('');
   /** Position (left or right) */

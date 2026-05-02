@@ -1,12 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 import { TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-skeleton',
   templateUrl: './skeleton.component.html',
   styleUrl: './skeleton.component.scss'
 })
-export class TailwindSkeleton {
+export class TailwindSkeleton extends TailwindComponent {
   readonly variant = input<'text' | 'circle' | 'rect' | 'rounded'>('text');
   readonly width = input<string>('100%');
   readonly height = input<string>('');

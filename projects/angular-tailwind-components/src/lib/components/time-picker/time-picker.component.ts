@@ -1,5 +1,6 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-time-picker',
@@ -7,11 +8,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   templateUrl: './time-picker.component.html',
   styleUrl: './time-picker.component.scss'
 })
-export class TailwindTimePicker implements ControlValueAccessor {
+export class TailwindTimePicker extends TailwindComponent implements ControlValueAccessor  {
   readonly label = input<string>('');
   readonly step = input<number>(60);
-  readonly pickerId = input<string>(`tailwind-time-${nextTimeId++}`);
-  readonly value = model<string>('');
+    readonly value = model<string>('');
   readonly isDisabled = signal(false);
   private onChange: (v: string) => void = () => {};
   onTouched: () => void = () => {};
@@ -36,4 +36,3 @@ export class TailwindTimePicker implements ControlValueAccessor {
   }
 }
 
-let nextTimeId = 0;

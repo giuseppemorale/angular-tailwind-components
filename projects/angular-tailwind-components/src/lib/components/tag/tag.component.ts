@@ -1,12 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 import { TailwindSeverity } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-tag',
   templateUrl: './tag.component.html',
   styleUrl: './tag.component.scss'
 })
-export class TailwindTag {
+export class TailwindTag extends TailwindComponent {
   readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('neutral');
 
   readonly computedClasses = computed(() => {

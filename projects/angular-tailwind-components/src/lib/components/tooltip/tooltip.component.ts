@@ -1,12 +1,13 @@
 import { Component, computed, ElementRef, HostListener, inject, input, signal } from '@angular/core';
 import { TailwindPosition } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-tooltip',
   templateUrl: './tooltip.component.html',
   styleUrl: './tooltip.component.scss'
 })
-export class TailwindTooltip {
+export class TailwindTooltip extends TailwindComponent {
   /** Tooltip text */
   text = input.required<string>();
   /** Position relative to trigger */

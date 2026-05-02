@@ -1,5 +1,6 @@
 import { Component, input, output, signal } from '@angular/core';
 import { TailwindMenuItem } from './interfaces/menu-item.interface';
+import { TailwindComponent } from '../tailwind.component';
 
 export type { TailwindMenuItem };
 
@@ -11,7 +12,7 @@ export type { TailwindMenuItem };
     '(document:click)': 'onDocumentClick($event)'
   }
 })
-export class TailwindMenu {
+export class TailwindMenu extends TailwindComponent {
   readonly items = input<TailwindMenuItem[]>([]);
   readonly align = input<'left' | 'right'>('left');
   readonly onSelect = output<TailwindMenuItem>();

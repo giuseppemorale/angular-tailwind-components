@@ -1,6 +1,7 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-select',
@@ -14,7 +15,7 @@ import { TailwindOption, TailwindSize } from '../../models';
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss'
 })
-export class TailwindSelect implements ControlValueAccessor {
+export class TailwindSelect extends TailwindComponent implements ControlValueAccessor  {
   /** Label text */
   readonly label = input<string>('');
   /** Placeholder text */
@@ -32,8 +33,7 @@ export class TailwindSelect implements ControlValueAccessor {
   /** Whether in error state */
   readonly hasError = input<boolean>(false);
   /** Unique ID */
-  readonly selectId = input<string>(`tailwind-select-${nextSelectId++}`);
-
+  
   /** Currently selected value */
   readonly value = model<string>('');
 
@@ -93,4 +93,3 @@ export class TailwindSelect implements ControlValueAccessor {
   }
 }
 
-let nextSelectId = 0;

@@ -1,12 +1,13 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { TailwindSeverity } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-notification',
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss'
 })
-export class TailwindNotification {
+export class TailwindNotification extends TailwindComponent {
   readonly title = input<string>('');
   readonly severity = input<TailwindSeverity>('info');
   readonly dismissible = input<boolean>(true);

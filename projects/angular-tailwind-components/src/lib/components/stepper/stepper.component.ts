@@ -1,17 +1,19 @@
 import { Component, contentChildren, input, model, effect } from '@angular/core';
 import { TailwindStep } from './step.component';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-stepper',
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss'
 })
-export class TailwindStepper {
+export class TailwindStepper extends TailwindComponent {
   readonly activeIndex = model<number>(0);
   readonly linear = input<boolean>(false);
   steps = contentChildren(TailwindStep);
 
   constructor() {
+    super();
     effect(() => {
       const allSteps = this.steps();
       const idx = this.activeIndex();

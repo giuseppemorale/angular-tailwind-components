@@ -1,12 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 import { TailwindSeverity, TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-badge',
   templateUrl: './badge.component.html',
   styleUrl: './badge.component.scss'
 })
-export class TailwindBadge {
+export class TailwindBadge extends TailwindComponent {
   /** Color variant */
   readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('primary');
   /** Size variant */

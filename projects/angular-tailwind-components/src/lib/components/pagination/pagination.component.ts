@@ -1,11 +1,12 @@
 import { Component, computed, input, model, output } from '@angular/core';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-pagination',
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss'
 })
-export class TailwindPagination {
+export class TailwindPagination extends TailwindComponent {
   readonly totalItems = input.required<number>();
   readonly pageSize = input<number>(10);
   readonly currentPage = model<number>(1);

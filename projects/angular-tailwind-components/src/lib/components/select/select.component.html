@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-1.5">
   @if (label()) {
-    <label [for]="selectId()" class="text-sm font-medium text-surface-700" [class.text-danger-600]="hasError()">
+    <label [attr.for]="id() ? id() + '-inner' : null" class="text-sm font-medium text-surface-700" [class.text-danger-600]="hasError()">
       {{ label() }}
       @if (required()) {
         <span class="text-danger-500 ml-0.5">*</span>
@@ -10,10 +10,10 @@
 
   <div class="relative">
     <select
-      [id]="selectId()"
+      [attr.id]="id() ? id() + '-inner' : null"
       [disabled]="isDisabled()"
       [attr.aria-invalid]="hasError() || null"
-      [attr.aria-describedby]="helperText() || errorText() ? selectId() + '-helper' : null"
+      [attr.aria-describedby]="helperText() || errorText() && id() ? id() + '-helper' : null"
       [class]="selectClasses()"
       (change)="onSelectChange($event)">
       @if (placeholder()) {
@@ -40,9 +40,9 @@
   </div>
 
   @if (helperText() && !hasError()) {
-    <p [id]="selectId() + '-helper'" class="text-xs text-surface-500">{{ helperText() }}</p>
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-surface-500">{{ helperText() }}</p>
   }
   @if (errorText() && hasError()) {
-    <p [id]="selectId() + '-helper'" class="text-xs text-danger-600">{{ errorText() }}</p>
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600">{{ errorText() }}</p>
   }
 </div>

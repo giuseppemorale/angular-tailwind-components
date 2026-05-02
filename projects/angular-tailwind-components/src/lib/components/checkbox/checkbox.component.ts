@@ -1,6 +1,7 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-checkbox',
@@ -14,7 +15,7 @@ import { TailwindSize } from '../../models';
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.scss'
 })
-export class TailwindCheckbox implements ControlValueAccessor {
+export class TailwindCheckbox extends TailwindComponent implements ControlValueAccessor  {
   /** Label text */
   readonly label = input<string>('');
   /** Description text */
@@ -22,8 +23,7 @@ export class TailwindCheckbox implements ControlValueAccessor {
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Unique ID */
-  readonly checkboxId = input<string>(`tailwind-checkbox-${nextCheckboxId++}`);
-
+  
   /** Two-way bound checked state */
   readonly checked = model<boolean>(false);
 
@@ -70,4 +70,3 @@ export class TailwindCheckbox implements ControlValueAccessor {
   }
 }
 
-let nextCheckboxId = 0;

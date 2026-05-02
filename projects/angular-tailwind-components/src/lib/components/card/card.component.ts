@@ -1,11 +1,12 @@
 import { Component, input } from '@angular/core';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-card',
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss'
 })
-export class TailwindCard {
+export class TailwindCard extends TailwindComponent {
   /** Whether the card has elevated shadow */
   readonly elevated = input<boolean>(false);
   /** Whether to show hover shadow effect */

@@ -1,12 +1,13 @@
 import { Component, contentChildren, input, model, effect } from '@angular/core';
 import { TailwindTab } from './tab.component';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-tab-group',
   templateUrl: './tab-group.component.html',
   styleUrl: './tab-group.component.scss'
 })
-export class TailwindTabGroup {
+export class TailwindTabGroup extends TailwindComponent {
   /** Accessible label for the tab list */
   readonly ariaLabel = input<string>('');
   /** Whether tabs can scroll horizontally */
@@ -16,9 +17,10 @@ export class TailwindTabGroup {
   readonly activeIndex = model<number>(0);
 
   /** Query all child TailwindTab components */
-  tabs = contentChildren(TailwindTab);
+  readonly tabs = contentChildren(TailwindTab);
 
   constructor() {
+    super();
     effect(() => {
       const allTabs = this.tabs();
       const idx = this.activeIndex();

@@ -1,16 +1,16 @@
 <label
-  [for]="checkboxId()"
+  [attr.for]="id() ? id() + '-inner' : null"
   class="inline-flex items-start gap-2.5 cursor-pointer select-none"
   [class.cursor-not-allowed]="isDisabled()"
   [class.opacity-50]="isDisabled()">
   <div class="relative flex items-center justify-center shrink-0" [class]="boxSizeClass()">
     <input
-      [id]="checkboxId()"
+      [attr.id]="id() ? id() + '-inner' : null"
       type="checkbox"
       class="peer sr-only"
       [checked]="checked()"
       [disabled]="isDisabled()"
-      [attr.aria-describedby]="description() ? checkboxId() + '-desc' : null"
+      [attr.aria-describedby]="description() && id() ? id() + '-desc' : null"
       (change)="onCheckboxChange($event)" />
     <div
       class="w-full h-full rounded-md border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
@@ -36,7 +36,7 @@
       <span class="text-sm font-medium text-surface-800 leading-tight">{{ label() }}</span>
     }
     @if (description()) {
-      <span [id]="checkboxId() + '-desc'" class="text-xs text-surface-500 leading-snug">
+      <span [attr.id]="id() ? id() + '-desc' : null" class="text-xs text-surface-500 leading-snug">
         {{ description() }}
       </span>
     }

@@ -1,12 +1,13 @@
 import { Component, computed, effect, ElementRef, input, output, signal, viewChild } from '@angular/core';
 import { TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-modal',
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss'
 })
-export class TailwindModal {
+export class TailwindModal extends TailwindComponent {
   /** Modal title */
   readonly title = input<string>('');
   /** Size variant */
@@ -46,6 +47,7 @@ export class TailwindModal {
   });
 
   constructor() {
+    super();
     effect(() => {
       if (this.isOpen()) {
         // Small delay to trigger entrance animation

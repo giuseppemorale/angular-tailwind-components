@@ -1,6 +1,7 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-radio-group',
@@ -14,13 +15,13 @@ import { TailwindOption, TailwindSize } from '../../models';
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.scss'
 })
-export class TailwindRadioGroup implements ControlValueAccessor {
+export class TailwindRadioGroup extends TailwindComponent implements ControlValueAccessor  {
   /** Label for the radio group */
   readonly label = input<string>('');
   /** Aria label for accessibility */
   readonly ariaLabel = input<string>('');
   /** Name for the radio group (used for native radio grouping) */
-  readonly name = input<string>(`tailwind-radio-${nextRadioId++}`);
+  readonly name = input<string>();
   /** Available options */
   readonly options = input<TailwindOption[]>([]);
   /** Size variant */
@@ -85,4 +86,3 @@ export class TailwindRadioGroup implements ControlValueAccessor {
   }
 }
 
-let nextRadioId = 0;

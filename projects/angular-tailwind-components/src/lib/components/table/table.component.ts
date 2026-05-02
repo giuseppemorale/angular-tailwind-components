@@ -1,6 +1,7 @@
 import { Component, computed, input, output, signal } from '@angular/core';
 import { TailwindPagination } from '../pagination/pagination.component';
 import { TailwindTableColumn } from './interfaces/table-column.interface';
+import { TailwindComponent } from '../tailwind.component';
 
 export type { TailwindTableColumn };
 
@@ -10,7 +11,7 @@ export type { TailwindTableColumn };
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TailwindTable {
+export class TailwindTable extends TailwindComponent {
   // --- Public Inputs ---
   readonly columns = input<TailwindTableColumn[]>([]);
   readonly data = input<Record<string, any>[]>([]);

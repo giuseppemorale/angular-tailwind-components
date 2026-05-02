@@ -1,12 +1,13 @@
 import { Component, computed, input } from '@angular/core';
 import { TailwindSeverity, TailwindSize } from '../../models';
+import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-progress-bar',
   templateUrl: './progress-bar.component.html',
   styleUrl: './progress-bar.component.scss'
 })
-export class TailwindProgressBar {
+export class TailwindProgressBar extends TailwindComponent {
   /** Current value (0-100) */
   readonly value = input<number>(0);
   /** Label text */

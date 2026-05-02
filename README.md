@@ -24,8 +24,8 @@ npm install angular-tailwind-components
 Your consuming project must have **Tailwind CSS v4** configured. Add the library's theme tokens to your main stylesheet:
 
 ```css
-@import "tailwindcss";
-@import "angular-tailwind-components/src/lib/styles/tailwind.css";
+@import 'tailwindcss';
+@import 'angular-tailwind-components/src/lib/styles/tailwind.css';
 ```
 
 Or define your own theme tokens following the design system schema.
@@ -44,67 +44,74 @@ import { AtcButton, AtcInput, AtcToggle } from 'angular-tailwind-components';
     <atc-input label="Email" placeholder="you@example.com" [(value)]="email" />
     <atc-toggle label="Notifications" [(checked)]="notifications" />
     <atc-button variant="primary" (clicked)="submit()">Submit</atc-button>
-  `,
+  `
 })
 export class ExampleComponent {
   email = '';
   notifications = true;
-  submit() { /* ... */ }
+  submit() {
+    /* ... */
+  }
 }
 ```
 
 ## Components
 
 ### Form Controls (with ControlValueAccessor)
-| Component | Selector | Description |
-|-----------|----------|-------------|
-| Input | `atc-input` | Text, email, password, number, search |
-| Checkbox | `atc-checkbox` | Single checkbox with label |
-| Radio Group | `atc-radio-group` | Radio button group with options |
-| Select | `atc-select` | Native select with custom styling |
-| Toggle | `atc-toggle` | Switch on/off |
-| DatePicker | `atc-date-picker` | Calendar date selection |
-| TimePicker | `atc-time-picker` | Time input |
-| DateTimePicker | `atc-datetime-picker` | Combined date + time |
+
+| Component      | Selector              | Description                           |
+| -------------- | --------------------- | ------------------------------------- |
+| Input          | `atc-input`           | Text, email, password, number, search |
+| Checkbox       | `atc-checkbox`        | Single checkbox with label            |
+| Radio Group    | `atc-radio-group`     | Radio button group with options       |
+| Select         | `atc-select`          | Native select with custom styling     |
+| Toggle         | `atc-toggle`          | Switch on/off                         |
+| DatePicker     | `atc-date-picker`     | Calendar date selection               |
+| TimePicker     | `atc-time-picker`     | Time input                            |
+| DateTimePicker | `atc-datetime-picker` | Combined date + time                  |
 
 ### Display
-| Component | Selector | Description |
-|-----------|----------|-------------|
-| Button | `atc-button` | Primary, secondary, outline, ghost, danger |
-| Badge | `atc-badge` | Status badges with dot indicator |
-| Card | `atc-card` | Content card with header/body/footer |
-| Chip | `atc-chip` | Removable tags |
-| Tag | `atc-tag` | Semantic labels |
+
+| Component | Selector     | Description                                |
+| --------- | ------------ | ------------------------------------------ |
+| Button    | `atc-button` | Primary, secondary, outline, ghost, danger |
+| Badge     | `atc-badge`  | Status badges with dot indicator           |
+| Card      | `atc-card`   | Content card with header/body/footer       |
+| Chip      | `atc-chip`   | Removable tags                             |
+| Tag       | `atc-tag`    | Semantic labels                            |
 
 ### Feedback
-| Component | Selector | Description |
-|-----------|----------|-------------|
-| Alert | `atc-alert` | Contextual alerts (info, success, warning, danger) |
-| Spinner | `atc-spinner` | Loading indicator |
-| Progress Bar | `atc-progress-bar` | Determinate/indeterminate progress |
-| Toast | `atc-toast-container` | Global toast notifications (use `AtcToastService`) |
-| Notification | `atc-notification` | Inline notification with actions |
-| Message | `atc-message` | Form-level inline message |
-| Skeleton | `atc-skeleton` | Loading placeholder |
+
+| Component    | Selector              | Description                                        |
+| ------------ | --------------------- | -------------------------------------------------- |
+| Alert        | `atc-alert`           | Contextual alerts (info, success, warning, danger) |
+| Spinner      | `atc-spinner`         | Loading indicator                                  |
+| Progress Bar | `atc-progress-bar`    | Determinate/indeterminate progress                 |
+| Toast        | `atc-toast-container` | Global toast notifications (use `AtcToastService`) |
+| Notification | `atc-notification`    | Inline notification with actions                   |
+| Message      | `atc-message`         | Form-level inline message                          |
+| Skeleton     | `atc-skeleton`        | Loading placeholder                                |
 
 ### Navigation
-| Component | Selector | Description |
-|-----------|----------|-------------|
-| Tab Group | `atc-tab-group` | Tabbed content |
+
+| Component  | Selector         | Description            |
+| ---------- | ---------------- | ---------------------- |
+| Tab Group  | `atc-tab-group`  | Tabbed content         |
 | Breadcrumb | `atc-breadcrumb` | Navigation breadcrumbs |
-| Pagination | `atc-pagination` | Page navigation |
-| Menu | `atc-menu` | Dropdown menu |
-| Stepper | `atc-stepper` | Step-by-step wizard |
+| Pagination | `atc-pagination` | Page navigation        |
+| Menu       | `atc-menu`       | Dropdown menu          |
+| Stepper    | `atc-stepper`    | Step-by-step wizard    |
 
 ### Layout / Overlay
-| Component | Selector | Description |
-|-----------|----------|-------------|
-| Modal | `atc-modal` | Dialog overlay |
-| Drawer | `atc-drawer` | Slide-in panel |
-| Accordion | `atc-accordion` | Expandable sections |
-| Tooltip | `atc-tooltip` | Hover tooltip |
-| Form | `atc-form` | Form wrapper |
-| Table | `atc-table` | Data table with sorting |
+
+| Component | Selector        | Description             |
+| --------- | --------------- | ----------------------- |
+| Modal     | `atc-modal`     | Dialog overlay          |
+| Drawer    | `atc-drawer`    | Slide-in panel          |
+| Accordion | `atc-accordion` | Expandable sections     |
+| Tooltip   | `atc-tooltip`   | Hover tooltip           |
+| Form      | `atc-form`      | Form wrapper            |
+| Table     | `atc-table`     | Data table with sorting |
 
 ## Design System
 
@@ -122,10 +129,10 @@ The library uses a comprehensive design system defined via Tailwind CSS v4 `@the
 Override tokens in your main CSS:
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-primary-500: oklch(0.55 0.20 280); /* Change primary to purple */
+  --color-primary-500: oklch(0.55 0.2 280); /* Change primary to purple */
   --color-primary-600: oklch(0.48 0.22 280);
 }
 ```
@@ -135,9 +142,6 @@ Override tokens in your main CSS:
 ```bash
 # Build the library
 ng build angular-tailwind-components
-
-# Run tests
-ng test angular-tailwind-components
 
 # Start Storybook
 npm run storybook
@@ -152,11 +156,11 @@ npm run storybook
 5. Add a story in `storybook/<name>.stories.ts`
 
 ### Component Conventions
+
 - Use `input()` and `output()` signal functions (not decorators)
 - Use `model()` for two-way binding
 - Use `computed()` for derived Tailwind class logic
 - Implement `ControlValueAccessor` for form controls
-- Use `standalone: true`
 - Follow WCAG accessibility guidelines
 
 ## License

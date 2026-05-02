@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "es2020",
+    "moduleResolution": "bundler"
+  },
+  "include": ["../storybook/**/*.stories.ts", "../storybook/**/*.ts", "../projects/**/*.ts"],
+  "exclude": ["../node_modules"]
+}

@@ -1,0 +1,49 @@
+import { Component, contentChildren, input, model, signal } from '@angular/core';
+
+@Component({
+  selector: 'atc-accordion-item',
+  standalone: true,
+  template: `
+    <div class="border-b border-surface-200 last:border-b-0">
+      <button type="button" (click)="toggle()"
+        class="flex items-center justify-between w-full px-5 py-4 text-left text-sm font-medium text-surface-800 hover:bg-surface-50 transition-colors cursor-pointer"
+        [attr.aria-expanded]="isExpanded()">
+        <span>{{ title() }}</span>
+        <svg class="w-4 h-4 text-surface-400 transition-transform duration-200" [class.rotate-180]="isExpanded()"
+          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </button>
+      @if (isExpanded()) {
+        <div class="px-5 pb-4 text-sm text-surface-600">
+          <ng-content />
+        </div>
+      }
+    </div>
+  `,
+  styles: `:host { display: block; }`,
+})
+export class AtcAccordionItem {
+  title = input.required<string>();
+  disabled = input<boolean>(false);
+  isExpanded = signal(false);
+
+  toggle(): void {
+    if (!this.disabled()) this.isExpanded.update(v => !v);
+  }
+}
+
+@Component({
+  selector: 'atc-accordion',
+  standalone: true,
+  template: `
+    <div class="border border-surface-200 rounded-xl overflow-hidden divide-y divide-surface-200">
+      <ng-content />
+    </div>
+  `,
+  styles: `:host { display: block; }`,
+})
+export class AtcAccordion {
+  multiple = input<boolean>(false);
+  items = contentChildren(AtcAccordionItem);
+}

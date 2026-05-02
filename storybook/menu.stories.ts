@@ -1,5 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
+import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindMenu } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindMenu> = {
@@ -10,74 +9,29 @@ const meta: Meta<TailwindMenu> = {
   args: {
     items: [],
     align: 'left'
-  },
+  }
 };
 export default meta;
 type Story = StoryObj<TailwindMenu>;
 
-export const Default: Story = {
-  render: () => ({
-    props: {
-      items: [
-        { label: 'Profile', value: 'profile' },
-        { label: 'Settings', value: 'settings' },
-        { label: 'Help', value: 'help' },
-        { divider: true },
-        { label: 'Sign out', value: 'signout' },
-      ],
-    },
+export const Menu: Story = {
+  render: args => ({
+    props: args,
     template: `
-      <div style="padding:20px">
-        <tailwind-menu [items]="items">
-          <tailwind-menu-trigger>
-            <tailwind-button>Open Menu â–¾</tailwind-button>
-          </tailwind-menu-trigger>
-        </tailwind-menu>
-      </div>`,
+      <tailwind-menu ${argsToTemplate(args)}>
+        <tailwind-menu-trigger>
+          <tailwind-button>Open Menù</tailwind-button>
+        </tailwind-menu-trigger>
+      </tailwind-menu>
+      `
   }),
+  args: {
+    items: [
+      { label: 'Profile', value: 'profile' },
+      { label: 'Settings', value: 'settings' },
+      { label: 'Help', value: 'help' },
+      { divider: true },
+      { label: 'Sign out', value: 'signout' }
+    ]
+  }
 };
-
-export const WithDisabled: Story = {
-  render: () => ({
-    props: {
-      items: [
-        { label: 'Edit', value: 'edit' },
-        { label: 'Duplicate', value: 'duplicate', disabled: true },
-        { label: 'Archive', value: 'archive' },
-        { divider: true },
-        { label: 'Delete', value: 'delete' },
-      ],
-    },
-    template: `
-      <div style="padding:20px">
-        <tailwind-menu [items]="items">
-          <tailwind-menu-trigger>
-            <tailwind-button variant="outline">Actions â–¾</tailwind-button>
-          </tailwind-menu-trigger>
-        </tailwind-menu>
-      </div>`,
-  }),
-};
-
-export const AlignRight: Story = {
-  render: () => ({
-    props: {
-      items: [
-        { label: 'View', value: 'view' },
-        { label: 'Download', value: 'download' },
-        { divider: true },
-        { label: 'Delete', value: 'delete' },
-      ],
-    },
-    template: `
-      <div style="padding:20px; display:flex; justify-content:flex-end">
-        <tailwind-menu [items]="items" align="right">
-          <tailwind-menu-trigger>
-            <tailwind-button variant="ghost">â‹®</tailwind-button>
-          </tailwind-menu-trigger>
-        </tailwind-menu>
-      </div>`,
-  }),
-};
-
-

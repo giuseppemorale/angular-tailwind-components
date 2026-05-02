@@ -1,5 +1,5 @@
 export interface TailwindMenuItem {
-  label: string;
+  label?: string;
   icon?: string;
   disabled?: boolean;
   divider?: boolean;

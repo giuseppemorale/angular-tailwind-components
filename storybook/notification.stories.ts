@@ -63,18 +63,3 @@ export const WithActions: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <tailwind-notification [severity]="severity" [title]="title" [dismissible]="dismissible" ${argsToTemplate(args)}>
-        This is a notification message with relevant details.
-      </tailwind-notification>`,
-  }),
-  args: {
-    title: '',
-    severity: 'info',
-    dismissible: true,
-    showActions: false
-  }
-};

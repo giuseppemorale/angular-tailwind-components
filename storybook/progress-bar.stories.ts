@@ -6,6 +6,16 @@ const meta: Meta<TailwindProgressBar> = {
   title: 'Components/ProgressBar',
   component: TailwindProgressBar,
   tags: ['autodocs'],
+  args: {
+    value: 0,
+    label: '',
+    showLabel: true,
+    showValue: true,
+    variant: 'primary',
+    size: 'md',
+    indeterminate: false,
+    striped: false
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindProgressBar>;
@@ -36,19 +46,3 @@ export const Indeterminate: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-progress-bar [value]="65" label="Upload Progress"  ${argsToTemplate(args)}/>`,
-  }),
-  args: {
-    value: 0,
-    label: '',
-    showLabel: true,
-    showValue: true,
-    variant: 'primary',
-    size: 'md',
-    indeterminate: false,
-    striped: false
-  }
-};

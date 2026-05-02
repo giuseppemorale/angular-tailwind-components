@@ -11,6 +11,11 @@ const meta: Meta<TailwindSkeleton> = {
     width: { control: 'text' },
     height: { control: 'text' },
   },
+  args: {
+    variant: 'text',
+    width: '100%',
+    height: ''
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindSkeleton>;
@@ -57,19 +62,3 @@ export const AllVariants: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <div class="space-y-2 max-w-xs">
-        <tailwind-skeleton variant="text" width="100%" ${argsToTemplate(args)}></tailwind-skeleton>
-        <tailwind-skeleton variant="text" width="80%"></tailwind-skeleton>
-        <tailwind-skeleton variant="text" width="60%"></tailwind-skeleton>
-      </div>`,
-  }),
-  args: {
-    variant: 'text',
-    width: '100%',
-    height: ''
-  }
-};

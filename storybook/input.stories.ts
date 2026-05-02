@@ -71,22 +71,3 @@ export const AllSizes: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-input [label]="label" [placeholder]="placeholder" [type]="type" [size]="size" [helperText]="helperText" [hasError]="hasError" [errorText]="errorText" [required]="required"  ${argsToTemplate(args)}/>`,
-  }),
-  args: {
-    label: '',
-    placeholder: '',
-    type: 'text',
-    size: 'md',
-    required: false,
-    readonly: false,
-    helperText: '',
-    errorText: '',
-    hasError: false,
-    prefixIcon: false,
-    suffixIcon: false
-  }
-};

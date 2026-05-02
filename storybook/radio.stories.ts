@@ -40,16 +40,3 @@ export const Horizontal: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-radio-group [label]="label" [options]="options" style="max-width:320px;display:block" ${argsToTemplate(args)}></tailwind-radio-group>`,
-  }),
-  args: {
-    label: '',
-    ariaLabel: '',
-    options: [],
-    size: 'md',
-    orientation: 'vertical'
-  }
-};

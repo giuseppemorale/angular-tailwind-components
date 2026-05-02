@@ -32,14 +32,3 @@ export const Disabled: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-date-picker [label]="label" [placeholder]="placeholder" style="max-width:320px;display:block" ${argsToTemplate(args)}></tailwind-date-picker>`,
-  }),
-  args: {
-    label: '',
-    placeholder: 'Select date',
-    format: 'yyyy-MM-dd'
-  }
-};

@@ -6,6 +6,9 @@ const meta: Meta<TailwindTag> = {
   title: 'Components/Tag',
   component: TailwindTag,
   tags: ['autodocs'],
+  args: {
+    variant: 'neutral'
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindTag>;
@@ -36,20 +39,3 @@ export const WithIcons: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <div class="flex flex-wrap gap-2">
-        <tailwind-tag ${argsToTemplate(args)}>Default</tailwind-tag>
-        <tailwind-tag variant="primary">Primary</tailwind-tag>
-        <tailwind-tag variant="success">Success</tailwind-tag>
-        <tailwind-tag variant="warning">Warning</tailwind-tag>
-        <tailwind-tag variant="danger">Danger</tailwind-tag>
-        <tailwind-tag variant="info">Info</tailwind-tag>
-      </div>`,
-  }),
-  args: {
-    variant: 'neutral'
-  }
-};

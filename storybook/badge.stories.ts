@@ -1,5 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
+import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindBadge } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindBadge> = {
@@ -10,18 +9,18 @@ const meta: Meta<TailwindBadge> = {
     variant: { control: 'select', options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'] },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     dot: { control: 'boolean' },
-    pill: { control: 'boolean' },
-  },
+    pill: { control: 'boolean' }
+  }
 };
 export default meta;
 type Story = StoryObj<TailwindBadge>;
 
-export const Default: Story = {
-  render: (args) => ({
+export const Badge: Story = {
+  render: args => ({
     props: args,
-    template: `<tailwind-badge [variant]="variant" [size]="size" [dot]="dot" [pill]="pill">Badge</tailwind-badge>`,
+    template: `<tailwind-badge ${argsToTemplate(args)}>Badge</tailwind-badge>`
   }),
-  args: { variant: 'primary', size: 'md', dot: false, pill: false },
+  args: { variant: 'primary', size: 'md', dot: false, pill: false }
 };
 
 export const AllVariants: Story = {
@@ -34,8 +33,9 @@ export const AllVariants: Story = {
         <tailwind-badge variant="warning">Warning</tailwind-badge>
         <tailwind-badge variant="danger">Danger</tailwind-badge>
         <tailwind-badge variant="info">Info</tailwind-badge>
-      </div>`,
+      </div>`
   }),
+  args: { variant: 'primary', size: 'md', dot: false, pill: false }
 };
 
 export const WithDot: Story = {
@@ -45,8 +45,8 @@ export const WithDot: Story = {
         <tailwind-badge variant="success" [dot]="true">Online</tailwind-badge>
         <tailwind-badge variant="danger" [dot]="true">Offline</tailwind-badge>
         <tailwind-badge variant="warning" [dot]="true">Away</tailwind-badge>
-      </div>`,
-  }),
+      </div>`
+  })
 };
 
 export const Pill: Story = {
@@ -56,21 +56,6 @@ export const Pill: Story = {
         <tailwind-badge variant="primary" [pill]="true">New</tailwind-badge>
         <tailwind-badge variant="success" [pill]="true">Active</tailwind-badge>
         <tailwind-badge variant="danger" [pill]="true">99+</tailwind-badge>
-      </div>`,
-  }),
-};
-
-
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-badge [variant]="variant" [size]="size" [dot]="dot" [pill]="pill" ${argsToTemplate(args)}>Badge</tailwind-badge>`,
-  }),
-  args: {
-    variant: 'primary',
-    size: 'md',
-    dot: false,
-    pill: false,
-    ariaLabel: ''
-  }
+      </div>`
+  })
 };

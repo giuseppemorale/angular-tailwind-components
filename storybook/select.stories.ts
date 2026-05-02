@@ -41,19 +41,3 @@ export const WithGroups: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-select [label]="label" [options]="options" [placeholder]="placeholder" style="max-width:320px;display:block" ${argsToTemplate(args)}></tailwind-select>`,
-  }),
-  args: {
-    label: '',
-    placeholder: '',
-    options: [],
-    size: 'md',
-    required: false,
-    helperText: '',
-    errorText: '',
-    hasError: false
-  }
-};

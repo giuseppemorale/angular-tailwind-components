@@ -20,12 +20,3 @@ export const Default: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-datetime-picker [label]="label" style="max-width:480px;display:block" ${argsToTemplate(args)}></tailwind-datetime-picker>`,
-  }),
-  args: {
-    label: ''
-  }
-};

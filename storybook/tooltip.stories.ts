@@ -15,10 +15,11 @@ export default meta;
 type Story = StoryObj<TailwindTooltip>;
 
 export const AllPositions: Story = {
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
       <div class="flex gap-8 items-center justify-center" style="padding:60px">
-        <tailwind-tooltip text="Top tooltip" position="top">
+        <tailwind-tooltip ${argsToTemplate(args)} text="Top tooltip" position="top">
           <tailwind-button variant="outline">Top</tailwind-button>
         </tailwind-tooltip>
         <tailwind-tooltip text="Bottom tooltip" position="bottom">
@@ -35,7 +36,7 @@ export const AllPositions: Story = {
 };
 
 export const Default: Story = {
-  render: args => ({
+  render: (args) => ({
     props: args,
     template: `
       <div style="padding:60px;display:flex;justify-content:center">
@@ -47,29 +48,3 @@ export const Default: Story = {
   args: { text: 'This is a tooltip', position: 'top' }
 };
 
-export const Interactive: Story = {
-  render: args => ({
-    props: args,
-    template: `
-      <div class="flex gap-8 items-center justify-center" style="padding:60px">
-        <tailwind-tooltip text="Top tooltip" position="top" ${argsToTemplate(args)}>
-          <tailwind-button variant="outline">Top</tailwind-button>
-        </tailwind-tooltip>
-        <tailwind-tooltip text="Bottom tooltip" position="bottom">
-          <tailwind-button variant="outline">Bottom</tailwind-button>
-        </tailwind-tooltip>
-        <tailwind-tooltip text="Left tooltip" position="left">
-          <tailwind-button variant="outline">Left</tailwind-button>
-        </tailwind-tooltip>
-        <tailwind-tooltip text="Right tooltip" position="right">
-          <tailwind-button variant="outline">Right</tailwind-button>
-        </tailwind-tooltip>
-      </div>`
-  }),
-  args: {
-    position: 'top',
-    showDelay: 200,
-    hideDelay: 100,
-    text: ''
-  }
-};

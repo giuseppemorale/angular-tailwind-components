@@ -30,13 +30,3 @@ export const With24h: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-time-picker [label]="label" style="max-width:240px;display:block" ${argsToTemplate(args)}></tailwind-time-picker>`,
-  }),
-  args: {
-    label: '',
-    step: 60
-  }
-};

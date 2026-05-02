@@ -6,7 +6,17 @@ const meta: Meta<TailwindTable> = {
   title: 'Components/Table',
   component: TailwindTable,
   tags: ['autodocs'],
-  parameters: { docs: { story: { height: '500px' } } }
+  parameters: { docs: { story: { height: '500px' } } },
+  args: {
+    columns: [],
+    selectable: false,
+    striped: false,
+    loading: false,
+    emptyMessage: 'No data available',
+    paginated: true,
+    pageSize: 10,
+    paginationSummaryTemplate: 'Showing {start} to {end} of {total} results'
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindTable>;
@@ -48,33 +58,17 @@ const rows = [
 ];
 
 export const Default: Story = {
-  render: () => ({
-    props: { columns, rows },
-    template: `<tailwind-table [columns]="columns" [data]="rows"></tailwind-table>`
+  render: (args) => ({
+    props: { ...args, ...{ columns, rows } },
+    template: `<tailwind-table ${argsToTemplate(args)} [columns]="columns" [data]="rows"></tailwind-table>`
   })
 };
 
 export const Striped: Story = {
-  render: () => ({
-    props: { columns, rows },
-    template: `<tailwind-table [columns]="columns" [data]="rows" [striped]="true"></tailwind-table>`
+  render: (args) => ({
+    props: { ...args, ...{ columns, rows } },
+    template: `<tailwind-table ${argsToTemplate(args)} [columns]="columns" [data]="rows" [striped]="true"></tailwind-table>`
   })
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-table [columns]="columns" [data]="rows" ${argsToTemplate(args)}></tailwind-table>`,
-  }),
-  args: {
-    columns: [],
-    selectable: false,
-    striped: false,
-    loading: false,
-    emptyMessage: 'No data available',
-    paginated: true,
-    pageSize: 10,
-    paginationSummaryTemplate: 'Showing {start} to {end} of {total} results'
-  }
-};

@@ -6,6 +6,13 @@ const meta: Meta<TailwindSpinner> = {
   title: 'Components/Spinner',
   component: TailwindSpinner,
   tags: ['autodocs'],
+  args: {
+    size: 'md',
+    color: 'text-primary-600',
+    label: '',
+    ariaLabel: 'Loading',
+    orientation: 'horizontal'
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindSpinner>;
@@ -31,24 +38,3 @@ export const WithLabel: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <div class="flex items-center gap-6">
-        <tailwind-spinner size="xs"  ${argsToTemplate(args)}/>
-        <tailwind-spinner size="sm" />
-        <tailwind-spinner size="md" />
-        <tailwind-spinner size="lg" />
-        <tailwind-spinner size="xl" />
-      </div>
-    `,
-  }),
-  args: {
-    size: 'md',
-    color: 'text-primary-600',
-    label: '',
-    ariaLabel: 'Loading',
-    orientation: 'horizontal'
-  }
-};

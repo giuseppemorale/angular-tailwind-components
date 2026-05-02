@@ -6,6 +6,9 @@ const meta: Meta = {
   title: 'Components/Stepper',
   tags: ['autodocs'],
   parameters: { docs: { story: { height: '350px' } } },
+  args: {
+    linear: false
+  },
 };
 export default meta;
 type Story = StoryObj;
@@ -45,29 +48,3 @@ export const Linear: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <tailwind-stepper ${argsToTemplate(args)}>
-        <tailwind-step label="Account" description="Create your account">
-          <div class="space-y-3">
-            <tailwind-input label="Email" placeholder="email@example.com" />
-            <tailwind-input label="Password" type="password" placeholder="ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢" />
-          </div>
-        </tailwind-step>
-        <tailwind-step label="Profile" description="Set up your profile">
-          <div class="space-y-3">
-            <tailwind-input label="Full Name" placeholder="John Doe" />
-            <tailwind-input label="Bio" placeholder="Tell us about yourself" />
-          </div>
-        </tailwind-step>
-        <tailwind-step label="Review" description="Review & confirm">
-          <p class="text-sm text-surface-600">Review your details before submitting.</p>
-        </tailwind-step>
-      </tailwind-stepper>`,
-  }),
-  args: {
-    linear: false
-  }
-};

@@ -10,6 +10,12 @@ const meta: Meta = {
       story: { height: '400px' },
     },
   },
+  args: {
+    title: '',
+    position: 'right',
+    width: 'max-w-md',
+    closeOnBackdrop: true
+  },
 };
 export default meta;
 type Story = StoryObj;
@@ -71,26 +77,3 @@ export const LeftDrawer: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <div>
-        <tailwind-button (click)="drawer.open()" ${argsToTemplate(args)}>Open Drawer</tailwind-button>
-        <tailwind-drawer #drawer title="Drawer Title" position="right">
-          <p class="text-sm text-surface-600 mb-4">This is the drawer content. You can place any content here.</p>
-          <tailwind-input label="Name" placeholder="Enter your name" />
-          <div class="mt-4 flex gap-2">
-            <tailwind-button size="sm" (click)="drawer.close()">Save</tailwind-button>
-            <tailwind-button size="sm" variant="ghost" (click)="drawer.close()">Cancel</tailwind-button>
-          </div>
-        </tailwind-drawer>
-      </div>`,
-  }),
-  args: {
-    title: '',
-    position: 'right',
-    width: 'max-w-md',
-    closeOnBackdrop: true
-  }
-};

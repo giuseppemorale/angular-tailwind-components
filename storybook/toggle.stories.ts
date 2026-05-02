@@ -6,6 +6,11 @@ const meta: Meta<TailwindToggle> = {
   title: 'Forms/Toggle',
   component: TailwindToggle,
   tags: ['autodocs'],
+  args: {
+    label: '',
+    ariaLabel: '',
+    size: 'md'
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindToggle>;
@@ -31,14 +36,3 @@ export const AllSizes: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-toggle label="Enable notifications"  ${argsToTemplate(args)}/>`,
-  }),
-  args: {
-    label: '',
-    ariaLabel: '',
-    size: 'md'
-  }
-};

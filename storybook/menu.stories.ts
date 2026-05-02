@@ -7,6 +7,10 @@ const meta: Meta<TailwindMenu> = {
   component: TailwindMenu,
   tags: ['autodocs'],
   parameters: { docs: { story: { height: '320px' } } },
+  args: {
+    items: [],
+    align: 'left'
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindMenu>;
@@ -77,20 +81,3 @@ export const AlignRight: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <div style="padding:20px">
-        <tailwind-menu [items]="items" ${argsToTemplate(args)}>
-          <tailwind-menu-trigger>
-            <tailwind-button>Open Menu â–¾</tailwind-button>
-          </tailwind-menu-trigger>
-        </tailwind-menu>
-      </div>`,
-  }),
-  args: {
-    items: [],
-    align: 'left'
-  }
-};

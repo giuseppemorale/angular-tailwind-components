@@ -16,7 +16,7 @@ export default meta;
 type Story = StoryObj<TailwindCheckbox>;
 
 export const Default: Story = {
-  render: args => ({
+  render: (args) => ({
     props: args,
     template: `<tailwind-checkbox [label]="label" [size]="size" [checked]="checked"></tailwind-checkbox>`
   }),
@@ -24,10 +24,11 @@ export const Default: Story = {
 };
 
 export const States: Story = {
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
       <div class="space-y-3">
-        <tailwind-checkbox label="Unchecked" />
+        <tailwind-checkbox ${argsToTemplate(args)} label="Unchecked" />
         <tailwind-checkbox label="Checked" [checked]="true" />
         <tailwind-checkbox label="Small" size="sm" />
         <tailwind-checkbox label="Large" size="lg" />
@@ -36,11 +37,12 @@ export const States: Story = {
 };
 
 export const CheckboxGroup: Story = {
-  render: () => ({
+  render: (args) => ({
+    props: args,
     template: `
       <div class="space-y-2">
         <p class="text-sm font-medium text-surface-700 mb-3">Select your interests:</p>
-        <tailwind-checkbox label="Angular" />
+        <tailwind-checkbox ${argsToTemplate(args)} label="Angular" />
         <tailwind-checkbox label="TypeScript" />
         <tailwind-checkbox label="Tailwind CSS" />
         <tailwind-checkbox label="Storybook" />
@@ -49,20 +51,3 @@ export const CheckboxGroup: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <div class="space-y-3">
-        <tailwind-checkbox label="Unchecked"  ${argsToTemplate(args)}/>
-        <tailwind-checkbox label="Checked" [checked]="true" />
-        <tailwind-checkbox label="Small" size="sm" />
-        <tailwind-checkbox label="Large" size="lg" />
-      </div>`,
-  }),
-  args: {
-    label: '',
-    description: '',
-    size: 'md'
-  }
-};

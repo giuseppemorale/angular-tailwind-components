@@ -6,6 +6,11 @@ const meta: Meta<TailwindChip> = {
   title: 'Components/Chip',
   component: TailwindChip,
   tags: ['autodocs'],
+  args: {
+    variant: 'neutral',
+    size: 'md',
+    removable: false
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindChip>;
@@ -43,14 +48,3 @@ export const AllVariants: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-chip ${argsToTemplate(args)}>Angular</tailwind-chip>`,
-  }),
-  args: {
-    variant: 'neutral',
-    size: 'md',
-    removable: false
-  }
-};

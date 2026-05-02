@@ -76,18 +76,3 @@ export const FullWidth: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" [fullWidth]="fullWidth" ${argsToTemplate(args)}>Button</tailwind-button>`,
-  }),
-  args: {
-    variant: 'primary',
-    size: 'md',
-    disabled: false,
-    loading: false,
-    type: 'button',
-    fullWidth: false,
-    iconOnly: false
-  }
-};

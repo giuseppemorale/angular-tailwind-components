@@ -6,6 +6,10 @@ const meta: Meta<TailwindBreadcrumb> = {
   title: 'Components/Breadcrumb',
   component: TailwindBreadcrumb,
   tags: ['autodocs'],
+  args: {
+    items: [],
+    ariaLabel: 'Breadcrumb'
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindBreadcrumb>;
@@ -38,14 +42,3 @@ export const Short: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <tailwind-breadcrumb [items]="items" ${argsToTemplate(args)}></tailwind-breadcrumb>`,
-  }),
-  args: {
-    items: [],
-    ariaLabel: 'Breadcrumb'
-  }
-};

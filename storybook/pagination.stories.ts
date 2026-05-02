@@ -12,6 +12,14 @@ const meta: Meta<TailwindPagination> = {
     currentPage: { control: 'number' },
     showSummary: { control: 'boolean' },
   },
+  args: {
+    pageSize: 10,
+    maxVisible: 7,
+    ariaLabel: 'Pagination',
+    showSummary: false,
+    summaryTemplate: 'Showing {start}-{end} of {total}',
+    totalItems: 0
+  },
 };
 export default meta;
 type Story = StoryObj<TailwindPagination>;
@@ -38,17 +46,3 @@ export const ManyPages: Story = {
 };
 
 
-export const Interactive: Story = {
-  render: (args) => ({
-    props: args,
-    template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage" ${argsToTemplate(args)}></tailwind-pagination>`,
-  }),
-  args: {
-    pageSize: 10,
-    maxVisible: 7,
-    ariaLabel: 'Pagination',
-    showSummary: false,
-    summaryTemplate: 'Showing {start}-{end} of {total}',
-    totalItems: 0
-  }
-};

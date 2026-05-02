@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindMenu } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindMenu> = {
@@ -73,4 +74,23 @@ export const AlignRight: Story = {
         </tailwind-menu>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div style="padding:20px">
+        <tailwind-menu [items]="items" ${argsToTemplate(args)}>
+          <tailwind-menu-trigger>
+            <tailwind-button>Open Menu â–¾</tailwind-button>
+          </tailwind-menu-trigger>
+        </tailwind-menu>
+      </div>`,
+  }),
+  args: {
+    items: [],
+    align: 'left'
+  }
 };

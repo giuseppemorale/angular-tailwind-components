@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindDateTimePicker } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindDateTimePicker> = {
@@ -16,4 +17,15 @@ export const Default: Story = {
     template: `<tailwind-datetime-picker [label]="label" style="max-width:480px;display:block"></tailwind-datetime-picker>`,
   }),
   args: { label: 'Appointment Date & Time' },
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-datetime-picker [label]="label" style="max-width:480px;display:block" ${argsToTemplate(args)}></tailwind-datetime-picker>`,
+  }),
+  args: {
+    label: ''
+  }
 };

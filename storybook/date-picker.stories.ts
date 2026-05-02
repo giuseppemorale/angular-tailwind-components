@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindDatePicker } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindDatePicker> = {
@@ -28,4 +29,17 @@ export const Disabled: Story = {
   render: () => ({
     template: `<tailwind-date-picker label="Date" [disabled]="true" style="max-width:320px;display:block"></tailwind-date-picker>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-date-picker [label]="label" [placeholder]="placeholder" style="max-width:320px;display:block" ${argsToTemplate(args)}></tailwind-date-picker>`,
+  }),
+  args: {
+    label: '',
+    placeholder: 'Select date',
+    format: 'yyyy-MM-dd'
+  }
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindBadge } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindBadge> = {
@@ -57,4 +58,19 @@ export const Pill: Story = {
         <tailwind-badge variant="danger" [pill]="true">99+</tailwind-badge>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-badge [variant]="variant" [size]="size" [dot]="dot" [pill]="pill" ${argsToTemplate(args)}>Badge</tailwind-badge>`,
+  }),
+  args: {
+    variant: 'primary',
+    size: 'md',
+    dot: false,
+    pill: false,
+    ariaLabel: ''
+  }
 };

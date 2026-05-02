@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindChip } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindChip> = {
@@ -39,4 +40,17 @@ export const AllVariants: Story = {
         <tailwind-chip variant="info">Info</tailwind-chip>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-chip ${argsToTemplate(args)}>Angular</tailwind-chip>`,
+  }),
+  args: {
+    variant: 'neutral',
+    size: 'md',
+    removable: false
+  }
 };

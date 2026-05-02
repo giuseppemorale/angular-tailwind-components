@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TailwindTabGroup, TailwindTab } from '../projects/angular-tailwind-components/src/public-api';
+import { argsToTemplate } from '@storybook/angular';
 
 const meta: Meta = {
   title: 'Components/Tabs',
   tags: ['autodocs'],
-  parameters: { docs: { story: { height: '300px' } } },
+  parameters: { docs: { story: { height: '300px' } } }
 };
 export default meta;
 type Story = StoryObj;
@@ -25,8 +25,8 @@ export const Default: Story = {
         <tailwind-tab label="Disabled" [disabled]="true">
           <p class="text-sm text-surface-600">You can't see this.</p>
         </tailwind-tab>
-      </tailwind-tab-group>`,
-  }),
+      </tailwind-tab-group>`
+  })
 };
 
 export const Scrollable: Story = {
@@ -40,6 +40,31 @@ export const Scrollable: Story = {
           <tailwind-tab label="Tab Four"><p class="text-sm">Content 4</p></tailwind-tab>
           <tailwind-tab label="Tab Five"><p class="text-sm">Content 5</p></tailwind-tab>
         </tailwind-tab-group>
-      </div>`,
+      </div>`
+  })
+};
+
+export const Interactive: Story = {
+  render: args => ({
+    props: args,
+    template: `
+      <tailwind-tab-group ${argsToTemplate(args)}>
+        <tailwind-tab label="Overview">
+          <p class="text-sm text-surface-600">This is the overview tab content.</p>
+        </tailwind-tab>
+        <tailwind-tab label="Features">
+          <p class="text-sm text-surface-600">Feature list goes here.</p>
+        </tailwind-tab>
+        <tailwind-tab label="Pricing">
+          <p class="text-sm text-surface-600">Pricing information.</p>
+        </tailwind-tab>
+        <tailwind-tab label="Disabled" [disabled]="true">
+          <p class="text-sm text-surface-600">You can't see this.</p>
+        </tailwind-tab>
+      </tailwind-tab-group>`
   }),
+  args: {
+    ariaLabel: '',
+    scrollable: false
+  }
 };

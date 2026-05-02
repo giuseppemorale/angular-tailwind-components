@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindNotification } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindNotification> = {
@@ -59,4 +60,21 @@ export const WithActions: Story = {
         </tailwind-notification>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <tailwind-notification [severity]="severity" [title]="title" [dismissible]="dismissible" ${argsToTemplate(args)}>
+        This is a notification message with relevant details.
+      </tailwind-notification>`,
+  }),
+  args: {
+    title: '',
+    severity: 'info',
+    dismissible: true,
+    showActions: false
+  }
 };

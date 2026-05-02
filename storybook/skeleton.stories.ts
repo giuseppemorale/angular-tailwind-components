@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindSkeleton } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSkeleton> = {
@@ -53,4 +54,22 @@ export const AllVariants: Story = {
         <tailwind-skeleton variant="rounded" width="100%" height="80px"></tailwind-skeleton>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div class="space-y-2 max-w-xs">
+        <tailwind-skeleton variant="text" width="100%" ${argsToTemplate(args)}></tailwind-skeleton>
+        <tailwind-skeleton variant="text" width="80%"></tailwind-skeleton>
+        <tailwind-skeleton variant="text" width="60%"></tailwind-skeleton>
+      </div>`,
+  }),
+  args: {
+    variant: 'text',
+    width: '100%',
+    height: ''
+  }
 };

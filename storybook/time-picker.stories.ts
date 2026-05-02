@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindTimePicker } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTimePicker> = {
@@ -26,4 +27,16 @@ export const With24h: Story = {
         <tailwind-time-picker label="End Time" [use24h]="true"></tailwind-time-picker>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-time-picker [label]="label" style="max-width:240px;display:block" ${argsToTemplate(args)}></tailwind-time-picker>`,
+  }),
+  args: {
+    label: '',
+    step: 60
+  }
 };

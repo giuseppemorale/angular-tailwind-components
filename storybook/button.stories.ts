@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindButton } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindButton> = {
@@ -72,4 +73,21 @@ export const FullWidth: Story = {
   render: () => ({
     template: `<tailwind-button [fullWidth]="true">Full Width Button</tailwind-button>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" [fullWidth]="fullWidth" ${argsToTemplate(args)}>Button</tailwind-button>`,
+  }),
+  args: {
+    variant: 'primary',
+    size: 'md',
+    disabled: false,
+    loading: false,
+    type: 'button',
+    fullWidth: false,
+    iconOnly: false
+  }
 };

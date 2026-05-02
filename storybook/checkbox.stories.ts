@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindCheckbox } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindCheckbox> = {
@@ -45,4 +46,23 @@ export const CheckboxGroup: Story = {
         <tailwind-checkbox label="Storybook" />
       </div>`
   })
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div class="space-y-3">
+        <tailwind-checkbox label="Unchecked"  ${argsToTemplate(args)}/>
+        <tailwind-checkbox label="Checked" [checked]="true" />
+        <tailwind-checkbox label="Small" size="sm" />
+        <tailwind-checkbox label="Large" size="lg" />
+      </div>`,
+  }),
+  args: {
+    label: '',
+    description: '',
+    size: 'md'
+  }
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindSpinner } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSpinner> = {
@@ -27,4 +28,27 @@ export const WithLabel: Story = {
   render: () => ({
     template: `<tailwind-spinner size="md" label="Loading data..." />`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div class="flex items-center gap-6">
+        <tailwind-spinner size="xs"  ${argsToTemplate(args)}/>
+        <tailwind-spinner size="sm" />
+        <tailwind-spinner size="md" />
+        <tailwind-spinner size="lg" />
+        <tailwind-spinner size="xl" />
+      </div>
+    `,
+  }),
+  args: {
+    size: 'md',
+    color: 'text-primary-600',
+    label: '',
+    ariaLabel: 'Loading',
+    orientation: 'horizontal'
+  }
 };

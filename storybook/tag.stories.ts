@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindTag } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTag> = {
@@ -32,4 +33,23 @@ export const WithIcons: Story = {
         <tailwind-tag variant="danger">Ã¢Å“â€” Failed</tailwind-tag>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div class="flex flex-wrap gap-2">
+        <tailwind-tag ${argsToTemplate(args)}>Default</tailwind-tag>
+        <tailwind-tag variant="primary">Primary</tailwind-tag>
+        <tailwind-tag variant="success">Success</tailwind-tag>
+        <tailwind-tag variant="warning">Warning</tailwind-tag>
+        <tailwind-tag variant="danger">Danger</tailwind-tag>
+        <tailwind-tag variant="info">Info</tailwind-tag>
+      </div>`,
+  }),
+  args: {
+    variant: 'neutral'
+  }
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindMessage } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindMessage> = {
@@ -32,4 +33,21 @@ export const InForm: Story = {
         <tailwind-message severity="danger">This email is already in use.</tailwind-message>
       </div>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <div class="flex flex-col gap-2 max-w-md">
+        <tailwind-message severity="success" ${argsToTemplate(args)}>Operation completed successfully.</tailwind-message>
+        <tailwind-message severity="warning">Please review before proceeding.</tailwind-message>
+        <tailwind-message severity="danger">An error occurred during the operation.</tailwind-message>
+        <tailwind-message severity="info">This is an informational message.</tailwind-message>
+      </div>`,
+  }),
+  args: {
+    severity: 'info'
+  }
 };

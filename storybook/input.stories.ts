@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindInput } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindInput> = {
@@ -67,4 +68,25 @@ export const AllSizes: Story = {
       </div>
     `,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-input [label]="label" [placeholder]="placeholder" [type]="type" [size]="size" [helperText]="helperText" [hasError]="hasError" [errorText]="errorText" [required]="required"  ${argsToTemplate(args)}/>`,
+  }),
+  args: {
+    label: '',
+    placeholder: '',
+    type: 'text',
+    size: 'md',
+    required: false,
+    readonly: false,
+    helperText: '',
+    errorText: '',
+    hasError: false,
+    prefixIcon: false,
+    suffixIcon: false
+  }
 };

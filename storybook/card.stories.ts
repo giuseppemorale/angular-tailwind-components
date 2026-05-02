@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindCard } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindCard> = {
@@ -8,6 +9,30 @@ const meta: Meta<TailwindCard> = {
 };
 export default meta;
 type Story = StoryObj<TailwindCard>;
+
+export const Interactive: Story = {
+  render: args => ({
+    props: args,
+    template: `
+      <tailwind-card style="max-width:400px" ${argsToTemplate(args)}>
+        <tailwind-card-header><h3 class="font-semibold text-surface-900">Interactive Card</h3></tailwind-card-header>
+        <p class="text-surface-600 text-sm">Change the controls below to see the card update in real-time!</p>
+        <tailwind-card-footer>
+          <div class="flex justify-end gap-2">
+            <tailwind-button variant="ghost" size="sm">Cancel</tailwind-button>
+            <tailwind-button size="sm">Confirm</tailwind-button>
+          </div>
+        </tailwind-card-footer>
+      </tailwind-card>`
+  }),
+  args: {
+    elevated: false,
+    hoverable: false,
+    headerBg: false,
+    hasHeader: true,
+    hasFooter: true
+  }
+};
 
 export const Default: Story = {
   render: () => ({

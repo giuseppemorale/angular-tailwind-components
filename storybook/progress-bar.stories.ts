@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindProgressBar } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindProgressBar> = {
@@ -32,4 +33,22 @@ export const Indeterminate: Story = {
   render: () => ({
     template: `<tailwind-progress-bar [indeterminate]="true" label="Loading..." [showValue]="false" />`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-progress-bar [value]="65" label="Upload Progress"  ${argsToTemplate(args)}/>`,
+  }),
+  args: {
+    value: 0,
+    label: '',
+    showLabel: true,
+    showValue: true,
+    variant: 'primary',
+    size: 'md',
+    indeterminate: false,
+    striped: false
+  }
 };

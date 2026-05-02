@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindBreadcrumb } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindBreadcrumb> = {
@@ -34,4 +35,17 @@ export const Short: Story = {
       ],
     },
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `
+      <tailwind-breadcrumb [items]="items" ${argsToTemplate(args)}></tailwind-breadcrumb>`,
+  }),
+  args: {
+    items: [],
+    ariaLabel: 'Breadcrumb'
+  }
 };

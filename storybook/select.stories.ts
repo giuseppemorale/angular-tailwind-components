@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindSelect } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSelect> = {
@@ -37,4 +38,22 @@ export const WithGroups: Story = {
     },
     template: `<tailwind-select label="Language" [options]="groupedOptions" style="max-width:320px;display:block"></tailwind-select>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-select [label]="label" [options]="options" [placeholder]="placeholder" style="max-width:320px;display:block" ${argsToTemplate(args)}></tailwind-select>`,
+  }),
+  args: {
+    label: '',
+    placeholder: '',
+    options: [],
+    size: 'md',
+    required: false,
+    helperText: '',
+    errorText: '',
+    hasError: false
+  }
 };

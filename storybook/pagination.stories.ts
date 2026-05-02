@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindPagination } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindPagination> = {
@@ -34,4 +35,20 @@ export const ManyPages: Story = {
     props: { totalItems: 500, pageSize: 10, currentPage: 25 },
     template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage" [showSummary]="true"></tailwind-pagination>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage" ${argsToTemplate(args)}></tailwind-pagination>`,
+  }),
+  args: {
+    pageSize: 10,
+    maxVisible: 7,
+    ariaLabel: 'Pagination',
+    showSummary: false,
+    summaryTemplate: 'Showing {start}-{end} of {total}',
+    totalItems: 0
+  }
 };

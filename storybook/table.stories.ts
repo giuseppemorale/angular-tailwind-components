@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindTable } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTable> = {
@@ -58,4 +59,22 @@ export const Striped: Story = {
     props: { columns, rows },
     template: `<tailwind-table [columns]="columns" [data]="rows" [striped]="true"></tailwind-table>`
   })
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-table [columns]="columns" [data]="rows" ${argsToTemplate(args)}></tailwind-table>`,
+  }),
+  args: {
+    columns: [],
+    selectable: false,
+    striped: false,
+    loading: false,
+    emptyMessage: 'No data available',
+    paginated: true,
+    pageSize: 10,
+    paginationSummaryTemplate: 'Showing {start} to {end} of {total} results'
+  }
 };

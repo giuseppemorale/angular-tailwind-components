@@ -1,5 +1,5 @@
 @if (isActive()) {
-  <div role="tabpanel" [attr.aria-labelledby]="'tab-' + tabId()">
+  <div role="tabpanel" [attr.aria-labelledby]="id() ? 'tab-' + id() : null">
     <ng-content />
   </div>
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate } from '@storybook/angular';
 import { TailwindRadioGroup } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindRadioGroup> = {
@@ -36,4 +37,19 @@ export const Horizontal: Story = {
     },
     template: `<tailwind-radio-group label="Size" [options]="options" orientation="horizontal"></tailwind-radio-group>`,
   }),
+};
+
+
+export const Interactive: Story = {
+  render: (args) => ({
+    props: args,
+    template: `<tailwind-radio-group [label]="label" [options]="options" style="max-width:320px;display:block" ${argsToTemplate(args)}></tailwind-radio-group>`,
+  }),
+  args: {
+    label: '',
+    ariaLabel: '',
+    options: [],
+    size: 'md',
+    orientation: 'vertical'
+  }
 };

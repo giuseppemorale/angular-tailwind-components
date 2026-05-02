@@ -6,7 +6,7 @@ import { TailwindModalService } from './modal.service';
   selector: 'tailwind-modal-container',
   templateUrl: './modal-container.component.html',
   styleUrl: './modal-container.component.scss',
-  imports: [NgComponentOutlet],
+  imports: [NgComponentOutlet]
 })
 export class TailwindModalContainer {
   readonly modalService = inject(TailwindModalService);

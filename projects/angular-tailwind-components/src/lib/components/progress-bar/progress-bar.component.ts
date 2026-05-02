@@ -4,7 +4,7 @@ import { TailwindSeverity, TailwindSize } from '../../models';
 @Component({
   selector: 'tailwind-progress-bar',
   templateUrl: './progress-bar.component.html',
-  styleUrl: './progress-bar.component.scss',
+  styleUrl: './progress-bar.component.scss'
 })
 export class TailwindProgressBar {
   /** Current value (0-100) */
@@ -32,7 +32,7 @@ export class TailwindProgressBar {
       sm: 'h-1.5',
       md: 'h-2.5',
       lg: 'h-4',
-      xl: 'h-5',
+      xl: 'h-5'
     };
 
     return `w-full bg-surface-200 rounded-full overflow-hidden ${sizeMap[this.size()]}`;
@@ -44,12 +44,12 @@ export class TailwindProgressBar {
       success: 'bg-success-600',
       warning: 'bg-warning-500',
       danger: 'bg-danger-600',
-      info: 'bg-info-600',
+      info: 'bg-info-600'
     };
 
     const base = [
       'h-full rounded-full transition-all duration-300 ease-out',
-      variantMap[this.variant()] ?? variantMap['primary'],
+      variantMap[this.variant()] ?? variantMap['primary']
     ];
 
     if (this.indeterminate()) {
@@ -57,9 +57,7 @@ export class TailwindProgressBar {
     }
 
     if (this.striped()) {
-      base.push(
-        'bg-gradient-to-r from-transparent via-white/20 to-transparent bg-[length:1rem_100%]'
-      );
+      base.push('bg-gradient-to-r from-transparent via-white/20 to-transparent bg-[length:1rem_100%]');
     }
 
     return base.join(' ');

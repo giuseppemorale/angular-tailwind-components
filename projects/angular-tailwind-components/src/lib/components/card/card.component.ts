@@ -3,7 +3,7 @@ import { Component, input } from '@angular/core';
 @Component({
   selector: 'tailwind-card',
   templateUrl: './card.component.html',
-  styleUrl: './card.component.scss',
+  styleUrl: './card.component.scss'
 })
 export class TailwindCard {
   /** Whether the card has elevated shadow */

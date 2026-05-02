@@ -6,7 +6,7 @@ import { TailwindSize, TailwindVariant } from '../../models';
   selector: 'tailwind-button',
   imports: [NgClass],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss',
+  styleUrl: './button.component.scss'
 })
 export class TailwindButton {
   /** Visual style variant */
@@ -35,7 +35,7 @@ export class TailwindButton {
       'transition-all duration-150 ease-in-out',
       'focus-visible:outline-2 focus-visible:outline-offset-2',
       'disabled:cursor-not-allowed disabled:opacity-50',
-      'cursor-pointer',
+      'cursor-pointer'
     ];
 
     const variantMap: Record<TailwindVariant, string> = {
@@ -53,8 +53,7 @@ export class TailwindButton {
         'bg-success-600 text-white hover:bg-success-700 active:bg-success-800 focus-visible:outline-success-600 shadow-sm',
       warning:
         'bg-warning-500 text-surface-900 hover:bg-warning-600 active:bg-warning-700 focus-visible:outline-warning-500 shadow-sm',
-      info:
-        'bg-info-600 text-white hover:bg-info-700 active:bg-info-800 focus-visible:outline-info-600 shadow-sm',
+      info: 'bg-info-600 text-white hover:bg-info-700 active:bg-info-800 focus-visible:outline-info-600 shadow-sm'
     };
 
     const sizeMap: Record<TailwindSize, string> = {
@@ -62,7 +61,7 @@ export class TailwindButton {
       sm: 'text-sm px-3 py-1.5 rounded-md',
       md: 'text-sm px-4 py-2 rounded-md',
       lg: 'text-base px-5 py-2.5 rounded-lg',
-      xl: 'text-base px-6 py-3 rounded-lg',
+      xl: 'text-base px-6 py-3 rounded-lg'
     };
 
     const iconSizeMap: Record<TailwindSize, string> = {
@@ -70,14 +69,14 @@ export class TailwindButton {
       sm: 'p-1.5 rounded-md',
       md: 'p-2 rounded-md',
       lg: 'p-2.5 rounded-lg',
-      xl: 'p-3 rounded-lg',
+      xl: 'p-3 rounded-lg'
     };
 
     return [
       ...base,
       variantMap[this.variant()],
       this.iconOnly() ? iconSizeMap[this.size()] : sizeMap[this.size()],
-      this.fullWidth() ? 'w-full' : '',
+      this.fullWidth() ? 'w-full' : ''
     ].join(' ');
   });
 

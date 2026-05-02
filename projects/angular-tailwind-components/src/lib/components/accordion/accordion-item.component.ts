@@ -3,7 +3,7 @@ import { Component, input, signal } from '@angular/core';
 @Component({
   selector: 'tailwind-accordion-item',
   templateUrl: './accordion-item.component.html',
-  styleUrl: './accordion-item.component.scss',
+  styleUrl: './accordion-item.component.scss'
 })
 export class TailwindAccordionItem {
   title = input.required<string>();

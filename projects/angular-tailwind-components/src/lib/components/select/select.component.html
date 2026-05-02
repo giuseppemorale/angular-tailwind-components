@@ -1,10 +1,6 @@
 <div class="flex flex-col gap-1.5">
   @if (label()) {
-    <label
-      [for]="selectId()"
-      class="text-sm font-medium text-surface-700"
-      [class.text-danger-600]="hasError()"
-    >
+    <label [for]="selectId()" class="text-sm font-medium text-surface-700" [class.text-danger-600]="hasError()">
       {{ label() }}
       @if (required()) {
         <span class="text-danger-500 ml-0.5">*</span>
@@ -19,17 +15,12 @@
       [attr.aria-invalid]="hasError() || null"
       [attr.aria-describedby]="helperText() || errorText() ? selectId() + '-helper' : null"
       [class]="selectClasses()"
-      (change)="onSelectChange($event)"
-    >
+      (change)="onSelectChange($event)">
       @if (placeholder()) {
         <option value="" disabled [selected]="!value()">{{ placeholder() }}</option>
       }
       @for (option of options(); track option.value) {
-        <option
-          [value]="option.value"
-          [disabled]="!!option.disabled"
-          [selected]="value() === option.value"
-        >
+        <option [value]="option.value" [disabled]="!!option.disabled" [selected]="value() === option.value">
           {{ option.label }}
         </option>
       }
@@ -40,13 +31,11 @@
       class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 w-4 h-4"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
-      fill="currentColor"
-    >
+      fill="currentColor">
       <path
         fill-rule="evenodd"
         d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-        clip-rule="evenodd"
-      />
+        clip-rule="evenodd" />
     </svg>
   </div>
 

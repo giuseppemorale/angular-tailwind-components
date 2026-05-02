@@ -1,8 +1,7 @@
 <label
   class="inline-flex items-center gap-3 cursor-pointer select-none"
   [class.cursor-not-allowed]="isDisabled()"
-  [class.opacity-50]="isDisabled()"
->
+  [class.opacity-50]="isDisabled()">
   <button
     type="button"
     role="switch"
@@ -10,12 +9,8 @@
     [attr.aria-label]="ariaLabel() || label()"
     [disabled]="isDisabled()"
     [class]="trackClasses()"
-    (click)="toggle()"
-  >
-    <span
-      [class]="thumbClasses()"
-      aria-hidden="true"
-    ></span>
+    (click)="toggle()">
+    <span [class]="thumbClasses()" aria-hidden="true"></span>
   </button>
 
   @if (label()) {

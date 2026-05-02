@@ -4,7 +4,7 @@ import { TailwindSize } from '../../models';
 @Component({
   selector: 'tailwind-skeleton',
   templateUrl: './skeleton.component.html',
-  styleUrl: './skeleton.component.scss',
+  styleUrl: './skeleton.component.scss'
 })
 export class TailwindSkeleton {
   readonly variant = input<'text' | 'circle' | 'rect' | 'rounded'>('text');
@@ -17,7 +17,7 @@ export class TailwindSkeleton {
       text: 'h-4 rounded',
       circle: 'rounded-full',
       rect: 'rounded-none',
-      rounded: 'rounded-xl',
+      rounded: 'rounded-xl'
     };
     return `${base} ${variantMap[this.variant()]}`;
   });

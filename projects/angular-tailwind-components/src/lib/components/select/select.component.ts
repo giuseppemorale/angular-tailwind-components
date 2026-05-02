@@ -8,11 +8,11 @@ import { TailwindOption, TailwindSize } from '../../models';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => TailwindSelect),
-      multi: true,
-    },
+      multi: true
+    }
   ],
   templateUrl: './select.component.html',
-  styleUrl: './select.component.scss',
+  styleUrl: './select.component.scss'
 })
 export class TailwindSelect implements ControlValueAccessor {
   /** Label text */
@@ -47,7 +47,7 @@ export class TailwindSelect implements ControlValueAccessor {
       'border transition-colors duration-150',
       'pr-10 cursor-pointer',
       'focus:outline-none focus:ring-2 focus:ring-offset-0',
-      'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed',
+      'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed'
     ];
 
     const sizeMap: Record<TailwindSize, string> = {
@@ -55,7 +55,7 @@ export class TailwindSelect implements ControlValueAccessor {
       sm: 'text-sm px-2.5 py-1.5 rounded-md',
       md: 'text-sm px-3 py-2 rounded-md',
       lg: 'text-base px-3.5 py-2.5 rounded-lg',
-      xl: 'text-base px-4 py-3 rounded-lg',
+      xl: 'text-base px-4 py-3 rounded-lg'
     };
 
     const stateClass = this.hasError()

@@ -4,7 +4,7 @@ import { TailwindPosition } from '../../models';
 @Component({
   selector: 'tailwind-drawer',
   templateUrl: './drawer.component.html',
-  styleUrl: './drawer.component.scss',
+  styleUrl: './drawer.component.scss'
 })
 export class TailwindDrawer {
   /** Drawer title */
@@ -29,7 +29,7 @@ export class TailwindDrawer {
       'fixed top-0 bottom-0 z-[1050]',
       'flex flex-col w-full bg-white shadow-2xl',
       'transition-transform duration-300 ease-in-out',
-      this.width(),
+      this.width()
     ];
 
     const pos = this.position();

@@ -7,7 +7,7 @@ describe('TailwindInput', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TailwindInput],
+      imports: [TailwindInput]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TailwindInput);

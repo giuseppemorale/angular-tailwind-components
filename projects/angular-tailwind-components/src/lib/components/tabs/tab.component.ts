@@ -3,7 +3,7 @@ import { Component, input, signal } from '@angular/core';
 @Component({
   selector: 'tailwind-tab',
   templateUrl: './tab.component.html',
-  styleUrl: './tab.component.scss',
+  styleUrl: './tab.component.scss'
 })
 export class TailwindTab {
   /** Tab label */

@@ -11,7 +11,7 @@ export type { TailwindDateTimeValue };
   imports: [TailwindDatePicker, TailwindTimePicker],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDateTimePicker), multi: true }],
   templateUrl: './datetime-picker.component.html',
-  styleUrl: './datetime-picker.component.scss',
+  styleUrl: './datetime-picker.component.scss'
 })
 export class TailwindDateTimePicker implements ControlValueAccessor {
   readonly label = input<string>('');
@@ -22,14 +22,27 @@ export class TailwindDateTimePicker implements ControlValueAccessor {
   private onTouched: () => void = () => {};
 
   writeValue(v: TailwindDateTimeValue): void {
-    if (v) { this.dateValue.set(v.date ?? ''); this.timeValue.set(v.time ?? ''); }
+    if (v) {
+      this.dateValue.set(v.date ?? '');
+      this.timeValue.set(v.time ?? '');
+    }
   }
-  registerOnChange(fn: (v: TailwindDateTimeValue) => void): void { this.onChange = fn; }
-  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(d: boolean): void { this.isDisabled.set(d); }
+  registerOnChange(fn: (v: TailwindDateTimeValue) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(d: boolean): void {
+    this.isDisabled.set(d);
+  }
 
-  onDateChange(): void { this.emitChange(); }
-  onTimeChange(): void { this.emitChange(); }
+  onDateChange(): void {
+    this.emitChange();
+  }
+  onTimeChange(): void {
+    this.emitChange();
+  }
 
   private emitChange(): void {
     this.onChange({ date: this.dateValue(), time: this.timeValue() });

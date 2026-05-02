@@ -8,11 +8,11 @@ import { TailwindOption, TailwindSize } from '../../models';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => TailwindRadioGroup),
-      multi: true,
-    },
+      multi: true
+    }
   ],
   templateUrl: './radio-group.component.html',
-  styleUrl: './radio-group.component.scss',
+  styleUrl: './radio-group.component.scss'
 })
 export class TailwindRadioGroup implements ControlValueAccessor {
   /** Label for the radio group */
@@ -41,7 +41,7 @@ export class TailwindRadioGroup implements ControlValueAccessor {
       sm: 'w-4 h-4',
       md: 'w-5 h-5',
       lg: 'w-6 h-6',
-      xl: 'w-7 h-7',
+      xl: 'w-7 h-7'
     };
     return sizeMap[this.size()];
   });
@@ -53,7 +53,7 @@ export class TailwindRadioGroup implements ControlValueAccessor {
       sm: 'w-2 h-2',
       md: 'w-2.5 h-2.5',
       lg: 'w-3 h-3',
-      xl: 'w-3.5 h-3.5',
+      xl: 'w-3.5 h-3.5'
     };
     return sizeMap[this.size()];
   });

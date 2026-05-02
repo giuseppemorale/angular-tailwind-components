@@ -6,7 +6,7 @@ export type { TailwindBreadcrumbItem };
 @Component({
   selector: 'tailwind-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrl: './breadcrumb.component.scss',
+  styleUrl: './breadcrumb.component.scss'
 })
 export class TailwindBreadcrumb {
   readonly items = input<TailwindBreadcrumbItem[]>([]);

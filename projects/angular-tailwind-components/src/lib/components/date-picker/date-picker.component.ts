@@ -5,7 +5,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'tailwind-date-picker',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDatePicker), multi: true }],
   templateUrl: './date-picker.component.html',
-  styleUrl: './date-picker.component.scss',
+  styleUrl: './date-picker.component.scss'
 })
 export class TailwindDatePicker implements ControlValueAccessor {
   readonly label = input<string>('');
@@ -24,12 +24,26 @@ export class TailwindDatePicker implements ControlValueAccessor {
   readonly displayValue = computed(() => this.value() || '');
 
   readonly monthYearLabel = computed(() => {
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
     return `${months[this.viewMonth()]} ${this.viewYear()}`;
   });
 
   readonly calendarDays = computed(() => {
-    const y = this.viewYear(), m = this.viewMonth();
+    const y = this.viewYear(),
+      m = this.viewMonth();
     const firstDay = new Date(y, m, 1).getDay();
     const daysInMonth = new Date(y, m + 1, 0).getDate();
     const offset = firstDay === 0 ? 6 : firstDay - 1;
@@ -41,17 +55,47 @@ export class TailwindDatePicker implements ControlValueAccessor {
   private onChange: (v: string) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(v: string): void { this.value.set(v ?? ''); if (v) { const d = new Date(v); this.viewMonth.set(d.getMonth()); this.viewYear.set(d.getFullYear()); } }
-  registerOnChange(fn: (v: string) => void): void { this.onChange = fn; }
-  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(d: boolean): void { this.isDisabled.set(d); }
+  writeValue(v: string): void {
+    this.value.set(v ?? '');
+    if (v) {
+      const d = new Date(v);
+      this.viewMonth.set(d.getMonth());
+      this.viewYear.set(d.getFullYear());
+    }
+  }
+  registerOnChange(fn: (v: string) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(d: boolean): void {
+    this.isDisabled.set(d);
+  }
 
-  toggleCalendar(): void { if (!this.isDisabled()) this.showCalendar.update(v => !v); }
-  prevMonth(): void { if (this.viewMonth() === 0) { this.viewMonth.set(11); this.viewYear.update(y => y - 1); } else { this.viewMonth.update(m => m - 1); } }
-  nextMonth(): void { if (this.viewMonth() === 11) { this.viewMonth.set(0); this.viewYear.update(y => y + 1); } else { this.viewMonth.update(m => m + 1); } }
+  toggleCalendar(): void {
+    if (!this.isDisabled()) this.showCalendar.update(v => !v);
+  }
+  prevMonth(): void {
+    if (this.viewMonth() === 0) {
+      this.viewMonth.set(11);
+      this.viewYear.update(y => y - 1);
+    } else {
+      this.viewMonth.update(m => m - 1);
+    }
+  }
+  nextMonth(): void {
+    if (this.viewMonth() === 11) {
+      this.viewMonth.set(0);
+      this.viewYear.update(y => y + 1);
+    } else {
+      this.viewMonth.update(m => m + 1);
+    }
+  }
 
   selectDay(day: number): void {
-    const y = this.viewYear(), m = this.viewMonth();
+    const y = this.viewYear(),
+      m = this.viewMonth();
     const dateStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     this.value.set(dateStr);
     this.onChange(dateStr);

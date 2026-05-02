@@ -7,7 +7,7 @@ describe('TailwindAlert', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TailwindAlert],
+      imports: [TailwindAlert]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TailwindAlert);

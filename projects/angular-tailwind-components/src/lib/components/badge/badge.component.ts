@@ -4,7 +4,7 @@ import { TailwindSeverity, TailwindSize } from '../../models';
 @Component({
   selector: 'tailwind-badge',
   templateUrl: './badge.component.html',
-  styleUrl: './badge.component.scss',
+  styleUrl: './badge.component.scss'
 })
 export class TailwindBadge {
   /** Color variant */
@@ -19,10 +19,7 @@ export class TailwindBadge {
   readonly ariaLabel = input<string>('');
 
   readonly computedClasses = computed(() => {
-    const base = [
-      'inline-flex items-center gap-1 font-medium',
-      'leading-none',
-    ];
+    const base = ['inline-flex items-center gap-1 font-medium', 'leading-none'];
 
     const variantMap: Record<string, string> = {
       primary: 'bg-primary-100 text-primary-700',
@@ -30,7 +27,7 @@ export class TailwindBadge {
       success: 'bg-success-100 text-success-700',
       warning: 'bg-warning-100 text-warning-800',
       danger: 'bg-danger-100 text-danger-700',
-      info: 'bg-info-100 text-info-700',
+      info: 'bg-info-100 text-info-700'
     };
 
     const sizeMap: Record<TailwindSize, string> = {
@@ -38,7 +35,7 @@ export class TailwindBadge {
       sm: 'text-xs px-2 py-0.5',
       md: 'text-xs px-2.5 py-1',
       lg: 'text-sm px-3 py-1',
-      xl: 'text-sm px-3.5 py-1.5',
+      xl: 'text-sm px-3.5 py-1.5'
     };
 
     const shape = this.pill() ? 'rounded-full' : 'rounded-md';

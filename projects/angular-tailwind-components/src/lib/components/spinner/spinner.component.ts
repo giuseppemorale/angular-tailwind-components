@@ -4,7 +4,7 @@ import { TailwindSize } from '../../models';
 @Component({
   selector: 'tailwind-spinner',
   templateUrl: './spinner.component.html',
-  styleUrl: './spinner.component.scss',
+  styleUrl: './spinner.component.scss'
 })
 export class TailwindSpinner {
   /** Size variant */
@@ -30,7 +30,7 @@ export class TailwindSpinner {
       sm: 'w-4 h-4',
       md: 'w-6 h-6',
       lg: 'w-8 h-8',
-      xl: 'w-12 h-12',
+      xl: 'w-12 h-12'
     };
 
     return `tailwind-spinner-svg ${sizeMap[this.size()]} ${this.color()}`;
@@ -42,7 +42,7 @@ export class TailwindSpinner {
       sm: 'text-xs',
       md: 'text-sm',
       lg: 'text-base',
-      xl: 'text-lg',
+      xl: 'text-lg'
     };
 
     return `${sizeMap[this.size()]} ${this.color()} font-medium`;

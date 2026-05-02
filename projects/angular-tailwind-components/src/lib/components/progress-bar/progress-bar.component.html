@@ -16,11 +16,7 @@
     [attr.aria-valuenow]="clampedValue()"
     [attr.aria-valuemin]="0"
     [attr.aria-valuemax]="100"
-    [attr.aria-label]="label() || 'Progress'"
-  >
-    <div
-      [class]="barClasses()"
-      [style.width.%]="indeterminate() ? 100 : clampedValue()"
-    ></div>
+    [attr.aria-label]="label() || 'Progress'">
+    <div [class]="barClasses()" [style.width.%]="indeterminate() ? 100 : clampedValue()"></div>
   </div>
 </div>

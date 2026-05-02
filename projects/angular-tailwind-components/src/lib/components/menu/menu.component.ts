@@ -8,8 +8,8 @@ export type { TailwindMenuItem };
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   host: {
-    '(document:click)': 'onDocumentClick($event)',
-  },
+    '(document:click)': 'onDocumentClick($event)'
+  }
 })
 export class TailwindMenu {
   readonly items = input<TailwindMenuItem[]>([]);
@@ -18,7 +18,9 @@ export class TailwindMenu {
 
   readonly isOpen = signal(false);
 
-  toggle(): void { this.isOpen.update(v => !v); }
+  toggle(): void {
+    this.isOpen.update(v => !v);
+  }
 
   selectItem(item: TailwindMenuItem): void {
     if (!item.disabled) {

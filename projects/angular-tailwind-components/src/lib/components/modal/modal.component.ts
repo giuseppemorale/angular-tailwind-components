@@ -1,19 +1,10 @@
-import {
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  input,
-  output,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { Component, computed, effect, ElementRef, input, output, signal, viewChild } from '@angular/core';
 import { TailwindSize } from '../../models';
 
 @Component({
   selector: 'tailwind-modal',
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.scss',
+  styleUrl: './modal.component.scss'
 })
 export class TailwindModal {
   /** Modal title */
@@ -39,22 +30,17 @@ export class TailwindModal {
   private modalPanel = viewChild<ElementRef>('modalPanel');
 
   readonly panelClasses = computed(() => {
-    const base = [
-      'relative bg-white rounded-xl shadow-2xl',
-      'w-full transform transition-all duration-200',
-    ];
+    const base = ['relative bg-white rounded-xl shadow-2xl', 'w-full transform transition-all duration-200'];
 
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'max-w-sm',
       sm: 'max-w-md',
       md: 'max-w-lg',
       lg: 'max-w-2xl',
-      xl: 'max-w-4xl',
+      xl: 'max-w-4xl'
     };
 
-    const animation = this.isVisible()
-      ? 'opacity-100 scale-100'
-      : 'opacity-0 scale-95';
+    const animation = this.isVisible() ? 'opacity-100 scale-100' : 'opacity-0 scale-95';
 
     return [...base, sizeMap[this.size()], animation].join(' ');
   });

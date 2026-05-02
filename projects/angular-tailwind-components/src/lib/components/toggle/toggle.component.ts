@@ -8,11 +8,11 @@ import { TailwindSize } from '../../models';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => TailwindToggle),
-      multi: true,
-    },
+      multi: true
+    }
   ],
   templateUrl: './toggle.component.html',
-  styleUrl: './toggle.component.scss',
+  styleUrl: './toggle.component.scss'
 })
 export class TailwindToggle implements ControlValueAccessor {
   /** Label text */
@@ -35,7 +35,7 @@ export class TailwindToggle implements ControlValueAccessor {
       sm: 'w-8 h-5',
       md: 'w-11 h-6',
       lg: 'w-14 h-7',
-      xl: 'w-16 h-8',
+      xl: 'w-16 h-8'
     };
 
     const base = [
@@ -43,12 +43,10 @@ export class TailwindToggle implements ControlValueAccessor {
       'border-2 border-transparent',
       'transition-colors duration-200 ease-in-out',
       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600',
-      'cursor-pointer disabled:cursor-not-allowed',
+      'cursor-pointer disabled:cursor-not-allowed'
     ];
 
-    const stateClass = this.checked()
-      ? 'bg-primary-600'
-      : 'bg-surface-300';
+    const stateClass = this.checked() ? 'bg-primary-600' : 'bg-surface-300';
 
     return [...base, sizeMap[this.size()], stateClass].join(' ');
   });
@@ -60,7 +58,7 @@ export class TailwindToggle implements ControlValueAccessor {
       sm: { thumb: 'w-4 h-4', translateOn: 'translate-x-3' },
       md: { thumb: 'w-5 h-5', translateOn: 'translate-x-5' },
       lg: { thumb: 'w-6 h-6', translateOn: 'translate-x-7' },
-      xl: { thumb: 'w-7 h-7', translateOn: 'translate-x-8' },
+      xl: { thumb: 'w-7 h-7', translateOn: 'translate-x-8' }
     };
 
     const config = sizeMap[this.size()];
@@ -68,7 +66,7 @@ export class TailwindToggle implements ControlValueAccessor {
     const base = [
       'pointer-events-none inline-block rounded-full',
       'bg-white shadow-md',
-      'transform transition-transform duration-200 ease-in-out',
+      'transform transition-transform duration-200 ease-in-out'
     ];
 
     const translateClass = this.checked() ? config.translateOn : 'translate-x-0';

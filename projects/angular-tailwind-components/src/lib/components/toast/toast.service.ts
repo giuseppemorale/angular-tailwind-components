@@ -19,11 +19,23 @@ export class TailwindToastService {
     return id;
   }
 
-  success(message: string, title?: string): number { return this.show({ message, title, severity: 'success' }); }
-  warning(message: string, title?: string): number { return this.show({ message, title, severity: 'warning' }); }
-  danger(message: string, title?: string): number { return this.show({ message, title, severity: 'danger' }); }
-  info(message: string, title?: string): number { return this.show({ message, title, severity: 'info' }); }
+  success(message: string, title?: string): number {
+    return this.show({ message, title, severity: 'success' });
+  }
+  warning(message: string, title?: string): number {
+    return this.show({ message, title, severity: 'warning' });
+  }
+  danger(message: string, title?: string): number {
+    return this.show({ message, title, severity: 'danger' });
+  }
+  info(message: string, title?: string): number {
+    return this.show({ message, title, severity: 'info' });
+  }
 
-  dismiss(id: number): void { this.toasts.update(list => list.filter(t => t.id !== id)); }
-  clear(): void { this.toasts.set([]); }
+  dismiss(id: number): void {
+    this.toasts.update(list => list.filter(t => t.id !== id));
+  }
+  clear(): void {
+    this.toasts.set([]);
+  }
 }

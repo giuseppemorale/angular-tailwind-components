@@ -8,11 +8,11 @@ import { TailwindSize } from '../../models';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => TailwindCheckbox),
-      multi: true,
-    },
+      multi: true
+    }
   ],
   templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.scss',
+  styleUrl: './checkbox.component.scss'
 })
 export class TailwindCheckbox implements ControlValueAccessor {
   /** Label text */
@@ -37,7 +37,7 @@ export class TailwindCheckbox implements ControlValueAccessor {
       sm: 'w-4 h-4',
       md: 'w-5 h-5',
       lg: 'w-6 h-6',
-      xl: 'w-7 h-7',
+      xl: 'w-7 h-7'
     };
     return sizeMap[this.size()];
   });

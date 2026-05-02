@@ -2,8 +2,7 @@
   [for]="checkboxId()"
   class="inline-flex items-start gap-2.5 cursor-pointer select-none"
   [class.cursor-not-allowed]="isDisabled()"
-  [class.opacity-50]="isDisabled()"
->
+  [class.opacity-50]="isDisabled()">
   <div class="relative flex items-center justify-center shrink-0" [class]="boxSizeClass()">
     <input
       [id]="checkboxId()"
@@ -12,16 +11,13 @@
       [checked]="checked()"
       [disabled]="isDisabled()"
       [attr.aria-describedby]="description() ? checkboxId() + '-desc' : null"
-      (change)="onCheckboxChange($event)"
-    />
+      (change)="onCheckboxChange($event)" />
     <div
-      class="w-full h-full rounded-md border-2 transition-all duration-150
-             peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
+      class="w-full h-full rounded-md border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
       [class.border-surface-300]="!checked()"
       [class.bg-white]="!checked()"
       [class.border-primary-600]="checked()"
-      [class.bg-primary-600]="checked()"
-    >
+      [class.bg-primary-600]="checked()">
       @if (checked()) {
         <svg class="w-full h-full text-white p-0.5" viewBox="0 0 16 16" fill="none">
           <path
@@ -29,8 +25,7 @@
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+            stroke-linejoin="round" />
         </svg>
       }
     </div>
@@ -41,10 +36,7 @@
       <span class="text-sm font-medium text-surface-800 leading-tight">{{ label() }}</span>
     }
     @if (description()) {
-      <span
-        [id]="checkboxId() + '-desc'"
-        class="text-xs text-surface-500 leading-snug"
-      >
+      <span [id]="checkboxId() + '-desc'" class="text-xs text-surface-500 leading-snug">
         {{ description() }}
       </span>
     }

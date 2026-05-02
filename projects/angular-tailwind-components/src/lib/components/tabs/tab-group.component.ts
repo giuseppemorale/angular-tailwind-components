@@ -4,7 +4,7 @@ import { TailwindTab } from './tab.component';
 @Component({
   selector: 'tailwind-tab-group',
   templateUrl: './tab-group.component.html',
-  styleUrl: './tab-group.component.scss',
+  styleUrl: './tab-group.component.scss'
 })
 export class TailwindTabGroup {
   /** Accessible label for the tab list */

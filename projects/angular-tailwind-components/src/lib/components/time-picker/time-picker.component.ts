@@ -5,7 +5,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   selector: 'tailwind-time-picker',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindTimePicker), multi: true }],
   templateUrl: './time-picker.component.html',
-  styleUrl: './time-picker.component.scss',
+  styleUrl: './time-picker.component.scss'
 })
 export class TailwindTimePicker implements ControlValueAccessor {
   readonly label = input<string>('');
@@ -16,14 +16,23 @@ export class TailwindTimePicker implements ControlValueAccessor {
   private onChange: (v: string) => void = () => {};
   onTouched: () => void = () => {};
 
-  writeValue(v: string): void { this.value.set(v ?? ''); }
-  registerOnChange(fn: (v: string) => void): void { this.onChange = fn; }
-  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(d: boolean): void { this.isDisabled.set(d); }
+  writeValue(v: string): void {
+    this.value.set(v ?? '');
+  }
+  registerOnChange(fn: (v: string) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(d: boolean): void {
+    this.isDisabled.set(d);
+  }
 
   onInput(e: Event): void {
     const val = (e.target as HTMLInputElement).value;
-    this.value.set(val); this.onChange(val);
+    this.value.set(val);
+    this.onChange(val);
   }
 }
 

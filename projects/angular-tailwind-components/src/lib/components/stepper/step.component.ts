@@ -3,7 +3,7 @@ import { Component, input, signal } from '@angular/core';
 @Component({
   selector: 'tailwind-step',
   templateUrl: './step.component.html',
-  styleUrl: './step.component.scss',
+  styleUrl: './step.component.scss'
 })
 export class TailwindStep {
   label = input.required<string>();

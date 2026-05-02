@@ -4,7 +4,7 @@ import { TailwindAccordionItem } from './accordion-item.component';
 @Component({
   selector: 'tailwind-accordion',
   templateUrl: './accordion.component.html',
-  styleUrl: './accordion.component.scss',
+  styleUrl: './accordion.component.scss'
 })
 export class TailwindAccordion {
   readonly multiple = input<boolean>(false);

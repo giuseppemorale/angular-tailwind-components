@@ -1,17 +1,8 @@
-<div
-  class="relative inline-flex"
-  (mouseenter)="show()"
-  (mouseleave)="hide()"
-  (focusin)="show()"
-  (focusout)="hide()"
->
+<div class="relative inline-flex" (mouseenter)="show()" (mouseleave)="hide()" (focusin)="show()" (focusout)="hide()">
   <ng-content />
 
   @if (isVisible()) {
-    <div
-      role="tooltip"
-      [class]="tooltipClasses()"
-    >
+    <div role="tooltip" [class]="tooltipClasses()">
       {{ text() }}
       <!-- Arrow -->
       <div [class]="arrowClasses()"></div>

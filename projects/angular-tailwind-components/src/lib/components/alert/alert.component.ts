@@ -4,7 +4,7 @@ import { TailwindSeverity } from '../../models';
 @Component({
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
-  styleUrl: './alert.component.scss',
+  styleUrl: './alert.component.scss'
 })
 export class TailwindAlert {
   /** Severity / color variant */
@@ -29,7 +29,7 @@ export class TailwindAlert {
       success: 'bg-success-50 text-success-800 border-success-200',
       warning: 'bg-warning-50 text-warning-800 border-warning-200',
       danger: 'bg-danger-50 text-danger-800 border-danger-200',
-      info: 'bg-info-50 text-info-800 border-info-200',
+      info: 'bg-info-50 text-info-800 border-info-200'
     };
 
     const borderClass = this.bordered() ? 'border-l-4' : 'border';

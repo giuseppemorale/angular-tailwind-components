@@ -7,7 +7,7 @@ describe('TailwindButton', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TailwindButton],
+      imports: [TailwindButton]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TailwindButton);

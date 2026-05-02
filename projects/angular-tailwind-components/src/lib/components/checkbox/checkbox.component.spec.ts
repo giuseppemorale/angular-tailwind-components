@@ -7,7 +7,7 @@ describe('TailwindCheckbox', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TailwindCheckbox],
+      imports: [TailwindCheckbox]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TailwindCheckbox);

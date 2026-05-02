@@ -3,7 +3,7 @@ import { Component, computed, input, model, output } from '@angular/core';
 @Component({
   selector: 'tailwind-pagination',
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss',
+  styleUrl: './pagination.component.scss'
 })
 export class TailwindPagination {
   readonly totalItems = input.required<number>();
@@ -27,8 +27,12 @@ export class TailwindPagination {
     const half = Math.floor((max - 4) / 2);
     let start = Math.max(2, current - half);
     let end = Math.min(total - 1, current + half);
-    if (current <= half + 2) { end = max - 2; }
-    if (current >= total - half - 1) { start = total - max + 3; }
+    if (current <= half + 2) {
+      end = max - 2;
+    }
+    if (current >= total - half - 1) {
+      start = total - max + 3;
+    }
     if (start > 2) pages.push(-1);
     for (let i = start; i <= end; i++) pages.push(i);
     if (end < total - 1) pages.push(-1);
@@ -38,7 +42,8 @@ export class TailwindPagination {
 
   readonly summaryText = computed(() => {
     const total = this.totalItems();
-    if (total === 0) return this.summaryTemplate().replace('{start}', '0').replace('{end}', '0').replace('{total}', '0');
+    if (total === 0)
+      return this.summaryTemplate().replace('{start}', '0').replace('{end}', '0').replace('{total}', '0');
     const start = (this.currentPage() - 1) * this.pageSize() + 1;
     const end = Math.min(this.currentPage() * this.pageSize(), total);
     return this.summaryTemplate()

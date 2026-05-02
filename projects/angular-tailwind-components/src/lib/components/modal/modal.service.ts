@@ -1,13 +1,8 @@
-import { Injectable, signal, Type } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { TailwindModalConfig } from './interfaces/modal-config.interface';
+import { TailwindModalState } from './interfaces/modal-state.interface';
 
 export type { TailwindModalConfig };
-
-interface TailwindModalState<R = any> {
-  config: TailwindModalConfig;
-  resolve: (result: R | undefined) => void;
-  isVisible: boolean;
-}
 
 @Injectable({ providedIn: 'root' })
 export class TailwindModalService {
@@ -20,11 +15,11 @@ export class TailwindModalService {
    * Resolves with `undefined` if dismissed (backdrop / escape / X button).
    */
   open<R = any>(config: TailwindModalConfig): Promise<R | undefined> {
-    return new Promise<R | undefined>((resolve) => {
+    return new Promise<R | undefined>(resolve => {
       this._state.set({ config, resolve, isVisible: false });
       // Animate in on next frame
       requestAnimationFrame(() => {
-        this._state.update(s => s ? { ...s, isVisible: true } : s);
+        this._state.update(s => (s ? { ...s, isVisible: true } : s));
       });
     });
   }
@@ -32,20 +27,21 @@ export class TailwindModalService {
   /**
    * Shorthand for a simple confirm dialog.
    */
-  confirm(options: {
+  async confirm(options: {
     title?: string;
     message: string;
     confirmLabel?: string;
     cancelLabel?: string;
   }): Promise<boolean> {
-    return this.open<boolean>({
+    const r = await this.open<boolean>({
       ...options,
       confirmLabel: options.confirmLabel ?? 'Confirm',
       cancelLabel: options.cancelLabel ?? 'Cancel',
       showCloseButton: true,
       closeOnBackdrop: true,
-      closeOnEscape: true,
-    }).then(r => r === true);
+      closeOnEscape: true
+    });
+    return r === true;
   }
 
   /** Close with a result value */
@@ -65,7 +61,7 @@ export class TailwindModalService {
   }
 
   private _animateOut(cb: () => void): void {
-    this._state.update(s => s ? { ...s, isVisible: false } : s);
+    this._state.update(s => (s ? { ...s, isVisible: false } : s));
     setTimeout(cb, 200);
   }
 }

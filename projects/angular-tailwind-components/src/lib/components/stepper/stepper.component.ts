@@ -4,7 +4,7 @@ import { TailwindStep } from './step.component';
 @Component({
   selector: 'tailwind-stepper',
   templateUrl: './stepper.component.html',
-  styleUrl: './stepper.component.scss',
+  styleUrl: './stepper.component.scss'
 })
 export class TailwindStepper {
   readonly activeIndex = model<number>(0);

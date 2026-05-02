@@ -1,10 +1,6 @@
 <div class="tailwind-input-wrapper flex flex-col gap-1.5">
   @if (label()) {
-    <label
-      [for]="inputId()"
-      class="text-sm font-medium text-surface-700"
-      [class.text-danger-600]="hasError()"
-    >
+    <label [for]="inputId()" class="text-sm font-medium text-surface-700" [class.text-danger-600]="hasError()">
       {{ label() }}
       @if (required()) {
         <span class="text-danger-500 ml-0.5">*</span>
@@ -30,8 +26,7 @@
       [value]="value()"
       [class]="inputClasses()"
       (input)="onInputChange($event)"
-      (blur)="onBlur()"
-    />
+      (blur)="onBlur()" />
 
     @if (suffixIcon()) {
       <span class="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 pointer-events-none">

@@ -3,8 +3,12 @@
 }
 
 @keyframes tailwind-indeterminate {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(200%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
 }
 
 .tailwind-progress-indeterminate {

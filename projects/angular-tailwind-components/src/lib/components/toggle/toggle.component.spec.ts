@@ -7,7 +7,7 @@ describe('TailwindToggle', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TailwindToggle],
+      imports: [TailwindToggle]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TailwindToggle);

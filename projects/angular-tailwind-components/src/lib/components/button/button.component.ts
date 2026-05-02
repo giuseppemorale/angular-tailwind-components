@@ -1,34 +1,34 @@
 import { Component, computed, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { AtcSize, AtcVariant } from '../../models';
+import { TailwindSize, TailwindVariant } from '../../models';
 
 @Component({
-  selector: 'atc-button',
+  selector: 'tailwind-button',
   imports: [NgClass],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
 })
-export class AtcButton {
+export class TailwindButton {
   /** Visual style variant */
-  variant = input<AtcVariant>('primary');
+  readonly variant = input<TailwindVariant>('primary');
   /** Size of the button */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Whether the button is disabled */
-  disabled = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
   /** Whether to show loading spinner */
-  loading = input<boolean>(false);
+  readonly loading = input<boolean>(false);
   /** HTML button type attribute */
-  type = input<'button' | 'submit' | 'reset'>('button');
+  readonly type = input<'button' | 'submit' | 'reset'>('button');
   /** Make the button full width */
-  fullWidth = input<boolean>(false);
+  readonly fullWidth = input<boolean>(false);
   /** Icon-only mode (no text) */
-  iconOnly = input<boolean>(false);
+  readonly iconOnly = input<boolean>(false);
 
   /** Emitted when the button is clicked (not disabled/loading) */
-  clicked = output<MouseEvent>();
+  readonly clicked = output<MouseEvent>();
 
   /** Computed Tailwind classes based on variant, size, and state */
-  computedClasses = computed(() => {
+  readonly computedClasses = computed(() => {
     const base = [
       'inline-flex items-center justify-center gap-2',
       'font-medium',
@@ -38,7 +38,7 @@ export class AtcButton {
       'cursor-pointer',
     ];
 
-    const variantMap: Record<AtcVariant, string> = {
+    const variantMap: Record<TailwindVariant, string> = {
       primary:
         'bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 focus-visible:outline-primary-600 shadow-sm',
       secondary:
@@ -57,7 +57,7 @@ export class AtcButton {
         'bg-info-600 text-white hover:bg-info-700 active:bg-info-800 focus-visible:outline-info-600 shadow-sm',
     };
 
-    const sizeMap: Record<AtcSize, string> = {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs px-2 py-1 rounded-sm',
       sm: 'text-sm px-3 py-1.5 rounded-md',
       md: 'text-sm px-4 py-2 rounded-md',
@@ -65,7 +65,7 @@ export class AtcButton {
       xl: 'text-base px-6 py-3 rounded-lg',
     };
 
-    const iconSizeMap: Record<AtcSize, string> = {
+    const iconSizeMap: Record<TailwindSize, string> = {
       xs: 'p-1 rounded-sm',
       sm: 'p-1.5 rounded-md',
       md: 'p-2 rounded-md',

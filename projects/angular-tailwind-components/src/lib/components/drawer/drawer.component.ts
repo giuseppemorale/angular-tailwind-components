@@ -1,20 +1,20 @@
 import { Component, computed, input, output, signal } from '@angular/core';
-import { AtcPosition } from '../../models';
+import { TailwindPosition } from '../../models';
 
 @Component({
-  selector: 'atc-drawer',
+  selector: 'tailwind-drawer',
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.scss',
 })
-export class AtcDrawer {
+export class TailwindDrawer {
   /** Drawer title */
-  title = input<string>('');
+  readonly title = input<string>('');
   /** Position (left or right) */
-  position = input<'left' | 'right'>('right');
+  readonly position = input<'left' | 'right'>('right');
   /** Width class */
-  width = input<string>('max-w-md');
+  readonly width = input<string>('max-w-md');
   /** Whether clicking backdrop closes */
-  closeOnBackdrop = input<boolean>(true);
+  readonly closeOnBackdrop = input<boolean>(true);
 
   /** Open/close state */
   isOpen = signal(false);
@@ -22,9 +22,9 @@ export class AtcDrawer {
   isVisible = signal(false);
 
   /** Emitted when closed */
-  closed = output<void>();
+  readonly closed = output<void>();
 
-  panelClasses = computed(() => {
+  readonly panelClasses = computed(() => {
     const base = [
       'fixed top-0 bottom-0 z-[1050]',
       'flex flex-col w-full bg-white shadow-2xl',

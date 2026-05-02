@@ -1,11 +1,11 @@
 import { Component, input, output } from '@angular/core';
 
 @Component({
-  selector: 'atc-form',
+  selector: 'tailwind-form',
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
 })
-export class AtcForm {
-  gap = input<string>('4');
-  submitted = output<void>();
+export class TailwindForm {
+  readonly gap = input<string>('4');
+  readonly submitted = output<void>();
 }

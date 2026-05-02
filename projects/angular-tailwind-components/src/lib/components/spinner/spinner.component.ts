@@ -1,31 +1,31 @@
 import { Component, computed, input } from '@angular/core';
-import { AtcSize } from '../../models';
+import { TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-spinner',
+  selector: 'tailwind-spinner',
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.scss',
 })
-export class AtcSpinner {
+export class TailwindSpinner {
   /** Size variant */
-  size = input<AtcSize>('md');
-  /** Color â€” uses Tailwind text color class */
-  color = input<string>('text-primary-600');
+  readonly size = input<TailwindSize>('md');
+  /** Color ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â uses Tailwind text color class */
+  readonly color = input<string>('text-primary-600');
   /** Optional label text */
-  label = input<string>('');
+  readonly label = input<string>('');
   /** Aria label for accessibility */
-  ariaLabel = input<string>('Loading');
+  readonly ariaLabel = input<string>('Loading');
   /** Layout orientation */
-  orientation = input<'horizontal' | 'vertical'>('horizontal');
+  readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
 
-  containerClasses = computed(() => {
+  readonly containerClasses = computed(() => {
     const base = 'inline-flex items-center gap-2';
     const orient = this.orientation() === 'vertical' ? 'flex-col' : '';
     return `${base} ${orient}`;
   });
 
-  spinnerClasses = computed(() => {
-    const sizeMap: Record<AtcSize, string> = {
+  readonly spinnerClasses = computed(() => {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'w-3 h-3',
       sm: 'w-4 h-4',
       md: 'w-6 h-6',
@@ -33,11 +33,11 @@ export class AtcSpinner {
       xl: 'w-12 h-12',
     };
 
-    return `atc-spinner-svg ${sizeMap[this.size()]} ${this.color()}`;
+    return `tailwind-spinner-svg ${sizeMap[this.size()]} ${this.color()}`;
   });
 
-  labelClasses = computed(() => {
-    const sizeMap: Record<AtcSize, string> = {
+  readonly labelClasses = computed(() => {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs',
       sm: 'text-xs',
       md: 'text-sm',

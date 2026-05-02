@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AtcInput } from './input.component';
+import { TailwindInput } from './input.component';
 
-describe('AtcInput', () => {
-  let fixture: ComponentFixture<AtcInput>;
-  let component: AtcInput;
+describe('TailwindInput', () => {
+  let fixture: ComponentFixture<TailwindInput>;
+  let component: TailwindInput;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AtcInput],
+      imports: [TailwindInput],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AtcInput);
+    fixture = TestBed.createComponent(TailwindInput);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

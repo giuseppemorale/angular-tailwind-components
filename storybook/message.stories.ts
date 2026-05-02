@@ -1,25 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcMessage } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindMessage } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcMessage> = {
+const meta: Meta<TailwindMessage> = {
   title: 'Components/Message',
-  component: AtcMessage,
+  component: TailwindMessage,
   tags: ['autodocs'],
   argTypes: {
     severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] },
   },
 };
 export default meta;
-type Story = StoryObj<AtcMessage>;
+type Story = StoryObj<TailwindMessage>;
 
 export const AllSeverities: Story = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-2 max-w-md">
-        <atc-message severity="success">Operation completed successfully.</atc-message>
-        <atc-message severity="warning">Please review before proceeding.</atc-message>
-        <atc-message severity="danger">An error occurred during the operation.</atc-message>
-        <atc-message severity="info">This is an informational message.</atc-message>
+        <tailwind-message severity="success">Operation completed successfully.</tailwind-message>
+        <tailwind-message severity="warning">Please review before proceeding.</tailwind-message>
+        <tailwind-message severity="danger">An error occurred during the operation.</tailwind-message>
+        <tailwind-message severity="info">This is an informational message.</tailwind-message>
       </div>`,
   }),
 };
@@ -28,8 +28,8 @@ export const InForm: Story = {
   render: () => ({
     template: `
       <div class="max-w-sm space-y-2">
-        <atc-input label="Email" placeholder="Enter your email" />
-        <atc-message severity="danger">This email is already in use.</atc-message>
+        <tailwind-input label="Email" placeholder="Enter your email" />
+        <tailwind-message severity="danger">This email is already in use.</tailwind-message>
       </div>`,
   }),
 };

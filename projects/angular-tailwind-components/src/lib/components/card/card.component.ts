@@ -1,19 +1,19 @@
 import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'atc-card',
+  selector: 'tailwind-card',
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
-export class AtcCard {
+export class TailwindCard {
   /** Whether the card has elevated shadow */
-  elevated = input<boolean>(false);
+  readonly elevated = input<boolean>(false);
   /** Whether to show hover shadow effect */
-  hoverable = input<boolean>(false);
+  readonly hoverable = input<boolean>(false);
   /** Whether to show header background */
-  headerBg = input<boolean>(false);
+  readonly headerBg = input<boolean>(false);
   /** Custom padding class for the body */
-  bodyPadding = input<string>('p-6');
+  readonly bodyPadding = input<string>('p-6');
 
   /** Track content projection slots */
   hasHeader = false;

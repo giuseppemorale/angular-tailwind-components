@@ -1,15 +1,15 @@
 import { Component, computed, input } from '@angular/core';
-import { AtcSeverity } from '../../models';
+import { TailwindSeverity } from '../../models';
 
 @Component({
-  selector: 'atc-tag',
+  selector: 'tailwind-tag',
   templateUrl: './tag.component.html',
   styleUrl: './tag.component.scss',
 })
-export class AtcTag {
-  variant = input<AtcSeverity | 'neutral' | 'primary'>('neutral');
+export class TailwindTag {
+  readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('neutral');
 
-  computedClasses = computed(() => {
+  readonly computedClasses = computed(() => {
     const variantMap: Record<string, string> = {
       primary: 'bg-primary-600 text-white', neutral: 'bg-surface-600 text-white',
       success: 'bg-success-600 text-white', warning: 'bg-warning-500 text-surface-900',

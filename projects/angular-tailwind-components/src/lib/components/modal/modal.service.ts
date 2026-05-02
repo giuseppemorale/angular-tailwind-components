@@ -1,46 +1,25 @@
 import { Injectable, signal, Type } from '@angular/core';
-import { AtcSize } from '../../models';
+import { TailwindModalConfig } from './interfaces/modal-config.interface';
 
-export interface AtcModalConfig<TData = any> {
-  /** Modal title */
-  title?: string;
-  /** Size variant */
-  size?: AtcSize;
-  /** Simple text message shown in body */
-  message?: string;
-  /** Dynamic component to render as body */
-  component?: Type<any>;
-  /** Inputs to pass to the dynamic component */
-  inputs?: Record<string, any>;
-  /** Label for the primary (confirm) button */
-  confirmLabel?: string;
-  /** Label for the secondary (cancel) button */
-  cancelLabel?: string;
-  /** Show the X close button in header */
-  showCloseButton?: boolean;
-  /** Click backdrop to close */
-  closeOnBackdrop?: boolean;
-  /** Press Escape to close */
-  closeOnEscape?: boolean;
-}
+export type { TailwindModalConfig };
 
-interface AtcModalState<R = any> {
-  config: AtcModalConfig;
+interface TailwindModalState<R = any> {
+  config: TailwindModalConfig;
   resolve: (result: R | undefined) => void;
   isVisible: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
-export class AtcModalService {
-  /** @internal current modal state, consumed by AtcModalContainer */
-  readonly _state = signal<AtcModalState | null>(null);
+export class TailwindModalService {
+  /** @internal current modal state, consumed by TailwindModalContainer */
+  readonly _state = signal<TailwindModalState | null>(null);
 
   /**
    * Open a modal and return a Promise that resolves when it closes.
    * Resolves with `result` if closed via `close(result)` or confirm button.
    * Resolves with `undefined` if dismissed (backdrop / escape / X button).
    */
-  open<R = any>(config: AtcModalConfig): Promise<R | undefined> {
+  open<R = any>(config: TailwindModalConfig): Promise<R | undefined> {
     return new Promise<R | undefined>((resolve) => {
       this._state.set({ config, resolve, isVisible: false });
       // Animate in on next frame

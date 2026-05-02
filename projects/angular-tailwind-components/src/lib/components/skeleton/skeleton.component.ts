@@ -1,18 +1,18 @@
 import { Component, computed, input } from '@angular/core';
-import { AtcSize } from '../../models';
+import { TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-skeleton',
+  selector: 'tailwind-skeleton',
   templateUrl: './skeleton.component.html',
   styleUrl: './skeleton.component.scss',
 })
-export class AtcSkeleton {
-  variant = input<'text' | 'circle' | 'rect' | 'rounded'>('text');
-  width = input<string>('100%');
-  height = input<string>('');
+export class TailwindSkeleton {
+  readonly variant = input<'text' | 'circle' | 'rect' | 'rounded'>('text');
+  readonly width = input<string>('100%');
+  readonly height = input<string>('');
 
-  computedClasses = computed(() => {
-    const base = 'atc-skeleton-pulse';
+  readonly computedClasses = computed(() => {
+    const base = 'tailwind-skeleton-pulse';
     const variantMap: Record<string, string> = {
       text: 'h-4 rounded',
       circle: 'rounded-full',

@@ -1,47 +1,47 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AtcOption, AtcSize } from '../../models';
+import { TailwindOption, TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-select',
+  selector: 'tailwind-select',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AtcSelect),
+      useExisting: forwardRef(() => TailwindSelect),
       multi: true,
     },
   ],
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',
 })
-export class AtcSelect implements ControlValueAccessor {
+export class TailwindSelect implements ControlValueAccessor {
   /** Label text */
-  label = input<string>('');
+  readonly label = input<string>('');
   /** Placeholder text */
-  placeholder = input<string>('');
+  readonly placeholder = input<string>('');
   /** Available options */
-  options = input<AtcOption[]>([]);
+  readonly options = input<TailwindOption[]>([]);
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Whether the select is required */
-  required = input<boolean>(false);
+  readonly required = input<boolean>(false);
   /** Helper text */
-  helperText = input<string>('');
+  readonly helperText = input<string>('');
   /** Error text */
-  errorText = input<string>('');
+  readonly errorText = input<string>('');
   /** Whether in error state */
-  hasError = input<boolean>(false);
+  readonly hasError = input<boolean>(false);
   /** Unique ID */
-  selectId = input<string>(`atc-select-${nextSelectId++}`);
+  readonly selectId = input<string>(`tailwind-select-${nextSelectId++}`);
 
   /** Currently selected value */
-  value = model<string>('');
+  readonly value = model<string>('');
 
   /** Internal disabled state */
   isDisabled = signal(false);
 
   /** Computed select classes */
-  selectClasses = computed(() => {
+  readonly selectClasses = computed(() => {
     const base = [
       'block w-full appearance-none bg-white',
       'border transition-colors duration-150',
@@ -50,7 +50,7 @@ export class AtcSelect implements ControlValueAccessor {
       'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed',
     ];
 
-    const sizeMap: Record<AtcSize, string> = {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs px-2 py-1 rounded-sm',
       sm: 'text-sm px-2.5 py-1.5 rounded-md',
       md: 'text-sm px-3 py-2 rounded-md',

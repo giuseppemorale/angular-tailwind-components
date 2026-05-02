@@ -1,18 +1,24 @@
 import { Component, computed, input, model, output } from '@angular/core';
 
 @Component({
-  selector: 'atc-pagination',
+  selector: 'tailwind-pagination',
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })
-export class AtcPagination {
-  totalPages = input.required<number>();
-  currentPage = model<number>(1);
-  maxVisible = input<number>(7);
-  ariaLabel = input<string>('Pagination');
-  pageChanged = output<number>();
+export class TailwindPagination {
+  readonly totalItems = input.required<number>();
+  readonly pageSize = input<number>(10);
+  readonly currentPage = model<number>(1);
+  readonly maxVisible = input<number>(7);
+  readonly ariaLabel = input<string>('Pagination');
+  readonly showSummary = input<boolean>(false);
+  readonly summaryTemplate = input<string>('Showing {start}-{end} of {total}');
 
-  visiblePages = computed(() => {
+  readonly pageChanged = output<number>();
+
+  readonly totalPages = computed(() => Math.ceil(this.totalItems() / this.pageSize()));
+
+  readonly visiblePages = computed(() => {
     const total = this.totalPages();
     const current = this.currentPage();
     const max = this.maxVisible();
@@ -28,6 +34,17 @@ export class AtcPagination {
     if (end < total - 1) pages.push(-1);
     pages.push(total);
     return pages;
+  });
+
+  readonly summaryText = computed(() => {
+    const total = this.totalItems();
+    if (total === 0) return this.summaryTemplate().replace('{start}', '0').replace('{end}', '0').replace('{total}', '0');
+    const start = (this.currentPage() - 1) * this.pageSize() + 1;
+    const end = Math.min(this.currentPage() * this.pageSize(), total);
+    return this.summaryTemplate()
+      .replace('{start}', start.toString())
+      .replace('{end}', end.toString())
+      .replace('{total}', total.toString());
   });
 
   goToPage(page: number): void {

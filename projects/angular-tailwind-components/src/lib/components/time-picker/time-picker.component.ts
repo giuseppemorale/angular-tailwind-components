@@ -2,16 +2,16 @@ import { Component, computed, forwardRef, input, model, signal } from '@angular/
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'atc-time-picker',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AtcTimePicker), multi: true }],
+  selector: 'tailwind-time-picker',
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindTimePicker), multi: true }],
   templateUrl: './time-picker.component.html',
   styleUrl: './time-picker.component.scss',
 })
-export class AtcTimePicker implements ControlValueAccessor {
-  label = input<string>('');
-  step = input<number>(60);
-  pickerId = input<string>(`atc-time-${nextTimeId++}`);
-  value = model<string>('');
+export class TailwindTimePicker implements ControlValueAccessor {
+  readonly label = input<string>('');
+  readonly step = input<number>(60);
+  readonly pickerId = input<string>(`tailwind-time-${nextTimeId++}`);
+  readonly value = model<string>('');
   isDisabled = signal(false);
   private onChange: (v: string) => void = () => {};
   onTouched: () => void = () => {};

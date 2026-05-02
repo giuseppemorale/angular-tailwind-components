@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcBreadcrumb } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindBreadcrumb } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcBreadcrumb> = {
+const meta: Meta<TailwindBreadcrumb> = {
   title: 'Components/Breadcrumb',
-  component: AtcBreadcrumb,
+  component: TailwindBreadcrumb,
   tags: ['autodocs'],
 };
 export default meta;
-type Story = StoryObj<AtcBreadcrumb>;
+type Story = StoryObj<TailwindBreadcrumb>;
 
 export const Default: Story = {
   render: () => ({
     template: `
-      <atc-breadcrumb [items]="items"></atc-breadcrumb>`,
+      <tailwind-breadcrumb [items]="items"></tailwind-breadcrumb>`,
     props: {
       items: [
         { label: 'Home', href: '#' },
@@ -26,7 +26,7 @@ export const Default: Story = {
 
 export const Short: Story = {
   render: () => ({
-    template: `<atc-breadcrumb [items]="items"></atc-breadcrumb>`,
+    template: `<tailwind-breadcrumb [items]="items"></tailwind-breadcrumb>`,
     props: {
       items: [
         { label: 'Dashboard', href: '#' },

@@ -1,16 +1,16 @@
 import { Component, computed, input } from '@angular/core';
-import { AtcSeverity } from '../../models';
+import { TailwindSeverity } from '../../models';
 
 @Component({
-  selector: 'atc-message',
+  selector: 'tailwind-message',
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss',
 })
-export class AtcMessage {
-  severity = input<AtcSeverity>('info');
+export class TailwindMessage {
+  readonly severity = input<TailwindSeverity>('info');
 
-  computedClasses = computed(() => {
-    const variantMap: Record<AtcSeverity, string> = {
+  readonly computedClasses = computed(() => {
+    const variantMap: Record<TailwindSeverity, string> = {
       success: 'bg-success-50 text-success-700 border-success-200',
       warning: 'bg-warning-50 text-warning-700 border-warning-200',
       danger: 'bg-danger-50 text-danger-700 border-danger-200',

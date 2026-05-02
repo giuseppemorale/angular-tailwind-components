@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcAlert } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindAlert } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcAlert> = {
+const meta: Meta<TailwindAlert> = {
   title: 'Components/Alert',
-  component: AtcAlert,
+  component: TailwindAlert,
   tags: ['autodocs'],
   argTypes: {
     severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] },
@@ -13,16 +13,16 @@ const meta: Meta<AtcAlert> = {
   },
 };
 export default meta;
-type Story = StoryObj<AtcAlert>;
+type Story = StoryObj<TailwindAlert>;
 
 export const AllSeverities: Story = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-3">
-        <atc-alert severity="info" title="Information">This is an informational alert.</atc-alert>
-        <atc-alert severity="success" title="Success">Your action was completed successfully.</atc-alert>
-        <atc-alert severity="warning" title="Warning">Please review before proceeding.</atc-alert>
-        <atc-alert severity="danger" title="Error">An error occurred during the operation.</atc-alert>
+        <tailwind-alert severity="info" title="Information">This is an informational alert.</tailwind-alert>
+        <tailwind-alert severity="success" title="Success">Your action was completed successfully.</tailwind-alert>
+        <tailwind-alert severity="warning" title="Warning">Please review before proceeding.</tailwind-alert>
+        <tailwind-alert severity="danger" title="Error">An error occurred during the operation.</tailwind-alert>
       </div>
     `,
   }),
@@ -30,6 +30,6 @@ export const AllSeverities: Story = {
 
 export const Dismissible: Story = {
   render: () => ({
-    template: `<atc-alert severity="info" title="Dismissible" [dismissible]="true">Click the X to dismiss this alert.</atc-alert>`,
+    template: `<tailwind-alert severity="info" title="Dismissible" [dismissible]="true">Click the X to dismiss this alert.</tailwind-alert>`,
   }),
 };

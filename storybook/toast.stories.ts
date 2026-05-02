@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcToastService, AtcToastContainer } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindToastService, TailwindToastContainer } from '../projects/angular-tailwind-components/src/public-api';
 import { Component, inject } from '@angular/core';
 
 @Component({
-  selector: 'atc-toast-story',
-  imports: [AtcToastContainer],
+  selector: 'tailwind-toast-story',
+  imports: [TailwindToastContainer],
   template: `
     <div class="flex flex-wrap gap-3">
-      <atc-button variant="success" (click)="showSuccess()">Success</atc-button>
-      <atc-button variant="warning" (click)="showWarning()">Warning</atc-button>
-      <atc-button variant="danger" (click)="showDanger()">Error</atc-button>
-      <atc-button (click)="showInfo()">Info</atc-button>
-      <atc-button variant="ghost" (click)="toast.clear()">Clear All</atc-button>
+      <tailwind-button variant="success" (click)="showSuccess()">Success</tailwind-button>
+      <tailwind-button variant="warning" (click)="showWarning()">Warning</tailwind-button>
+      <tailwind-button variant="danger" (click)="showDanger()">Error</tailwind-button>
+      <tailwind-button (click)="showInfo()">Info</tailwind-button>
+      <tailwind-button variant="ghost" (click)="toast.clear()">Clear All</tailwind-button>
     </div>
-    <atc-toast-container />`,
+    <tailwind-toast-container />`,
 })
 class ToastStoryComponent {
-  toast = inject(AtcToastService);
+  toast = inject(TailwindToastService);
   showSuccess() { this.toast.success('Saved successfully!', 'Success'); }
   showWarning() { this.toast.warning('Session expires in 5 minutes.', 'Warning'); }
   showDanger() { this.toast.danger('Failed to save changes.', 'Error'); }

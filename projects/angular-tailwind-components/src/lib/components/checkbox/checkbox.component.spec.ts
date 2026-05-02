@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AtcCheckbox } from './checkbox.component';
+import { TailwindCheckbox } from './checkbox.component';
 
-describe('AtcCheckbox', () => {
-  let fixture: ComponentFixture<AtcCheckbox>;
-  let component: AtcCheckbox;
+describe('TailwindCheckbox', () => {
+  let fixture: ComponentFixture<TailwindCheckbox>;
+  let component: TailwindCheckbox;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AtcCheckbox],
+      imports: [TailwindCheckbox],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AtcCheckbox);
+    fixture = TestBed.createComponent(TailwindCheckbox);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcSpinner } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindSpinner } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcSpinner> = {
+const meta: Meta<TailwindSpinner> = {
   title: 'Components/Spinner',
-  component: AtcSpinner,
+  component: TailwindSpinner,
   tags: ['autodocs'],
 };
 export default meta;
-type Story = StoryObj<AtcSpinner>;
+type Story = StoryObj<TailwindSpinner>;
 
 export const AllSizes: Story = {
   render: () => ({
     template: `
       <div class="flex items-center gap-6">
-        <atc-spinner size="xs" />
-        <atc-spinner size="sm" />
-        <atc-spinner size="md" />
-        <atc-spinner size="lg" />
-        <atc-spinner size="xl" />
+        <tailwind-spinner size="xs" />
+        <tailwind-spinner size="sm" />
+        <tailwind-spinner size="md" />
+        <tailwind-spinner size="lg" />
+        <tailwind-spinner size="xl" />
       </div>
     `,
   }),
@@ -25,6 +25,6 @@ export const AllSizes: Story = {
 
 export const WithLabel: Story = {
   render: () => ({
-    template: `<atc-spinner size="md" label="Loading data..." />`,
+    template: `<tailwind-spinner size="md" label="Loading data..." />`,
   }),
 };

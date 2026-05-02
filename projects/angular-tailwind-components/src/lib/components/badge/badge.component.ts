@@ -1,24 +1,24 @@
 import { Component, computed, input } from '@angular/core';
-import { AtcSeverity, AtcSize } from '../../models';
+import { TailwindSeverity, TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-badge',
+  selector: 'tailwind-badge',
   templateUrl: './badge.component.html',
   styleUrl: './badge.component.scss',
 })
-export class AtcBadge {
+export class TailwindBadge {
   /** Color variant */
-  variant = input<AtcSeverity | 'neutral' | 'primary'>('primary');
+  readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('primary');
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Show a dot indicator */
-  dot = input<boolean>(false);
+  readonly dot = input<boolean>(false);
   /** Shape variant */
-  pill = input<boolean>(false);
+  readonly pill = input<boolean>(false);
   /** Accessible label */
-  ariaLabel = input<string>('');
+  readonly ariaLabel = input<string>('');
 
-  computedClasses = computed(() => {
+  readonly computedClasses = computed(() => {
     const base = [
       'inline-flex items-center gap-1 font-medium',
       'leading-none',
@@ -33,7 +33,7 @@ export class AtcBadge {
       info: 'bg-info-100 text-info-700',
     };
 
-    const sizeMap: Record<AtcSize, string> = {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-[10px] px-1.5 py-0.5',
       sm: 'text-xs px-2 py-0.5',
       md: 'text-xs px-2.5 py-1',

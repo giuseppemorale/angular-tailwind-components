@@ -2,18 +2,18 @@ import { Component, computed, forwardRef, input, model, signal } from '@angular/
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
-  selector: 'atc-date-picker',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AtcDatePicker), multi: true }],
+  selector: 'tailwind-date-picker',
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDatePicker), multi: true }],
   templateUrl: './date-picker.component.html',
   styleUrl: './date-picker.component.scss',
 })
-export class AtcDatePicker implements ControlValueAccessor {
-  label = input<string>('');
-  placeholder = input<string>('Select date');
-  format = input<string>('yyyy-MM-dd');
-  pickerId = input<string>(`atc-date-${nextDateId++}`);
+export class TailwindDatePicker implements ControlValueAccessor {
+  readonly label = input<string>('');
+  readonly placeholder = input<string>('Select date');
+  readonly format = input<string>('yyyy-MM-dd');
+  readonly pickerId = input<string>(`tailwind-date-${nextDateId++}`);
 
-  value = model<string>('');
+  readonly value = model<string>('');
   isDisabled = signal(false);
   showCalendar = signal(false);
   viewMonth = signal(new Date().getMonth());
@@ -21,14 +21,14 @@ export class AtcDatePicker implements ControlValueAccessor {
 
   readonly weekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
-  displayValue = computed(() => this.value() || '');
+  readonly displayValue = computed(() => this.value() || '');
 
-  monthYearLabel = computed(() => {
+  readonly monthYearLabel = computed(() => {
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     return `${months[this.viewMonth()]} ${this.viewYear()}`;
   });
 
-  calendarDays = computed(() => {
+  readonly calendarDays = computed(() => {
     const y = this.viewYear(), m = this.viewMonth();
     const firstDay = new Date(y, m, 1).getDay();
     const daysInMonth = new Date(y, m + 1, 0).getDate();

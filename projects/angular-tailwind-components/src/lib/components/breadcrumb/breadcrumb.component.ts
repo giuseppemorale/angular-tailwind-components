@@ -1,16 +1,14 @@
 import { Component, input } from '@angular/core';
+import { TailwindBreadcrumbItem } from './interfaces/breadcrumb-item.interface';
 
-export interface AtcBreadcrumbItem {
-  label: string;
-  href?: string;
-}
+export type { TailwindBreadcrumbItem };
 
 @Component({
-  selector: 'atc-breadcrumb',
+  selector: 'tailwind-breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styleUrl: './breadcrumb.component.scss',
 })
-export class AtcBreadcrumb {
-  items = input<AtcBreadcrumbItem[]>([]);
-  ariaLabel = input<string>('Breadcrumb');
+export class TailwindBreadcrumb {
+  readonly items = input<TailwindBreadcrumbItem[]>([]);
+  readonly ariaLabel = input<string>('Breadcrumb');
 }

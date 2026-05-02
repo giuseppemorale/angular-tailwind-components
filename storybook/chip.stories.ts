@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcChip } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindChip } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcChip> = {
+const meta: Meta<TailwindChip> = {
   title: 'Components/Chip',
-  component: AtcChip,
+  component: TailwindChip,
   tags: ['autodocs'],
 };
 export default meta;
-type Story = StoryObj<AtcChip>;
+type Story = StoryObj<TailwindChip>;
 
 export const Default: Story = {
   render: () => ({
-    template: `<atc-chip>Angular</atc-chip>`,
+    template: `<tailwind-chip>Angular</tailwind-chip>`,
   }),
 };
 
@@ -19,10 +19,10 @@ export const Removable: Story = {
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-2">
-        <atc-chip [removable]="true">Angular</atc-chip>
-        <atc-chip [removable]="true" variant="success">TypeScript</atc-chip>
-        <atc-chip [removable]="true" variant="info">Tailwind</atc-chip>
-        <atc-chip [removable]="true" variant="warning">Design</atc-chip>
+        <tailwind-chip [removable]="true">Angular</tailwind-chip>
+        <tailwind-chip [removable]="true" variant="success">TypeScript</tailwind-chip>
+        <tailwind-chip [removable]="true" variant="info">Tailwind</tailwind-chip>
+        <tailwind-chip [removable]="true" variant="warning">Design</tailwind-chip>
       </div>`,
   }),
 };
@@ -31,12 +31,12 @@ export const AllVariants: Story = {
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-2">
-        <atc-chip variant="default">Default</atc-chip>
-        <atc-chip variant="primary">Primary</atc-chip>
-        <atc-chip variant="success">Success</atc-chip>
-        <atc-chip variant="warning">Warning</atc-chip>
-        <atc-chip variant="danger">Danger</atc-chip>
-        <atc-chip variant="info">Info</atc-chip>
+        <tailwind-chip variant="default">Default</tailwind-chip>
+        <tailwind-chip variant="primary">Primary</tailwind-chip>
+        <tailwind-chip variant="success">Success</tailwind-chip>
+        <tailwind-chip variant="warning">Warning</tailwind-chip>
+        <tailwind-chip variant="danger">Danger</tailwind-chip>
+        <tailwind-chip variant="info">Info</tailwind-chip>
       </div>`,
   }),
 };

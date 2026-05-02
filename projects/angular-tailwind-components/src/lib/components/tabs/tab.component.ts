@@ -1,19 +1,19 @@
 import { Component, input, signal } from '@angular/core';
 
 @Component({
-  selector: 'atc-tab',
+  selector: 'tailwind-tab',
   templateUrl: './tab.component.html',
   styleUrl: './tab.component.scss',
 })
-export class AtcTab {
+export class TailwindTab {
   /** Tab label */
   label = input.required<string>();
   /** Tab icon (optional, CSS class or content) */
-  icon = input<string>('');
+  readonly icon = input<string>('');
   /** Whether the tab is disabled */
-  disabled = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
   /** Unique identifier */
-  tabId = input<string>(`atc-tab-${nextTabId++}`);
+  readonly tabId = input<string>(`tailwind-tab-${nextTabId++}`);
 
   /** Whether this tab is the currently active one (set by parent) */
   isActive = signal(false);

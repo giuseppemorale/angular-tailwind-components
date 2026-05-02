@@ -1,38 +1,38 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AtcSize } from '../../models';
+import { TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-checkbox',
+  selector: 'tailwind-checkbox',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AtcCheckbox),
+      useExisting: forwardRef(() => TailwindCheckbox),
       multi: true,
     },
   ],
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.scss',
 })
-export class AtcCheckbox implements ControlValueAccessor {
+export class TailwindCheckbox implements ControlValueAccessor {
   /** Label text */
-  label = input<string>('');
+  readonly label = input<string>('');
   /** Description text */
-  description = input<string>('');
+  readonly description = input<string>('');
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Unique ID */
-  checkboxId = input<string>(`atc-checkbox-${nextCheckboxId++}`);
+  readonly checkboxId = input<string>(`tailwind-checkbox-${nextCheckboxId++}`);
 
   /** Two-way bound checked state */
-  checked = model<boolean>(false);
+  readonly checked = model<boolean>(false);
 
   /** Internal disabled state */
   isDisabled = signal(false);
 
   /** Box size class based on size input */
-  boxSizeClass = computed(() => {
-    const sizeMap: Record<AtcSize, string> = {
+  readonly boxSizeClass = computed(() => {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'w-3.5 h-3.5',
       sm: 'w-4 h-4',
       md: 'w-5 h-5',

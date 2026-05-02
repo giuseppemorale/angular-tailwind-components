@@ -1,33 +1,33 @@
 import { Component, computed, input } from '@angular/core';
-import { AtcSeverity, AtcSize } from '../../models';
+import { TailwindSeverity, TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-progress-bar',
+  selector: 'tailwind-progress-bar',
   templateUrl: './progress-bar.component.html',
   styleUrl: './progress-bar.component.scss',
 })
-export class AtcProgressBar {
+export class TailwindProgressBar {
   /** Current value (0-100) */
-  value = input<number>(0);
+  readonly value = input<number>(0);
   /** Label text */
-  label = input<string>('');
+  readonly label = input<string>('');
   /** Show the label row */
-  showLabel = input<boolean>(true);
+  readonly showLabel = input<boolean>(true);
   /** Show percentage value */
-  showValue = input<boolean>(true);
+  readonly showValue = input<boolean>(true);
   /** Color variant */
-  variant = input<AtcSeverity | 'primary'>('primary');
+  readonly variant = input<TailwindSeverity | 'primary'>('primary');
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Indeterminate mode (animated) */
-  indeterminate = input<boolean>(false);
+  readonly indeterminate = input<boolean>(false);
   /** Whether to use striped pattern */
-  striped = input<boolean>(false);
+  readonly striped = input<boolean>(false);
 
-  clampedValue = computed(() => Math.max(0, Math.min(100, this.value())));
+  readonly clampedValue = computed(() => Math.max(0, Math.min(100, this.value())));
 
-  trackClasses = computed(() => {
-    const sizeMap: Record<AtcSize, string> = {
+  readonly trackClasses = computed(() => {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'h-1',
       sm: 'h-1.5',
       md: 'h-2.5',
@@ -38,7 +38,7 @@ export class AtcProgressBar {
     return `w-full bg-surface-200 rounded-full overflow-hidden ${sizeMap[this.size()]}`;
   });
 
-  barClasses = computed(() => {
+  readonly barClasses = computed(() => {
     const variantMap: Record<string, string> = {
       primary: 'bg-primary-600',
       success: 'bg-success-600',
@@ -53,7 +53,7 @@ export class AtcProgressBar {
     ];
 
     if (this.indeterminate()) {
-      base.push('atc-progress-indeterminate');
+      base.push('tailwind-progress-indeterminate');
     }
 
     if (this.striped()) {

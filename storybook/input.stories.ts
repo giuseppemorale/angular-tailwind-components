@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcInput } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindInput } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcInput> = {
+const meta: Meta<TailwindInput> = {
   title: 'Components/Input',
-  component: AtcInput,
+  component: TailwindInput,
   tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
@@ -17,19 +17,19 @@ const meta: Meta<AtcInput> = {
   },
 };
 export default meta;
-type Story = StoryObj<AtcInput>;
+type Story = StoryObj<TailwindInput>;
 
 export const Default: Story = {
   render: (args) => ({
     props: args,
-    template: `<atc-input [label]="label" [placeholder]="placeholder" [type]="type" [size]="size" [helperText]="helperText" [hasError]="hasError" [errorText]="errorText" [required]="required" />`,
+    template: `<tailwind-input [label]="label" [placeholder]="placeholder" [type]="type" [size]="size" [helperText]="helperText" [hasError]="hasError" [errorText]="errorText" [required]="required" />`,
   }),
   args: { label: 'Email', placeholder: 'Enter your email', type: 'email', size: 'md', helperText: 'We will never share your email.', hasError: false, errorText: '', required: false },
 };
 
 export const WithError: Story = {
   render: () => ({
-    template: `<atc-input label="Username" placeholder="Enter username" [hasError]="true" errorText="Username is already taken" />`,
+    template: `<tailwind-input label="Username" placeholder="Enter username" [hasError]="true" errorText="Username is already taken" />`,
   }),
 };
 
@@ -37,11 +37,11 @@ export const AllSizes: Story = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-4 max-w-sm">
-        <atc-input label="Extra Small" size="xs" placeholder="xs" />
-        <atc-input label="Small" size="sm" placeholder="sm" />
-        <atc-input label="Medium" size="md" placeholder="md" />
-        <atc-input label="Large" size="lg" placeholder="lg" />
-        <atc-input label="Extra Large" size="xl" placeholder="xl" />
+        <tailwind-input label="Extra Small" size="xs" placeholder="xs" />
+        <tailwind-input label="Small" size="sm" placeholder="sm" />
+        <tailwind-input label="Medium" size="md" placeholder="md" />
+        <tailwind-input label="Large" size="lg" placeholder="lg" />
+        <tailwind-input label="Extra Large" size="xl" placeholder="xl" />
       </div>
     `,
   }),

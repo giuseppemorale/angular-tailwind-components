@@ -1,30 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcMenu } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindMenu } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcMenu> = {
+const meta: Meta<TailwindMenu> = {
   title: 'Components/Menu',
-  component: AtcMenu,
+  component: TailwindMenu,
   tags: ['autodocs'],
 };
 export default meta;
-type Story = StoryObj<AtcMenu>;
+type Story = StoryObj<TailwindMenu>;
 
 export const Default: Story = {
   render: () => ({
     props: {
       items: [
-        { label: 'Profile', icon: 'ðŸ‘¤' },
-        { label: 'Settings', icon: 'âš™ï¸' },
-        { label: 'Help', icon: 'â“' },
+        { label: 'Profile', icon: 'Ã°Å¸â€˜Â¤' },
+        { label: 'Settings', icon: 'Ã¢Å¡â„¢Ã¯Â¸Â' },
+        { label: 'Help', icon: 'Ã¢Ââ€œ' },
         { type: 'divider' },
-        { label: 'Sign out', icon: 'ðŸšª', danger: true },
+        { label: 'Sign out', icon: 'Ã°Å¸Å¡Âª', danger: true },
       ],
     },
     template: `
       <div style="padding:20px">
-        <atc-menu [items]="items">
-          <atc-button>Open Menu â–¾</atc-button>
-        </atc-menu>
+        <tailwind-menu [items]="items">
+          <tailwind-button>Open Menu Ã¢â€“Â¾</tailwind-button>
+        </tailwind-menu>
       </div>`,
   }),
 };
@@ -33,18 +33,18 @@ export const WithDisabled: Story = {
   render: () => ({
     props: {
       items: [
-        { label: 'Edit', icon: 'âœï¸' },
-        { label: 'Duplicate', icon: 'ðŸ“‹', disabled: true },
-        { label: 'Archive', icon: 'ðŸ“¦' },
+        { label: 'Edit', icon: 'Ã¢Å“ÂÃ¯Â¸Â' },
+        { label: 'Duplicate', icon: 'Ã°Å¸â€œâ€¹', disabled: true },
+        { label: 'Archive', icon: 'Ã°Å¸â€œÂ¦' },
         { type: 'divider' },
-        { label: 'Delete', icon: 'ðŸ—‘ï¸', danger: true },
+        { label: 'Delete', icon: 'Ã°Å¸â€”â€˜Ã¯Â¸Â', danger: true },
       ],
     },
     template: `
       <div style="padding:20px">
-        <atc-menu [items]="items">
-          <atc-button variant="outline">Actions â–¾</atc-button>
-        </atc-menu>
+        <tailwind-menu [items]="items">
+          <tailwind-button variant="outline">Actions Ã¢â€“Â¾</tailwind-button>
+        </tailwind-menu>
       </div>`,
   }),
 };

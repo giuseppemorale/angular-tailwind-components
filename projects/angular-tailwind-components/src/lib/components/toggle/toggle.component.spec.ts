@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AtcToggle } from './toggle.component';
+import { TailwindToggle } from './toggle.component';
 
-describe('AtcToggle', () => {
-  let fixture: ComponentFixture<AtcToggle>;
-  let component: AtcToggle;
+describe('TailwindToggle', () => {
+  let fixture: ComponentFixture<TailwindToggle>;
+  let component: TailwindToggle;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AtcToggle],
+      imports: [TailwindToggle],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AtcToggle);
+    fixture = TestBed.createComponent(TailwindToggle);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

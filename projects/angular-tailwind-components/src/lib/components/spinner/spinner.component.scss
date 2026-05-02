@@ -2,11 +2,11 @@
   display: inline-flex;
 }
 
-@keyframes atc-spin {
+@keyframes tailwind-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-.atc-spinner-svg {
-  animation: atc-spin 0.75s linear infinite;
+.tailwind-spinner-svg {
+  animation: tailwind-spin 0.75s linear infinite;
 }

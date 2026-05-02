@@ -1,24 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcTag } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindTag } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcTag> = {
+const meta: Meta<TailwindTag> = {
   title: 'Components/Tag',
-  component: AtcTag,
+  component: TailwindTag,
   tags: ['autodocs'],
 };
 export default meta;
-type Story = StoryObj<AtcTag>;
+type Story = StoryObj<TailwindTag>;
 
 export const AllVariants: Story = {
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-2">
-        <atc-tag>Default</atc-tag>
-        <atc-tag variant="primary">Primary</atc-tag>
-        <atc-tag variant="success">Success</atc-tag>
-        <atc-tag variant="warning">Warning</atc-tag>
-        <atc-tag variant="danger">Danger</atc-tag>
-        <atc-tag variant="info">Info</atc-tag>
+        <tailwind-tag>Default</tailwind-tag>
+        <tailwind-tag variant="primary">Primary</tailwind-tag>
+        <tailwind-tag variant="success">Success</tailwind-tag>
+        <tailwind-tag variant="warning">Warning</tailwind-tag>
+        <tailwind-tag variant="danger">Danger</tailwind-tag>
+        <tailwind-tag variant="info">Info</tailwind-tag>
       </div>`,
   }),
 };
@@ -27,9 +27,9 @@ export const WithIcons: Story = {
   render: () => ({
     template: `
       <div class="flex gap-2">
-        <atc-tag variant="success">âœ“ Completed</atc-tag>
-        <atc-tag variant="warning">âš  Pending</atc-tag>
-        <atc-tag variant="danger">âœ— Failed</atc-tag>
+        <tailwind-tag variant="success">Ã¢Å“â€œ Completed</tailwind-tag>
+        <tailwind-tag variant="warning">Ã¢Å¡Â  Pending</tailwind-tag>
+        <tailwind-tag variant="danger">Ã¢Å“â€” Failed</tailwind-tag>
       </div>`,
   }),
 };

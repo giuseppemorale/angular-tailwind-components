@@ -1,26 +1,17 @@
 import { Injectable, signal } from '@angular/core';
-import { AtcSeverity } from '../../models';
+import { TailwindToastConfig } from './interfaces/toast-config.interface';
+import { TailwindToastItem } from './interfaces/toast-item.interface';
 
-export interface AtcToastConfig {
-  message: string;
-  title?: string;
-  severity?: AtcSeverity;
-  duration?: number;
-  dismissible?: boolean;
-}
-
-export interface AtcToastItem extends AtcToastConfig {
-  id: number;
-}
+export type { TailwindToastConfig, TailwindToastItem };
 
 @Injectable({ providedIn: 'root' })
-export class AtcToastService {
+export class TailwindToastService {
   private nextId = 0;
-  toasts = signal<AtcToastItem[]>([]);
+  readonly toasts = signal<TailwindToastItem[]>([]);
 
-  show(config: AtcToastConfig): number {
+  show(config: TailwindToastConfig): number {
     const id = this.nextId++;
-    const toast: AtcToastItem = { id, severity: 'info', duration: 4000, dismissible: true, ...config };
+    const toast: TailwindToastItem = { id, severity: 'info', duration: 4000, dismissible: true, ...config };
     this.toasts.update(list => [...list, toast]);
     if (toast.duration && toast.duration > 0) {
       setTimeout(() => this.dismiss(id), toast.duration);

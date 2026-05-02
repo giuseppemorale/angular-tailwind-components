@@ -1,36 +1,36 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AtcSize } from '../../models';
+import { TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-toggle',
+  selector: 'tailwind-toggle',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AtcToggle),
+      useExisting: forwardRef(() => TailwindToggle),
       multi: true,
     },
   ],
   templateUrl: './toggle.component.html',
   styleUrl: './toggle.component.scss',
 })
-export class AtcToggle implements ControlValueAccessor {
+export class TailwindToggle implements ControlValueAccessor {
   /** Label text */
-  label = input<string>('');
+  readonly label = input<string>('');
   /** Aria label for accessibility */
-  ariaLabel = input<string>('');
+  readonly ariaLabel = input<string>('');
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
 
   /** Two-way bound checked state */
-  checked = model<boolean>(false);
+  readonly checked = model<boolean>(false);
 
   /** Internal disabled state */
   isDisabled = signal(false);
 
   /** Track (background) classes */
-  trackClasses = computed(() => {
-    const sizeMap: Record<AtcSize, string> = {
+  readonly trackClasses = computed(() => {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'w-7 h-4',
       sm: 'w-8 h-5',
       md: 'w-11 h-6',
@@ -54,8 +54,8 @@ export class AtcToggle implements ControlValueAccessor {
   });
 
   /** Thumb (knob) classes */
-  thumbClasses = computed(() => {
-    const sizeMap: Record<AtcSize, { thumb: string; translateOn: string }> = {
+  readonly thumbClasses = computed(() => {
+    const sizeMap: Record<TailwindSize, { thumb: string; translateOn: string }> = {
       xs: { thumb: 'w-3 h-3', translateOn: 'translate-x-3' },
       sm: { thumb: 'w-4 h-4', translateOn: 'translate-x-3' },
       md: { thumb: 'w-5 h-5', translateOn: 'translate-x-5' },

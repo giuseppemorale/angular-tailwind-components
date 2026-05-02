@@ -1,15 +1,15 @@
 import { Component, contentChildren, input, model, effect } from '@angular/core';
-import { AtcStep } from './step.component';
+import { TailwindStep } from './step.component';
 
 @Component({
-  selector: 'atc-stepper',
+  selector: 'tailwind-stepper',
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.scss',
 })
-export class AtcStepper {
-  activeIndex = model<number>(0);
-  linear = input<boolean>(false);
-  steps = contentChildren(AtcStep);
+export class TailwindStepper {
+  readonly activeIndex = model<number>(0);
+  readonly linear = input<boolean>(false);
+  steps = contentChildren(TailwindStep);
 
   constructor() {
     effect(() => {

@@ -7,28 +7,28 @@ import {
   input,
   signal,
 } from '@angular/core';
-import { AtcPosition } from '../../models';
+import { TailwindPosition } from '../../models';
 
 @Component({
-  selector: 'atc-tooltip',
+  selector: 'tailwind-tooltip',
   templateUrl: './tooltip.component.html',
   styleUrl: './tooltip.component.scss',
 })
-export class AtcTooltip {
+export class TailwindTooltip {
   /** Tooltip text */
   text = input.required<string>();
   /** Position relative to trigger */
-  position = input<AtcPosition>('top');
+  readonly position = input<TailwindPosition>('top');
   /** Delay before showing (ms) */
-  showDelay = input<number>(200);
+  readonly showDelay = input<number>(200);
   /** Delay before hiding (ms) */
-  hideDelay = input<number>(100);
+  readonly hideDelay = input<number>(100);
 
   isVisible = signal(false);
   private showTimeout: ReturnType<typeof setTimeout> | null = null;
   private hideTimeout: ReturnType<typeof setTimeout> | null = null;
 
-  tooltipClasses = computed(() => {
+  readonly tooltipClasses = computed(() => {
     const base = [
       'absolute z-[1070] px-3 py-1.5',
       'text-xs font-medium text-white bg-surface-900 rounded-lg',
@@ -37,7 +37,7 @@ export class AtcTooltip {
       this.isVisible() ? 'opacity-100' : 'opacity-0',
     ];
 
-    const posMap: Record<AtcPosition, string> = {
+    const posMap: Record<TailwindPosition, string> = {
       top: 'bottom-full left-1/2 -translate-x-1/2 mb-2',
       bottom: 'top-full left-1/2 -translate-x-1/2 mt-2',
       left: 'right-full top-1/2 -translate-y-1/2 mr-2',
@@ -47,10 +47,10 @@ export class AtcTooltip {
     return [...base, posMap[this.position()]].join(' ');
   });
 
-  arrowClasses = computed(() => {
+  readonly arrowClasses = computed(() => {
     const base = 'absolute w-2 h-2 bg-surface-900 rotate-45';
 
-    const posMap: Record<AtcPosition, string> = {
+    const posMap: Record<TailwindPosition, string> = {
       top: 'top-full left-1/2 -translate-x-1/2 -mt-1',
       bottom: 'bottom-full left-1/2 -translate-x-1/2 -mb-1',
       left: 'left-full top-1/2 -translate-y-1/2 -ml-1',

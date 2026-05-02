@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcDateTimePicker } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindDateTimePicker } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcDateTimePicker> = {
+const meta: Meta<TailwindDateTimePicker> = {
   title: 'Components/DateTimePicker',
-  component: AtcDateTimePicker,
+  component: TailwindDateTimePicker,
   tags: ['autodocs'],
 };
 export default meta;
-type Story = StoryObj<AtcDateTimePicker>;
+type Story = StoryObj<TailwindDateTimePicker>;
 
 export const Default: Story = {
   render: (args) => ({
     props: args,
-    template: `<atc-datetime-picker [label]="label" style="max-width:480px;display:block"></atc-datetime-picker>`,
+    template: `<tailwind-datetime-picker [label]="label" style="max-width:480px;display:block"></tailwind-datetime-picker>`,
   }),
   args: { label: 'Appointment Date & Time' },
 };

@@ -1,13 +1,13 @@
 import { Component, input, signal } from '@angular/core';
 
 @Component({
-  selector: 'atc-accordion-item',
+  selector: 'tailwind-accordion-item',
   templateUrl: './accordion-item.component.html',
   styleUrl: './accordion-item.component.scss',
 })
-export class AtcAccordionItem {
+export class TailwindAccordionItem {
   title = input.required<string>();
-  disabled = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
   isExpanded = signal(false);
 
   toggle(): void {

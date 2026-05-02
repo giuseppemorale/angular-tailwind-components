@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AtcButton } from './button.component';
+import { TailwindButton } from './button.component';
 
-describe('AtcButton', () => {
-  let fixture: ComponentFixture<AtcButton>;
-  let component: AtcButton;
+describe('TailwindButton', () => {
+  let fixture: ComponentFixture<TailwindButton>;
+  let component: TailwindButton;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AtcButton],
+      imports: [TailwindButton],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AtcButton);
+    fixture = TestBed.createComponent(TailwindButton);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

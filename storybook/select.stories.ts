@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcSelect } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindSelect } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcSelect> = {
+const meta: Meta<TailwindSelect> = {
   title: 'Components/Select',
-  component: AtcSelect,
+  component: TailwindSelect,
   tags: ['autodocs'],
 };
 export default meta;
-type Story = StoryObj<AtcSelect>;
+type Story = StoryObj<TailwindSelect>;
 
 const options = [
   { value: 'angular', label: 'Angular' },
@@ -19,7 +19,7 @@ const options = [
 export const Default: Story = {
   render: (args) => ({
     props: { ...args, options },
-    template: `<atc-select [label]="label" [options]="options" [placeholder]="placeholder" style="max-width:320px;display:block"></atc-select>`,
+    template: `<tailwind-select [label]="label" [options]="options" [placeholder]="placeholder" style="max-width:320px;display:block"></tailwind-select>`,
   }),
   args: { label: 'Framework', placeholder: 'Choose a framework' },
 };
@@ -34,6 +34,6 @@ export const WithGroups: Story = {
         { value: 'go', label: 'Go' },
       ],
     },
-    template: `<atc-select label="Language" [options]="groupedOptions" style="max-width:320px;display:block"></atc-select>`,
+    template: `<tailwind-select label="Language" [options]="groupedOptions" style="max-width:320px;display:block"></tailwind-select>`,
   }),
 };

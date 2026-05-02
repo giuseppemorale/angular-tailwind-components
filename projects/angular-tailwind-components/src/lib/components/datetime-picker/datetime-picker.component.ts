@@ -1,32 +1,30 @@
 import { Component, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AtcDatePicker } from '../date-picker/date-picker.component';
-import { AtcTimePicker } from '../time-picker/time-picker.component';
+import { TailwindDatePicker } from '../date-picker/date-picker.component';
+import { TailwindTimePicker } from '../time-picker/time-picker.component';
+import { TailwindDateTimeValue } from './interfaces/datetime-value.interface';
 
-export interface AtcDateTimeValue {
-  date: string;
-  time: string;
-}
+export type { TailwindDateTimeValue };
 
 @Component({
-  selector: 'atc-datetime-picker',
-  imports: [AtcDatePicker, AtcTimePicker],
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AtcDateTimePicker), multi: true }],
+  selector: 'tailwind-datetime-picker',
+  imports: [TailwindDatePicker, TailwindTimePicker],
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDateTimePicker), multi: true }],
   templateUrl: './datetime-picker.component.html',
   styleUrl: './datetime-picker.component.scss',
 })
-export class AtcDateTimePicker implements ControlValueAccessor {
-  label = input<string>('');
+export class TailwindDateTimePicker implements ControlValueAccessor {
+  readonly label = input<string>('');
   dateValue = signal('');
   timeValue = signal('');
   isDisabled = signal(false);
-  private onChange: (v: AtcDateTimeValue) => void = () => {};
+  private onChange: (v: TailwindDateTimeValue) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(v: AtcDateTimeValue): void {
+  writeValue(v: TailwindDateTimeValue): void {
     if (v) { this.dateValue.set(v.date ?? ''); this.timeValue.set(v.time ?? ''); }
   }
-  registerOnChange(fn: (v: AtcDateTimeValue) => void): void { this.onChange = fn; }
+  registerOnChange(fn: (v: TailwindDateTimeValue) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
   setDisabledState(d: boolean): void { this.isDisabled.set(d); }
 

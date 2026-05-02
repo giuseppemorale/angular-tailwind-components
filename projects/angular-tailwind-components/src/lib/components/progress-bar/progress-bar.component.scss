@@ -2,12 +2,12 @@
   display: block;
 }
 
-@keyframes atc-indeterminate {
+@keyframes tailwind-indeterminate {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(200%); }
 }
 
-.atc-progress-indeterminate {
-  animation: atc-indeterminate 1.5s ease-in-out infinite;
+.tailwind-progress-indeterminate {
+  animation: tailwind-indeterminate 1.5s ease-in-out infinite;
   width: 40% !important;
 }

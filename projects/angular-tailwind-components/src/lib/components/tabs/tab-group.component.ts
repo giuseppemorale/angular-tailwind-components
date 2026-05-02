@@ -1,22 +1,22 @@
 import { Component, contentChildren, input, model, effect } from '@angular/core';
-import { AtcTab } from './tab.component';
+import { TailwindTab } from './tab.component';
 
 @Component({
-  selector: 'atc-tab-group',
+  selector: 'tailwind-tab-group',
   templateUrl: './tab-group.component.html',
   styleUrl: './tab-group.component.scss',
 })
-export class AtcTabGroup {
+export class TailwindTabGroup {
   /** Accessible label for the tab list */
-  ariaLabel = input<string>('');
+  readonly ariaLabel = input<string>('');
   /** Whether tabs can scroll horizontally */
-  scrollable = input<boolean>(false);
+  readonly scrollable = input<boolean>(false);
 
   /** Currently active tab index (two-way) */
-  activeIndex = model<number>(0);
+  readonly activeIndex = model<number>(0);
 
-  /** Query all child AtcTab components */
-  tabs = contentChildren(AtcTab);
+  /** Query all child TailwindTab components */
+  tabs = contentChildren(TailwindTab);
 
   constructor() {
     effect(() => {

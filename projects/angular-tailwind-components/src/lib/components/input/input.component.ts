@@ -1,53 +1,53 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AtcSize } from '../../models';
+import { TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-input',
+  selector: 'tailwind-input',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AtcInput),
+      useExisting: forwardRef(() => TailwindInput),
       multi: true,
     },
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
 })
-export class AtcInput implements ControlValueAccessor {
+export class TailwindInput implements ControlValueAccessor {
   /** Label text */
-  label = input<string>('');
+  readonly label = input<string>('');
   /** Placeholder text */
-  placeholder = input<string>('');
+  readonly placeholder = input<string>('');
   /** Input type */
-  type = input<'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'>('text');
+  readonly type = input<'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'>('text');
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Whether the input is required */
-  required = input<boolean>(false);
+  readonly required = input<boolean>(false);
   /** Whether the input is readonly */
   readonly = input<boolean>(false);
   /** Helper text shown below input */
-  helperText = input<string>('');
+  readonly helperText = input<string>('');
   /** Error text shown when hasError is true */
-  errorText = input<string>('');
+  readonly errorText = input<string>('');
   /** Whether the input is in error state */
-  hasError = input<boolean>(false);
+  readonly hasError = input<boolean>(false);
   /** Whether the input has a prefix icon slot */
-  prefixIcon = input<boolean>(false);
+  readonly prefixIcon = input<boolean>(false);
   /** Whether the input has a suffix icon slot */
-  suffixIcon = input<boolean>(false);
+  readonly suffixIcon = input<boolean>(false);
   /** Unique ID for the input */
-  inputId = input<string>(`atc-input-${nextId++}`);
+  readonly inputId = input<string>(`tailwind-input-${nextId++}`);
 
   /** Two-way bound value */
-  value = model<string>('');
+  readonly value = model<string>('');
 
   /** Internal disabled state */
   isDisabled = signal(false);
 
   /** Computed input classes */
-  inputClasses = computed(() => {
+  readonly inputClasses = computed(() => {
     const base = [
       'block w-full bg-white',
       'border transition-colors duration-150',
@@ -56,7 +56,7 @@ export class AtcInput implements ControlValueAccessor {
       'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed',
     ];
 
-    const sizeMap: Record<AtcSize, string> = {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs px-2 py-1 rounded-sm',
       sm: 'text-sm px-2.5 py-1.5 rounded-md',
       md: 'text-sm px-3 py-2 rounded-md',

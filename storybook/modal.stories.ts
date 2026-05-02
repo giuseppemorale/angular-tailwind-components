@@ -1,27 +1,27 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcModalService, AtcModalContainer } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindModalService, TailwindModalContainer } from '../projects/angular-tailwind-components/src/public-api';
 import { Component, inject } from '@angular/core';
 
 @Component({
-  selector: 'atc-modal-story',
-  imports: [AtcModalContainer],
+  selector: 'tailwind-modal-story',
+  imports: [TailwindModalContainer],
   template: `
     <div class="flex flex-wrap gap-3">
-      <atc-button (click)="openSimple()">Simple Modal</atc-button>
-      <atc-button variant="danger" (click)="openConfirm()">Confirm Dialog</atc-button>
-      <atc-button variant="outline" (click)="openLarge()">Large Modal</atc-button>
+      <tailwind-button (click)="openSimple()">Simple Modal</tailwind-button>
+      <tailwind-button variant="danger" (click)="openConfirm()">Confirm Dialog</tailwind-button>
+      <tailwind-button variant="outline" (click)="openLarge()">Large Modal</tailwind-button>
     </div>
     <p class="mt-4 text-sm text-surface-600">Last result: <strong>{{ result }}</strong></p>
-    <atc-modal-container />`,
+    <tailwind-modal-container />`,
 })
 class ModalStoryComponent {
-  modal = inject(AtcModalService);
+  modal = inject(TailwindModalService);
   result = 'none';
 
   async openSimple() {
     await this.modal.open({
       title: 'About This Component',
-      message: 'This modal was opened programmatically via AtcModalService. Close it with the X button or click outside.',
+      message: 'This modal was opened programmatically via TailwindModalService. Close it with the X button or click outside.',
       showCloseButton: true,
       closeOnBackdrop: true,
       closeOnEscape: true,
@@ -36,7 +36,7 @@ class ModalStoryComponent {
       confirmLabel: 'Delete',
       cancelLabel: 'Cancel',
     });
-    this.result = confirmed ? 'confirmed âœ“' : 'cancelled âœ—';
+    this.result = confirmed ? 'confirmed Ã¢Å“â€œ' : 'cancelled Ã¢Å“â€”';
   }
 
   async openLarge() {

@@ -1,31 +1,26 @@
 import { Component, input, output, signal } from '@angular/core';
+import { TailwindMenuItem } from './interfaces/menu-item.interface';
 
-export interface AtcMenuItem {
-  label: string;
-  icon?: string;
-  disabled?: boolean;
-  divider?: boolean;
-  value?: string;
-}
+export type { TailwindMenuItem };
 
 @Component({
-  selector: 'atc-menu',
+  selector: 'tailwind-menu',
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   host: {
     '(document:click)': 'onDocumentClick($event)',
   },
 })
-export class AtcMenu {
-  items = input<AtcMenuItem[]>([]);
-  align = input<'left' | 'right'>('left');
-  selected = output<AtcMenuItem>();
+export class TailwindMenu {
+  readonly items = input<TailwindMenuItem[]>([]);
+  readonly align = input<'left' | 'right'>('left');
+  readonly selected = output<TailwindMenuItem>();
 
   isOpen = signal(false);
 
   toggle(): void { this.isOpen.update(v => !v); }
 
-  selectItem(item: AtcMenuItem): void {
+  selectItem(item: TailwindMenuItem): void {
     if (!item.disabled) {
       this.selected.emit(item);
       this.isOpen.set(false);
@@ -34,6 +29,5 @@ export class AtcMenu {
 
   onDocumentClick(event: Event): void {
     // Close on outside click is handled by host listener
-    // This is a simplified version; a production version would check element containment
   }
 }

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { AtcButton } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindButton } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<AtcButton> = {
+const meta: Meta<TailwindButton> = {
   title: 'Components/Button',
-  component: AtcButton,
+  component: TailwindButton,
   tags: ['autodocs'],
   argTypes: {
     variant: { control: 'select', options: ['primary', 'secondary', 'outline', 'ghost', 'danger', 'success', 'warning', 'info'] },
@@ -15,12 +15,12 @@ const meta: Meta<AtcButton> = {
   },
 };
 export default meta;
-type Story = StoryObj<AtcButton>;
+type Story = StoryObj<TailwindButton>;
 
 export const Primary: Story = {
   render: (args) => ({
     props: args,
-    template: `<atc-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" [fullWidth]="fullWidth">Button</atc-button>`,
+    template: `<tailwind-button [variant]="variant" [size]="size" [disabled]="disabled" [loading]="loading" [fullWidth]="fullWidth">Button</tailwind-button>`,
   }),
   args: { variant: 'primary', size: 'md', disabled: false, loading: false, fullWidth: false },
 };
@@ -29,14 +29,14 @@ export const AllVariants: Story = {
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-3 items-center">
-        <atc-button variant="primary">Primary</atc-button>
-        <atc-button variant="secondary">Secondary</atc-button>
-        <atc-button variant="outline">Outline</atc-button>
-        <atc-button variant="ghost">Ghost</atc-button>
-        <atc-button variant="danger">Danger</atc-button>
-        <atc-button variant="success">Success</atc-button>
-        <atc-button variant="warning">Warning</atc-button>
-        <atc-button variant="info">Info</atc-button>
+        <tailwind-button variant="primary">Primary</tailwind-button>
+        <tailwind-button variant="secondary">Secondary</tailwind-button>
+        <tailwind-button variant="outline">Outline</tailwind-button>
+        <tailwind-button variant="ghost">Ghost</tailwind-button>
+        <tailwind-button variant="danger">Danger</tailwind-button>
+        <tailwind-button variant="success">Success</tailwind-button>
+        <tailwind-button variant="warning">Warning</tailwind-button>
+        <tailwind-button variant="info">Info</tailwind-button>
       </div>
     `,
   }),
@@ -46,11 +46,11 @@ export const AllSizes: Story = {
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-3 items-center">
-        <atc-button size="xs">Extra Small</atc-button>
-        <atc-button size="sm">Small</atc-button>
-        <atc-button size="md">Medium</atc-button>
-        <atc-button size="lg">Large</atc-button>
-        <atc-button size="xl">Extra Large</atc-button>
+        <tailwind-button size="xs">Extra Small</tailwind-button>
+        <tailwind-button size="sm">Small</tailwind-button>
+        <tailwind-button size="md">Medium</tailwind-button>
+        <tailwind-button size="lg">Large</tailwind-button>
+        <tailwind-button size="xl">Extra Large</tailwind-button>
       </div>
     `,
   }),
@@ -58,18 +58,18 @@ export const AllSizes: Story = {
 
 export const Loading: Story = {
   render: () => ({
-    template: `<atc-button [loading]="true">Loading...</atc-button>`,
+    template: `<tailwind-button [loading]="true">Loading...</tailwind-button>`,
   }),
 };
 
 export const Disabled: Story = {
   render: () => ({
-    template: `<atc-button [disabled]="true">Disabled</atc-button>`,
+    template: `<tailwind-button [disabled]="true">Disabled</tailwind-button>`,
   }),
 };
 
 export const FullWidth: Story = {
   render: () => ({
-    template: `<atc-button [fullWidth]="true">Full Width Button</atc-button>`,
+    template: `<tailwind-button [fullWidth]="true">Full Width Button</tailwind-button>`,
   }),
 };

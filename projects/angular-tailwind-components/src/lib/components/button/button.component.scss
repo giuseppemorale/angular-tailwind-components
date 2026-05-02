@@ -2,13 +2,13 @@
   display: inline-block;
 }
 
-.atc-btn-spinner {
-  animation: atc-spin 1s linear infinite;
+.tailwind-btn-spinner {
+  animation: tailwind-spin 1s linear infinite;
   width: 1em;
   height: 1em;
 }
 
-@keyframes atc-spin {
+@keyframes tailwind-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }

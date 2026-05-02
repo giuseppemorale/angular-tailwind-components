@@ -8,24 +8,24 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { AtcSize } from '../../models';
+import { TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-modal',
+  selector: 'tailwind-modal',
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
 })
-export class AtcModal {
+export class TailwindModal {
   /** Modal title */
-  title = input<string>('');
+  readonly title = input<string>('');
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Whether to show close button in header */
-  showCloseButton = input<boolean>(true);
+  readonly showCloseButton = input<boolean>(true);
   /** Whether clicking backdrop closes the modal */
-  closeOnBackdrop = input<boolean>(true);
+  readonly closeOnBackdrop = input<boolean>(true);
   /** Whether pressing Escape closes the modal */
-  closeOnEscape = input<boolean>(true);
+  readonly closeOnEscape = input<boolean>(true);
 
   /** Open/close state */
   isOpen = signal(false);
@@ -33,18 +33,18 @@ export class AtcModal {
   isVisible = signal(false);
 
   /** Emitted when the modal is closed */
-  closed = output<void>();
+  readonly closed = output<void>();
 
   /** Reference to the modal panel for focus management */
   private modalPanel = viewChild<ElementRef>('modalPanel');
 
-  panelClasses = computed(() => {
+  readonly panelClasses = computed(() => {
     const base = [
       'relative bg-white rounded-xl shadow-2xl',
       'w-full transform transition-all duration-200',
     ];
 
-    const sizeMap: Record<AtcSize, string> = {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'max-w-sm',
       sm: 'max-w-md',
       md: 'max-w-lg',

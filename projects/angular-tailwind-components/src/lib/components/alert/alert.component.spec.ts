@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AtcAlert } from './alert.component';
+import { TailwindAlert } from './alert.component';
 
-describe('AtcAlert', () => {
-  let fixture: ComponentFixture<AtcAlert>;
-  let component: AtcAlert;
+describe('TailwindAlert', () => {
+  let fixture: ComponentFixture<TailwindAlert>;
+  let component: TailwindAlert;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AtcAlert],
+      imports: [TailwindAlert],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AtcAlert);
+    fixture = TestBed.createComponent(TailwindAlert);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

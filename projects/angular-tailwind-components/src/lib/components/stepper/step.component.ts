@@ -1,14 +1,14 @@
 import { Component, input, signal } from '@angular/core';
 
 @Component({
-  selector: 'atc-step',
+  selector: 'tailwind-step',
   templateUrl: './step.component.html',
   styleUrl: './step.component.scss',
 })
-export class AtcStep {
+export class TailwindStep {
   label = input.required<string>();
-  description = input<string>('');
-  optional = input<boolean>(false);
+  readonly description = input<string>('');
+  readonly optional = input<boolean>(false);
   completed = signal(false);
   isActive = signal(false);
 }

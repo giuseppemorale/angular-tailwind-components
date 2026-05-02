@@ -1,42 +1,42 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AtcOption, AtcSize } from '../../models';
+import { TailwindOption, TailwindSize } from '../../models';
 
 @Component({
-  selector: 'atc-radio-group',
+  selector: 'tailwind-radio-group',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AtcRadioGroup),
+      useExisting: forwardRef(() => TailwindRadioGroup),
       multi: true,
     },
   ],
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.scss',
 })
-export class AtcRadioGroup implements ControlValueAccessor {
+export class TailwindRadioGroup implements ControlValueAccessor {
   /** Label for the radio group */
-  label = input<string>('');
+  readonly label = input<string>('');
   /** Aria label for accessibility */
-  ariaLabel = input<string>('');
+  readonly ariaLabel = input<string>('');
   /** Name for the radio group (used for native radio grouping) */
-  name = input<string>(`atc-radio-${nextRadioId++}`);
+  readonly name = input<string>(`tailwind-radio-${nextRadioId++}`);
   /** Available options */
-  options = input<AtcOption[]>([]);
+  readonly options = input<TailwindOption[]>([]);
   /** Size variant */
-  size = input<AtcSize>('md');
+  readonly size = input<TailwindSize>('md');
   /** Layout orientation */
-  orientation = input<'horizontal' | 'vertical'>('vertical');
+  readonly orientation = input<'horizontal' | 'vertical'>('vertical');
 
   /** Currently selected value */
-  value = model<string>('');
+  readonly value = model<string>('');
 
   /** Internal disabled state */
   isDisabled = signal(false);
 
   /** Radio button outer ring size */
-  radioSizeClass = computed(() => {
-    const sizeMap: Record<AtcSize, string> = {
+  readonly radioSizeClass = computed(() => {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'w-3.5 h-3.5',
       sm: 'w-4 h-4',
       md: 'w-5 h-5',
@@ -47,8 +47,8 @@ export class AtcRadioGroup implements ControlValueAccessor {
   });
 
   /** Inner dot size */
-  dotSizeClass = computed(() => {
-    const sizeMap: Record<AtcSize, string> = {
+  readonly dotSizeClass = computed(() => {
+    const sizeMap: Record<TailwindSize, string> = {
       xs: 'w-1.5 h-1.5',
       sm: 'w-2 h-2',
       md: 'w-2.5 h-2.5',

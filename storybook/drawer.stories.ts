@@ -1,31 +1,31 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
+import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindDrawer } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta = {
   title: 'Components/Drawer',
+  component: TailwindDrawer,
   tags: ['autodocs'],
   parameters: {
     docs: {
-      story: { height: '400px' },
-    },
+      story: { height: '400px' }
+    }
   },
-  args: {
-    title: '',
-    position: 'right',
-    width: 'max-w-md',
-    closeOnBackdrop: true
-  },
+  argTypes: {
+    title: { control: 'text' },
+    position: { control: 'select', options: ['left', 'right'] },
+    width: { control: 'text' },
+    closeOnBackdrop: { control: 'boolean' }
+  }
 };
 export default meta;
-type Story = StoryObj;
 
-export const RightDrawer: Story = {
-  render: () => ({
+export const Drawer: StoryObj<TailwindDrawer> = {
+  render: args => ({
+    props: args,
     template: `
       <div>
         <tailwind-button (click)="drawer.open()">Open Drawer</tailwind-button>
-        <tailwind-drawer #drawer title="Drawer Title" position="right">
+        <tailwind-drawer #drawer ${argsToTemplate(args)}>
           <p class="text-sm text-surface-600 mb-4">This is the drawer content. You can place any content here.</p>
           <tailwind-input label="Name" placeholder="Enter your name" />
           <div class="mt-4 flex gap-2">
@@ -33,38 +33,50 @@ export const RightDrawer: Story = {
             <tailwind-button size="sm" color="secondary" kind="text" (click)="drawer.close()">Cancel</tailwind-button>
           </div>
         </tailwind-drawer>
-      </div>`,
+      </div>`
   }),
+  args: {
+    title: 'Drawer Title',
+    position: 'right',
+    closeOnBackdrop: true
+  }
 };
 
-export const WithFooter: Story = {
-  render: () => ({
+export const WithFooter: StoryObj<TailwindDrawer> = {
+  render: args => ({
+    props: args,
     template: `
       <div>
         <tailwind-button (click)="drawer.open()">Open Drawer with Footer</tailwind-button>
-        <tailwind-drawer #drawer title="Edit Profile" position="right">
+        <tailwind-drawer #drawer ${argsToTemplate(args)}>
           <div class="space-y-4">
             <tailwind-input label="First Name" placeholder="John" />
             <tailwind-input label="Last Name" placeholder="Doe" />
             <tailwind-input label="Email" type="email" placeholder="john@example.com" />
           </div>
           <tailwind-drawer-footer>
-            <div class="flex justify-end gap-3 pt-4 border-t border-surface-200">
+            <div class="flex justify-end gap-3 m-4 p-4 border-t border-surface-100 bg-surface-50/50">
               <tailwind-button color="secondary" kind="text" (click)="drawer.close()">Discard</tailwind-button>
               <tailwind-button (click)="drawer.close()">Save Changes</tailwind-button>
             </div>
           </tailwind-drawer-footer>
         </tailwind-drawer>
-      </div>`,
+      </div>`
   }),
+  args: {
+    title: 'Drawer with footer',
+    position: 'right',
+    closeOnBackdrop: true
+  }
 };
 
-export const LeftDrawer: Story = {
-  render: () => ({
+export const LeftDrawer: StoryObj<TailwindDrawer> = {
+  render: args => ({
+    props: args,
     template: `
       <div>
         <tailwind-button (click)="drawer.open()">Open Left Drawer</tailwind-button>
-        <tailwind-drawer #drawer title="Navigation" position="left">
+        <tailwind-drawer #drawer ${argsToTemplate(args)}>
           <nav class="space-y-2">
             <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-surface-100">Dashboard</a>
             <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-surface-100">Products</a>
@@ -72,8 +84,11 @@ export const LeftDrawer: Story = {
             <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-surface-100">Settings</a>
           </nav>
         </tailwind-drawer>
-      </div>`,
+      </div>`
   }),
+  args: {
+    title: 'Drawer Left',
+    position: 'left',
+    closeOnBackdrop: true
+  }
 };
-
-

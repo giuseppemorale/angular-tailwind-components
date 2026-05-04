@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
 import { TailwindPagination } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindPagination> = {
@@ -9,40 +8,21 @@ const meta: Meta<TailwindPagination> = {
   argTypes: {
     totalItems: { control: 'number' },
     pageSize: { control: 'number' },
-    currentPage: { control: 'number' },
-    showSummary: { control: 'boolean' },
+    currentPage: { control: 'number' }
   },
   args: {
     pageSize: 10,
     maxVisible: 7,
     ariaLabel: 'Pagination',
-    showSummary: false,
     summaryTemplate: 'Showing {start}-{end} of {total}',
     totalItems: 0
-  },
+  }
 };
 export default meta;
-type Story = StoryObj<TailwindPagination>;
 
-export const Default: Story = {
+export const Pagination: StoryObj<TailwindPagination> = {
   render: () => ({
     props: { totalItems: 100, pageSize: 10, currentPage: 1 },
-    template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage"></tailwind-pagination>`,
-  }),
+    template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage"></tailwind-pagination>`
+  })
 };
-
-export const WithSummary: Story = {
-  render: () => ({
-    props: { totalItems: 100, pageSize: 10, currentPage: 1 },
-    template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage" [showSummary]="true"></tailwind-pagination>`,
-  }),
-};
-
-export const ManyPages: Story = {
-  render: () => ({
-    props: { totalItems: 500, pageSize: 10, currentPage: 25 },
-    template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage" [showSummary]="true"></tailwind-pagination>`,
-  }),
-};
-
-

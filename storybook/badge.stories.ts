@@ -13,9 +13,8 @@ const meta: Meta<TailwindBadge> = {
   }
 };
 export default meta;
-type Story = StoryObj<TailwindBadge>;
 
-export const Badge: Story = {
+export const Badge: StoryObj<TailwindBadge> = {
   render: args => ({
     props: args,
     template: `<tailwind-badge ${argsToTemplate(args)}>Badge</tailwind-badge>`
@@ -23,39 +22,18 @@ export const Badge: Story = {
   args: { variant: 'primary', size: 'md', dot: false, pill: false }
 };
 
-export const AllVariants: Story = {
-  render: () => ({
-    template: `
-      <div class="flex flex-wrap gap-2">
-        <tailwind-badge variant="primary">Primary</tailwind-badge>
-        <tailwind-badge variant="neutral">Neutral</tailwind-badge>
-        <tailwind-badge variant="success">Success</tailwind-badge>
-        <tailwind-badge variant="warning">Warning</tailwind-badge>
-        <tailwind-badge variant="danger">Danger</tailwind-badge>
-        <tailwind-badge variant="info">Info</tailwind-badge>
-      </div>`
-  }),
-  args: { variant: 'primary', size: 'md', dot: false, pill: false }
-};
-
-export const WithDot: Story = {
-  render: () => ({
-    template: `
-      <div class="flex gap-2">
-        <tailwind-badge variant="success" [dot]="true">Online</tailwind-badge>
-        <tailwind-badge variant="danger" [dot]="true">Offline</tailwind-badge>
-        <tailwind-badge variant="warning" [dot]="true">Away</tailwind-badge>
-      </div>`
+export const WithDot: StoryObj<TailwindBadge> = {
+  render: args => ({
+    props: args,
+    template: `<tailwind-badge ${argsToTemplate(args)}>With dot</tailwind-badge>`,
+    args: { variant: 'success', size: 'md', dot: true, pill: false }
   })
 };
 
-export const Pill: Story = {
-  render: () => ({
-    template: `
-      <div class="flex gap-2">
-        <tailwind-badge variant="primary" [pill]="true">New</tailwind-badge>
-        <tailwind-badge variant="success" [pill]="true">Active</tailwind-badge>
-        <tailwind-badge variant="danger" [pill]="true">99+</tailwind-badge>
-      </div>`
+export const Pill: StoryObj<TailwindBadge> = {
+  render: args => ({
+    props: args,
+    template: `<tailwind-badge ${argsToTemplate(args)}>With pill</tailwind-badge>`,
+    args: { variant: 'primary', size: 'md', dot: false, pill: true }
   })
 };

@@ -11,8 +11,8 @@ import { Component, inject } from '@angular/core';
   imports: [TailwindModalContainer, TailwindButton],
   template: ` <div class="flex flex-wrap gap-3">
       <tailwind-button (click)="openSimple()">Simple Modal</tailwind-button>
-      <tailwind-button variant="danger" (click)="openConfirm()">Confirm Dialog</tailwind-button>
-      <tailwind-button variant="outline" (click)="openLarge()">Large Modal</tailwind-button>
+      <tailwind-button color="danger" (click)="openConfirm()">Confirm Dialog</tailwind-button>
+      <tailwind-button color="primary" kind="outlined" (click)="openLarge()">Large Modal</tailwind-button>
     </div>
     <p class="mt-4 text-sm text-surface-600">
       Last result: <strong>{{ result }}</strong>

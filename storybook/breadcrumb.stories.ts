@@ -1,5 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
+import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindBreadcrumb } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindBreadcrumb> = {
@@ -7,38 +6,30 @@ const meta: Meta<TailwindBreadcrumb> = {
   component: TailwindBreadcrumb,
   tags: ['autodocs'],
   args: {
-    items: [],
-    ariaLabel: 'Breadcrumb'
-  },
+    ariaLabel: 'Breadcrumb',
+    items: [
+      { label: 'Home', href: '#' },
+      { label: 'Products', href: '#' },
+      { label: 'Angular Components', href: '#' },
+      { label: 'Button' }
+    ]
+  }
 };
 export default meta;
-type Story = StoryObj<TailwindBreadcrumb>;
 
-export const Default: Story = {
-  render: () => ({
+export const Breadcrumb: StoryObj<TailwindBreadcrumb> = {
+  render: args => ({
+    props: args,
     template: `
-      <tailwind-breadcrumb [items]="items"></tailwind-breadcrumb>`,
-    props: {
+      <tailwind-breadcrumb ${argsToTemplate(args)}></tailwind-breadcrumb>`,
+    args: {
+      ariaLabel: 'Breadcrumb',
       items: [
         { label: 'Home', href: '#' },
         { label: 'Products', href: '#' },
         { label: 'Angular Components', href: '#' },
-        { label: 'Button' },
-      ],
-    },
-  }),
+        { label: 'Button' }
+      ]
+    }
+  })
 };
-
-export const Short: Story = {
-  render: () => ({
-    template: `<tailwind-breadcrumb [items]="items"></tailwind-breadcrumb>`,
-    props: {
-      items: [
-        { label: 'Dashboard', href: '#' },
-        { label: 'Settings' },
-      ],
-    },
-  }),
-};
-
-

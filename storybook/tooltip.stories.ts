@@ -1,50 +1,34 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
-import { TailwindTooltip } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindTooltipDirective } from '../projects/angular-tailwind-components/src/public-api';
 
-const meta: Meta<TailwindTooltip> = {
+const meta: Meta<TailwindTooltipDirective> = {
   title: 'Components/Tooltip',
-  component: TailwindTooltip,
+  component: TailwindTooltipDirective,
   tags: ['autodocs'],
-  parameters: { docs: { story: { height: '150px' } } },
   argTypes: {
-    position: { control: 'select', options: ['top', 'bottom', 'left', 'right'] }
+    tooltipPosition: { control: 'select', options: ['top', 'bottom', 'left', 'right'] }
   }
 };
 export default meta;
-type Story = StoryObj<TailwindTooltip>;
 
-export const AllPositions: Story = {
-  render: (args) => ({
+export const ButtonTooltip: StoryObj<TailwindTooltipDirective> = {
+  render: args => ({
     props: args,
     template: `
-      <div class="flex gap-8 items-center justify-center" style="padding:60px">
-        <tailwind-tooltip ${argsToTemplate(args)} text="Top tooltip" position="top">
-          <tailwind-button variant="outline">Top</tailwind-button>
-        </tailwind-tooltip>
-        <tailwind-tooltip text="Bottom tooltip" position="bottom">
-          <tailwind-button variant="outline">Bottom</tailwind-button>
-        </tailwind-tooltip>
-        <tailwind-tooltip text="Left tooltip" position="left">
-          <tailwind-button variant="outline">Left</tailwind-button>
-        </tailwind-tooltip>
-        <tailwind-tooltip text="Right tooltip" position="right">
-          <tailwind-button variant="outline">Right</tailwind-button>
-        </tailwind-tooltip>
-      </div>`
-  })
-};
-
-export const Default: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <div style="padding:60px;display:flex;justify-content:center">
-        <tailwind-tooltip [text]="text" [position]="position">
-          <tailwind-button>Hover me</tailwind-button>
-        </tailwind-tooltip>
+      <div class="flex justify-center" style="padding: 60px;">
+        <tailwind-button [tooltip]="text" [tooltipPosition]="tooltipPosition">Hover me</tailwind-button>
       </div>`
   }),
-  args: { text: 'This is a tooltip', position: 'top' }
+  args: { text: 'This is a tooltip', tooltipPosition: 'top' }
 };
 
+export const InputTooltip: StoryObj<TailwindTooltipDirective> = {
+  render: args => ({
+    props: args,
+    template: `
+      <div class="flex justify-center" style="padding: 60px;">
+        <tailwind-input label="Tooltip" type="text" placeholder="Type something..." [tooltip]="text" [tooltipPosition]="tooltipPosition" />
+      </div>`
+  }),
+  args: { text: 'This is a tooltip', tooltipPosition: 'top' }
+};

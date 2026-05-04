@@ -63,8 +63,9 @@ describe('TailwindButton', () => {
     expect(button.disabled).toBe(true);
   });
 
-  it('should apply variant classes', () => {
-    fixture.componentRef.setInput('variant', 'danger');
+  it('should apply color and kind classes', () => {
+    fixture.componentRef.setInput('color', 'danger');
+    fixture.componentRef.setInput('kind', 'solid');
     fixture.detectChanges();
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');

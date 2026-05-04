@@ -17,6 +17,7 @@ export * from './modal/modal.component';
 export * from './tabs/tab.component';
 export * from './tabs/tab-group.component';
 export * from './tooltip/tooltip.component';
+export * from '../directives/tooltip/tooltip.directive';
 export * from './progress-bar/progress-bar.component';
 export * from './menu/menu.component';
 export * from './drawer/drawer.component';

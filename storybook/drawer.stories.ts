@@ -30,7 +30,7 @@ export const RightDrawer: Story = {
           <tailwind-input label="Name" placeholder="Enter your name" />
           <div class="mt-4 flex gap-2">
             <tailwind-button size="sm" (click)="drawer.close()">Save</tailwind-button>
-            <tailwind-button size="sm" variant="ghost" (click)="drawer.close()">Cancel</tailwind-button>
+            <tailwind-button size="sm" color="secondary" kind="text" (click)="drawer.close()">Cancel</tailwind-button>
           </div>
         </tailwind-drawer>
       </div>`,
@@ -50,7 +50,7 @@ export const WithFooter: Story = {
           </div>
           <tailwind-drawer-footer>
             <div class="flex justify-end gap-3 pt-4 border-t border-surface-200">
-              <tailwind-button variant="ghost" (click)="drawer.close()">Discard</tailwind-button>
+              <tailwind-button color="secondary" kind="text" (click)="drawer.close()">Discard</tailwind-button>
               <tailwind-button (click)="drawer.close()">Save Changes</tailwind-button>
             </div>
           </tailwind-drawer-footer>

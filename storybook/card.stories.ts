@@ -12,13 +12,12 @@ const meta: Meta<TailwindCard> = {
     headerBg: false,
     hasHeader: true,
     hasFooter: true
-  },
+  }
 };
 export default meta;
-type Story = StoryObj<TailwindCard>;
 
-export const Default: Story = {
-  render: (args) => ({
+export const Card: StoryObj<TailwindCard> = {
+  render: args => ({
     props: args,
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px">
@@ -26,7 +25,7 @@ export const Default: Story = {
         <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <tailwind-card-footer>
           <div class="flex justify-end gap-2">
-            <tailwind-button variant="ghost" size="sm">Cancel</tailwind-button>
+            <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
             <tailwind-button size="sm">Confirm</tailwind-button>
           </div>
         </tailwind-card-footer>
@@ -34,15 +33,15 @@ export const Default: Story = {
   })
 };
 
-export const NoHeader: Story = {
-  render: (args) => ({
+export const NoHeader: StoryObj<TailwindCard> = {
+  render: args => ({
     props: args,
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px" [hasHeader]="false">
         <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <tailwind-card-footer>
           <div class="flex justify-end gap-2">
-            <tailwind-button variant="ghost" size="sm">Cancel</tailwind-button>
+            <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
             <tailwind-button size="sm">Confirm</tailwind-button>
           </div>
         </tailwind-card-footer>
@@ -50,8 +49,8 @@ export const NoHeader: Story = {
   })
 };
 
-export const NoFooter: Story = {
-  render: (args) => ({
+export const NoFooter: StoryObj<TailwindCard> = {
+  render: args => ({
     props: args,
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px" [hasFooter]="false">
@@ -61,8 +60,8 @@ export const NoFooter: Story = {
   })
 };
 
-export const Elevated: Story = {
-  render: (args) => ({
+export const Elevated: StoryObj<TailwindCard> = {
+  render: args => ({
     props: args,
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px" [elevated]="true">
@@ -70,7 +69,7 @@ export const Elevated: Story = {
         <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <tailwind-card-footer>
           <div class="flex justify-end gap-2">
-            <tailwind-button variant="ghost" size="sm">Cancel</tailwind-button>
+            <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
             <tailwind-button size="sm">Confirm</tailwind-button>
           </div>
         </tailwind-card-footer>

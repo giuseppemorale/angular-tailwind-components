@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
 import { TailwindInput } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindInput> = {
@@ -14,27 +13,35 @@ const meta: Meta<TailwindInput> = {
     helperText: { control: 'text' },
     errorText: { control: 'text' },
     hasError: { control: 'boolean' },
-    required: { control: 'boolean' },
-  },
+    required: { control: 'boolean' }
+  }
 };
 export default meta;
-type Story = StoryObj<TailwindInput>;
 
-export const Default: Story = {
-  render: (args) => ({
+export const Input: StoryObj<TailwindInput> = {
+  render: args => ({
     props: args,
-    template: `<tailwind-input [label]="label" [placeholder]="placeholder" [type]="type" [size]="size" [helperText]="helperText" [hasError]="hasError" [errorText]="errorText" [required]="required" />`,
+    template: `<tailwind-input [label]="label" [placeholder]="placeholder" [type]="type" [size]="size" [helperText]="helperText" [hasError]="hasError" [errorText]="errorText" [required]="required" />`
   }),
-  args: { label: 'Email', placeholder: 'Enter your email', type: 'email', size: 'md', helperText: 'We will never share your email.', hasError: false, errorText: '', required: false },
+  args: {
+    label: 'Email',
+    placeholder: 'Enter your email',
+    type: 'email',
+    size: 'md',
+    helperText: 'We will never share your email.',
+    hasError: false,
+    errorText: '',
+    required: false
+  }
 };
 
-export const WithError: Story = {
+export const WithError: StoryObj<TailwindInput> = {
   render: () => ({
-    template: `<tailwind-input label="Username" placeholder="Enter username" [hasError]="true" errorText="Username is already taken" />`,
-  }),
+    template: `<tailwind-input label="Username" placeholder="Enter username" [hasError]="true" errorText="Username is already taken" />`
+  })
 };
 
-export const WithPrefixAndSuffix: Story = {
+export const WithPrefixAndSuffix: StoryObj<TailwindInput> = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-4 max-w-sm">
@@ -52,11 +59,11 @@ export const WithPrefixAndSuffix: Story = {
         <tailwind-input label="Website" placeholder="yoursite.com">
           <tailwind-prefix>https://</tailwind-prefix>
         </tailwind-input>
-      </div>`,
-  }),
+      </div>`
+  })
 };
 
-export const AllSizes: Story = {
+export const AllSizes: StoryObj<TailwindInput> = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-4 max-w-sm">
@@ -66,8 +73,6 @@ export const AllSizes: Story = {
         <tailwind-input label="Large" size="lg" placeholder="lg" />
         <tailwind-input label="Extra Large" size="xl" placeholder="xl" />
       </div>
-    `,
-  }),
+    `
+  })
 };
-
-

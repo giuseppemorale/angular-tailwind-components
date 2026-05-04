@@ -1,27 +1,26 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
 import { TailwindChip } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindChip> = {
   title: 'Components/Chip',
   component: TailwindChip,
-  tags: ['autodocs'],
-  args: {
-    variant: 'neutral',
-    size: 'md',
-    removable: false
-  },
+  tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<TailwindChip>;
 
-export const Default: Story = {
-  render: () => ({
+export const Chip: StoryObj<TailwindChip> = {
+  render: args => ({
+    props: args,
     template: `<tailwind-chip>Angular</tailwind-chip>`,
-  }),
+    args: {
+      variant: 'neutral',
+      size: 'md',
+      removable: false
+    }
+  })
 };
 
-export const Removable: Story = {
+export const Removable: StoryObj<TailwindChip> = {
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-2">
@@ -29,11 +28,11 @@ export const Removable: Story = {
         <tailwind-chip [removable]="true" variant="success">TypeScript</tailwind-chip>
         <tailwind-chip [removable]="true" variant="info">Tailwind</tailwind-chip>
         <tailwind-chip [removable]="true" variant="warning">Design</tailwind-chip>
-      </div>`,
-  }),
+      </div>`
+  })
 };
 
-export const AllVariants: Story = {
+export const AllVariants: StoryObj<TailwindChip> = {
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-2">
@@ -43,8 +42,6 @@ export const AllVariants: Story = {
         <tailwind-chip variant="warning">Warning</tailwind-chip>
         <tailwind-chip variant="danger">Danger</tailwind-chip>
         <tailwind-chip variant="info">Info</tailwind-chip>
-      </div>`,
-  }),
+      </div>`
+  })
 };
-
-

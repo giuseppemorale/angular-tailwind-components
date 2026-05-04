@@ -13,18 +13,17 @@ const meta: Meta<TailwindCheckbox> = {
   }
 };
 export default meta;
-type Story = StoryObj<TailwindCheckbox>;
 
-export const Default: Story = {
-  render: (args) => ({
+export const Checkbox: StoryObj<TailwindCheckbox> = {
+  render: args => ({
     props: args,
     template: `<tailwind-checkbox [label]="label" [size]="size" [checked]="checked"></tailwind-checkbox>`
   }),
   args: { label: 'Accept terms and conditions', size: 'md', checked: false }
 };
 
-export const States: Story = {
-  render: (args) => ({
+export const States: StoryObj<TailwindCheckbox> = {
+  render: args => ({
     props: args,
     template: `
       <div class="space-y-3">
@@ -36,8 +35,8 @@ export const States: Story = {
   })
 };
 
-export const CheckboxGroup: Story = {
-  render: (args) => ({
+export const CheckboxGroup: StoryObj<TailwindCheckbox> = {
+  render: args => ({
     props: args,
     template: `
       <div class="space-y-2">
@@ -49,5 +48,3 @@ export const CheckboxGroup: Story = {
       </div>`
   })
 };
-
-

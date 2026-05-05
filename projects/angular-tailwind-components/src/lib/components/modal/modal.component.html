@@ -1,7 +1,7 @@
 @if (isOpen()) {
   <!-- Backdrop -->
   <div
-    class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1040] transition-opacity duration-200"
+    class="fixed inset-0 bg-black/50 backdrop-blur-sm z-1040 transition-opacity duration-200"
     [class.opacity-100]="isVisible()"
     [class.opacity-0]="!isVisible()"
     (click)="closeOnBackdrop() && close()"
@@ -9,7 +9,7 @@
 
   <!-- Modal -->
   <div
-    class="fixed inset-0 z-[1050] overflow-y-auto"
+    class="fixed inset-0 z-1050 overflow-y-auto"
     role="dialog"
     [attr.aria-modal]="true"
     [attr.aria-label]="title()"

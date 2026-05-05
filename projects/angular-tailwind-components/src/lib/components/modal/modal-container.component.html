@@ -3,7 +3,7 @@
 @if (state) {
   <!-- Backdrop -->
   <div
-    class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[1040] transition-opacity duration-200"
+    class="fixed inset-0 bg-black/50 backdrop-blur-sm z-1040 transition-opacity duration-200"
     [class.opacity-100]="state.isVisible"
     [class.opacity-0]="!state.isVisible"
     (click)="state.config.closeOnBackdrop !== false && modalService.dismiss()"
@@ -11,7 +11,7 @@
 
   <!-- Dialog -->
   <div
-    class="fixed inset-0 z-[1050] overflow-y-auto flex min-h-full items-center justify-center p-4"
+    class="fixed inset-0 z-1050 overflow-y-auto flex min-h-full items-center justify-center p-4"
     role="dialog"
     aria-modal="true"
     [attr.aria-label]="state.config.title"

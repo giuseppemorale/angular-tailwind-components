@@ -26,7 +26,7 @@ export const CardSkeleton: Story = {
   render: () => ({
     template: `
       <div class="max-w-lg">
-        <tailwind-card [hasHeader]="true">
+        <tailwind-card [hasHeader]="false">
           <div class="space-y-4">
             <div class="flex items-center gap-3">
               <tailwind-skeleton variant="circle" width="48px"></tailwind-skeleton>

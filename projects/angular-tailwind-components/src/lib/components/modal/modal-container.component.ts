@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
-import { TailwindModalService } from './modal.service';
+import { TailwindModalService } from '../../services/modal/modal.service';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({

@@ -10,3 +10,6 @@ export * from './lib/directives';
 
 // Components
 export * from './lib/components';
+
+// Services
+export * from './lib/services';

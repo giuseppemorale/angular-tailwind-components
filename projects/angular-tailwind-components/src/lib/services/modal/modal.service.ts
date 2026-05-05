@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { TailwindModalConfig } from './interfaces/modal-config.interface';
-import { TailwindModalState } from './interfaces/modal-state.interface';
+import { TailwindModalConfig } from '../../components/modal/interfaces/modal-config.interface';
+import { TailwindModalState } from '../../components/modal/interfaces/modal-state.interface';
 
 export type { TailwindModalConfig };
 
@@ -33,7 +33,7 @@ export class TailwindModalService {
     confirmLabel?: string;
     cancelLabel?: string;
   }): Promise<boolean> {
-    const r = await this.open<boolean>({
+    const result = await this.open<boolean>({
       ...options,
       confirmLabel: options.confirmLabel ?? 'Confirm',
       cancelLabel: options.cancelLabel ?? 'Cancel',
@@ -41,7 +41,7 @@ export class TailwindModalService {
       closeOnBackdrop: true,
       closeOnEscape: true
     });
-    return r === true;
+    return result === true;
   }
 
   /** Close with a result value */

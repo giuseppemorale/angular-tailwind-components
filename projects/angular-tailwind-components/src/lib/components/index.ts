@@ -11,8 +11,6 @@ export * from './alert/alert.component';
 export * from './spinner/spinner.component';
 
 // Batch 2 — Intermediate
-export * from '../services/modal/modal.service';
-export * from './modal/modal-container.component';
 export * from './modal/modal.component';
 export * from './tabs/tab.component';
 export * from './tabs/tab-group.component';
@@ -34,7 +32,6 @@ export * from './stepper/step.component';
 export * from './stepper/stepper.component';
 export * from './accordion/accordion-item.component';
 export * from './accordion/accordion.component';
-export * from './toast/toast.service';
 export * from './toast/toast-container.component';
 export * from './notification/notification.component';
 export * from './message/message.component';

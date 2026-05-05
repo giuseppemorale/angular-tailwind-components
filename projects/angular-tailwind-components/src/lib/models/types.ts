@@ -18,16 +18,8 @@ export type TailwindPosition = 'top' | 'bottom' | 'left' | 'right';
 /** Shape variants */
 export type TailwindShape = 'rounded' | 'pill' | 'square';
 
-/** Common interface for components with label + description */
-export interface TailwindLabeledComponent {
-  label?: string;
-  description?: string;
-}
-
 /** Option interface for select/radio/checkbox groups */
-export interface TailwindOption<T = string> {
+export interface TailwindOption<T = unknown> {
   value: T;
   label: string;
-  disabled?: boolean;
-  description?: string;
 }

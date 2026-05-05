@@ -17,29 +17,27 @@
     <div class="flex min-h-full items-center justify-center p-4">
       <div #modalPanel [class]="panelClasses()" tabindex="-1">
         <!-- Header -->
-        @if (title() || showCloseButton()) {
-          <div class="flex items-center justify-between px-6 py-4 border-b border-surface-200">
-            @if (title()) {
-              <h2 class="text-lg font-semibold text-surface-900">{{ title() }}</h2>
-            }
-            @if (showCloseButton()) {
-              <button
-                type="button"
-                class="p-1.5 -m-1.5 rounded-lg text-surface-400 hover:text-surface-600 hover:bg-surface-100 transition-colors cursor-pointer"
-                aria-label="Close"
-                (click)="close()">
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path
-                    d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                </svg>
-              </button>
-            }
-          </div>
-        }
+        <div class="flex items-center justify-between px-6 py-4 border-b border-surface-200">
+          <h2 class="text-lg font-semibold text-surface-900">
+            <ng-content select="tailwind-modal-title" />
+          </h2>
+          @if (showCloseButton()) {
+            <button
+              type="button"
+              class="p-1.5 -m-1.5 rounded-lg text-surface-400 hover:text-surface-600 hover:bg-surface-100 transition-colors cursor-pointer"
+              aria-label="Close"
+              (click)="close()">
+              <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+              </svg>
+            </button>
+          }
+        </div>
 
         <!-- Body -->
         <div class="px-6 py-5">
-          <ng-content />
+          <ng-content select="tailwind-modal-content" />
         </div>
 
         <!-- Footer -->

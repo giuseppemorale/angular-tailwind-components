@@ -4,7 +4,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **31 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **Common components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -56,8 +56,7 @@ import { Component } from '@angular/core';
 import { TailwindButton, TailwindInput, TailwindToggle } from 'angular-tailwind-components';
 
 @Component({
-  selector: 'app-example',
-  standalone: true,
+  selector: 'example-component',
   imports: [TailwindButton, TailwindInput, TailwindToggle],
   template: `
     <tailwind-input label="Email" placeholder="you@example.com" [(value)]="email" />
@@ -92,7 +91,6 @@ export class ExampleComponent {
 - **Button** (`tailwind-button`): Primary, secondary, outline, ghost, danger
 - **Badge** (`tailwind-badge`): Status badges with dot indicator
 - **Card** (`tailwind-card`): Content card with header/body/footer
-- **Chip** (`tailwind-chip`): Removable tags
 - **Tag** (`tailwind-tag`): Semantic labels
 
 ### Feedback
@@ -119,7 +117,6 @@ export class ExampleComponent {
 - **Drawer** (`tailwind-drawer`): Slide-in panel
 - **Accordion** (`tailwind-accordion`): Expandable sections
 - **Tooltip** (`tailwind-tooltip`): Hover tooltip
-- **Form** (`tailwind-form`): Form wrapper
 - **Table** (`tailwind-table`): Data table with sorting
 
 ## Design System

@@ -1,8 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { TailwindToastConfig } from './interfaces/toast-config.interface';
-import { TailwindToastItem } from './interfaces/toast-item.interface';
-
-export type { TailwindToastConfig, TailwindToastItem };
+import { TailwindToastItem } from '../../components/toast/interfaces/toast-item.interface';
+import { TailwindToastConfig } from '../../components/toast/interfaces/toast-config.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TailwindToastService {

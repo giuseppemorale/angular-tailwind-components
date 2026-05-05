@@ -2,6 +2,7 @@
   "name": "angular-tailwind-components",
   "version": "1.0.0",
   "peerDependencies": {
+    "@angular/cdk": "^21.2.0",
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0",
     "tailwindcss": "^4.2.4",

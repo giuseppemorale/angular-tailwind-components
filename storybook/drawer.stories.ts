@@ -55,7 +55,7 @@ export const WithFooter: StoryObj<TailwindDrawer> = {
             <tailwind-input label="Email" type="email" placeholder="john@example.com" />
           </div>
           <tailwind-drawer-footer>
-            <div class="flex justify-end gap-3 m-4 p-4 border-t border-surface-100 bg-surface-50/50">
+            <div class="flex justify-end gap-3 p-4 border-t border-surface-100 bg-surface-50/50">
               <tailwind-button color="secondary" kind="text" (click)="drawer.close()">Discard</tailwind-button>
               <tailwind-button (click)="drawer.close()">Save Changes</tailwind-button>
             </div>

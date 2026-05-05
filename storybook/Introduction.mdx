@@ -34,8 +34,17 @@ Add the postcssrc.json in the root of the project
 Your consuming project must have **Tailwind CSS v4** configured. Add the library's theme tokens to your main stylesheet:
 
 ```css
-@import 'tailwindcss';
 @import 'angular-tailwind-components/src/lib/styles/tailwind.css';
+```
+
+This file includes the import of tailwindcss.
+If u want to override the theme tokens, you can do it in your own stylesheet:
+
+```css
+@theme {
+  --color-primary-500: oklch(0.55 0.2 280); /* Change primary to purple */
+  --color-primary-600: oklch(0.48 0.22 280);
+}
 ```
 
 Or define your own theme tokens following the design system schema.
@@ -146,14 +155,6 @@ ng build angular-tailwind-components
 # Start Storybook
 npm run storybook
 ```
-
-## Adding New Components
-
-1. Create a directory under `projects/angular-tailwind-components/src/lib/components/<name>/`
-2. Create `<name>.ts` with inline template, styles, and component logic
-3. Create `<name>.spec.ts` for unit tests
-4. Export from `components/index.ts`
-5. Add a story in `storybook/<name>.stories.ts`
 
 ### Component Conventions
 

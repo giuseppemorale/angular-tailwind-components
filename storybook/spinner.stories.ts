@@ -1,40 +1,45 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
 import { TailwindSpinner } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSpinner> = {
   title: 'Components/Spinner',
   component: TailwindSpinner,
   tags: ['autodocs'],
+  argTypes: {
+    size: {
+      options: ['xs', 'sm', 'md', 'lg', 'xl'],
+      control: { type: 'select' }
+    },
+    color: {
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
+      control: { type: 'select' }
+    },
+    label: { control: 'text' },
+    ariaLabel: { control: 'text' },
+    orientation: {
+      options: ['horizontal', 'vertical'],
+      control: { type: 'select' }
+    }
+  }
+};
+export default meta;
+
+export const Spinner: StoryObj<TailwindSpinner> = {
   args: {
     size: 'md',
-    color: 'text-primary-600',
+    color: 'primary',
     label: '',
     ariaLabel: 'Loading',
     orientation: 'horizontal'
-  },
-};
-export default meta;
-type Story = StoryObj<TailwindSpinner>;
-
-export const AllSizes: Story = {
-  render: () => ({
-    template: `
-      <div class="flex items-center gap-6">
-        <tailwind-spinner size="xs" />
-        <tailwind-spinner size="sm" />
-        <tailwind-spinner size="md" />
-        <tailwind-spinner size="lg" />
-        <tailwind-spinner size="xl" />
-      </div>
-    `,
-  }),
+  }
 };
 
-export const WithLabel: Story = {
-  render: () => ({
-    template: `<tailwind-spinner size="md" label="Loading data..." />`,
-  }),
+export const WithLabel: StoryObj<TailwindSpinner> = {
+  args: {
+    size: 'md',
+    color: 'primary',
+    label: 'Loading data...',
+    ariaLabel: 'Loading',
+    orientation: 'horizontal'
+  }
 };
-
-

@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { TailwindSize } from '../../models';
+import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -10,8 +10,8 @@ import { TailwindComponent } from '../tailwind.component';
 export class TailwindSpinner extends TailwindComponent {
   /** Size variant */
   readonly size = input<TailwindSize>('md');
-  /** Color ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â uses Tailwind text color class */
-  readonly color = input<string>('text-primary-600');
+  /** Color uses Tailwind text color class */
+  readonly color = input<TailwindColor>('primary');
   /** Optional label text */
   readonly label = input<string>('');
   /** Aria label for accessibility */
@@ -34,7 +34,16 @@ export class TailwindSpinner extends TailwindComponent {
       xl: 'w-12 h-12'
     };
 
-    return `tailwind-spinner-svg ${sizeMap[this.size()]} ${this.color()}`;
+    const colorMap: Record<TailwindColor, string> = {
+      primary: 'text-primary-600',
+      secondary: 'text-secondary-600',
+      success: 'text-success-600',
+      warning: 'text-warning-600',
+      danger: 'text-danger-600',
+      info: 'text-info-600'
+    };
+
+    return `tailwind-spinner-svg ${sizeMap[this.size()]} ${colorMap[this.color()]}`;
   });
 
   readonly labelClasses = computed(() => {

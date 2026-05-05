@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
 import { TailwindTable } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTable> = {
@@ -7,19 +6,19 @@ const meta: Meta<TailwindTable> = {
   component: TailwindTable,
   tags: ['autodocs'],
   parameters: { docs: { story: { height: '500px' } } },
-  args: {
-    columns: [],
-    selectable: false,
-    striped: false,
-    loading: false,
-    emptyMessage: 'No data available',
-    paginated: true,
-    pageSize: 10,
-    paginationSummaryTemplate: 'Showing {start} to {end} of {total} results'
-  },
+  argTypes: {
+    columns: { control: 'object' },
+    data: { control: 'object' },
+    selectable: { control: 'boolean' },
+    striped: { control: 'boolean' },
+    loading: { control: 'boolean' },
+    emptyMessage: { control: 'text' },
+    paginated: { control: 'boolean' },
+    pageSize: { control: 'number' },
+    paginationSummaryTemplate: { control: 'text' }
+  }
 };
 export default meta;
-type Story = StoryObj<TailwindTable>;
 
 const columns = [
   { key: 'name', label: 'Name', sortable: true },
@@ -57,18 +56,16 @@ const rows = [
   { name: 'Zack Allen', email: 'zack.allen@example.com', role: 'Viewer', status: 'Active' }
 ];
 
-export const Default: Story = {
-  render: (args) => ({
-    props: { ...args, ...{ columns, rows } },
-    template: `<tailwind-table ${argsToTemplate(args)} [columns]="columns" [data]="rows"></tailwind-table>`
-  })
+export const Table: StoryObj<TailwindTable> = {
+  args: {
+    columns: columns,
+    data: rows,
+    selectable: false,
+    striped: false,
+    loading: false,
+    emptyMessage: 'Nessun dato disponibile',
+    paginated: true,
+    pageSize: 10,
+    paginationSummaryTemplate: 'Visualizzati {start} - {end} di {total} risultati'
+  }
 };
-
-export const Striped: Story = {
-  render: (args) => ({
-    props: { ...args, ...{ columns, rows } },
-    template: `<tailwind-table ${argsToTemplate(args)} [columns]="columns" [data]="rows" [striped]="true"></tailwind-table>`
-  })
-};
-
-

@@ -15,7 +15,7 @@ import { TailwindComponent } from '../tailwind.component';
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss'
 })
-export class TailwindInput extends TailwindComponent implements ControlValueAccessor  {
+export class TailwindInput extends TailwindComponent implements ControlValueAccessor {
   /** Label text */
   readonly label = input<string>('');
   /** Placeholder text */
@@ -24,8 +24,6 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
   readonly type = input<'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'>('text');
   /** Size variant */
   readonly size = input<TailwindSize>('md');
-  /** Whether the input is required */
-  readonly required = input<boolean>(false);
   /** Whether the input is readonly */
   readonly readonly = input<boolean>(false);
   /** Helper text shown below input */
@@ -34,10 +32,6 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
   readonly errorText = input<string>('');
   /** Whether the input is in error state */
   readonly hasError = input<boolean>(false);
-  /** Whether the input has a prefix icon slot */
-  readonly prefixIcon = input<boolean>(false);
-  /** Whether the input has a suffix icon slot */
-  readonly suffixIcon = input<boolean>(false);
 
   /** Two-way bound value */
   readonly value = model<string>('');
@@ -67,10 +61,7 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
       ? 'border-danger-400 focus:ring-danger-500/30 text-danger-900'
       : 'border-surface-300 focus:ring-primary-500/30 focus:border-primary-500 text-surface-900';
 
-    const paddingLeft = this.prefixIcon() ? 'pl-10' : '';
-    const paddingRight = this.suffixIcon() ? 'pr-10' : '';
-
-    return [...base, sizeMap[this.size()], stateClass, paddingLeft, paddingRight].join(' ');
+    return [...base, sizeMap[this.size()], stateClass].join(' ');
   });
 
   // CVA
@@ -103,4 +94,3 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
     this.onTouched();
   }
 }
-

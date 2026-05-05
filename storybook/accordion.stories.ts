@@ -1,21 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
+import { TailwindAccordion } from '../projects/angular-tailwind-components/src/lib/components/accordion/accordion.component';
 
 const meta: Meta = {
   title: 'Components/Accordion',
+  component: TailwindAccordion,
   tags: ['autodocs'],
-  parameters: { docs: { story: { height: '300px' } } },
-  args: {
-    multiple: false
-  }
+  parameters: { docs: { story: { height: '300px' } } }
 };
 export default meta;
-type Story = StoryObj;
 
-export const Accordion: Story = {
-  render: args => ({
+export const Accordion: StoryObj<TailwindAccordion> = {
+  render: () => ({
     template: `
-      <tailwind-accordion ${argsToTemplate(args)}>
+      <tailwind-accordion>
         <tailwind-accordion-item title="What is Angular?">
           Angular is a platform and framework for building client-side applications using HTML, CSS, and TypeScript.
         </tailwind-accordion-item>
@@ -26,8 +23,5 @@ export const Accordion: Story = {
           Install the library via npm and import the components you need in your Angular module or standalone component.
         </tailwind-accordion-item>
       </tailwind-accordion>`
-  }),
-  args: {
-    multiple: false
-  }
+  })
 };

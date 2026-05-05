@@ -8,12 +8,13 @@ import { TailwindComponent } from '../tailwind.component';
   templateUrl: './date-picker.component.html',
   styleUrl: './date-picker.component.scss'
 })
-export class TailwindDatePicker extends TailwindComponent implements ControlValueAccessor  {
+export class TailwindDatePicker extends TailwindComponent implements ControlValueAccessor {
   readonly label = input<string>('');
   readonly placeholder = input<string>('Select date');
   readonly format = input<string>('yyyy-MM-dd');
-  
+
   readonly value = model<string>('');
+
   readonly isDisabled = signal(false);
   readonly showCalendar = signal(false);
   readonly viewMonth = signal(new Date().getMonth());
@@ -122,4 +123,3 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     this.selectDay(t.getDate());
   }
 }
-

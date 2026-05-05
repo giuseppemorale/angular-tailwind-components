@@ -23,7 +23,6 @@ export * from './menu/menu.component';
 export * from './drawer/drawer.component';
 export * from './breadcrumb/breadcrumb.component';
 export * from './pagination/pagination.component';
-export * from './chip/chip.component';
 export * from './tag/tag.component';
 
 // Batch 3 — Advanced

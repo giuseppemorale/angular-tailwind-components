@@ -1,26 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
-import { TailwindStepper, TailwindStep } from '../projects/angular-tailwind-components/src/public-api';
+import { TailwindStepper } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta = {
   title: 'Components/Stepper',
+  component: TailwindStepper,
   tags: ['autodocs'],
-  parameters: { docs: { story: { height: '350px' } } },
-  args: {
-    linear: false
-  },
+  parameters: { docs: { story: { height: '350px' } } }
 };
 export default meta;
-type Story = StoryObj;
 
-export const Default: Story = {
+export const Stepper: StoryObj<TailwindStepper> = {
   render: () => ({
     template: `
       <tailwind-stepper>
         <tailwind-step label="Account" description="Create your account">
           <div class="space-y-3">
             <tailwind-input label="Email" placeholder="email@example.com" />
-            <tailwind-input label="Password" type="password" placeholder="ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢" />
+            <tailwind-input label="Password" type="password" placeholder="Type here your password" />
           </div>
         </tailwind-step>
         <tailwind-step label="Profile" description="Set up your profile">
@@ -32,19 +28,23 @@ export const Default: Story = {
         <tailwind-step label="Review" description="Review & confirm">
           <p class="text-sm text-surface-600">Review your details before submitting.</p>
         </tailwind-step>
-      </tailwind-stepper>`,
-  }),
+      </tailwind-stepper>`
+  })
 };
 
-export const Linear: Story = {
+export const Linear: StoryObj<TailwindStepper> = {
   render: () => ({
     template: `
-      <tailwind-stepper [linear]="true">
-        <tailwind-step label="Step 1">Content for step 1</tailwind-step>
-        <tailwind-step label="Step 2">Content for step 2</tailwind-step>
-        <tailwind-step label="Step 3">Content for step 3</tailwind-step>
-      </tailwind-stepper>`,
-  }),
+      <tailwind-stepper #stepper [linear]="true">
+        <tailwind-step label="Data">
+          <tailwind-button (onClick)="stepper.next()">Go Next</tailwind-button>
+        </tailwind-step>
+        <tailwind-step label="Profile">
+          <tailwind-button (onClick)="stepper.next()">Go Review</tailwind-button>
+        </tailwind-step>
+        <tailwind-step label="Review">
+          Finished
+        </tailwind-step>
+      </tailwind-stepper>`
+  })
 };
-
-

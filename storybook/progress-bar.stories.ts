@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
 import { TailwindProgressBar } from '../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindProgressBar> = {
@@ -15,18 +14,24 @@ const meta: Meta<TailwindProgressBar> = {
     size: 'md',
     indeterminate: false,
     striped: false
-  },
+  }
 };
 export default meta;
-type Story = StoryObj<TailwindProgressBar>;
 
-export const Default: Story = {
-  render: () => ({
-    template: `<tailwind-progress-bar [value]="65" label="Upload Progress" />`,
-  }),
+export const ProgressBar: StoryObj<TailwindProgressBar> = {
+  args: {
+    value: 65,
+    label: 'Upload Progress',
+    showLabel: true,
+    showValue: true,
+    variant: 'primary',
+    size: 'md',
+    indeterminate: false,
+    striped: false
+  }
 };
 
-export const AllVariants: Story = {
+export const AllVariants: StoryObj<TailwindProgressBar> = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-4">
@@ -35,14 +40,15 @@ export const AllVariants: Story = {
         <tailwind-progress-bar [value]="70" label="Warning" variant="warning" />
         <tailwind-progress-bar [value]="90" label="Danger" variant="danger" />
       </div>
-    `,
-  }),
+    `
+  })
 };
 
-export const Indeterminate: Story = {
-  render: () => ({
-    template: `<tailwind-progress-bar [indeterminate]="true" label="Loading..." [showValue]="false" />`,
-  }),
+export const Indeterminate: StoryObj<TailwindProgressBar> = {
+  args: {
+    indeterminate: true,
+    label: 'Loading...',
+    showValue: false,
+    striped: false
+  }
 };
-
-

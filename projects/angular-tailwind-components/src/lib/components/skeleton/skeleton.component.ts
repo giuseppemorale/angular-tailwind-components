@@ -1,5 +1,4 @@
 import { Component, computed, input } from '@angular/core';
-import { TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -22,12 +21,4 @@ export class TailwindSkeleton extends TailwindComponent {
     };
     return `${base} ${variantMap[this.variant()]}`;
   });
-
-  get hostStyles(): Record<string, string> {
-    const styles: Record<string, string> = {};
-    if (this.width()) styles['width'] = this.width();
-    if (this.height()) styles['height'] = this.height();
-    else if (this.variant() === 'circle') styles['height'] = this.width();
-    return styles;
-  }
 }

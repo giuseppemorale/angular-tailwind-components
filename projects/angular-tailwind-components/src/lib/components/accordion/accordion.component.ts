@@ -1,4 +1,4 @@
-import { Component, contentChildren, input } from '@angular/core';
+import { Component, contentChildren } from '@angular/core';
 import { TailwindAccordionItem } from './accordion-item.component';
 import { TailwindComponent } from '../tailwind.component';
 
@@ -8,6 +8,5 @@ import { TailwindComponent } from '../tailwind.component';
   styleUrl: './accordion.component.scss'
 })
 export class TailwindAccordion extends TailwindComponent {
-  readonly multiple = input<boolean>(false);
-  items = contentChildren(TailwindAccordionItem);
+  readonly items = contentChildren(TailwindAccordionItem);
 }

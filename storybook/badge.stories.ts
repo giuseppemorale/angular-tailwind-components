@@ -9,7 +9,7 @@ const meta: Meta<TailwindBadge> = {
     variant: { control: 'select', options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'] },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     dot: { control: 'boolean' },
-    pill: { control: 'boolean' }
+    rounded: { control: 'boolean' }
   }
 };
 export default meta;
@@ -19,21 +19,21 @@ export const Badge: StoryObj<TailwindBadge> = {
     props: args,
     template: `<tailwind-badge ${argsToTemplate(args)}>Badge</tailwind-badge>`
   }),
-  args: { variant: 'primary', size: 'md', dot: false, pill: false }
+  args: { variant: 'primary', size: 'md', dot: false, rounded: false }
 };
 
 export const WithDot: StoryObj<TailwindBadge> = {
   render: args => ({
     props: args,
-    template: `<tailwind-badge ${argsToTemplate(args)}>With dot</tailwind-badge>`,
-    args: { variant: 'success', size: 'md', dot: true, pill: false }
-  })
+    template: `<tailwind-badge ${argsToTemplate(args)}>With dot</tailwind-badge>`
+  }),
+  args: { variant: 'success', size: 'md', dot: true, rounded: false }
 };
 
-export const Pill: StoryObj<TailwindBadge> = {
+export const Rounded: StoryObj<TailwindBadge> = {
   render: args => ({
     props: args,
-    template: `<tailwind-badge ${argsToTemplate(args)}>With pill</tailwind-badge>`,
-    args: { variant: 'primary', size: 'md', dot: false, pill: true }
-  })
+    template: `<tailwind-badge ${argsToTemplate(args)}>With pill</tailwind-badge>`
+  }),
+  args: { variant: 'primary', size: 'md', dot: false, rounded: true }
 };

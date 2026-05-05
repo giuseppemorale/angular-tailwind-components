@@ -1,1 +1,5 @@
-<div [class]="computedClasses()" aria-hidden="true"></div>
+<div
+  [style.width]="width()"
+  [style.height]="height() || (variant() === 'circle' ? width() : '1.5rem')"
+  [class]="computedClasses()"
+  aria-hidden="true"></div>

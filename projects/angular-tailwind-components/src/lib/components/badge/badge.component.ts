@@ -15,7 +15,7 @@ export class TailwindBadge extends TailwindComponent {
   /** Show a dot indicator */
   readonly dot = input<boolean>(false);
   /** Shape variant */
-  readonly pill = input<boolean>(false);
+  readonly rounded = input<boolean>(false);
   /** Accessible label */
   readonly ariaLabel = input<string>('');
 
@@ -39,7 +39,7 @@ export class TailwindBadge extends TailwindComponent {
       xl: 'text-sm px-3.5 py-1.5'
     };
 
-    const shape = this.pill() ? 'rounded-full' : 'rounded-md';
+    const shape = this.rounded() ? 'rounded-full' : 'rounded-md';
 
     return [...base, variantMap[this.variant()] ?? variantMap['primary'], sizeMap[this.size()], shape].join(' ');
   });

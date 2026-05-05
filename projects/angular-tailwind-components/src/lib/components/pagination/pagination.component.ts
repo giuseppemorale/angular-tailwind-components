@@ -10,7 +10,7 @@ export class TailwindPagination extends TailwindComponent {
   readonly totalItems = input.required<number>();
   readonly pageSize = input<number>(10);
   readonly currentPage = model<number>(1);
-  readonly maxVisible = input<number>(7);
+  readonly maxVisible = input<number>(10);
   readonly ariaLabel = input<string>('Pagination');
   readonly summaryTemplate = input<string>('Showing {start}-{end} of {total}');
 

@@ -7,7 +7,7 @@ import { TailwindComponent } from '../tailwind.component';
   styleUrl: './step.component.scss'
 })
 export class TailwindStep extends TailwindComponent {
-  label = input.required<string>();
+  readonly label = input.required<string>();
   readonly description = input<string>('');
   readonly optional = input<boolean>(false);
   readonly completed = signal(false);

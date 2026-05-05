@@ -9,20 +9,16 @@ const meta: Meta<TailwindPagination> = {
     totalItems: { control: 'number' },
     pageSize: { control: 'number' },
     currentPage: { control: 'number' }
-  },
-  args: {
-    pageSize: 10,
-    maxVisible: 7,
-    ariaLabel: 'Pagination',
-    summaryTemplate: 'Showing {start}-{end} of {total}',
-    totalItems: 0
   }
 };
 export default meta;
 
 export const Pagination: StoryObj<TailwindPagination> = {
-  render: () => ({
-    props: { totalItems: 100, pageSize: 10, currentPage: 1 },
-    template: `<tailwind-pagination [totalItems]="totalItems" [pageSize]="pageSize" [(currentPage)]="currentPage"></tailwind-pagination>`
-  })
+  args: {
+    pageSize: 10,
+    maxVisible: 7,
+    ariaLabel: 'Pagination',
+    summaryTemplate: 'Visualizzati {start}-{end} di {total}',
+    totalItems: 50
+  }
 };

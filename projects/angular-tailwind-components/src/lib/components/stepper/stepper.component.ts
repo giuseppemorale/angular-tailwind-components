@@ -10,7 +10,8 @@ import { TailwindComponent } from '../tailwind.component';
 export class TailwindStepper extends TailwindComponent {
   readonly activeIndex = model<number>(0);
   readonly linear = input<boolean>(false);
-  steps = contentChildren(TailwindStep);
+
+  readonly steps = contentChildren(TailwindStep);
 
   constructor() {
     super();

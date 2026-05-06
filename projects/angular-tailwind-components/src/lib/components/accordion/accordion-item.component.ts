@@ -7,7 +7,7 @@ import { TailwindComponent } from '../tailwind.component';
   styleUrl: './accordion-item.component.scss'
 })
 export class TailwindAccordionItem extends TailwindComponent {
-  title = input.required<string>();
+  readonly title = input.required<string>();
   readonly disabled = input<boolean>(false);
   readonly isExpanded = signal(false);
 

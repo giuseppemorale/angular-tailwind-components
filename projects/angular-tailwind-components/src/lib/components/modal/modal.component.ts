@@ -8,8 +8,6 @@ import { TailwindComponent } from '../tailwind.component';
   styleUrl: './modal.component.scss'
 })
 export class TailwindModal extends TailwindComponent {
-  /** Modal title */
-  readonly title = input<string>('');
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Whether to show close button in header */
@@ -24,11 +22,10 @@ export class TailwindModal extends TailwindComponent {
   /** Visibility for animation */
   readonly isVisible = signal(false);
 
-  /** Emitted when the modal is closed */
+  /** Emitted when the modal is fully closed (after exit animation) */
   readonly onClose = output<void>();
 
-  /** Reference to the modal panel for focus management */
-  private modalPanel = viewChild<ElementRef>('modalPanel');
+  private readonly modalPanel = viewChild<ElementRef>('modalPanel');
 
   readonly panelClasses = computed(() => {
     const base = ['relative bg-white rounded-xl shadow-2xl', 'w-full transform transition-all duration-200'];
@@ -50,7 +47,6 @@ export class TailwindModal extends TailwindComponent {
     super();
     effect(() => {
       if (this.isOpen()) {
-        // Small delay to trigger entrance animation
         requestAnimationFrame(() => {
           this.isVisible.set(true);
           this.modalPanel()?.nativeElement?.focus();
@@ -64,7 +60,7 @@ export class TailwindModal extends TailwindComponent {
     this.isOpen.set(true);
   }
 
-  /** Close the modal */
+  /** Close the modal (plays exit animation then emits onClose) */
   close(): void {
     this.isVisible.set(false);
     setTimeout(() => {

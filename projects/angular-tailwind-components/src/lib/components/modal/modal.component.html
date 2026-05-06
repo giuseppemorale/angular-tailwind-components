@@ -12,19 +12,19 @@
     class="fixed inset-0 z-1050 overflow-y-auto"
     role="dialog"
     [attr.aria-modal]="true"
-    [attr.aria-label]="title()"
     (keydown.escape)="closeOnEscape() && close()">
     <div class="flex min-h-full items-center justify-center p-4">
       <div #modalPanel [class]="panelClasses()" tabindex="-1">
+
         <!-- Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-surface-200">
-          <h2 class="text-lg font-semibold text-surface-900">
-            <ng-content select="tailwind-modal-title" />
+          <h2 class="text-lg font-semibold text-surface-900 pr-2">
+            <ng-content />
           </h2>
           @if (showCloseButton()) {
             <button
               type="button"
-              class="p-1.5 -m-1.5 rounded-lg text-surface-400 hover:text-surface-600 hover:bg-surface-100 transition-colors cursor-pointer"
+              class="p-1.5 -m-1.5 shrink-0 rounded-lg text-surface-400 hover:text-surface-600 hover:bg-surface-100 transition-colors cursor-pointer"
               aria-label="Close"
               (click)="close()">
               <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -36,14 +36,11 @@
         </div>
 
         <!-- Body -->
-        <div class="px-6 py-5">
-          <ng-content select="tailwind-modal-content" />
-        </div>
+        <ng-content select="tailwind-modal-content" />
 
         <!-- Footer -->
-        <div class="px-6 py-4 border-t border-surface-100 bg-surface-50/50 rounded-b-xl">
-          <ng-content select="tailwind-modal-footer" />
-        </div>
+        <ng-content select="tailwind-modal-footer" />
+
       </div>
     </div>
   </div>

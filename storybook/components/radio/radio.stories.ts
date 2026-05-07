@@ -3,8 +3,7 @@ import { TailwindRadioGroup } from '../../../projects/angular-tailwind-component
 
 const meta: Meta<TailwindRadioGroup> = {
   title: 'Forms/RadioGroup',
-  component: TailwindRadioGroup,
-  tags: ['autodocs']
+  component: TailwindRadioGroup
 };
 export default meta;
 

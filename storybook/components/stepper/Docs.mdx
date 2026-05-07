@@ -1,0 +1,102 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as StepperStories from './stepper.stories';
+
+<Meta of={StepperStories} />
+
+# Stepper
+
+`TailwindStepper` organizza contenuti in passi; ogni passo è un `tailwind-step` con etichetta e descrizione.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindStepper, TailwindStep, TailwindInput],
+  template: `
+    <tailwind-stepper>
+      <tailwind-step label="Account" description="Create your account">
+        <tailwind-input label="Email" />
+      </tailwind-step>
+      <tailwind-step label="Done" description="Finish">
+        <p>Complete.</p>
+      </tailwind-step>
+    </tailwind-stepper>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={StepperStories.Stepper} />
+
+---
+
+## Properties
+
+### `TailwindStepper (tailwind-stepper)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>activeIndex</code></td>
+      <td><code>ModelSignal&lt;number&gt;</code></td>
+      <td><code>0</code></td>
+      <td>Indice passo attivo (two-way).</td>
+    </tr>
+    <tr>
+      <td><code>linear</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Se <code>true</code>, non si saltano passi futuri.</td>
+    </tr>
+  </tbody>
+</table>
+
+### `TailwindStep (tailwind-step)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Richiesto: titolo passo.</td>
+    </tr>
+    <tr>
+      <td><code>description</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Sottotitolo.</td>
+    </tr>
+    <tr>
+      <td><code>optional</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Segna passo come opzionale.</td>
+    </tr>
+  </tbody>
+</table>
+
+Gli stati <code>completed</code> e <code>isActive</code> sono gestiti internamente dallo stepper.

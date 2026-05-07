@@ -4,7 +4,6 @@ import { TailwindBadge } from '../../../projects/angular-tailwind-components/src
 const meta: Meta<TailwindBadge> = {
   title: 'Components/Badge',
   component: TailwindBadge,
-  tags: ['autodocs'],
   argTypes: {
     variant: { control: 'select', options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'] },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
@@ -20,20 +19,4 @@ export const Badge: StoryObj<TailwindBadge> = {
     template: `<tailwind-badge ${argsToTemplate(args)}>Badge</tailwind-badge>`
   }),
   args: { variant: 'primary', size: 'md', dot: false, rounded: false }
-};
-
-export const WithDot: StoryObj<TailwindBadge> = {
-  render: args => ({
-    props: args,
-    template: `<tailwind-badge ${argsToTemplate(args)}>With dot</tailwind-badge>`
-  }),
-  args: { variant: 'success', size: 'md', dot: true, rounded: false }
-};
-
-export const Rounded: StoryObj<TailwindBadge> = {
-  render: args => ({
-    props: args,
-    template: `<tailwind-badge ${argsToTemplate(args)}>With pill</tailwind-badge>`
-  }),
-  args: { variant: 'primary', size: 'md', dot: false, rounded: true }
 };

@@ -5,7 +5,6 @@ import { TailwindAlert } from '../../../projects/angular-tailwind-components/src
 const meta: Meta<TailwindAlert> = {
   title: 'Components/Alert',
   component: TailwindAlert,
-  tags: ['autodocs'],
   argTypes: {
     severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] },
     title: { control: 'text' },

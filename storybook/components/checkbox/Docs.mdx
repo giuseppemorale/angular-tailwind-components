@@ -1,0 +1,74 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CheckboxStories from './checkbox.stories';
+
+<Meta of={CheckboxStories} />
+
+# Checkbox
+
+`TailwindCheckbox` è un controllo checkbox integrato con i form reattivi (`ControlValueAccessor`).
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindCheckbox],
+  template: `
+    <tailwind-checkbox
+      label="Accept terms"
+      size="md"
+      [checked]="false"
+    />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={CheckboxStories.Checkbox} />
+
+---
+
+## Properties
+
+### `TailwindCheckbox (tailwind-checkbox)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>description</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo descrittivo sotto l’etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Scalatura box e label.</td>
+    </tr>
+    <tr>
+      <td><code>checked</code></td>
+      <td><code>ModelSignal&lt;boolean&gt;</code></td>
+      <td><code>false</code></td>
+      <td>Stato selezionato (two-way con <code>[(checked)]</code>).</td>
+    </tr>
+  </tbody>
+</table>

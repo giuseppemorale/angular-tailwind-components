@@ -4,7 +4,6 @@ import { TailwindDrawer } from '../../../projects/angular-tailwind-components/sr
 const meta: Meta = {
   title: 'Components/Drawer',
   component: TailwindDrawer,
-  tags: ['autodocs'],
   parameters: {
     docs: {
       story: { height: '400px' }

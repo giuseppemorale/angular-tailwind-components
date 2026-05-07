@@ -3,8 +3,7 @@ import { TailwindTimePicker } from '../../../projects/angular-tailwind-component
 
 const meta: Meta<TailwindTimePicker> = {
   title: 'Forms/TimePicker',
-  component: TailwindTimePicker,
-  tags: ['autodocs']
+  component: TailwindTimePicker
 };
 export default meta;
 

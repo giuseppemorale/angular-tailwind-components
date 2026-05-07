@@ -1,0 +1,56 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MessageStories from './message.stories';
+
+<Meta of={MessageStories} />
+
+# Message
+
+`TailwindMessage` è un messaggio inline compatto con severità e contenuto proiettato.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindMessage],
+  template: `
+    <tailwind-message severity="info">
+      This is an informational message.
+    </tailwind-message>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={MessageStories.AllSeverities} />
+
+---
+
+## Properties
+
+### `TailwindMessage (tailwind-message)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>severity</code></td>
+      <td><code>'success' | 'warning' | 'danger' | 'info'</code></td>
+      <td><code>'info'</code></td>
+      <td>Variante colore.</td>
+    </tr>
+  </tbody>
+</table>
+
+Il contenuto del messaggio si passa come contenuto proiettato tra i tag del componente.

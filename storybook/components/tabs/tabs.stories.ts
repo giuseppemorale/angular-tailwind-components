@@ -3,7 +3,6 @@ import { argsToTemplate } from '@storybook/angular';
 
 const meta: Meta = {
   title: 'Components/Tabs',
-  tags: ['autodocs'],
   parameters: { docs: { story: { height: '300px' } } },
   args: {
     ariaLabel: '',

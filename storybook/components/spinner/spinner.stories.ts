@@ -4,7 +4,6 @@ import { TailwindSpinner } from '../../../projects/angular-tailwind-components/s
 const meta: Meta<TailwindSpinner> = {
   title: 'Components/Spinner',
   component: TailwindSpinner,
-  tags: ['autodocs'],
   argTypes: {
     size: {
       options: ['xs', 'sm', 'md', 'lg', 'xl'],

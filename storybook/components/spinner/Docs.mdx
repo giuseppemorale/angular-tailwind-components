@@ -1,0 +1,82 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SpinnerStories from './spinner.stories';
+
+<Meta of={SpinnerStories} />
+
+# Spinner
+
+`TailwindSpinner` indica caricamento con SVG animato, colore e orientamento label.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindSpinner],
+  template: `
+    <tailwind-spinner
+      size="md"
+      color="primary"
+      label=""
+      ariaLabel="Loading"
+      orientation="horizontal"
+    />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={SpinnerStories.Spinner} />
+
+---
+
+## Properties
+
+### `TailwindSpinner (tailwind-spinner)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione icona.</td>
+    </tr>
+    <tr>
+      <td><code>color</code></td>
+      <td><code>TailwindColor</code></td>
+      <td><code>'primary'</code></td>
+      <td>Colore (classi testo).</td>
+    </tr>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo accanto allo spinner.</td>
+    </tr>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>'Loading'</code></td>
+      <td>Accessibilità.</td>
+    </tr>
+    <tr>
+      <td><code>orientation</code></td>
+      <td><code>'horizontal' | 'vertical'</code></td>
+      <td><code>'horizontal'</code></td>
+      <td>Disposizione label.</td>
+    </tr>
+  </tbody>
+</table>

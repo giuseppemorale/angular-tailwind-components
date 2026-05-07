@@ -4,7 +4,6 @@ import { TailwindInput } from '../../../projects/angular-tailwind-components/src
 const meta: Meta<TailwindInput> = {
   title: 'Forms/Input',
   component: TailwindInput,
-  tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
     placeholder: { control: 'text' },

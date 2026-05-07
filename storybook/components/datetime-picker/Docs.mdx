@@ -1,0 +1,56 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DateTimePickerStories from './datetime-picker.stories';
+
+<Meta of={DateTimePickerStories} />
+
+# Date time picker
+
+`TailwindDateTimePicker` combina data e ora in un unico valore `TailwindDateTimeValue` (`date`, `time`).
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindDateTimePicker],
+  template: `
+    <tailwind-datetime-picker
+      label="Appointment Date & Time"
+    />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={DateTimePickerStories.DateTimepicker} />
+
+---
+
+## Properties
+
+### `TailwindDateTimePicker (tailwind-datetime-picker)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta del gruppo.</td>
+    </tr>
+  </tbody>
+</table>
+
+Il valore del controllo (CVA) è un oggetto `{ date?: string; time?: string }` (`TailwindDateTimeValue`).

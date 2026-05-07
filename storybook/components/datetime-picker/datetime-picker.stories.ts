@@ -4,7 +4,6 @@ import { TailwindDateTimePicker } from '../../../projects/angular-tailwind-compo
 const meta: Meta<TailwindDateTimePicker> = {
   title: 'Forms/DateTimePicker',
   component: TailwindDateTimePicker,
-  tags: ['autodocs'],
   parameters: { docs: { story: { height: '380px' } } }
 };
 export default meta;

@@ -1,0 +1,60 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TimePickerStories from './time-picker.stories';
+
+<Meta of={TimePickerStories} />
+
+# Time picker
+
+`TailwindTimePicker` è un campo ora (`ControlValueAccessor`) con valore stringa.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindTimePicker],
+  template: `
+    <tailwind-time-picker label="Meeting Time" [(value)]="time" />`
+})
+export class ExampleComponent {
+  time = '';
+}
+```
+
+## Anteprima
+
+<Canvas of={TimePickerStories.TimePicker} />
+
+---
+
+## Properties
+
+### `TailwindTimePicker (tailwind-time-picker)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Valore ora (two-way).</td>
+    </tr>
+  </tbody>
+</table>

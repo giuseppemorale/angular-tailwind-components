@@ -5,7 +5,6 @@ import { TailwindMessage } from '../../../projects/angular-tailwind-components/s
 const meta: Meta<TailwindMessage> = {
   title: 'Components/Message',
   component: TailwindMessage,
-  tags: ['autodocs'],
   argTypes: {
     severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] },
   },

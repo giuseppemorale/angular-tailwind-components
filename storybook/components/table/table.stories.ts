@@ -4,7 +4,6 @@ import { TailwindTable } from '../../../projects/angular-tailwind-components/src
 const meta: Meta<TailwindTable> = {
   title: 'Components/Table',
   component: TailwindTable,
-  tags: ['autodocs'],
   parameters: { docs: { story: { height: '500px' } } },
   argTypes: {
     columns: { control: 'object' },

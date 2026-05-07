@@ -1,0 +1,109 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SelectStories from './select.stories';
+
+<Meta of={SelectStories} />
+
+# Select
+
+`TailwindSelect` è una select nativa con etichetta, opzioni e stati di errore (`ControlValueAccessor`).
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindSelect],
+  template: `
+    <tailwind-select
+      label="Framework"
+      placeholder="Choose a framework"
+      [options]="options"
+      size="md"
+      [(value)]="value"
+    />`
+})
+export class ExampleComponent {
+  value = '';
+  options = [{ value: 'angular', label: 'Angular' }];
+}
+```
+
+## Anteprima
+
+<Canvas of={SelectStories.Select} />
+
+---
+
+## Properties
+
+### `TailwindSelect (tailwind-select)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Opzione vuota iniziale.</td>
+    </tr>
+    <tr>
+      <td><code>options</code></td>
+      <td><code>TailwindOption[]</code></td>
+      <td><code>[]</code></td>
+      <td>Elenco opzioni.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione.</td>
+    </tr>
+    <tr>
+      <td><code>required</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Attributo required.</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo ausilio.</td>
+    </tr>
+    <tr>
+      <td><code>errorText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Errore.</td>
+    </tr>
+    <tr>
+      <td><code>hasError</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Stile errore.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Valore selezionato (two-way).</td>
+    </tr>
+  </tbody>
+</table>

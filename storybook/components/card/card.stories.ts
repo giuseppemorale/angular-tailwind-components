@@ -5,7 +5,6 @@ import { TailwindCard } from '../../../projects/angular-tailwind-components/src/
 const meta: Meta<TailwindCard> = {
   title: 'Components/Card',
   component: TailwindCard,
-  tags: ['autodocs'],
   args: {
     elevated: false,
     hoverable: false,

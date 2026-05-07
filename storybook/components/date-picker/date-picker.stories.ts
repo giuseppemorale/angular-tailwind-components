@@ -5,7 +5,6 @@ import { componentWrapperDecorator } from '@storybook/angular';
 const meta: Meta<TailwindDatePicker> = {
   title: 'Forms/DatePicker',
   component: TailwindDatePicker,
-  tags: ['autodocs'],
   decorators: [componentWrapperDecorator(story => `<div class="max-w-xl">${story}</div>`)],
   parameters: { docs: { story: { height: '380px' } } }
 };

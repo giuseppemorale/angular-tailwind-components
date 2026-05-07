@@ -4,7 +4,6 @@ import { TailwindMenu } from '../../../projects/angular-tailwind-components/src/
 const meta: Meta<TailwindMenu> = {
   title: 'Components/Menu',
   component: TailwindMenu,
-  tags: ['autodocs'],
   parameters: { docs: { story: { height: '320px' } } },
   args: {
     items: [],

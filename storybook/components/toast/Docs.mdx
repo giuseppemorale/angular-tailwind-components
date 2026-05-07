@@ -1,0 +1,83 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ToastStories from './toast.stories';
+
+<Meta of={ToastStories} />
+
+# Toast
+
+I toast sono gestiti da `TailwindToastService` e resi da `tailwind-toast-container` nell’albero dei componenti.
+
+---
+
+## Utilizzo
+
+```typescript
+import { Component, inject } from '@angular/core';
+
+@Component({
+  imports: [TailwindToastContainer, TailwindButton],
+  template: `
+    <div>
+      <tailwind-button (click)="toast.success('Saved!', 'Success')">Success</tailwind-button>
+      <tailwind-toast-container />
+    </div>`
+})
+export class ExampleComponent {
+  toast = inject(TailwindToastService);
+}
+```
+
+## Anteprima
+
+<Canvas of={ToastStories.ServiceBased} />
+
+---
+
+## `TailwindToastService`
+
+Servizio `providedIn: 'root'`.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Metodo</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>show(config: TailwindToastConfig)</code></td>
+      <td>Aggiunge un toast; restituisce l’id numerico.</td>
+    </tr>
+    <tr>
+      <td><code>success(message, title?)</code></td>
+      <td>Toast di severità success.</td>
+    </tr>
+    <tr>
+      <td><code>warning(message, title?)</code></td>
+      <td>Toast warning.</td>
+    </tr>
+    <tr>
+      <td><code>danger(message, title?)</code></td>
+      <td>Toast danger.</td>
+    </tr>
+    <tr>
+      <td><code>info(message, title?)</code></td>
+      <td>Toast info.</td>
+    </tr>
+    <tr>
+      <td><code>dismiss(id)</code></td>
+      <td>Rimuove un toast per id.</td>
+    </tr>
+    <tr>
+      <td><code>clear()</code></td>
+      <td>Rimuove tutti i toast.</td>
+    </tr>
+  </tbody>
+</table>
+
+La configurazione (`TailwindToastConfig`) supporta almeno messaggio, titolo opzionale, severità, durata e dismissibile (vedi sorgente).
+
+### `TailwindToastContainer (tailwind-toast-container)`
+
+Eredita `TailwindComponent` (`id`, `class`). Legge lo stato dal servizio e non espone input pubblici oltre all’ereditarietà host.

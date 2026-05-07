@@ -1,0 +1,91 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NotificationStories from './notification.stories';
+
+<Meta of={NotificationStories} />
+
+# Notification
+
+`TailwindNotification` è un banner con titolo, severità, azioni opzionali tramite proiezione contenuti.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindNotification],
+  template: `
+    <tailwind-notification severity="info" title="Information" [dismissible]="true">
+      Corpo della notifica.
+    </tailwind-notification>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={NotificationStories.Notification} />
+
+---
+
+## Properties
+
+### `TailwindNotification (tailwind-notification)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>title</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Titolo.</td>
+    </tr>
+    <tr>
+      <td><code>severity</code></td>
+      <td><code>TailwindSeverity</code></td>
+      <td><code>'info'</code></td>
+      <td>Variante colore.</td>
+    </tr>
+    <tr>
+      <td><code>dismissible</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra chiusura.</td>
+    </tr>
+    <tr>
+      <td><code>showActions</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Area azioni da contenuto <code>tailwind-notification-actions</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Output</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>onDismiss</code></td>
+      <td><code>void</code></td>
+      <td>Chiusura notifica.</td>
+    </tr>
+  </tbody>
+</table>

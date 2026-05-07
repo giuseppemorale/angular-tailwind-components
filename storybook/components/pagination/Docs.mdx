@@ -1,0 +1,108 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PaginationStories from './pagination.stories';
+
+<Meta of={PaginationStories} />
+
+# Pagination
+
+`TailwindPagination` gestisce la navigazione tra pagine con riepilogo testuale configurabile.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindPagination],
+  template: `
+    <tailwind-pagination
+      [totalItems]="50"
+      [pageSize]="10"
+      [currentPage]="1"
+      [maxVisible]="7"
+      ariaLabel="Pagination"
+      summaryTemplate="Visualizzati {start}-{end} di {total}"
+    />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={PaginationStories.Pagination} />
+
+---
+
+## Properties
+
+### `TailwindPagination (tailwind-pagination)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>totalItems</code></td>
+      <td><code>number</code></td>
+      <td>—</td>
+      <td>Richiesto: numero totale elementi.</td>
+    </tr>
+    <tr>
+      <td><code>pageSize</code></td>
+      <td><code>number</code></td>
+      <td><code>10</code></td>
+      <td>Elementi per pagina.</td>
+    </tr>
+    <tr>
+      <td><code>currentPage</code></td>
+      <td><code>ModelSignal&lt;number&gt;</code></td>
+      <td><code>1</code></td>
+      <td>Pagina corrente (two-way).</td>
+    </tr>
+    <tr>
+      <td><code>maxVisible</code></td>
+      <td><code>number</code></td>
+      <td><code>10</code></td>
+      <td>Numero massimo di numeri pagina visibili.</td>
+    </tr>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>'Pagination'</code></td>
+      <td>Accessibilità.</td>
+    </tr>
+    <tr>
+      <td><code>summaryTemplate</code></td>
+      <td><code>string</code></td>
+      <td><code>'Showing {start}-{end} of {total}'</code></td>
+      <td>Placeholder <code>{start}</code>, <code>{end}</code>, <code>{total}</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Output</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>onPageChange</code></td>
+      <td><code>number</code></td>
+      <td>Nuova pagina (1-based).</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,100 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AlertStories from './alert.stories';
+
+<Meta of={AlertStories} />
+
+# Alert
+
+`TailwindAlert` mostra un messaggio con severità (success, warning, danger, info), titolo opzionale e possibilità di chiusura.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindAlert],
+  template: `
+    <tailwind-alert
+      severity="info"
+      title="Information"
+      message="This is an informational alert."
+      [dismissible]="true"
+    />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={AlertStories.Alert} />
+
+---
+
+## Properties
+
+### `TailwindAlert (tailwind-alert)`
+
+Eredita gli input di host da `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>severity</code></td>
+      <td><code>'success' | 'warning' | 'danger' | 'info'</code></td>
+      <td><code>'info'</code></td>
+      <td>Variante colore.</td>
+    </tr>
+    <tr>
+      <td><code>title</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Titolo dell’alert.</td>
+    </tr>
+    <tr>
+      <td><code>message</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo principale.</td>
+    </tr>
+    <tr>
+      <td><code>dismissible</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Mostra il pulsante di chiusura.</td>
+    </tr>
+    <tr>
+      <td><code>bordered</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Bordo laterale evidenziato.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Output</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>onDismiss</code></td>
+      <td><code>void</code></td>
+      <td>Emesso quando l’alert viene chiuso.</td>
+    </tr>
+  </tbody>
+</table>

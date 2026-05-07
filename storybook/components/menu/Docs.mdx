@@ -1,0 +1,87 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MenuStories from './menu.stories';
+
+<Meta of={MenuStories} />
+
+# Menu
+
+`TailwindMenu` mostra un dropdown con elementi configurabili e trigger per proiezione dei contenuti.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindMenu, TailwindButton],
+  template: `
+    <tailwind-menu [items]="items" align="left" (onSelect)="onSelect($event)">
+      <tailwind-menu-trigger>
+        <tailwind-button>Open menu</tailwind-button>
+      </tailwind-menu-trigger>
+    </tailwind-menu>`
+})
+export class ExampleComponent {
+  items = [
+    { label: 'Profile', value: 'profile' },
+    { label: 'Sign out', value: 'signout' }
+  ];
+  onSelect(item: unknown) {}
+}
+```
+
+## Anteprima
+
+<Canvas of={MenuStories.Menu} />
+
+---
+
+## Properties
+
+### `TailwindMenu (tailwind-menu)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>items</code></td>
+      <td><code>TailwindMenuItem[]</code></td>
+      <td><code>[]</code></td>
+      <td>Voci; supporta <code>divider</code> e <code>disabled</code>.</td>
+    </tr>
+    <tr>
+      <td><code>align</code></td>
+      <td><code>'left' | 'right'</code></td>
+      <td><code>'left'</code></td>
+      <td>Allineamento pannello rispetto al trigger.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Output</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>onSelect</code></td>
+      <td><code>TailwindMenuItem</code></td>
+      <td>Voce selezionata (se non disabilitata).</td>
+    </tr>
+  </tbody>
+</table>

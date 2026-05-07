@@ -4,7 +4,6 @@ import { TailwindTooltipDirective } from '../../../projects/angular-tailwind-com
 const meta: Meta<TailwindTooltipDirective> = {
   title: 'Components/Tooltip',
   component: TailwindTooltipDirective,
-  tags: ['autodocs'],
   argTypes: {
     tooltipPosition: { control: 'select', options: ['top', 'bottom', 'left', 'right'] }
   }

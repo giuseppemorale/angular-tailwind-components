@@ -1,0 +1,123 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AccordionStories from './accordion.stories';
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+`TailwindAccordion` è un componente che permette di visualizzare una lista di elementi in un accordion.
+
+---
+
+## Utilizzo 
+
+```typescript
+@Component({
+  imports: [TailwindAccordion, TailwindAccordionItem],
+  template: `
+    <tailwind-accordion>
+        <tailwind-accordion-item title="What is Angular?">
+          Angular is a platform and framework for building client-side applications using HTML, CSS, and TypeScript.
+        </tailwind-accordion-item>
+        <tailwind-accordion-item title="What is Tailwind CSS?">
+          Tailwind CSS is a utility-first CSS framework for rapidly building custom user interfaces.
+        </tailwind-accordion-item>
+        <tailwind-accordion-item title="How do I get started?">
+          Install the library via npm and import the components you need in your Angular module or standalone component.
+        </tailwind-accordion-item>
+      </tailwind-accordion>
+  `
+})
+export class PageComponent {}
+```
+
+
+
+## Anteprima
+
+<Canvas of={AccordionStories.Usage} />
+
+---
+
+## Properties
+
+### `TailwindAccordion (tailwind-accordion)`
+
+Eredita gli input di host da `TailwindComponent`. Il contenuto è una sequenza di `tailwind-accordion-item`.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>id</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Attributo <code>id</code> opzionale sull’elemento host.</td>
+    </tr>
+    <tr>
+      <td><code>class</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Classi CSS aggiuntive sull’elemento host.</td>
+    </tr>
+  </tbody>
+</table>
+
+### `TailwindAccordionItem (tailwind-accordion-item)`
+
+Eredita gli input di host da `TailwindComponent`.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>title</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Obbligatorio (signal <code>input.required</code>). Titolo del pannello.</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Se <code>true</code>, il pannello non si espande e non risponde al toggle.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+Eventi emessi dal componente
+
+### `TailwindAccordionItem (tailwind-accordion-item)`
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Output</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>onToggle</code></td>
+      <td><code>void</code></td>
+      <td>Output emesso quando il pannello viene espanso o collassato.</td>
+    </tr>
+  </tbody>
+</table>

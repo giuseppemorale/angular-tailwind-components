@@ -4,7 +4,6 @@ import { TailwindPagination } from '../../../projects/angular-tailwind-component
 const meta: Meta<TailwindPagination> = {
   title: 'Components/Pagination',
   component: TailwindPagination,
-  tags: ['autodocs'],
   argTypes: {
     totalItems: { control: 'number' },
     pageSize: { control: 'number' },

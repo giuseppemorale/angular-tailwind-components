@@ -1,0 +1,108 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InputStories from './input.stories';
+
+<Meta of={InputStories} />
+
+# Input
+
+`TailwindInput` è un campo di input con etichetta, stati di errore e integrazione `ControlValueAccessor`.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindInput],
+  template: `
+    <tailwind-input
+      label="Email"
+      placeholder="Enter your email"
+      type="email"
+      size="md"
+      [(value)]="email"
+    />`
+})
+export class ExampleComponent {
+  email = '';
+}
+```
+
+## Anteprima
+
+<Canvas of={InputStories.Input} />
+
+---
+
+## Properties
+
+### `TailwindInput (tailwind-input)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Placeholder.</td>
+    </tr>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'</code></td>
+      <td><code>'text'</code></td>
+      <td>Tipo input HTML.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione.</td>
+    </tr>
+    <tr>
+      <td><code>readonly</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Sola lettura.</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo di aiuto.</td>
+    </tr>
+    <tr>
+      <td><code>errorText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Messaggio errore.</td>
+    </tr>
+    <tr>
+      <td><code>hasError</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Stile errore.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Valore (two-way).</td>
+    </tr>
+  </tbody>
+</table>

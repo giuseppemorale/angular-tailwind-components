@@ -4,7 +4,6 @@ import { TailwindSkeleton } from '../../../projects/angular-tailwind-components/
 const meta: Meta<TailwindSkeleton> = {
   title: 'Components/Skeleton',
   component: TailwindSkeleton,
-  tags: ['autodocs'],
   argTypes: {
     variant: { control: 'select', options: ['text', 'circle', 'rect', 'rounded'] },
     width: { control: 'text' },

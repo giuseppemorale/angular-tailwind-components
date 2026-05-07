@@ -1,0 +1,77 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DatePickerStories from './date-picker.stories';
+
+<Meta of={DatePickerStories} />
+
+# Date Picker
+
+`TailwindDatePicker` permette di selezionare una data tramite calendario; espone un valore stringa (es. ISO) ed è un `ControlValueAccessor`.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindDatePicker],
+  template: `
+    <tailwind-date-picker
+      label="Date of Birth"
+      placeholder="Pick a date"
+      format="yyyy-MM-dd"
+      [(value)]="date"
+    />`
+})
+export class ExampleComponent {
+  date = '';
+}
+```
+
+## Anteprima
+
+<Canvas of={DatePickerStories.Datepicker} />
+
+---
+
+## Properties
+
+### `TailwindDatePicker (tailwind-date-picker)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta campo.</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td><code>string</code></td>
+      <td><code>'Select date'</code></td>
+      <td>Testo se vuoto.</td>
+    </tr>
+    <tr>
+      <td><code>format</code></td>
+      <td><code>string</code></td>
+      <td><code>'yyyy-MM-dd'</code></td>
+      <td>Formato di visualizzazione/value.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Valore data (bind two-way).</td>
+    </tr>
+  </tbody>
+</table>

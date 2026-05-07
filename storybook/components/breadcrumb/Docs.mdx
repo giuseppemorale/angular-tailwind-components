@@ -1,0 +1,65 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as BreadcrumbStories from './breadcrumb.stories';
+
+<Meta of={BreadcrumbStories} />
+
+# Breadcrumb
+
+`TailwindBreadcrumb` mostra una gerarchia di link con supporto all’ultimo elemento come testo corrente.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindBreadcrumb],
+  template: `
+    <tailwind-breadcrumb
+      ariaLabel="Breadcrumb"
+      [items]="[
+        { label: 'Home', href: '#' },
+        { label: 'Section', href: '#' },
+        { label: 'Current' }
+      ]"
+    />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={BreadcrumbStories.Breadcrumb} />
+
+---
+
+## Properties
+
+### `TailwindBreadcrumb (tailwind-breadcrumb)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>items</code></td>
+      <td><code>TailwindBreadcrumbItem[]</code></td>
+      <td><code>[]</code></td>
+      <td>Elementi con <code>label</code>, <code>href</code> opzionale.</td>
+    </tr>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>'Breadcrumb'</code></td>
+      <td>Etichetta per il nav.</td>
+    </tr>
+  </tbody>
+</table>

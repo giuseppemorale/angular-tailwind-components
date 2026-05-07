@@ -5,7 +5,6 @@ import { TailwindButton } from '../../../projects/angular-tailwind-components/sr
 const meta: Meta<TailwindButton> = {
   title: 'Components/Button',
   component: TailwindButton,
-  tags: ['autodocs'],
   argTypes: {
     color: {
       control: 'select',

@@ -4,7 +4,6 @@ import { TailwindToggle } from '../../../projects/angular-tailwind-components/sr
 const meta: Meta<TailwindToggle> = {
   title: 'Forms/Toggle',
   component: TailwindToggle,
-  tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
     ariaLabel: { control: 'text' },

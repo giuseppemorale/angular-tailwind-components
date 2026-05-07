@@ -5,7 +5,6 @@ import { TailwindCheckbox } from '../../../projects/angular-tailwind-components/
 const meta: Meta<TailwindCheckbox> = {
   title: 'Forms/Checkbox',
   component: TailwindCheckbox,
-  tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },

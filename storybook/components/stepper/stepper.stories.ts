@@ -4,7 +4,6 @@ import { TailwindStepper } from '../../../projects/angular-tailwind-components/s
 const meta: Meta = {
   title: 'Components/Stepper',
   component: TailwindStepper,
-  tags: ['autodocs'],
   parameters: { docs: { story: { height: '350px' } } }
 };
 export default meta;

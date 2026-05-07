@@ -1,0 +1,100 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as RadioStories from './radio.stories';
+
+<Meta of={RadioStories} />
+
+# Radio group
+
+`TailwindRadioGroup` raggruppa opzioni radio con layout verticale o orizzontale e integrazione form.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindRadioGroup],
+  template: `
+    <tailwind-radio-group
+      label="Plan"
+      [options]="options"
+      size="md"
+      orientation="vertical"
+      [(value)]="selected"
+    />`
+})
+export class ExampleComponent {
+  selected = 'free';
+  options = [
+    { value: 'free', label: 'Free' },
+    { value: 'pro', label: 'Pro' }
+  ];
+}
+```
+
+## Anteprima
+
+<Canvas of={RadioStories.RadioGroup} />
+
+---
+
+## Properties
+
+### `TailwindRadioGroup (tailwind-radio-group)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta gruppo.</td>
+    </tr>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Aria-label sul gruppo.</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td><code>string | undefined</code></td>
+      <td>—</td>
+      <td>Nome HTML delle radio.</td>
+    </tr>
+    <tr>
+      <td><code>options</code></td>
+      <td><code>TailwindOption[]</code></td>
+      <td><code>[]</code></td>
+      <td>Oggetti <code>value</code> / <code>label</code>.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione radio.</td>
+    </tr>
+    <tr>
+      <td><code>orientation</code></td>
+      <td><code>'horizontal' | 'vertical'</code></td>
+      <td><code>'vertical'</code></td>
+      <td>Disposizione.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Valore selezionato (two-way).</td>
+    </tr>
+  </tbody>
+</table>

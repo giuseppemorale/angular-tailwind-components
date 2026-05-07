@@ -1,0 +1,104 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TabsStories from './tabs.stories';
+
+<Meta of={TabsStories} />
+
+# Tabs
+
+`TailwindTabGroup` e `TailwindTab` definiscono schede con contenuto proiettato e indice attivo (model).
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindTabGroup, TailwindTab],
+  template: `
+    <tailwind-tab-group ariaLabel="Example" [scrollable]="false" [(activeIndex)]="index">
+      <tailwind-tab label="Overview">Overview content</tailwind-tab>
+      <tailwind-tab label="Details">Details content</tailwind-tab>
+    </tailwind-tab-group>`
+})
+export class ExampleComponent {
+  index = 0;
+}
+```
+
+## Anteprima
+
+<Canvas of={TabsStories.Default} />
+
+---
+
+## Properties
+
+### `TailwindTabGroup (tailwind-tab-group)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta lista tab.</td>
+    </tr>
+    <tr>
+      <td><code>scrollable</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Scroll orizzontale tab.</td>
+    </tr>
+    <tr>
+      <td><code>activeIndex</code></td>
+      <td><code>ModelSignal&lt;number&gt;</code></td>
+      <td><code>0</code></td>
+      <td>Indice tab attiva (two-way).</td>
+    </tr>
+  </tbody>
+</table>
+
+### `TailwindTab (tailwind-tab)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Richiesto: testo tab.</td>
+    </tr>
+    <tr>
+      <td><code>icon</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Icona o classe CSS opzionale.</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Tab non selezionabile.</td>
+    </tr>
+  </tbody>
+</table>

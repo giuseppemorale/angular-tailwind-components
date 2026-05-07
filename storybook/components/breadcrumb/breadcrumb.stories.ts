@@ -4,7 +4,6 @@ import { TailwindBreadcrumb } from '../../../projects/angular-tailwind-component
 const meta: Meta<TailwindBreadcrumb> = {
   title: 'Components/Breadcrumb',
   component: TailwindBreadcrumb,
-  tags: ['autodocs'],
   args: {
     ariaLabel: 'Breadcrumb',
     items: [

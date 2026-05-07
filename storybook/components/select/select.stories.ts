@@ -4,7 +4,6 @@ import { TailwindSelect } from '../../../projects/angular-tailwind-components/sr
 const meta: Meta<TailwindSelect> = {
   title: 'Forms/Select',
   component: TailwindSelect,
-  tags: ['autodocs'],
   parameters: { docs: { story: { height: '300px' } } }
 };
 export default meta;

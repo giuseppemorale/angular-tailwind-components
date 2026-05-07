@@ -4,7 +4,6 @@ import { TailwindNotification } from '../../../projects/angular-tailwind-compone
 const meta: Meta<TailwindNotification> = {
   title: 'Components/Notification',
   component: TailwindNotification,
-  tags: ['autodocs'],
   argTypes: {
     severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] }
   }

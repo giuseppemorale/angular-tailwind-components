@@ -1,0 +1,103 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ProgressBarStories from './progress-bar.stories';
+
+<Meta of={ProgressBarStories} />
+
+# Progress bar
+
+`TailwindProgressBar` visualizza avanzamento percentuale, modo indeterminato e opzioni estetiche.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindProgressBar],
+  template: `
+    <tailwind-progress-bar
+      [value]="65"
+      label="Upload progress"
+      [showLabel]="true"
+      [showValue]="true"
+      variant="primary"
+      size="md"
+      [indeterminate]="false"
+      [striped]="false"
+    />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={ProgressBarStories.ProgressBar} />
+
+---
+
+## Properties
+
+### `TailwindProgressBar (tailwind-progress-bar)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>number</code></td>
+      <td><code>0</code></td>
+      <td>Percentuale 0–100 (clamp interno).</td>
+    </tr>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta sopra la barra.</td>
+    </tr>
+    <tr>
+      <td><code>showLabel</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra riga etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>showValue</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra percentuale.</td>
+    </tr>
+    <tr>
+      <td><code>variant</code></td>
+      <td><code>TailwindSeverity | 'primary'</code></td>
+      <td><code>'primary'</code></td>
+      <td>Colore barra.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Altezza track.</td>
+    </tr>
+    <tr>
+      <td><code>indeterminate</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Animazione indeterminata.</td>
+    </tr>
+    <tr>
+      <td><code>striped</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Motivo a strisce.</td>
+    </tr>
+  </tbody>
+</table>

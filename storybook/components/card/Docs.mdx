@@ -1,0 +1,82 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CardStories from './card.stories';
+
+<Meta of={CardStories} />
+
+# Card
+
+`TailwindCard` è un contenitore con slot opzionali per header, corpo, immagine e footer.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindCard, TailwindButton],
+  template: `
+    <tailwind-card [elevated]="false" [hoverable]="false" [hasHeader]="true" [hasFooter]="true">
+      <tailwind-card-header><h3 class="font-semibold">Titolo</h3></tailwind-card-header>
+      <p>Contenuto della card.</p>
+      <tailwind-card-footer>
+        <tailwind-button size="sm">OK</tailwind-button>
+      </tailwind-card-footer>
+    </tailwind-card>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={CardStories.Card} />
+
+---
+
+## Properties
+
+### `TailwindCard (tailwind-card)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>elevated</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Ombra più marcata.</td>
+    </tr>
+    <tr>
+      <td><code>hoverable</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Effetto hover sull’ombra.</td>
+    </tr>
+    <tr>
+      <td><code>headerBg</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Sfondo nell’area header.</td>
+    </tr>
+    <tr>
+      <td><code>hasHeader</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra il blocco header (proiezione).</td>
+    </tr>
+    <tr>
+      <td><code>hasFooter</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra il blocco footer.</td>
+    </tr>
+  </tbody>
+</table>

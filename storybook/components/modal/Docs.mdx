@@ -5,11 +5,11 @@ import * as ModalStories from './modal.stories';
 
 # Modal
 
-`TailwindModal` è un overlay dialog che supporta due modalità d'uso: **dichiarativa** (template-driven) e **programmatica** (service-driven con risultato tipizzato).
+`TailwindModal` è un overlay dialog
 
 ---
 
-## Utilizzo programmatico (via servizio)
+## Utilizzo 
 
 Chiama `TailwindModalService.open()` da qualsiasi componente. La promise si risolve con il valore passato a `close()` oppure `undefined` se la modale viene chiusa senza risultato.
 
@@ -19,7 +19,7 @@ Il componente struttura il proprio contenuto con tre slot: `tailwind-modal-title
 
 ```typescript
 @Component({
-  imports: [TailwindButton, TailwindModalTitle, TailwindModalContent, TailwindModalFooter],
+  imports: [TailwindButton, TailwindModal],
   template: `
     <tailwind-modal-title>Conferma azione</tailwind-modal-title>
     <tailwind-modal-content>

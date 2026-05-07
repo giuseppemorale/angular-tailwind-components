@@ -4,7 +4,6 @@ import { TailwindProgressBar } from '../../../projects/angular-tailwind-componen
 const meta: Meta<TailwindProgressBar> = {
   title: 'Components/ProgressBar',
   component: TailwindProgressBar,
-  tags: ['autodocs'],
   args: {
     value: 0,
     label: '',

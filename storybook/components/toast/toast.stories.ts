@@ -38,7 +38,6 @@ class ToastStoryComponent {
 const meta: Meta = {
   title: 'Components/Toast',
   component: ToastStoryComponent,
-  tags: ['autodocs'],
   parameters: {
     docs: {
       story: { height: '300px' }

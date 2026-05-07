@@ -1,0 +1,95 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DrawerStories from './drawer.stories';
+
+<Meta of={DrawerStories} />
+
+# Drawer
+
+`TailwindDrawer` è un pannello laterale con animazione, titolo e metodi `open()` / `close()`.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindDrawer, TailwindButton, TailwindInput],
+  template: `
+    <div>
+      <tailwind-button (click)="drawer.open()">Open drawer</tailwind-button>
+      <tailwind-drawer #drawer title="Drawer Title" position="right" [closeOnBackdrop]="true">
+        <p>Contenuto</p>
+        <tailwind-button size="sm" (click)="drawer.close()">Close</tailwind-button>
+      </tailwind-drawer>
+    </div>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={DrawerStories.Drawer} />
+
+---
+
+## Properties
+
+### `TailwindDrawer (tailwind-drawer)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>title</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Titolo nel header.</td>
+    </tr>
+    <tr>
+      <td><code>position</code></td>
+      <td><code>'left' | 'right'</code></td>
+      <td><code>'right'</code></td>
+      <td>Lato da cui entra il pannello.</td>
+    </tr>
+    <tr>
+      <td><code>width</code></td>
+      <td><code>string</code></td>
+      <td><code>'max-w-md'</code></td>
+      <td>Classi larghezza (Tailwind).</td>
+    </tr>
+    <tr>
+      <td><code>closeOnBackdrop</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Chiusura al click sul backdrop.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Output</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>onClose</code></td>
+      <td><code>void</code></td>
+      <td>Emesso dopo la chiusura animata.</td>
+    </tr>
+  </tbody>
+</table>

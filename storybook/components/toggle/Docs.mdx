@@ -1,0 +1,77 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ToggleStories from './toggle.stories';
+
+<Meta of={ToggleStories} />
+
+# Toggle
+
+`TailwindToggle` è un interruttore on/off con `ControlValueAccessor`.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindToggle],
+  template: `
+    <tailwind-toggle
+      label="Enable notifications"
+      ariaLabel="Toggle notifications"
+      size="md"
+      [(checked)]="on"
+    />`
+})
+export class ExampleComponent {
+  on = false;
+}
+```
+
+## Anteprima
+
+<Canvas of={ToggleStories.Toggle} />
+
+---
+
+## Properties
+
+### `TailwindToggle (tailwind-toggle)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta visibile.</td>
+    </tr>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta accessibile.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione.</td>
+    </tr>
+    <tr>
+      <td><code>checked</code></td>
+      <td><code>ModelSignal&lt;boolean&gt;</code></td>
+      <td><code>false</code></td>
+      <td>Stato acceso/spento (two-way).</td>
+    </tr>
+  </tbody>
+</table>

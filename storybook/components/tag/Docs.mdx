@@ -1,0 +1,53 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TagStories from './tag.stories';
+
+<Meta of={TagStories} />
+
+# Tag
+
+`TailwindTag` è un’etichetta stile “pill” uppercase per stati e categorie.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindTag],
+  template: `<tailwind-tag variant="neutral">Label</tailwind-tag>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={TagStories.Tags} />
+
+---
+
+## Properties
+
+### `TailwindTag (tailwind-tag)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>variant</code></td>
+      <td><code>TailwindSeverity | 'neutral' | 'primary'</code></td>
+      <td><code>'neutral'</code></td>
+      <td>Colore di sfondo.</td>
+    </tr>
+  </tbody>
+</table>
+
+Il contenuto del tag è proiettato nel corpo del componente.

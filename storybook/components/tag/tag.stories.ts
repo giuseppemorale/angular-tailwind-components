@@ -3,8 +3,7 @@ import { TailwindTag } from '../../../projects/angular-tailwind-components/src/p
 
 const meta: Meta<TailwindTag> = {
   title: 'Components/Tag',
-  component: TailwindTag,
-  tags: ['autodocs']
+  component: TailwindTag
 };
 export default meta;
 

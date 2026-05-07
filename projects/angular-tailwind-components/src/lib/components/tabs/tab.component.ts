@@ -8,7 +8,7 @@ import { TailwindComponent } from '../tailwind.component';
 })
 export class TailwindTab extends TailwindComponent {
   /** Tab label */
-  label = input.required<string>();
+  readonly label = input.required<string>();
   /** Tab icon (optional, CSS class or content) */
   readonly icon = input<string>('');
   /** Whether the tab is disabled */

@@ -81,11 +81,12 @@
     @if (paginated() && data().length > 0) {
       <div class="px-4 py-3 border-t border-surface-200 bg-white">
         <tailwind-pagination
-          [totalItems]="data().length"
-          [pageSize]="pageSize()"
-          [(currentPage)]="currentPage"
-          [showSummary]="true"
-          [summaryTemplate]="paginationSummaryTemplate()">
+          [totalItems]="pagination()?.totalItems ?? data().length"
+          [pageSize]="pagination()?.pageSize ?? 10"
+          [currentPage]="currentPage()"
+          (onPageChange)="currentPage.set($event)"
+          [ariaLabel]="pagination()?.ariaLabel ?? 'Pagination'"
+          [summary]="pagination()?.summary ?? 'Showing {start}-{end} of {total}'">
         </tailwind-pagination>
       </div>
     }

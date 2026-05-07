@@ -19,9 +19,8 @@ import * as PaginationStories from './pagination.stories';
       [totalItems]="50"
       [pageSize]="10"
       [currentPage]="1"
-      [maxVisible]="7"
       ariaLabel="Pagination"
-      summaryTemplate="Visualizzati {start}-{end} di {total}"
+      summary="Visualizzati {start}-{end} di {total}"
     />`
 })
 export class ExampleComponent {}
@@ -68,22 +67,16 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Pagina corrente (two-way).</td>
     </tr>
     <tr>
-      <td><code>maxVisible</code></td>
-      <td><code>number</code></td>
-      <td><code>10</code></td>
-      <td>Numero massimo di numeri pagina visibili.</td>
-    </tr>
-    <tr>
       <td><code>ariaLabel</code></td>
       <td><code>string</code></td>
       <td><code>'Pagination'</code></td>
       <td>Accessibilità.</td>
     </tr>
     <tr>
-      <td><code>summaryTemplate</code></td>
+      <td><code>summary</code></td>
       <td><code>string</code></td>
-      <td><code>'Showing {start}-{end} of {total}'</code></td>
-      <td>Placeholder <code>{start}</code>, <code>{end}</code>, <code>{total}</code>.</td>
+      <td><code>{`'Showing {start}-{end} of {total}'`}</code></td>
+      <td>Placeholder <code>{`{start}`}</code>, <code>{`{end}`}</code>, <code>{`{total}`}</code>.</td>
     </tr>
   </tbody>
 </table>

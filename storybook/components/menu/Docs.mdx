@@ -5,7 +5,7 @@ import * as MenuStories from './menu.stories';
 
 # Menu
 
-`TailwindMenu` mostra un dropdown con elementi configurabili e trigger per proiezione dei contenuti.
+Il toggle (es. bottone) resta **sibling** di `tailwind-menu`. Passa il `click` a `open($event)` così il menu si posiziona sotto l’elemento che ha emesso l’evento (`currentTarget`). Dopo la prima apertura con anchor, puoi chiamare anche `open()` senza argomenti (riusa l’ultimo anchor).
 
 ---
 
@@ -15,11 +15,8 @@ import * as MenuStories from './menu.stories';
 @Component({
   imports: [TailwindMenu, TailwindButton],
   template: `
-    <tailwind-menu [items]="items" align="left" (onSelect)="onSelect($event)">
-      <tailwind-menu-trigger>
-        <tailwind-button>Open menu</tailwind-button>
-      </tailwind-menu-trigger>
-    </tailwind-menu>`
+    <tailwind-button (click)="menu.open($event)">Open menu</tailwind-button>
+    <tailwind-menu #menu [items]="items" align="left" (onSelect)="onSelect($event)" />`
 })
 export class ExampleComponent {
   items = [
@@ -29,6 +26,8 @@ export class ExampleComponent {
   onSelect(item: unknown) {}
 }
 ```
+
+Per usare un elemento DOM esplicito: `menu.open(buttonEl)` con un `HTMLElement`.
 
 ## Anteprima
 
@@ -62,7 +61,32 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>align</code></td>
       <td><code>'left' | 'right'</code></td>
       <td><code>'left'</code></td>
-      <td>Allineamento pannello rispetto al trigger.</td>
+      <td>Bordo sinistro del pannello allineato al bordo sinistro dell’anchor, oppure bordo destro al bordo destro dell’anchor.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Metodi (template ref)
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Metodo</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>open(anchor?: Event | HTMLElement)</code></td>
+      <td>Apre sotto l’anchor. Con <code>(click)="menu.open($event)"</code> sull’host del bottone, l’anchor è il toggle.</td>
+    </tr>
+    <tr>
+      <td><code>close()</code></td>
+      <td>Chiude il menu.</td>
+    </tr>
+    <tr>
+      <td><code>toggle(anchor?: Event | HTMLElement)</code></td>
+      <td>Apre o chiude; in apertura richiede anchor come <code>open</code> se non ne hai già impostato uno.</td>
     </tr>
   </tbody>
 </table>

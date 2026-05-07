@@ -1,5 +1,7 @@
 import { Component, computed, input, model, output } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
+import { Pagination } from './interfaces/pagination.interface';
+export type { Pagination };
 
 @Component({
   selector: 'tailwind-pagination',
@@ -7,12 +9,11 @@ import { TailwindComponent } from '../tailwind.component';
   styleUrl: './pagination.component.scss'
 })
 export class TailwindPagination extends TailwindComponent {
-  readonly totalItems = input.required<number>();
-  readonly pageSize = input<number>(10);
-  readonly currentPage = model<number>(1);
-  readonly maxVisible = input<number>(10);
-  readonly ariaLabel = input<string>('Pagination');
-  readonly summaryTemplate = input<string>('Showing {start}-{end} of {total}');
+  readonly totalItems = input.required<Pagination['totalItems']>();
+  readonly pageSize = input<Pagination['pageSize']>(10);
+  readonly currentPage = model<Pagination['currentPage']>(1);
+  readonly ariaLabel = input<Pagination['ariaLabel']>('Pagination');
+  readonly summary = input<Pagination['summary']>('Showing {start}-{end} of {total}');
 
   readonly onPageChange = output<number>();
 
@@ -20,33 +21,15 @@ export class TailwindPagination extends TailwindComponent {
 
   readonly visiblePages = computed(() => {
     const total = this.totalPages();
-    const current = this.currentPage();
-    const max = this.maxVisible();
-    if (total <= max) return Array.from({ length: total }, (_, i) => i + 1);
-    const pages: number[] = [1];
-    const half = Math.floor((max - 4) / 2);
-    let start = Math.max(2, current - half);
-    let end = Math.min(total - 1, current + half);
-    if (current <= half + 2) {
-      end = max - 2;
-    }
-    if (current >= total - half - 1) {
-      start = total - max + 3;
-    }
-    if (start > 2) pages.push(-1);
-    for (let i = start; i <= end; i++) pages.push(i);
-    if (end < total - 1) pages.push(-1);
-    pages.push(total);
-    return pages;
+    return Array.from({ length: total }, (_, i) => i + 1);
   });
 
   readonly summaryText = computed(() => {
     const total = this.totalItems();
-    if (total === 0)
-      return this.summaryTemplate().replace('{start}', '0').replace('{end}', '0').replace('{total}', '0');
+    if (total === 0) return this.summary().replace('{start}', '0').replace('{end}', '0').replace('{total}', '0');
     const start = (this.currentPage() - 1) * this.pageSize() + 1;
     const end = Math.min(this.currentPage() * this.pageSize(), total);
-    return this.summaryTemplate()
+    return this.summary()
       .replace('{start}', start.toString())
       .replace('{end}', end.toString())
       .replace('{total}', total.toString());

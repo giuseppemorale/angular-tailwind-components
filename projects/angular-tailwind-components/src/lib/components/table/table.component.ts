@@ -1,5 +1,5 @@
-import { Component, computed, input, output, signal } from '@angular/core';
-import { TailwindPagination } from '../pagination/pagination.component';
+import { Component, computed, effect, input, output, signal } from '@angular/core';
+import { Pagination, TailwindPagination } from '../pagination/pagination.component';
 import { TailwindTableColumn } from './interfaces/table-column.interface';
 import { TailwindComponent } from '../tailwind.component';
 
@@ -12,7 +12,6 @@ export type { TailwindTableColumn };
   styleUrl: './table.component.scss'
 })
 export class TailwindTable extends TailwindComponent {
-  // --- Public Inputs ---
   readonly columns = input<TailwindTableColumn[]>([]);
   readonly data = input<Record<string, any>[]>([]);
   readonly selectable = input<boolean>(false);
@@ -22,8 +21,7 @@ export class TailwindTable extends TailwindComponent {
 
   // --- Pagination Inputs ---
   readonly paginated = input<boolean>(true);
-  readonly pageSize = input<number>(10);
-  readonly paginationSummaryTemplate = input<string>('Showing {start} to {end} of {total} results');
+  readonly pagination = input<Pagination>();
 
   // --- Outputs ---
   readonly onSortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
@@ -34,6 +32,16 @@ export class TailwindTable extends TailwindComponent {
   readonly sortDir = signal<'asc' | 'desc'>('asc');
   readonly selectedRows = signal<Set<number>>(new Set());
   readonly currentPage = signal<number>(1);
+
+  constructor() {
+    super();
+    effect(() => {
+      const fromInput = this.pagination()?.currentPage;
+      if (fromInput != null && fromInput >= 1) {
+        this.currentPage.set(fromInput);
+      }
+    });
+  }
 
   // --- Computed ---
   readonly sortedData = computed(() => {
@@ -55,7 +63,7 @@ export class TailwindTable extends TailwindComponent {
   readonly displayedData = computed(() => {
     const rows = this.sortedData();
     if (!this.paginated()) return rows;
-    const size = this.pageSize();
+    const size = this.pagination()?.pageSize ?? 10;
     const page = this.currentPage();
     return rows.slice((page - 1) * size, page * size);
   });

@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/angular';
+import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindDateTimePicker } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindDateTimePicker> = {
@@ -7,8 +7,15 @@ const meta: Meta<TailwindDateTimePicker> = {
   parameters: { docs: { story: { height: '380px' } } }
 };
 export default meta;
-type Story = StoryObj<TailwindDateTimePicker>;
 
-export const DateTimepicker: Story = {
+export const DateTimepicker: StoryObj<TailwindDateTimePicker> = {
+  render: args => ({
+    props: args,
+    template: `
+      <div class="max-w-2xl">
+        <tailwind-datetime-picker ${argsToTemplate(args)}></tailwind-datetime-picker>
+      </div>
+      `
+  }),
   args: { label: 'Appointment Date & Time' }
 };

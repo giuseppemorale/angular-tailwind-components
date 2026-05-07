@@ -30,7 +30,7 @@ import {
   TailwindTable,
   TailwindTag,
   TailwindTimePicker,
-  TailwindToastContainer,
+  TailwindToast,
   TailwindToggle,
   TailwindTooltip
 } from '../src/public-api';
@@ -65,7 +65,7 @@ const ALL_COMPONENTS = [
   TailwindTable,
   TailwindTag,
   TailwindTimePicker,
-  TailwindToastContainer,
+  TailwindToast,
   TailwindToggle,
   TailwindTooltip
 ];

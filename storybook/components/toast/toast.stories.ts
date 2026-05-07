@@ -1,15 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import {
   TailwindToastService,
-  TailwindToastContainer,
-  TailwindButton,
-  TailwindPosition
+  TailwindToast,
+  TailwindButton
 } from '../../../projects/angular-tailwind-components/src/public-api';
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'tailwind-toast-story',
-  imports: [TailwindToastContainer, TailwindButton],
+  imports: [TailwindToast, TailwindButton],
   template: ` <div class="flex flex-wrap gap-3">
       <tailwind-button color="success" (click)="showSuccess()">Success</tailwind-button>
       <tailwind-button color="warning" (click)="showWarning()">Warning</tailwind-button>
@@ -17,7 +16,7 @@ import { Component, inject, input } from '@angular/core';
       <tailwind-button (click)="showInfo()">Info</tailwind-button>
       <tailwind-button color="secondary" kind="text" (click)="toast.clear()">Clear All</tailwind-button>
     </div>
-    <tailwind-toast-container />`
+    <tailwind-toast />`
 })
 class ToastStoryComponent {
   toast = inject(TailwindToastService);
@@ -48,5 +47,5 @@ export default meta;
 type Story = StoryObj;
 
 export const ServiceBased: Story = {
-  render: (args) => ({ component: ToastStoryComponent, props: args })
+  render: args => ({ component: ToastStoryComponent, props: args })
 };

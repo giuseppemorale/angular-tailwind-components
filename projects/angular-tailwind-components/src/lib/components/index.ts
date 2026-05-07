@@ -35,7 +35,7 @@ export * from './stepper/step.component';
 export * from './stepper/stepper.component';
 export * from './accordion/accordion-item.component';
 export * from './accordion/accordion.component';
-export * from './toast/toast-container.component';
+export * from './toast/toast.component';
 export * from './notification/notification.component';
 export * from './message/message.component';
 export * from './skeleton/skeleton.component';

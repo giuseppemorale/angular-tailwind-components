@@ -1,5 +1,5 @@
 <div class="flex flex-wrap items-center justify-between gap-4 w-full">
-  @if (summaryTemplate()) {
+  @if (summary()) {
     <span class="text-sm text-surface-700 dark:text-surface-300">
       {{ summaryText() }}
     </span>
@@ -21,20 +21,16 @@
     </button>
 
     @for (page of visiblePages(); track page) {
-      @if (page === -1) {
-        <span class="px-2 text-surface-400">…</span>
-      } @else {
-        <button
-          type="button"
-          (click)="goToPage(page)"
-          class="min-w-8 h-8 px-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
-          [class.bg-primary-600]="page === currentPage()"
-          [class.text-white]="page === currentPage()"
-          [class.text-surface-600]="page !== currentPage()"
-          [class.hover:bg-surface-100]="page !== currentPage()">
-          {{ page }}
-        </button>
-      }
+      <button
+        type="button"
+        (click)="goToPage(page)"
+        class="min-w-8 h-8 px-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
+        [class.bg-primary-600]="page === currentPage()"
+        [class.text-white]="page === currentPage()"
+        [class.text-surface-600]="page !== currentPage()"
+        [class.hover:bg-surface-100]="page !== currentPage()">
+        {{ page }}
+      </button>
     }
 
     <!-- Next -->

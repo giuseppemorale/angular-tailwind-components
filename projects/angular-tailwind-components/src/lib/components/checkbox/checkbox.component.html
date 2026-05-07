@@ -1,6 +1,6 @@
 <label
   [attr.for]="id() ? id() + '-inner' : null"
-  class="inline-flex items-start gap-2.5 cursor-pointer select-none"
+  class="inline-flex items-center gap-2.5 cursor-pointer select-none"
   [class.cursor-not-allowed]="isDisabled()"
   [class.opacity-50]="isDisabled()">
   <div class="relative flex items-center justify-center shrink-0" [class]="boxSizeClass()">
@@ -13,7 +13,9 @@
       [attr.aria-describedby]="description() && id() ? id() + '-desc' : null"
       (change)="onCheckboxChange($event)" />
     <div
-      class="w-full h-full rounded-md border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
+      class="w-full h-full border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
+      [class.rounded-sm]="size() === 'xs' || size() === 'sm'"
+      [class.rounded-md]="size() !== 'xs' && size() !== 'sm'"
       [class.border-surface-300]="!checked()"
       [class.bg-white]="!checked()"
       [class.border-primary-600]="checked()"

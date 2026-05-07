@@ -7,10 +7,10 @@ import { TailwindToastService } from '../../services';
 export type { TailwindToastConfig, TailwindToastItem };
 
 @Component({
-  selector: 'tailwind-toast-container',
-  templateUrl: './toast-container.component.html',
-  styleUrl: './toast-container.component.scss'
+  selector: 'tailwind-toast',
+  templateUrl: './toast.component.html',
+  styleUrl: './toast.component.scss'
 })
-export class TailwindToastContainer extends TailwindComponent {
-  toastService = inject(TailwindToastService);
+export class TailwindToast extends TailwindComponent {
+  readonly toastService = inject(TailwindToastService);
 }

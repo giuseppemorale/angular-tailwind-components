@@ -13,8 +13,7 @@ const meta: Meta<TailwindTable> = {
     loading: { control: 'boolean' },
     emptyMessage: { control: 'text' },
     paginated: { control: 'boolean' },
-    pageSize: { control: 'number' },
-    paginationSummaryTemplate: { control: 'text' }
+    pagination: { control: 'object' }
   }
 };
 export default meta;
@@ -64,7 +63,12 @@ export const Table: StoryObj<TailwindTable> = {
     loading: false,
     emptyMessage: 'Nessun dato disponibile',
     paginated: true,
-    pageSize: 10,
-    paginationSummaryTemplate: 'Visualizzati {start} - {end} di {total} risultati'
+    pagination: {
+      totalItems: rows.length,
+      pageSize: 10,
+      currentPage: 1,
+      ariaLabel: 'Paginazione',
+      summary: 'Visualizzati {start} - {end} di {total} risultati'
+    }
   }
 };

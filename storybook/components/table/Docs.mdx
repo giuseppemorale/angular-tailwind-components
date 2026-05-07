@@ -24,7 +24,7 @@ import * as TableStories from './table.stories';
       emptyMessage="Nessun dato"
       [paginated]="true"
       [pageSize]="10"
-      paginationSummaryTemplate="Visualizzati {start} - {end} di {total}"
+      summary="Visualizzati {start} - {end} di {total}"
     />`
 })
 export class ExampleComponent {
@@ -98,16 +98,10 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Paginazione client-side.</td>
     </tr>
     <tr>
-      <td><code>pageSize</code></td>
-      <td><code>number</code></td>
-      <td><code>10</code></td>
-      <td>Righe per pagina.</td>
-    </tr>
-    <tr>
-      <td><code>paginationSummaryTemplate</code></td>
-      <td><code>string</code></td>
-      <td>template default</td>
-      <td>Testo riepilogo paginazione interna.</td>
+      <td><code>pagination</code></td>
+      <td><code>Pagination</code></td>
+      <td><code>null</code></td>
+      <td>Configurazione paginazione (<code>totalItems</code>, <code>pageSize</code>, <code>currentPage</code>, <code>maxVisible</code>, <code>ariaLabel</code>, <code>summary</code>).</td>
     </tr>
   </tbody>
 </table>

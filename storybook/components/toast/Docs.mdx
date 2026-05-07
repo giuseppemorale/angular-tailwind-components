@@ -5,22 +5,42 @@ import * as ToastStories from './toast.stories';
 
 # Toast
 
-I toast sono gestiti da `TailwindToastService` e resi da `tailwind-toast-container` nell’albero dei componenti.
+I toast sono gestiti da `TailwindToastService` e resi dal componente `<tailwind-toast />`. Va incluso **una sola volta** nel template del componente radice dell’app (ad es. `AppComponent`), così i toast sono disponibili ovunque.
 
 ---
 
 ## Utilizzo
 
+### 1 — Aggiungi il contenitore nell’`AppComponent`
+
 ```typescript
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { TailwindToast } from 'angular-tailwind-components';
 
 @Component({
-  imports: [TailwindToastContainer, TailwindButton],
+  selector: 'app-root',
+  imports: [TailwindToast /* …RouterOutlet, ecc. */],
   template: `
-    <div>
-      <tailwind-button (click)="toast.success('Saved!', 'Success')">Success</tailwind-button>
-      <tailwind-toast-container />
-    </div>`
+    <!-- contenuto dell’app -->
+    <tailwind-toast />
+  `
+})
+export class AppComponent {}
+```
+
+### 2 — Mostra i toast dal servizio
+
+Da qualsiasi componente inietta `TailwindToastService` e chiama i metodi (`success`, `warning`, ecc.).
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { TailwindToastService, TailwindButton } from 'angular-tailwind-components';
+
+@Component({
+  imports: [TailwindButton],
+  template: `
+    <tailwind-button (click)="toast.success('Saved!', 'Success')">Success</tailwind-button>
+  `
 })
 export class ExampleComponent {
   toast = inject(TailwindToastService);
@@ -78,6 +98,6 @@ Servizio `providedIn: 'root'`.
 
 La configurazione (`TailwindToastConfig`) supporta almeno messaggio, titolo opzionale, severità, durata e dismissibile (vedi sorgente).
 
-### `TailwindToastContainer (tailwind-toast-container)`
+### `TailwindToast` (`tailwind-toast`)
 
 Eredita `TailwindComponent` (`id`, `class`). Legge lo stato dal servizio e non espone input pubblici oltre all’ereditarietà host.

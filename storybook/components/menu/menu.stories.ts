@@ -17,11 +17,8 @@ export const Menu: Story = {
   render: args => ({
     props: args,
     template: `
-      <tailwind-menu ${argsToTemplate(args)}>
-        <tailwind-menu-trigger>
-          <tailwind-button>Open Menù</tailwind-button>
-        </tailwind-menu-trigger>
-      </tailwind-menu>
+      <tailwind-button (click)="menu.open($event)">Open Menù</tailwind-button>
+      <tailwind-menu #menu ${argsToTemplate(args)}></tailwind-menu>
       `
   }),
   args: {

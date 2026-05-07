@@ -5,7 +5,7 @@ import * as DatePickerStories from './date-picker.stories';
 
 # Date Picker
 
-`TailwindDatePicker` permette di selezionare una data tramite calendario; espone un valore stringa (es. ISO) ed è un `ControlValueAccessor`.
+`TailwindDatePicker` permette di selezionare una data tramite calendario; espone un valore stringa (es. `yyyy-MM-dd`) ed è un `ControlValueAccessor`.
 
 ---
 
@@ -16,14 +16,13 @@ import * as DatePickerStories from './date-picker.stories';
   imports: [TailwindDatePicker],
   template: `
     <tailwind-date-picker
-      label="Date of Birth"
-      placeholder="Pick a date"
-      format="yyyy-MM-dd"
+      label="Data di nascita"
+      format="dd/MM/yyyy"
       [(value)]="date"
     />`
 })
 export class ExampleComponent {
-  date = '';
+  date: Date | null = null;
 }
 ```
 
@@ -53,25 +52,136 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>label</code></td>
       <td><code>string</code></td>
       <td><code>''</code></td>
-      <td>Etichetta campo.</td>
+      <td>Etichetta del campo.</td>
     </tr>
     <tr>
       <td><code>placeholder</code></td>
-      <td><code>string</code></td>
-      <td><code>'Select date'</code></td>
-      <td>Testo se vuoto.</td>
+      <td><code>string | undefined</code></td>
+      <td><em>dalla lingua</em></td>
+      <td>Testo placeholder. Se non fornito usa il default della lingua selezionata (<code>'Seleziona data'</code> / <code>'Select date'</code>).</td>
     </tr>
     <tr>
       <td><code>format</code></td>
       <td><code>string</code></td>
-      <td><code>'yyyy-MM-dd'</code></td>
-      <td>Formato di visualizzazione/value.</td>
+      <td><code>'dd/MM/yyyy'</code></td>
+      <td>Formato di visualizzazione della data nel campo input (es. <code>'dd/MM/yyyy'</code>, <code>'yyyy-MM-dd'</code>).</td>
     </tr>
     <tr>
       <td><code>value</code></td>
-      <td><code>ModelSignal&lt;string&gt;</code></td>
-      <td><code>''</code></td>
-      <td>Valore data (bind two-way).</td>
+      <td><code>ModelSignal&lt;Date | null&gt;</code></td>
+      <td><code>null</code></td>
+      <td>Valore data (two-way binding). Emette un oggetto <code>Date</code> alla conferma.</td>
     </tr>
   </tbody>
 </table>
+
+---
+
+## Comportamento
+
+Il componente segue un pattern **draft/apply**:
+
+1. L'utente apre il calendario cliccando sul campo.
+2. Naviga tra mesi e seleziona un giorno — la selezione viene mantenuta in uno stato *draft* senza ancora modificare il valore del form.
+3. **Oggi** porta il calendario al mese corrente e preseleziona la data odierna nel draft.
+4. **Applica** (o `Apply`) conferma il draft, aggiorna il valore e chiude il pannello.
+
+Questo garantisce che il form venga aggiornato solo all'intenzione esplicita dell'utente.
+
+---
+
+## Lingua
+
+Il componente supporta italiano (`it`) e inglese (`en`) tramite il token `TAILWIND_DATETIME_LANGUAGE`.
+
+### Configurazione globale (consigliata)
+
+Imposta il token una sola volta a livello di `ApplicationConfig`:
+
+```typescript
+// app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { TAILWIND_DATETIME_LANGUAGE } from 'angular-tailwind-components';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    { provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'it' }
+  ]
+};
+```
+
+### Configurazione locale (per singolo componente)
+
+```typescript
+@Component({
+  providers: [{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'en' }]
+})
+export class MyComponent {}
+```
+
+### Token di iniezione
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Tipo</th>
+      <th>Valori</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>TAILWIND_DATETIME_LANGUAGE</code></td>
+      <td><code>TailwindDatetimeLanguage</code></td>
+      <td><code>'it'</code> · <code>'en'</code></td>
+      <td><code>'it'</code></td>
+    </tr>
+  </tbody>
+</table>
+
+### Stringhe localizzate
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Chiave</th>
+      <th>Italiano</th>
+      <th>Inglese</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Placeholder</td>
+      <td>Seleziona data</td>
+      <td>Select date</td>
+    </tr>
+    <tr>
+      <td>Tasto oggi</td>
+      <td>Oggi</td>
+      <td>Today</td>
+    </tr>
+    <tr>
+      <td>Tasto applica</td>
+      <td>Applica</td>
+      <td>Apply</td>
+    </tr>
+    <tr>
+      <td>Nomi mesi</td>
+      <td>Gennaio … Dicembre</td>
+      <td>January … December</td>
+    </tr>
+    <tr>
+      <td>Giorni settimana</td>
+      <td>Lu Ma Me Gi Ve Sa Do</td>
+      <td>Mo Tu We Th Fr Sa Su</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Formattazione della data
+
+Il valore emesso è un oggetto `Date` (orario locale a mezzanotte, es. `new Date(2026, 4, 8)`).
+La visualizzazione nel campo input usa il parametro `format` (default `dd/MM/yyyy`) tramite `formatDate` di Angular.

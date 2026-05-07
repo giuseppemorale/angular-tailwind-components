@@ -6,7 +6,7 @@ const meta: Meta<TailwindDatePicker> = {
   title: 'Forms/DatePicker',
   component: TailwindDatePicker,
   decorators: [componentWrapperDecorator(story => `<div class="max-w-xl">${story}</div>`)],
-  parameters: { docs: { story: { height: '380px' } } }
+  parameters: { docs: { story: { height: '420px' } } }
 };
 export default meta;
 

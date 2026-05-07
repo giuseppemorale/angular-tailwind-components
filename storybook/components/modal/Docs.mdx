@@ -1,0 +1,134 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import * as ModalStories from './modal.stories';
+
+<Meta of={ModalStories} />
+
+# Modal
+
+`TailwindModal` è un overlay dialog che supporta due modalità d'uso: **dichiarativa** (template-driven) e **programmatica** (service-driven con risultato tipizzato).
+
+---
+
+## Utilizzo programmatico (via servizio)
+
+Chiama `TailwindModalService.open()` da qualsiasi componente. La promise si risolve con il valore passato a `close()` oppure `undefined` se la modale viene chiusa senza risultato.
+
+### 1 — Crea il componente modale
+
+Il componente struttura il proprio contenuto con tre slot: `tailwind-modal-title`, `tailwind-modal-content`, `tailwind-modal-footer`. Inietta `TailwindModalRef<R>` per chiudere la modale con un risultato tipizzato.
+
+```typescript
+@Component({
+  imports: [TailwindButton, TailwindModalTitle, TailwindModalContent, TailwindModalFooter],
+  template: `
+    <tailwind-modal-title>Conferma azione</tailwind-modal-title>
+    <tailwind-modal-content>
+      <p>L'operazione non può essere annullata. Vuoi procedere?</p>
+    </tailwind-modal-content>
+    <tailwind-modal-footer>
+      <div class="flex justify-end gap-3">
+        <tailwind-button kind="outlined" (click)="ref.close()">Annulla</tailwind-button>
+        <tailwind-button color="primary" (click)="ref.close(true)">Conferma</tailwind-button>
+      </div>
+    </tailwind-modal-footer>
+  `
+})
+export class ConfirmModalComponent {
+  readonly ref = inject<TailwindModalRef<boolean>>(TailwindModalRef);
+}
+```
+
+### 2 — Apri la modale
+
+```typescript
+async deleteItem(): Promise<void> {
+  const confirmed = await this.modalService.open<boolean>(ConfirmModalComponent, {
+    size: 'md',
+    showCloseButton: true,
+  });
+
+  if (confirmed) {
+    // procedi con l'eliminazione
+  }
+}
+```
+
+---
+
+## Slot components
+
+Il servizio distribuisce automaticamente i figli del componente nei tre slot di `TailwindModal`.
+
+- `TailwindModalTitle` - `tailwind-modal-title` - Header — all'interno dell'`<h2>`
+- `TailwindModalContent` - `tailwind-modal-content` - Body — `px-6 py-5`
+- `TailwindModalFooter` - `tailwind-modal-footer` - Footer — `px-6 py-4 border-t`
+
+> Tutti e tre vanno importati nel componente modale che li usa.
+
+---
+
+## TailwindModalRef\<R\>
+
+Iniettato automaticamente nel componente modale dal servizio.
+
+```typescript
+const ref = inject<TailwindModalRef<boolean>>(TailwindModalRef);
+
+ref.close(true);  // risolve la promise con `true`
+ref.close();      // risolve la promise con `undefined`
+```
+
+---
+
+## Passare dati alla modale
+
+Usa `config.data` per iniettare dati nel componente modale via `TAILWIND_MODAL_DATA`.
+
+```typescript
+interface DeleteData { itemName: string }
+
+@Component({
+  imports: [TailwindButton, TailwindModalTitle, TailwindModalContent, TailwindModalFooter],
+  template: `
+    <tailwind-modal-title>Elimina elemento</tailwind-modal-title>
+    <tailwind-modal-content>
+      <p>Stai per eliminare <strong>{{ data.itemName }}</strong>.</p>
+    </tailwind-modal-content>
+    <tailwind-modal-footer>
+      <div class="flex justify-end">
+        <tailwind-button color="danger" (click)="ref.close(true)">Elimina</tailwind-button>
+      </div>
+    </tailwind-modal-footer>
+  `
+})
+export class DeleteModalComponent {
+  readonly ref  = inject<TailwindModalRef<boolean>>(TailwindModalRef);
+  readonly data = inject<DeleteData>(TAILWIND_MODAL_DATA);
+}
+
+// Chiamante
+const deleted = await this.modalService.open<boolean>(DeleteModalComponent, {
+  data: { itemName: 'Fattura #1042' },
+});
+```
+
+---
+
+## Configurazione
+
+```typescript
+interface TailwindModalConfig<D = unknown> {
+  data?:            D;            // iniettato via TAILWIND_MODAL_DATA
+  size?:            TailwindSize; // 'xs' | 'sm' | 'md' | 'lg' | 'xl'  (default: 'md')
+  showCloseButton?: boolean;      // pulsante × in alto a destra (default: true)
+  closeOnBackdrop?: boolean;      // click fuori per chiudere (default: true)
+  closeOnEscape?:   boolean;      // tasto Escape per chiudere (default: true)
+}
+```
+
+---
+
+## Aperture multiple
+
+Ogni chiamata a `open()` crea un injector isolato con la propria istanza di `TailwindModalRef`.
+È possibile aprire più modali simultaneamente — ogni componente riceverà il suo ref specifico, senza conflitti.

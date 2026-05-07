@@ -88,6 +88,12 @@ const preview: Preview = {
       story: {
         height: '300px'
       }
+    },
+    options: {
+      storySort: {
+        order: ['Docs', 'Components'],
+        method: 'alphabetical'
+      }
     }
   }
 };

@@ -1,4 +1,20 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  inject,
+  input,
+  model,
+  OnDestroy,
+  signal,
+  TemplateRef,
+  ViewContainerRef,
+  viewChild
+} from '@angular/core';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { Subscription } from 'rxjs';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -15,7 +31,15 @@ import { TailwindComponent } from '../tailwind.component';
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss'
 })
-export class TailwindSelect extends TailwindComponent implements ControlValueAccessor  {
+export class TailwindSelect extends TailwindComponent implements ControlValueAccessor, OnDestroy {
+  private readonly overlay = inject(Overlay);
+  private readonly vcr = inject(ViewContainerRef);
+  private readonly elRef = inject(ElementRef<HTMLElement>);
+  private readonly panelTpl = viewChild.required<TemplateRef<unknown>>('panelTpl');
+
+  private overlayRef: OverlayRef | null = null;
+  private outsideSub: Subscription | null = null;
+
   /** Label text */
   readonly label = input<string>('');
   /** Placeholder text */
@@ -24,32 +48,35 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
   readonly options = input<TailwindOption[]>([]);
   /** Size variant */
   readonly size = input<TailwindSize>('md');
-  /** Whether the select is required */
-  readonly required = input<boolean>(false);
   /** Helper text */
   readonly helperText = input<string>('');
   /** Error text */
   readonly errorText = input<string>('');
   /** Whether in error state */
   readonly hasError = input<boolean>(false);
-  /** Unique ID */
-  
+
   /** Currently selected value */
   readonly value = model<string>('');
 
   /** Internal disabled state */
   readonly isDisabled = signal(false);
 
-  /** Computed select classes */
-  readonly selectClasses = computed(() => {
-    const base = [
-      'block w-full appearance-none bg-white',
-      'border transition-colors duration-150',
-      'pr-10 cursor-pointer',
-      'focus:outline-none focus:ring-2 focus:ring-offset-0',
-      'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed'
-    ];
+  /** Whether the dropdown panel is open */
+  readonly isOpen = signal(false);
 
+  /** Keyboard-highlighted option index (-1 = none) */
+  readonly activeIndex = signal(-1);
+
+  /** The currently selected option object */
+  readonly selectedOption = computed(() => this.options().find(o => String(o.value) === this.value()) ?? null);
+
+  /** Used in the template to compare option values */
+  isOptionSelected(option: TailwindOption): boolean {
+    return String(option.value) === this.value();
+  }
+
+  /** Classes for the trigger button */
+  readonly triggerClasses = computed(() => {
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs px-2 py-1 rounded-sm',
       sm: 'text-sm px-2.5 py-1.5 rounded-md',
@@ -60,10 +87,35 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
 
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:ring-danger-500/30 text-danger-900'
-      : 'border-surface-300 focus:ring-primary-500/30 focus:border-primary-500 text-surface-900';
+      : 'border-surface-300 focus:ring-primary-500/30 focus:border-primary-500';
 
-    return [...base, sizeMap[this.size()], stateClass].join(' ');
+    return [
+      'flex items-center justify-between w-full bg-white border transition-colors duration-150',
+      'pr-3 cursor-pointer text-left',
+      'focus:outline-none focus:ring-2 focus:ring-offset-0',
+      'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed',
+      sizeMap[this.size()],
+      stateClass
+    ].join(' ');
   });
+
+  /** Classes for a single option row */
+  optionClasses(index: number, option: TailwindOption): string {
+    const isSelected = String(option.value) === this.value();
+    const isActive = this.activeIndex() === index;
+    const isDisabled = !!option.disabled;
+
+    return [
+      'flex items-center justify-between px-3 py-2 text-sm cursor-pointer select-none',
+      isDisabled
+        ? 'text-surface-400 cursor-not-allowed'
+        : isSelected
+          ? 'bg-primary-50 text-primary-700 font-medium'
+          : isActive
+            ? 'bg-surface-100 text-surface-900'
+            : 'text-surface-800 hover:bg-surface-50'
+    ].join(' ');
+  }
 
   // CVA
   private onChange: (value: string) => void = () => {};
@@ -72,24 +124,131 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
   writeValue(value: string): void {
     this.value.set(value ?? '');
   }
-
   registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
-
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
-
   setDisabledState(disabled: boolean): void {
     this.isDisabled.set(disabled);
   }
 
-  onSelectChange(event: Event): void {
-    const val = (event.target as HTMLSelectElement).value;
+  ngOnDestroy(): void {
+    this.closeDropdown();
+  }
+
+  private openDropdown(): void {
+    if (this.overlayRef) return;
+
+    const trigger =
+      (this.elRef.nativeElement.querySelector('button[role="combobox"]') as HTMLElement) ?? this.elRef.nativeElement;
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(trigger)
+      .withPositions([
+        // Preferred: open downward
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+        // Fallback: open upward
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 }
+      ])
+      .withFlexibleDimensions(false)
+      .withPush(false);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.close(),
+      width: trigger.offsetWidth
+    });
+
+    const portal = new TemplatePortal(this.panelTpl(), this.vcr);
+    this.overlayRef.attach(portal);
+
+    // Close when clicking outside (but not on the trigger itself)
+    this.outsideSub = this.overlayRef.outsidePointerEvents().subscribe(event => {
+      if (!this.elRef.nativeElement.contains(event.target as Node)) {
+        this.closeDropdown();
+      }
+    });
+
+    this.isOpen.set(true);
+    this.activeIndex.set(this.options().findIndex(o => String(o.value) === this.value()));
+  }
+
+  private closeDropdown(): void {
+    this.overlayRef?.detach();
+    this.overlayRef?.dispose();
+    this.overlayRef = null;
+    this.outsideSub?.unsubscribe();
+    this.outsideSub = null;
+    this.isOpen.set(false);
+    this.activeIndex.set(-1);
+  }
+
+  toggleDropdown(): void {
+    if (this.isDisabled()) return;
+    if (this.isOpen()) {
+      this.closeDropdown();
+    } else {
+      this.openDropdown();
+    }
+  }
+
+  selectOption(option: TailwindOption): void {
+    if (option.disabled) return;
+    const val = String(option.value);
     this.value.set(val);
     this.onChange(val);
     this.onTouched();
+    this.closeDropdown();
+  }
+
+  onKeydown(event: KeyboardEvent): void {
+    if (this.isDisabled()) return;
+    const opts = this.options();
+
+    switch (event.key) {
+      case 'ArrowDown': {
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.openDropdown();
+          return;
+        }
+        let next = this.activeIndex() + 1;
+        while (next < opts.length && opts[next].disabled) next++;
+        if (next < opts.length) this.activeIndex.set(next);
+        break;
+      }
+      case 'ArrowUp': {
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.openDropdown();
+          return;
+        }
+        let prev = this.activeIndex() - 1;
+        while (prev >= 0 && opts[prev].disabled) prev--;
+        if (prev >= 0) this.activeIndex.set(prev);
+        break;
+      }
+      case 'Enter':
+      case ' ': {
+        event.preventDefault();
+        if (!this.isOpen()) {
+          this.openDropdown();
+          return;
+        }
+        const active = this.activeIndex();
+        if (active >= 0 && active < opts.length) {
+          this.selectOption(opts[active]);
+        }
+        break;
+      }
+      case 'Escape':
+      case 'Tab': {
+        this.closeDropdown();
+        break;
+      }
+    }
   }
 }
-

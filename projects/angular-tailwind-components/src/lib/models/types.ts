@@ -22,4 +22,5 @@ export type TailwindShape = 'rounded' | 'pill' | 'square';
 export interface TailwindOption<T = unknown> {
   value: T;
   label: string;
+  disabled?: boolean;
 }

@@ -5,7 +5,7 @@ import * as SelectStories from './select.stories';
 
 # Select
 
-`TailwindSelect` è una select nativa con etichetta, opzioni e stati di errore (`ControlValueAccessor`).
+`TailwindSelect` è un dropdown custom in stile Tailwind con etichetta, opzioni, navigazione da tastiera e stati di errore (`ControlValueAccessor`).
 
 ---
 
@@ -25,13 +25,28 @@ import * as SelectStories from './select.stories';
 })
 export class ExampleComponent {
   value = '';
-  options = [{ value: 'angular', label: 'Angular' }];
+  options = [
+    { value: 'angular', label: 'Angular' },
+    { value: 'react',   label: 'React', disabled: true },
+  ];
 }
 ```
 
 ## Anteprima
 
 <Canvas of={SelectStories.Select} />
+
+## Con opzioni disabilitate
+
+<Canvas of={SelectStories.WithDisabledOptions} />
+
+## Stato errore
+
+<Canvas of={SelectStories.WithError} />
+
+## Dimensioni
+
+<Canvas of={SelectStories.Sizes} />
 
 ---
 
@@ -61,49 +76,59 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>placeholder</code></td>
       <td><code>string</code></td>
       <td><code>''</code></td>
-      <td>Opzione vuota iniziale.</td>
+      <td>Testo mostrato quando nessuna opzione è selezionata.</td>
     </tr>
     <tr>
       <td><code>options</code></td>
       <td><code>TailwindOption[]</code></td>
       <td><code>[]</code></td>
-      <td>Elenco opzioni.</td>
+      <td>Elenco opzioni. Ogni opzione può avere <code>disabled?: boolean</code>.</td>
     </tr>
     <tr>
       <td><code>size</code></td>
       <td><code>TailwindSize</code></td>
       <td><code>'md'</code></td>
-      <td>Dimensione.</td>
+      <td>Dimensione: <code>xs | sm | md | lg | xl</code>.</td>
     </tr>
     <tr>
       <td><code>required</code></td>
       <td><code>boolean</code></td>
       <td><code>false</code></td>
-      <td>Attributo required.</td>
+      <td>Mostra asterisco accanto alla label.</td>
     </tr>
     <tr>
       <td><code>helperText</code></td>
       <td><code>string</code></td>
       <td><code>''</code></td>
-      <td>Testo ausilio.</td>
+      <td>Testo di aiuto (visibile solo se non in errore).</td>
     </tr>
     <tr>
       <td><code>errorText</code></td>
       <td><code>string</code></td>
       <td><code>''</code></td>
-      <td>Errore.</td>
+      <td>Messaggio di errore (visibile solo con <code>hasError</code>).</td>
     </tr>
     <tr>
       <td><code>hasError</code></td>
       <td><code>boolean</code></td>
       <td><code>false</code></td>
-      <td>Stile errore.</td>
+      <td>Attiva lo stile errore (bordo rosso).</td>
     </tr>
     <tr>
       <td><code>value</code></td>
       <td><code>ModelSignal&lt;string&gt;</code></td>
       <td><code>''</code></td>
-      <td>Valore selezionato (two-way).</td>
+      <td>Valore selezionato (two-way binding).</td>
     </tr>
   </tbody>
 </table>
+
+### `TailwindOption`
+
+```typescript
+interface TailwindOption<T = unknown> {
+  value: T;
+  label: string;
+  disabled?: boolean;
+}
+```

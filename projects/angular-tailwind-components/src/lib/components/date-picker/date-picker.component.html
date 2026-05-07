@@ -9,7 +9,7 @@
       readonly
       [value]="displayValue()"
       [placeholder]="effectivePlaceholder()"
-      class="block w-full bg-white border border-surface-300 rounded-md px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 cursor-pointer disabled:bg-surface-50 disabled:cursor-not-allowed pr-10"
+      class="block w-full bg-white border border-surface-300 rounded-md px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-surface-50 disabled:cursor-not-allowed pr-10"
       [disabled]="isDisabled()"
       (click)="toggleCalendar()" />
     <svg

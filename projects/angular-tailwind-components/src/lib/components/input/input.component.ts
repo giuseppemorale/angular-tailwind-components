@@ -45,7 +45,7 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
       'block w-full bg-white',
       'border transition-colors duration-150',
       'placeholder:text-surface-400',
-      'focus:outline-none focus:ring-2 focus:ring-offset-0',
+      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed'
     ];
 
@@ -58,8 +58,8 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
     };
 
     const stateClass = this.hasError()
-      ? 'border-danger-400 focus:ring-danger-500/30 text-danger-900'
-      : 'border-surface-300 focus:ring-primary-500/30 focus:border-primary-500 text-surface-900';
+      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
+      : 'border-surface-300 focus:outline-primary-500 text-surface-900';
 
     return [...base, sizeMap[this.size()], stateClass].join(' ');
   });

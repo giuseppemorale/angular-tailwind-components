@@ -9,7 +9,7 @@
       readonly
       [value]="displayValue()"
       [placeholder]="effectivePlaceholder()"
-      class="block w-full bg-white border border-surface-300 rounded-md px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 cursor-pointer disabled:bg-surface-50 disabled:cursor-not-allowed pr-10"
+      class="block w-full bg-white border border-surface-300 rounded-md px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-surface-50 disabled:cursor-not-allowed pr-10"
       [disabled]="isDisabled()"
       (click)="togglePanel()" />
     <svg
@@ -87,20 +87,24 @@
         <div class="mt-3 pt-3 border-t border-surface-100 flex items-center gap-2">
           <span class="text-xs font-medium text-surface-600 shrink-0">{{ i18n.time }}</span>
           <select
-            class="flex-1 min-w-0 block bg-white border border-surface-300 rounded-md px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 disabled:bg-surface-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-white border border-surface-300 rounded-md px-2 py-1.5 text-sm text-surface-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-surface-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled() || !draft()"
             (change)="onHourChange($event)">
             @for (h of hours; track h) {
-              <option [value]="h" [selected]="h === (draft()?.getHours() ?? 0)">{{ h.toString().padStart(2, '0') }}</option>
+              <option [value]="h" [selected]="h === (draft()?.getHours() ?? 0)">
+                {{ h.toString().padStart(2, '0') }}
+              </option>
             }
           </select>
           <span class="text-surface-400 text-sm">:</span>
           <select
-            class="flex-1 min-w-0 block bg-white border border-surface-300 rounded-md px-2 py-1.5 text-sm text-surface-900 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 disabled:bg-surface-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-white border border-surface-300 rounded-md px-2 py-1.5 text-sm text-surface-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-surface-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled() || !draft()"
             (change)="onMinuteChange($event)">
             @for (m of minutes; track m) {
-              <option [value]="m" [selected]="m === (draft()?.getMinutes() ?? 0)">{{ m.toString().padStart(2, '0') }}</option>
+              <option [value]="m" [selected]="m === (draft()?.getMinutes() ?? 0)">
+                {{ m.toString().padStart(2, '0') }}
+              </option>
             }
           </select>
         </div>

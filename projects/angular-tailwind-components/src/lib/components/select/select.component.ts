@@ -86,13 +86,13 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
     };
 
     const stateClass = this.hasError()
-      ? 'border-danger-400 focus:ring-danger-500/30 text-danger-900'
-      : 'border-surface-300 focus:ring-primary-500/30 focus:border-primary-500';
+      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
+      : 'border-surface-300 focus:outline-primary-500';
 
     return [
       'flex items-center justify-between w-full bg-white border transition-colors duration-150',
       'pr-3 cursor-pointer text-left',
-      'focus:outline-none focus:ring-2 focus:ring-offset-0',
+      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed',
       sizeMap[this.size()],
       stateClass

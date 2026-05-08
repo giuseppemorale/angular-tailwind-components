@@ -31,7 +31,7 @@ import { TailwindComponent } from '../tailwind.component';
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss'
 })
-export class TailwindSelect extends TailwindComponent implements ControlValueAccessor, OnDestroy {
+export class TailwindSelect<T = unknown> extends TailwindComponent implements ControlValueAccessor, OnDestroy {
   private readonly overlay = inject(Overlay);
   private readonly vcr = inject(ViewContainerRef);
   private readonly elRef = inject(ElementRef<HTMLElement>);
@@ -45,7 +45,7 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
   /** Placeholder text */
   readonly placeholder = input<string>('');
   /** Available options */
-  readonly options = input<TailwindOption[]>([]);
+  readonly options = input<TailwindOption<T>[]>([]);
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Helper text */
@@ -56,7 +56,7 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
   readonly hasError = input<boolean>(false);
 
   /** Currently selected value */
-  readonly value = model<string>('');
+  readonly value = model<T | null>(null);
 
   /** Internal disabled state */
   readonly isDisabled = signal(false);
@@ -69,11 +69,6 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
 
   /** The currently selected option object */
   readonly selectedOption = computed(() => this.options().find(o => String(o.value) === this.value()) ?? null);
-
-  /** Used in the template to compare option values */
-  isOptionSelected(option: TailwindOption): boolean {
-    return String(option.value) === this.value();
-  }
 
   /** Classes for the trigger button */
   readonly triggerClasses = computed(() => {
@@ -99,6 +94,11 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
     ].join(' ');
   });
 
+  /** Used in the template to compare option values */
+  isOptionSelected(option: TailwindOption): boolean {
+    return String(option.value) === this.value();
+  }
+
   /** Classes for a single option row */
   optionClasses(index: number, option: TailwindOption): string {
     const isSelected = String(option.value) === this.value();
@@ -118,13 +118,13 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
   }
 
   // CVA
-  private onChange: (value: string) => void = () => {};
+  private onChange: (value: T) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: string): void {
-    this.value.set(value ?? '');
+  writeValue(value: T): void {
+    this.value.set(value ?? null);
   }
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: T) => void): void {
     this.onChange = fn;
   }
   registerOnTouched(fn: () => void): void {
@@ -195,9 +195,9 @@ export class TailwindSelect extends TailwindComponent implements ControlValueAcc
     }
   }
 
-  selectOption(option: TailwindOption): void {
+  selectOption(option: TailwindOption<T>): void {
     if (option.disabled) return;
-    const val = String(option.value);
+    const val = option.value;
     this.value.set(val);
     this.onChange(val);
     this.onTouched();

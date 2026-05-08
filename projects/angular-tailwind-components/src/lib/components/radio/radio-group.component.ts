@@ -1,6 +1,6 @@
 import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindOptionGroup, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { TailwindComponent } from '../tailwind.component';
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.scss'
 })
-export class TailwindRadioGroup extends TailwindComponent implements ControlValueAccessor  {
+export class TailwindRadioGroup<T = unknown> extends TailwindComponent implements ControlValueAccessor {
   /** Label for the radio group */
   readonly label = input<string>('');
   /** Aria label for accessibility */
@@ -23,14 +23,14 @@ export class TailwindRadioGroup extends TailwindComponent implements ControlValu
   /** Name for the radio group (used for native radio grouping) */
   readonly name = input<string>();
   /** Available options */
-  readonly options = input<TailwindOption[]>([]);
+  readonly options = input<TailwindOptionGroup<T>[]>([]);
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Layout orientation */
   readonly orientation = input<'horizontal' | 'vertical'>('vertical');
 
   /** Currently selected value */
-  readonly value = model<string>('');
+  readonly value = model<T | null>(null);
 
   /** Internal disabled state */
   readonly isDisabled = signal(false);
@@ -60,14 +60,14 @@ export class TailwindRadioGroup extends TailwindComponent implements ControlValu
   });
 
   // CVA
-  private onChange: (value: string) => void = () => {};
+  private onChange: (value: T) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: string): void {
-    this.value.set(value ?? '');
+  writeValue(value: T): void {
+    this.value.set(value ?? null);
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: T) => void): void {
     this.onChange = fn;
   }
 
@@ -79,10 +79,9 @@ export class TailwindRadioGroup extends TailwindComponent implements ControlValu
     this.isDisabled.set(disabled);
   }
 
-  onRadioChange(optionValue: string): void {
+  onRadioChange(optionValue: T): void {
     this.value.set(optionValue);
     this.onChange(optionValue);
     this.onTouched();
   }
 }
-

@@ -24,3 +24,7 @@ export interface TailwindOption<T = unknown> {
   label: string;
   disabled?: boolean;
 }
+
+export interface TailwindOptionGroup<T = unknown> extends TailwindOption<T> {
+  description?: string;
+}

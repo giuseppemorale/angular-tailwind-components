@@ -14,7 +14,7 @@ import { TailwindIcon } from '../../projects/angular-tailwind-components/src/pub
           <tailwind-icon class="shrink-0" [icon]="name" [size]="'normal'" />
           <code
             class="line-clamp-3 min-h-0 w-full select-all break-all text-center font-mono text-[12px] leading-snug text-neutral-600 dark:text-neutral-400">
-            {{ codeLiteral(name) }}
+            {{ name }}
           </code>
         </div>
       }
@@ -24,10 +24,6 @@ import { TailwindIcon } from '../../projects/angular-tailwind-components/src/pub
 })
 export class StorybookIconsGalleryComponent {
   readonly icons = TAILWIND_HERO_ICON_NAMES;
-
-  codeLiteral(name: string): string {
-    return `${name}`;
-  }
 }
 
 const meta: Meta<StorybookIconsGalleryComponent> = {

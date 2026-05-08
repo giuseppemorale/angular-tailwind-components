@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+.tailwind-slider-thumb {
+  cursor: pointer;
+}
+
+.tailwind-slider-thumb:disabled {
+  cursor: not-allowed;
+}

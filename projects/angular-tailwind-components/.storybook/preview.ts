@@ -32,7 +32,11 @@ import {
   TailwindTimePicker,
   TailwindToast,
   TailwindToggle,
-  TailwindTooltip
+  TailwindTooltip,
+  TailwindToolbar,
+  TailwindDivider,
+  TailwindMeter,
+  TailwindSlider
 } from '../src/public-api';
 
 const ALL_COMPONENTS = [
@@ -67,7 +71,11 @@ const ALL_COMPONENTS = [
   TailwindTimePicker,
   TailwindToast,
   TailwindToggle,
-  TailwindTooltip
+  TailwindTooltip,
+  TailwindToolbar,
+  TailwindDivider,
+  TailwindMeter,
+  TailwindSlider
 ];
 
 const preview: Preview = {

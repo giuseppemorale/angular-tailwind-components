@@ -1,0 +1,31 @@
+<div class="w-full space-y-2">
+  <div
+    [class]="trackContainerClasses()"
+    role="meter"
+    [attr.aria-valuemin]="0"
+    [attr.aria-valuemax]="scaleMax()"
+    [attr.aria-valuenow]="totalValue()"
+    [attr.aria-label]="'Meter'">
+    @for (seg of segmentLayouts(); track $index) {
+      @if (seg.widthPct > 0) {
+        <div
+          class="h-full min-w-0 transition-all duration-300 ease-out"
+          [class]="seg.barClass"
+          [style.width.%]="seg.widthPct"
+          [attr.title]="seg.label + ': ' + seg.value"></div>
+      }
+    }
+  </div>
+
+  @if (showLabels()) {
+    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-surface-600">
+      @for (seg of segments(); track $index) {
+        <span class="inline-flex items-center gap-1.5">
+          <span class="inline-block size-2 rounded-sm shrink-0" [class]="legendSwatchClass(seg.variant)"></span>
+          <span>{{ seg.label }}</span>
+          <span class="text-surface-400">({{ seg.value }})</span>
+        </span>
+      }
+    </div>
+  }
+</div>

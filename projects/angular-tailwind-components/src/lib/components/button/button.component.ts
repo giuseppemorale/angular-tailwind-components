@@ -12,7 +12,7 @@ import { TailwindComponent } from '../tailwind.component';
 export class TailwindButton extends TailwindComponent {
   /** Visual color */
   readonly color = input<TailwindColor>('primary');
-  /** Visual kind */
+  /** Visual kind: `ghost` = transparent with hover tint; `text` = text color only, no hover background */
   readonly kind = input<TailwindButtonKind>('solid');
   /** Size of the button */
   readonly size = input<TailwindSize>('md');
@@ -64,7 +64,8 @@ export class TailwindButton extends TailwindComponent {
       info: 'bg-transparent text-info-600 border-info-600 hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600'
     };
 
-    const textMap: Record<TailwindColor, string> = {
+    /** Transparent + hover/active background tint (former `text` look). */
+    const ghostMap: Record<TailwindColor, string> = {
       primary:
         'bg-transparent text-primary-600 border-transparent hover:bg-primary-50 active:bg-primary-100 focus-visible:outline-primary-600',
       secondary:
@@ -78,9 +79,20 @@ export class TailwindButton extends TailwindComponent {
       info: 'bg-transparent text-info-600 border-transparent hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600'
     };
 
+    /** Text color from severity only; background stays transparent on hover/active. */
+    const textMap: Record<TailwindColor, string> = {
+      primary: 'bg-transparent text-primary-600 border-transparent focus-visible:outline-primary-600',
+      secondary: 'bg-transparent text-surface-700 border-transparent focus-visible:outline-surface-500',
+      danger: 'bg-transparent text-danger-600 border-transparent focus-visible:outline-danger-600',
+      success: 'bg-transparent text-success-600 border-transparent focus-visible:outline-success-600',
+      warning: 'bg-transparent text-warning-600 border-transparent focus-visible:outline-warning-500',
+      info: 'bg-transparent text-info-600 border-transparent focus-visible:outline-info-600'
+    };
+
     const styleMap = {
       solid: solidMap,
       outlined: outlinedMap,
+      ghost: ghostMap,
       text: textMap
     };
 

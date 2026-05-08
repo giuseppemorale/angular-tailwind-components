@@ -1,0 +1,14 @@
+<div [class]="rootClasses()">
+  <div class="shrink-0">
+    <ng-content select="tailwind-toolbar-logo" />
+  </div>
+  <div [class]="contentWrapperClasses()">
+    <ng-content select="tailwind-toolbar-content" />
+  </div>
+  <div
+    class="flex flex-wrap items-center gap-2"
+    [class.justify-end]="orientation() === 'horizontal'"
+    [class.mt-auto]="orientation() === 'vertical'">
+    <ng-content select="tailwind-toolbar-end" />
+  </div>
+</div>

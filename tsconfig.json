@@ -31,6 +31,9 @@
     },
     {
       "path": "./projects/angular-tailwind-components/tsconfig.spec.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
     }
   ]
 }

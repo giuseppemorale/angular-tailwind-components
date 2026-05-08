@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "start": "ng serve playground",
+    "build": "ng build angular-tailwind-components",
+    "build:playground": "ng build playground",
+    "watch": "ng build angular-tailwind-components --watch --configuration development",
     "test": "ng test",
     "release": "node scripts/release.js",
     "storybook": "ng run angular-tailwind-components:storybook",

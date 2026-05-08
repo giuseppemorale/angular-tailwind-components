@@ -12,7 +12,7 @@ const meta: Meta<TailwindButton> = {
     },
     kind: {
       control: 'select',
-      options: ['solid', 'outlined', 'text']
+      options: ['solid', 'outlined', 'ghost', 'text']
     },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     disabled: { control: 'boolean' },

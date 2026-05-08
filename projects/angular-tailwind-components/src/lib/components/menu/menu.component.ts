@@ -9,9 +9,8 @@ import {
   signal,
   viewChild
 } from '@angular/core';
-import { TailwindMenuItem } from './interfaces/menu-item.interface';
 import { TailwindComponent } from '../tailwind.component';
-export type { TailwindMenuItem };
+import { TailwindMenuItem } from '../../models';
 
 /** Matches previous `min-w-48` floor when the anchor is narrower. */
 const MIN_PANEL_WIDTH_PX = 192;

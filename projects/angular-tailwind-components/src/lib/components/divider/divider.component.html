@@ -1,0 +1,9 @@
+@if (isLabeledHorizontal()) {
+  <div [class]="labeledRowClass()" role="separator" [attr.aria-label]="label()">
+    <div class="flex-1 border-0 border-t" [class]="ruleLineClass()"></div>
+    <span class="text-xs font-medium text-surface-500 shrink-0">{{ label() }}</span>
+    <div class="flex-1 border-0 border-t" [class]="ruleLineClass()"></div>
+  </div>
+} @else {
+  <div [class]="ruleClasses()" role="separator"></div>
+}

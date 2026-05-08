@@ -1,0 +1,143 @@
+@if (orientation() === 'horizontal') {
+  <div
+    #track
+    class="relative w-full touch-none select-none py-3"
+    [class.opacity-50]="isEffectivelyDisabled()"
+    [class.pointer-events-none]="isEffectivelyDisabled()"
+    (pointerdown)="onTrackPointerDown($event, range() ? null : null)">
+    <div class="relative h-6 w-full">
+      <!-- rail -->
+      <div
+        class="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2 rounded-full bg-surface-200"
+        [class]="trackThickness()"></div>
+
+      @if (showTicks()) {
+        @for (p of tickPositions(); track $index) {
+          <div
+            class="pointer-events-none absolute top-1/2 h-2 w-px -translate-x-1/2 -translate-y-1/2 bg-surface-300"
+            [style.left.%]="p"></div>
+        }
+      }
+
+      <!-- fill -->
+      <div
+        class="pointer-events-none absolute top-1/2 -translate-y-1/2 rounded-full bg-primary-500"
+        [class]="trackThickness()"
+        [style.left.%]="fillStartPct()"
+        [style.width.%]="fillWidthPct()"></div>
+
+      @if (range()) {
+        <button
+          type="button"
+          [disabled]="isEffectivelyDisabled()"
+          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          [class]="thumbSizeClass()"
+          [style.left.%]="lowPct()"
+          role="slider"
+          [attr.aria-valuemin]="min()"
+          [attr.aria-valuemax]="max()"
+          [attr.aria-valuenow]="rangeLow()"
+          [attr.aria-disabled]="isEffectivelyDisabled()"
+          (pointerdown)="onThumbPointerDown($event, 0)"
+          (keydown)="onKeyDown($event, 0)"></button>
+        <button
+          type="button"
+          [disabled]="isEffectivelyDisabled()"
+          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          [class]="thumbSizeClass()"
+          [style.left.%]="highPct()"
+          role="slider"
+          [attr.aria-valuemin]="min()"
+          [attr.aria-valuemax]="max()"
+          [attr.aria-valuenow]="rangeHigh()"
+          [attr.aria-disabled]="isEffectivelyDisabled()"
+          (pointerdown)="onThumbPointerDown($event, 1)"
+          (keydown)="onKeyDown($event, 1)"></button>
+      } @else {
+        <button
+          type="button"
+          [disabled]="isEffectivelyDisabled()"
+          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          [class]="thumbSizeClass()"
+          [style.left.%]="singlePct()"
+          role="slider"
+          [attr.aria-valuemin]="min()"
+          [attr.aria-valuemax]="max()"
+          [attr.aria-valuenow]="singleValue()"
+          [attr.aria-disabled]="isEffectivelyDisabled()"
+          (pointerdown)="onThumbPointerDown($event, 0)"
+          (keydown)="onKeyDown($event, 0)"></button>
+      }
+    </div>
+  </div>
+} @else {
+  <div
+    #track
+    class="relative mx-auto h-52 w-10 touch-none select-none"
+    [class.opacity-50]="isEffectivelyDisabled()"
+    [class.pointer-events-none]="isEffectivelyDisabled()"
+    (pointerdown)="onTrackPointerDown($event, range() ? null : null)">
+    <div class="relative h-full w-full">
+      <div
+        class="pointer-events-none absolute bottom-0 left-1/2 top-0 -translate-x-1/2 rounded-full bg-surface-200"
+        [class]="verticalTrackThickness()"></div>
+
+      @if (showTicks()) {
+        @for (p of tickPositions(); track $index) {
+          <div
+            class="pointer-events-none absolute left-1/2 w-2 h-px -translate-x-1/2 translate-y-1/2 bg-surface-300"
+            [style.bottom.%]="p"></div>
+        }
+      }
+
+      <div
+        class="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full bg-primary-500"
+        [class]="verticalTrackThickness()"
+        [style.bottom.%]="fillStartPct()"
+        [style.height.%]="fillWidthPct()"></div>
+
+      @if (range()) {
+        <button
+          type="button"
+          [disabled]="isEffectivelyDisabled()"
+          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          [class]="thumbSizeClass()"
+          [style.bottom.%]="lowPct()"
+          role="slider"
+          [attr.aria-valuemin]="min()"
+          [attr.aria-valuemax]="max()"
+          [attr.aria-valuenow]="rangeLow()"
+          [attr.aria-disabled]="isEffectivelyDisabled()"
+          (pointerdown)="onThumbPointerDown($event, 0)"
+          (keydown)="onKeyDown($event, 0)"></button>
+        <button
+          type="button"
+          [disabled]="isEffectivelyDisabled()"
+          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          [class]="thumbSizeClass()"
+          [style.bottom.%]="highPct()"
+          role="slider"
+          [attr.aria-valuemin]="min()"
+          [attr.aria-valuemax]="max()"
+          [attr.aria-valuenow]="rangeHigh()"
+          [attr.aria-disabled]="isEffectivelyDisabled()"
+          (pointerdown)="onThumbPointerDown($event, 1)"
+          (keydown)="onKeyDown($event, 1)"></button>
+      } @else {
+        <button
+          type="button"
+          [disabled]="isEffectivelyDisabled()"
+          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          [class]="thumbSizeClass()"
+          [style.bottom.%]="singlePct()"
+          role="slider"
+          [attr.aria-valuemin]="min()"
+          [attr.aria-valuemax]="max()"
+          [attr.aria-valuenow]="singleValue()"
+          [attr.aria-disabled]="isEffectivelyDisabled()"
+          (pointerdown)="onThumbPointerDown($event, 0)"
+          (keydown)="onKeyDown($event, 0)"></button>
+      }
+    </div>
+  </div>
+}

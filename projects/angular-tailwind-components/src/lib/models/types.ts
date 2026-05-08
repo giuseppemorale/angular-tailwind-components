@@ -7,7 +7,7 @@ export type TailwindSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type TailwindColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info';
 
 /** Button kinds */
-export type TailwindButtonKind = 'solid' | 'outlined' | 'text';
+export type TailwindButtonKind = 'solid' | 'outlined' | 'ghost' | 'text';
 
 /** Alert/feedback color variants */
 export type TailwindSeverity = 'success' | 'warning' | 'danger' | 'info';
@@ -27,4 +27,12 @@ export interface TailwindOption<T = unknown> {
 
 export interface TailwindOptionGroup<T = unknown> extends TailwindOption<T> {
   description?: string;
+}
+
+export interface TailwindMenuItem {
+  label?: string;
+  icon?: string;
+  disabled?: boolean;
+  divider?: boolean;
+  value?: string;
 }

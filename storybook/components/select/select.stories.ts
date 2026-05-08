@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindSelect } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const FRAMEWORKS = [
@@ -16,6 +16,14 @@ const meta: Meta<TailwindSelect> = {
 export default meta;
 
 export const Select: StoryObj<TailwindSelect> = {
+  render: args => ({
+    props: args,
+    template: `
+    <div class="max-w-lg">
+      <tailwind-select ${argsToTemplate(args)} />
+    </div>
+    `
+  }),
   args: {
     label: 'Framework',
     placeholder: 'Choose a framework',
@@ -25,6 +33,14 @@ export const Select: StoryObj<TailwindSelect> = {
 
 export const WithDisabledOptions: StoryObj<TailwindSelect> = {
   name: 'Con opzioni disabilitate',
+  render: args => ({
+    props: args,
+    template: `
+    <div class="max-w-lg">
+      <tailwind-select ${argsToTemplate(args)} />
+    </div>
+    `
+  }),
   args: {
     label: 'Framework',
     placeholder: 'Choose a framework',
@@ -39,6 +55,14 @@ export const WithDisabledOptions: StoryObj<TailwindSelect> = {
 
 export const WithError: StoryObj<TailwindSelect> = {
   name: 'Stato errore',
+  render: args => ({
+    props: args,
+    template: `
+    <div class="max-w-lg">
+      <tailwind-select ${argsToTemplate(args)} />
+    </div>
+    `
+  }),
   args: {
     label: 'Framework',
     placeholder: 'Choose a framework',
@@ -48,13 +72,14 @@ export const WithError: StoryObj<TailwindSelect> = {
   }
 };
 
-export const WithHelperText: StoryObj<TailwindSelect> = {
-  name: 'Con helper text',
+export const Multiple: StoryObj<TailwindSelect<string>> = {
+  name: 'Selezione multipla',
   args: {
     label: 'Framework',
-    placeholder: 'Choose a framework',
+    placeholder: 'Scegli uno o più framework',
     options: FRAMEWORKS,
-    helperText: 'Scegli il framework che preferisci.'
+    multiple: true,
+    value: ['angular', 'vue']
   }
 };
 
@@ -63,7 +88,7 @@ export const Sizes: StoryObj<TailwindSelect> = {
   render: () => ({
     props: { options: FRAMEWORKS },
     template: `
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 max-w-lg">
         <tailwind-select label="xs" size="xs" placeholder="xs" [options]="options" />
         <tailwind-select label="sm" size="sm" placeholder="sm" [options]="options" />
         <tailwind-select label="md" size="md" placeholder="md" [options]="options" />

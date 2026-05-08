@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -35,7 +35,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   private readonly overlay = inject(Overlay);
   private readonly vcr = inject(ViewContainerRef);
   private readonly elRef = inject(ElementRef<HTMLElement>);
-  private readonly panelTpl = viewChild.required<TemplateRef<unknown>>('panelTpl');
+  private readonly panelTemplate = viewChild.required<TemplateRef<unknown>>('panelTemplate');
 
   private overlayRef: OverlayRef | null = null;
   private outsideSub: Subscription | null = null;
@@ -54,9 +54,11 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   readonly errorText = input<string>('');
   /** Whether in error state */
   readonly hasError = input<boolean>(false);
+  /** When true, value is `T[]` and several options can be selected */
+  readonly multiple = input(false);
 
-  /** Currently selected value */
-  readonly value = model<T | null>(null);
+  /** Selected value: `T | null` when single, `T[]` when `multiple` */
+  readonly value = model<T | T[] | null>(null);
 
   /** Internal disabled state */
   readonly isDisabled = signal(false);
@@ -67,8 +69,21 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   /** Keyboard-highlighted option index (-1 = none) */
   readonly activeIndex = signal(-1);
 
-  /** The currently selected option object */
-  readonly selectedOption = computed(() => this.options().find(o => String(o.value) === this.value()) ?? null);
+  /** The currently selected option object (single mode only) */
+  readonly selectedOption = computed(() => {
+    if (this.multiple()) return null;
+    const v = this.value();
+    if (v == null || Array.isArray(v)) return null;
+    return this.options().find(o => this.optionValueEquals(o.value, v)) ?? null;
+  });
+
+  /** Selected option objects in `options()` order (multiple mode only) */
+  readonly selectedOptions = computed(() => {
+    if (!this.multiple()) return [];
+    const v = this.value();
+    const arr = Array.isArray(v) ? v : [];
+    return this.options().filter(o => arr.some(sv => this.optionValueEquals(o.value, sv)));
+  });
 
   /** Classes for the trigger button */
   readonly triggerClasses = computed(() => {
@@ -84,8 +99,11 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
       : 'border-surface-300 focus:outline-primary-500';
 
+    const layout = this.multiple() ? 'items-start' : 'items-center';
+
     return [
-      'flex items-center justify-between w-full bg-white border transition-colors duration-150',
+      'flex justify-between w-full bg-white border transition-colors duration-150',
+      layout,
       'pr-3 cursor-pointer text-left',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed',
@@ -94,14 +112,25 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     ].join(' ');
   });
 
+  private optionValueEquals(a: unknown, b: unknown): boolean {
+    return Object.is(a, b);
+  }
+
   /** Used in the template to compare option values */
-  isOptionSelected(option: TailwindOption): boolean {
-    return String(option.value) === this.value();
+  isOptionSelected(option: TailwindOption<T>): boolean {
+    if (this.multiple()) {
+      const v = this.value();
+      const arr = Array.isArray(v) ? v : [];
+      return arr.some(sv => this.optionValueEquals(option.value, sv));
+    }
+    const v = this.value();
+    if (v == null || Array.isArray(v)) return false;
+    return this.optionValueEquals(option.value, v);
   }
 
   /** Classes for a single option row */
-  optionClasses(index: number, option: TailwindOption): string {
-    const isSelected = String(option.value) === this.value();
+  optionClasses(index: number, option: TailwindOption<T>): string {
+    const isSelected = this.isOptionSelected(option);
     const isActive = this.activeIndex() === index;
     const isDisabled = !!option.disabled;
 
@@ -118,18 +147,27 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   }
 
   // CVA
-  private onChange: (value: T) => void = () => {};
+  private onChange: (value: T | T[] | null) => void = () => {};
   private onTouched: () => void = () => {};
 
-  writeValue(value: T): void {
-    this.value.set(value ?? null);
+  writeValue(value: T | T[] | null | undefined): void {
+    if (this.multiple()) {
+      if (value == null) this.value.set([]);
+      else this.value.set(Array.isArray(value) ? [...value] : []);
+    } else {
+      if (Array.isArray(value)) this.value.set(null);
+      else this.value.set(value ?? null);
+    }
   }
-  registerOnChange(fn: (value: T) => void): void {
+
+  registerOnChange(fn: (value: T | T[] | null) => void): void {
     this.onChange = fn;
   }
+
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
+
   setDisabledState(disabled: boolean): void {
     this.isDisabled.set(disabled);
   }
@@ -149,9 +187,9 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
       .flexibleConnectedTo(trigger)
       .withPositions([
         // Preferred: open downward
-        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
         // Fallback: open upward
-        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 }
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' }
       ])
       .withFlexibleDimensions(false)
       .withPush(false);
@@ -159,21 +197,49 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     this.overlayRef = this.overlay.create({
       positionStrategy,
       scrollStrategy: this.overlay.scrollStrategies.close(),
-      width: trigger.offsetWidth
+      width: trigger.offsetWidth,
+      minWidth: 'w-full'
     });
 
-    const portal = new TemplatePortal(this.panelTpl(), this.vcr);
+    const portal = new TemplatePortal(this.panelTemplate(), this.vcr);
     this.overlayRef.attach(portal);
 
-    // Close when clicking outside (but not on the trigger itself)
-    this.outsideSub = this.overlayRef.outsidePointerEvents().subscribe(event => {
-      if (!this.elRef.nativeElement.contains(event.target as Node)) {
+    const pane = this.overlayRef.overlayElement;
+    this.outsideSub = new Subscription();
+
+    // Close on outside click (capture: trigger + panel are excluded; avoids CDK edge cases)
+    this.outsideSub.add(
+      fromEvent<PointerEvent>(document, 'pointerdown', { capture: true }).subscribe(ev => {
+        const t = ev.target as Node;
+        if (this.elRef.nativeElement.contains(t) || pane.contains(t)) return;
         this.closeDropdown();
-      }
-    });
+      })
+    );
+
+    this.outsideSub.add(
+      fromEvent<KeyboardEvent>(document, 'keydown').subscribe(ev => {
+        if (ev.key === 'Escape') {
+          ev.preventDefault();
+          this.closeDropdown();
+        }
+      })
+    );
 
     this.isOpen.set(true);
-    this.activeIndex.set(this.options().findIndex(o => String(o.value) === this.value()));
+
+    const opts = this.options();
+    let initial = -1;
+    if (this.multiple()) {
+      const v = this.value();
+      const arr = Array.isArray(v) ? v : [];
+      initial = opts.findIndex(o => arr.some(sv => this.optionValueEquals(o.value, sv)));
+    } else {
+      const v = this.value();
+      if (v != null && !Array.isArray(v)) {
+        initial = opts.findIndex(o => this.optionValueEquals(o.value, v));
+      }
+    }
+    this.activeIndex.set(initial >= 0 ? initial : -1);
   }
 
   private closeDropdown(): void {
@@ -197,6 +263,17 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
 
   selectOption(option: TailwindOption<T>): void {
     if (option.disabled) return;
+    if (this.multiple()) {
+      const v = this.value();
+      const current = Array.isArray(v) ? [...v] : [];
+      const idx = current.findIndex(sv => this.optionValueEquals(sv, option.value));
+      if (idx >= 0) current.splice(idx, 1);
+      else current.push(option.value);
+      this.value.set(current);
+      this.onChange(current);
+      this.onTouched();
+      return;
+    }
     const val = option.value;
     this.value.set(val);
     this.onChange(val);

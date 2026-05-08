@@ -5,7 +5,7 @@ import * as SelectStories from './select.stories';
 
 # Select
 
-`TailwindSelect` è un dropdown custom in stile Tailwind con etichetta, opzioni, navigazione da tastiera e stati di errore (`ControlValueAccessor`).
+`TailwindSelect` è un dropdown custom in stile Tailwind con etichetta, opzioni, navigazione da tastiera, selezione multipla opzionale e stati di errore (`ControlValueAccessor`).
 
 ---
 
@@ -43,6 +43,33 @@ export class ExampleComponent {
 ## Stato errore
 
 <Canvas of={SelectStories.WithError} />
+
+## Selezione multipla
+
+Con `[multiple]="true"` il valore è un array `T[]` (vuoto se nulla è selezionato). Il trigger mostra le label selezionate come chip; il pannello resta aperto mentre si aggiungono o rimuovono voci.
+
+```typescript
+@Component({
+  imports: [TailwindSelect],
+  template: `
+    <tailwind-select
+      label="Framework"
+      placeholder="Scegli uno o più framework"
+      [options]="options"
+      [multiple]="true"
+      [(value)]="value"
+    />`
+})
+export class ExampleComponent {
+  value: string[] = [];
+  options = [
+    { value: 'angular', label: 'Angular' },
+    { value: 'react', label: 'React' },
+  ];
+}
+```
+
+<Canvas of={SelectStories.Multiple} />
 
 ## Dimensioni
 
@@ -115,10 +142,16 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Attiva lo stile errore (bordo rosso).</td>
     </tr>
     <tr>
+      <td><code>multiple</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Se <code>true</code>, il valore è <code>T[]</code> e si possono selezionare più opzioni; con <code>ControlValueAccessor</code> il form riceve un array.</td>
+    </tr>
+    <tr>
       <td><code>value</code></td>
-      <td><code>ModelSignal&lt;string&gt;</code></td>
-      <td><code>''</code></td>
-      <td>Valore selezionato (two-way binding).</td>
+      <td><code>ModelSignal&lt;T | T[] | null&gt;</code></td>
+      <td><code>null</code></td>
+      <td>In modalità singola: <code>T | null</code>. Con <code>multiple</code>: <code>T[]</code> (nessuna selezione = array vuoto).</td>
     </tr>
   </tbody>
 </table>

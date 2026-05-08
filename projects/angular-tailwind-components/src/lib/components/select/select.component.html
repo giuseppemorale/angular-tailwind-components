@@ -21,9 +21,21 @@
     [class]="triggerClasses()"
     (click)="toggleDropdown()"
     (keydown)="onKeydown($event)">
-    <span [class.text-surface-400]="!selectedOption()">
-      {{ selectedOption()?.label ?? placeholder() }}
-    </span>
+    @if (multiple()) {
+      <span class="flex flex-wrap gap-1 flex-1 min-w-0 mr-2" [class.text-surface-400]="selectedOptions().length === 0">
+        @if (selectedOptions().length === 0) {
+          {{ placeholder() }}
+        } @else {
+          @for (opt of selectedOptions(); track opt) {
+            <span class="rounded-md bg-surface-100 px-2 py-0.5 text-sm text-surface-800">{{ opt.label }}</span>
+          }
+        }
+      </span>
+    } @else {
+      <span [class.text-surface-400]="!selectedOption()">
+        {{ selectedOption()?.label ?? placeholder() }}
+      </span>
+    }
 
     <svg
       class="shrink-0 ml-2 w-4 h-4 text-surface-400 transition-transform duration-150"
@@ -48,8 +60,11 @@
 </div>
 
 <!-- Dropdown panel — rendered via CDK Overlay outside the component DOM -->
-<ng-template #panelTpl>
-  <ul role="listbox" class="bg-white border border-surface-200 rounded-md shadow-lg py-1 max-h-60 overflow-auto">
+<ng-template #panelTemplate>
+  <ul
+    role="listbox"
+    [attr.aria-multiselectable]="multiple() ? true : null"
+    class="w-full bg-white border border-surface-200 rounded-md shadow-lg py-1 max-h-60 overflow-auto">
     @if (placeholder()) {
       <li role="option" aria-disabled="true" class="px-3 py-2 text-sm text-surface-400 cursor-default select-none">
         {{ placeholder() }}

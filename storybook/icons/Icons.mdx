@@ -25,21 +25,41 @@ Per ogni icona la **stringa da usare** è il nome in **kebab-case** tra apici si
 Per mostrare un’icona usa **`TailwindIcon`** con:
 
 - **`icon`**: `TailwindHeroIcon` (obbligatorio)
-- **`size`**: `'normal'` (24×24) o `'small'` (16×16); se omesso dipende dal token globale (vedi sotto)
-- **`label`** (opzionale): testo per accessibilità (`alt`); senza `label` l’icona è decorativa (`aria-hidden`)
+- **`size`**: `'normal'` (24×24) o `'small'` (16×16); se omesso usa il token **`TAILWIND_ICON_SIZE`** se presente, altrimenti **`'normal'`**
+
+Il componente imposta **`src`** su **`/icons/<nome>.svg`** (URL assoluto dalla root del sito che serve l’app). Le SVG non sono incorporate nel bundle JS: il browser le scarica come risorse statiche.
 
 ```typescript
 import { TailwindIcon } from 'angular-tailwind-components';
 
 @Component({
   imports: [TailwindIcon],
-  template: `
-    <tailwind-icon icon="bell" size="small" />
-    <tailwind-icon icon="arrow-right" label="Avanti" />
-  `
+  template: `<tailwind-icon icon="bell" size="small" />`
 })
 export class ExampleComponent {}
 ```
+
+## Build della libreria e pacchetto npm
+
+`ng-packagr` non può leggere file fuori dalla cartella del progetto libreria. Prima di ogni **`npm run build`** lo script **`scripts/sync-icons-to-lib.js`** copia **`public/icons/*.svg`** in **`projects/angular-tailwind-components/icons/`**; da lì le SVG entrano nel tarball in **`icons/`** (accanto a `fesm2022`, ecc.).
+
+## App che usa la libreria (build di produzione)
+
+Nel **`angular.json`** (target **`build`** dell’app) aggiungi gli asset così le richieste a **`/icons/nome.svg`** risolvono correttamente:
+
+```json
+"assets": [
+  {
+    "glob": "**/*",
+    "input": "node_modules/angular-tailwind-components/tailwind-icons",
+    "output": "/tailwind-icons"
+  }
+]
+```
+
+Il path **`input`** è relativo alla root del workspace dell’app (come negli altri asset Angular). In sviluppo **`ng serve`** copia gli stessi file nella cartella di output con prefisso **`/icons/`**.
+
+Se il progetto non usa `node_modules` ma una path alias, punta **`input`** alla cartella **`icons`** del pacchetto installato.
 
 ## Dimensione predefinita: `TAILWIND_ICON_SIZE`
 

@@ -3,6 +3,6 @@
   [src]="src()"
   [attr.width]="pixelSize()"
   [attr.height]="pixelSize()"
-  [attr.alt]="label() ?? ''"
-  [attr.aria-hidden]="label() ? null : true"
+  [attr.alt]="icon()"
+  [attr.aria-hidden]="true"
   decoding="async" />

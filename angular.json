@@ -114,10 +114,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "projects/angular-tailwind-components/src/lib/styles/tailwind.css",
-              "src/styles.scss"
-            ]
+            "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css", "src/styles.scss"]
           },
           "configurations": {
             "production": {

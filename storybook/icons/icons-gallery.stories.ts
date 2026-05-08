@@ -11,7 +11,7 @@ import { TailwindIcon } from '../../projects/angular-tailwind-components/src/pub
       @for (name of icons; track name) {
         <div
           class="flex h-28 flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border border-neutral-200 bg-white p-3 shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-          <tailwind-icon class="shrink-0" [icon]="name" [size]="'normal'" />
+          <tailwind-icon class="shrink-0" [icon]="name" [] [size]="'normal'" />
           <code
             class="line-clamp-3 min-h-0 w-full select-all break-all text-center font-mono text-[12px] leading-snug text-neutral-600 dark:text-neutral-400">
             {{ name }}

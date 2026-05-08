@@ -17,10 +17,8 @@ export class TailwindIcon extends TailwindComponent {
   readonly icon = input.required<TailwindHeroIcon>();
   /** `normal` = 24×24, `small` = 16×16; default dalla DI (`TAILWIND_ICON_SIZE`) se presente */
   readonly size = input<TailwindIconSize>(this.iconSize ?? 'normal');
-  /** When set, exposes the icon to assistive tech (`alt`); otherwise decorative (`aria-hidden`) */
-  readonly label = input<string | undefined>(undefined);
 
-  readonly src = computed(() => `/icons/${this.icon()}.svg`);
+  readonly src = computed(() => `/tailwind-icons/${this.icon()}.svg`);
 
   readonly pixelSize = computed(() => (this.size() === 'small' ? 16 : 24));
 }

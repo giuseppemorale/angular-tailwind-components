@@ -4,9 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve playground",
-    "build": "ng build angular-tailwind-components",
-    "build:playground": "ng build playground",
-    "watch": "ng build angular-tailwind-components --watch --configuration development",
+    "build": "ng build angular-tailwind-components && node scripts/copy-icons.js",
+    "watch": "ng build angular-tailwind-components --watch --configuration development && node scripts/copy-icons.js",
     "test": "ng test",
     "release": "node scripts/release.js",
     "storybook": "ng run angular-tailwind-components:storybook",

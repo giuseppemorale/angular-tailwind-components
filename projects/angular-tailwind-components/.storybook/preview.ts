@@ -12,6 +12,7 @@ import {
   TailwindDatePicker,
   TailwindDateTimePicker,
   TailwindDrawer,
+  TailwindIcon,
   TailwindInput,
   TailwindMenu,
   TailwindMessage,
@@ -51,6 +52,7 @@ const ALL_COMPONENTS = [
   TailwindDatePicker,
   TailwindDateTimePicker,
   TailwindDrawer,
+  TailwindIcon,
   TailwindInput,
   TailwindMenu,
   TailwindMessage,
@@ -99,7 +101,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Docs', 'Components'],
+        order: ['Introduction', 'Docs', 'Components'],
         method: 'alphabetical'
       }
     }

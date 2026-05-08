@@ -1,4 +1,5 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
+import { TailwindMenuItem } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -10,18 +11,31 @@ export class TailwindToolbar extends TailwindComponent {
   /** When true, uses rounded corners (`rounded-xl`). */
   readonly rounded = input<boolean>(true);
   /**
-   * `full` / `container` sizing: horizontal uses width (`w-full` vs 95%/85%/75% + `mx-auto`);
-   * vertical uses the same breakpoints on height (`h-full` vs `h-[95%] md:h-[85%] lg:h-[75%]` + `my-auto`) with `w-full` in the column.
+   * Orizzontale: `full` = `w-full`; `container` = larghezza responsiva (95% / 85% / 75%) centrata.
+   * Verticale: ignorato per l’altezza — il rail è sempre `h-full w-full` nella colonna.
    */
   readonly width = input<'full' | 'container'>('full');
   /** Applies a stronger drop shadow. */
   readonly elevated = input<boolean>(false);
-  /** `horizontal` for a top app bar; `vertical` for a side rail (logo → content → end). */
+  /** `horizontal` for a top app bar; `vertical` for a side rail (logo → menu → end). */
   readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
 
-  /** Classes for the main content slot wrapper */
-  readonly contentWrapperClasses = computed(() =>
-    this.orientation() === 'horizontal' ? 'min-w-0 flex-1' : 'min-w-0 flex-1 flex flex-col min-h-0'
+  /** Navigation / actions rendered between logo and end slots. */
+  readonly menu = input<TailwindMenuItem[]>([]);
+
+  /** Emitted when a non-disabled, non-divider menu entry is activated. */
+  readonly onMenuSelect = output<TailwindMenuItem>();
+
+  readonly menuContainerClasses = computed(() =>
+    this.orientation() === 'horizontal'
+      ? 'min-w-0 flex-1 flex flex-row flex-wrap items-center gap-1'
+      : 'min-w-0 flex-1 flex flex-col gap-1 overflow-y-auto min-h-0'
+  );
+
+  readonly menuItemButtonClasses = computed(() =>
+    this.orientation() === 'horizontal'
+      ? 'shrink-0 rounded-md px-3 py-1.5 text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
+      : 'w-full text-left rounded-md px-2 py-2 text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
   );
 
   readonly rootClasses = computed(() => {
@@ -30,9 +44,7 @@ export class TailwindToolbar extends TailwindComponent {
       ? this.width() === 'full'
         ? 'w-full'
         : 'w-[95%] md:w-[85%] lg:w-[75%] mx-auto'
-      : this.width() === 'full'
-        ? 'h-full w-full'
-        : 'h-[95%] md:h-[85%] lg:h-[75%] my-auto w-full';
+      : 'h-full w-full';
 
     const base = [
       'bg-white border border-surface-200',
@@ -50,4 +62,15 @@ export class TailwindToolbar extends TailwindComponent {
 
     return base.join(' ');
   });
+
+  selectMenuItem(item: TailwindMenuItem): void {
+    if (item.divider || item.disabled) {
+      return;
+    }
+    this.onMenuSelect.emit(item);
+  }
+
+  menuTrackKey(index: number, item: TailwindMenuItem): string {
+    return item.value ?? item.label ?? String(index);
+  }
 }

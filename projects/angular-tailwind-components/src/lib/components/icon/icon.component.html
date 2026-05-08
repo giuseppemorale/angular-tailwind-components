@@ -1,0 +1,8 @@
+<img
+  class="block shrink-0"
+  [src]="src()"
+  [attr.width]="pixelSize()"
+  [attr.height]="pixelSize()"
+  [attr.alt]="label() ?? ''"
+  [attr.aria-hidden]="label() ? null : true"
+  decoding="async" />

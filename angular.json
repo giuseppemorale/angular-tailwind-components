@@ -57,7 +57,13 @@
           "options": {
             "browser": "projects/angular-tailwind-components/storybook-entry.ts",
             "tsConfig": "projects/angular-tailwind-components/tsconfig.storybook.json",
-            "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"]
+            "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ]
           }
         }
       }

@@ -18,6 +18,9 @@ export type TailwindPosition = 'top' | 'bottom' | 'left' | 'right';
 /** Shape variants */
 export type TailwindShape = 'rounded' | 'pill' | 'square';
 
+/** Icon dimensions: `normal` = 24×24, `small` = 16×16 */
+export type TailwindIconSize = 'normal' | 'small';
+
 /** Option interface for select/radio/checkbox groups */
 export interface TailwindOption<T = unknown> {
   value: T;

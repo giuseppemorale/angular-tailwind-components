@@ -1,5 +1,6 @@
 // Batch 1 — Foundation
 export * from './button/button.component';
+export * from './icon/icon.component';
 export * from './input/input.component';
 export * from './checkbox/checkbox.component';
 export * from './radio/radio-group.component';

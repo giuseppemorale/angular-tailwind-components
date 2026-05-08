@@ -1,0 +1,114 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SliderStories from './slider.stories';
+
+<Meta of={SliderStories} />
+
+# Slider
+
+`TailwindSlider` è uno slider accessibile (trascinamento, tastiera, ARIA), ispirato a [PrimeNG Slider](https://primeng.org/slider). Supporta valore singolo o **range** a due thumb, layout orizzontale/verticale, step e tick opzionali.
+
+Implementa **`ControlValueAccessor`**: il valore è `number` oppure `[number, number]` quando `range` è `true` (tipo esportato `TailwindSliderValue`).
+
+---
+
+## Utilizzo
+
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TailwindSlider } from 'angular-tailwind-components';
+
+@Component({
+  imports: [FormsModule, TailwindSlider],
+  template: `
+    <tailwind-slider [(ngModel)]="volume" [min]="0" [max]="100" [step]="1" />
+    <tailwind-slider [(ngModel)]="window" [range]="true" [min]="0" [max]="24" [step]="1" />
+  `
+})
+export class ExampleComponent {
+  volume = 50;
+  window: [number, number] = [8, 18];
+}
+```
+
+Disabilitazione: attributo **`disabled`** sul componente oppure stato disabilitato del form (`setDisabledState`).
+
+## Anteprima
+
+<Canvas of={SliderStories.Default} />
+
+---
+
+## Properties
+
+### `TailwindSlider (tailwind-slider)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>min</code></td>
+      <td><code>number</code></td>
+      <td><code>0</code></td>
+      <td>Estremo inferiore.</td>
+    </tr>
+    <tr>
+      <td><code>max</code></td>
+      <td><code>number</code></td>
+      <td><code>100</code></td>
+      <td>Estremo superiore.</td>
+    </tr>
+    <tr>
+      <td><code>step</code></td>
+      <td><code>number</code></td>
+      <td><code>1</code></td>
+      <td>Incremento (snap).</td>
+    </tr>
+    <tr>
+      <td><code>range</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Due thumb; valore del form come tupla ordinata.</td>
+    </tr>
+    <tr>
+      <td><code>orientation</code></td>
+      <td><code>'horizontal' | 'vertical'</code></td>
+      <td><code>'horizontal'</code></td>
+      <td>Layout del track.</td>
+    </tr>
+    <tr>
+      <td><code>showTicks</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Tacche a ogni step.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione thumb e spessore track.</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Disabilita interazione (combinato con CVA da form).</td>
+    </tr>
+  </tbody>
+</table>
+
+## Form value
+
+| Modalità | Tipo valore (`ngModel` / <code>writeValue</code>) |
+|----------|---------------------------------------------------|
+| Singolo | <code>number</code> |
+| Range | <code>[number, number]</code> (ordinata internamente) |

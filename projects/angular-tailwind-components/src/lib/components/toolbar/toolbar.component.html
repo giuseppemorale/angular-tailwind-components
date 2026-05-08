@@ -2,11 +2,27 @@
   <div class="shrink-0">
     <ng-content select="tailwind-toolbar-logo" />
   </div>
-  <div [class]="contentWrapperClasses()">
-    <ng-content select="tailwind-toolbar-content" />
-  </div>
+  <nav [class]="menuContainerClasses()" [attr.aria-label]="'Toolbar menu'">
+    @for (item of menu(); track menuTrackKey($index, item)) {
+      @if (item.divider) {
+        @if (orientation() === 'horizontal') {
+          <span class="mx-0.5 h-5 w-px shrink-0 self-center bg-surface-200" aria-hidden="true"></span>
+        } @else {
+          <hr class="my-1 w-full border-0 border-t border-surface-100" />
+        }
+      } @else {
+        <button
+          type="button"
+          [disabled]="!!item.disabled"
+          [class]="menuItemButtonClasses()"
+          (click)="selectMenuItem(item)">
+          {{ item.label }}
+        </button>
+      }
+    }
+  </nav>
   <div
-    class="flex flex-wrap items-center gap-2"
+    class="flex flex-wrap items-center gap-2 shrink-0"
     [class.justify-end]="orientation() === 'horizontal'"
     [class.mt-auto]="orientation() === 'vertical'">
     <ng-content select="tailwind-toolbar-end" />

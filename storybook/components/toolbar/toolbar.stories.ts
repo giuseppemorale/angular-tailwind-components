@@ -1,5 +1,17 @@
 import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
-import { TailwindToolbar } from '../../../projects/angular-tailwind-components/src/public-api';
+import { type TailwindMenuItem, TailwindToolbar } from '../../../projects/angular-tailwind-components/src/public-api';
+
+const horizontalMenu: TailwindMenuItem[] = [
+  { label: 'Home', value: 'home' },
+  { label: 'Docs', value: 'docs' }
+];
+
+const verticalMenu: TailwindMenuItem[] = [
+  { label: 'Dashboard', value: 'dashboard' },
+  { label: 'Settings', value: 'settings' },
+  { divider: true },
+  { label: 'Profile', value: 'profile' }
+];
 
 const meta: Meta<TailwindToolbar> = {
   title: 'Components/Toolbar',
@@ -8,7 +20,7 @@ const meta: Meta<TailwindToolbar> = {
     docs: {
       description: {
         component:
-          'App bar or side rail with three projection slots: `tailwind-toolbar-logo`, `tailwind-toolbar-content`, and `tailwind-toolbar-end`. **width="container"**: horizontal → responsive width (95% / 85% / 75%, `mx-auto`); vertical → same breakpoints on **height** (`my-auto` vertically). **width="full"**: horizontal → `w-full`; vertical → `h-full` in the column.'
+          'App bar or side rail: **`tailwind-toolbar-logo`** and **`tailwind-toolbar-end`** via content projection; central items come from the **`menu`** input (`TailwindMenuItem[]`), laid out as a row when **horizontal** and a column when **vertical** (dividers: vertical rule vs `<hr>`). Listen to **`onMenuSelect`** for clicks. **width="container"** applies only when **horizontal** (responsive width). **Vertical** toolbar is always **`h-full`** in its column (`w-full`).'
       },
       story: { height: '420px' }
     }
@@ -32,45 +44,19 @@ type Story = StoryObj<TailwindToolbar>;
 
 export const Horizontal: Story = {
   render: args => ({
-    props: args,
+    props: { ...args, menu: horizontalMenu, lastSelection: '' as string },
     template: `
-      <tailwind-toolbar ${argsToTemplate(args)}>
-        <tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">Logo</tailwind-toolbar-logo>
-        <tailwind-toolbar-content class="flex flex-wrap gap-2 text-sm text-surface-600">
-          <a href="#" class="hover:text-surface-900">Home</a>
-          <a href="#" class="hover:text-surface-900">Docs</a>
-        </tailwind-toolbar-content>
-        <tailwind-toolbar-end class="flex gap-2">
-          <tailwind-button size="sm" color="secondary" kind="outlined">Sign in</tailwind-button>
-          <tailwind-button size="sm">Get started</tailwind-button>
-        </tailwind-toolbar-end>
-      </tailwind-toolbar>
-    `
-  })
-};
-
-export const VerticalSidebar: Story = {
-  args: {
-    orientation: 'vertical',
-    elevated: true,
-    rounded: true,
-    width: 'full'
-  },
-  render: args => ({
-    props: args,
-    template: `
-      <div class="flex h-[80vh] gap-4 border border-dashed border-surface-200 rounded-lg p-2">
-        <tailwind-toolbar class="w-42" ${argsToTemplate(args)}>
-          <tailwind-toolbar-logo class="text-base font-bold text-surface-800 px-2">App</tailwind-toolbar-logo>
-          <tailwind-toolbar-content class="flex flex-col gap-1 text-sm ps-4">
-            <tailwind-button size="sm" color="secondary" kind="ghost">Dashboard</tailwind-button>
-            <tailwind-button size="sm" color="secondary" kind="ghost">Settings</tailwind-button>
-          </tailwind-toolbar-content>
-          <tailwind-toolbar-end class="px-2">
-            <tailwind-button size="sm" color="secondary" kind="text">Logout</tailwind-button>
+      <div class="space-y-2">
+        <tailwind-toolbar ${argsToTemplate(args)} [menu]="menu" (onMenuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
+          <tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">Logo</tailwind-toolbar-logo>
+          <tailwind-toolbar-end class="flex gap-2">
+            <tailwind-button size="sm" color="secondary" kind="outlined">Sign in</tailwind-button>
+            <tailwind-button size="sm">Get started</tailwind-button>
           </tailwind-toolbar-end>
         </tailwind-toolbar>
-        <div class="flex-1 rounded-lg bg-surface-50 p-4 text-sm text-surface-600">Main content</div>
+        @if (lastSelection) {
+          <p class="text-xs text-surface-500">Selected: {{ lastSelection }}</p>
+        }
       </div>
     `
   })
@@ -81,8 +67,7 @@ export const ContainerWidth: Story = {
   render: Horizontal.render
 };
 
-/** Vertical toolbar with **width="full"** (`h-full` in the column). */
-export const VerticalFullHeight: Story = {
+export const VerticalSidebar: Story = {
   parameters: { docs: { story: { height: '520px' } } },
   args: {
     orientation: 'vertical',
@@ -90,5 +75,18 @@ export const VerticalFullHeight: Story = {
     rounded: true,
     width: 'full'
   },
-  render: VerticalSidebar.render
+  render: args => ({
+    props: { ...args, menu: verticalMenu },
+    template: `
+      <div class="flex h-[80vh] gap-4 border border-dashed border-surface-200 rounded-lg p-2">
+        <tailwind-toolbar class="w-48 shrink-0" ${argsToTemplate(args)} [menu]="menu">
+          <tailwind-toolbar-logo class="text-base font-bold text-surface-800 px-2">App</tailwind-toolbar-logo>
+          <tailwind-toolbar-end class="px-2">
+            <tailwind-button size="sm" color="secondary" kind="text">Logout</tailwind-button>
+          </tailwind-toolbar-end>
+        </tailwind-toolbar>
+        <div class="flex-1 rounded-lg bg-surface-50 p-4 text-sm text-surface-600">Main content</div>
+      </div>
+    `
+  })
 };

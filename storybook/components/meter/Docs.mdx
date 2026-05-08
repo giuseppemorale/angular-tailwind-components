@@ -1,0 +1,85 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as MeterStories from './meter.stories';
+
+<Meta of={MeterStories} />
+
+# Meter
+
+`TailwindMeter` mostra una barra **segmentata** (stile [PrimeNG MeterGroup](https://primeng.org/metergroup)): ogni segmento ha `label`, `value` e colore opzionale. I valori sono normalizzati rispetto a **`max`** (default 100).
+
+---
+
+## Utilizzo
+
+```typescript
+import { Component } from '@angular/core';
+import { TailwindMeter, TailwindMeterSegment } from 'angular-tailwind-components';
+
+@Component({
+  imports: [TailwindMeter],
+  template: `
+    <tailwind-meter
+      [segments]="segments"
+      [max]="100"
+      [showLabels]="true"
+      size="md" />
+  `
+})
+export class ExampleComponent {
+  segments: TailwindMeterSegment[] = [
+    { label: 'Apps', value: 40, variant: 'primary' },
+    { label: 'Other', value: 60, variant: 'info' }
+  ];
+}
+```
+
+Il tipo `TailwindMeterSegment` è esportato dalla libreria (`label`, `value`, `variant?` con `TailwindSeverity | 'primary'`).
+
+## Anteprima
+
+<Canvas of={MeterStories.MultiSegment} />
+
+---
+
+## Properties
+
+### `TailwindMeter (tailwind-meter)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>segments</code></td>
+      <td><code>TailwindMeterSegment[]</code></td>
+      <td><code>[]</code></td>
+      <td>Blocchi della barra, in ordine da sinistra a destra.</td>
+    </tr>
+    <tr>
+      <td><code>max</code></td>
+      <td><code>number</code></td>
+      <td><code>100</code></td>
+      <td>Scala massima per calcolare le percentuali di larghezza. Se ≤ 0, usa la somma dei valori (minimo 1).</td>
+    </tr>
+    <tr>
+      <td><code>showLabels</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra la legenda sotto la barra.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Altezza del track.</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,141 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ToolbarStories from './toolbar.stories';
+
+<Meta of={ToolbarStories} />
+
+# Toolbar
+
+`TailwindToolbar` è una barra applicativa orizzontale o un rail laterale verticale. Il **menu** centrale è un array `TailwindMenuItem[]`; logo e azioni finali restano **content projection** (`tailwind-toolbar-logo`, `tailwind-toolbar-end`).
+
+---
+
+## Utilizzo
+
+```typescript
+import { Component } from '@angular/core';
+import { TailwindButton, TailwindMenuItem, TailwindToolbar } from 'angular-tailwind-components';
+
+@Component({
+  imports: [TailwindToolbar, TailwindButton],
+  template: `
+    <tailwind-toolbar [menu]="menu" (onMenuSelect)="onNav($event)">
+      <tailwind-toolbar-logo>Brand</tailwind-toolbar-logo>
+      <tailwind-toolbar-end>
+        <tailwind-button size="sm">Account</tailwind-button>
+      </tailwind-toolbar-end>
+    </tailwind-toolbar>
+  `
+})
+export class ExampleComponent {
+  menu: TailwindMenuItem[] = [
+    { label: 'Home', value: 'home' },
+    { label: 'Docs', value: 'docs' }
+  ];
+
+  onNav(item: TailwindMenuItem) {
+    console.log(item.value);
+  }
+}
+```
+
+Con **orientation** `vertical`, le voci del menu sono in colonna; con `divider: true` su un elemento si ottiene un separatore orizzontale. In orizzontale il divider è una linea verticale tra le voci.
+
+## Anteprima
+
+<Canvas of={ToolbarStories.Horizontal} />
+
+---
+
+## Content projection
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Slot</th>
+      <th>Selector</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Logo</td>
+      <td><code>tailwind-toolbar-logo</code></td>
+      <td>Area brand / titolo (sinistra o in alto).</td>
+    </tr>
+    <tr>
+      <td>Fine</td>
+      <td><code>tailwind-toolbar-end</code></td>
+      <td>Azioni secondarie (destra o in basso).</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Properties
+
+### `TailwindToolbar (tailwind-toolbar)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>rounded</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Angoli arrotondati (<code>rounded-xl</code>) o no.</td>
+    </tr>
+    <tr>
+      <td><code>width</code></td>
+      <td><code>'full' | 'container'</code></td>
+      <td><code>'full'</code></td>
+      <td>Orizzontale: larghezza piena vs 95% / 85% / 75% centrata. Verticale: sempre <code>h-full w-full</code> (il valore <code>width</code> non si applica).</td>
+    </tr>
+    <tr>
+      <td><code>elevated</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Ombra più marcata.</td>
+    </tr>
+    <tr>
+      <td><code>orientation</code></td>
+      <td><code>'horizontal' | 'vertical'</code></td>
+      <td><code>'horizontal'</code></td>
+      <td>Barra in alto o rail laterale.</td>
+    </tr>
+    <tr>
+      <td><code>menu</code></td>
+      <td><code>TailwindMenuItem[]</code></td>
+      <td><code>[]</code></td>
+      <td>Voci centrali (stesso modello di <code>TailwindMenu</code>).</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Evento</th>
+      <th>Payload</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>onMenuSelect</code></td>
+      <td><code>TailwindMenuItem</code></td>
+      <td>Click su voce non disabilitata e non divider.</td>
+    </tr>
+  </tbody>
+</table>

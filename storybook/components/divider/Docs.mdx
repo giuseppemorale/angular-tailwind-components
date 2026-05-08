@@ -1,0 +1,79 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as DividerStories from './divider.stories';
+
+<Meta of={DividerStories} />
+
+# Divider
+
+`TailwindDivider` è un separatore visivo riusabile: linea orizzontale o verticale, bordo solido o tratteggiato, opzionale etichetta centrata (solo orizzontale).
+
+---
+
+## Utilizzo
+
+```typescript
+import { Component } from '@angular/core';
+import { TailwindDivider } from 'angular-tailwind-components';
+
+@Component({
+  imports: [TailwindDivider],
+  template: `
+    <p>Sezione A</p>
+    <tailwind-divider />
+    <p>Sezione B</p>
+    <tailwind-divider orientation="vertical" variant="dashed" />
+  `
+})
+export class ExampleComponent {}
+```
+
+In un contenitore **flex** a riga, `orientation="vertical"` produce una linea verticale che si allunga in altezza (`self-stretch` sul contenitore padre quando necessario).
+
+## Anteprima
+
+<Canvas of={DividerStories.Horizontal} />
+
+---
+
+## Properties
+
+### `TailwindDivider (tailwind-divider)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>orientation</code></td>
+      <td><code>'horizontal' | 'vertical'</code></td>
+      <td><code>'horizontal'</code></td>
+      <td>Direzione della regola.</td>
+    </tr>
+    <tr>
+      <td><code>inset</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Margine orizzontale (<code>mx-4</code>) sulla regola orizzontale.</td>
+    </tr>
+    <tr>
+      <td><code>variant</code></td>
+      <td><code>'solid' | 'dashed'</code></td>
+      <td><code>'solid'</code></td>
+      <td>Stile del bordo.</td>
+    </tr>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo tra due linee (solo orizzontale; se vuoto, una sola linea).</td>
+    </tr>
+  </tbody>
+</table>

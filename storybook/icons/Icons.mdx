@@ -1,0 +1,86 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as IconsStories from './icons-gallery.stories';
+
+<Meta of={IconsStories} />
+
+# Icons
+
+Icone **[Heroicons](https://heroicons.com/)** (MIT), versione ottimizzata in SVG nella cartella **`public/icons/`**.
+
+## Uso in TypeScript
+
+Importa il tipo e l’array dei nomi dalla libreria:
+
+```typescript
+import type { TailwindHeroIcon } from 'angular-tailwind-components';
+import { TAILWIND_HERO_ICON_NAMES } from 'angular-tailwind-components';
+
+const icon: TailwindHeroIcon = 'bell';
+```
+
+Per ogni icona la **stringa da usare** è il nome in **kebab-case** tra apici singoli (come in `TailwindHeroIcon`), ad esempio `'bell'` oppure `'arrow-right-on-rectangle'`.
+
+## Componente `tailwind-icon`
+
+Per mostrare un’icona usa **`TailwindIcon`** con:
+
+- **`icon`**: `TailwindHeroIcon` (obbligatorio)
+- **`size`**: `'normal'` (24×24) o `'small'` (16×16); se omesso dipende dal token globale (vedi sotto)
+- **`label`** (opzionale): testo per accessibilità (`alt`); senza `label` l’icona è decorativa (`aria-hidden`)
+
+```typescript
+import { TailwindIcon } from 'angular-tailwind-components';
+
+@Component({
+  imports: [TailwindIcon],
+  template: `
+    <tailwind-icon icon="bell" size="small" />
+    <tailwind-icon icon="arrow-right" label="Avanti" />
+  `
+})
+export class ExampleComponent {}
+```
+
+## Dimensione predefinita: `TAILWIND_ICON_SIZE`
+
+Il token **`TAILWIND_ICON_SIZE`** (`InjectionToken<'normal' | 'small'>`) imposta il **default** di **`size`** su tutte le **`tailwind-icon`** dell’albero che ricevono quel provider. Se il token **non** è fornito, il default è **`'normal'`**.
+
+```typescript
+import { bootstrapApplication } from '@angular/platform-browser';
+import { TAILWIND_ICON_SIZE } from 'angular-tailwind-components';
+import { AppComponent } from './app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [{ provide: TAILWIND_ICON_SIZE, useValue: 'small' }]
+});
+```
+
+Puoi anche limitarlo a una parte dell’app con **`providers`** su un componente contenitore:
+
+```typescript
+@Component({
+  selector: 'app-settings-shell',
+  imports: [TailwindIcon],
+  providers: [{ provide: TAILWIND_ICON_SIZE, useValue: 'small' }],
+  template: `<tailwind-icon icon="cog-6-tooth" />`
+})
+export class SettingsShellComponent {}
+```
+
+Passare esplicitamente **`[size]`** sulla singola icona ha sempre la precedenza sul valore del token.
+
+## Percorsi dei file SVG
+
+È inclusa solo la variante **outline 24×24**:
+
+- **`public/icons/`** — un file `.svg` per ogni nome in `TailwindHeroIcon`
+
+Il nome file coincide con la stringa del tipo, ad esempio `public/icons/bell.svg` per `'bell'`.
+
+---
+
+## Catalogo (anteprima 24×24 outline)
+
+Sotto ogni icona è indicata la **stringa letterale** da copiare (`'nome-icona'`).
+
+<Canvas of={IconsStories.Gallery} />

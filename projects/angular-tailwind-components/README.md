@@ -21,16 +21,20 @@ npm install angular-tailwind-components
 
 ### Prerequisites
 
-Your consuming project must have **Tailwind CSS v4** configured. Add the library's theme tokens to your main stylesheet:
+Your consuming project must have **Tailwind CSS v4** configured. Add the library stylesheet (it includes `@import "tailwindcss"`, design tokens, and **`@source` paths** so utilities used inside library components are generated without extra setup):
 
 ```css
 @import 'angular-tailwind-components/styles/tailwind.css';
 ```
 
-this import contains the
+The published `styles/tailwind.css` scans the sibling `fesm2022` bundle plus library `.html` / `.ts` sources for development. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
+
+The same import also pulls in:
+
 ```css
 @import 'tailwindcss';
 ```
+
 Or define your own theme tokens following the design system schema.
 
 ## Quick Start
@@ -122,8 +126,6 @@ The library uses a comprehensive design system defined via Tailwind CSS v4 `@the
 Override tokens in your main CSS:
 
 ```css
-@import 'tailwindcss';
-
 @theme {
   --color-primary-500: oklch(0.55 0.2 280); /* Change primary to purple */
   --color-primary-600: oklch(0.48 0.22 280);

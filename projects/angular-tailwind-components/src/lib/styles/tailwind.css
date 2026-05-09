@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 /*
+ * Tailwind v4 @source:
+ * - ../fesm2022 — npm package layout (this file is styles/tailwind.css); templates are inlined in FESM bundles.
+ * - ../ glob for .html and .ts — Storybook and monorepo when this file lives under src/lib/styles.
+ */
+@source "../fesm2022";
+@source "../**/*.html";
+@source "../**/*.ts";
+
+/*
  * Angular Tailwind Components — Design System
  * Customizable theme tokens via Tailwind v4 @theme directive
  */

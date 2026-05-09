@@ -4,7 +4,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **Common components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **31 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -19,32 +19,20 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 npm install angular-tailwind-components
 ```
 
-Add the postcssrc.json in the root of the project
-
-```json
-{
-  "plugins": {
-    "tailwindcss": {}
-  }
-}
-```
-
 ### Prerequisites
 
-Your consuming project must have **Tailwind CSS v4** configured. Add the library's theme tokens to your main stylesheet:
+Your consuming project must have **Tailwind CSS v4** configured. Add the library stylesheet (it includes `@import "tailwindcss"`, design tokens, and **`@source` paths** so utilities used inside library components are generated without extra setup):
 
 ```css
-@import 'angular-tailwind-components/src/lib/styles/tailwind.css';
+@import 'angular-tailwind-components/styles/tailwind.css';
 ```
 
-This file includes the import of tailwindcss.
-If u want to override the theme tokens, you can do it in your own stylesheet:
+The published `styles/tailwind.css` scans the sibling `fesm2022` bundle plus library `.html` / `.ts` sources for development. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
+
+The same import also pulls in:
 
 ```css
-@theme {
-  --color-primary-500: oklch(0.55 0.2 280); /* Change primary to purple */
-  --color-primary-600: oklch(0.48 0.22 280);
-}
+@import 'tailwindcss';
 ```
 
 Or define your own theme tokens following the design system schema.
@@ -56,12 +44,13 @@ import { Component } from '@angular/core';
 import { TailwindButton, TailwindInput, TailwindToggle } from 'angular-tailwind-components';
 
 @Component({
-  selector: 'example-component',
+  selector: 'app-example',
+  standalone: true,
   imports: [TailwindButton, TailwindInput, TailwindToggle],
   template: `
     <tailwind-input label="Email" placeholder="you@example.com" [(value)]="email" />
     <tailwind-toggle label="Notifications" [(checked)]="notifications" />
-    <tailwind-button color="primary" (onClick)="submit()">Submit</tailwind-button>
+    <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
   `
 })
 export class ExampleComponent {
@@ -91,6 +80,7 @@ export class ExampleComponent {
 - **Button** (`tailwind-button`): Primary, secondary, outline, ghost, danger
 - **Badge** (`tailwind-badge`): Status badges with dot indicator
 - **Card** (`tailwind-card`): Content card with header/body/footer
+- **Chip** (`tailwind-chip`): Removable tags
 - **Tag** (`tailwind-tag`): Semantic labels
 
 ### Feedback
@@ -117,6 +107,7 @@ export class ExampleComponent {
 - **Drawer** (`tailwind-drawer`): Slide-in panel
 - **Accordion** (`tailwind-accordion`): Expandable sections
 - **Tooltip** (`tailwind-tooltip`): Hover tooltip
+- **Form** (`tailwind-form`): Form wrapper
 - **Table** (`tailwind-table`): Data table with sorting
 
 ## Design System
@@ -135,8 +126,6 @@ The library uses a comprehensive design system defined via Tailwind CSS v4 `@the
 Override tokens in your main CSS:
 
 ```css
-@import 'tailwindcss';
-
 @theme {
   --color-primary-500: oklch(0.55 0.2 280); /* Change primary to purple */
   --color-primary-600: oklch(0.48 0.22 280);

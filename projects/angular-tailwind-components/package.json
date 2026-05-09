@@ -1,6 +1,12 @@
 {
   "name": "angular-tailwind-components",
-  "version": "1.0.4",
+  "version": "1.0.5",
+  "files": [
+    "fesm2022",
+    "types",
+    "styles",
+    "tailwind-icons"
+  ],
   "exports": {
     "./styles/tailwind.css": {
       "style": "./styles/tailwind.css",

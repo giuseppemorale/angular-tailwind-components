@@ -35,4 +35,17 @@ export class TailwindTitle extends TailwindComponent {
     const base = `${scale[tag]} ${layout}`.trim();
     return extra ? `${base} ${extra}`.trim() : base;
   });
+
+  readonly iconSize = computed(() => {
+    const tag = this.titleTag();
+    const size: Record<TailwindTitleTag, number> = {
+      h1: 32,
+      h2: 24,
+      h3: 20,
+      h4: 18,
+      h5: 16,
+      h6: 14
+    };
+    return size[tag];
+  });
 }

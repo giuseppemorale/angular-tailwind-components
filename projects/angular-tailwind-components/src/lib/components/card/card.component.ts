@@ -1,5 +1,9 @@
 import { Component, input } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
+import { TailwindCardHeader } from './card-header.component';
+import { TailwindCardFooter } from './card-footer.component';
+import { TailwindCardImage } from './card-image.component';
+export type { TailwindCardHeader, TailwindCardFooter, TailwindCardImage };
 
 @Component({
   selector: 'tailwind-card',

@@ -1,10 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { argsToTemplate } from '@storybook/angular';
-import { TailwindCard } from '../../../projects/angular-tailwind-components/src/public-api';
+import { argsToTemplate, moduleMetadata } from '@storybook/angular';
+import {
+  TailwindButton,
+  TailwindCard,
+  TailwindCardFooter,
+  TailwindCardHeader
+} from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindCard> = {
   title: 'Components/Card',
   component: TailwindCard,
+  decorators: [
+    moduleMetadata({
+      imports: [TailwindCard, TailwindCardHeader, TailwindCardFooter, TailwindButton]
+    })
+  ],
   args: {
     elevated: false,
     hoverable: false,

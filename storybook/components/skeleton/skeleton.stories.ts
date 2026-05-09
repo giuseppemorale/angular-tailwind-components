@@ -1,9 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TailwindSkeleton } from '../../../projects/angular-tailwind-components/src/public-api';
+import { moduleMetadata } from '@storybook/angular';
+import {
+  TailwindCard,
+  TailwindCardFooter,
+  TailwindSkeleton
+} from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSkeleton> = {
   title: 'Components/Skeleton',
   component: TailwindSkeleton,
+  decorators: [
+    moduleMetadata({
+      imports: [TailwindCard, TailwindCardFooter, TailwindSkeleton]
+    })
+  ],
   argTypes: {
     variant: { control: 'select', options: ['text', 'circle', 'rect', 'rounded'] },
     width: { control: 'text' },

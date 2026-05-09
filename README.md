@@ -24,10 +24,13 @@ npm install angular-tailwind-components
 Your consuming project must have **Tailwind CSS v4** configured. Add the library's theme tokens to your main stylesheet:
 
 ```css
-@import 'tailwindcss';
 @import 'angular-tailwind-components/styles/tailwind.css';
 ```
 
+this import contains the
+```css
+@import 'tailwindcss';
+```
 Or define your own theme tokens following the design system schema.
 
 ## Quick Start

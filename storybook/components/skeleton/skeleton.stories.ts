@@ -1,17 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import {
-  TailwindCard,
-  TailwindCardFooter,
-  TailwindSkeleton
-} from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindCard, TailwindSkeleton } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSkeleton> = {
   title: 'Components/Skeleton',
   component: TailwindSkeleton,
   decorators: [
     moduleMetadata({
-      imports: [TailwindCard, TailwindCardFooter, TailwindSkeleton]
+      imports: [TailwindCard, TailwindSkeleton]
     })
   ],
   argTypes: {
@@ -47,12 +43,12 @@ export const CardSkeleton: Story = {
             <tailwind-skeleton variant="rounded" width="100%" height="120px"></tailwind-skeleton>
             <tailwind-skeleton variant="text" width="100%"></tailwind-skeleton>
           </div>
-          <tailwind-card-footer>
+          <div tailwind-card-footer>
             <div class="flex justify-end items-center gap-3">
               <tailwind-skeleton variant="text" width="80px" height="36px"></tailwind-skeleton>
               <tailwind-skeleton variant="text" width="80px" height="36px"></tailwind-skeleton>
             </div>
-          </tailwind-card-footer>
+          </div>
         </tailwind-card>
       </div>`
   })

@@ -25,7 +25,7 @@ Your consuming project must have **Tailwind CSS v4** configured. Add the library
 
 ```css
 @import 'tailwindcss';
-@import 'angular-tailwind-components/src/lib/styles/tailwind.css';
+@import 'angular-tailwind-components/styles/tailwind.css';
 ```
 
 Or define your own theme tokens following the design system schema.
@@ -59,59 +59,49 @@ export class ExampleComponent {
 
 ### Form Controls (with ControlValueAccessor)
 
-| Component      | Selector              | Description                           |
-| -------------- | --------------------- | ------------------------------------- |
-| Input          | `atc-input`           | Text, email, password, number, search |
-| Checkbox       | `atc-checkbox`        | Single checkbox with label            |
-| Radio Group    | `atc-radio-group`     | Radio button group with options       |
-| Select         | `atc-select`          | Native select with custom styling     |
-| Toggle         | `atc-toggle`          | Switch on/off                         |
-| DatePicker     | `atc-date-picker`     | Calendar date selection               |
-| TimePicker     | `atc-time-picker`     | Time input                            |
-| DateTimePicker | `atc-datetime-picker` | Combined date + time                  |
+- **Input** (`tailwind-input`): Text, email, password, number, search
+- **Checkbox** (`tailwind-checkbox`): Single checkbox with label
+- **Radio Group** (`tailwind-radio-group`): Radio button group with options
+- **Select** (`tailwind-select`): Native select with custom styling
+- **Toggle** (`tailwind-toggle`): Switch on/off
+- **DatePicker** (`tailwind-date-picker`): Calendar date selection
+- **TimePicker** (`tailwind-time-picker`): Time input
+- **DateTimePicker** (`tailwind-datetime-picker`): Combined date + time
 
 ### Display
 
-| Component | Selector     | Description                                |
-| --------- | ------------ | ------------------------------------------ |
-| Button    | `atc-button` | Primary, secondary, outline, ghost, danger |
-| Badge     | `atc-badge`  | Status badges with dot indicator           |
-| Card      | `atc-card`   | Content card with header/body/footer       |
-| Chip      | `atc-chip`   | Removable tags                             |
-| Tag       | `atc-tag`    | Semantic labels                            |
+- **Button** (`tailwind-button`): Primary, secondary, outline, ghost, danger
+- **Badge** (`tailwind-badge`): Status badges with dot indicator
+- **Card** (`tailwind-card`): Content card with header/body/footer
+- **Chip** (`tailwind-chip`): Removable tags
+- **Tag** (`tailwind-tag`): Semantic labels
 
 ### Feedback
 
-| Component    | Selector              | Description                                        |
-| ------------ | --------------------- | -------------------------------------------------- |
-| Alert        | `atc-alert`           | Contextual alerts (info, success, warning, danger) |
-| Spinner      | `atc-spinner`         | Loading indicator                                  |
-| Progress Bar | `atc-progress-bar`    | Determinate/indeterminate progress                 |
-| Toast        | `atc-toast-container` | Global toast notifications (use `AtcToastService`) |
-| Notification | `atc-notification`    | Inline notification with actions                   |
-| Message      | `atc-message`         | Form-level inline message                          |
-| Skeleton     | `atc-skeleton`        | Loading placeholder                                |
+- **Alert** (`tailwind-alert`): Contextual alerts (info, success, warning, danger)
+- **Spinner** (`tailwind-spinner`): Loading indicator
+- **Progress Bar** (`tailwind-progress-bar`): Determinate/indeterminate progress
+- **Toast** (`tailwind-toast-container`): Global toast notifications (use `TailwindToastService`)
+- **Notification** (`tailwind-notification`): Inline notification with actions
+- **Message** (`tailwind-message`): Form-level inline message
+- **Skeleton** (`tailwind-skeleton`): Loading placeholder
 
 ### Navigation
 
-| Component  | Selector         | Description            |
-| ---------- | ---------------- | ---------------------- |
-| Tab Group  | `atc-tab-group`  | Tabbed content         |
-| Breadcrumb | `atc-breadcrumb` | Navigation breadcrumbs |
-| Pagination | `atc-pagination` | Page navigation        |
-| Menu       | `atc-menu`       | Dropdown menu          |
-| Stepper    | `atc-stepper`    | Step-by-step wizard    |
+- **Tab Group** (`tailwind-tab-group`): Tabbed content
+- **Breadcrumb** (`tailwind-breadcrumb`): Navigation breadcrumbs
+- **Pagination** (`tailwind-pagination`): Page navigation
+- **Menu** (`tailwind-menu`): Dropdown menu
+- **Stepper** (`tailwind-stepper`): Step-by-step wizard
 
 ### Layout / Overlay
 
-| Component | Selector        | Description             |
-| --------- | --------------- | ----------------------- |
-| Modal     | `atc-modal`     | Dialog overlay          |
-| Drawer    | `atc-drawer`    | Slide-in panel          |
-| Accordion | `atc-accordion` | Expandable sections     |
-| Tooltip   | `atc-tooltip`   | Hover tooltip           |
-| Form      | `atc-form`      | Form wrapper            |
-| Table     | `atc-table`     | Data table with sorting |
+- **Modal** (`tailwind-modal`): Dialog overlay
+- **Drawer** (`tailwind-drawer`): Slide-in panel
+- **Accordion** (`tailwind-accordion`): Expandable sections
+- **Tooltip** (`tailwind-tooltip`): Hover tooltip
+- **Form** (`tailwind-form`): Form wrapper
+- **Table** (`tailwind-table`): Data table with sorting
 
 ## Design System
 
@@ -146,14 +136,6 @@ ng build angular-tailwind-components
 # Start Storybook
 npm run storybook
 ```
-
-## Adding New Components
-
-1. Create a directory under `projects/angular-tailwind-components/src/lib/components/<name>/`
-2. Create `<name>.ts` with inline template, styles, and component logic
-3. Create `<name>.spec.ts` for unit tests
-4. Export from `components/index.ts`
-5. Add a story in `storybook/<name>.stories.ts`
 
 ### Component Conventions
 

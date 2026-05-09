@@ -7,12 +7,12 @@
   @if (hasHeader()) {
     <!-- Header slot (always rendered; only visible when content is projected) -->
     <div class="px-6 py-4 border-b border-surface-100" [class.bg-surface-50]="headerBg()">
-      <ng-content select="tailwind-card-header" />
+      <ng-content select="[tailwind-card-header]" />
     </div>
   }
 
   <!-- Image slot -->
-  <ng-content select="tailwind-card-image" />
+  <ng-content select="[tailwind-card-image]" />
 
   <!-- Body -->
   <div class="p-6">
@@ -22,7 +22,7 @@
   @if (hasFooter()) {
     <!-- Footer slot -->
     <div class="px-6 py-4 border-t border-surface-100 bg-surface-50/50">
-      <ng-content select="tailwind-card-footer" />
+      <ng-content select="[tailwind-card-footer]" />
     </div>
   }
 </div>

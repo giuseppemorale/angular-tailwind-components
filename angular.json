@@ -10,7 +10,7 @@
       "projectType": "library",
       "root": "projects/angular-tailwind-components",
       "sourceRoot": "projects/angular-tailwind-components/src",
-      "prefix": "atc",
+      "prefix": "tailwind",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",

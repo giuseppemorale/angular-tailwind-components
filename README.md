@@ -25,7 +25,7 @@ Your consuming project must have **Tailwind CSS v4** configured. Add the library
 
 ```css
 @import 'tailwindcss';
-@import 'angular-tailwind-components/src/lib/styles/tailwind.css';
+@import 'angular-tailwind-components/styles/tailwind.css';
 ```
 
 Or define your own theme tokens following the design system schema.

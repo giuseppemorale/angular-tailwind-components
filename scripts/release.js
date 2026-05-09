@@ -65,11 +65,8 @@ rl.question(question, answer => {
     console.log(`\n✅ Release ${newVersion} completed successfully!`);
 
     // 5. Publish (commented out)
-    /*
     console.log('\nPublishing to npm...');
     execSync('npm publish', { cwd: path.join(__dirname, '../dist/angular-tailwind-components'), stdio: 'inherit' });
-    */
-    console.log('\n(Note: npm publish is currently commented out in the script.)');
   } catch (error) {
     console.error('\n❌ An error occurred during the release process:');
     console.error(error.message);

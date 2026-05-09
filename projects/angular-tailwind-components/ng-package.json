@@ -6,6 +6,11 @@
       "glob": "**/*.svg",
       "input": "./icons",
       "output": "icons"
+    },
+    {
+      "glob": "tailwind.css",
+      "input": "./src/lib/styles",
+      "output": "styles"
     }
   ],
   "lib": {

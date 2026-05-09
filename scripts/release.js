@@ -36,25 +36,25 @@ rl.question(question, answer => {
   }
 
   try {
-    console.log('\nBuilding the library...');
-    execSync('npm run build', { stdio: 'inherit' });
-
+    // Bump version first: ng-packagr writes dist/package.json from
+    // projects/.../package.json during build; publishing stale dist would
+    // republish the old version on npm.
     console.log(`\nBumping ${releaseType} version...`);
 
-    // 1. Use npm version to safely update package.json and package-lock.json in root
     execSync(`npm version ${releaseType} --no-git-tag-version`, { stdio: 'inherit' });
 
-    // 2. Read the new version
     const newVersion = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf8')).version;
     console.log(`New version is: ${newVersion}`);
 
-    // 3. Update the library package.json
     console.log('Updating library package.json...');
     const libPackageJson = JSON.parse(fs.readFileSync(libPackageJsonPath, 'utf8'));
     libPackageJson.version = newVersion;
     fs.writeFileSync(libPackageJsonPath, JSON.stringify(libPackageJson, null, 2) + '\n');
 
-    // 4. Git operations
+    console.log('\nBuilding the library...');
+    execSync('npm run build', { stdio: 'inherit' });
+
+    // Git operations
     console.log('\nCommitting changes...');
     execSync(`git add .`, { stdio: 'inherit' });
     execSync(`git commit -m "Release ${newVersion}"`, { stdio: 'inherit' });
@@ -64,7 +64,6 @@ rl.question(question, answer => {
 
     console.log(`\n✅ Release ${newVersion} completed successfully!`);
 
-    // 5. Publish (commented out)
     console.log('\nPublishing to npm...');
     execSync('npm publish', { cwd: path.join(__dirname, '../dist/angular-tailwind-components'), stdio: 'inherit' });
   } catch (error) {

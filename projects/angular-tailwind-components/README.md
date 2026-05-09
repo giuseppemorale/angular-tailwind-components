@@ -4,7 +4,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **31 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **32 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -62,6 +62,10 @@ export class ExampleComponent {
 }
 ```
 
+## Content slots
+
+Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-drawer`, `tailwind-notification`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
+
 ## Components
 
 ### Form Controls (with ControlValueAccessor)
@@ -82,6 +86,7 @@ export class ExampleComponent {
 - **Card** (`tailwind-card`): Content card with header/body/footer
 - **Chip** (`tailwind-chip`): Removable tags
 - **Tag** (`tailwind-tag`): Semantic labels
+- **Title** (`tailwind-title`): Semantic headings (`h1`–`h6`) with required `text` and optional Heroicon
 
 ### Feedback
 

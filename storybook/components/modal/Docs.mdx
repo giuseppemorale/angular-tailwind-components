@@ -15,22 +15,22 @@ Chiama `TailwindModalService.open()` da qualsiasi componente. La promise si riso
 
 ### 1 — Crea il componente modale
 
-Il componente struttura il proprio contenuto con tre slot: `tailwind-modal-title`, `tailwind-modal-content`, `tailwind-modal-footer`. Inietta `TailwindModalRef<R>` per chiudere la modale con un risultato tipizzato.
+Il componente struttura il proprio contenuto con tre slot (selettori attributo): `[tailwind-modal-title]`, `[tailwind-modal-content]`, `[tailwind-modal-footer]`. Inietta `TailwindModalRef<R>` per chiudere la modale con un risultato tipizzato.
 
 ```typescript
 @Component({
-  imports: [TailwindButton, TailwindModal],
+  imports: [TailwindButton],
   template: `
-    <tailwind-modal-title>Conferma azione</tailwind-modal-title>
-    <tailwind-modal-content>
+    <span tailwind-modal-title>Conferma azione</span>
+    <div tailwind-modal-content>
       <p>L'operazione non può essere annullata. Vuoi procedere?</p>
-    </tailwind-modal-content>
-    <tailwind-modal-footer>
+    </div>
+    <div tailwind-modal-footer>
       <div class="flex justify-end gap-3">
         <tailwind-button kind="outlined" (click)="ref.close()">Annulla</tailwind-button>
         <tailwind-button color="primary" (click)="ref.close(true)">Conferma</tailwind-button>
       </div>
-    </tailwind-modal-footer>
+    </div>
   `
 })
 export class ConfirmModalComponent {
@@ -57,13 +57,13 @@ async deleteItem(): Promise<void> {
 
 ## Slot components
 
-Il servizio distribuisce automaticamente i figli del componente nei tre slot di `TailwindModal`.
+Il servizio distribuisce automaticamente i figli diretti del componente (con attributi `tailwind-modal-*`) nei tre slot di `TailwindModal`.
 
-- `TailwindModalTitle` - `tailwind-modal-title` - Header — all'interno dell'`<h2>`
-- `TailwindModalContent` - `tailwind-modal-content` - Body — `px-6 py-5`
-- `TailwindModalFooter` - `tailwind-modal-footer` - Footer — `px-6 py-4 border-t`
+- `TailwindModalTitle` - `[tailwind-modal-title]` - Header — all'interno dell'`<h2>` (es. `<span tailwind-modal-title>…</span>`)
+- `TailwindModalContent` - `[tailwind-modal-content]` - Body — `px-6 py-5` (es. `<div tailwind-modal-content>…</div>`)
+- `TailwindModalFooter` - `[tailwind-modal-footer]` - Footer — `px-6 py-4 border-t` (es. `<div tailwind-modal-footer>…</div>`)
 
-> Tutti e tre vanno importati nel componente modale che li usa.
+> Tutti e tre vanno importati nel componente modale che li usa; oppure usa elementi nativi con lo stesso attributo senza i componenti helper.
 
 ---
 
@@ -88,17 +88,17 @@ Usa `config.data` per iniettare dati nel componente modale via `TAILWIND_MODAL_D
 interface DeleteData { itemName: string }
 
 @Component({
-  imports: [TailwindButton, TailwindModalTitle, TailwindModalContent, TailwindModalFooter],
+  imports: [TailwindButton],
   template: `
-    <tailwind-modal-title>Elimina elemento</tailwind-modal-title>
-    <tailwind-modal-content>
+    <span tailwind-modal-title>Elimina elemento</span>
+    <div tailwind-modal-content>
       <p>Stai per eliminare <strong>{{ data.itemName }}</strong>.</p>
-    </tailwind-modal-content>
-    <tailwind-modal-footer>
+    </div>
+    <div tailwind-modal-footer>
       <div class="flex justify-end">
         <tailwind-button color="danger" (click)="ref.close(true)">Elimina</tailwind-button>
       </div>
-    </tailwind-modal-footer>
+    </div>
   `
 })
 export class DeleteModalComponent {

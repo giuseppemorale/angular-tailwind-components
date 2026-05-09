@@ -23,10 +23,10 @@ export class TailwindModalService {
    * Open a modal programmatically.
    *
    * The `component` is instantiated and its slot elements are projected into
-   * TailwindModal's ng-content slots:
-   *  - `<tailwind-modal-title>`   → header title area
-   *  - `<tailwind-modal-content>` → body area
-   *  - `<tailwind-modal-footer>`  → footer area
+   * TailwindModal's ng-content slots (attribute selectors on direct children):
+   *  - `[tailwind-modal-title]`   → header title area
+   *  - `[tailwind-modal-content]` → body area
+   *  - `[tailwind-modal-footer]`  → footer area
    *
    * The component can inject `TailwindModalRef<R>` to close with a typed result
    * and `TAILWIND_MODAL_DATA` to receive the `config.data` payload.
@@ -58,16 +58,16 @@ export class TailwindModalService {
       const nodes = (sel: string) => Array.from(host.querySelectorAll(`:scope > ${sel}`));
 
       // ── Step 3: create TailwindModal projecting the slot nodes ────────────
-      //   projectableNodes[0] → <ng-content />                (title / catch-all)
-      //   projectableNodes[1] → <ng-content select="tailwind-modal-content" />
-      //   projectableNodes[2] → <ng-content select="tailwind-modal-footer" />
+      //   projectableNodes[0] → <ng-content />                     (title / catch-all)
+      //   projectableNodes[1] → <ng-content select="[tailwind-modal-content]" />
+      //   projectableNodes[2] → <ng-content select="[tailwind-modal-footer]" />
       const modalComp = createComponent(TailwindModal, {
         environmentInjector: this.environmentInjector,
         elementInjector: injector,
         projectableNodes: [
-          nodes('tailwind-modal-title'),
-          nodes('tailwind-modal-content'),
-          nodes('tailwind-modal-footer')
+          nodes('[tailwind-modal-title]'),
+          nodes('[tailwind-modal-content]'),
+          nodes('[tailwind-modal-footer]')
         ]
       });
 

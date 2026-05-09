@@ -1,0 +1,39 @@
+@switch (titleTag()) {
+  @case ('h1') {
+    <h1 [class]="headingClasses()">
+      <ng-container [ngTemplateOutlet]="titleBody" />
+    </h1>
+  }
+  @case ('h2') {
+    <h2 [class]="headingClasses()">
+      <ng-container [ngTemplateOutlet]="titleBody" />
+    </h2>
+  }
+  @case ('h3') {
+    <h3 [class]="headingClasses()">
+      <ng-container [ngTemplateOutlet]="titleBody" />
+    </h3>
+  }
+  @case ('h4') {
+    <h4 [class]="headingClasses()">
+      <ng-container [ngTemplateOutlet]="titleBody" />
+    </h4>
+  }
+  @case ('h5') {
+    <h5 [class]="headingClasses()">
+      <ng-container [ngTemplateOutlet]="titleBody" />
+    </h5>
+  }
+  @case ('h6') {
+    <h6 [class]="headingClasses()">
+      <ng-container [ngTemplateOutlet]="titleBody" />
+    </h6>
+  }
+}
+
+<ng-template #titleBody>
+  @if (icon()) {
+    <tailwind-icon [icon]="icon()!" size="small" />
+  }
+  <span class="min-w-0">{{ text() }}</span>
+</ng-template>

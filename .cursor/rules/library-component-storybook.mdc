@@ -1,0 +1,14 @@
+---
+description: When adding a new component to angular-tailwind-components, always add Storybook stories and Docs.mdx.
+globs: projects/angular-tailwind-components/src/lib/components/**/*.ts
+alwaysApply: false
+---
+
+# Nuovi componenti libreria
+
+Quando aggiungi un nuovo componente in `projects/angular-tailwind-components/src/lib/components/`:
+
+1. **Storybook**: crea `storybook/components/<name>/<name>.stories.ts` con almeno una story principale e controlli sugli input rilevanti.
+2. **Documentazione**: crea `storybook/components/<name>/Docs.mdx` con Meta, utilizzo, Canvas di anteprima e tabella proprietà (stesso stile degli altri componenti, es. Badge).
+3. Registra il componente in `projects/angular-tailwind-components/.storybook/preview.ts` (`ALL_COMPONENTS`) se non è già importabile globalmente nelle stories.
+4. Aggiorna `storybook/Introduction.mdx` e i **README** alla radice del repo e in `projects/angular-tailwind-components/` (conteggio componenti e voce in elenco) quando introduce un componente esposto pubblicamente.

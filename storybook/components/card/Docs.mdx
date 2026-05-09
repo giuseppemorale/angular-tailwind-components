@@ -16,11 +16,11 @@ import * as CardStories from './card.stories';
   imports: [TailwindCard, TailwindButton],
   template: `
     <tailwind-card [elevated]="false" [hoverable]="false" [hasHeader]="true" [hasFooter]="true">
-      <tailwind-card-header><h3 class="font-semibold">Titolo</h3></tailwind-card-header>
+      <div tailwind-card-header><h3 class="font-semibold">Titolo</h3></div>
       <p>Contenuto della card.</p>
-      <tailwind-card-footer>
+      <div tailwind-card-footer>
         <tailwind-button size="sm">OK</tailwind-button>
-      </tailwind-card-footer>
+      </div>
     </tailwind-card>`
 })
 export class ExampleComponent {}

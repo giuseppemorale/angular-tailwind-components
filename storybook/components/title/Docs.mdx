@@ -1,0 +1,76 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TitleStories from './title.stories';
+
+<Meta of={TitleStories} />
+
+# Title
+
+`TailwindTitle` rende un titolo semantico (`h1`–`h6`) con testo obbligatorio e, opzionalmente, un’icona Heroicons **prima** del testo.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindTitle],
+  template: `
+    <tailwind-title titleTag="h1" text="Dashboard" class="text-primary-700" />
+    <tailwind-title titleTag="h2" text="Impostazioni" icon="cog-6-tooth" />
+  `
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={TitleStories.Title} />
+
+### Con icona
+
+<Canvas of={TitleStories.WithIcon} />
+
+### Tutti i livelli
+
+<Canvas of={TitleStories.HeadingLevels} />
+
+---
+
+## Properties
+
+### `TailwindTitle (tailwind-title)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>text</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Testo del titolo (obbligatorio).</td>
+    </tr>
+    <tr>
+      <td><code>icon</code></td>
+      <td><code>TailwindHeroIcon | undefined</code></td>
+      <td><code>undefined</code></td>
+      <td>Nome icona (Heroicons); se presente, viene mostrata prima di <code>text</code>.</td>
+    </tr>
+    <tr>
+      <td><code>titleTag</code></td>
+      <td><code>TailwindTitleTag</code></td>
+      <td><code>'h2'</code></td>
+      <td>Tag HTML del titolo: <code>h1</code> … <code>h6</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+`:host { display: contents }` fa sì che nel layout conti soprattutto l’elemento heading reale.

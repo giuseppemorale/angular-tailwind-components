@@ -7,15 +7,13 @@ export * from './radio/radio-group.component';
 export * from './select/select.component';
 export * from './toggle/toggle.component';
 export * from './badge/badge.component';
+export * from './title/title.component';
 export * from './card/card.component';
 export * from './alert/alert.component';
 export * from './spinner/spinner.component';
 
 // Batch 2 — Intermediate
 export * from './modal/modal.component';
-export * from './modal/modal-title.component';
-export * from './modal/modal-content.component';
-export * from './modal/modal-footer.component';
 export * from './tabs/tab.component';
 export * from './tabs/tab-group.component';
 export * from './tooltip/tooltip.component';

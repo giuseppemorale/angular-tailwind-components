@@ -20,7 +20,7 @@ const meta: Meta<TailwindToolbar> = {
     docs: {
       description: {
         component:
-          'App bar or side rail: **`tailwind-toolbar-logo`** and **`tailwind-toolbar-end`** via content projection; central items come from the **`menu`** input (`TailwindMenuItem[]`), laid out as a row when **horizontal** and a column when **vertical** (dividers: vertical rule vs `<hr>`). Listen to **`onMenuSelect`** for clicks. **width="container"** applies only when **horizontal** (responsive width). **Vertical** toolbar is always **`h-full`** in its column (`w-full`).'
+          'App bar or side rail: **`[tailwind-toolbar-logo]`** and **`[tailwind-toolbar-end]`** via content projection (use attributes on native elements, e.g. `<div tailwind-toolbar-logo>`); central items come from the **`menu`** input (`TailwindMenuItem[]`), laid out as a row when **horizontal** and a column when **vertical** (dividers: vertical rule vs `<hr>`). Listen to **`onMenuSelect`** for clicks. **width="container"** applies only when **horizontal** (responsive width). **Vertical** toolbar is always **`h-full`** in its column (`w-full`).'
       },
       story: { height: '420px' }
     }
@@ -48,11 +48,11 @@ export const Horizontal: Story = {
     template: `
       <div class="space-y-2">
         <tailwind-toolbar ${argsToTemplate(args)} [menu]="menu" (onMenuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
-          <tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">Logo</tailwind-toolbar-logo>
-          <tailwind-toolbar-end class="flex gap-2">
+          <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">Logo</div>
+          <div tailwind-toolbar-end class="flex gap-2">
             <tailwind-button size="sm" color="secondary" kind="outlined">Sign in</tailwind-button>
             <tailwind-button size="sm">Get started</tailwind-button>
-          </tailwind-toolbar-end>
+          </div>
         </tailwind-toolbar>
         @if (lastSelection) {
           <p class="text-xs text-surface-500">Selected: {{ lastSelection }}</p>
@@ -80,10 +80,10 @@ export const VerticalSidebar: Story = {
     template: `
       <div class="flex h-[80vh] gap-4 border border-dashed border-surface-200 rounded-lg p-2">
         <tailwind-toolbar class="w-48 shrink-0" ${argsToTemplate(args)} [menu]="menu">
-          <tailwind-toolbar-logo class="text-base font-bold text-surface-800 px-2">App</tailwind-toolbar-logo>
-          <tailwind-toolbar-end class="px-2">
+          <div tailwind-toolbar-logo class="text-base font-bold text-surface-800 px-2">App</div>
+          <div tailwind-toolbar-end class="px-2">
             <tailwind-button size="sm" color="secondary" kind="text">Logout</tailwind-button>
-          </tailwind-toolbar-end>
+          </div>
         </tailwind-toolbar>
         <div class="flex-1 rounded-lg bg-surface-50 p-4 text-sm text-surface-600">Main content</div>
       </div>

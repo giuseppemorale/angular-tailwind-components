@@ -1,6 +1,6 @@
 <div [class]="rootClasses()">
   <div class="shrink-0">
-    <ng-content select="tailwind-toolbar-logo" />
+    <ng-content select="[tailwind-toolbar-logo]" />
   </div>
   <nav [class]="menuContainerClasses()" [attr.aria-label]="'Toolbar menu'">
     @for (item of menu(); track menuTrackKey($index, item)) {
@@ -25,6 +25,6 @@
     class="flex flex-wrap items-center gap-2 shrink-0"
     [class.justify-end]="orientation() === 'horizontal'"
     [class.mt-auto]="orientation() === 'vertical'">
-    <ng-content select="tailwind-toolbar-end" />
+    <ng-content select="[tailwind-toolbar-end]" />
   </div>
 </div>

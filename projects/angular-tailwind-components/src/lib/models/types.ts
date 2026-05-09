@@ -18,6 +18,9 @@ export type TailwindPosition = 'top' | 'bottom' | 'left' | 'right';
 /** Shape variants */
 export type TailwindShape = 'rounded' | 'pill' | 'square';
 
+/** Semantic heading level for `TailwindTitle` */
+export type TailwindTitleTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
 /** Icon dimensions: `normal` = 24×24, `small` = 16×16 */
 export type TailwindIconSize = 'normal' | 'small';
 

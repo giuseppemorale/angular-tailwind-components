@@ -3,28 +3,25 @@ import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@story
 import {
   TailwindButton,
   TailwindModal,
-  TailwindModalContent,
-  TailwindModalFooter,
   TailwindModalRef,
   TailwindModalService,
-  TailwindModalTitle,
   TailwindSize
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 @Component({
-  imports: [TailwindButton, TailwindModalTitle, TailwindModalContent, TailwindModalFooter],
+  imports: [TailwindButton],
   selector: 'modal-story-confirm',
   template: `
-    <tailwind-modal-title>Confirm action</tailwind-modal-title>
-    <tailwind-modal-content>
+    <span tailwind-modal-title>Confirm action</span>
+    <div tailwind-modal-content>
       <p class="text-surface-700">This action cannot be undone. Do you want to proceed?</p>
-    </tailwind-modal-content>
-    <tailwind-modal-footer>
+    </div>
+    <div tailwind-modal-footer>
       <div class="flex justify-end gap-3">
         <tailwind-button color="secondary" kind="outlined" (click)="ref.close()">Cancel</tailwind-button>
         <tailwind-button color="primary" (click)="ref.close(true)">Confirm</tailwind-button>
       </div>
-    </tailwind-modal-footer>
+    </div>
   `
 })
 class ConfirmModalComponent {

@@ -5,7 +5,7 @@ import * as ToolbarStories from './toolbar.stories';
 
 # Toolbar
 
-`TailwindToolbar` è una barra applicativa orizzontale o un rail laterale verticale. Il **menu** centrale è un array `TailwindMenuItem[]`; logo e azioni finali restano **content projection** (`tailwind-toolbar-logo`, `tailwind-toolbar-end`).
+`TailwindToolbar` è una barra applicativa orizzontale o un rail laterale verticale. Il **menu** centrale è un array `TailwindMenuItem[]`; logo e azioni finali restano **content projection** con attributi `[tailwind-toolbar-logo]` e `[tailwind-toolbar-end]` su elementi nativi (es. `<div tailwind-toolbar-logo>`).
 
 ---
 
@@ -19,10 +19,10 @@ import { TailwindButton, TailwindMenuItem, TailwindToolbar } from 'angular-tailw
   imports: [TailwindToolbar, TailwindButton],
   template: `
     <tailwind-toolbar [menu]="menu" (onMenuSelect)="onNav($event)">
-      <tailwind-toolbar-logo>Brand</tailwind-toolbar-logo>
-      <tailwind-toolbar-end>
+      <div tailwind-toolbar-logo>Brand</div>
+      <div tailwind-toolbar-end>
         <tailwind-button size="sm">Account</tailwind-button>
-      </tailwind-toolbar-end>
+      </div>
     </tailwind-toolbar>
   `
 })
@@ -52,19 +52,19 @@ Con **orientation** `vertical`, le voci del menu sono in colonna; con `divider: 
   <thead>
     <tr>
       <th>Slot</th>
-      <th>Selector</th>
+      <th>Attributo</th>
       <th>Descrizione</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>Logo</td>
-      <td><code>tailwind-toolbar-logo</code></td>
+      <td><code>[tailwind-toolbar-logo]</code></td>
       <td>Area brand / titolo (sinistra o in alto).</td>
     </tr>
     <tr>
       <td>Fine</td>
-      <td><code>tailwind-toolbar-end</code></td>
+      <td><code>[tailwind-toolbar-end]</code></td>
       <td>Azioni secondarie (destra o in basso).</td>
     </tr>
   </tbody>

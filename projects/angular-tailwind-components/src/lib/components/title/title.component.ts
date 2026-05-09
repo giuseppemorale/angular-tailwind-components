@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
-import type { TailwindHeroIcon, TailwindTitleTag } from '../../models';
+import type { TailwindSolarIcon, TailwindTitleTag } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 
@@ -14,8 +14,8 @@ export class TailwindTitle extends TailwindComponent {
   /** Visible title text */
   readonly text = input.required<string>();
 
-  /** Optional Heroicon name (shown before `text`) */
-  readonly icon = input<TailwindHeroIcon | undefined>();
+  /** Optional Solar Line Duotone icon name (shown before `text`) */
+  readonly icon = input<TailwindSolarIcon | undefined>();
 
   /** HTML heading element */
   readonly titleTag = input<TailwindTitleTag>('h2');

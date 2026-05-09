@@ -86,7 +86,7 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Card** (`tailwind-card`): Content card with header/body/footer
 - **Chip** (`tailwind-chip`): Removable tags
 - **Tag** (`tailwind-tag`): Semantic labels
-- **Title** (`tailwind-title`): Semantic headings (`h1`–`h6`) with required `text` and optional Heroicon
+- **Title** (`tailwind-title`): Semantic headings (`h1`–`h6`) with required `text` and optional Solar Line Duotone icon
 
 ### Feedback
 
@@ -158,3 +158,5 @@ npm run storybook
 ## License
 
 MIT
+
+The bundled **Solar Line Duotone** SVG icons are © [480 Design](https://www.figma.com/@480design) / [Solar Icons](https://solar-icons.vercel.app/icons), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).

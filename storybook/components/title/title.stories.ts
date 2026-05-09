@@ -1,5 +1,5 @@
 import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
-import { TAILWIND_HERO_ICON_NAMES, TailwindTitle } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TAILWIND_SOLAR_ICON_NAMES, TailwindTitle } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTitle> = {
   title: 'Components/Title',
@@ -11,7 +11,7 @@ const meta: Meta<TailwindTitle> = {
     },
     icon: {
       control: 'select',
-      options: TAILWIND_HERO_ICON_NAMES
+      options: TAILWIND_SOLAR_ICON_NAMES
     }
   }
 };
@@ -32,7 +32,7 @@ export const WithIcon: StoryObj<TailwindTitle> = {
   parameters: {
     docs: {
       description: {
-        story: 'Con `icon` impostato, l’icona Heroicons viene mostrata prima del testo.'
+        story: 'Con `icon` impostato, l’icona Solar Line Duotone viene mostrata prima del testo.'
       }
     }
   },

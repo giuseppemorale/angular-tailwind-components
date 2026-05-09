@@ -33,7 +33,7 @@
 
 <ng-template #titleBody>
   @if (icon()) {
-    <tailwind-icon [icon]="icon()!" size="small" />
+    <tailwind-icon [icon]="icon()!" [size]="16" />
   }
   <span class="min-w-0">{{ text() }}</span>
 </ng-template>

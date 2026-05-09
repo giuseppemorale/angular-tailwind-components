@@ -5,47 +5,47 @@ import * as IconsStories from './icons-gallery.stories';
 
 # Icons
 
-Icone **[Heroicons](https://heroicons.com/)** (MIT), versione ottimizzata in SVG nella cartella **`public/icons/`**.
+Le icone sono **[Solar Line Duotone](https://solar-icons.vercel.app/icons)** (480 Design), licenza **CC BY 4.0**. Gli SVG master sono **64×64** nel viewBox del set Solar (`24×24` tipico); il componente imposta larghezza/altezza in pixel tramite **`size`** (16–64).
 
 ## Uso in TypeScript
 
 Importa il tipo e l’array dei nomi dalla libreria:
 
 ```typescript
-import type { TailwindHeroIcon } from 'angular-tailwind-components';
-import { TAILWIND_HERO_ICON_NAMES } from 'angular-tailwind-components';
+import type { TailwindSolarIcon } from 'angular-tailwind-components';
+import { TAILWIND_SOLAR_ICON_NAMES } from 'angular-tailwind-components';
 
-const icon: TailwindHeroIcon = 'bell';
+const icon: TailwindSolarIcon = 'bell';
 ```
 
-Per ogni icona la **stringa da usare** è il nome in **kebab-case** tra apici singoli (come in `TailwindHeroIcon`), ad esempio `'bell'` oppure `'arrow-right-on-rectangle'`.
+Per ogni icona la **stringa da usare** è il nome in **kebab-case** tra apici singoli (come in `TailwindSolarIcon`), ad esempio `'bell'` oppure `'home-smile'`.
 
 ## Componente `tailwind-icon`
 
 Per mostrare un’icona usa **`TailwindIcon`** con:
 
-- **`icon`**: `TailwindHeroIcon` (obbligatorio)
-- **`size`**: `'normal'` (24×24) o `'small'` (16×16); se omesso usa il token **`TAILWIND_ICON_SIZE`** se presente, altrimenti **`'normal'`**
+- **`icon`**: `TailwindSolarIcon` (obbligatorio)
+- **`size`**: numero **pixel** per larghezza e altezza (**16–64**, valori fuori range vengono clampati); se omesso usa il token **`TAILWIND_ICON_SIZE`** se presente, altrimenti **24**
 
-Il componente imposta **`src`** su **`/icons/<nome>.svg`** (URL assoluto dalla root del sito che serve l’app). Le SVG non sono incorporate nel bundle JS: il browser le scarica come risorse statiche.
+Il componente imposta **`src`** su **`/tailwind-icons/<nome>.svg`** (URL dalla root del sito che serve l’app). Le SVG non sono incorporate nel bundle JS: il browser le scarica come risorse statiche.
 
 ```typescript
 import { TailwindIcon } from 'angular-tailwind-components';
 
 @Component({
   imports: [TailwindIcon],
-  template: `<tailwind-icon icon="bell" size="small" />`
+  template: `<tailwind-icon icon="bell" [size]="16" />`
 })
 export class ExampleComponent {}
 ```
 
 ## Build della libreria e pacchetto npm
 
-`ng-packagr` non può leggere file fuori dalla cartella del progetto libreria. Prima di ogni **`npm run build`** lo script **`scripts/sync-icons-to-lib.js`** copia **`public/icons/*.svg`** in **`projects/angular-tailwind-components/icons/`**; da lì le SVG entrano nel tarball in **`icons/`** (accanto a `fesm2022`, ecc.).
+Prima di **`npm run build`** viene eseguito **`node scripts/copy-icons.js sync`**, che rigenera **`public/tailwind-icons/*.svg`** e **`models/icons.ts`** da `@iconify-json/solar`. Subito dopo la compilazione, **`node scripts/copy-icons.js dist`** copia gli SVG nel pacchetto pubblicato in **`tailwind-icons/`** (accanto a `fesm2022`, ecc.).
 
 ## App che usa la libreria (build di produzione)
 
-Nel **`angular.json`** (target **`build`** dell’app) aggiungi gli asset così le richieste a **`/icons/nome.svg`** risolvono correttamente:
+Nel **`angular.json`** (target **`build`** dell’app) aggiungi gli asset così le richieste a **`/tailwind-icons/nome.svg`** risolvono correttamente:
 
 ```json
 "assets": [
@@ -57,13 +57,11 @@ Nel **`angular.json`** (target **`build`** dell’app) aggiungi gli asset così 
 ]
 ```
 
-Il path **`input`** è relativo alla root del workspace dell’app (come negli altri asset Angular). In sviluppo **`ng serve`** copia gli stessi file nella cartella di output con prefisso **`/icons/`**.
-
-Se il progetto non usa `node_modules` ma una path alias, punta **`input`** alla cartella **`icons`** del pacchetto installato.
+Il path **`input`** è relativo alla root del workspace dell’app. In sviluppo **`ng serve`** copia gli stessi file nella cartella di output con prefisso **`/tailwind-icons/`**.
 
 ## Dimensione predefinita: `TAILWIND_ICON_SIZE`
 
-Il token **`TAILWIND_ICON_SIZE`** (`InjectionToken<'normal' | 'small'>`) imposta il **default** di **`size`** su tutte le **`tailwind-icon`** dell’albero che ricevono quel provider. Se il token **non** è fornito, il default è **`'normal'`**.
+Il token **`TAILWIND_ICON_SIZE`** (`InjectionToken<number>`) imposta il **default** di **`size`** su tutte le **`tailwind-icon`** dell’albero che ricevono quel provider. Se il token **non** è fornito, il default è **24** (px).
 
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -71,7 +69,7 @@ import { TAILWIND_ICON_SIZE } from 'angular-tailwind-components';
 import { AppComponent } from './app.component';
 
 bootstrapApplication(AppComponent, {
-  providers: [{ provide: TAILWIND_ICON_SIZE, useValue: 'small' }]
+  providers: [{ provide: TAILWIND_ICON_SIZE, useValue: 20 }]
 });
 ```
 
@@ -81,8 +79,8 @@ Puoi anche limitarlo a una parte dell’app con **`providers`** su un componente
 @Component({
   selector: 'app-settings-shell',
   imports: [TailwindIcon],
-  providers: [{ provide: TAILWIND_ICON_SIZE, useValue: 'small' }],
-  template: `<tailwind-icon icon="cog-6-tooth" />`
+  providers: [{ provide: TAILWIND_ICON_SIZE, useValue: 20 }],
+  template: `<tailwind-icon icon="settings" />`
 })
 export class SettingsShellComponent {}
 ```
@@ -91,15 +89,11 @@ Passare esplicitamente **`[size]`** sulla singola icona ha sempre la precedenza 
 
 ## Percorsi dei file SVG
 
-È inclusa solo la variante **outline 24×24**:
-
-- **`public/icons/`** — un file `.svg` per ogni nome in `TailwindHeroIcon`
-
-Il nome file coincide con la stringa del tipo, ad esempio `public/icons/bell.svg` per `'bell'`.
+Nella repo della libreria gli SVG sorgente stanno in **`public/tailwind-icons/`** — un file `.svg` per ogni nome in `TailwindSolarIcon`. Nel pacchetto npm sono nella cartella **`tailwind-icons/`**.
 
 ---
 
-## Catalogo (anteprima 24×24 outline)
+## Catalogo
 
 Sotto ogni icona è indicata la **stringa letterale** da copiare (`'nome-icona'`).
 

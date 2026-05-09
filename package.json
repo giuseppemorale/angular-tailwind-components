@@ -1,11 +1,12 @@
 {
   "name": "angular-tailwind-components",
-  "version": "1.0.11",
+  "version": "1.1.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve playground",
-    "build": "ng build angular-tailwind-components && node scripts/copy-icons.js",
-    "watch": "ng build angular-tailwind-components --watch --configuration development && node scripts/copy-icons.js",
+    "build": "node scripts/copy-icons.js sync && ng build angular-tailwind-components && node scripts/copy-icons.js dist",
+    "sync-icons": "node scripts/copy-icons.js sync",
+    "watch": "node scripts/copy-icons.js sync && ng build angular-tailwind-components --watch --configuration development && node scripts/copy-icons.js dist",
     "test": "ng test",
     "release": "node scripts/release.js",
     "storybook": "ng run angular-tailwind-components:storybook",
@@ -35,6 +36,7 @@
     "@angular/compiler-cli": "^21.2.12",
     "@angular/platform-browser-dynamic": "^21.2.12",
     "@compodoc/compodoc": "^1.2.1",
+    "@iconify-json/solar": "^1.2.5",
     "@storybook/addon-a11y": "^10.3.6",
     "@storybook/addon-docs": "^10.3.6",
     "@storybook/addon-onboarding": "^10.3.6",

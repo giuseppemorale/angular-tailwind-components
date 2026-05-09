@@ -13,7 +13,7 @@
     "prettier:write": "prettier --write projects/**/*.{ts,html,scss}",
     "prettier:check": "prettier --check ."
   },
-  "private": true,
+  "private": false,
   "packageManager": "npm@11.13.0",
   "dependencies": {
     "@angular/cdk": "^21.2.10",

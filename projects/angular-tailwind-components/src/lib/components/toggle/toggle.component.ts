@@ -52,6 +52,23 @@ export class TailwindToggle extends TailwindComponent implements ControlValueAcc
     return [...base, sizeMap[this.size()], stateClass].join(' ');
   });
 
+  /** `aria-label` / `aria-labelledby` for the switch (label text is not a hit target) */
+  readonly switchAria = computed(() => {
+    const al = this.ariaLabel();
+    if (al) {
+      return { label: al, labelledBy: null as string | null };
+    }
+    const lb = this.label();
+    const sid = this.id();
+    if (lb && sid) {
+      return { label: null, labelledBy: `${sid}-label` };
+    }
+    if (lb) {
+      return { label: lb, labelledBy: null };
+    }
+    return { label: 'Toggle', labelledBy: null };
+  });
+
   /** Thumb (knob) classes */
   readonly thumbClasses = computed(() => {
     const sizeMap: Record<TailwindSize, { thumb: string; translateOn: string }> = {

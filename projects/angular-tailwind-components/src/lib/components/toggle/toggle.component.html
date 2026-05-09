@@ -1,12 +1,12 @@
-<label
-  class="inline-flex items-center gap-3 cursor-pointer select-none"
-  [class.cursor-not-allowed]="isDisabled()"
+<div
+  class="inline-flex items-center gap-3 select-none"
   [class.opacity-50]="isDisabled()">
   <button
     type="button"
     role="switch"
     [attr.aria-checked]="checked()"
-    [attr.aria-label]="ariaLabel() || label()"
+    [attr.aria-label]="switchAria().label"
+    [attr.aria-labelledby]="switchAria().labelledBy"
     [disabled]="isDisabled()"
     [class]="trackClasses()"
     (click)="toggle()">
@@ -14,6 +14,6 @@
   </button>
 
   @if (label()) {
-    <span class="text-sm font-medium text-surface-800">{{ label() }}</span>
+    <span [attr.id]="id() ? id() + '-label' : null" class="text-sm font-medium text-surface-800">{{ label() }}</span>
   }
-</label>
+</div>

@@ -40,15 +40,15 @@ const meta: Meta<TailwindToolbar> = {
 };
 export default meta;
 
-type Story = StoryObj<TailwindToolbar>;
-
-export const Horizontal: Story = {
+export const Horizontal: StoryObj<TailwindToolbar> = {
   render: args => ({
     props: { ...args, menu: horizontalMenu, lastSelection: '' as string },
     template: `
       <div class="space-y-2">
         <tailwind-toolbar ${argsToTemplate(args)} [menu]="menu" (onMenuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
-          <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">Logo</div>
+          <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">
+            <img src="/logo.png" alt="Logo" class="h-8 w-8">
+          </div>
           <div tailwind-toolbar-end class="flex gap-2">
             <tailwind-button size="sm" color="secondary" kind="outlined">Sign in</tailwind-button>
             <tailwind-button size="sm">Get started</tailwind-button>
@@ -62,12 +62,12 @@ export const Horizontal: Story = {
   })
 };
 
-export const ContainerWidth: Story = {
+export const ContainerWidth: StoryObj<TailwindToolbar> = {
   args: { width: 'container', elevated: true },
   render: Horizontal.render
 };
 
-export const VerticalSidebar: Story = {
+export const VerticalSidebar: StoryObj<TailwindToolbar> = {
   parameters: { docs: { story: { height: '520px' } } },
   args: {
     orientation: 'vertical',

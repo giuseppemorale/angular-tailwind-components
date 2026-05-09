@@ -1,4 +1,4 @@
-import { Component, computed, forwardRef, inject, input, model, signal } from '@angular/core';
+import { Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
@@ -30,6 +30,7 @@ const I18N: Record<Lang, { months: string[]; weekDays: string[]; today: string; 
   styleUrl: './date-picker.component.scss'
 })
 export class TailwindDatePicker extends TailwindComponent implements ControlValueAccessor {
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly lang: Lang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
 
   protected readonly i18n = I18N[this.lang];
@@ -141,5 +142,20 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     this.viewMonth.set(t.getMonth());
     this.viewYear.set(t.getFullYear());
     this.selectDay(t.getDate());
+  }
+
+  @HostListener('document:pointerdown', ['$event'])
+  onDocumentPointerDown(event: PointerEvent): void {
+    if (!this.showCalendar()) return;
+    const t = event.target;
+    if (t instanceof Node && this.host.nativeElement.contains(t)) return;
+    this.showCalendar.set(false);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onDocumentKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Escape' || !this.showCalendar()) return;
+    event.stopPropagation();
+    this.showCalendar.set(false);
   }
 }

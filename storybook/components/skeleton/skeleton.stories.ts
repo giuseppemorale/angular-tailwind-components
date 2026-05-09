@@ -17,9 +17,8 @@ const meta: Meta<TailwindSkeleton> = {
   }
 };
 export default meta;
-type Story = StoryObj<TailwindSkeleton>;
 
-export const Skeleton: Story = {
+export const Skeleton: StoryObj<TailwindSkeleton> = {
   args: {
     variant: 'text',
     width: '100%',
@@ -27,7 +26,7 @@ export const Skeleton: Story = {
   }
 };
 
-export const CardSkeleton: Story = {
+export const CardSkeleton: StoryObj<TailwindSkeleton> = {
   render: () => ({
     template: `
       <div class="max-w-lg">
@@ -54,7 +53,7 @@ export const CardSkeleton: Story = {
   })
 };
 
-export const AllVariants: Story = {
+export const AllVariants: StoryObj<TailwindSkeleton> = {
   render: () => ({
     template: `
       <div class="space-y-4 max-w-xs">

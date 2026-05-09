@@ -1,9 +1,11 @@
-<label
-  [attr.for]="id() ? id() + '-inner' : null"
-  class="inline-flex items-center gap-2.5 cursor-pointer select-none"
-  [class.cursor-not-allowed]="isDisabled()"
+<div
+  class="inline-flex items-center gap-2.5 select-none"
   [class.opacity-50]="isDisabled()">
-  <div class="relative flex items-center justify-center shrink-0" [class]="boxSizeClass()">
+  <label
+    class="relative flex items-center justify-center shrink-0"
+    [class.cursor-pointer]="!isDisabled()"
+    [class.cursor-not-allowed]="isDisabled()"
+    [attr.for]="id() ? id() + '-inner' : null">
     <input
       [attr.id]="id() ? id() + '-inner' : null"
       type="checkbox"
@@ -11,6 +13,7 @@
       [checked]="checked()"
       [disabled]="isDisabled()"
       [attr.aria-describedby]="description() && id() ? id() + '-desc' : null"
+      [attr.aria-labelledby]="label() && id() ? id() + '-label' : null"
       (change)="onCheckboxChange($event)" />
     <div
       class="w-full h-full border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
@@ -31,11 +34,13 @@
         </svg>
       }
     </div>
-  </div>
+  </label>
 
   <div class="flex flex-col gap-0.5 pt-0.5">
     @if (label()) {
-      <span class="text-sm font-medium text-surface-800 leading-tight">{{ label() }}</span>
+      <span [attr.id]="id() ? id() + '-label' : null" class="text-sm font-medium text-surface-800 leading-tight">{{
+        label()
+      }}</span>
     }
     @if (description()) {
       <span [attr.id]="id() ? id() + '-desc' : null" class="text-xs text-surface-500 leading-snug">
@@ -43,4 +48,4 @@
       </span>
     }
   </div>
-</label>
+</div>

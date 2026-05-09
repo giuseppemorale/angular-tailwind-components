@@ -1,4 +1,4 @@
-import { Component, computed, forwardRef, inject, input, model, signal } from '@angular/core';
+import { Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindComponent } from '../tailwind.component';
@@ -19,6 +19,7 @@ const I18N: Record<Lang, { placeholder: string; now: string; apply: string }> = 
   styleUrl: './time-picker.component.scss'
 })
 export class TailwindTimePicker extends TailwindComponent implements ControlValueAccessor {
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly lang: Lang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
 
   protected readonly i18n = I18N[this.lang];
@@ -89,5 +90,20 @@ export class TailwindTimePicker extends TailwindComponent implements ControlValu
     const cur = this.draft();
     if (!cur) return;
     this.draft.set({ ...cur, m: Number((e.target as HTMLSelectElement).value) });
+  }
+
+  @HostListener('document:pointerdown', ['$event'])
+  onDocumentPointerDown(event: PointerEvent): void {
+    if (!this.showPanel()) return;
+    const t = event.target;
+    if (t instanceof Node && this.host.nativeElement.contains(t)) return;
+    this.showPanel.set(false);
+  }
+
+  @HostListener('document:keydown', ['$event'])
+  onDocumentKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Escape' || !this.showPanel()) return;
+    event.stopPropagation();
+    this.showPanel.set(false);
   }
 }

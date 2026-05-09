@@ -21,8 +21,9 @@
 
       <!-- fill -->
       <div
-        class="pointer-events-none absolute top-1/2 -translate-y-1/2 rounded-full bg-primary-500"
+        class="pointer-events-none absolute top-1/2 z-1 -translate-y-1/2 rounded-full"
         [class]="trackThickness()"
+        [style.background-color]="accentVars().fill"
         [style.left.%]="fillStartPct()"
         [style.width.%]="fillWidthPct()"></div>
 
@@ -30,8 +31,10 @@
         <button
           type="button"
           [disabled]="isEffectivelyDisabled()"
-          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow focus:outline-none"
           [class]="thumbSizeClass()"
+          [style.background-color]="accentVars().thumb"
+          [style.--slider-ring]="accentVars().ring"
           [style.left.%]="lowPct()"
           role="slider"
           [attr.aria-valuemin]="min()"
@@ -43,8 +46,10 @@
         <button
           type="button"
           [disabled]="isEffectivelyDisabled()"
-          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow focus:outline-none"
           [class]="thumbSizeClass()"
+          [style.background-color]="accentVars().thumb"
+          [style.--slider-ring]="accentVars().ring"
           [style.left.%]="highPct()"
           role="slider"
           [attr.aria-valuemin]="min()"
@@ -57,8 +62,10 @@
         <button
           type="button"
           [disabled]="isEffectivelyDisabled()"
-          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          class="tailwind-slider-thumb absolute top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow focus:outline-none"
           [class]="thumbSizeClass()"
+          [style.background-color]="accentVars().thumb"
+          [style.--slider-ring]="accentVars().ring"
           [style.left.%]="singlePct()"
           role="slider"
           [attr.aria-valuemin]="min()"
@@ -91,8 +98,9 @@
       }
 
       <div
-        class="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full bg-primary-500"
+        class="pointer-events-none absolute bottom-0 left-1/2 z-1 -translate-x-1/2 rounded-full"
         [class]="verticalTrackThickness()"
+        [style.background-color]="accentVars().fill"
         [style.bottom.%]="fillStartPct()"
         [style.height.%]="fillWidthPct()"></div>
 
@@ -100,8 +108,10 @@
         <button
           type="button"
           [disabled]="isEffectivelyDisabled()"
-          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white shadow focus:outline-none"
           [class]="thumbSizeClass()"
+          [style.background-color]="accentVars().thumb"
+          [style.--slider-ring]="accentVars().ring"
           [style.bottom.%]="lowPct()"
           role="slider"
           [attr.aria-valuemin]="min()"
@@ -113,8 +123,10 @@
         <button
           type="button"
           [disabled]="isEffectivelyDisabled()"
-          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white shadow focus:outline-none"
           [class]="thumbSizeClass()"
+          [style.background-color]="accentVars().thumb"
+          [style.--slider-ring]="accentVars().ring"
           [style.bottom.%]="highPct()"
           role="slider"
           [attr.aria-valuemin]="min()"
@@ -127,8 +139,10 @@
         <button
           type="button"
           [disabled]="isEffectivelyDisabled()"
-          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white bg-primary-600 shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+          class="tailwind-slider-thumb absolute left-1/2 z-10 -translate-x-1/2 translate-y-1/2 rounded-full border-2 border-white shadow focus:outline-none"
           [class]="thumbSizeClass()"
+          [style.background-color]="accentVars().thumb"
+          [style.--slider-ring]="accentVars().ring"
           [style.bottom.%]="singlePct()"
           role="slider"
           [attr.aria-valuemin]="min()"

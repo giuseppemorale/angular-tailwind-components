@@ -1,6 +1,6 @@
 import { booleanAttribute, Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TailwindSize } from '../../models';
+import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 /** Value model: single number or sorted pair when `range` is true */
@@ -33,6 +33,8 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
   readonly showTicks = input<boolean>(false);
   /** Control size */
   readonly size = input<TailwindSize>('md');
+  /** Track fill / thumb color */
+  readonly variant = input<TailwindSeverity | 'primary'>('primary');
 
   readonly trackRef = viewChild<ElementRef<HTMLElement>>('track');
 
@@ -86,6 +88,19 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
       xl: 'w-3'
     };
     return map[this.size()];
+  });
+
+  /**
+   * Uses theme CSS variables (`--color-*`) so accent colors work even when dynamic
+   * `bg-*` utilities are not present in the compiled stylesheet (Tailwind content scan).
+   */
+  readonly accentVars = computed(() => {
+    const name = this.variant();
+    return {
+      fill: `var(--color-${name}-500)`,
+      thumb: `var(--color-${name}-600)`,
+      ring: `var(--color-${name}-500)`
+    };
   });
 
   readonly singlePct = computed(() => this.valueToPct(this.singleValue()));

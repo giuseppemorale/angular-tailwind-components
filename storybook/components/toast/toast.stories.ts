@@ -10,27 +10,28 @@ import { Component, inject } from '@angular/core';
   selector: 'tailwind-toast-story',
   imports: [TailwindToast, TailwindButton],
   template: ` <div class="flex flex-wrap gap-3">
-      <tailwind-button color="success" (click)="showSuccess()">Success</tailwind-button>
-      <tailwind-button color="warning" (click)="showWarning()">Warning</tailwind-button>
-      <tailwind-button color="danger" (click)="showDanger()">Error</tailwind-button>
-      <tailwind-button (click)="showInfo()">Info</tailwind-button>
-      <tailwind-button color="secondary" kind="text" (click)="toast.clear()">Clear All</tailwind-button>
-    </div>
-    <tailwind-toast />`
+    <tailwind-toast />
+    <tailwind-button color="success" (click)="showSuccess()">Success</tailwind-button>
+    <tailwind-button color="warning" (click)="showWarning()">Warning</tailwind-button>
+    <tailwind-button color="danger" (click)="showDanger()">Error</tailwind-button>
+    <tailwind-button (click)="showInfo()">Info</tailwind-button>
+    <tailwind-button color="secondary" kind="text" (click)="toastService.clear()">Clear All</tailwind-button>
+  </div>`
 })
 class ToastStoryComponent {
-  toast = inject(TailwindToastService);
+  readonly toastService = inject(TailwindToastService);
+
   showSuccess() {
-    this.toast.success('Saved successfully!', 'Success');
+    this.toastService.success('Saved successfully!', 'Success');
   }
   showWarning() {
-    this.toast.warning('Session expires in 5 minutes.', 'Warning');
+    this.toastService.warning('Session expires in 5 minutes.', 'Warning');
   }
   showDanger() {
-    this.toast.danger('Failed to save changes.', 'Error');
+    this.toastService.danger('Failed to save changes.', 'Error');
   }
   showInfo() {
-    this.toast.info('New version available.', 'Info');
+    this.toastService.info('New version available.', 'Info');
   }
 }
 

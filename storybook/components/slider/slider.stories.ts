@@ -1,9 +1,9 @@
 import { FormsModule } from '@angular/forms';
-import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
+import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindSlider } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSlider> = {
-  title: 'Components/Slider',
+  title: 'Forms/Slider',
   component: TailwindSlider,
   decorators: [
     moduleMetadata({
@@ -26,8 +26,25 @@ const meta: Meta<TailwindSlider> = {
     range: { control: 'boolean' },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
     showTicks: { control: 'boolean' },
-    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] }
-  },
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
+    variant: {
+      control: 'select',
+      options: ['primary', 'success', 'warning', 'danger', 'info']
+    }
+  }
+};
+export default meta;
+
+export const Slider: StoryObj<TailwindSlider> = {
+  render: args => ({
+    props: { model: 40, ...args },
+    template: `
+      <div class="max-w-md">
+        <tailwind-slider [(ngModel)]="model" ${argsToTemplate(args)} />
+        <p class="mt-2 text-sm text-surface-600">Value: {{ model }}</p>
+      </div>
+    `
+  }),
   args: {
     min: 0,
     max: 100,
@@ -35,88 +52,52 @@ const meta: Meta<TailwindSlider> = {
     range: false,
     orientation: 'horizontal',
     showTicks: false,
-    size: 'md'
+    size: 'md',
+    variant: 'primary'
   }
 };
-export default meta;
 
-type Story = StoryObj<TailwindSlider>;
-
-export const Default: Story = {
-  render: args => ({
-    props: { ...args, model: 40 },
-    template: `
-      <div class="max-w-md">
-        <tailwind-slider
-          [(ngModel)]="model"
-          [min]="min"
-          [max]="max"
-          [step]="step"
-          [range]="range"
-          [orientation]="orientation"
-          [showTicks]="showTicks"
-          [size]="size" />
-        <p class="mt-2 text-sm text-surface-600">Value: {{ model }}</p>
-      </div>
-    `
-  })
-};
-
-export const Range: Story = {
-  args: { range: true, step: 1 },
+export const Range: StoryObj<TailwindSlider> = {
   parameters: { docs: { story: { height: '320px' } } },
   render: args => ({
-    props: { ...args, model: [20, 70] as [number, number] },
+    props: { model: [20, 70] as [number, number], ...args },
     template: `
       <div class="max-w-md">
-        <tailwind-slider
-          [(ngModel)]="model"
-          [min]="min"
-          [max]="max"
-          [step]="step"
-          [range]="range"
-          [orientation]="orientation"
-          [showTicks]="showTicks"
-          [size]="size" />
+        <tailwind-slider [(ngModel)]="model" ${argsToTemplate(args)} />
         <p class="mt-2 text-sm text-surface-600">Values: {{ model[0] }} — {{ model[1] }}</p>
       </div>
     `
-  })
+  }),
+  args: {
+    min: 0,
+    max: 100,
+    step: 1,
+    range: true,
+    orientation: 'horizontal',
+    showTicks: false,
+    size: 'md',
+    variant: 'primary'
+  }
 };
 
-export const Vertical: Story = {
-  args: { orientation: 'vertical', showTicks: true, step: 5 },
+export const Vertical: StoryObj<TailwindSlider> = {
   parameters: { docs: { story: { height: '380px' } } },
   render: args => ({
     props: { ...args, model: 35 },
     template: `
       <div class="flex h-72 justify-center">
-        <tailwind-slider
-          [(ngModel)]="model"
-          [min]="min"
-          [max]="max"
-          [step]="step"
-          [range]="range"
-          [orientation]="orientation"
-          [showTicks]="showTicks"
-          [size]="size" />
+        <tailwind-slider [(ngModel)]="model" ${argsToTemplate(args)} />
       </div>
     `
-  })
-};
-
-export const Disabled: Story = {
-  render: args => ({
-    props: { ...args, model: 30 },
-    template: `
-      <div class="max-w-md">
-        <tailwind-slider
-          [(ngModel)]="model"
-          [min]="min"
-          [max]="max"
-          [step]="step"
-          [disabled]="true" />
-      </div>
-    `
-  })
+  }),
+  args: {
+    min: 0,
+    max: 100,
+    step: 5,
+    range: false,
+    orientation: 'vertical',
+    showTicks: true,
+    size: 'md',
+    variant: 'primary'
+  }
 };

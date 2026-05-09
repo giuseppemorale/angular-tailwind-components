@@ -36,6 +36,21 @@ rl.question(question, answer => {
   }
 
   try {
+    console.log('\nChecking npm login...');
+    try {
+      const who = execSync('npm whoami', { encoding: 'utf8' }).trim();
+      console.log(`Logged in as: ${who}`);
+    } catch {
+      console.error(
+        '\n❌ Non risulti autenticato su npm (401 / whoami fallito).\n' +
+          '   Esegui: npm login\n' +
+          '   Se usi 2FA "auth and publish", al publish serve: npm publish --otp=<codice>\n' +
+          '   oppure un Access Token con permesso di pubblicazione: https://www.npmjs.com/settings/~/tokens\n'
+      );
+      rl.close();
+      process.exit(1);
+    }
+
     // Bump version first: ng-packagr writes dist/package.json from
     // projects/.../package.json during build; publishing stale dist would
     // republish the old version on npm.
@@ -65,7 +80,10 @@ rl.question(question, answer => {
     console.log(`\n✅ Release ${newVersion} completed successfully!`);
 
     console.log('\nPublishing to npm...');
-    execSync('npm publish', { cwd: path.join(__dirname, '../dist/angular-tailwind-components'), stdio: 'inherit' });
+    execSync('npm publish --access public', {
+      cwd: path.join(__dirname, '../dist/angular-tailwind-components'),
+      stdio: 'inherit'
+    });
   } catch (error) {
     console.error('\n❌ An error occurred during the release process:');
     console.error(error.message);

@@ -1,10 +1,12 @@
 import { Component, input } from '@angular/core';
 import { TailwindBreadcrumbItem } from './interfaces/breadcrumb-item.interface';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 export type { TailwindBreadcrumbItem };
 
 @Component({
+  imports: [TailwindIcon],
   selector: 'tailwind-breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styleUrl: './breadcrumb.component.scss'

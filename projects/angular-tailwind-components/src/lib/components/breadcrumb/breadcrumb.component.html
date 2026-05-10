@@ -12,18 +12,26 @@
             </svg>
           </span>
         }
-        @if (item.href && !last) {
-          <a [href]="item.href" class="text-surface-500 hover:text-primary-600 transition-colors font-medium">{{
-            item.label
-          }}</a>
+        @if ((item.link ?? item.href) && !last) {
+          <a
+            [href]="item.link ?? item.href"
+            class="inline-flex items-center gap-1 text-surface-500 hover:text-primary-600 transition-colors font-medium">
+            @if (item.icon) {
+              <tailwind-icon [icon]="item.icon" [size]="16" />
+            }
+            {{ item.label }}
+          </a>
         } @else {
           <span
-            class="font-medium"
+            class="inline-flex items-center gap-1 font-medium"
             [class.text-surface-900]="last"
             [class.text-surface-500]="!last"
-            [attr.aria-current]="last ? 'page' : null"
-            >{{ item.label }}</span
-          >
+            [attr.aria-current]="last ? 'page' : null">
+            @if (item.icon) {
+              <tailwind-icon [icon]="item.icon" [size]="16" />
+            }
+            {{ item.label }}
+          </span>
         }
       </li>
     }

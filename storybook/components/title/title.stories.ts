@@ -43,7 +43,7 @@ export const WithIcon: StoryObj<TailwindTitle> = {
   args: {
     titleTag: 'h2',
     text: 'Dashboard',
-    icon: 'home'
+    icon: 'home-2'
   }
 };
 

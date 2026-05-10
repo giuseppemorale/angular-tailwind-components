@@ -1,5 +1,6 @@
+import { provideRouter } from '@angular/router';
 import type { Preview } from '@storybook/angular';
-import { moduleMetadata } from '@storybook/angular';
+import { applicationConfig, moduleMetadata } from '@storybook/angular';
 import {
   TailwindAccordion,
   TailwindAccordionItem,
@@ -90,6 +91,9 @@ const ALL_COMPONENTS = [
 
 const preview: Preview = {
   decorators: [
+    applicationConfig({
+      providers: [provideRouter([])]
+    }),
     moduleMetadata({
       imports: ALL_COMPONENTS
     })

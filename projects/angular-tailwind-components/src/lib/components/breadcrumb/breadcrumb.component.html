@@ -12,9 +12,9 @@
             </svg>
           </span>
         }
-        @if ((item.link ?? item.href) && !last) {
+        @if (item.link && !last) {
           <a
-            [href]="item.link ?? item.href"
+            [routerLink]="item.link"
             class="inline-flex items-center gap-1 text-surface-500 hover:text-primary-600 transition-colors font-medium">
             @if (item.icon) {
               <tailwind-icon [icon]="item.icon" [size]="16" />

@@ -5,7 +5,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
-  styleUrl: './alert.component.scss'
+  styleUrl: './alert.component.css'
 })
 export class TailwindAlert extends TailwindComponent {
   /** Severity / color variant */

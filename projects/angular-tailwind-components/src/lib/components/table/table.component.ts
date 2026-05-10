@@ -1,33 +1,52 @@
-import { Component, computed, effect, input, output, signal } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { Component, HostListener, computed, contentChild, effect, input, output, signal } from '@angular/core';
 import { Pagination, TailwindPagination } from '../pagination/pagination.component';
-import { TailwindTableColumn } from './interfaces/table-column.interface';
 import { TailwindComponent } from '../tailwind.component';
-
-export type { TailwindTableColumn };
+import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
+import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
+export type { TailwindTableSortHost };
 
 @Component({
   selector: 'tailwind-table',
-  imports: [TailwindPagination],
+  imports: [NgTemplateOutlet, TailwindPagination],
   templateUrl: './table.component.html',
-  styleUrl: './table.component.scss'
+  styleUrl: './table.component.css',
+  host: {
+    '[attr.data-tw-sort-key]': 'sortKey()',
+    '[attr.data-tw-sort-dir]': 'sortDir()'
+  }
 })
-export class TailwindTable extends TailwindComponent {
-  readonly columns = input<TailwindTableColumn[]>([]);
-  readonly data = input<Record<string, any>[]>([]);
+export class TailwindTable extends TailwindComponent implements TailwindTableSortHost {
+  readonly data = input<Record<string, unknown>[]>([]);
   readonly selectable = input<boolean>(false);
   readonly striped = input<boolean>(false);
   readonly loading = input<boolean>(false);
   readonly emptyMessage = input<string>('No data available');
+  /** Match your column count so the empty state spans the full table width. */
+  readonly emptyColspan = input<number>(1);
 
-  // --- Pagination Inputs ---
   readonly paginated = input<boolean>(true);
   readonly pagination = input<Pagination>();
 
-  // --- Outputs ---
   readonly onSortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
   readonly onSelectionChange = output<Set<number>>();
 
-  // --- Internal State ---
+  readonly rowTemplate = contentChild.required(TailwindTableRowDirective);
+
+  rowContext(row: Record<string, unknown>, index: number): Record<string, unknown> {
+    return {
+      $implicit: row,
+      index,
+      stripedRow: this.striped() && index % 2 === 1,
+      selected: this.selectedRows().has(index),
+      selectable: this.selectable(),
+      toggleRow: () => {
+        if (!this.selectable()) return;
+        this.toggleSelection(index);
+      }
+    };
+  }
+
   readonly sortKey = signal<string>('');
   readonly sortDir = signal<'asc' | 'desc'>('asc');
   readonly selectedRows = signal<Set<number>>(new Set());
@@ -43,7 +62,6 @@ export class TailwindTable extends TailwindComponent {
     });
   }
 
-  // --- Computed ---
   readonly sortedData = computed(() => {
     let rows = [...this.data()];
     const key = this.sortKey();
@@ -52,9 +70,10 @@ export class TailwindTable extends TailwindComponent {
       rows.sort((a, b) => {
         const va = a[key],
           vb = b[key];
-        if (va < vb) return -dir;
-        if (va > vb) return dir;
-        return 0;
+        const sa = va == null ? '' : String(va);
+        const sb = vb == null ? '' : String(vb);
+        const cmp = sa.localeCompare(sb, undefined, { numeric: true, sensitivity: 'base' });
+        return dir * cmp;
       });
     }
     return rows;
@@ -68,7 +87,6 @@ export class TailwindTable extends TailwindComponent {
     return rows.slice((page - 1) * size, page * size);
   });
 
-  // --- Methods ---
   sort(key: string): void {
     if (this.sortKey() === key) {
       this.sortDir.update(d => (d === 'asc' ? 'desc' : 'asc'));
@@ -76,7 +94,7 @@ export class TailwindTable extends TailwindComponent {
       this.sortKey.set(key);
       this.sortDir.set('asc');
     }
-    this.currentPage.set(1); // Reset to first page on sort
+    this.currentPage.set(1);
     this.onSortChange.emit({ key: this.sortKey(), direction: this.sortDir() });
   }
 
@@ -88,5 +106,29 @@ export class TailwindTable extends TailwindComponent {
       return next;
     });
     this.onSelectionChange.emit(this.selectedRows());
+  }
+
+  @HostListener('click', ['$event'])
+  protected onSortZoneClick(ev: Event): void {
+    this.delegateSortFromEvent(ev);
+  }
+
+  @HostListener('keydown', ['$event'])
+  protected onSortZoneKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    const target = ev.target as HTMLElement | null;
+    if (!target?.closest?.('[tailwindSortHeader]')) return;
+    if (ev.key === ' ') ev.preventDefault();
+    this.delegateSortFromEvent(ev);
+  }
+
+  private delegateSortFromEvent(ev: Event): void {
+    const host = ev.currentTarget as HTMLElement;
+    const target = ev.target as HTMLElement | null;
+    const header = target?.closest?.('[tailwindSortHeader]') as HTMLElement | null;
+    if (!header || !host.contains(header)) return;
+    if (header.closest('tailwind-table') !== host) return;
+    const key = header.getAttribute('data-sort-key');
+    if (key) this.sort(key);
   }
 }

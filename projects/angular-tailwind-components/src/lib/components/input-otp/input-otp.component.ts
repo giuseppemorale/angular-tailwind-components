@@ -23,7 +23,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './input-otp.component.html',
-  styleUrl: './input-otp.component.scss'
+  styleUrl: './input-otp.component.css'
 })
 export class TailwindInputOtp extends TailwindComponent implements ControlValueAccessor {
   /** Label text */

@@ -5,7 +5,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.scss'
+  styleUrl: './toolbar.component.css'
 })
 export class TailwindToolbar extends TailwindComponent {
   /** When true, uses rounded corners (`rounded-xl`). */

@@ -4,7 +4,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-step',
   templateUrl: './step.component.html',
-  styleUrl: './step.component.scss'
+  styleUrl: './step.component.css'
 })
 export class TailwindStep extends TailwindComponent {
   readonly label = input.required<string>();

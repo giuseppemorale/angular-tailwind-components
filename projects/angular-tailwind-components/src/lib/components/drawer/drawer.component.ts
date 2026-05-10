@@ -5,7 +5,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-drawer',
   templateUrl: './drawer.component.html',
-  styleUrl: './drawer.component.scss'
+  styleUrl: './drawer.component.css'
 })
 export class TailwindDrawer extends TailwindComponent {
   /** Drawer title */

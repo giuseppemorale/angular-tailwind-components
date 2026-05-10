@@ -26,7 +26,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './upload.component.html',
-  styleUrl: './upload.component.scss'
+  styleUrl: './upload.component.css'
 })
 export class TailwindUpload extends TailwindComponent implements ControlValueAccessor {
   private static nextId = 0;

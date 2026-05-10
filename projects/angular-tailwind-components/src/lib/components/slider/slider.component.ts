@@ -16,7 +16,7 @@ export type TailwindSliderValue = number | [number, number];
     }
   ],
   templateUrl: './slider.component.html',
-  styleUrl: './slider.component.scss'
+  styleUrl: './slider.component.css'
 })
 export class TailwindSlider extends TailwindComponent implements ControlValueAccessor {
   /** Minimum bound */

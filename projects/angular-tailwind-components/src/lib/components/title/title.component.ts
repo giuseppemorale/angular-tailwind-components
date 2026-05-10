@@ -8,7 +8,7 @@ import { TailwindIcon } from '../icon/icon.component';
   selector: 'tailwind-title',
   imports: [NgTemplateOutlet, TailwindIcon],
   templateUrl: './title.component.html',
-  styleUrl: './title.component.scss'
+  styleUrl: './title.component.css'
 })
 export class TailwindTitle extends TailwindComponent {
   /** Visible title text */

@@ -13,7 +13,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './radio-group.component.html',
-  styleUrl: './radio-group.component.scss'
+  styleUrl: './radio-group.component.css'
 })
 export class TailwindRadioGroup<T = unknown> extends TailwindComponent implements ControlValueAccessor {
   /** Label for the radio group */

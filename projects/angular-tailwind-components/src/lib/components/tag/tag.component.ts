@@ -5,7 +5,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-tag',
   templateUrl: './tag.component.html',
-  styleUrl: './tag.component.scss'
+  styleUrl: './tag.component.css'
 })
 export class TailwindTag extends TailwindComponent {
   readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('neutral');

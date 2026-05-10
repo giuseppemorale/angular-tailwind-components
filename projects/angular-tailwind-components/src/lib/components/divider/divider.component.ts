@@ -4,7 +4,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-divider',
   templateUrl: './divider.component.html',
-  styleUrl: './divider.component.scss'
+  styleUrl: './divider.component.css'
 })
 export class TailwindDivider extends TailwindComponent {
   /** Rule direction */

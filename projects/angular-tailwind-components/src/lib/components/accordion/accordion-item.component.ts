@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   selector: 'tailwind-accordion-item',
   templateUrl: './accordion-item.component.html',
-  styleUrl: './accordion-item.component.scss'
+  styleUrl: './accordion-item.component.css'
 })
 export class TailwindAccordionItem extends TailwindComponent {
   readonly title = input.required<string>();

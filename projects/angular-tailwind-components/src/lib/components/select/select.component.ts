@@ -29,7 +29,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './select.component.html',
-  styleUrl: './select.component.scss'
+  styleUrl: './select.component.css'
 })
 export class TailwindSelect<T = unknown> extends TailwindComponent implements ControlValueAccessor, OnDestroy {
   private readonly overlay = inject(Overlay);

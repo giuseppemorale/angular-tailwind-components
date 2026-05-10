@@ -7,7 +7,7 @@ import { TailwindComponent } from '../tailwind.component';
   selector: 'tailwind-button',
   imports: [NgClass],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrl: './button.component.css'
 })
 export class TailwindButton extends TailwindComponent {
   /** Visual color */

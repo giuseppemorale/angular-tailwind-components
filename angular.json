@@ -72,7 +72,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
+          "style": "css",
           "skipTests": true
         },
         "@schematics/angular:class": {
@@ -107,14 +107,14 @@
             "browser": "src/main.ts",
             "index": "src/index.html",
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
+            "inlineStyleLanguage": "css",
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
-            "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css", "src/styles.scss"]
+            "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css", "src/styles.css"]
           },
           "configurations": {
             "production": {

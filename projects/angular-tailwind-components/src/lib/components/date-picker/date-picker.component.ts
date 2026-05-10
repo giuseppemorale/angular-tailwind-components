@@ -27,7 +27,7 @@ const I18N: Record<Lang, { months: string[]; weekDays: string[]; today: string; 
   selector: 'tailwind-date-picker',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDatePicker), multi: true }],
   templateUrl: './date-picker.component.html',
-  styleUrl: './date-picker.component.scss'
+  styleUrl: './date-picker.component.css'
 })
 export class TailwindDatePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

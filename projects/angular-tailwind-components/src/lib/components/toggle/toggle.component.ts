@@ -13,7 +13,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './toggle.component.html',
-  styleUrl: './toggle.component.scss'
+  styleUrl: './toggle.component.css'
 })
 export class TailwindToggle extends TailwindComponent implements ControlValueAccessor  {
   /** Label text */

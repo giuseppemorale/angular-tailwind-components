@@ -10,7 +10,7 @@ export type { TailwindBreadcrumbItem };
   imports: [RouterLink, TailwindIcon],
   selector: 'tailwind-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrl: './breadcrumb.component.scss'
+  styleUrl: './breadcrumb.component.css'
 })
 export class TailwindBreadcrumb extends TailwindComponent {
   readonly items = input<TailwindBreadcrumbItem[]>([]);

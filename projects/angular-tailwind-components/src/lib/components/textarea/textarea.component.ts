@@ -13,7 +13,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './textarea.component.html',
-  styleUrl: './textarea.component.scss'
+  styleUrl: './textarea.component.css'
 })
 export class TailwindTextarea extends TailwindComponent implements ControlValueAccessor {
   /** Label text */

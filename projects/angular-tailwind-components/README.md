@@ -118,7 +118,7 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Accordion** (`tailwind-accordion`): Expandable sections
 - **Tooltip** (`tailwind-tooltip`): Hover tooltip
 - **Form** (`tailwind-form`): Form wrapper
-- **Table** (`tailwind-table`): Data table with sorting
+- **Table** (`tailwind-table`): Data table with projected header/rows, client-side sort and pagination
 
 ## Design System
 

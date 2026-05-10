@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   selector: 'tailwind-accordion',
   templateUrl: './accordion.component.html',
-  styleUrl: './accordion.component.scss'
+  styleUrl: './accordion.component.css'
 })
 export class TailwindAccordion extends TailwindComponent {
   readonly items = contentChildren(TailwindAccordionItem);

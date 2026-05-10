@@ -5,7 +5,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-notification',
   templateUrl: './notification.component.html',
-  styleUrl: './notification.component.scss'
+  styleUrl: './notification.component.css'
 })
 export class TailwindNotification extends TailwindComponent {
   readonly title = input<string>('');

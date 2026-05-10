@@ -6,7 +6,7 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'tailwind-tooltip',
   templateUrl: './tooltip.component.html',
-  styleUrl: './tooltip.component.scss'
+  styleUrl: './tooltip.component.css'
 })
 export class TailwindTooltip extends TailwindComponent implements AfterViewInit, OnDestroy {
   /** Tooltip text */

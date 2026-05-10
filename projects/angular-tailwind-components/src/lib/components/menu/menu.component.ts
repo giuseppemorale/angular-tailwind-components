@@ -18,7 +18,7 @@ const MIN_PANEL_WIDTH_PX = 192;
 @Component({
   selector: 'tailwind-menu',
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.scss'
+  styleUrl: './menu.component.css'
 })
 export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit {
   private openScheduleId: ReturnType<typeof setTimeout> | undefined;

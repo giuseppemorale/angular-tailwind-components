@@ -13,7 +13,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.scss'
+  styleUrl: './checkbox.component.css'
 })
 export class TailwindCheckbox extends TailwindComponent implements ControlValueAccessor  {
   /** Label text */

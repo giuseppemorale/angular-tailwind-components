@@ -30,7 +30,7 @@ const I18N: Record<Lang, { months: string[]; weekDays: string[]; time: string; t
   imports: [],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDateTimePicker), multi: true }],
   templateUrl: './datetime-picker.component.html',
-  styleUrl: './datetime-picker.component.scss'
+  styleUrl: './datetime-picker.component.css'
 })
 export class TailwindDateTimePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

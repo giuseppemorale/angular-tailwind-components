@@ -5,7 +5,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-badge',
   templateUrl: './badge.component.html',
-  styleUrl: './badge.component.scss'
+  styleUrl: './badge.component.css'
 })
 export class TailwindBadge extends TailwindComponent {
   /** Color variant */

@@ -6,7 +6,7 @@ import { TailwindMeterSegment } from './interfaces/meter-segment.interface';
 @Component({
   selector: 'tailwind-meter',
   templateUrl: './meter.component.html',
-  styleUrl: './meter.component.scss'
+  styleUrl: './meter.component.css'
 })
 export class TailwindMeter extends TailwindComponent {
   /** Segments rendered as proportional blocks in the bar. */

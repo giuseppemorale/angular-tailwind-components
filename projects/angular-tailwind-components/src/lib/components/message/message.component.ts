@@ -5,7 +5,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-message',
   templateUrl: './message.component.html',
-  styleUrl: './message.component.scss'
+  styleUrl: './message.component.css'
 })
 export class TailwindMessage extends TailwindComponent {
   readonly severity = input<TailwindSeverity>('info');

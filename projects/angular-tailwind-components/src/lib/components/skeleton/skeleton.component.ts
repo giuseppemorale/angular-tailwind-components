@@ -4,7 +4,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-skeleton',
   templateUrl: './skeleton.component.html',
-  styleUrl: './skeleton.component.scss'
+  styleUrl: './skeleton.component.css'
 })
 export class TailwindSkeleton extends TailwindComponent {
   readonly variant = input<'text' | 'circle' | 'rect' | 'rounded'>('text');

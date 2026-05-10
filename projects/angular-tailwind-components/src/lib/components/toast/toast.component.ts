@@ -9,7 +9,7 @@ export type { TailwindToastConfig, TailwindToastItem };
 @Component({
   selector: 'tailwind-toast',
   templateUrl: './toast.component.html',
-  styleUrl: './toast.component.scss'
+  styleUrl: './toast.component.css'
 })
 export class TailwindToast extends TailwindComponent {
   readonly toastService = inject(TailwindToastService);

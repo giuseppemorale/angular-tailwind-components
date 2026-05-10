@@ -5,33 +5,71 @@ import * as TableStories from './table.stories';
 
 # Table
 
-`TailwindTable` mostra dati tabellari con ordinamento, selezione righe, caricamento e paginazione integrata.
+`TailwindTable` gestisce contenitore, ordinamento e paginazione client-side su `data`. L’header è proiettato (`<thead>`). Il corpo si definisce con **`tailwindTableRow`** sulla riga template (vedi sotto).
+
+---
+
+## Righe (`tailwindTableRow`)
+
+Il componente ripete il template per ogni riga di `displayedData()`. La forma consigliata è **direttiva strutturale su `<tbody>`** (la `*` è necessaria affinché Angular espanda il template con `let row`):
+
+```html
+<tbody *tailwindTableRow="let row">
+  <tr>
+    <td>{{ row['name'] }}</td>
+  </tr>
+</tbody>
+```
+
+Ogni iterazione produce un `<tbody>` separato (consentito in HTML5). Per righe zebrate, selezione e click, il contesto del template espone anche `stripedRow`, `selected`, `selectable`, `toggleRow` (vedi story).
+
+**Alternativa legacy:** solo celle, senza `<tbody>/<tr>` nel template:
+
+```html
+<ng-template tailwindTableRow let-row>
+  <td>...</td>
+</ng-template>
+```
+
+---
+
+## Intestazioni ordinabili (`tailwindSortHeader`)
+
+Solo le colonne che devono ordinare usano la direttiva su **`<th>`** (testo dell’intestazione come contenuto dell’elemento, senza `button`). **`tailwind-table`** intercetta click e tastiera (delegation) e applica l’ordinamento; non servono riferimenti (`#tbl`) né input sulla tabella.
 
 ---
 
 ## Utilizzo
 
+Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bordi, padding, tipografia, hover riga) è definito in **`table.component.css`** — nel template servono solo struttura semantica e direttive (`tailwindSortHeader`, `tailwindTableRow`).
+
 ```typescript
 @Component({
-  imports: [TailwindTable],
+  imports: [TailwindTable, TailwindTableRowDirective, TailwindSortHeaderDirective],
   template: `
-    <tailwind-table
-      [columns]="columns"
-      [data]="rows"
-      [selectable]="false"
-      [striped]="false"
-      [loading]="false"
-      emptyMessage="Nessun dato"
-      [paginated]="true"
-      [pageSize]="10"
-      summary="Visualizzati {start} - {end} di {total}"
-    />`
+    <tailwind-table [data]="rows" [paginated]="true" [pagination]="pagination" [emptyColspan]="2">
+      <thead>
+        <tr>
+          <th scope="col" tailwindSortHeader sortKey="name">Nome</th>
+          <th scope="col">Email</th>
+        </tr>
+      </thead>
+      <tbody *tailwindTableRow="let row">
+        <tr>
+          <td>{{ row['name'] }}</td>
+          <td>{{ row['email'] }}</td>
+        </tr>
+      </tbody>
+    </tailwind-table>
+  `
 })
 export class ExampleComponent {
-  columns = [{ key: 'name', label: 'Name', sortable: true }];
-  rows = [{ name: 'Alice' }];
+  rows = [{ name: 'Alice', email: 'a@example.com' }];
+  pagination = { totalItems: 1, pageSize: 10, currentPage: 1 };
 }
 ```
+
+---
 
 ## Anteprima
 
@@ -56,28 +94,22 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>columns</code></td>
-      <td><code>TailwindTableColumn[]</code></td>
-      <td><code>[]</code></td>
-      <td>Definizione colonne (<code>key</code>, <code>label</code>, <code>sortable</code>).</td>
-    </tr>
-    <tr>
       <td><code>data</code></td>
       <td><code>Record&lt;string, unknown&gt;[]</code></td>
       <td><code>[]</code></td>
-      <td>Righe dati.</td>
+      <td>Righe dati (ordinamento e slice paginazione applicati dal componente).</td>
     </tr>
     <tr>
       <td><code>selectable</code></td>
       <td><code>boolean</code></td>
       <td><code>false</code></td>
-      <td>Colonna checkbox selezione.</td>
+      <td>Click sulla riga per selezione (evidenziazione); usare <code>toggleRow</code> dal contesto del template riga.</td>
     </tr>
     <tr>
       <td><code>striped</code></td>
       <td><code>boolean</code></td>
       <td><code>false</code></td>
-      <td>Righe alternate.</td>
+      <td>Righe alternate; usare <code>stripedRow</code> sul <code>&lt;tr&gt;</code>.</td>
     </tr>
     <tr>
       <td><code>loading</code></td>
@@ -89,7 +121,13 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>emptyMessage</code></td>
       <td><code>string</code></td>
       <td><code>'No data available'</code></td>
-      <td>Testo tabella vuota.</td>
+      <td>Testo quando non ci sono righe.</td>
+    </tr>
+    <tr>
+      <td><code>emptyColspan</code></td>
+      <td><code>number</code></td>
+      <td><code>1</code></td>
+      <td><code>colspan</code> della cella vuota (allineare al numero di colonne).</td>
     </tr>
     <tr>
       <td><code>paginated</code></td>
@@ -100,8 +138,50 @@ Eredita `TailwindComponent` (`id`, `class`).
     <tr>
       <td><code>pagination</code></td>
       <td><code>Pagination</code></td>
-      <td><code>null</code></td>
+      <td><code>undefined</code></td>
       <td>Configurazione paginazione (<code>totalItems</code>, <code>pageSize</code>, <code>currentPage</code>, <code>maxVisible</code>, <code>ariaLabel</code>, <code>summary</code>).</td>
+    </tr>
+  </tbody>
+</table>
+
+### `TailwindTableRowDirective`
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Selector</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>*tailwindTableRow</code> (su <code>tbody</code>)</td>
+      <td>Template di una riga (<code>tbody</code> &gt; <code>tr</code> &gt; celle). Contesto: <code>$implicit</code> (row), <code>index</code>, <code>stripedRow</code>, <code>selected</code>, <code>selectable</code>, <code>toggleRow</code>.</td>
+    </tr>
+    <tr>
+      <td><code>ng-template[tailwindTableRow]</code></td>
+      <td>Solo celle (<code>&lt;td&gt;</code>); contesto come sopra.</td>
+    </tr>
+  </tbody>
+</table>
+
+`TailwindTableRowTemplateDirective` è un alias deprecato dello stesso simbolo.
+
+### `TailwindSortHeaderDirective`
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Selector</th>
+      <th>Input</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>[tailwindSortHeader]</code> su <code>&lt;th&gt;</code></td>
+      <td><code>sortKey</code> (obbl., stringa)</td>
+      <td>Colonna ordinabile; icone e <code>aria-label</code> gestiti dalla direttiva. Il sort è delegato all’host <code>tailwind-table</code>.</td>
     </tr>
   </tbody>
 </table>
@@ -120,12 +200,16 @@ Eredita `TailwindComponent` (`id`, `class`).
     <tr>
       <td><code>onSortChange</code></td>
       <td><code>&#123; key: string; direction: 'asc' | 'desc' &#125;</code></td>
-      <td>Ordinamento applicato.</td>
+      <td>Ordinamento applicato (chiave proprietà di <code>data</code>).</td>
     </tr>
     <tr>
       <td><code>onSelectionChange</code></td>
       <td><code>Set&lt;number&gt;</code></td>
-      <td>Indici righe selezionate.</td>
+      <td>Indici delle righe selezionate (rispetto alla pagina visualizzata).</td>
     </tr>
   </tbody>
 </table>
+
+## Metodo `sort(key)`
+
+Disponibile su `TailwindTable` per ordinare da codice; nelle intestazioni usare `tailwindSortHeader`.

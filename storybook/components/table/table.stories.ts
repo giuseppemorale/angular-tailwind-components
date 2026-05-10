@@ -6,26 +6,17 @@ const meta: Meta<TailwindTable> = {
   component: TailwindTable,
   parameters: { docs: { story: { height: '500px' } } },
   argTypes: {
-    columns: { control: 'object' },
-    data: { control: 'object' },
     selectable: { control: 'boolean' },
     striped: { control: 'boolean' },
     loading: { control: 'boolean' },
-    emptyMessage: { control: 'text' },
+    emptyColspan: { control: 'number' },
     paginated: { control: 'boolean' },
     pagination: { control: 'object' }
   }
 };
 export default meta;
 
-const columns = [
-  { key: 'name', label: 'Name', sortable: true },
-  { key: 'email', label: 'Email', sortable: true },
-  { key: 'role', label: 'Role' },
-  { key: 'status', label: 'Status' }
-];
-
-const rows = [
+const rows: Record<string, unknown>[] = [
   { name: 'Alice Johnson', email: 'alice.johnson@example.com', role: 'Admin', status: 'Active' },
   { name: 'Bob Smith', email: 'bob.smith@example.com', role: 'Editor', status: 'Active' },
   { name: 'Carol White', email: 'carol.white@example.com', role: 'Viewer', status: 'Inactive' },
@@ -55,13 +46,49 @@ const rows = [
 ];
 
 export const Table: StoryObj<TailwindTable> = {
+  render: args => ({
+    props: {
+      ...args,
+      data: rows
+    },
+    template: `
+      <tailwind-table
+        [data]="data"
+        [selectable]="selectable"
+        [striped]="striped"
+        [loading]="loading"
+        emptyMessage="Nessun dato disponibile"
+        [emptyColspan]="emptyColspan"
+        [paginated]="paginated"
+        [pagination]="pagination">
+        <thead>
+          <tr>
+            <th scope="col" tailwindSortHeader sortKey="name">Name</th>
+            <th scope="col" tailwindSortHeader sortKey="email">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody *tailwindTableRow="let row; let stripedRow = stripedRow; let selected = selected; let selectable = selectable; let toggleRow = toggleRow">
+          <tr
+            [class.bg-surface-50]="stripedRow"
+            [class.bg-primary-50/30]="selected"
+            [class.cursor-pointer]="selectable"
+            (click)="toggleRow()">
+            <td>{{ row['name'] }}</td>
+            <td>{{ row['email'] }}</td>
+            <td>{{ row['role'] }}</td>
+            <td>{{ row['status'] }}</td>
+          </tr>
+        </tbody>
+      </tailwind-table>
+    `
+  }),
   args: {
-    columns: columns,
-    data: rows,
     selectable: false,
     striped: false,
     loading: false,
-    emptyMessage: 'Nessun dato disponibile',
+    emptyColspan: 4,
     paginated: true,
     pagination: {
       totalItems: rows.length,

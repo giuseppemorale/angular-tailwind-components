@@ -6,7 +6,7 @@ export type { Pagination };
 @Component({
   selector: 'tailwind-pagination',
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.scss'
+  styleUrl: './pagination.component.css'
 })
 export class TailwindPagination extends TailwindComponent {
   readonly totalItems = input.required<Pagination['totalItems']>();

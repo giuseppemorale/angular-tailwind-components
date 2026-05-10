@@ -4,7 +4,7 @@ import { TailwindComponent } from '../tailwind.component';
 @Component({
   selector: 'tailwind-card',
   templateUrl: './card.component.html',
-  styleUrl: './card.component.scss'
+  styleUrl: './card.component.css'
 })
 export class TailwindCard extends TailwindComponent {
   /** Whether the card has elevated shadow */

@@ -4,7 +4,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **32 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **35 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -41,20 +41,22 @@ Or define your own theme tokens following the design system schema.
 
 ```typescript
 import { Component } from '@angular/core';
-import { TailwindButton, TailwindInput, TailwindToggle } from 'angular-tailwind-components';
+import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 'angular-tailwind-components';
 
 @Component({
   selector: 'app-example',
   standalone: true,
-  imports: [TailwindButton, TailwindInput, TailwindToggle],
+  imports: [TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle],
   template: `
     <tailwind-input label="Email" placeholder="you@example.com" [(value)]="email" />
+    <tailwind-textarea label="Notes" placeholder="Optional notes" [(value)]="notes" />
     <tailwind-toggle label="Notifications" [(checked)]="notifications" />
     <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
   `
 })
 export class ExampleComponent {
   email = '';
+  notes = '';
   notifications = true;
   submit() {
     /* ... */
@@ -71,6 +73,9 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 ### Form Controls (with ControlValueAccessor)
 
 - **Input** (`tailwind-input`): Text, email, password, number, search
+- **Textarea** (`tailwind-textarea`): Multi-line text with resize modes and rows/cols
+- **Upload** (`tailwind-upload`): File picker as button or drop zone; value as base64 data URL for forms, `filesSelected` for raw files
+- **Input OTP** (`tailwind-input-otp`): Multi-digit OTP / PIN with paste and keyboard navigation
 - **Checkbox** (`tailwind-checkbox`): Single checkbox with label
 - **Radio Group** (`tailwind-radio-group`): Radio button group with options
 - **Select** (`tailwind-select`): Native select with custom styling

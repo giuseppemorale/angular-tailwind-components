@@ -1,0 +1,181 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as UploadStories from './upload.stories';
+
+<Meta of={UploadStories} />
+
+# Upload
+
+`TailwindUpload` consente di scegliere file tramite **area drag‑and‑drop** o **pulsante** che apre il file picker nativo. Il valore per i form è una **data URL** (`data:<tipo>;base64,...`), leggibile ad esempio su `<img [src]>`. Per uso senza form model, usa l’output **`filesSelected`** sui `File` grezzi.
+
+---
+
+## Utilizzo
+
+### Form / `[(value)]` (base64 come data URL)
+
+```typescript
+@Component({
+  imports: [TailwindUpload, ReactiveFormsModule],
+  template: `
+    <form [formGroup]="form">
+      <tailwind-upload
+        label="Avatar"
+        variant="area"
+        accept="image/*"
+        formControlName="avatarDataUrl"
+      />
+    </form>
+  `
+})
+export class ExampleComponent {
+  form = new FormGroup({
+    avatarDataUrl: new FormControl('')
+  });
+}
+```
+
+### Solo output (`File[]`)
+
+```typescript
+@Component({
+  imports: [TailwindUpload],
+  template: `
+    <tailwind-upload
+      variant="button"
+      buttonLabel="Scegli file"
+      [multiple]="true"
+      (filesSelected)="onFiles($event)"
+    />
+  `
+})
+export class ExampleComponent {
+  onFiles(files: File[]) {
+    /* upload HTTP, ecc. — senza aggiornare il FormControl */
+  }
+}
+```
+
+Con **`multiple`**, il modello / `FormControl` contiene la data URL **solo del primo file**; tutti i file scelti sono comunque emessi da **`filesSelected`**.
+
+---
+
+## Anteprima
+
+<Canvas of={UploadStories.Area} />
+
+---
+
+## Properties
+
+### `TailwindUpload (tailwind-upload)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>variant</code></td>
+      <td><code>'button' | 'area'</code></td>
+      <td><code>'area'</code></td>
+      <td>Pulsante che apre il file input oppure zona drag‑and‑drop.</td>
+    </tr>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta accessibile collegata all’input file.</td>
+    </tr>
+    <tr>
+      <td><code>buttonLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>'Choose file'</code></td>
+      <td>Testo sul pulsante se <code>variant</code> è <code>button</code>.</td>
+    </tr>
+    <tr>
+      <td><code>areaTitle</code> / <code>areaHint</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Titolo e sottotesto nell’area se <code>variant</code> è <code>area</code>.</td>
+    </tr>
+    <tr>
+      <td><code>accept</code></td>
+      <td><code>string | undefined</code></td>
+      <td><code>undefined</code></td>
+      <td>Attributo HTML <code>accept</code>.</td>
+    </tr>
+    <tr>
+      <td><code>multiple</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Selezione multipla.</td>
+    </tr>
+    <tr>
+      <td><code>maxFileSizeBytes</code></td>
+      <td><code>number | undefined</code></td>
+      <td><code>undefined</code></td>
+      <td>Dimensione massima per file; se superata, la selezione viene rifiutata.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione del pulsante (<code>variant="button"</code>).</td>
+    </tr>
+    <tr>
+      <td><code>showClear</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra il controllo di cancellazione se c’è un valore.</td>
+    </tr>
+    <tr>
+      <td><code>clearText</code></td>
+      <td><code>string</code></td>
+      <td><code>'clear'</code></td>
+      <td>Testo del pulsante/link di cancellazione (localizzabile).</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code> / <code>errorText</code> / <code>hasError</code></td>
+      <td>—</td>
+      <td>—</td>
+      <td>Come gli altri campi form.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Data URL base64 (two-way / CVA).</td>
+    </tr>
+  </tbody>
+</table>
+
+### Outputs
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Output</th>
+      <th>Tipo</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>filesSelected</code></td>
+      <td><code>File[]</code></td>
+      <td>File validi dopo lettura; utile senza form o per upload HTTP.</td>
+    </tr>
+    <tr>
+      <td><code>validationError</code></td>
+      <td><code>string</code></td>
+      <td>Messaggio se validazione dimensione fallisce o lettura file fallisce.</td>
+    </tr>
+  </tbody>
+</table>

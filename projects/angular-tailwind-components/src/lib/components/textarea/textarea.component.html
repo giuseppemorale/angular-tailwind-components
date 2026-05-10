@@ -1,0 +1,36 @@
+<div class="tailwind-textarea-wrapper flex flex-col gap-1.5">
+  @if (label()) {
+    <label
+      [attr.for]="id() ? id() + '-inner' : null"
+      class="text-sm font-medium text-surface-700"
+      [class.text-danger-600]="hasError()">
+      {{ label() }}
+    </label>
+  }
+
+  <textarea
+    [attr.id]="id() ? id() + '-inner' : null"
+    [placeholder]="placeholder()"
+    [rows]="rows()"
+    [attr.cols]="cols() ?? null"
+    [attr.maxlength]="maxlength() ?? null"
+    [disabled]="isDisabled()"
+    [readonly]="readonly()"
+    [attr.aria-invalid]="hasError() || null"
+    [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+    [value]="value()"
+    [class]="textareaClasses()"
+    (input)="onInputChange($event)"
+    (blur)="onBlur()"></textarea>
+
+  @if (helperText() && !hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-surface-500">
+      {{ helperText() }}
+    </p>
+  }
+  @if (errorText() && hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600">
+      {{ errorText() }}
+    </p>
+  }
+</div>

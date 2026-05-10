@@ -14,6 +14,8 @@ import {
   TailwindDrawer,
   TailwindIcon,
   TailwindInput,
+  TailwindInputOtp,
+  TailwindTextarea,
   TailwindMenu,
   TailwindMessage,
   TailwindModal,
@@ -36,6 +38,7 @@ import {
   TailwindToggle,
   TailwindTooltip,
   TailwindToolbar,
+  TailwindUpload,
   TailwindDivider,
   TailwindMeter,
   TailwindSlider
@@ -55,6 +58,8 @@ const ALL_COMPONENTS = [
   TailwindDrawer,
   TailwindIcon,
   TailwindInput,
+  TailwindInputOtp,
+  TailwindTextarea,
   TailwindMenu,
   TailwindMessage,
   TailwindModal,
@@ -77,6 +82,7 @@ const ALL_COMPONENTS = [
   TailwindToggle,
   TailwindTooltip,
   TailwindToolbar,
+  TailwindUpload,
   TailwindDivider,
   TailwindMeter,
   TailwindSlider

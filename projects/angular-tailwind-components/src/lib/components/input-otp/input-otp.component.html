@@ -1,0 +1,48 @@
+<div class="tailwind-input-otp-wrapper flex flex-col gap-1.5">
+  @if (label()) {
+    <label
+      [attr.for]="cellId(0)"
+      class="text-sm font-medium text-surface-700"
+      [class.text-danger-600]="hasError()">
+      {{ label() }}
+    </label>
+  }
+
+  <div role="group" [attr.aria-label]="groupAriaLabel()" class="flex flex-wrap items-center gap-2">
+    @for (idx of slotIndexes(); track idx) {
+      <input
+        #otpDigit
+        [attr.id]="cellId(idx)"
+        [type]="inputType()"
+        [attr.inputmode]="inputMode()"
+        [attr.autocomplete]="autocompleteForSlot(idx)"
+        [attr.aria-label]="'Digit ' + (idx + 1) + ' of ' + slotIndexes().length"
+        [disabled]="isDisabled()"
+        [readonly]="readonly()"
+        [attr.aria-invalid]="hasError() || null"
+        [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+        maxlength="1"
+        spellcheck="false"
+        [class]="cellClasses()"
+        [value]="digitAt(idx)"
+        (input)="onInput($event, idx)"
+        (keydown)="onKeydown($event, idx)"
+        (paste)="onPaste($event, idx)"
+        (focus)="onSlotFocus(idx)" />
+      @if (showSeparatorAfter(idx)) {
+        <span class="select-none text-surface-500" aria-hidden="true">{{ separator() }}</span>
+      }
+    }
+  </div>
+
+  @if (helperText() && !hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-surface-500">
+      {{ helperText() }}
+    </p>
+  }
+  @if (errorText() && hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600">
+      {{ errorText() }}
+    </p>
+  }
+</div>

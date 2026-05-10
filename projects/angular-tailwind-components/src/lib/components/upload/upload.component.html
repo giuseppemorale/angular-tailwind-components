@@ -1,0 +1,90 @@
+<div class="tailwind-upload-wrapper flex flex-col gap-1.5">
+  @if (label()) {
+    <label
+      [attr.for]="fileInputId()"
+      class="text-sm font-medium text-surface-700"
+      [class.text-danger-600]="hasError()">
+      {{ label() }}
+    </label>
+  }
+
+  <input
+    #fileInput
+    type="file"
+    class="sr-only"
+    [attr.id]="fileInputId()"
+    [accept]="accept() ?? null"
+    [attr.multiple]="multiple() ? '' : null"
+    [disabled]="isDisabled()"
+    [attr.aria-invalid]="hasError() || null"
+    [attr.aria-describedby]="helperText() || errorText() ? fileInputId() + '-helper' : null"
+    (change)="onNativeChange($event)"
+    (blur)="blurHost()" />
+
+  @if (variant() === 'button') {
+    <div class="flex flex-wrap items-center gap-2">
+      <tailwind-button
+        type="button"
+        color="primary"
+        kind="solid"
+        [size]="size()"
+        [disabled]="isDisabled()"
+        (onClick)="triggerPicker($event)">
+        {{ buttonLabel() }}
+      </tailwind-button>
+      @if (showClear() && value()) {
+        <button
+          type="button"
+          class="text-sm font-medium text-primary-600 underline-offset-2 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+          [disabled]="isDisabled()"
+          (click)="clear($event)">
+          {{ clearText() }}
+        </button>
+      }
+    </div>
+  } @else {
+    <div class="flex flex-col gap-2">
+      <div
+        role="button"
+        tabindex="0"
+        [class]="areaClasses()"
+        [attr.aria-disabled]="isDisabled() || null"
+        (click)="triggerPicker($event)"
+        (keydown)="onKeydownArea($event)"
+        (dragenter)="onDragEnter($event)"
+        (dragleave)="onDragLeave($event)"
+        (dragover)="onDragOver($event)"
+        (drop)="onDrop($event)">
+        <tailwind-icon icon="cloud-upload" [size]="40" />
+        <span class="text-sm font-medium">{{ areaTitle() }}</span>
+        <span class="text-xs text-surface-500">{{ areaHint() }}</span>
+      </div>
+      @if (showClear() && value()) {
+        <button
+          type="button"
+          class="self-start text-sm font-medium text-primary-600 underline-offset-2 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+          [disabled]="isDisabled()"
+          (click)="clear($event)">
+          {{ clearText() }}
+        </button>
+      }
+    </div>
+  }
+
+  @if (selectedNames().length) {
+    <p class="truncate text-xs text-surface-600" [attr.title]="selectedNames().join(', ')">
+      {{ selectedNames().join(', ') }}
+    </p>
+  }
+
+  @if (helperText() && !hasError()) {
+    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-surface-500">
+      {{ helperText() }}
+    </p>
+  }
+  @if (errorText() && hasError()) {
+    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-danger-600">
+      {{ errorText() }}
+    </p>
+  }
+</div>

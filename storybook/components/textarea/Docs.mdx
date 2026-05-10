@@ -1,0 +1,127 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TextareaStories from './textarea.stories';
+
+<Meta of={TextareaStories} />
+
+# Textarea
+
+`TailwindTextarea` è un campo multi‑riga con etichetta, stati di errore, opzioni di ridimensionamento e integrazione `ControlValueAccessor` (template-driven e reactive forms).
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindTextarea],
+  template: `
+    <tailwind-textarea
+      label="Descrizione"
+      placeholder="Inserisci il testo"
+      [rows]="5"
+      resize="vertical"
+      size="md"
+      [(value)]="description"
+    />`
+})
+export class ExampleComponent {
+  description = '';
+}
+```
+
+## Anteprima
+
+<Canvas of={TextareaStories.Textarea} />
+
+---
+
+## Properties
+
+### `TailwindTextarea (tailwind-textarea)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Placeholder.</td>
+    </tr>
+    <tr>
+      <td><code>rows</code></td>
+      <td><code>number</code></td>
+      <td><code>4</code></td>
+      <td>Numero di righe visibili (attributo HTML <code>rows</code>).</td>
+    </tr>
+    <tr>
+      <td><code>cols</code></td>
+      <td><code>number | undefined</code></td>
+      <td><code>undefined</code></td>
+      <td>Larghezza in colonne (attributo HTML <code>cols</code>), opzionale.</td>
+    </tr>
+    <tr>
+      <td><code>maxlength</code></td>
+      <td><code>number | undefined</code></td>
+      <td><code>undefined</code></td>
+      <td>Limite caratteri (<code>maxlength</code>).</td>
+    </tr>
+    <tr>
+      <td><code>resize</code></td>
+      <td><code>'vertical' | 'none' | 'both' | 'horizontal'</code></td>
+      <td><code>'vertical'</code></td>
+      <td>Comportamento ridimensionamento (classi Tailwind <code>resize-*</code>).</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione tipografica, padding e altezza minima.</td>
+    </tr>
+    <tr>
+      <td><code>readonly</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Sola lettura.</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo di aiuto.</td>
+    </tr>
+    <tr>
+      <td><code>errorText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Messaggio errore.</td>
+    </tr>
+    <tr>
+      <td><code>hasError</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Stile errore.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Valore (two-way).</td>
+    </tr>
+  </tbody>
+</table>

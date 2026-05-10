@@ -1,0 +1,149 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InputOtpStories from './input-otp.stories';
+
+<Meta of={InputOtpStories} />
+
+# Input OTP
+
+`TailwindInputOtp` è un gruppo di campi a singola cifra per codici OTP / PIN, con incolla, navigazione da tastiera e integrazione `ControlValueAccessor`. Il comportamento è ispirato a [PrimeNG InputOtp](https://primeng.org/inputotp).
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindInputOtp],
+  template: `
+    <tailwind-input-otp
+      label="Verification code"
+      [length]="6"
+      [(value)]="code"
+      separator="-"
+      [separatorAfterIndex]="2"
+      (completed)="onComplete($event)"
+    />`
+})
+export class ExampleComponent {
+  code = '';
+
+  onComplete(full: string) {
+    console.log('OTP:', full);
+  }
+}
+```
+
+## Anteprima
+
+<Canvas of={InputOtpStories.OTP} />
+
+---
+
+## Properties
+
+### `TailwindInputOtp (tailwind-input-otp)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta sopra il gruppo.</td>
+    </tr>
+    <tr>
+      <td><code>length</code></td>
+      <td><code>number</code></td>
+      <td><code>6</code></td>
+      <td>Numero di slot (1–32).</td>
+    </tr>
+    <tr>
+      <td><code>integerOnly</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Accetta solo cifre.</td>
+    </tr>
+    <tr>
+      <td><code>mask</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Nasconde i caratteri (<code>type="password"</code>).</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione delle celle.</td>
+    </tr>
+    <tr>
+      <td><code>readonly</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Sola lettura dei campi.</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo di aiuto sotto il gruppo.</td>
+    </tr>
+    <tr>
+      <td><code>errorText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Messaggio errore se <code>hasError</code>.</td>
+    </tr>
+    <tr>
+      <td><code>hasError</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Stile errore sulle celle.</td>
+    </tr>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>'Verification code'</code></td>
+      <td><code>aria-label</code> del gruppo se <code>label</code> è vuota.</td>
+    </tr>
+    <tr>
+      <td><code>separator</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo separatore (es. <code>-</code>).</td>
+    </tr>
+    <tr>
+      <td><code>separatorAfterIndex</code></td>
+      <td><code>number | null</code></td>
+      <td><code>null</code></td>
+      <td>Indice 0-based dello slot dopo cui mostrare il separatore.</td>
+    </tr>
+    <tr>
+      <td><code>autocomplete</code></td>
+      <td><code>string</code></td>
+      <td><code>'one-time-code'</code></td>
+      <td>Attributo sul primo campo (SMS autofill).</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
+      <td><code>''</code></td>
+      <td>Codice completo (two-way).</td>
+    </tr>
+    <tr>
+      <td><code>completed</code></td>
+      <td><code>OutputEmitterRef&lt;string&gt;</code></td>
+      <td>—</td>
+      <td>Emette il codice quando tutti gli slot sono compilati.</td>
+    </tr>
+  </tbody>
+</table>

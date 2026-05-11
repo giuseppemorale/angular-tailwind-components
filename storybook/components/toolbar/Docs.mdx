@@ -1,7 +1,7 @@
 import { Canvas, Meta } from '@storybook/addon-docs/blocks';
-import * as ToolbarStories from './toolbar.stories';
+import * as ToolbarStories from './toolbar.stories.ts';
 
-<Meta of={ToolbarStories} />
+<Meta title="Components/Toolbar" />
 
 # Toolbar
 
@@ -42,7 +42,7 @@ Con **orientation** `vertical`, le voci del menu sono in colonna; con `divider: 
 
 ## Anteprima
 
-<Canvas of={ToolbarStories.Horizontal} />
+<Canvas meta={ToolbarStories} of={ToolbarStories.Horizontal} />
 
 ---
 

@@ -12,15 +12,13 @@ import {
   imports: [TailwindButton],
   selector: 'modal-story-confirm',
   template: `
-    <span tailwind-modal-title>Confirm action</span>
+    <h4 tailwind-modal-title>Confirm action</h4>
     <div tailwind-modal-content>
       <p class="text-surface-700">This action cannot be undone. Do you want to proceed?</p>
     </div>
-    <div tailwind-modal-footer>
-      <div class="flex justify-end gap-3">
-        <tailwind-button color="secondary" kind="outlined" (click)="ref.close()">Cancel</tailwind-button>
-        <tailwind-button color="primary" (click)="ref.close(true)">Confirm</tailwind-button>
-      </div>
+    <div tailwind-modal-footer class="flex justify-end gap-3">
+      <tailwind-button color="secondary" kind="outlined" (click)="ref.close()">Cancel</tailwind-button>
+      <tailwind-button color="primary" (click)="ref.close(true)">Confirm</tailwind-button>
     </div>
   `
 })
@@ -46,14 +44,18 @@ class ConfirmModalComponent {
   `
 })
 class ProgrammaticWrapperComponent {
-  private tailwindModalService = inject(TailwindModalService);
+  private readonly tailwindModalService = inject(TailwindModalService);
 
   readonly size = input<TailwindSize>('md');
+
   readonly showCloseButton = input<boolean>(true);
+
   readonly closeOnBackdrop = input<boolean>(true);
+
   readonly closeOnEscape = input<boolean>(true);
 
   readonly resolved = signal(false);
+
   readonly confirmed = signal(false);
 
   async open(): Promise<void> {
@@ -83,9 +85,41 @@ const meta: Meta<TailwindModal> = {
     closeOnEscape: { control: 'boolean' }
   }
 };
+
 export default meta;
 
-export const SimpleModal: StoryObj = {
+/** Declarative usage: same pattern as Drawer — `meta.component` matches what Canvas renders, controls bind to `tailwind-modal`. */
+
+export const SimpleModal: StoryObj<TailwindModal> = {
+  render: args => ({
+    props: args,
+    template: `
+      <div class="flex flex-col gap-4">
+        <tailwind-button (click)="modal.open()">Open modal</tailwind-button>
+        <tailwind-modal #modal ${argsToTemplate(args)}>
+          <h4 tailwind-modal-title>Confirm action</h4>
+          <div tailwind-modal-content>
+            <p class="text-surface-700">This action cannot be undone. Do you want to proceed?</p>
+          </div>
+          <div tailwind-modal-footer class="flex justify-end gap-3">
+            <tailwind-button color="secondary" kind="outlined" (click)="modal.close()">Cancel</tailwind-button>
+            <tailwind-button color="primary" (click)="modal.close()">Confirm</tailwind-button>
+          </div>
+        </tailwind-modal>
+      </div>
+    `
+  }),
+  args: {
+    size: 'md',
+    showCloseButton: true,
+    closeOnBackdrop: true,
+    closeOnEscape: true
+  }
+};
+
+/** Opens via `TailwindModalService.open()` and projects slot markup from a dedicated component (append-to-body). */
+
+export const ProgrammaticOpen: StoryObj<TailwindModal> = {
   render: args => ({
     props: args,
     template: `<modal-story-programmatic-wrapper ${argsToTemplate(args)}></modal-story-programmatic-wrapper>`
@@ -108,7 +142,6 @@ export const SimpleModal: StoryObj = {
         code: `
           /* HTML */
           <tailwind-button (click)="open()">Open confirmation modal</tailwind-button>
-
           /* TypeScript */
           async openModal(): void {
             const result = await this.modalService.open<boolean>(ConfirmModalComponent, {
@@ -117,7 +150,6 @@ export const SimpleModal: StoryObj = {
               closeOnBackdrop: true,
               closeOnEscape: true
             });
-
             if (result) {
               // utente ha confermato
             }

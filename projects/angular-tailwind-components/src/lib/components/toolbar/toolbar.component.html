@@ -15,8 +15,17 @@
           type="button"
           [disabled]="!!item.disabled"
           [class]="menuItemButtonClasses()"
+          [class.px-2]="!!item.icon && !menuItemHasVisibleLabel(item) && orientation() === 'horizontal'"
+          [class.py-2]="!!item.icon && !menuItemHasVisibleLabel(item) && orientation() === 'horizontal'"
+          [class.justify-center]="orientation() === 'vertical' && !menuItemHasVisibleLabel(item)"
+          [attr.aria-label]="menuItemAriaLabel(item)"
           (click)="selectMenuItem(item)">
-          {{ item.label }}
+          @if (item.icon) {
+            <tailwind-icon [icon]="item.icon" [size]="orientation() === 'horizontal' ? 20 : 22" />
+          }
+          @if (menuItemHasVisibleLabel(item)) {
+            {{ item.label }}
+          }
         </button>
       }
     }

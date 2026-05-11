@@ -21,7 +21,7 @@ Il componente struttura il proprio contenuto con tre slot (selettori attributo):
 @Component({
   imports: [TailwindButton],
   template: `
-    <span tailwind-modal-title>Conferma azione</span>
+    <h4 tailwind-modal-title>Conferma azione</h4>
     <div tailwind-modal-content>
       <p>L'operazione non può essere annullata. Vuoi procedere?</p>
     </div>
@@ -90,14 +90,12 @@ interface DeleteData { itemName: string }
 @Component({
   imports: [TailwindButton],
   template: `
-    <span tailwind-modal-title>Elimina elemento</span>
+    <h4 tailwind-modal-title>Elimina elemento</h4>
     <div tailwind-modal-content>
       <p>Stai per eliminare <strong>{{ data.itemName }}</strong>.</p>
     </div>
-    <div tailwind-modal-footer>
-      <div class="flex justify-end">
-        <tailwind-button color="danger" (click)="ref.close(true)">Elimina</tailwind-button>
-      </div>
+    <div tailwind-modal-footer class="flex justify-end">
+      <tailwind-button color="danger" (click)="ref.close(true)">Elimina</tailwind-button>
     </div>
   `
 })

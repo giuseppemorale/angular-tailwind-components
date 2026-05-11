@@ -1,8 +1,10 @@
 import { Component, computed, input, output } from '@angular/core';
 import { TailwindMenuItem } from '../../models';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindIcon],
   selector: 'tailwind-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css'
@@ -29,13 +31,13 @@ export class TailwindToolbar extends TailwindComponent {
   readonly menuContainerClasses = computed(() =>
     this.orientation() === 'horizontal'
       ? 'min-w-0 flex-1 flex flex-row flex-wrap items-center gap-1'
-      : 'min-w-0 flex-1 flex flex-col gap-1 overflow-y-auto min-h-0'
+      : 'min-w-0 flex-1 flex flex-col gap-1.5 overflow-y-auto min-h-0'
   );
 
   readonly menuItemButtonClasses = computed(() =>
     this.orientation() === 'horizontal'
-      ? 'shrink-0 rounded-md px-3 py-1.5 text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
-      : 'w-full text-left rounded-md px-2 py-2 text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
+      ? 'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
+      : 'inline-flex w-full items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
   );
 
   readonly rootClasses = computed(() => {
@@ -68,6 +70,21 @@ export class TailwindToolbar extends TailwindComponent {
       return;
     }
     this.onMenuSelect.emit(item);
+  }
+
+  /** True when `label` is a non-empty string after trim (icon-only entries omit or blank `label`). */
+  menuItemHasVisibleLabel(item: TailwindMenuItem): boolean {
+    const label = item.label;
+    return typeof label === 'string' && label.trim().length > 0;
+  }
+
+  /** Accessible name when there is no visible label (`value`, trimmed). */
+  menuItemAriaLabel(item: TailwindMenuItem): string | null {
+    if (this.menuItemHasVisibleLabel(item)) {
+      return null;
+    }
+    const v = item.value;
+    return v != null && String(v).trim().length > 0 ? String(v).trim() : null;
   }
 
   menuTrackKey(index: number, item: TailwindMenuItem): string {

@@ -17,6 +17,7 @@ import * as BreadcrumbStories from './breadcrumb.stories';
   template: `
     <tailwind-breadcrumb
       ariaLabel="Breadcrumb"
+      separator="/"
       [items]="[
         { label: 'Home', link: '#', icon: 'home' },
         { label: 'Section', href: '#' },
@@ -54,6 +55,12 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>TailwindBreadcrumbItem[]</code></td>
       <td><code>[]</code></td>
       <td>Elementi con <code>label</code>; <code>link</code> o <code>href</code> per i crumb cliccabili; <code>icon</code> opzionale (<code>TailwindSolarIcon</code>).</td>
+    </tr>
+    <tr>
+      <td><code>separator</code></td>
+      <td><code>string</code></td>
+      <td><code>'/'</code></td>
+      <td>Separatore per le breadcrumbs.</td>
     </tr>
     <tr>
       <td><code>ariaLabel</code></td>

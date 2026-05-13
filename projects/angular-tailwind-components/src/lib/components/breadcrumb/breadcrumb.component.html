@@ -1,15 +1,10 @@
 <nav [attr.aria-label]="ariaLabel()" class="flex">
-  <ol class="inline-flex items-center gap-1.5 text-sm">
+  <ol class="inline-flex items-center text-sm">
     @for (item of items(); track item.label; let last = $last; let first = $first) {
       <li class="inline-flex items-center">
         @if (!first) {
-          <span class="mx-1.5 text-surface-400" aria-hidden="true">
-            <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                clip-rule="evenodd" />
-            </svg>
+          <span class="mx-2 text-surface-400" aria-hidden="true">
+            {{ separator() }}
           </span>
         }
         @if (item.link && !last) {

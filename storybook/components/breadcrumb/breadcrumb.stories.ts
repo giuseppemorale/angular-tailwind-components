@@ -6,6 +6,7 @@ const meta: Meta<TailwindBreadcrumb> = {
   component: TailwindBreadcrumb,
   args: {
     ariaLabel: 'Breadcrumb',
+    separator: '>',
     items: [
       { label: 'Home', link: '#', icon: 'home-2' },
       { label: 'Products', link: '#' },
@@ -23,6 +24,7 @@ export const Breadcrumb: StoryObj<TailwindBreadcrumb> = {
       <tailwind-breadcrumb ${argsToTemplate(args)}></tailwind-breadcrumb>`,
     args: {
       ariaLabel: 'Breadcrumb',
+      separator: '>',
       items: [
         { label: 'Home', link: '#', icon: 'home-2' },
         { label: 'Products', link: '#' },

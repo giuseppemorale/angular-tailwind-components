@@ -14,23 +14,22 @@ const meta: Meta<TailwindAlert> = {
   args: {
     severity: 'info',
     title: '',
-    message: '',
     dismissible: false,
     bordered: true
   }
 };
 export default meta;
-type Story = StoryObj<TailwindAlert>;
 
-export const Alert: Story = {
+export const Alert: StoryObj<TailwindAlert> = {
   render: args => ({
     props: args,
-    template: `<tailwind-alert ${argsToTemplate(args)} />`
+    template: `<tailwind-alert ${argsToTemplate(args)}>
+    This is an informational alert.
+    </tailwind-alert>`
   }),
   args: {
     severity: 'info',
     title: 'Information',
-    message: 'This is an informational alert.',
     dismissible: false,
     bordered: true
   }

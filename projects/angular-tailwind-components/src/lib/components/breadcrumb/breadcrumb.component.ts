@@ -14,5 +14,6 @@ export type { TailwindBreadcrumbItem };
 })
 export class TailwindBreadcrumb extends TailwindComponent {
   readonly items = input<TailwindBreadcrumbItem[]>([]);
+  readonly separator = input<string>('>');
   readonly ariaLabel = input<string>('Breadcrumb');
 }

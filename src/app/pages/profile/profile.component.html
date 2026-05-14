@@ -1,0 +1,31 @@
+<div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-2">
+    <tailwind-title titleTag="h1" text="Profilo" icon="user" />
+    <p class="text-surface-600 text-sm max-w-2xl">
+      Form semplice con input, textarea e toggle per testare binding e stati di caricamento.
+    </p>
+  </div>
+
+  <tailwind-card [elevated]="true">
+    <div tailwind-card-header>
+      <tailwind-title titleTag="h3" text="Dati anagrafici" icon="user-id" />
+    </div>
+
+    <div class="flex flex-col gap-4">
+      <tailwind-input id="profile-display" label="Nome visualizzato" placeholder="Es. Mario Rossi" />
+      <tailwind-input type="email" label="Email" placeholder="nome@esempio.it" helperText="Non condividiamo la tua email." />
+      <tailwind-textarea label="Bio" placeholder="Breve descrizione..." />
+      <tailwind-divider />
+      <tailwind-toggle id="profile-notify" label="Ricevi notifiche sulle novità della libreria" />
+    </div>
+
+    <div tailwind-card-footer class="flex flex-wrap items-center gap-3 justify-between">
+      @if (saving()) {
+        <tailwind-spinner size="sm" label="Salvataggio in corso" ariaLabel="Salvataggio in corso" />
+      } @else {
+        <span class="text-xs text-surface-500">Ultimo salvataggio: —</span>
+      }
+      <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">Salva</tailwind-button>
+    </div>
+  </tailwind-card>
+</div>

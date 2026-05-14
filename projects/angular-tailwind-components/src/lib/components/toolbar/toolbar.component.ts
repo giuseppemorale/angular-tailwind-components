@@ -46,7 +46,7 @@ export class TailwindToolbar extends TailwindComponent {
     const sizeClasses = horizontal
       ? this.width() === 'full'
         ? 'w-full h-16'
-        : 'w-[95%] md:w-[85%] lg:w-[75%] mx-auto h-16'
+        : 'container mx-auto h-16'
       : 'h-full w-full';
 
     const base = [

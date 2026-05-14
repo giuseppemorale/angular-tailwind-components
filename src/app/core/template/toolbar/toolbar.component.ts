@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { TailwindButton, TailwindMenuItem, TailwindToolbar } from 'angular-tailwind-components';
 
@@ -10,6 +11,7 @@ import { TailwindButton, TailwindMenuItem, TailwindToolbar } from 'angular-tailw
 })
 export class ToolbarComponent {
   private readonly translocoService = inject(TranslocoService);
+  private readonly router = inject(Router);
 
   readonly menu: TailwindMenuItem[] = [
     { label: this.translocoService.translate('TOOLBAR.HOME'), value: 'home' },
@@ -17,4 +19,11 @@ export class ToolbarComponent {
     { label: this.translocoService.translate('TOOLBAR.SETTINGS'), value: 'settings' },
     { label: this.translocoService.translate('TOOLBAR.DOCS'), value: 'docs' }
   ];
+
+  onMenuSelect(item: TailwindMenuItem): void {
+    const path = item.value?.trim();
+    if (path) {
+      void this.router.navigateByUrl(`/${path}`);
+    }
+  }
 }

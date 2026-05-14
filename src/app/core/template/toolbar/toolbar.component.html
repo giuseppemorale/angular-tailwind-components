@@ -4,7 +4,8 @@
   [rounded]="true"
   [elevated]="true"
   [menu]="menu"
-  [orientation]="'horizontal'">
+  [orientation]="'horizontal'"
+  (onMenuSelect)="onMenuSelect($event)">
   <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">
     <img src="/logo.png" alt="Logo" class="h-8 w-8" />
   </div>
@@ -12,6 +13,6 @@
     <tailwind-button size="sm" color="secondary" kind="outlined">
       {{ 'TOOLBAR.CTA.SIGN_IN' | transloco }}
     </tailwind-button>
-    <tailwind-button size="sm">{{ 'TOOLBAR.CTA.GET_STARTED' | transloco }}</tailwind-button>
+    <tailwind-button size="sm">{{ 'TOOLBAR.CTA.SIGN_UP' | transloco }}</tailwind-button>
   </div>
 </tailwind-toolbar>

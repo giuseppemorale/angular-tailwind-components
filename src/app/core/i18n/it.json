@@ -1,8 +1,12 @@
 {
-  "toolbar": {
-    "home": "Home",
-    "profile": "Profilo",
-    "settings": "Impostazioni",
-    "docs": "Documentazione"
+  "TOOLBAR": {
+    "HOME": "Home",
+    "PROFILE": "Profilo",
+    "SETTINGS": "Impostazioni",
+    "DOCS": "Documentazione",
+    "CTA": {
+      "SIGN_IN": "Accedi",
+      "GET_STARTED": "Inizia"
+    }
   }
 }

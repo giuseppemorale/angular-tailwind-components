@@ -9,7 +9,9 @@
     <img src="/logo.png" alt="Logo" class="h-8 w-8" />
   </div>
   <div tailwind-toolbar-end class="flex gap-2">
-    <tailwind-button size="sm" color="secondary" kind="outlined">Sign in</tailwind-button>
-    <tailwind-button size="sm">Get started</tailwind-button>
+    <tailwind-button size="sm" color="secondary" kind="outlined">
+      {{ 'TOOLBAR.CTA.SIGN_IN' | transloco }}
+    </tailwind-button>
+    <tailwind-button size="sm">{{ 'TOOLBAR.CTA.GET_STARTED' | transloco }}</tailwind-button>
   </div>
 </tailwind-toolbar>

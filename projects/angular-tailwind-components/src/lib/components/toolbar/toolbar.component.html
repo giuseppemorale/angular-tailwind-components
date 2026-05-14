@@ -2,34 +2,74 @@
   <div class="shrink-0">
     <ng-content select="[tailwind-toolbar-logo]" />
   </div>
-  <nav [class]="menuContainerClasses()" [attr.aria-label]="'Toolbar menu'">
-    @for (item of menu(); track menuTrackKey($index, item)) {
-      @if (item.divider) {
-        @if (orientation() === 'horizontal') {
-          <span class="mx-0.5 h-5 w-px shrink-0 self-center bg-surface-200" aria-hidden="true"></span>
-        } @else {
-          <hr class="my-1 w-full border-0 border-t border-surface-100" />
-        }
-      } @else {
-        <button
-          type="button"
-          [disabled]="!!item.disabled"
-          [class]="menuItemButtonClasses()"
-          [class.px-2]="!!item.icon && !menuItemHasVisibleLabel(item) && orientation() === 'horizontal'"
-          [class.py-2]="!!item.icon && !menuItemHasVisibleLabel(item) && orientation() === 'horizontal'"
-          [class.justify-center]="orientation() === 'vertical' && !menuItemHasVisibleLabel(item)"
-          [attr.aria-label]="menuItemAriaLabel(item)"
-          (click)="selectMenuItem(item)">
-          @if (item.icon) {
-            <tailwind-icon [icon]="item.icon" [size]="orientation() === 'horizontal' ? 20 : 22" />
-          }
-          @if (menuItemHasVisibleLabel(item)) {
-            {{ item.label }}
-          }
-        </button>
+  @if (orientation() === 'horizontal') {
+    <nav class="min-w-0 flex flex-1 flex-row flex-wrap items-center gap-1" [attr.aria-label]="'Toolbar menu'">
+      @if (menu().length) {
+        <div class="flex shrink-0 items-center md:hidden">
+          <button
+            type="button"
+            class="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-2 text-surface-700 transition-colors hover:bg-surface-100 hover:text-surface-900"
+            [attr.aria-expanded]="mobileToolbarMenu.isOpen()"
+            aria-haspopup="menu"
+            aria-label="Open navigation menu"
+            (click)="mobileToolbarMenu.toggle($event)">
+            <tailwind-icon icon="hamburger-menu" [size]="22" />
+          </button>
+          <tailwind-menu
+            #mobileToolbarMenu
+            [items]="menu()"
+            align="left"
+            (onSelect)="selectMenuItem($event)" />
+        </div>
       }
-    }
-  </nav>
+      <div class="hidden min-w-0 flex-1 flex-row flex-wrap items-center gap-1 md:flex">
+        @for (item of menu(); track menuTrackKey($index, item)) {
+          @if (item.divider) {
+            <span class="mx-0.5 h-5 w-px shrink-0 self-center bg-surface-200" aria-hidden="true"></span>
+          } @else {
+            <button
+              type="button"
+              [disabled]="!!item.disabled"
+              [class]="menuItemButtonClasses()"
+              [class.px-2]="!!item.icon && !menuItemHasVisibleLabel(item)"
+              [class.py-2]="!!item.icon && !menuItemHasVisibleLabel(item)"
+              [attr.aria-label]="menuItemAriaLabel(item)"
+              (click)="selectMenuItem(item)">
+              @if (item.icon) {
+                <tailwind-icon [icon]="item.icon" [size]="20" />
+              }
+              @if (menuItemHasVisibleLabel(item)) {
+                {{ item.label }}
+              }
+            </button>
+          }
+        }
+      </div>
+    </nav>
+  } @else {
+    <nav [class]="menuContainerClasses()" [attr.aria-label]="'Toolbar menu'">
+      @for (item of menu(); track menuTrackKey($index, item)) {
+        @if (item.divider) {
+          <hr class="my-1 w-full border-0 border-t border-surface-100" />
+        } @else {
+          <button
+            type="button"
+            [disabled]="!!item.disabled"
+            [class]="menuItemButtonClasses()"
+            [class.justify-center]="!menuItemHasVisibleLabel(item)"
+            [attr.aria-label]="menuItemAriaLabel(item)"
+            (click)="selectMenuItem(item)">
+            @if (item.icon) {
+              <tailwind-icon [icon]="item.icon" [size]="22" />
+            }
+            @if (menuItemHasVisibleLabel(item)) {
+              {{ item.label }}
+            }
+          </button>
+        }
+      }
+    </nav>
+  }
   <div
     class="flex flex-wrap items-center gap-2 shrink-0"
     [class.justify-end]="orientation() === 'horizontal'"

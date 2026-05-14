@@ -1,10 +1,11 @@
 import { Component, computed, input, output } from '@angular/core';
 import { TailwindMenuItem } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
+import { TailwindMenu } from '../menu/menu.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
-  imports: [TailwindIcon],
+  imports: [TailwindIcon, TailwindMenu],
   selector: 'tailwind-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css'

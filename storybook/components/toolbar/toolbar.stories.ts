@@ -14,11 +14,11 @@ const verticalMenu: TailwindMenuItem[] = [
 ];
 
 const iconOnlyMenu: TailwindMenuItem[] = [
-  { icon: 'home-2', value: 'home' },
+  { icon: 'home', value: 'home' },
   { icon: 'document-text', value: 'docs' },
   { divider: true },
   { icon: 'bell', value: 'notifications' },
-  { icon: 'settings-minimalistic', value: 'settings' }
+  { icon: 'cog-6-tooth', value: 'settings' }
 ];
 
 const meta: Meta<TailwindToolbar> = {
@@ -102,7 +102,7 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
           </div>
           <div tailwind-toolbar-end class="flex justify-center px-2">
             <tailwind-button size="sm" color="secondary" kind="text">              
-              <tailwind-icon icon="logout" size="20" />
+              <tailwind-icon icon="arrow-right-end-on-rectangle" size="20" />
             </tailwind-button>
           </div>
         </tailwind-toolbar>

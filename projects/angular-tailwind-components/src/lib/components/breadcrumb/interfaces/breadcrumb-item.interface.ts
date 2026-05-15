@@ -1,7 +1,7 @@
-import type { TailwindSolarIcon } from '../../../models';
+import type { TailwindHeroicon } from '../../../models';
 
 export interface TailwindBreadcrumbItem {
   label: string;
   link?: string;
-  icon?: TailwindSolarIcon;
+  icon?: TailwindHeroicon;
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TAILWIND_SOLAR_ICON_NAMES } from '../../projects/angular-tailwind-components/src/lib/models/icons';
+import { TAILWIND_HEROICON_NAMES } from '../../projects/angular-tailwind-components/src/lib/models/icons';
 import { TailwindIcon } from '../../projects/angular-tailwind-components/src/public-api';
 
 @Component({
@@ -23,7 +23,7 @@ import { TailwindIcon } from '../../projects/angular-tailwind-components/src/pub
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StorybookIconsGalleryComponent {
-  readonly icons = TAILWIND_SOLAR_ICON_NAMES;
+  readonly icons = TAILWIND_HEROICON_NAMES;
 }
 
 const meta: Meta<StorybookIconsGalleryComponent> = {
@@ -34,7 +34,7 @@ const meta: Meta<StorybookIconsGalleryComponent> = {
     docs: {
       description: {
         component:
-          'Catalogo delle icone Solar Line Duotone incluse nella libreria: usa il tipo **`TailwindSolarIcon`** e la costante **`TAILWIND_SOLAR_ICON_NAMES`** da `angular-tailwind-components`.'
+          'Catalogo delle icone Heroicons outline incluse nella libreria: usa il tipo **`TailwindHeroicon`** e la costante **`TAILWIND_HEROICON_NAMES`** da `angular-tailwind-components`.'
       },
       story: { inline: false }
     }

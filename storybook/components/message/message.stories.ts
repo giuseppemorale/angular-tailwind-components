@@ -36,13 +36,13 @@ export const Severities: StoryObj<TailwindMessage> = {
         </tailwind-message>
         <tailwind-message severity="warning">
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="shield-warning" class="text-warning-600 shrink-0" />
+            <tailwind-icon icon="shield-exclamation" class="text-warning-600 shrink-0" />
             <span>Please review before proceeding.</span>
           </div>
         </tailwind-message>
         <tailwind-message severity="danger">
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="danger-circle" class="text-danger-600 shrink-0" />
+            <tailwind-icon icon="x-circle" class="text-danger-600 shrink-0" />
             <span>An error occurred during the operation.</span>
           </div>
         </tailwind-message>
@@ -64,7 +64,7 @@ export const InForm: StoryObj<TailwindMessage> = {
         <tailwind-input label="Email" placeholder="Enter your email" />
         <tailwind-message ${argsToTemplate(args)}>
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="danger-circle" class="text-danger-600 shrink-0" />
+            <tailwind-icon icon="x-circle" class="text-danger-600 shrink-0" />
             This email is already in use.
           </div>
         </tailwind-message>

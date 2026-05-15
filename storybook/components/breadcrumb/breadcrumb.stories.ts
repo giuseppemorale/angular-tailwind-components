@@ -8,7 +8,7 @@ const meta: Meta<TailwindBreadcrumb> = {
     ariaLabel: 'Breadcrumb',
     separator: '>',
     items: [
-      { label: 'Home', link: '#', icon: 'home-2' },
+      { label: 'Home', link: '#', icon: 'home' },
       { label: 'Products', link: '#' },
       { label: 'Angular Components', link: '#' },
       { label: 'Button' }
@@ -26,7 +26,7 @@ export const Breadcrumb: StoryObj<TailwindBreadcrumb> = {
       ariaLabel: 'Breadcrumb',
       separator: '>',
       items: [
-        { label: 'Home', link: '#', icon: 'home-2' },
+        { label: 'Home', link: '#', icon: 'home' },
         { label: 'Products', link: '#' },
         { label: 'Angular Components', link: '#' },
         { label: 'Button' }

@@ -5,26 +5,26 @@ import * as IconsStories from './icons-gallery.stories';
 
 # Icons
 
-Le icone sono **[Solar Line Duotone](https://solar-icons.vercel.app/icons)** (480 Design), licenza **CC BY 4.0**. Gli SVG master sono **64×64** nel viewBox del set Solar (`24×24` tipico); il componente imposta larghezza/altezza in pixel tramite **`size`** (16–64).
+Le icone sono **[Heroicons](https://heroicons.com/outline)** in variante **outline** (24×24), licenza **MIT** (Tailwind Labs). Ogni SVG è servito con **larghezza e altezza intrinseche 64×64** e `viewBox` 24×24 così si scalano da **16 a 64 px** tramite l’attributo **`size`** del componente.
 
 ## Uso in TypeScript
 
 Importa il tipo e l’array dei nomi dalla libreria:
 
 ```typescript
-import type { TailwindSolarIcon } from 'angular-tailwind-components';
-import { TAILWIND_SOLAR_ICON_NAMES } from 'angular-tailwind-components';
+import type { TailwindHeroicon } from 'angular-tailwind-components';
+import { TAILWIND_HEROICON_NAMES } from 'angular-tailwind-components';
 
-const icon: TailwindSolarIcon = 'bell';
+const icon: TailwindHeroicon = 'bell';
 ```
 
-Per ogni icona la **stringa da usare** è il nome in **kebab-case** tra apici singoli (come in `TailwindSolarIcon`), ad esempio `'bell'` oppure `'home-smile'`.
+Per ogni icona la **stringa da usare** è il nome in **kebab-case** come su [heroicons.com/outline](https://heroicons.com/outline), ad esempio `'bell'` oppure `'cog-6-tooth'`.
 
 ## Componente `tailwind-icon`
 
 Per mostrare un’icona usa **`TailwindIcon`** con:
 
-- **`icon`**: `TailwindSolarIcon` (obbligatorio)
+- **`icon`**: `TailwindHeroicon` (obbligatorio)
 - **`size`**: numero **pixel** per larghezza e altezza (**16–64**, valori fuori range vengono clampati); se omesso usa il token **`TAILWIND_ICON_SIZE`** se presente, altrimenti **24**
 
 Il componente imposta **`src`** su **`/tailwind-icons/<nome>.svg`** (URL dalla root del sito che serve l’app). Le SVG non sono incorporate nel bundle JS: il browser le scarica come risorse statiche.
@@ -41,7 +41,7 @@ export class ExampleComponent {}
 
 ## Build della libreria e pacchetto npm
 
-Prima di **`npm run build`** viene eseguito **`node scripts/copy-icons.js sync`**, che rigenera **`public/tailwind-icons/*.svg`** e **`models/icons.ts`** da `@iconify-json/solar`. Subito dopo la compilazione, **`node scripts/copy-icons.js dist`** copia gli SVG nel pacchetto pubblicato in **`tailwind-icons/`** (accanto a `fesm2022`, ecc.).
+Prima di **`npm run build`** viene eseguito **`node scripts/copy-icons.js sync`**, che rigenera **`public/tailwind-icons/*.svg`** e **`models/icons.ts`** da `@iconify-json/heroicons`. Subito dopo la compilazione, **`node scripts/copy-icons.js dist`** copia gli SVG nel pacchetto pubblicato in **`tailwind-icons/`** (accanto a `fesm2022`, ecc.).
 
 ## App che usa la libreria (build di produzione)
 
@@ -80,7 +80,7 @@ Puoi anche limitarlo a una parte dell’app con **`providers`** su un componente
   selector: 'app-settings-shell',
   imports: [TailwindIcon],
   providers: [{ provide: TAILWIND_ICON_SIZE, useValue: 20 }],
-  template: `<tailwind-icon icon="settings" />`
+  template: `<tailwind-icon icon="cog-6-tooth" />`
 })
 export class SettingsShellComponent {}
 ```
@@ -89,7 +89,7 @@ Passare esplicitamente **`[size]`** sulla singola icona ha sempre la precedenza 
 
 ## Percorsi dei file SVG
 
-Nella repo della libreria gli SVG sorgente stanno in **`public/tailwind-icons/`** — un file `.svg` per ogni nome in `TailwindSolarIcon`. Nel pacchetto npm sono nella cartella **`tailwind-icons/`**.
+Nella repo della libreria gli SVG sorgente stanno in **`public/tailwind-icons/`** — un file `.svg` per ogni nome in `TailwindHeroicon`. Nel pacchetto npm sono nella cartella **`tailwind-icons/`**.
 
 ---
 

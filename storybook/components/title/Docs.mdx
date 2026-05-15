@@ -5,7 +5,7 @@ import * as TitleStories from './title.stories';
 
 # Title
 
-`TailwindTitle` rende un titolo semantico (`h1`–`h6`) con testo obbligatorio e, opzionalmente, un’icona Solar Line Duotone **prima** del testo.
+`TailwindTitle` rende un titolo semantico (`h1`–`h6`) con testo obbligatorio e, opzionalmente, un’icona Heroicons outline **prima** del testo.
 
 ---
 
@@ -16,7 +16,7 @@ import * as TitleStories from './title.stories';
   imports: [TailwindTitle],
   template: `
     <tailwind-title titleTag="h1" text="Dashboard" class="text-primary-700" />
-    <tailwind-title titleTag="h2" text="Impostazioni" icon="settings" />
+    <tailwind-title titleTag="h2" text="Impostazioni" icon="cog-6-tooth" />
   `
 })
 export class ExampleComponent {}
@@ -60,9 +60,9 @@ Eredita `TailwindComponent` (`id`, `class`).
     </tr>
     <tr>
       <td><code>icon</code></td>
-      <td><code>TailwindSolarIcon | undefined</code></td>
+      <td><code>TailwindHeroicon | undefined</code></td>
       <td><code>undefined</code></td>
-      <td>Nome icona (Solar Line Duotone); se presente, viene mostrata prima di <code>text</code> (16×16 px).</td>
+      <td>Nome icona (Heroicons outline); se presente, viene mostrata prima di <code>text</code> (16×16 px).</td>
     </tr>
     <tr>
       <td><code>titleTag</code></td>

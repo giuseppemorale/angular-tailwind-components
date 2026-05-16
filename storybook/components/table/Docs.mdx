@@ -41,7 +41,7 @@ Solo le colonne che devono ordinare usano la direttiva su **`<th>`** (testo dell
 
 ## Utilizzo
 
-Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bordi, padding, tipografia, hover riga) è definito in **`table.component.css`** — nel template servono solo struttura semantica e direttive (`tailwindSortHeader`, `tailwindTableRow`).
+Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bordi, padding, tipografia) è definito in **`table.component.css`** con selettori **`:where(...)`** e `@layer components`, così le **classi Tailwind** che metti su celle e intestazioni (`w-*`, `min-w-*`, `max-w-*`, `p-*`, ecc.) hanno la precedenza sui default. La `<table>` interna usa **`table-layout: fixed`** e `min-w-0`: puoi controllare le larghezze delle colonne direttamente sugli **`th`** / **`td`** del template proiettato.
 
 ```typescript
 @Component({

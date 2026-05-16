@@ -1,41 +1,30 @@
-<div class="flex flex-col gap-8">
-  <div class="flex flex-col gap-2">
-    <tailwind-title titleTag="h1" text="Documentazione" icon="document-text" />
-    <p class="text-surface-600 text-sm max-w-2xl">
-      Messaggi inline, barra di avanzamento e paginazione per stress test di testo e controlli.
-    </p>
-  </div>
+<app-header [items]="breadcrumb" [description]="'DOCS.INTRO' | transloco" />
 
+<div class="flex flex-col gap-8">
   <div class="flex flex-col gap-3">
     <tailwind-message severity="info">
-      Suggerimento: confronta queste viste con Storybook per isolare eventuali differenze di tema o contenitore.
+      {{ 'DOCS.MESSAGE_INFO' | transloco }}
     </tailwind-message>
     <tailwind-message severity="warning">
-      Alcuni overlay (select, menu) possono comportarsi diversamente se il contenitore ha <code class="text-xs bg-surface-100 px-1 rounded">transform</code>.
+      {{ 'DOCS.MESSAGE_WARNING_BEFORE' | transloco
+      }}<code class="text-xs bg-surface-100 px-1 rounded">{{ 'DOCS.MESSAGE_WARNING_CODE' | transloco }}</code
+      >{{ 'DOCS.MESSAGE_WARNING_AFTER' | transloco }}
     </tailwind-message>
   </div>
 
   <tailwind-card [elevated]="true">
     <div tailwind-card-header>
-      <tailwind-title titleTag="h3" text="Avanzamento lettura" icon="book-open" />
+      <tailwind-title titleTag="h3" [text]="'DOCS.PROGRESS_SECTION_TITLE' | transloco" icon="book-open" />
     </div>
     <div class="flex flex-col gap-4">
       <tailwind-progress-bar
         [value]="progressDemo()"
-        label="Capitoli completati"
+        [label]="'DOCS.PROGRESS_LABEL' | transloco"
         variant="primary"
         [showValue]="true" />
-      <tailwind-button size="sm" kind="outlined" (onClick)="bumpProgress()">Simula avanzamento</tailwind-button>
+      <tailwind-button size="sm" kind="outlined" (onClick)="bumpProgress()">{{
+        'DOCS.BTN_SIMULATE_PROGRESS' | transloco
+      }}</tailwind-button>
     </div>
-  </tailwind-card>
-
-  <tailwind-card [hasHeader]="false" [hasFooter]="false">
-    <tailwind-title titleTag="h3" class="mb-4" text="Paginazione" icon="queue-list" />
-    <tailwind-pagination
-      [totalItems]="47"
-      [pageSize]="10"
-      [(currentPage)]="docPage"
-      summary="Righe {start}-{end} di {total}" />
-    <p class="text-xs text-surface-500 mt-3 mb-0">Pagina modello: {{ docPage() }}</p>
   </tailwind-card>
 </div>

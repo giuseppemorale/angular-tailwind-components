@@ -1,31 +1,51 @@
-<div class="flex flex-col gap-8">
-  <div class="flex flex-col gap-2">
-    <tailwind-title titleTag="h1" text="Profilo" icon="user" />
-    <p class="text-surface-600 text-sm max-w-2xl">
-      Form semplice con input, textarea e toggle per testare binding e stati di caricamento.
-    </p>
-  </div>
+<app-header [items]="breadcrumb" [description]="'PROFILE.INTRO' | transloco" />
 
+<div class="flex flex-col gap-8">
   <tailwind-card [elevated]="true">
     <div tailwind-card-header>
-      <tailwind-title titleTag="h3" text="Dati anagrafici" icon="identification" />
+      <tailwind-title titleTag="h3" [text]="'PROFILE.SECTION_IDENTITY' | transloco" icon="identification" />
     </div>
 
     <div class="flex flex-col gap-4">
-      <tailwind-input id="profile-display" label="Nome visualizzato" placeholder="Es. Mario Rossi" />
-      <tailwind-input type="email" label="Email" placeholder="nome@esempio.it" helperText="Non condividiamo la tua email." />
-      <tailwind-textarea label="Bio" placeholder="Breve descrizione..." />
-      <tailwind-divider />
-      <tailwind-toggle id="profile-notify" label="Ricevi notifiche sulle novità della libreria" />
+      <form [formGroup]="form">
+        <tailwind-input
+          class="mb-2"
+          id="profile-display"
+          [formControl]="form.controls.name"
+          [label]="'PROFILE.FIELD_NAME_LABEL' | transloco"
+          [placeholder]="'PROFILE.FIELD_NAME_PLACEHOLDER' | transloco" />
+        <tailwind-input
+          class="mb-2"
+          type="email"
+          [formControl]="form.controls.email"
+          [label]="'PROFILE.FIELD_EMAIL_LABEL' | transloco"
+          [placeholder]="'PROFILE.FIELD_EMAIL_PLACEHOLDER' | transloco"
+          [helperText]="'PROFILE.FIELD_EMAIL_HELPER' | transloco" />
+        <tailwind-textarea
+          class="mb-2"
+          [formControl]="form.controls.bio"
+          [label]="'PROFILE.FIELD_BIO_LABEL' | transloco"
+          [placeholder]="'PROFILE.FIELD_BIO_PLACEHOLDER' | transloco" />
+        <tailwind-divider />
+        <tailwind-toggle
+          id="profile-notify"
+          [formControl]="form.controls.notify"
+          [label]="'PROFILE.TOGGLE_NOTIFY' | transloco" />
+      </form>
     </div>
 
     <div tailwind-card-footer class="flex flex-wrap items-center gap-3 justify-between">
       @if (saving()) {
-        <tailwind-spinner size="sm" label="Salvataggio in corso" ariaLabel="Salvataggio in corso" />
+        <tailwind-spinner
+          size="sm"
+          [label]="'PROFILE.SPINNER_LABEL' | transloco"
+          [ariaLabel]="'PROFILE.SPINNER_LABEL' | transloco" />
       } @else {
-        <span class="text-xs text-surface-500">Ultimo salvataggio: —</span>
+        <span class="text-xs text-surface-500">{{ 'PROFILE.LAST_SAVE' | transloco }}</span>
       }
-      <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">Salva</tailwind-button>
+      <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">{{
+        'PROFILE.BTN_SAVE' | transloco
+      }}</tailwind-button>
     </div>
   </tailwind-card>
 </div>

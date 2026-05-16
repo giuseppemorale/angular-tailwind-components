@@ -1,47 +1,74 @@
+<app-header [items]="breadcrumb" [description]="'HOME.INTRO' | transloco" />
+
+<tailwind-divider [label]="'HOME.DIVIDER_FEEDBACK' | transloco" />
+
 <div class="flex flex-col gap-8">
-  <div class="flex flex-col gap-3">
-    <tailwind-breadcrumb [items]="breadcrumb" ariaLabel="Percorso" />
-    <tailwind-title titleTag="h1" text="Home" icon="home" />
-    <p class="text-surface-600 text-sm max-w-2xl">
-      Panoramica rapida con card, alert e badge per provare il layout e gli stati visivi dei componenti.
-    </p>
-  </div>
-
-  <tailwind-divider label="Feedback" />
-
-  <div class="grid gap-4 md:grid-cols-2">
-    <tailwind-alert severity="info" title="Benvenuto">
-      Questa è una pagina di prova della libreria: usa il menu in alto per spostarti tra le sezioni.
-    </tailwind-alert>
-    <tailwind-alert severity="success" [dismissible]="true" title="Salvato">
-      Alert chiudibile per verificare dismiss e stato interno.
-    </tailwind-alert>
-  </div>
+  <tailwind-alert severity="info" [title]="'HOME.ALERT_WELCOME_TITLE' | transloco">
+    {{ 'HOME.ALERT_WELCOME_BODY' | transloco }}
+  </tailwind-alert>
 
   <div class="grid gap-6 md:grid-cols-2">
     <tailwind-card [elevated]="true">
       <div tailwind-card-header class="flex flex-wrap items-center gap-2 justify-between">
-        <span class="font-semibold text-surface-900">Stato build</span>
-        <tailwind-badge variant="success" size="sm">OK</tailwind-badge>
+        <span class="font-semibold text-surface-900">{{ 'HOME.CARD_BUILD_TITLE' | transloco }}</span>
+        <tailwind-badge variant="success" size="sm">{{ 'HOME.BADGE_OK' | transloco }}</tailwind-badge>
       </div>
       <p class="text-sm text-surface-600 m-0">
-        Card con header, corpo e footer: utile per incollare form o riepiloghi.
+        {{ 'HOME.CARD_BUILD_BODY' | transloco }}
       </p>
       <div tailwind-card-footer class="flex justify-end gap-2">
-        <tailwind-button kind="outlined" color="secondary" size="sm">Dettagli</tailwind-button>
-        <tailwind-button size="sm">Apri</tailwind-button>
+        <tailwind-button kind="outlined" color="secondary" size="sm">{{
+          'HOME.BTN_DETAILS' | transloco
+        }}</tailwind-button>
+        <tailwind-button size="sm">{{ 'HOME.BTN_OPEN' | transloco }}</tailwind-button>
       </div>
     </tailwind-card>
 
     <tailwind-card [hoverable]="true" [hasHeader]="false" [hasFooter]="false">
       <div class="flex flex-wrap items-center gap-2 mb-3">
-        <tailwind-title titleTag="h3" text="Tag e varianti" icon="tag" />
-        <tailwind-badge variant="warning" [dot]="true">Beta</tailwind-badge>
-        <tailwind-badge variant="neutral" size="sm">v0</tailwind-badge>
+        <tailwind-title titleTag="h3" [text]="'HOME.TAG_SECTION_TITLE' | transloco" icon="tag" />
+        <tailwind-badge variant="warning" [dot]="true">{{ 'HOME.BADGE_BETA' | transloco }}</tailwind-badge>
+        <tailwind-badge variant="neutral" size="sm">{{ 'HOME.BADGE_V0' | transloco }}</tailwind-badge>
       </div>
       <p class="text-sm text-surface-600 m-0">
-        Badge in linea con titolo ridotto per controllare allineamento e spaziature.
+        {{ 'HOME.CARD_TAGS_BODY' | transloco }}
       </p>
     </tailwind-card>
   </div>
+
+  <tailwind-card [elevated]="true" [hasFooter]="false">
+    <div tailwind-card-header class="flex flex-wrap items-center gap-2 justify-between">
+      <span class="font-semibold text-surface-900">{{ 'HOME.TABLE_CARD_TITLE' | transloco }}</span>
+    </div>
+    <p class="text-sm text-surface-600 m-0 mb-4">
+      {{ 'HOME.TABLE_CARD_BODY' | transloco }}
+    </p>
+    <tailwind-table [data]="tableRows" [emptyMessage]="'HOME.TABLE_EMPTY' | transloco" [emptyColspan]="3">
+      <thead>
+        <tr>
+          <th class="min-w-0" scope="col" tailwindSortHeader sortKey="nameKey">
+            {{ 'HOME.TABLE_COL_NAME' | transloco }}
+          </th>
+          <th scope="col">{{ 'HOME.TABLE_COL_STATUS' | transloco }}</th>
+          <th class="w-52" scope="col">{{ 'HOME.TABLE_COL_ACTIONS' | transloco }}</th>
+        </tr>
+      </thead>
+      <tbody *tailwindTableRow="let row">
+        <tr>
+          <td class="min-w-0">{{ row.nameKey | transloco }}</td>
+          <td>
+            <tailwind-tag [variant]="row.variant">{{ row.statusKey | transloco }}</tailwind-tag>
+          </td>
+          <td class="w-52 whitespace-nowrap">
+            <div class="flex flex-wrap items-center gap-2">
+              <tailwind-button kind="outlined" color="secondary" size="sm">
+                {{ 'HOME.TABLE_BTN_EDIT' | transloco }}
+              </tailwind-button>
+              <tailwind-button size="sm">{{ 'HOME.TABLE_BTN_DETAILS' | transloco }}</tailwind-button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </tailwind-table>
+  </tailwind-card>
 </div>

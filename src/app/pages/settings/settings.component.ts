@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
   TailwindCard,
   TailwindDivider,
@@ -9,17 +10,35 @@ import {
   TailwindToggle,
   type TailwindOption
 } from 'angular-tailwind-components';
+import { HeaderComponent } from '../../core/template/header/header.component';
 
 @Component({
+  imports: [
+    HeaderComponent,
+    TailwindTitle,
+    TailwindCard,
+    TailwindTabGroup,
+    TailwindTab,
+    TailwindToggle,
+    TailwindDivider,
+    TailwindSelect,
+    TranslocoPipe
+  ],
   selector: 'app-page-settings',
-  imports: [TailwindTitle, TailwindCard, TailwindTabGroup, TailwindTab, TailwindToggle, TailwindDivider, TailwindSelect],
   templateUrl: './settings.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent {
+  private readonly transloco = inject(TranslocoService);
+
+  readonly breadcrumb = [
+    { label: 'Home', link: '/', icon: 'home' },
+    { label: 'Impostazioni', link: '/settings' }
+  ];
+
   readonly densityOptions: TailwindOption<string>[] = [
-    { value: 'comfortable', label: 'Comoda' },
-    { value: 'compact', label: 'Compatta' }
+    { value: 'comfortable', label: this.transloco.translate('SETTINGS.DENSITY_COMFORTABLE') },
+    { value: 'compact', label: this.transloco.translate('SETTINGS.DENSITY_COMPACT') }
   ];
 
   readonly theme = model<string | null>('comfortable');

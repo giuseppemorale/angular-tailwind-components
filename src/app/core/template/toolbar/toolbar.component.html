@@ -7,7 +7,7 @@
   [orientation]="'horizontal'"
   (onMenuSelect)="onMenuSelect($event)">
   <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">
-    <img src="/logo.png" alt="Logo" class="h-8 w-8" />
+    <img src="/logo.png" [attr.alt]="'TOOLBAR.LOGO_ALT' | transloco" class="h-8 w-8" />
   </div>
   <div tailwind-toolbar-end class="flex gap-2">
     <tailwind-button size="sm" color="secondary" kind="outlined">

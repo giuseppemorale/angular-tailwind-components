@@ -1,40 +1,35 @@
-:host {
-  display: block;
-}
+@layer components {
+  :host {
+    display: block;
+  }
 
-/* Projected `<thead>` / `<tbody>` come from the consumer template — pierce encapsulation. */
+  /*
+   * Stili di default con `:where(...)` sulla parte «tipo elemento» del selettore:
+   * la specificità contributiva è 0, così le utility Tailwind su `th` / `td` proiettate
+   * (`w-*`, `min-w-*`, `max-w-*`, `p-*`, ecc.) vincono sempre in caso di conflitto.
+   */
+  :host ::ng-deep :where(thead) {
+    background-color: var(--color-surface-50);
+    border-bottom: 1px solid var(--color-surface-200);
+  }
 
-:host ::ng-deep thead {
-  background-color: var(--color-surface-50);
-  border-bottom: 1px solid var(--color-surface-200);
-}
+  :host ::ng-deep :where(thead th) {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    color: var(--color-surface-700);
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
 
-:host ::ng-deep thead th {
-  padding: 0.75rem 1rem;
-  font-weight: 600;
-  color: var(--color-surface-700);
-  text-align: left;
-  white-space: nowrap;
-  vertical-align: middle;
-}
+  :host ::ng-deep :where(tbody td) {
+    padding: 0.75rem 1rem;
+    color: var(--color-surface-700);
+  }
 
-:host ::ng-deep tbody td {
-  padding: 0.75rem 1rem;
-  color: var(--color-surface-700);
-}
-
-:host ::ng-deep tbody td[colspan] {
-  padding: 2rem 1rem;
-  text-align: center;
-  color: var(--color-surface-400);
-}
-
-:host ::ng-deep tbody tr {
-  transition-property: background-color, color, border-color;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-:host ::ng-deep tbody tr:hover {
-  background-color: color-mix(in oklch, var(--color-surface-50) 50%, transparent);
+  :host ::ng-deep :where(tbody td[colspan]) {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--color-surface-400);
+  }
 }

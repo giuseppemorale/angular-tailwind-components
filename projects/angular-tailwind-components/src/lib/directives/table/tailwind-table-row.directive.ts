@@ -11,7 +11,7 @@ import { Directive, inject, TemplateRef } from '@angular/core';
   standalone: true
 })
 export class TailwindTableRowDirective {
-  readonly templateRef = inject(TemplateRef<{ $implicit: Record<string, unknown>; index: number }>);
+  readonly templateRef = inject(TemplateRef<{ $implicit: any; index: number }>);
 }
 
 /** @deprecated Use TailwindTableRowDirective instead. */

@@ -1,20 +1,34 @@
 import { ChangeDetectionStrategy, Component, model } from '@angular/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 import {
   TailwindButton,
   TailwindCard,
   TailwindMessage,
-  TailwindPagination,
   TailwindProgressBar,
   TailwindTitle
 } from 'angular-tailwind-components';
+import { HeaderComponent } from '../../core/template/header/header.component';
 
 @Component({
+  imports: [
+    HeaderComponent,
+    TailwindTitle,
+    TailwindCard,
+    TailwindMessage,
+    TailwindProgressBar,
+    TailwindButton,
+    TranslocoPipe
+  ],
   selector: 'app-page-docs',
-  imports: [TailwindTitle, TailwindCard, TailwindMessage, TailwindProgressBar, TailwindPagination, TailwindButton],
   templateUrl: './docs.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocsComponent {
+  readonly breadcrumb = [
+    { label: 'Home', link: '/', icon: 'home' },
+    { label: 'Documentazione', link: '/docs' }
+  ];
+
   readonly docPage = model(1);
   readonly progressDemo = model(38);
 

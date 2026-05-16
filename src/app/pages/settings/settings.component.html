@@ -1,36 +1,31 @@
-<div class="flex flex-col gap-8">
-  <div class="flex flex-col gap-2">
-    <tailwind-title titleTag="h1" text="Impostazioni" icon="cog-6-tooth" />
-    <p class="text-surface-600 text-sm max-w-2xl">
-      Tab, select e toggle per verificare focus, modello dati e contenuti dinamici.
-    </p>
-  </div>
+<app-header [items]="breadcrumb" [description]="'PROFILE.INTRO' | transloco" />
 
-  <tailwind-tab-group ariaLabel="Sezioni impostazioni" [(activeIndex)]="tabIndex">
-    <tailwind-tab label="Aspetto">
+<div class="flex flex-col gap-8">
+  <tailwind-tab-group [ariaLabel]="'SETTINGS.TABS_ARIA' | transloco" [(activeIndex)]="tabIndex">
+    <tailwind-tab [label]="'SETTINGS.TAB_APPEARANCE' | transloco">
       <tailwind-card [hasFooter]="false" class="mt-2">
         <div tailwind-card-header>
-          <tailwind-title titleTag="h3" text="Layout" icon="swatch" />
+          <tailwind-title titleTag="h3" [text]="'SETTINGS.SECTION_LAYOUT' | transloco" icon="swatch" />
         </div>
         <div class="flex flex-col gap-4">
           <tailwind-select
-            label="Densità interfaccia"
-            placeholder="Scegli un’opzione"
+            [label]="'SETTINGS.FIELD_DENSITY_LABEL' | transloco"
+            [placeholder]="'SETTINGS.FIELD_DENSITY_PLACEHOLDER' | transloco"
             [options]="densityOptions"
             [(value)]="theme" />
-          <tailwind-divider label="Preferenze" />
-          <tailwind-toggle id="settings-reduced" label="Riduci animazioni" />
-          <tailwind-toggle id="settings-high-contrast" label="Evidenzia focus (test accessibilità)" />
+          <tailwind-divider [label]="'SETTINGS.DIVIDER_PREFERENCES' | transloco" />
+          <tailwind-toggle id="settings-reduced" [label]="'SETTINGS.TOGGLE_REDUCED_MOTION' | transloco" />
+          <tailwind-toggle id="settings-high-contrast" [label]="'SETTINGS.TOGGLE_FOCUS_HIGHLIGHT' | transloco" />
         </div>
       </tailwind-card>
     </tailwind-tab>
 
-    <tailwind-tab label="Avanzate">
+    <tailwind-tab [label]="'SETTINGS.TAB_ADVANCED' | transloco">
       <tailwind-card [hasHeader]="false" [hasFooter]="false" class="mt-2">
         <p class="text-sm text-surface-600 m-0 mb-4">
-          Secondo pannello: controlla che il cambio tab mantenga lo scroll e lo stato dove previsto.
+          {{ 'SETTINGS.ADVANCED_PANEL_INTRO' | transloco }}
         </p>
-        <tailwind-toggle id="settings-telemetry" label="Consenti telemetria anonima (solo demo)" />
+        <tailwind-toggle id="settings-telemetry" [label]="'SETTINGS.TOGGLE_TELEMETRY' | transloco" />
       </tailwind-card>
     </tailwind-tab>
   </tailwind-tab-group>

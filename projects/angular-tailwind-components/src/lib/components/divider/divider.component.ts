@@ -29,7 +29,9 @@ export class TailwindDivider extends TailwindComponent {
         .join(' ');
     }
 
-    return ['w-full border-0 border-t', variant, 'border-surface-200', inset].filter(Boolean).join(' ');
+    return ['w-full border-0 border-t', variant, 'border-surface-200', 'my-4', inset]
+      .filter(Boolean)
+      .join(' ');
   });
 
   /** Top rule for labeled horizontal layout */
@@ -39,6 +41,6 @@ export class TailwindDivider extends TailwindComponent {
   });
 
   readonly labeledRowClass = computed(() =>
-    this.inset() ? 'flex items-center gap-3 w-full mx-4' : 'flex items-center gap-3 w-full'
+    ['flex items-center gap-3 w-full my-4', this.inset() ? 'mx-4' : ''].filter(Boolean).join(' ')
   );
 }

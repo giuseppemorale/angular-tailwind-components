@@ -1,4 +1,5 @@
-import { Component, computed, input, model, output } from '@angular/core';
+import { Component, computed, inject, input, model, output } from '@angular/core';
+import { TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 import { Pagination } from './interfaces/pagination.interface';
 export type { Pagination };
@@ -9,11 +10,16 @@ export type { Pagination };
   styleUrl: './pagination.component.css'
 })
 export class TailwindPagination extends TailwindComponent {
+  private readonly summaryFromToken = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
+
   readonly totalItems = input.required<Pagination['totalItems']>();
   readonly pageSize = input<Pagination['pageSize']>(10);
   readonly currentPage = model<Pagination['currentPage']>(1);
   readonly ariaLabel = input<Pagination['ariaLabel']>('Pagination');
-  readonly summary = input<Pagination['summary']>('Showing {start}-{end} of {total}');
+  /** Placeholders `{start}`, `{end}`, `{total}`; default from `TAILWIND_PAGINATION_SUMMARY` or English copy. */
+  readonly summary = input<Pagination['summary']>(
+    this.summaryFromToken ?? 'Showing {start}-{end} of {total}'
+  );
 
   readonly onPageChange = output<number>();
 

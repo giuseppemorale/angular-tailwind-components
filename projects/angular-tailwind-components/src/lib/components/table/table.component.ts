@@ -17,7 +17,7 @@ export type { TailwindTableSortHost };
   }
 })
 export class TailwindTable extends TailwindComponent implements TailwindTableSortHost {
-  readonly data = input<Record<string, unknown>[]>([]);
+  readonly data = input<any[]>([]);
   readonly selectable = input<boolean>(false);
   readonly striped = input<boolean>(false);
   readonly loading = input<boolean>(false);

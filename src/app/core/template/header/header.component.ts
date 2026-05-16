@@ -1,5 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TailwindBreadcrumb, TailwindBreadcrumbItem, TailwindTitle } from 'angular-tailwind-components';
+import {
+  TailwindBreadcrumb,
+  TailwindBreadcrumbItem,
+  TailwindTitle,
+  TailwindTitleTag
+} from 'angular-tailwind-components';
 
 @Component({
   imports: [TailwindBreadcrumb, TailwindTitle],
@@ -8,10 +13,11 @@ import { TailwindBreadcrumb, TailwindBreadcrumbItem, TailwindTitle } from 'angul
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-  readonly page = input.required<string>();
+  readonly items = input.required<TailwindBreadcrumbItem[]>();
 
-  readonly items = computed<TailwindBreadcrumbItem[]>(() => [
-    { label: 'Home', link: '/' },
-    { label: this.page(), link: `/${this.page()}` }
-  ]);
+  readonly titleTag = input<TailwindTitleTag>('h1');
+
+  readonly description = input<string>();
+
+  readonly page = computed<TailwindBreadcrumbItem>(() => this.items()[this.items().length - 1]);
 }

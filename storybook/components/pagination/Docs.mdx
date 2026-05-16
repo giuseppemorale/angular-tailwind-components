@@ -26,6 +26,24 @@ import * as PaginationStories from './pagination.stories';
 export class ExampleComponent {}
 ```
 
+### Default globale: `TAILWIND_PAGINATION_SUMMARY`
+
+Il token **`TAILWIND_PAGINATION_SUMMARY`** (`InjectionToken<string>`) imposta il **testo predefinito** dell’input **`summary`** su tutte le **`tailwind-pagination`** dell’albero che ricevono quel provider, quando **`summary` non è passato** dal template. Se il token **non** è fornito, il default è **`'Showing {start}-{end} of {total}'`**. I placeholder **`{start}`**, **`{end}`**, **`{total}`** hanno lo stesso significato dell’input **`summary`**.
+
+Per non ripetere la stringa su ogni istanza, registra il provider **una volta** a livello applicazione (stesso livello di router, HTTP client, ecc.).
+
+```typescript
+import { TAILWIND_PAGINATION_SUMMARY } from 'angular-tailwind-components';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    { provide: TAILWIND_PAGINATION_SUMMARY, useValue: 'Visualizzati {start}-{end} di {total}' }
+  ]
+});
+```
+
+Se su una singola istanza imposti **`[summary]="..."`**, quel valore **prevale** sul default del token.
+
 ## Anteprima
 
 <Canvas of={PaginationStories.Pagination} />
@@ -75,8 +93,27 @@ Eredita `TailwindComponent` (`id`, `class`).
     <tr>
       <td><code>summary</code></td>
       <td><code>string</code></td>
-      <td><code>{`'Showing {start}-{end} of {total}'`}</code></td>
+      <td><code>TAILWIND_PAGINATION_SUMMARY</code> se fornito, altrimenti <code>{`'Showing {start}-{end} of {total}'`}</code></td>
       <td>Placeholder <code>{`{start}`}</code>, <code>{`{end}`}</code>, <code>{`{total}`}</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+### Injection tokens
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Tipo</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>TAILWIND_PAGINATION_SUMMARY</code></td>
+      <td><code>InjectionToken&lt;string&gt;</code></td>
+      <td>Default di <code>summary</code> quando l’input non è impostato nel template.</td>
     </tr>
   </tbody>
 </table>

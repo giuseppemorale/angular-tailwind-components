@@ -8,11 +8,11 @@
       Loading...
     </div>
   } @else {
-    <table class="w-full text-sm text-left divide-y divide-surface-100">
+    <!-- `table-fixed`: consente `w-*` / `min-w-*` / `max-w-*` sulle celle e sugli `th` proiettati. -->
+    <table class="w-full min-w-0 table-fixed text-sm text-left divide-y divide-surface-100">
       <ng-content select="thead" />
       @for (row of displayedData(); track row; let i = $index) {
-        <ng-container
-          *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />
+        <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />
       } @empty {
         <tbody>
           <tr>

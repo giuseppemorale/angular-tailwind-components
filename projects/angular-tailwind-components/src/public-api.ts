@@ -17,5 +17,8 @@ export * from './lib/services';
 // Tokens
 export * from './lib/tokens';
 
+// App-level providers
+export * from './lib/providers';
+
 // Refs
 export * from './lib/ref';

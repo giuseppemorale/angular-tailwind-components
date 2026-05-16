@@ -10,16 +10,14 @@ export type { Pagination };
   styleUrl: './pagination.component.css'
 })
 export class TailwindPagination extends TailwindComponent {
-  private readonly summaryFromToken = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
+  private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
 
   readonly totalItems = input.required<Pagination['totalItems']>();
   readonly pageSize = input<Pagination['pageSize']>(10);
   readonly currentPage = model<Pagination['currentPage']>(1);
   readonly ariaLabel = input<Pagination['ariaLabel']>('Pagination');
   /** Placeholders `{start}`, `{end}`, `{total}`; default from `TAILWIND_PAGINATION_SUMMARY` or English copy. */
-  readonly summary = input<Pagination['summary']>(
-    this.summaryFromToken ?? 'Showing {start}-{end} of {total}'
-  );
+  readonly summary = input<Pagination['summary']>(this.tailwindPaginationSummary ?? 'Showing {start}-{end} of {total}');
 
   readonly onPageChange = output<number>();
 

@@ -64,6 +64,10 @@ export class ExampleComponent {
 }
 ```
 
+## Application configuration
+
+Use **`provideTailwindComponents`** from `angular-tailwind-components` to register defaults for **`TAILWIND_ICON_SIZE`**, **`TAILWIND_DATETIME_LANGUAGE`**, **`TAILWIND_COMPONENTS_SIZE`**, **`TAILWIND_PAGINATION_SUMMARY`**, and optionally **`TAILWIND_MODAL_DATA`**. It returns **`EnvironmentProviders`**: add it directly to `bootstrapApplication` / `ApplicationConfig.providers` (no spread). See the package README for the property → token table and a full example.
+
 ## Components
 
 ### Form Controls (with ControlValueAccessor)

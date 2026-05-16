@@ -62,6 +62,34 @@ export class ExampleComponent {
 }
 ```
 
+## Application configuration
+
+Register shared defaults for library injection tokens with **`provideTailwindComponents`**. Each property is optional; only set keys produce `Provider` entries (same effect as individual `{ provide: TAILWIND_…, useValue: … }`). The function returns **`EnvironmentProviders`** (`makeEnvironmentProviders`), so you add it as **one** entry in `providers` without the spread operator.
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { provideTailwindComponents } from 'angular-tailwind-components';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideTailwindComponents({
+      iconSize: 20,
+      datetimeLanguage: 'it',
+      componentsSize: 'md',
+      paginationSummary: 'Visualizzati {start}-{end} di {total}'
+    })
+  ]
+};
+```
+
+| Config key | Token |
+| --- | --- |
+| `iconSize` | `TAILWIND_ICON_SIZE` |
+| `datetimeLanguage` | `TAILWIND_DATETIME_LANGUAGE` |
+| `componentsSize` | `TAILWIND_COMPONENTS_SIZE` |
+| `paginationSummary` | `TAILWIND_PAGINATION_SUMMARY` |
+| `modalData` | `TAILWIND_MODAL_DATA` (rare at app scope; modal `open()` still supplies per-dialog data) |
+
 ## Content slots
 
 Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-drawer`, `tailwind-notification`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.

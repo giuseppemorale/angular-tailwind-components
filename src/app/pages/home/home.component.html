@@ -8,9 +8,9 @@
   </tailwind-alert>
 
   <div class="grid gap-6 md:grid-cols-2">
-    <tailwind-card [elevated]="true">
+    <tailwind-card>
       <div tailwind-card-header class="flex flex-wrap items-center gap-2 justify-between">
-        <span class="font-semibold text-surface-900">{{ 'HOME.CARD_BUILD_TITLE' | transloco }}</span>
+        <tailwind-title titleTag="h4" [text]="'HOME.CARD_BUILD_TITLE' | transloco" />
         <tailwind-badge variant="success" size="sm">{{ 'HOME.BADGE_OK' | transloco }}</tailwind-badge>
       </div>
       <p class="text-sm text-surface-600 m-0">
@@ -24,9 +24,9 @@
       </div>
     </tailwind-card>
 
-    <tailwind-card [hoverable]="true" [hasHeader]="false" [hasFooter]="false">
-      <div class="flex flex-wrap items-center gap-2 mb-3">
-        <tailwind-title titleTag="h3" [text]="'HOME.TAG_SECTION_TITLE' | transloco" icon="tag" />
+    <tailwind-card [hasFooter]="false">
+      <div tailwind-card-header class="flex flex-wrap items-center gap-2">
+        <tailwind-title titleTag="h4" [text]="'HOME.TAG_SECTION_TITLE' | transloco" icon="tag" />
         <tailwind-badge variant="warning" [dot]="true">{{ 'HOME.BADGE_BETA' | transloco }}</tailwind-badge>
         <tailwind-badge variant="neutral" size="sm">{{ 'HOME.BADGE_V0' | transloco }}</tailwind-badge>
       </div>

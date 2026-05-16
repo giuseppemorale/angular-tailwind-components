@@ -32,7 +32,7 @@
           [currentPage]="currentPage()"
           (onPageChange)="currentPage.set($event)"
           [ariaLabel]="pagination()?.ariaLabel ?? 'Pagination'"
-          [summary]="pagination()?.summary ?? 'Showing {start}-{end} of {total}'">
+          [summary]="paginationSummary()">
         </tailwind-pagination>
       </div>
     }

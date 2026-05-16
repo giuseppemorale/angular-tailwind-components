@@ -6,7 +6,7 @@
   [class.hover:shadow-xl]="hoverable() && elevated()">
   @if (hasHeader()) {
     <!-- Header slot (always rendered; only visible when content is projected) -->
-    <div class="px-6 pt-4 border-b border-surface-100" [class.bg-surface-50]="headerBg()">
+    <div class="px-6 pt-4 pb-2 border-b border-surface-100" [class.bg-surface-50]="headerBg()">
       <ng-content select="[tailwind-card-header]" />
     </div>
   }

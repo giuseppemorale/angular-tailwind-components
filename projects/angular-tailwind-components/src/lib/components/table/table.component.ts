@@ -1,9 +1,10 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, HostListener, computed, contentChild, effect, input, output, signal } from '@angular/core';
+import { Component, HostListener, computed, contentChild, effect, inject, input, output, signal } from '@angular/core';
 import { Pagination, TailwindPagination } from '../pagination/pagination.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
+import { TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
 export type { TailwindTableSortHost };
 
 @Component({
@@ -17,6 +18,8 @@ export type { TailwindTableSortHost };
   }
 })
 export class TailwindTable extends TailwindComponent implements TailwindTableSortHost {
+  private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
+
   readonly data = input<any[]>([]);
   readonly selectable = input<boolean>(false);
   readonly striped = input<boolean>(false);
@@ -27,6 +30,9 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
 
   readonly paginated = input<boolean>(true);
   readonly pagination = input<Pagination>();
+  readonly paginationSummary = computed(
+    () => this.pagination()?.summary ?? this.tailwindPaginationSummary ?? 'Showing {start}-{end} of {total}'
+  );
 
   readonly onSortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
   readonly onSelectionChange = output<Set<number>>();

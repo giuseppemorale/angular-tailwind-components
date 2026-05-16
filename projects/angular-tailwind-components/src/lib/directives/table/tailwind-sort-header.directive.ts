@@ -1,7 +1,23 @@
-import { Directive, ElementRef, Renderer2, effect, inject, input } from '@angular/core';
+import {
+  ApplicationRef,
+  afterNextRender,
+  ComponentRef,
+  DestroyRef,
+  Directive,
+  ElementRef,
+  EnvironmentInjector,
+  Injector,
+  Renderer2,
+  createComponent,
+  inject,
+  input
+} from '@angular/core';
+import { TailwindIcon } from '../../components/icon/icon.component';
 /** Host attributes on `<tailwind-table>`; kept in sync for sort-header observers. */
 export const TW_TABLE_SORT_KEY_ATTR = 'data-tw-sort-key';
 export const TW_TABLE_SORT_DIR_ATTR = 'data-tw-sort-dir';
+
+const MAX_TABLE_RESOLVE_ATTEMPTS = 24;
 
 /**
  * Sortable column header: put on `<th>` (plain header text + directive). Not sortable columns omit this directive.
@@ -12,7 +28,7 @@ export const TW_TABLE_SORT_DIR_ATTR = 'data-tw-sort-dir';
   standalone: true,
   host: {
     class:
-      'cursor-pointer hover:text-surface-900 select-none table-cell align-middle whitespace-nowrap text-left',
+      'flex cursor-pointer items-center gap-1.5 justify-start whitespace-nowrap text-left select-none hover:text-surface-900',
     '[attr.tabindex]': '0',
     '[attr.data-sort-key]': 'sortKey()'
   }
@@ -23,96 +39,89 @@ export class TailwindSortHeaderDirective {
 
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
-  private svg?: SVGSVGElement;
+  private readonly appRef = inject(ApplicationRef);
+  private readonly environmentInjector = inject(EnvironmentInjector);
+  private readonly injector = inject(Injector);
+
+  private iconRef?: ComponentRef<TailwindIcon>;
+  private mo?: MutationObserver;
+  private destroyed = false;
 
   constructor() {
-    effect(onCleanup => {
-      const key = this.sortKey();
-      const tableEl = this.host.nativeElement.closest('tailwind-table');
-      if (!tableEl) return;
-
-      const sync = (): void => {
-        const activeKey = tableEl.getAttribute(TW_TABLE_SORT_KEY_ATTR) ?? '';
-        const dirRaw = tableEl.getAttribute(TW_TABLE_SORT_DIR_ATTR) ?? 'asc';
-        const asc = dirRaw === 'asc';
-        const active = activeKey === key;
-
-        if (!this.svg) {
-          this.svg = this.createSvg();
-          this.renderer.appendChild(this.host.nativeElement, this.svg);
-        }
-        this.updateSvg(active, asc);
-        this.renderer.setAttribute(
-          this.host.nativeElement,
-          'aria-label',
-          active ? `Sorted ${asc ? 'ascending' : 'descending'}, activate to reverse` : `Sort by ${key}`
-        );
-      };
-
-      sync();
-      const mo = new MutationObserver(() => sync());
-      mo.observe(tableEl, {
-        attributes: true,
-        attributeFilter: [TW_TABLE_SORT_KEY_ATTR, TW_TABLE_SORT_DIR_ATTR]
-      });
-      onCleanup(() => mo.disconnect());
+    inject(DestroyRef).onDestroy(() => {
+      this.destroyed = true;
+      this.mo?.disconnect();
+      this.mo = undefined;
+      this.iconRef?.destroy();
+      this.iconRef = undefined;
     });
+
+    afterNextRender(
+      () => {
+        if (!this.destroyed) {
+          this.resolveTableAndAttach(0);
+        }
+      },
+      { injector: this.injector }
+    );
   }
 
-  private createSvg(): SVGSVGElement {
-    const svg = this.renderer.createElement('svg', 'svg') as SVGSVGElement;
-    this.renderer.setAttribute(svg, 'xmlns', 'http://www.w3.org/2000/svg');
-    this.renderer.setAttribute(svg, 'viewBox', '0 0 20 20');
-    this.renderer.setAttribute(svg, 'fill', 'currentColor');
-    this.renderer.setAttribute(svg, 'aria-hidden', 'true');
+  /**
+   * After first render the projected `<th>` may still not be under `<tailwind-table>` in the DOM
+   * for one frame; retry with `requestAnimationFrame` until `closest` succeeds.
+   */
+  private resolveTableAndAttach(attempt: number): void {
+    if (this.destroyed || this.mo) return;
 
-    const ascPath = this.renderer.createElement('path', 'svg');
-    this.renderer.setAttribute(ascPath, 'fill-rule', 'evenodd');
-    this.renderer.setAttribute(
-      ascPath,
-      'd',
-      'M10 17a.75.75 0 01-.75-.75V5.612L5.29 9.77a.75.75 0 01-1.08-1.04l5.25-5.5a.75.75 0 011.08 0l5.25 5.5a.75.75 0 11-1.08 1.04l-3.96-4.158V16.25A.75.75 0 0110 17z'
-    );
-    this.renderer.setAttribute(ascPath, 'clip-rule', 'evenodd');
-    this.renderer.addClass(ascPath, 'tailwind-sort-header__asc');
+    const tableEl = this.host.nativeElement.closest('tailwind-table');
+    if (!tableEl) {
+      if (attempt < MAX_TABLE_RESOLVE_ATTEMPTS) {
+        requestAnimationFrame(() => this.resolveTableAndAttach(attempt + 1));
+      }
+      return;
+    }
 
-    const descPath = this.renderer.createElement('path', 'svg');
-    this.renderer.setAttribute(descPath, 'fill-rule', 'evenodd');
-    this.renderer.setAttribute(
-      descPath,
-      'd',
-      'M10 3a.75.75 0 01.75.75v10.638l3.96-4.158a.75.75 0 111.08 1.04l-5.25 5.5a.75.75 0 01-1.08 0l-5.25-5.5a.75.75 0 111.08-1.04l3.96 4.158V3.75A.75.75 0 0110 3z'
-    );
-    this.renderer.setAttribute(descPath, 'clip-rule', 'evenodd');
-    this.renderer.addClass(descPath, 'tailwind-sort-header__desc');
+    const sync = (): void => {
+      if (this.destroyed || !this.iconRef) return;
 
-    this.renderer.appendChild(svg, ascPath);
-    this.renderer.appendChild(svg, descPath);
-    return svg;
-  }
+      const columnKey = this.sortKey();
+      const activeKey = tableEl.getAttribute(TW_TABLE_SORT_KEY_ATTR) ?? '';
+      const dirRaw = tableEl.getAttribute(TW_TABLE_SORT_DIR_ATTR) ?? 'asc';
+      const asc = dirRaw === 'asc';
+      const active = activeKey === columnKey;
 
-  private updateSvg(active: boolean, asc: boolean): void {
-    if (!this.svg) return;
+      const icon = active ? (asc ? 'chevron-up' : 'chevron-down') : 'chevron-up-down';
+      this.iconRef.setInput('icon', icon);
+      this.iconRef.setInput('size', 14);
+      this.iconRef.setInput(
+        'class',
+        active ? 'shrink-0 text-primary-600' : 'shrink-0 text-surface-400'
+      );
 
-    this.renderer.setAttribute(
-      this.svg,
-      'class',
-      `inline-block align-middle ml-1 w-3.5 h-3.5 shrink-0 ${active ? 'text-primary-600' : 'text-surface-400'}`
-    );
+      this.renderer.setAttribute(
+        this.host.nativeElement,
+        'aria-label',
+        active ? `Sorted ${asc ? 'ascending' : 'descending'}, activate to reverse` : `Sort by ${columnKey}`
+      );
 
-    const ascPath = this.svg.querySelector('.tailwind-sort-header__asc');
-    const descPath = this.svg.querySelector('.tailwind-sort-header__desc');
+      this.iconRef.changeDetectorRef.detectChanges();
+    };
 
-    const showAsc = active && asc;
-    const showDesc = active ? !asc : true;
+    if (!this.iconRef) {
+      this.iconRef = createComponent(TailwindIcon, {
+        environmentInjector: this.environmentInjector,
+        elementInjector: this.injector
+      });
+      this.renderer.appendChild(this.host.nativeElement, this.iconRef.location.nativeElement);
+      this.appRef.attachView(this.iconRef.hostView);
+    }
 
-    this.setPathHidden(ascPath, !showAsc);
-    this.setPathHidden(descPath, !showDesc);
-  }
+    sync();
 
-  private setPathHidden(el: Element | null, hidden: boolean): void {
-    if (!el) return;
-    if (hidden) this.renderer.addClass(el, 'hidden');
-    else this.renderer.removeClass(el, 'hidden');
+    this.mo = new MutationObserver(() => sync());
+    this.mo.observe(tableEl, {
+      attributes: true,
+      attributeFilter: [TW_TABLE_SORT_KEY_ATTR, TW_TABLE_SORT_DIR_ATTR]
+    });
   }
 }

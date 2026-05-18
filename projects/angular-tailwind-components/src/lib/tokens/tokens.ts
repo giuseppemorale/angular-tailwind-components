@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { TailwindSize } from '../models';
+import { TailwindButtonKind, TailwindSize } from '../models';
 
 export const TAILWIND_MODAL_DATA = new InjectionToken<unknown>('TAILWIND_MODAL_DATA');
 
@@ -9,6 +9,9 @@ export const TAILWIND_ICON_SIZE = new InjectionToken<number>('TAILWIND_ICON_SIZE
 export const TAILWIND_DATETIME_LANGUAGE = new InjectionToken<'it' | 'en'>('TAILWIND_DATETIME_LANGUAGE');
 
 export const TAILWIND_COMPONENTS_SIZE = new InjectionToken<TailwindSize>('TAILWIND_COMPONENTS_SIZE');
+
+/** Default `kind` for `tailwind-button` when the `kind` input is omitted. */
+export const TAILWIND_BUTTON_KIND = new InjectionToken<TailwindButtonKind>('TAILWIND_BUTTON_KIND');
 
 /**
  * Default template for `tailwind-pagination` **summary** when the `summary` input is omitted.

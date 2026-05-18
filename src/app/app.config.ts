@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import { defineTheme } from 'angular-tailwind-components';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { options } from './core/transloco/transloco.options';
-import { TAILWIND_OPTIONS } from './core/tailwind-options/tailwind-options';
+import { TAILWIND_CONFIG } from './core/tailwind-config/tailwind-config';
 
 const inizializeApp = () => {
   const translocoService = inject(TranslocoService);
@@ -19,6 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideTransloco(options),
     provideBrowserGlobalErrorListeners(),
     provideAppInitializer(inizializeApp),
-    defineTheme({ ...TAILWIND_OPTIONS })
+    defineTheme(TAILWIND_CONFIG)
   ]
 };

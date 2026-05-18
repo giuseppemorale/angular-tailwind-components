@@ -1,4 +1,4 @@
-import { TailwindSize } from '../../models';
+import { TailwindButtonKind, TailwindSize } from '../../models';
 import { TailwindThemeSeverityColor } from '../types/theme-config.types';
 
 /**
@@ -12,6 +12,8 @@ export interface TailwindComponentsConfig {
   datetimeLanguage?: 'it' | 'en';
   /** Maps to {@link TAILWIND_COMPONENTS_SIZE}. */
   componentsSize?: TailwindSize;
+  /** Maps to {@link TAILWIND_BUTTON_KIND} (default `kind` on `tailwind-button`). */
+  buttonKind?: TailwindButtonKind;
   /** Maps to {@link TAILWIND_PAGINATION_SUMMARY}. */
   paginationSummary?: string;
 }

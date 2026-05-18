@@ -38,6 +38,11 @@ describe('buildTailwindThemeVariableEntries', () => {
     expect(entries).toContainEqual(['--color-danger-500', '#e00']);
   });
 
+  it('does not emit button kind (handled by TAILWIND_BUTTON_KIND provider, not CSS vars)', () => {
+    const entries = buildTailwindThemeVariableEntries({ buttonKind: 'flat' });
+    expect(entries).toEqual([]);
+  });
+
   it('ignores invalid shade keys on flat objects', () => {
     const entries = buildTailwindThemeVariableEntries({
       colors: { info: { 600: '#00f', foo: 'x' } as Record<string, string> }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TAILWIND_BUTTON_KIND } from '../../tokens';
 import { TailwindButton } from './button.component';
 
 describe('TailwindButton', () => {
@@ -58,6 +59,21 @@ describe('TailwindButton', () => {
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     expect(button.className).toContain('bg-danger-600');
     expect(button.className).toContain('text-on-danger-600');
+  });
+
+  it('should use TAILWIND_BUTTON_KIND as default kind when input is omitted', async () => {
+    await TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [TailwindButton],
+      providers: [{ provide: TAILWIND_BUTTON_KIND, useValue: 'flat' }]
+    }).compileComponents();
+
+    const tokenFixture = TestBed.createComponent(TailwindButton);
+    tokenFixture.detectChanges();
+
+    const button: HTMLButtonElement = tokenFixture.nativeElement.querySelector('button');
+    expect(button.className).toContain('shadow-none');
+    expect(button.className).toContain('border-0');
   });
 
   it('should apply flat kind without shadow or border', () => {

@@ -1,6 +1,7 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TailwindSize, TailwindColor, TailwindButtonKind } from '../../models';
+import { TAILWIND_BUTTON_KIND } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -10,13 +11,16 @@ import { TailwindComponent } from '../tailwind.component';
   styleUrl: './button.component.css'
 })
 export class TailwindButton extends TailwindComponent {
+  private readonly defaultKind = inject(TAILWIND_BUTTON_KIND, { optional: true });
+
   /** Visual color */
   readonly color = input<TailwindColor>('primary');
   /**
    * Visual kind: `flat` = filled like `solid` without border or shadow;
    * `ghost` = transparent with hover tint; `text` = text color only, no hover background.
+   * Default from {@link TAILWIND_BUTTON_KIND} or `'solid'`.
    */
-  readonly kind = input<TailwindButtonKind>('solid');
+  readonly kind = input<TailwindButtonKind>(this.defaultKind ?? 'solid');
   /** Size of the button */
   readonly size = input<TailwindSize>('md');
   /** Whether the button is disabled */

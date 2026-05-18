@@ -63,7 +63,7 @@ export class ExampleComponent {
 
 ## Application configuration (`defineTheme`)
 
-Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `paginationSummary`) and, when you pass **`colors`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
+Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `buttonKind`, `paginationSummary`) and, when you pass **`colors`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
 
 `TailwindDefineThemeConfig` extends **`TailwindComponentsConfig`** with an optional **`colors`** field.
 
@@ -79,6 +79,7 @@ export const appConfig: ApplicationConfig = {
       iconSize: 20,
       datetimeLanguage: 'it',
       componentsSize: 'md',
+      buttonKind: 'flat',
       paginationSummary: 'Visualizzati {start}-{end} di {total}',
       colors: {
         primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
@@ -132,6 +133,7 @@ You can omit **`colors`** if you only need token defaults, or omit token keys if
 | `iconSize` | `TAILWIND_ICON_SIZE` |
 | `datetimeLanguage` | `TAILWIND_DATETIME_LANGUAGE` |
 | `componentsSize` | `TAILWIND_COMPONENTS_SIZE` |
+| `buttonKind` | `TAILWIND_BUTTON_KIND` |
 | `paginationSummary` | `TAILWIND_PAGINATION_SUMMARY` |
 
 **`provideTailwindComponents`** is still exported for backward compatibility (token providers only, same implementation as the token slice of `defineTheme`). It is **deprecated**; prefer **`defineTheme`**.

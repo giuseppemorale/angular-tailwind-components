@@ -8,6 +8,7 @@ import {
   type Provider
 } from '@angular/core';
 import {
+  TAILWIND_BUTTON_KIND,
   TAILWIND_COMPONENTS_SIZE,
   TAILWIND_DATETIME_LANGUAGE,
   TAILWIND_ICON_SIZE,
@@ -37,6 +38,9 @@ function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig)
   }
   if (config.componentsSize !== undefined) {
     providers.push({ provide: TAILWIND_COMPONENTS_SIZE, useValue: config.componentsSize });
+  }
+  if (config.buttonKind !== undefined) {
+    providers.push({ provide: TAILWIND_BUTTON_KIND, useValue: config.buttonKind });
   }
   if (config.paginationSummary !== undefined) {
     providers.push({ provide: TAILWIND_PAGINATION_SUMMARY, useValue: config.paginationSummary });

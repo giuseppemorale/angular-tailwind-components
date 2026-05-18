@@ -1,3 +1,11 @@
 :host {
   display: block;
 }
+
+/*
+ * Menu icons are external SVGs via <img>; they do not inherit `color`.
+ * On semantic variants with light foreground tokens, approximate `text-on-*` with invert.
+ */
+:host .toolbar-menu-icon-on-light img {
+  filter: brightness(0) invert(1);
+}

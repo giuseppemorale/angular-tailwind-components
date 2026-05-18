@@ -12,7 +12,10 @@ import { TailwindComponent } from '../tailwind.component';
 export class TailwindButton extends TailwindComponent {
   /** Visual color */
   readonly color = input<TailwindColor>('primary');
-  /** Visual kind: `ghost` = transparent with hover tint; `text` = text color only, no hover background */
+  /**
+   * Visual kind: `flat` = filled like `solid` without border or shadow;
+   * `ghost` = transparent with hover tint; `text` = text color only, no hover background.
+   */
   readonly kind = input<TailwindButtonKind>('solid');
   /** Size of the button */
   readonly size = input<TailwindSize>('md');
@@ -21,7 +24,7 @@ export class TailwindButton extends TailwindComponent {
   /** HTML button type attribute */
   readonly type = input<'button' | 'submit' | 'reset'>('button');
 
-  /** Emitted when the button is clicked (not disabled/loading) */
+  /** Emitted when the button is clicked (not disabled). */
   readonly onClick = output<MouseEvent>();
 
   /** Computed Tailwind classes based on color, kind, size, and state */
@@ -38,16 +41,33 @@ export class TailwindButton extends TailwindComponent {
 
     const solidMap: Record<TailwindColor, string> = {
       primary:
-        'bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 border-transparent focus-visible:outline-primary-600 shadow-sm',
+        'bg-primary-600 text-on-primary-600 hover:bg-primary-700 hover:text-on-primary-700 active:bg-primary-800 active:text-on-primary-800 border-transparent focus-visible:outline-primary-600 shadow-sm',
       secondary:
         'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 border-neutral-300 focus-visible:outline-neutral-500 shadow-sm',
       danger:
-        'bg-danger-600 text-white hover:bg-danger-700 active:bg-danger-800 border-transparent focus-visible:outline-danger-600 shadow-sm',
+        'bg-danger-600 text-on-danger-600 hover:bg-danger-700 hover:text-on-danger-700 active:bg-danger-800 active:text-on-danger-800 border-transparent focus-visible:outline-danger-600 shadow-sm',
       success:
-        'bg-success-600 text-white hover:bg-success-700 active:bg-success-800 border-transparent focus-visible:outline-success-600 shadow-sm',
+        'bg-success-600 text-on-success-600 hover:bg-success-700 hover:text-on-success-700 active:bg-success-800 active:text-on-success-800 border-transparent focus-visible:outline-success-600 shadow-sm',
       warning:
-        'bg-warning-500 text-neutral-900 hover:bg-warning-600 active:bg-warning-700 border-transparent focus-visible:outline-warning-500 shadow-sm',
-      info: 'bg-info-600 text-white hover:bg-info-700 active:bg-info-800 border-transparent focus-visible:outline-info-600 shadow-sm'
+        'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-transparent focus-visible:outline-warning-500 shadow-sm',
+      info:
+        'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-transparent focus-visible:outline-info-600 shadow-sm'
+    };
+
+    /** Filled surface like `solid`, without box shadow or visible border. */
+    const flatMap: Record<TailwindColor, string> = {
+      primary:
+        'bg-primary-600 text-on-primary-600 hover:bg-primary-700 hover:text-on-primary-700 active:bg-primary-800 active:text-on-primary-800 border-0 shadow-none focus-visible:outline-primary-600',
+      secondary:
+        'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 border-0 shadow-none focus-visible:outline-neutral-500',
+      danger:
+        'bg-danger-600 text-on-danger-600 hover:bg-danger-700 hover:text-on-danger-700 active:bg-danger-800 active:text-on-danger-800 border-0 shadow-none focus-visible:outline-danger-600',
+      success:
+        'bg-success-600 text-on-success-600 hover:bg-success-700 hover:text-on-success-700 active:bg-success-800 active:text-on-success-800 border-0 shadow-none focus-visible:outline-success-600',
+      warning:
+        'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-0 shadow-none focus-visible:outline-warning-500',
+      info:
+        'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-0 shadow-none focus-visible:outline-info-600'
     };
 
     const outlinedMap: Record<TailwindColor, string> = {
@@ -91,6 +111,7 @@ export class TailwindButton extends TailwindComponent {
 
     const styleMap = {
       solid: solidMap,
+      flat: flatMap,
       outlined: outlinedMap,
       ghost: ghostMap,
       text: textMap

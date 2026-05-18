@@ -14,7 +14,13 @@ import {
   TAILWIND_PAGINATION_SUMMARY
 } from '../tokens';
 import { TailwindComponentsConfig, TailwindDefineThemeConfig } from './interfaces/theme-config.interface';
-import { TailwindThemeColorShade, TailwindThemeSemantic, TailwindThemeSeverityColor } from './types/theme-config.types';
+import {
+  TailwindThemeColorShade,
+  TailwindThemeSemantic,
+  TailwindThemeSemanticPaletteObject,
+  TailwindThemeSemanticShades,
+  TailwindThemeSeverityColor
+} from './types/theme-config.types';
 
 /**
  * Builds `Provider` entries for each set field on `config`.
@@ -64,15 +70,76 @@ function shadesForSemantic(semantic: TailwindThemeSemantic): readonly number[] {
   }
 }
 
-function isShadeRecord(value: TailwindThemeSeverityColor): value is Partial<Record<TailwindThemeColorShade, string>> {
-  return typeof value === 'object' && value !== null;
+function isValidShadeKey(key: string): key is TailwindThemeColorShade {
+  return (
+    key === '50' ||
+    key === '100' ||
+    key === '200' ||
+    key === '300' ||
+    key === '400' ||
+    key === '500' ||
+    key === '600' ||
+    key === '700' ||
+    key === '800' ||
+    key === '900' ||
+    key === '950'
+  );
+}
+
+function isSemanticPaletteObject(value: object): value is TailwindThemeSemanticPaletteObject {
+  return (
+    'shades' in value &&
+    typeof (value as TailwindThemeSemanticPaletteObject).shades === 'object' &&
+    (value as TailwindThemeSemanticPaletteObject).shades !== null
+  );
+}
+
+/**
+ * Normalizes object `colors` values: legacy flat shade map vs `{ shades, on? }`.
+ */
+function normalizeSemanticColorObject(
+  value: Exclude<TailwindThemeSeverityColor, string>
+): { shades: TailwindThemeSemanticShades; on?: TailwindThemeSemanticShades } {
+  if (isSemanticPaletteObject(value)) {
+    return { shades: value.shades, on: value.on };
+  }
+  return { shades: value as TailwindThemeSemanticShades };
+}
+
+function pushShadeVariables(
+  semantic: TailwindThemeSemantic,
+  shades: TailwindThemeSemanticShades,
+  entries: Array<[string, string]>
+): void {
+  for (const [shade, color] of Object.entries(shades)) {
+    if (!isValidShadeKey(shade) || color === undefined || color === '') {
+      continue;
+    }
+    entries.push([`--color-${semantic}-${shade}`, color]);
+  }
+}
+
+function pushOnShadeVariables(
+  semantic: TailwindThemeSemantic,
+  on: TailwindThemeSemanticShades | undefined,
+  entries: Array<[string, string]>
+): void {
+  if (!on) {
+    return;
+  }
+  for (const [shade, color] of Object.entries(on)) {
+    if (!isValidShadeKey(shade) || color === undefined || color === '') {
+      continue;
+    }
+    entries.push([`--color-on-${semantic}-${shade}`, color]);
+  }
 }
 
 /**
  * Builds `[CSS custom property name, value]` pairs for {@link defineTheme}.
  * Exported for unit tests.
  */
-function buildTailwindThemeVariableEntries(config: TailwindDefineThemeConfig): Array<[string, string]> {
+export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeConfig): Array<[string, string]> {
   const colors = config.colors;
   if (!colors) {
     return [];
@@ -102,12 +169,10 @@ function buildTailwindThemeVariableEntries(config: TailwindDefineThemeConfig): A
       for (const shade of shadesForSemantic(semantic)) {
         entries.push([`--color-${semantic}-${shade}`, `var(--color-${palette}-${shade})`]);
       }
-    } else if (isShadeRecord(value)) {
-      for (const [shade, color] of Object.entries(value) as Array<[TailwindThemeColorShade, string | undefined]>) {
-        if (color !== undefined && color !== '') {
-          entries.push([`--color-${semantic}-${shade}`, color]);
-        }
-      }
+    } else {
+      const { shades, on } = normalizeSemanticColorObject(value);
+      pushShadeVariables(semantic, shades, entries);
+      pushOnShadeVariables(semantic, on, entries);
     }
   }
 

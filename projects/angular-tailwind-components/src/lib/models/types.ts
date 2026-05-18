@@ -7,7 +7,7 @@ export type TailwindSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export type TailwindColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info';
 
 /** Button kinds */
-export type TailwindButtonKind = 'solid' | 'outlined' | 'ghost' | 'text';
+export type TailwindButtonKind = 'solid' | 'flat' | 'outlined' | 'ghost' | 'text';
 
 /** Alert/feedback color variants */
 export type TailwindSeverity = 'success' | 'warning' | 'danger' | 'info';

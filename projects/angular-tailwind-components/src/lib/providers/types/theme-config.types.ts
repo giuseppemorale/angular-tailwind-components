@@ -15,12 +15,28 @@ export type TailwindThemeColorShade =
   | '900'
   | '950';
 
+/** Explicit semantic palette shades only (legacy flat object form for `defineTheme` colors). */
+export type TailwindThemeSemanticShades = Partial<Record<TailwindThemeColorShade, string>>;
+
+/**
+ * Structured palette: background `shades` plus optional foreground `on` per shade.
+ * Emitted as `--color-<semantic>-<shade>` and `--color-on-<semantic>-<shade>`.
+ */
+export type TailwindThemeSemanticPaletteObject = {
+  shades: TailwindThemeSemanticShades;
+  on?: TailwindThemeSemanticShades;
+};
+
 /**
  * Values for each `colors` entry in {@link TailwindDefineThemeConfig} (exported type name).
  *
  * - **String:** Tailwind palette family name (lowercase), e.g. `'indigo'` for utilities like `bg-indigo-600`.
  *   See the [Tailwind color reference](https://tailwindcss.com/docs/colors) for all built-in names and previews.
  *   Each semantic shade is mapped to `var(--color-<name>-<shade>)`.
- * - **Object:** `Partial<Record<shade, string>>` with explicit CSS colors per shade (`'50'` … `'950'`).
+ * - **Flat object:** `Partial<Record<shade, string>>` — explicit CSS colors per shade (`'50'` … `'950'`); same as `{ shades: { … } }`.
+ * - **Structured object:** `{ shades, on? }` — optional `on` defines foreground (contrast) per shade; written as `--color-on-<semantic>-<shade>`.
  */
-export type TailwindThemeSeverityColor = string | Partial<Record<TailwindThemeColorShade, string>>;
+export type TailwindThemeSeverityColor =
+  | string
+  | TailwindThemeSemanticPaletteObject
+  | TailwindThemeSemanticShades;

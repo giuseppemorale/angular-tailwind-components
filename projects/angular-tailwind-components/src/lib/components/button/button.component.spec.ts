@@ -42,19 +42,6 @@ describe('TailwindButton', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('should not emit clicked event when loading', () => {
-    fixture.componentRef.setInput('loading', true);
-    fixture.detectChanges();
-
-    const spy = vi.fn();
-    component.onClick.subscribe(spy);
-
-    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    button.click();
-
-    expect(spy).not.toHaveBeenCalled();
-  });
-
   it('should have disabled attribute when disabled', () => {
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
@@ -70,13 +57,16 @@ describe('TailwindButton', () => {
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     expect(button.className).toContain('bg-danger-600');
+    expect(button.className).toContain('text-on-danger-600');
   });
 
-  it('should show spinner when loading', () => {
-    fixture.componentRef.setInput('loading', true);
+  it('should apply flat kind without shadow or border', () => {
+    fixture.componentRef.setInput('kind', 'flat');
     fixture.detectChanges();
 
-    const svg = fixture.nativeElement.querySelector('svg');
-    expect(svg).toBeTruthy();
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.className).toContain('shadow-none');
+    expect(button.className).toContain('border-0');
+    expect(button.className).not.toContain('shadow-sm');
   });
 });

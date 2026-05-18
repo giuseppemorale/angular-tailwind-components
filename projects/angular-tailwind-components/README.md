@@ -142,25 +142,44 @@ The optional **`colors`** object remaps semantic design tokens (`primary`, `neut
 
 | `colors` key | CSS variables | Default palette in `tailwind.css` |
 | --- | --- | --- |
-| `primary` | `--color-primary-*` | Tailwind `blue` |
-| `neutral` | `--color-neutral-*` | Tailwind `slate` |
-| `success` | `--color-success-*` | Tailwind `green` |
-| `warning` | `--color-warning-*` | Tailwind `amber` |
-| `danger` | `--color-danger-*` | Tailwind `red` |
+| `primary` | `--color-primary-*`, `--color-on-primary-*` | Tailwind `blue` |
+| `neutral` | `--color-neutral-*`, `--color-on-neutral-*` | Tailwind `slate` |
+| `success` | `--color-success-*`, `--color-on-success-*` | Tailwind `green` |
+| `warning` | `--color-warning-*`, `--color-on-warning-*` | Tailwind `amber` |
+| `danger` | `--color-danger-*`, `--color-on-danger-*` | Tailwind `red` |
 | `error` | Same as `danger` if `danger` is omitted | — |
-| `info` | `--color-info-*` | Tailwind `sky` |
+| `info` | `--color-info-*`, `--color-on-info-*` | Tailwind `sky` |
 
 ### `TailwindThemeSeverityColor`
 
-Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. It can be either of the following:
+Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. It can be any of the following:
 
 1. **A string — Tailwind palette name**  
    Use the lowercase **family name** only (the segment between the utility prefix and the shade), e.g. `bg-indigo-600` → `'indigo'`, `text-slate-500` → `'slate'`.  
    The full list of built-in names and swatches is in the official **[Tailwind CSS color reference](https://tailwindcss.com/docs/colors)** — pick any name from that page for the string form.  
-   For each configured shade, `defineTheme` sets `--color-<semantic>-<shade>` to `var(--color-<that-name>-<shade>)`.
+   For each configured shade, `defineTheme` sets `--color-<semantic>-<shade>` to `var(--color-<that-name>-<shade>)`.  
+   **Foreground / contrast:** built-in components that sit on saturated semantic backgrounds (solid buttons, tags, semantic toolbar) use utilities like `text-on-success-600`, backed by **`--color-on-<semantic>-<shade>`** defaults in the library `@theme`. With a **palette string**, you usually do **not** need to set `on` yourself — Tailwind’s scales stay internally consistent.
 
-2. **A partial object — per-shade CSS**  
-   Keys are optional shade steps: `'50'`, `'100'`, …, `'950'`. Values are any valid CSS color (`#hex`, `rgb()`, `oklch()`, `var(--color-fuchsia-600)`, etc.). Only the keys you pass are overridden.
+2. **A partial object — per-shade CSS (legacy flat form)**  
+   Keys are optional shade steps: `'50'`, `'100'`, …, `'950'`. Values are any valid CSS color (`#hex`, `rgb()`, `oklch()`, `var(--color-fuchsia-600)`, etc.). Only the keys you pass are written to `--color-<semantic>-<shade>`.  
+   **Optional `on`:** if you override background shades with custom values, set matching foreground tokens by using the structured form below so text stays readable.
+
+3. **A structured object — `{ shades, on? }`**  
+   - **`shades`**: same as the flat object: maps to `--color-<semantic>-<shade>`.  
+   - **`on`**: optional partial map of the same shade keys → CSS colors for **`--color-on-<semantic>-<shade>`** (recommended foreground on that semantic background). Solid `tailwind-button` / `tailwind-tag` / semantic `tailwind-toolbar` read these via `text-on-*` utilities.
+
+   Example:
+
+   ```typescript
+   defineTheme({
+     colors: {
+       success: {
+         shades: { 600: '#14532d', 700: '#0f3d21' },
+         on: { 600: '#ecfdf5', 700: '#ecfdf5' }
+       }
+     }
+   });
+   ```
 
    When you use a **string**, shade coverage matches the library tokens: `primary` and `neutral` include `950`; `success`, `warning`, `danger`, and `info` stop at `900`.
 

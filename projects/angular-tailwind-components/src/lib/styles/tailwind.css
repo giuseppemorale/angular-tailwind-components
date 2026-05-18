@@ -114,6 +114,79 @@
   --color-info-800: var(--color-sky-800);
   --color-info-900: var(--color-sky-900);
 
+  /*
+   * Foreground on semantic backgrounds (`text-on-success-600`, …).
+   * `defineTheme` may set `--color-on-<semantic>-<shade>` when colors use `{ shades, on }`.
+   * String palettes inherit these defaults (tuned for default Tailwind scales).
+   */
+  --color-on-primary-50: var(--color-neutral-900);
+  --color-on-primary-100: var(--color-neutral-900);
+  --color-on-primary-200: var(--color-neutral-900);
+  --color-on-primary-300: var(--color-neutral-900);
+  --color-on-primary-400: var(--color-neutral-900);
+  --color-on-primary-500: #ffffff;
+  --color-on-primary-600: #ffffff;
+  --color-on-primary-700: #ffffff;
+  --color-on-primary-800: #ffffff;
+  --color-on-primary-900: #ffffff;
+  --color-on-primary-950: #ffffff;
+
+  --color-on-neutral-50: var(--color-neutral-900);
+  --color-on-neutral-100: var(--color-neutral-900);
+  --color-on-neutral-200: var(--color-neutral-900);
+  --color-on-neutral-300: var(--color-neutral-900);
+  --color-on-neutral-400: var(--color-neutral-900);
+  --color-on-neutral-500: var(--color-neutral-900);
+  --color-on-neutral-600: #ffffff;
+  --color-on-neutral-700: #ffffff;
+  --color-on-neutral-800: #ffffff;
+  --color-on-neutral-900: #ffffff;
+  --color-on-neutral-950: #ffffff;
+
+  --color-on-success-50: var(--color-neutral-900);
+  --color-on-success-100: var(--color-neutral-900);
+  --color-on-success-200: var(--color-neutral-900);
+  --color-on-success-300: var(--color-neutral-900);
+  --color-on-success-400: var(--color-neutral-900);
+  --color-on-success-500: #ffffff;
+  --color-on-success-600: #ffffff;
+  --color-on-success-700: #ffffff;
+  --color-on-success-800: #ffffff;
+  --color-on-success-900: #ffffff;
+
+  --color-on-warning-50: var(--color-neutral-900);
+  --color-on-warning-100: var(--color-neutral-900);
+  --color-on-warning-200: var(--color-neutral-900);
+  --color-on-warning-300: var(--color-neutral-900);
+  --color-on-warning-400: var(--color-neutral-900);
+  --color-on-warning-500: var(--color-neutral-900);
+  --color-on-warning-600: #ffffff;
+  --color-on-warning-700: #ffffff;
+  --color-on-warning-800: #ffffff;
+  --color-on-warning-900: #ffffff;
+
+  --color-on-danger-50: var(--color-neutral-900);
+  --color-on-danger-100: var(--color-neutral-900);
+  --color-on-danger-200: var(--color-neutral-900);
+  --color-on-danger-300: var(--color-neutral-900);
+  --color-on-danger-400: var(--color-neutral-900);
+  --color-on-danger-500: #ffffff;
+  --color-on-danger-600: #ffffff;
+  --color-on-danger-700: #ffffff;
+  --color-on-danger-800: #ffffff;
+  --color-on-danger-900: #ffffff;
+
+  --color-on-info-50: var(--color-neutral-900);
+  --color-on-info-100: var(--color-neutral-900);
+  --color-on-info-200: var(--color-neutral-900);
+  --color-on-info-300: var(--color-neutral-900);
+  --color-on-info-400: var(--color-neutral-900);
+  --color-on-info-500: #ffffff;
+  --color-on-info-600: #ffffff;
+  --color-on-info-700: #ffffff;
+  --color-on-info-800: #ffffff;
+  --color-on-info-900: #ffffff;
+
   /* ===== Typography ===== */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;

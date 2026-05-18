@@ -40,11 +40,33 @@ export class TailwindToolbar extends TailwindComponent {
       : 'min-w-0 flex-1 flex flex-col gap-1.5 overflow-y-auto min-h-0'
   );
 
-  readonly menuItemToneClasses = computed(() =>
-    this.variant() === 'default'
-      ? 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
-      : 'text-neutral-900 hover:bg-black/5'
+  /** Foreground on semantic surface (`text-on-*`), aligned with solid toolbar shade per variant. */
+  readonly variantContrastTextClass = computed((): string | null => {
+    const v = this.variant();
+    if (v === 'default') {
+      return null;
+    }
+    const map: Record<TailwindSeverity, string> = {
+      success: 'text-on-success-600',
+      warning: 'text-on-warning-500',
+      danger: 'text-on-danger-600',
+      info: 'text-on-info-600'
+    };
+    return map[v];
+  });
+
+  /** Heroicons are `<img>`; on light-on-color variants tint SVG strokes to match `text-on-*`. */
+  readonly menuItemIconClasses = computed(() =>
+    this.variant() !== 'default' && this.variant() !== 'warning' ? 'toolbar-menu-icon-on-light' : ''
   );
+
+  readonly menuItemToneClasses = computed(() => {
+    const contrast = this.variantContrastTextClass();
+    if (!contrast) {
+      return 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900';
+    }
+    return `${contrast} hover:bg-white/12`;
+  });
 
   readonly menuItemButtonClasses = computed(() => {
     const horizontal = this.orientation() === 'horizontal';
@@ -66,13 +88,13 @@ export class TailwindToolbar extends TailwindComponent {
   readonly menuDividerLineClasses = computed(() =>
     this.variant() === 'default'
       ? 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-200'
-      : 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-900/15'
+      : 'mx-0.5 h-5 w-px shrink-0 self-center bg-white/30'
   );
 
   readonly menuDividerRuleClasses = computed(() =>
     this.variant() === 'default'
       ? 'my-1 w-full border-0 border-t border-neutral-100'
-      : 'my-1 w-full border-0 border-t border-neutral-900/10'
+      : 'my-1 w-full border-0 border-t border-white/25'
   );
 
   readonly rootClasses = computed(() => {
@@ -86,14 +108,15 @@ export class TailwindToolbar extends TailwindComponent {
     const variant = this.variant();
     const surfaceMap: Record<TailwindSeverity | 'default', string> = {
       default: 'bg-white border border-neutral-200',
-      success: 'bg-success-500 border border-success-200',
-      warning: 'bg-warning-500 border border-warning-200',
-      danger: 'bg-danger-500 border border-danger-200',
-      info: 'bg-info-500 border border-info-200'
+      success: 'bg-success-600 border border-white/20',
+      warning: 'bg-warning-500 border border-white/20',
+      danger: 'bg-danger-600 border border-white/20',
+      info: 'bg-info-600 border border-white/20'
     };
 
     const base = [
       surfaceMap[variant] ?? surfaceMap.default,
+      this.variantContrastTextClass() ?? '',
       'flex',
       sizeClasses,
       this.rounded() ? 'rounded-xl' : 'rounded-none',
@@ -106,7 +129,7 @@ export class TailwindToolbar extends TailwindComponent {
       base.push('flex-col items-stretch gap-3 px-3 py-4 min-h-0');
     }
 
-    return base.join(' ');
+    return base.filter(Boolean).join(' ');
   });
 
   selectMenuItem(item: TailwindMenuItem): void {

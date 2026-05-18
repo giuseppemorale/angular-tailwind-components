@@ -12,7 +12,7 @@ const meta: Meta<TailwindButton> = {
     },
     kind: {
       control: 'select',
-      options: ['solid', 'outlined', 'ghost', 'text']
+      options: ['solid', 'flat', 'outlined', 'ghost', 'text']
     },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     disabled: { control: 'boolean' },
@@ -30,4 +30,9 @@ export const Button: StoryObj<TailwindButton> = {
       </div>`
   }),
   args: { type: 'button', color: 'primary', kind: 'solid', size: 'md', disabled: false }
+};
+
+export const Flat: StoryObj<TailwindButton> = {
+  render: Button.render,
+  args: { ...Button.args, kind: 'flat', color: 'primary' }
 };

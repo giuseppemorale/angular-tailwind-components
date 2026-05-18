@@ -1,5 +1,5 @@
 import { Component, computed, input, output } from '@angular/core';
-import { TailwindMenuItem } from '../../models';
+import { TailwindMenuItem, TailwindSeverity } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindMenu } from '../menu/menu.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -20,6 +20,11 @@ export class TailwindToolbar extends TailwindComponent {
   readonly width = input<'full' | 'container'>('full');
   /** Applies a stronger drop shadow. */
   readonly elevated = input<boolean>(false);
+  /**
+   * Colore di superficie della barra: `default` mantiene sfondo bianco;
+   * i valori `TailwindSeverity` applicano tinte semantiche (come alert/notification).
+   */
+  readonly variant = input<TailwindSeverity | 'default'>('default');
   /** `horizontal` for a top app bar; `vertical` for a side rail (logo → menu → end). */
   readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
 
@@ -35,10 +40,39 @@ export class TailwindToolbar extends TailwindComponent {
       : 'min-w-0 flex-1 flex flex-col gap-1.5 overflow-y-auto min-h-0'
   );
 
-  readonly menuItemButtonClasses = computed(() =>
-    this.orientation() === 'horizontal'
-      ? 'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
-      : 'inline-flex w-full items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
+  readonly menuItemToneClasses = computed(() =>
+    this.variant() === 'default'
+      ? 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900'
+      : 'text-neutral-900 hover:bg-black/5'
+  );
+
+  readonly menuItemButtonClasses = computed(() => {
+    const horizontal = this.orientation() === 'horizontal';
+    const layout = horizontal
+      ? 'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium'
+      : 'inline-flex w-full items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-medium';
+    const rest =
+      'disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent';
+    return [layout, this.menuItemToneClasses(), rest].join(' ');
+  });
+
+  readonly mobileMenuToggleClasses = computed(() =>
+    [
+      'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-2 transition-colors',
+      this.menuItemToneClasses()
+    ].join(' ')
+  );
+
+  readonly menuDividerLineClasses = computed(() =>
+    this.variant() === 'default'
+      ? 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-200'
+      : 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-900/15'
+  );
+
+  readonly menuDividerRuleClasses = computed(() =>
+    this.variant() === 'default'
+      ? 'my-1 w-full border-0 border-t border-neutral-100'
+      : 'my-1 w-full border-0 border-t border-neutral-900/10'
   );
 
   readonly rootClasses = computed(() => {
@@ -49,8 +83,17 @@ export class TailwindToolbar extends TailwindComponent {
         : 'container mx-auto h-16'
       : 'h-full w-full';
 
+    const variant = this.variant();
+    const surfaceMap: Record<TailwindSeverity | 'default', string> = {
+      default: 'bg-white border border-neutral-200',
+      success: 'bg-success-500 border border-success-200',
+      warning: 'bg-warning-500 border border-warning-200',
+      danger: 'bg-danger-500 border border-danger-200',
+      info: 'bg-info-500 border border-info-200'
+    };
+
     const base = [
-      'bg-white border border-neutral-200',
+      surfaceMap[variant] ?? surfaceMap.default,
       'flex',
       sizeClasses,
       this.rounded() ? 'rounded-xl' : 'rounded-none',

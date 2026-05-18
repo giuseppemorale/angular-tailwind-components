@@ -8,7 +8,7 @@
         <div class="flex shrink-0 items-center md:hidden">
           <button
             type="button"
-            class="inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-2 text-neutral-700 transition-colors hover:bg-neutral-100 hover:text-neutral-900"
+            [class]="mobileMenuToggleClasses()"
             [attr.aria-expanded]="mobileToolbarMenu.isOpen()"
             aria-haspopup="menu"
             aria-label="Open navigation menu"
@@ -21,7 +21,7 @@
       <div class="hidden min-w-0 flex-1 flex-row flex-wrap items-center gap-1 md:flex">
         @for (item of menu(); track menuTrackKey($index, item)) {
           @if (item.divider) {
-            <span class="mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-200" aria-hidden="true"></span>
+            <span [class]="menuDividerLineClasses()" aria-hidden="true"></span>
           } @else {
             <button
               type="button"
@@ -46,7 +46,7 @@
     <nav [class]="menuContainerClasses()" [attr.aria-label]="'Toolbar menu'">
       @for (item of menu(); track menuTrackKey($index, item)) {
         @if (item.divider) {
-          <hr class="my-1 w-full border-0 border-t border-neutral-100" />
+          <hr [class]="menuDividerRuleClasses()" />
         } @else {
           <button
             type="button"

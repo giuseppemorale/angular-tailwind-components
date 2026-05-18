@@ -37,13 +37,15 @@ const meta: Meta<TailwindToolbar> = {
     rounded: { control: 'boolean' },
     width: { control: 'select', options: ['full', 'container'] },
     elevated: { control: 'boolean' },
-    orientation: { control: 'select', options: ['horizontal', 'vertical'] }
+    orientation: { control: 'select', options: ['horizontal', 'vertical'] },
+    variant: { control: 'select', options: ['default', 'info', 'success', 'warning', 'danger'] }
   },
   args: {
     rounded: true,
     width: 'full',
     elevated: false,
-    orientation: 'horizontal'
+    orientation: 'horizontal',
+    variant: 'default'
   }
 };
 export default meta;

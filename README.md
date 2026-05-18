@@ -30,12 +30,9 @@ Your consuming project must have **Tailwind CSS v4** configured. Add the library
 The published `styles/tailwind.css` scans the sibling `fesm2022` bundle plus library `.html` / `.ts` sources for development. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
 
 The same import also pulls in:
-
-```css
 @import 'tailwindcss';
-```
 
-Or define your own theme tokens following the design system schema.
+So you don't need to import the base styles
 
 ## Quick Start
 

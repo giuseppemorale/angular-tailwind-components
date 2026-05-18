@@ -25,7 +25,7 @@ export const Stepper: StoryObj<TailwindStepper> = {
           </div>
         </tailwind-step>
         <tailwind-step label="Review" description="Review & confirm">
-          <p class="text-sm text-surface-600">Review your details before submitting.</p>
+          <p class="text-sm text-neutral-600">Review your details before submitting.</p>
         </tailwind-step>
       </tailwind-stepper>`
   })

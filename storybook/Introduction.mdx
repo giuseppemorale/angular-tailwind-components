@@ -11,7 +11,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — Visual documentation for all components
-- 🎭 **Customizable** — Override theme tokens via Tailwind `@theme` directive
+- 🎭 **Customizable** — Runtime semantic colors with **`defineTheme()`**; optional CSS overrides via `@theme`
 
 ## Installation
 
@@ -67,6 +67,8 @@ export class ExampleComponent {
 ## Application configuration
 
 Use **`provideTailwindComponents`** from `angular-tailwind-components` to register defaults for **`TAILWIND_ICON_SIZE`**, **`TAILWIND_DATETIME_LANGUAGE`**, **`TAILWIND_COMPONENTS_SIZE`**, **`TAILWIND_PAGINATION_SUMMARY`**, and optionally **`TAILWIND_MODAL_DATA`**. It returns **`EnvironmentProviders`**: add it directly to `bootstrapApplication` / `ApplicationConfig.providers` (no spread). See the package README for the property → token table and a full example.
+
+Use **`defineTheme`** to remap semantic colors (`primary`, `neutral`, `success`, `warning`, `danger` / `error`, `info`) at runtime via CSS variables on `document.documentElement`. It returns **`EnvironmentProviders`** the same way. For string palette values, use names from the [Tailwind color reference](https://tailwindcss.com/docs/colors). Full options, `TailwindThemeSeverityColor`, and examples are in the [package README](https://github.com/giuseppemorale/angular-tailwind-components/blob/main/projects/angular-tailwind-components/README.md#theme-colors-definetheme).
 
 ## Components
 
@@ -124,7 +126,7 @@ Use **`provideTailwindComponents`** from `angular-tailwind-components` to regist
 
 The library uses a comprehensive design system defined via Tailwind CSS v4 `@theme` directive:
 
-- **Colors**: Primary (blue), Success (green), Warning (amber), Danger (red), Info (cyan), Neutral surfaces
+- **Colors**: Primary (blue), Success (green), Warning (amber), Danger (red), Info (cyan), Neutral neutrals
 - **Typography**: Inter (sans), JetBrains Mono (mono)
 - **Spacing**: Tailwind default scale
 - **Border Radius**: xs through full

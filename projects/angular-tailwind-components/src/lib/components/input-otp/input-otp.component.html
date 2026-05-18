@@ -1,9 +1,6 @@
 <div class="tailwind-input-otp-wrapper flex flex-col gap-1.5">
   @if (label()) {
-    <label
-      [attr.for]="cellId(0)"
-      class="text-sm font-medium text-surface-700"
-      [class.text-danger-600]="hasError()">
+    <label [attr.for]="cellId(0)" class="text-sm font-medium text-neutral-700" [class.text-danger-600]="hasError()">
       {{ label() }}
     </label>
   }
@@ -30,13 +27,13 @@
         (paste)="onPaste($event, idx)"
         (focus)="onSlotFocus(idx)" />
       @if (showSeparatorAfter(idx)) {
-        <span class="select-none text-surface-500" aria-hidden="true">{{ separator() }}</span>
+        <span class="select-none text-neutral-500" aria-hidden="true">{{ separator() }}</span>
       }
     }
   </div>
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-surface-500">
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500">
       {{ helperText() }}
     </p>
   }

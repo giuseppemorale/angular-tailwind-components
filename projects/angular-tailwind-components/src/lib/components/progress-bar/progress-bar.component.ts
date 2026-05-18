@@ -36,7 +36,7 @@ export class TailwindProgressBar extends TailwindComponent {
       xl: 'h-5'
     };
 
-    return `w-full bg-surface-200 rounded-full overflow-hidden ${sizeMap[this.size()]}`;
+    return `w-full bg-neutral-200 rounded-full overflow-hidden ${sizeMap[this.size()]}`;
   });
 
   readonly barClasses = computed(() => {

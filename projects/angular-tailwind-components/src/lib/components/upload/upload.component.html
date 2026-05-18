@@ -1,9 +1,6 @@
 <div class="tailwind-upload-wrapper flex flex-col gap-1.5">
   @if (label()) {
-    <label
-      [attr.for]="fileInputId()"
-      class="text-sm font-medium text-surface-700"
-      [class.text-danger-600]="hasError()">
+    <label [attr.for]="fileInputId()" class="text-sm font-medium text-neutral-700" [class.text-danger-600]="hasError()">
       {{ label() }}
     </label>
   }
@@ -57,7 +54,7 @@
         (drop)="onDrop($event)">
         <tailwind-icon icon="cloud-arrow-up" [size]="40" />
         <span class="text-sm font-medium">{{ areaTitle() }}</span>
-        <span class="text-xs text-surface-500">{{ areaHint() }}</span>
+        <span class="text-xs text-neutral-500">{{ areaHint() }}</span>
       </div>
       @if (showClear() && value()) {
         <button
@@ -72,13 +69,13 @@
   }
 
   @if (selectedNames().length) {
-    <p class="truncate text-xs text-surface-600" [attr.title]="selectedNames().join(', ')">
+    <p class="truncate text-xs text-neutral-600" [attr.title]="selectedNames().join(', ')">
       {{ selectedNames().join(', ') }}
     </p>
   }
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-surface-500">
+    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-neutral-500">
       {{ helperText() }}
     </p>
   }

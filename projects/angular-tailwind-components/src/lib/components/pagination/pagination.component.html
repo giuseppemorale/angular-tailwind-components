@@ -1,6 +1,6 @@
 <div class="flex flex-wrap items-center justify-between gap-4 w-full">
   @if (summary()) {
-    <span class="text-sm text-surface-700 dark:text-surface-300">
+    <span class="text-sm text-neutral-700 dark:text-neutral-300">
       {{ summaryText() }}
     </span>
   }
@@ -11,7 +11,7 @@
       type="button"
       [disabled]="currentPage() <= 1"
       (click)="goToPage(currentPage() - 1)"
-      class="p-2 rounded-lg text-surface-500 hover:bg-surface-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
+      class="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
       <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         <path
           fill-rule="evenodd"
@@ -27,8 +27,8 @@
         class="min-w-8 h-8 px-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
         [class.bg-primary-600]="page === currentPage()"
         [class.text-white]="page === currentPage()"
-        [class.text-surface-600]="page !== currentPage()"
-        [class.hover:bg-surface-100]="page !== currentPage()">
+        [class.text-neutral-600]="page !== currentPage()"
+        [class.hover:bg-neutral-100]="page !== currentPage()">
         {{ page }}
       </button>
     }
@@ -38,7 +38,7 @@
       type="button"
       [disabled]="currentPage() >= totalPages()"
       (click)="goToPage(currentPage() + 1)"
-      class="p-2 rounded-lg text-surface-500 hover:bg-surface-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
+      class="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
       <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
         <path
           fill-rule="evenodd"

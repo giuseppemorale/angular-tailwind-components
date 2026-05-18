@@ -1,14 +1,4 @@
-import {
-  Component,
-  computed,
-  forwardRef,
-  input,
-  model,
-  output,
-  signal,
-  viewChildren,
-  ElementRef
-} from '@angular/core';
+import { Component, computed, forwardRef, input, model, output, signal, viewChildren, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -73,7 +63,7 @@ export class TailwindInputOtp extends TailwindComponent implements ControlValueA
       'block w-10 text-center font-mono tabular-nums bg-white',
       'border transition-colors duration-150',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed'
+      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
     ];
 
     const sizeMap: Record<TailwindSize, string> = {
@@ -86,7 +76,7 @@ export class TailwindInputOtp extends TailwindComponent implements ControlValueA
 
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-surface-300 focus:outline-primary-500 text-surface-900';
+      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
     return [...base, sizeMap[this.size()], stateClass].join(' ');
   });
@@ -207,9 +197,7 @@ export class TailwindInputOtp extends TailwindComponent implements ControlValueA
     const merged = this.normalizeIncoming(this.value().slice(0, index) + cleaned);
     this.commit(merged);
 
-    queueMicrotask(() =>
-      this.focusSlot(cleaned.length ? Math.min(index + cleaned.length - 1, max - 1) : index)
-    );
+    queueMicrotask(() => this.focusSlot(cleaned.length ? Math.min(index + cleaned.length - 1, max - 1) : index));
   }
 
   onKeydown(event: KeyboardEvent, index: number): void {

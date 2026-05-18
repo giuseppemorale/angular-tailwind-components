@@ -19,16 +19,16 @@ export const Tabs: StoryObj<TailwindTabGroup> = {
     template: `
       <tailwind-tab-group ${argsToTemplate(args)}>
         <tailwind-tab label="Overview">
-          <p class="text-sm text-surface-600">This is the overview tab content.</p>
+          <p class="text-sm text-neutral-600">This is the overview tab content.</p>
         </tailwind-tab>
         <tailwind-tab label="Features">
-          <p class="text-sm text-surface-600">Feature list goes here.</p>
+          <p class="text-sm text-neutral-600">Feature list goes here.</p>
         </tailwind-tab>
         <tailwind-tab label="Pricing">
-          <p class="text-sm text-surface-600">Pricing information.</p>
+          <p class="text-sm text-neutral-600">Pricing information.</p>
         </tailwind-tab>
         <tailwind-tab label="Disabled" [disabled]="true">
-          <p class="text-sm text-surface-600">You can't see this.</p>
+          <p class="text-sm text-neutral-600">You can't see this.</p>
         </tailwind-tab>
       </tailwind-tab-group>`
   }),

@@ -41,7 +41,7 @@ export const Slider: StoryObj<TailwindSlider> = {
     template: `
       <div class="max-w-md">
         <tailwind-slider [(ngModel)]="model" ${argsToTemplate(args)} />
-        <p class="mt-2 text-sm text-surface-600">Value: {{ model }}</p>
+        <p class="mt-2 text-sm text-neutral-600">Value: {{ model }}</p>
       </div>
     `
   }),
@@ -64,7 +64,7 @@ export const Range: StoryObj<TailwindSlider> = {
     template: `
       <div class="max-w-md">
         <tailwind-slider [(ngModel)]="model" ${argsToTemplate(args)} />
-        <p class="mt-2 text-sm text-surface-600">Values: {{ model[0] }} — {{ model[1] }}</p>
+        <p class="mt-2 text-sm text-neutral-600">Values: {{ model[0] }} — {{ model[1] }}</p>
       </div>
     `
   }),

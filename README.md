@@ -11,7 +11,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — Visual documentation for all components
-- 🎭 **Customizable** — Override theme tokens via Tailwind `@theme` directive
+- 🎭 **Customizable** — Runtime semantic colors with **`defineTheme()`**; optional CSS overrides via `@theme`
 
 ## Installation
 
@@ -89,6 +89,60 @@ export const appConfig: ApplicationConfig = {
 | `paginationSummary` | `TAILWIND_PAGINATION_SUMMARY` |
 | `modalData` | `TAILWIND_MODAL_DATA` (rare at app scope; modal `open()` still supplies per-dialog data) |
 
+## Theme colors (`defineTheme`)
+
+Use **`defineTheme`** from `angular-tailwind-components` to remap semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** on `document.documentElement`. It sets the same CSS custom properties as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. The function returns **`EnvironmentProviders`**: add it as a single entry in `providers` (no spread), like `provideTailwindComponents`.
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { defineTheme, provideTailwindComponents } from 'angular-tailwind-components';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    defineTheme({
+      colors: {
+        primary: 'violet',
+        danger: 'rose',
+        neutral: 'zinc'
+      }
+    }),
+    provideTailwindComponents({
+      iconSize: 20,
+      datetimeLanguage: 'it',
+      componentsSize: 'md'
+    })
+  ]
+};
+```
+
+| `colors` key | CSS variables | Default palette in `tailwind.css` |
+| --- | --- | --- |
+| `primary` | `--color-primary-*` | Tailwind `blue` |
+| `neutral` | `--color-neutral-*` | Tailwind `slate` |
+| `success` | `--color-success-*` | Tailwind `green` |
+| `warning` | `--color-warning-*` | Tailwind `amber` |
+| `danger` | `--color-danger-*` | Tailwind `red` |
+| `error` | Same as `danger` if `danger` is omitted | — |
+| `info` | `--color-info-*` | Tailwind `sky` |
+
+### `TailwindThemeSeverityColor`
+
+Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. It can be either of the following:
+
+1. **A string — Tailwind palette name**  
+   Use the lowercase **family name** only (the segment between the utility prefix and the shade), e.g. `bg-indigo-600` → `'indigo'`, `text-slate-500` → `'slate'`.  
+   The full list of built-in names and swatches is in the official **[Tailwind CSS color reference](https://tailwindcss.com/docs/colors)** — pick any name from that page for the string form.  
+   For each configured shade, `defineTheme` sets `--color-<semantic>-<shade>` to `var(--color-<that-name>-<shade>)`.
+
+2. **A partial object — per-shade CSS**  
+   Keys are optional shade steps: `'50'`, `'100'`, …, `'950'`. Values are any valid CSS color (`#hex`, `rgb()`, `oklch()`, `var(--color-fuchsia-600)`, etc.). Only the keys you pass are overridden.
+
+   When you use a **string**, shade coverage matches the library tokens: `primary` and `neutral` include `950`; `success`, `warning`, `danger`, and `info` stop at `900`.
+
+When you pass a **palette string** (e.g. `primary: 'indigo'`), the target variables `--color-indigo-*` must exist in the compiled CSS. Tailwind v4 only emits palette variables that are referenced at build time, so the library’s `tailwind.css` **safelists** the default Tailwind families (`slate`, `gray`, `indigo`, …) with `@source inline(...)`. For a custom family name not covered there, use the object form with explicit colors, or add your own `@source inline("bg-<name>-{50,{100..900..100},950}")` in your app stylesheet.
+
+`defineTheme` is a no-op during **SSR** (browser only).
+
 ## Content slots
 
 Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-drawer`, `tailwind-notification`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
@@ -149,7 +203,7 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 
 The library uses a comprehensive design system defined via Tailwind CSS v4 `@theme` directive:
 
-- **Colors**: Primary (blue), Success (green), Warning (amber), Danger (red), Info (cyan), Neutral surfaces
+- **Colors**: Semantic tokens alias Tailwind default palettes — Primary (`blue`), neutral (`slate`), Success (`green`), Warning (`amber`), Danger (`red`), Info (`sky`)
 - **Typography**: Inter (sans), JetBrains Mono (mono)
 - **Spacing**: Tailwind default scale
 - **Border Radius**: xs through full
@@ -158,12 +212,14 @@ The library uses a comprehensive design system defined via Tailwind CSS v4 `@the
 
 ### Customization
 
-Override tokens in your main CSS:
+Prefer **`defineTheme({ colors: { … } })`** in `ApplicationConfig.providers` for semantic colors (see [Theme colors](#theme-colors-definetheme)).
+
+You can still override any token in your own CSS, for example:
 
 ```css
 @theme {
-  --color-primary-500: oklch(0.55 0.2 280); /* Change primary to purple */
-  --color-primary-600: oklch(0.48 0.22 280);
+  --color-primary-500: var(--color-violet-500);
+  --color-primary-600: var(--color-violet-600);
 }
 ```
 

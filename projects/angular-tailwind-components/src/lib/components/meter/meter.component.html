@@ -18,12 +18,12 @@
   </div>
 
   @if (showLabels()) {
-    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-surface-600">
+    <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-neutral-600">
       @for (seg of segments(); track $index) {
         <span class="inline-flex items-center gap-1.5">
           <span class="inline-block size-2 rounded-sm shrink-0" [class]="legendSwatchClass(seg.variant)"></span>
           <span>{{ seg.label }}</span>
-          <span class="text-surface-400">({{ seg.value }})</span>
+          <span class="text-neutral-400">({{ seg.value }})</span>
         </span>
       }
     </div>

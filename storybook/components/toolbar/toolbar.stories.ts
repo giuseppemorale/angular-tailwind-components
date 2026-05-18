@@ -63,7 +63,7 @@ export const Horizontal: StoryObj<TailwindToolbar> = {
           </div>
         </tailwind-toolbar>
         @if (lastSelection) {
-          <p class="text-xs text-surface-500">Selected: {{ lastSelection }}</p>
+          <p class="text-xs text-neutral-500">Selected: {{ lastSelection }}</p>
         }
       </div>
     `
@@ -95,7 +95,7 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
   render: args => ({
     props: { ...args, menu: iconOnlyMenu, lastSelection: '' as string },
     template: `
-      <div class="flex h-[90vh] gap-4 border border-dashed border-surface-200 rounded-lg p-2">
+      <div class="flex h-[90vh] gap-4 border border-dashed border-neutral-200 rounded-lg p-2">
         <tailwind-toolbar class="w-20 shrink-0" ${argsToTemplate(args)} [menu]="menu" (onMenuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
           <div tailwind-toolbar-logo class="flex justify-center px-2">
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
@@ -108,9 +108,9 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
         </tailwind-toolbar>
         <div class="flex min-w-0 flex-1 flex-col gap-2">
           @if (lastSelection) {
-            <p class="text-xs text-surface-500">Selected: {{ lastSelection }}</p>
+            <p class="text-xs text-neutral-500">Selected: {{ lastSelection }}</p>
           }
-          <div class="flex-1 rounded-lg bg-surface-50 p-4 text-sm text-surface-600">Main content</div>
+          <div class="flex-1 rounded-lg bg-neutral-50 p-4 text-sm text-neutral-600">Main content</div>
         </div>
       </div>
     `
@@ -128,16 +128,16 @@ export const VerticalSidebar: StoryObj<TailwindToolbar> = {
   render: args => ({
     props: { ...args, menu: verticalMenu },
     template: `
-      <div class="flex h-[90vh] gap-4 border border-dashed border-surface-200 rounded-lg p-2">
+      <div class="flex h-[90vh] gap-4 border border-dashed border-neutral-200 rounded-lg p-2">
         <tailwind-toolbar class="w-48 shrink-0" ${argsToTemplate(args)} [menu]="menu">
-          <div tailwind-toolbar-logo class="text-base font-bold text-surface-800 px-2">
+          <div tailwind-toolbar-logo class="text-base font-bold text-neutral-800 px-2">
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
           <div tailwind-toolbar-end class="px-2">
             <tailwind-button size="sm" color="secondary" kind="text">Logout</tailwind-button>
           </div>
         </tailwind-toolbar>
-        <div class="flex-1 rounded-lg bg-surface-50 p-4 text-sm text-surface-600">Main content</div>
+        <div class="flex-1 rounded-lg bg-neutral-50 p-4 text-sm text-neutral-600">Main content</div>
       </div>
     `
   })

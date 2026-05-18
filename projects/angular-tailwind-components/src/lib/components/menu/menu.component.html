@@ -2,20 +2,20 @@
   <div
     #panel
     role="menu"
-    class="fixed z-1000 bg-white rounded-xl border border-surface-200 shadow-lg py-1 animate-in fade-in slide-in-from-top-1"
+    class="fixed z-1000 bg-white rounded-xl border border-neutral-200 shadow-lg py-1 animate-in fade-in slide-in-from-top-1"
     [style.top.px]="layout.top"
     [style.left.px]="layout.left ?? null"
     [style.right.px]="layout.right ?? null"
     [style.minWidth.px]="layout.minWidth">
     @for (item of items(); track $index) {
       @if (item.divider) {
-        <hr class="my-1 border-surface-100" />
+        <hr class="my-1 border-neutral-100" />
       } @else {
         <button
           type="button"
           role="menuitem"
           [disabled]="!!item.disabled"
-          class="w-full text-left px-4 py-2 text-sm text-surface-700 hover:bg-surface-50 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+          class="w-full text-left px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
           (click)="selectItem(item)">
           {{ item.label }}
         </button>

@@ -25,7 +25,7 @@ export const Drawer: StoryObj<TailwindDrawer> = {
       <div>
         <tailwind-button (click)="drawer.open()">Open Drawer</tailwind-button>
         <tailwind-drawer #drawer ${argsToTemplate(args)}>
-          <p class="text-sm text-surface-600 mb-4">This is the drawer content. You can place any content here.</p>
+          <p class="text-sm text-neutral-600 mb-4">This is the drawer content. You can place any content here.</p>
           <tailwind-input label="Name" placeholder="Enter your name" />
           <div class="mt-4 flex gap-2">
             <tailwind-button size="sm" (click)="drawer.close()">Save</tailwind-button>
@@ -53,7 +53,7 @@ export const WithFooter: StoryObj<TailwindDrawer> = {
             <tailwind-input label="Last Name" placeholder="Doe" />
             <tailwind-input label="Email" type="email" placeholder="john@example.com" />
           </div>
-          <div tailwind-drawer-footer class="flex justify-end gap-3 p-4 border-t border-surface-100 bg-surface-50/50">
+          <div tailwind-drawer-footer class="flex justify-end gap-3 p-4 border-t border-neutral-100 bg-neutral-50/50">
             <tailwind-button color="secondary" kind="text" (click)="drawer.close()">Discard</tailwind-button>
             <tailwind-button (click)="drawer.close()">Save Changes</tailwind-button>
           </div>
@@ -75,10 +75,10 @@ export const LeftDrawer: StoryObj<TailwindDrawer> = {
         <tailwind-button (click)="drawer.open()">Open Left Drawer</tailwind-button>
         <tailwind-drawer #drawer ${argsToTemplate(args)}>
           <nav class="space-y-2">
-            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-surface-100">Dashboard</a>
-            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-surface-100">Products</a>
-            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-surface-100">Orders</a>
-            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-surface-100">Settings</a>
+            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-neutral-100">Dashboard</a>
+            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-neutral-100">Products</a>
+            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-neutral-100">Orders</a>
+            <a href="#" class="block px-3 py-2 rounded-lg text-sm hover:bg-neutral-100">Settings</a>
           </nav>
         </tailwind-drawer>
       </div>`

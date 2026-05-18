@@ -40,13 +40,13 @@ export class TailwindButton extends TailwindComponent {
       primary:
         'bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800 border-transparent focus-visible:outline-primary-600 shadow-sm',
       secondary:
-        'bg-surface-100 text-surface-800 hover:bg-surface-200 active:bg-surface-300 border-surface-300 focus-visible:outline-surface-500 shadow-sm',
+        'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 border-neutral-300 focus-visible:outline-neutral-500 shadow-sm',
       danger:
         'bg-danger-600 text-white hover:bg-danger-700 active:bg-danger-800 border-transparent focus-visible:outline-danger-600 shadow-sm',
       success:
         'bg-success-600 text-white hover:bg-success-700 active:bg-success-800 border-transparent focus-visible:outline-success-600 shadow-sm',
       warning:
-        'bg-warning-500 text-surface-900 hover:bg-warning-600 active:bg-warning-700 border-transparent focus-visible:outline-warning-500 shadow-sm',
+        'bg-warning-500 text-neutral-900 hover:bg-warning-600 active:bg-warning-700 border-transparent focus-visible:outline-warning-500 shadow-sm',
       info: 'bg-info-600 text-white hover:bg-info-700 active:bg-info-800 border-transparent focus-visible:outline-info-600 shadow-sm'
     };
 
@@ -54,7 +54,7 @@ export class TailwindButton extends TailwindComponent {
       primary:
         'bg-transparent text-primary-600 border-primary-600 hover:bg-primary-50 active:bg-primary-100 focus-visible:outline-primary-600',
       secondary:
-        'bg-transparent text-surface-700 border-surface-300 hover:bg-surface-50 active:bg-surface-100 focus-visible:outline-surface-500',
+        'bg-transparent text-neutral-700 border-neutral-300 hover:bg-neutral-50 active:bg-neutral-100 focus-visible:outline-neutral-500',
       danger:
         'bg-transparent text-danger-600 border-danger-600 hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
       success:
@@ -69,7 +69,7 @@ export class TailwindButton extends TailwindComponent {
       primary:
         'bg-transparent text-primary-600 border-transparent hover:bg-primary-50 active:bg-primary-100 focus-visible:outline-primary-600',
       secondary:
-        'bg-transparent text-surface-700 border-transparent hover:bg-surface-100 active:bg-surface-200 focus-visible:outline-surface-500',
+        'bg-transparent text-neutral-700 border-transparent hover:bg-neutral-100 active:bg-neutral-200 focus-visible:outline-neutral-500',
       danger:
         'bg-transparent text-danger-600 border-transparent hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
       success:
@@ -82,7 +82,7 @@ export class TailwindButton extends TailwindComponent {
     /** Text color from severity only; background stays transparent on hover/active. */
     const textMap: Record<TailwindColor, string> = {
       primary: 'bg-transparent text-primary-600 border-transparent focus-visible:outline-primary-600',
-      secondary: 'bg-transparent text-surface-700 border-transparent focus-visible:outline-surface-500',
+      secondary: 'bg-transparent text-neutral-700 border-transparent focus-visible:outline-neutral-500',
       danger: 'bg-transparent text-danger-600 border-transparent focus-visible:outline-danger-600',
       success: 'bg-transparent text-success-600 border-transparent focus-visible:outline-success-600',
       warning: 'bg-transparent text-warning-600 border-transparent focus-visible:outline-warning-500',

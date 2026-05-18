@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /*
  * Tailwind v4 @source:
@@ -10,81 +10,109 @@
 @source "../**/*.ts";
 
 /*
+ * `defineTheme({ colors: { primary: 'indigo', … } })` points semantic tokens at `var(--color-<palette>-*)`.
+ * Tailwind only emits `--color-<palette>-*` for palettes referenced in scanned content unless we safelist
+ * them here (see https://tailwindcss.com/docs/detecting-classes-in-source-files#safelisting-specific-utilities).
+ */
+@source inline("bg-slate-{50,{100..900..100},950}");
+@source inline("bg-gray-{50,{100..900..100},950}");
+@source inline("bg-zinc-{50,{100..900..100},950}");
+@source inline("bg-neutral-{50,{100..900..100},950}");
+@source inline("bg-stone-{50,{100..900..100},950}");
+@source inline("bg-red-{50,{100..900..100},950}");
+@source inline("bg-orange-{50,{100..900..100},950}");
+@source inline("bg-amber-{50,{100..900..100},950}");
+@source inline("bg-yellow-{50,{100..900..100},950}");
+@source inline("bg-lime-{50,{100..900..100},950}");
+@source inline("bg-green-{50,{100..900..100},950}");
+@source inline("bg-emerald-{50,{100..900..100},950}");
+@source inline("bg-teal-{50,{100..900..100},950}");
+@source inline("bg-cyan-{50,{100..900..100},950}");
+@source inline("bg-sky-{50,{100..900..100},950}");
+@source inline("bg-blue-{50,{100..900..100},950}");
+@source inline("bg-indigo-{50,{100..900..100},950}");
+@source inline("bg-violet-{50,{100..900..100},950}");
+@source inline("bg-purple-{50,{100..900..100},950}");
+@source inline("bg-fuchsia-{50,{100..900..100},950}");
+@source inline("bg-pink-{50,{100..900..100},950}");
+@source inline("bg-rose-{50,{100..900..100},950}");
+
+/*
  * Angular Tailwind Components — Design System
  * Customizable theme tokens via Tailwind v4 @theme directive
  */
 
 @theme {
-  /* ===== Colors — Primary ===== */
-  --color-primary-50: oklch(0.97 0.01 250);
-  --color-primary-100: oklch(0.94 0.03 250);
-  --color-primary-200: oklch(0.88 0.06 250);
-  --color-primary-300: oklch(0.79 0.10 250);
-  --color-primary-400: oklch(0.68 0.15 250);
-  --color-primary-500: oklch(0.55 0.20 250);
-  --color-primary-600: oklch(0.48 0.22 250);
-  --color-primary-700: oklch(0.40 0.19 250);
-  --color-primary-800: oklch(0.34 0.15 250);
-  --color-primary-900: oklch(0.28 0.12 250);
-  --color-primary-950: oklch(0.20 0.08 250);
+  /* ===== Colors — Primary (default: Tailwind blue scale) ===== */
+  --color-primary-50: var(--color-blue-50);
+  --color-primary-100: var(--color-blue-100);
+  --color-primary-200: var(--color-blue-200);
+  --color-primary-300: var(--color-blue-300);
+  --color-primary-400: var(--color-blue-400);
+  --color-primary-500: var(--color-blue-500);
+  --color-primary-600: var(--color-blue-600);
+  --color-primary-700: var(--color-blue-700);
+  --color-primary-800: var(--color-blue-800);
+  --color-primary-900: var(--color-blue-900);
+  --color-primary-950: var(--color-blue-950);
 
-  /* ===== Colors — Neutral / Surface ===== */
-  --color-surface-50: oklch(0.985 0.002 250);
-  --color-surface-100: oklch(0.97 0.004 250);
-  --color-surface-200: oklch(0.93 0.006 250);
-  --color-surface-300: oklch(0.87 0.008 250);
-  --color-surface-400: oklch(0.71 0.01 250);
-  --color-surface-500: oklch(0.55 0.014 250);
-  --color-surface-600: oklch(0.45 0.012 250);
-  --color-surface-700: oklch(0.37 0.01 250);
-  --color-surface-800: oklch(0.27 0.008 250);
-  --color-surface-900: oklch(0.21 0.006 250);
-  --color-surface-950: oklch(0.13 0.004 250);
+  /* ===== Colors — Neutral / neutral (default: Tailwind slate) ===== */
+  --color-neutral-50: var(--color-slate-50);
+  --color-neutral-100: var(--color-slate-100);
+  --color-neutral-200: var(--color-slate-200);
+  --color-neutral-300: var(--color-slate-300);
+  --color-neutral-400: var(--color-slate-400);
+  --color-neutral-500: var(--color-slate-500);
+  --color-neutral-600: var(--color-slate-600);
+  --color-neutral-700: var(--color-slate-700);
+  --color-neutral-800: var(--color-slate-800);
+  --color-neutral-900: var(--color-slate-900);
+  --color-neutral-950: var(--color-slate-950);
 
-  /* ===== Colors — Semantic ===== */
-  --color-success-50: oklch(0.97 0.02 155);
-  --color-success-100: oklch(0.93 0.04 155);
-  --color-success-200: oklch(0.86 0.08 155);
-  --color-success-300: oklch(0.77 0.14 155);
-  --color-success-400: oklch(0.66 0.18 155);
-  --color-success-500: oklch(0.55 0.20 155);
-  --color-success-600: oklch(0.47 0.18 155);
-  --color-success-700: oklch(0.40 0.15 155);
-  --color-success-800: oklch(0.34 0.12 155);
-  --color-success-900: oklch(0.28 0.09 155);
+  /* ===== Colors — Semantic (Tailwind default palettes) ===== */
+  --color-success-50: var(--color-green-50);
+  --color-success-100: var(--color-green-100);
+  --color-success-200: var(--color-green-200);
+  --color-success-300: var(--color-green-300);
+  --color-success-400: var(--color-green-400);
+  --color-success-500: var(--color-green-500);
+  --color-success-600: var(--color-green-600);
+  --color-success-700: var(--color-green-700);
+  --color-success-800: var(--color-green-800);
+  --color-success-900: var(--color-green-900);
 
-  --color-warning-50: oklch(0.98 0.02 85);
-  --color-warning-100: oklch(0.95 0.05 85);
-  --color-warning-200: oklch(0.90 0.10 85);
-  --color-warning-300: oklch(0.83 0.15 85);
-  --color-warning-400: oklch(0.78 0.18 85);
-  --color-warning-500: oklch(0.72 0.19 85);
-  --color-warning-600: oklch(0.62 0.17 85);
-  --color-warning-700: oklch(0.52 0.14 85);
-  --color-warning-800: oklch(0.44 0.11 85);
-  --color-warning-900: oklch(0.37 0.08 85);
+  --color-warning-50: var(--color-amber-50);
+  --color-warning-100: var(--color-amber-100);
+  --color-warning-200: var(--color-amber-200);
+  --color-warning-300: var(--color-amber-300);
+  --color-warning-400: var(--color-amber-400);
+  --color-warning-500: var(--color-amber-500);
+  --color-warning-600: var(--color-amber-600);
+  --color-warning-700: var(--color-amber-700);
+  --color-warning-800: var(--color-amber-800);
+  --color-warning-900: var(--color-amber-900);
 
-  --color-danger-50: oklch(0.97 0.02 25);
-  --color-danger-100: oklch(0.94 0.04 25);
-  --color-danger-200: oklch(0.88 0.08 25);
-  --color-danger-300: oklch(0.79 0.14 25);
-  --color-danger-400: oklch(0.68 0.18 25);
-  --color-danger-500: oklch(0.55 0.22 25);
-  --color-danger-600: oklch(0.48 0.20 25);
-  --color-danger-700: oklch(0.40 0.17 25);
-  --color-danger-800: oklch(0.34 0.13 25);
-  --color-danger-900: oklch(0.28 0.10 25);
+  --color-danger-50: var(--color-red-50);
+  --color-danger-100: var(--color-red-100);
+  --color-danger-200: var(--color-red-200);
+  --color-danger-300: var(--color-red-300);
+  --color-danger-400: var(--color-red-400);
+  --color-danger-500: var(--color-red-500);
+  --color-danger-600: var(--color-red-600);
+  --color-danger-700: var(--color-red-700);
+  --color-danger-800: var(--color-red-800);
+  --color-danger-900: var(--color-red-900);
 
-  --color-info-50: oklch(0.97 0.02 220);
-  --color-info-100: oklch(0.94 0.04 220);
-  --color-info-200: oklch(0.88 0.08 220);
-  --color-info-300: oklch(0.79 0.14 220);
-  --color-info-400: oklch(0.68 0.18 220);
-  --color-info-500: oklch(0.55 0.20 220);
-  --color-info-600: oklch(0.48 0.18 220);
-  --color-info-700: oklch(0.40 0.15 220);
-  --color-info-800: oklch(0.34 0.12 220);
-  --color-info-900: oklch(0.28 0.09 220);
+  --color-info-50: var(--color-sky-50);
+  --color-info-100: var(--color-sky-100);
+  --color-info-200: var(--color-sky-200);
+  --color-info-300: var(--color-sky-300);
+  --color-info-400: var(--color-sky-400);
+  --color-info-500: var(--color-sky-500);
+  --color-info-600: var(--color-sky-600);
+  --color-info-700: var(--color-sky-700);
+  --color-info-800: var(--color-sky-800);
+  --color-info-900: var(--color-sky-900);
 
   /* ===== Typography ===== */
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -114,7 +142,7 @@
   --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.07), 0 2px 4px -2px oklch(0 0 0 / 0.07);
   --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.08), 0 4px 6px -4px oklch(0 0 0 / 0.08);
   --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.08), 0 8px 10px -6px oklch(0 0 0 / 0.08);
-  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.20);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.2);
 
   /* ===== Transitions ===== */
   --transition-timing-default: cubic-bezier(0.4, 0, 0.2, 1);

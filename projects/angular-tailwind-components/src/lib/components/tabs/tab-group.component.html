@@ -1,5 +1,5 @@
 <!-- Tab Headers -->
-<div class="border-b border-surface-200" role="tablist" [attr.aria-label]="ariaLabel()">
+<div class="border-b border-neutral-200" role="tablist" [attr.aria-label]="ariaLabel()">
   <nav class="flex -mb-px gap-1" [class.overflow-x-auto]="scrollable()">
     @for (tab of tabs(); track $index; let i = $index) {
       <button
@@ -11,8 +11,8 @@
         [disabled]="tab.disabled()"
         class="group relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/30 focus-visible:rounded-t-lg"
         [class.text-primary-600]="activeIndex() === i"
-        [class.text-surface-500]="activeIndex() !== i"
-        [class.hover:text-surface-700]="activeIndex() !== i && !tab.disabled()"
+        [class.text-neutral-500]="activeIndex() !== i"
+        [class.hover:text-neutral-700]="activeIndex() !== i && !tab.disabled()"
         [class.opacity-50]="tab.disabled()"
         [class.cursor-not-allowed]="tab.disabled()"
         (click)="!tab.disabled() && selectTab(i)">

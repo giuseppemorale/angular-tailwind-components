@@ -33,7 +33,7 @@ export const Horizontal: Story = {
   render: args => ({
     props: args,
     template: `
-      <div class="max-w-md space-y-4 text-sm text-surface-700">
+      <div class="max-w-md space-y-4 text-sm text-neutral-700">
         <p>Section A</p>
         <tailwind-divider [orientation]="orientation" [inset]="inset" [variant]="variant" [label]="label" />
         <p>Section B</p>

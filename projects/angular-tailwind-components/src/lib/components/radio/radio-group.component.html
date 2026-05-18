@@ -4,7 +4,7 @@
   [attr.aria-label]="ariaLabel()"
   role="radiogroup">
   @if (label()) {
-    <legend class="text-sm font-medium text-surface-700 mb-2">{{ label() }}</legend>
+    <legend class="text-sm font-medium text-neutral-700 mb-2">{{ label() }}</legend>
   }
 
   @for (option of options(); track option.value) {
@@ -23,7 +23,7 @@
           (change)="onRadioChange(option.value)" />
         <div
           class="w-full h-full rounded-full border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1 flex items-center justify-center"
-          [class.border-surface-300]="value() !== option.value"
+          [class.border-neutral-300]="value() !== option.value"
           [class.border-primary-600]="value() === option.value">
           @if (value() === option.value) {
             <div
@@ -34,9 +34,9 @@
       </div>
 
       <div class="flex flex-col gap-0.5 pt-0.5">
-        <span class="text-sm font-medium text-surface-800 leading-tight">{{ option.label }}</span>
+        <span class="text-sm font-medium text-neutral-800 leading-tight">{{ option.label }}</span>
         @if (option.description) {
-          <span class="text-xs text-surface-500 leading-snug">{{ option.description }}</span>
+          <span class="text-xs text-neutral-500 leading-snug">{{ option.description }}</span>
         }
       </div>
     </label>

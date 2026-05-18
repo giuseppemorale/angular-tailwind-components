@@ -37,8 +37,8 @@ export class TailwindToolbar extends TailwindComponent {
 
   readonly menuItemButtonClasses = computed(() =>
     this.orientation() === 'horizontal'
-      ? 'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
-      : 'inline-flex w-full items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-medium text-surface-700 hover:bg-surface-100 hover:text-surface-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
+      ? 'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
+      : 'inline-flex w-full items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-medium text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent'
   );
 
   readonly rootClasses = computed(() => {
@@ -50,7 +50,7 @@ export class TailwindToolbar extends TailwindComponent {
       : 'h-full w-full';
 
     const base = [
-      'bg-white border border-surface-200',
+      'bg-white border border-neutral-200',
       'flex',
       sizeClasses,
       this.rounded() ? 'rounded-xl' : 'rounded-none',

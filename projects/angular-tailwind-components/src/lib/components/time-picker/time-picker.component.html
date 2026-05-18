@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-1.5">
   @if (label()) {
-    <label [attr.for]="id() ? id() + '-inner' : null" class="text-sm font-medium text-surface-700">{{ label() }}</label>
+    <label [attr.for]="id() ? id() + '-inner' : null" class="text-sm font-medium text-neutral-700">{{ label() }}</label>
   }
   <div class="relative">
     <input
@@ -10,10 +10,10 @@
       [value]="displayValue()"
       [placeholder]="i18n.placeholder"
       [disabled]="isDisabled()"
-      class="block w-full bg-white border border-surface-300 rounded-md px-3 py-2 text-sm text-surface-900 placeholder:text-surface-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-surface-50 disabled:cursor-not-allowed pr-10"
+      class="block w-full bg-white border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
       (click)="togglePanel()" />
     <svg
-      class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-surface-400 pointer-events-none"
+      class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 pointer-events-none"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill="currentColor">
@@ -25,10 +25,10 @@
 
     @if (showPanel()) {
       <div
-        class="absolute left-0 top-full z-popover mt-1 w-52 rounded-xl border border-surface-200 bg-white p-4 shadow-xl">
+        class="absolute left-0 top-full z-popover mt-1 w-52 rounded-xl border border-neutral-200 bg-white p-4 shadow-xl">
         <div class="flex items-center gap-2">
           <select
-            class="flex-1 min-w-0 block bg-white border border-surface-300 rounded-md px-2 py-1.5 text-sm text-surface-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-surface-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled()"
             (change)="onHourChange($event)">
             @for (h of hours; track h) {
@@ -37,9 +37,9 @@
               </option>
             }
           </select>
-          <span class="text-surface-400 text-sm shrink-0">:</span>
+          <span class="text-neutral-400 text-sm shrink-0">:</span>
           <select
-            class="flex-1 min-w-0 block bg-white border border-surface-300 rounded-md px-2 py-1.5 text-sm text-surface-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-surface-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled()"
             (change)="onMinuteChange($event)">
             @for (m of minutes; track m) {
@@ -49,7 +49,7 @@
             }
           </select>
         </div>
-        <div class="mt-2 pt-2 border-t border-surface-100 flex items-center justify-between gap-2">
+        <div class="mt-2 pt-2 border-t border-neutral-100 flex items-center justify-between gap-2">
           <button
             type="button"
             (click)="goToNow()"
@@ -61,7 +61,7 @@
             type="button"
             (click)="apply()"
             [disabled]="isDisabled()"
-            class="px-3 py-1.5 text-xs font-medium rounded-md bg-primary-600 text-white hover:bg-primary-700 cursor-pointer disabled:bg-surface-200 disabled:text-surface-500 disabled:cursor-not-allowed">
+            class="px-3 py-1.5 text-xs font-medium rounded-md bg-primary-600 text-white hover:bg-primary-700 cursor-pointer disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-not-allowed">
             {{ i18n.apply }}
           </button>
         </div>

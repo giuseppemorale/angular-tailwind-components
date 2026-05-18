@@ -41,7 +41,7 @@
           [label]="'PROFILE.SPINNER_LABEL' | transloco"
           [ariaLabel]="'PROFILE.SPINNER_LABEL' | transloco" />
       } @else {
-        <span class="text-xs text-surface-500">{{ 'PROFILE.LAST_SAVE' | transloco }}</span>
+        <span class="text-xs text-neutral-500">{{ 'PROFILE.LAST_SAVE' | transloco }}</span>
       }
       <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">{{
         'PROFILE.BTN_SAVE' | transloco

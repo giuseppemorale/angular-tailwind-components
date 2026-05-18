@@ -1,1 +1,2 @@
-export * from './tailwind-components-config';
+export * from './components-config.provider';
+export * from './theme-define.provider';

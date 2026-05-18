@@ -23,7 +23,7 @@ export const Card: StoryObj<TailwindCard> = {
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px">
         <tailwind-title tailwind-card-header titleTag="h3" text="Card Title" />
-        <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
+        <p class="text-neutral-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <div tailwind-card-footer class="flex justify-end gap-2">
           <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
           <tailwind-button size="sm">Confirm</tailwind-button>
@@ -44,7 +44,7 @@ export const NoHeader: StoryObj<TailwindCard> = {
     props: args,
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px" [hasHeader]="false">
-        <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
+        <p class="text-neutral-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <div tailwind-card-footer class="flex justify-end gap-2">
           <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
           <tailwind-button size="sm">Confirm</tailwind-button>
@@ -66,7 +66,7 @@ export const NoFooter: StoryObj<TailwindCard> = {
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px" [hasFooter]="false">
         <tailwind-title tailwind-card-header titleTag="h3" text="Card Title" />
-        <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
+        <p class="text-neutral-600 text-sm">This is the card body content. It can contain any HTML.</p>
       </tailwind-card>`
   }),
   args: {
@@ -84,7 +84,7 @@ export const Elevated: StoryObj<TailwindCard> = {
     template: `
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px" [elevated]="true">
         <tailwind-title tailwind-card-header titleTag="h3" text="Card Title" />
-        <p class="text-surface-600 text-sm">This is the card body content. It can contain any HTML.</p>
+        <p class="text-neutral-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <div tailwind-card-footer class="flex justify-end gap-2">
           <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
           <tailwind-button size="sm">Confirm</tailwind-button>

@@ -1,14 +1,4 @@
-import {
-  Component,
-  computed,
-  ElementRef,
-  forwardRef,
-  input,
-  model,
-  output,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, computed, ElementRef, forwardRef, input, model, output, signal, viewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
@@ -85,12 +75,13 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
     ];
 
     if (this.isDisabled()) {
-      return [...base, 'cursor-not-allowed opacity-50 bg-surface-50 border-surface-200 text-surface-500'].join(' ');
+      return [...base, 'cursor-not-allowed opacity-50 bg-neutral-50 border-neutral-200 text-neutral-500'].join(' ');
     }
     if (this.isDragOver()) {
-      return [...base, 'cursor-pointer border-primary-500 bg-primary-50/60 text-surface-800 focus-visible:outline-primary-500'].join(
-        ' '
-      );
+      return [
+        ...base,
+        'cursor-pointer border-primary-500 bg-primary-50/60 text-neutral-800 focus-visible:outline-primary-500'
+      ].join(' ');
     }
     if (this.hasError()) {
       return [
@@ -100,7 +91,7 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
     }
     return [
       ...base,
-      'cursor-pointer border-surface-300 bg-surface-50/50 text-surface-800 focus-visible:outline-primary-500',
+      'cursor-pointer border-neutral-300 bg-neutral-50/50 text-neutral-800 focus-visible:outline-primary-500',
       'hover:border-primary-400 hover:bg-primary-50/30'
     ].join(' ');
   });
@@ -198,7 +189,7 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
   private validate(files: File[]): string | null {
     const max = this.maxFileSizeBytes();
     if (max == null) return null;
-    const tooLarge = files.filter((f) => f.size > max);
+    const tooLarge = files.filter(f => f.size > max);
     if (tooLarge.length === 0) return null;
     const maxLabel =
       max >= 1024 * 1024
@@ -223,10 +214,10 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
       return;
     }
 
-    this.selectedNames.set(files.map((f) => f.name));
+    this.selectedNames.set(files.map(f => f.name));
 
     try {
-      const dataUrls = await Promise.all(files.map((f) => this.readAsDataUrl(f)));
+      const dataUrls = await Promise.all(files.map(f => this.readAsDataUrl(f)));
       this.filesSelected.emit(files);
 
       const primary = dataUrls[0] ?? '';

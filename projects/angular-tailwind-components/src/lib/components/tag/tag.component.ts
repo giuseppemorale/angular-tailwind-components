@@ -13,9 +13,9 @@ export class TailwindTag extends TailwindComponent {
   readonly computedClasses = computed(() => {
     const variantMap: Record<string, string> = {
       primary: 'bg-primary-600 text-white',
-      neutral: 'bg-surface-600 text-white',
+      neutral: 'bg-neutral-600 text-white',
       success: 'bg-success-600 text-white',
-      warning: 'bg-warning-500 text-surface-900',
+      warning: 'bg-warning-500 text-neutral-900',
       danger: 'bg-danger-600 text-white',
       info: 'bg-info-600 text-white'
     };

@@ -8,13 +8,13 @@
     <div class="relative h-6 w-full">
       <!-- rail -->
       <div
-        class="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2 rounded-full bg-surface-200"
+        class="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2 rounded-full bg-neutral-200"
         [class]="trackThickness()"></div>
 
       @if (showTicks()) {
         @for (p of tickPositions(); track $index) {
           <div
-            class="pointer-events-none absolute top-1/2 h-2 w-px -translate-x-1/2 -translate-y-1/2 bg-surface-300"
+            class="pointer-events-none absolute top-1/2 h-2 w-px -translate-x-1/2 -translate-y-1/2 bg-neutral-300"
             [style.left.%]="p"></div>
         }
       }
@@ -86,13 +86,13 @@
     (pointerdown)="onTrackPointerDown($event, range() ? null : null)">
     <div class="relative h-full w-full">
       <div
-        class="pointer-events-none absolute bottom-0 left-1/2 top-0 -translate-x-1/2 rounded-full bg-surface-200"
+        class="pointer-events-none absolute bottom-0 left-1/2 top-0 -translate-x-1/2 rounded-full bg-neutral-200"
         [class]="verticalTrackThickness()"></div>
 
       @if (showTicks()) {
         @for (p of tickPositions(); track $index) {
           <div
-            class="pointer-events-none absolute left-1/2 w-2 h-px -translate-x-1/2 translate-y-1/2 bg-surface-300"
+            class="pointer-events-none absolute left-1/2 w-2 h-px -translate-x-1/2 translate-y-1/2 bg-neutral-300"
             [style.bottom.%]="p"></div>
         }
       }

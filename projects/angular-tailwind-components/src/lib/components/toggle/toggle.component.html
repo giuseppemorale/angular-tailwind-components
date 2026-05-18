@@ -1,6 +1,4 @@
-<div
-  class="inline-flex items-center gap-3 select-none"
-  [class.opacity-50]="isDisabled()">
+<div class="inline-flex items-center gap-3 select-none" [class.opacity-50]="isDisabled()">
   <button
     type="button"
     role="switch"
@@ -14,6 +12,6 @@
   </button>
 
   @if (label()) {
-    <span [attr.id]="id() ? id() + '-label' : null" class="text-sm font-medium text-surface-800">{{ label() }}</span>
+    <span [attr.id]="id() ? id() + '-label' : null" class="text-sm font-medium text-neutral-800">{{ label() }}</span>
   }
 </div>

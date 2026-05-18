@@ -71,7 +71,7 @@ export const Table: StoryObj<TailwindTable> = {
         </thead>
         <tbody *tailwindTableRow="let row; let stripedRow = stripedRow; let selected = selected; let selectable = selectable; let toggleRow = toggleRow">
           <tr
-            [class.bg-surface-50]="stripedRow"
+            [class.bg-neutral-50]="stripedRow"
             [class.bg-primary-50/30]="selected"
             [class.cursor-pointer]="selectable"
             (click)="toggleRow()">

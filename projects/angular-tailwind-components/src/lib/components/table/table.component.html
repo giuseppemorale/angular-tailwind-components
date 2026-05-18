@@ -1,6 +1,6 @@
-<div class="w-full overflow-x-auto rounded-lg border border-surface-200">
+<div class="w-full overflow-x-auto rounded-lg border border-neutral-200">
   @if (loading()) {
-    <div class="flex items-center justify-center py-16 text-surface-400">
+    <div class="flex items-center justify-center py-16 text-neutral-400">
       <svg class="animate-spin w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
@@ -9,7 +9,7 @@
     </div>
   } @else {
     <!-- `table-fixed`: consente `w-*` / `min-w-*` / `max-w-*` sulle celle e sugli `th` proiettati. -->
-    <table class="w-full min-w-0 table-fixed text-sm text-left divide-y divide-surface-100">
+    <table class="w-full min-w-0 table-fixed text-sm text-left divide-y divide-neutral-100">
       <ng-content select="thead" />
       @for (row of displayedData(); track row; let i = $index) {
         <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />
@@ -25,7 +25,7 @@
     </table>
 
     @if (paginated() && data().length > 0) {
-      <div class="px-4 py-3 border-t border-surface-200 bg-white">
+      <div class="px-4 py-3 border-t border-neutral-200 bg-white">
         <tailwind-pagination
           [totalItems]="pagination()?.totalItems ?? data().length"
           [pageSize]="pagination()?.pageSize ?? 10"

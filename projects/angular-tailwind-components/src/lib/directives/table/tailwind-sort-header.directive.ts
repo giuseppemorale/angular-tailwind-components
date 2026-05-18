@@ -28,7 +28,7 @@ const MAX_TABLE_RESOLVE_ATTEMPTS = 24;
   standalone: true,
   host: {
     class:
-      'flex cursor-pointer items-center gap-1.5 justify-start whitespace-nowrap text-left select-none hover:text-surface-900',
+      'flex cursor-pointer items-center gap-1.5 justify-start whitespace-nowrap text-left select-none hover:text-neutral-900',
     '[attr.tabindex]': '0',
     '[attr.data-sort-key]': 'sortKey()'
   }
@@ -93,10 +93,7 @@ export class TailwindSortHeaderDirective {
       const icon = active ? (asc ? 'chevron-up' : 'chevron-down') : 'chevron-up-down';
       this.iconRef.setInput('icon', icon);
       this.iconRef.setInput('size', 14);
-      this.iconRef.setInput(
-        'class',
-        active ? 'shrink-0 text-primary-600' : 'shrink-0 text-surface-400'
-      );
+      this.iconRef.setInput('class', active ? 'shrink-0 text-primary-600' : 'shrink-0 text-neutral-400');
 
       this.renderer.setAttribute(
         this.host.nativeElement,

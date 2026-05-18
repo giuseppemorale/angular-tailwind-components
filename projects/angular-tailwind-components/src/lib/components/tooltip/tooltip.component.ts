@@ -1,4 +1,15 @@
-import { Component, computed, inject, input, signal, OnDestroy, AfterViewInit, NgZone, ElementRef, viewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+  OnDestroy,
+  AfterViewInit,
+  NgZone,
+  ElementRef,
+  viewChild
+} from '@angular/core';
 import { TailwindPosition } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { DOCUMENT } from '@angular/common';
@@ -23,7 +34,7 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
   private document = inject(DOCUMENT);
   private ngZone = inject(NgZone);
   private el = inject(ElementRef);
-  
+
   readonly tooltipEl = viewChild.required<ElementRef<HTMLDivElement>>('tooltipEl');
 
   private scrollListener = () => this.updatePosition();
@@ -31,7 +42,7 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
   readonly tooltipClasses = computed(() => {
     const base = [
       'fixed z-[1070] px-3 py-1.5',
-      'text-xs font-medium text-white bg-surface-900 rounded-lg',
+      'text-xs font-medium text-white bg-neutral-900 rounded-lg',
       'shadow-lg whitespace-nowrap pointer-events-none',
       'transition-opacity duration-150',
       this.isVisible() ? 'opacity-100' : 'opacity-0'
@@ -40,7 +51,7 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
   });
 
   readonly arrowClasses = computed(() => {
-    const base = 'absolute w-2 h-2 bg-surface-900 rotate-45';
+    const base = 'absolute w-2 h-2 bg-neutral-900 rotate-45';
 
     const posMap: Record<TailwindPosition, string> = {
       top: 'top-full left-1/2 -translate-x-1/2 -mt-1',
@@ -78,7 +89,7 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
 
   updatePosition(): void {
     if (!this.targetElement) return;
-    
+
     const origin = this.getFixedOrigin();
     const targetRect = this.targetElement.getBoundingClientRect();
     const tooltipRect = this.tooltipEl().nativeElement.getBoundingClientRect();

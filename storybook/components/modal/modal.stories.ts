@@ -14,7 +14,7 @@ import {
   template: `
     <h4 tailwind-modal-title>Confirm action</h4>
     <div tailwind-modal-content>
-      <p class="text-surface-700">This action cannot be undone. Do you want to proceed?</p>
+      <p class="text-neutral-700">This action cannot be undone. Do you want to proceed?</p>
     </div>
     <div tailwind-modal-footer class="flex justify-end gap-3">
       <tailwind-button color="secondary" kind="outlined" (click)="ref.close()">Cancel</tailwind-button>
@@ -33,9 +33,9 @@ class ConfirmModalComponent {
     <div class="flex items-center gap-6">
       <tailwind-button (click)="open()">Open confirmation modal</tailwind-button>
       @if (resolved()) {
-        <p class="text-sm text-surface-600">
+        <p class="text-sm text-neutral-600">
           Result:
-          <strong [class]="confirmed() ? 'text-success-600' : 'text-surface-400'">
+          <strong [class]="confirmed() ? 'text-success-600' : 'text-neutral-400'">
             {{ confirmed() ? 'Confirmed ✓' : 'Dismissed' }}
           </strong>
         </p>
@@ -99,7 +99,7 @@ export const SimpleModal: StoryObj<TailwindModal> = {
         <tailwind-modal #modal ${argsToTemplate(args)}>
           <h4 tailwind-modal-title>Confirm action</h4>
           <div tailwind-modal-content>
-            <p class="text-surface-700">This action cannot be undone. Do you want to proceed?</p>
+            <p class="text-neutral-700">This action cannot be undone. Do you want to proceed?</p>
           </div>
           <div tailwind-modal-footer class="flex justify-end gap-3">
             <tailwind-button color="secondary" kind="outlined" (click)="modal.close()">Cancel</tailwind-button>

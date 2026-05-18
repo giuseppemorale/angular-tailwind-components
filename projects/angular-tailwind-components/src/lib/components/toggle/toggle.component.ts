@@ -15,7 +15,7 @@ import { TailwindComponent } from '../tailwind.component';
   templateUrl: './toggle.component.html',
   styleUrl: './toggle.component.css'
 })
-export class TailwindToggle extends TailwindComponent implements ControlValueAccessor  {
+export class TailwindToggle extends TailwindComponent implements ControlValueAccessor {
   /** Label text */
   readonly label = input<string>('');
   /** Aria label for accessibility */
@@ -47,7 +47,7 @@ export class TailwindToggle extends TailwindComponent implements ControlValueAcc
       'cursor-pointer disabled:cursor-not-allowed'
     ];
 
-    const stateClass = this.checked() ? 'bg-primary-600' : 'bg-surface-300';
+    const stateClass = this.checked() ? 'bg-primary-600' : 'bg-neutral-300';
 
     return [...base, sizeMap[this.size()], stateClass].join(' ');
   });

@@ -2,7 +2,7 @@
   @if (label()) {
     <label
       [attr.for]="id() ? id() + '-inner' : null"
-      class="text-sm font-medium text-surface-700"
+      class="text-sm font-medium text-neutral-700"
       [class.text-danger-600]="hasError()">
       {{ label() }}
     </label>
@@ -24,7 +24,7 @@
     (blur)="onBlur()"></textarea>
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-surface-500">
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500">
       {{ helperText() }}
     </p>
   }

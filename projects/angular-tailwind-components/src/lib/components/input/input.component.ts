@@ -44,9 +44,9 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
     const base = [
       'block w-full bg-white',
       'border transition-colors duration-150',
-      'placeholder:text-surface-400',
+      'placeholder:text-neutral-400',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed'
+      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
     ];
 
     const sizeMap: Record<TailwindSize, string> = {
@@ -59,7 +59,7 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
 
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-surface-300 focus:outline-primary-500 text-surface-900';
+      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
     return [...base, sizeMap[this.size()], stateClass].join(' ');
   });

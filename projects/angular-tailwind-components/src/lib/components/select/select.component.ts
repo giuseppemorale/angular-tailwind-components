@@ -97,7 +97,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
 
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-surface-300 focus:outline-primary-500';
+      : 'border-neutral-300 focus:outline-primary-500';
 
     const layout = this.multiple() ? 'items-start' : 'items-center';
 
@@ -106,7 +106,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
       layout,
       'pr-3 cursor-pointer text-left',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-surface-50 disabled:text-surface-400 disabled:cursor-not-allowed',
+      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed',
       sizeMap[this.size()],
       stateClass
     ].join(' ');
@@ -137,12 +137,12 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     return [
       'flex items-center justify-between px-3 py-2 text-sm cursor-pointer select-none',
       isDisabled
-        ? 'text-surface-400 cursor-not-allowed'
+        ? 'text-neutral-400 cursor-not-allowed'
         : isSelected
           ? 'bg-primary-50 text-primary-700 font-medium'
           : isActive
-            ? 'bg-surface-100 text-surface-900'
-            : 'text-surface-800 hover:bg-surface-50'
+            ? 'bg-neutral-100 text-neutral-900'
+            : 'text-neutral-800 hover:bg-neutral-50'
     ].join(' ');
   }
 

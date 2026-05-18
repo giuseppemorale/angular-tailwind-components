@@ -33,8 +33,8 @@ export const WithReactiveForm: StoryObj<TailwindTimePicker> = {
     template: `
       <div class="max-w-sm min-h-48 flex flex-col gap-3 overflow-visible pb-8">
         <tailwind-time-picker [formControl]="control" label="Orario riunione" />
-        <p class="text-xs text-surface-600">Form value:</p>
-        <pre class="text-xs bg-surface-50 p-2 rounded border border-surface-200">{{ control.value | json }}</pre>
+        <p class="text-xs text-neutral-600">Form value:</p>
+        <pre class="text-xs bg-neutral-50 p-2 rounded border border-neutral-200">{{ control.value | json }}</pre>
       </div>
     `
   })

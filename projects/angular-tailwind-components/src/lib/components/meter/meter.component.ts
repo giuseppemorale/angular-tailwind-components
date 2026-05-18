@@ -53,7 +53,7 @@ export class TailwindMeter extends TailwindComponent {
   });
 
   readonly trackContainerClasses = computed(
-    () => `flex w-full overflow-hidden rounded-full bg-surface-200 ${this.trackHeightClass()}`
+    () => `flex w-full overflow-hidden rounded-full bg-neutral-200 ${this.trackHeightClass()}`
   );
 
   legendSwatchClass(variant?: TailwindSeverity | 'primary'): string {

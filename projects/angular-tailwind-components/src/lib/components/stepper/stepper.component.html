@@ -12,8 +12,8 @@
           [class.bg-primary-600]="i <= activeIndex()"
           [class.border-primary-600]="i <= activeIndex()"
           [class.text-white]="i <= activeIndex()"
-          [class.border-surface-300]="i > activeIndex()"
-          [class.text-surface-500]="i > activeIndex()">
+          [class.border-neutral-300]="i > activeIndex()"
+          [class.text-neutral-500]="i > activeIndex()">
           @if (step.completed()) {
             <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path
@@ -29,11 +29,11 @@
           <p
             class="text-sm font-medium"
             [class.text-primary-600]="i <= activeIndex()"
-            [class.text-surface-500]="i > activeIndex()">
+            [class.text-neutral-500]="i > activeIndex()">
             {{ step.label() }}
           </p>
           @if (step.description()) {
-            <p class="text-xs text-surface-400">{{ step.description() }}</p>
+            <p class="text-xs text-neutral-400">{{ step.description() }}</p>
           }
         </div>
       </button>
@@ -41,7 +41,7 @@
         <div
           class="flex-1 h-0.5 mx-3 rounded-full transition-colors duration-200"
           [class.bg-primary-600]="i < activeIndex()"
-          [class.bg-surface-200]="i >= activeIndex()"></div>
+          [class.bg-neutral-200]="i >= activeIndex()"></div>
       }
     </div>
   }

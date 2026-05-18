@@ -2,10 +2,10 @@
   @if (showLabel()) {
     <div class="flex justify-between items-center mb-1.5">
       @if (label()) {
-        <span class="text-sm font-medium text-surface-700">{{ label() }}</span>
+        <span class="text-sm font-medium text-neutral-700">{{ label() }}</span>
       }
       @if (showValue()) {
-        <span class="text-sm font-medium text-surface-600">{{ clampedValue() }}%</span>
+        <span class="text-sm font-medium text-neutral-600">{{ clampedValue() }}%</span>
       }
     </div>
   }

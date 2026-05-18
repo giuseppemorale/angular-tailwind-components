@@ -23,12 +23,12 @@ export class TailwindTitle extends TailwindComponent {
   readonly headingClasses = computed(() => {
     const tag = this.titleTag();
     const scale: Record<TailwindTitleTag, string> = {
-      h1: 'text-3xl font-bold tracking-tight text-surface-900',
-      h2: 'text-2xl font-semibold tracking-tight text-surface-900',
-      h3: 'text-xl font-semibold tracking-tight text-surface-900',
-      h4: 'text-lg font-normal text-surface-900',
-      h5: 'text-base font-normal text-surface-900',
-      h6: 'text-sm font-normal text-surface-800 uppercase tracking-wide'
+      h1: 'text-3xl font-bold tracking-tight text-neutral-900',
+      h2: 'text-2xl font-semibold tracking-tight text-neutral-900',
+      h3: 'text-xl font-semibold tracking-tight text-neutral-900',
+      h4: 'text-lg font-normal text-neutral-900',
+      h5: 'text-base font-normal text-neutral-900',
+      h6: 'text-sm font-normal text-neutral-800 uppercase tracking-wide'
     };
     const layout = 'inline-flex items-center gap-2 min-w-0';
     const extra = this.class();

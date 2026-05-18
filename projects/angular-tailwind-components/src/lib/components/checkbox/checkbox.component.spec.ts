@@ -37,7 +37,7 @@ describe('TailwindCheckbox', () => {
     fixture.componentRef.setInput('label', 'Accept terms');
     fixture.detectChanges();
 
-    const label = fixture.nativeElement.querySelector('.text-surface-800');
+    const label = fixture.nativeElement.querySelector('.text-neutral-800');
     expect(label?.textContent).toContain('Accept terms');
   });
 });

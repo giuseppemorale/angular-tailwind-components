@@ -11,7 +11,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — Visual documentation for all components
-- 🎭 **Customizable** — Runtime semantic colors with **`defineTheme()`**; optional CSS overrides via `@theme`
+- 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
 
 ## Installation
 
@@ -66,9 +66,32 @@ export class ExampleComponent {
 
 ## Application configuration
 
-Use **`provideTailwindComponents`** from `angular-tailwind-components` to register defaults for **`TAILWIND_ICON_SIZE`**, **`TAILWIND_DATETIME_LANGUAGE`**, **`TAILWIND_COMPONENTS_SIZE`**, **`TAILWIND_PAGINATION_SUMMARY`**, and optionally **`TAILWIND_MODAL_DATA`**. It returns **`EnvironmentProviders`**: add it directly to `bootstrapApplication` / `ApplicationConfig.providers` (no spread). See the package README for the property → token table and a full example.
+Use **`defineTheme`** from `angular-tailwind-components` for app-wide **injection token** defaults and optional **`colors`** (runtime CSS variables on `document.documentElement`). It returns **`EnvironmentProviders`**: add one entry to `bootstrapApplication` / `ApplicationConfig.providers` (no spread).
 
-Use **`defineTheme`** to remap semantic colors (`primary`, `neutral`, `success`, `warning`, `danger` / `error`, `info`) at runtime via CSS variables on `document.documentElement`. It returns **`EnvironmentProviders`** the same way. For string palette values, use names from the [Tailwind color reference](https://tailwindcss.com/docs/colors). Full options, `TailwindThemeSeverityColor`, and examples are in the [package README](https://github.com/giuseppemorale/angular-tailwind-components/blob/main/projects/angular-tailwind-components/README.md#theme-colors-definetheme).
+### Example
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { defineTheme } from 'angular-tailwind-components';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    defineTheme({
+      iconSize: 20,
+      datetimeLanguage: 'it',
+      componentsSize: 'md',
+      paginationSummary: 'Items {start}-{end} of {total}',
+      colors: {
+        primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
+        danger: 'rose',
+        neutral: 'zinc'
+      }
+    })
+  ]
+};
+```
+
+You can omit **`colors`** if you only need token defaults, or omit token fields if you only need theme colors. For string palette names, see the [Tailwind color reference](https://tailwindcss.com/docs/colors). Full API (including **`TailwindThemeSeverityColor`**) and the token → `InjectionToken` table are in the [package README](https://github.com/giuseppemorale/angular-tailwind-components/blob/main/projects/angular-tailwind-components/README.md#application-configuration-definetheme).
 
 ## Components
 

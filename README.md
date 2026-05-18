@@ -11,7 +11,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — Visual documentation for all components
-- 🎭 **Customizable** — Runtime semantic colors with **`defineTheme()`**; optional CSS overrides via `@theme`
+- 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
 
 ## Installation
 
@@ -61,25 +61,71 @@ export class ExampleComponent {
 }
 ```
 
-## Application configuration
+## Application configuration (`defineTheme`)
 
-Register shared defaults for library injection tokens with **`provideTailwindComponents`**. Each property is optional; only set keys produce `Provider` entries (same effect as individual `{ provide: TAILWIND_…, useValue: … }`). The function returns **`EnvironmentProviders`** (`makeEnvironmentProviders`), so you add it as **one** entry in `providers` without the spread operator.
+Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `paginationSummary`) and, when you pass **`colors`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
+
+`TailwindDefineThemeConfig` extends **`TailwindComponentsConfig`** with an optional **`colors`** field.
+
+### Example (tokens + colors)
 
 ```typescript
 import { ApplicationConfig } from '@angular/core';
-import { provideTailwindComponents } from 'angular-tailwind-components';
+import { defineTheme } from 'angular-tailwind-components';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideTailwindComponents({
+    defineTheme({
       iconSize: 20,
       datetimeLanguage: 'it',
       componentsSize: 'md',
-      paginationSummary: 'Visualizzati {start}-{end} di {total}'
+      paginationSummary: 'Visualizzati {start}-{end} di {total}',
+      colors: {
+        primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
+        danger: 'rose',
+        neutral: 'zinc'
+      }
     })
   ]
 };
 ```
+
+### Example: tokens only
+
+```typescript
+providers: [
+  defineTheme({
+    iconSize: 20,
+    datetimeLanguage: 'it',
+    componentsSize: 'md',
+    paginationSummary: 'Items {start}-{end} of {total}'
+  })
+];
+```
+
+### Example: colors only
+
+```typescript
+providers: [defineTheme({ colors: { primary: 'indigo', neutral: 'zinc' } })];
+```
+
+### Example: spread a shared config object
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { defineTheme, type TailwindComponentsConfig } from 'angular-tailwind-components';
+
+const shared: TailwindComponentsConfig = {
+  componentsSize: 'md',
+  datetimeLanguage: 'it'
+};
+
+export const appConfig: ApplicationConfig = {
+  providers: [defineTheme({ ...shared, colors: { primary: 'indigo' } })]
+};
+```
+
+You can omit **`colors`** if you only need token defaults, or omit token keys if you only need theme colors.
 
 | Config key | Token |
 | --- | --- |
@@ -87,33 +133,12 @@ export const appConfig: ApplicationConfig = {
 | `datetimeLanguage` | `TAILWIND_DATETIME_LANGUAGE` |
 | `componentsSize` | `TAILWIND_COMPONENTS_SIZE` |
 | `paginationSummary` | `TAILWIND_PAGINATION_SUMMARY` |
-| `modalData` | `TAILWIND_MODAL_DATA` (rare at app scope; modal `open()` still supplies per-dialog data) |
+
+**`provideTailwindComponents`** is still exported for backward compatibility (token providers only, same implementation as the token slice of `defineTheme`). It is **deprecated**; prefer **`defineTheme`**.
 
 ## Theme colors (`defineTheme`)
 
-Use **`defineTheme`** from `angular-tailwind-components` to remap semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** on `document.documentElement`. It sets the same CSS custom properties as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. The function returns **`EnvironmentProviders`**: add it as a single entry in `providers` (no spread), like `provideTailwindComponents`.
-
-```typescript
-import { ApplicationConfig } from '@angular/core';
-import { defineTheme, provideTailwindComponents } from 'angular-tailwind-components';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    defineTheme({
-      colors: {
-        primary: 'violet',
-        danger: 'rose',
-        neutral: 'zinc'
-      }
-    }),
-    provideTailwindComponents({
-      iconSize: 20,
-      datetimeLanguage: 'it',
-      componentsSize: 'md'
-    })
-  ]
-};
-```
+The optional **`colors`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Color application is a **no-op during SSR** (browser only).
 
 | `colors` key | CSS variables | Default palette in `tailwind.css` |
 | --- | --- | --- |
@@ -212,7 +237,7 @@ The library uses a comprehensive design system defined via Tailwind CSS v4 `@the
 
 ### Customization
 
-Prefer **`defineTheme({ colors: { … } })`** in `ApplicationConfig.providers` for semantic colors (see [Theme colors](#theme-colors-definetheme)).
+Prefer **`defineTheme({ … })`** in `ApplicationConfig.providers` for tokens and semantic colors (see [Application configuration](#application-configuration-definetheme)).
 
 You can still override any token in your own CSS, for example:
 

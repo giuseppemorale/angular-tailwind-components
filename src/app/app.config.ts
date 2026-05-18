@@ -1,7 +1,7 @@
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { provideTailwindComponents } from 'angular-tailwind-components';
+import { defineTheme } from 'angular-tailwind-components';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { options } from './core/transloco/transloco.options';
 import { TAILWIND_OPTIONS } from './core/tailwind-options/tailwind-options';
@@ -19,6 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideTransloco(options),
     provideBrowserGlobalErrorListeners(),
     provideAppInitializer(inizializeApp),
-    provideTailwindComponents(TAILWIND_OPTIONS)
+    defineTheme({ ...TAILWIND_OPTIONS })
   ]
 };

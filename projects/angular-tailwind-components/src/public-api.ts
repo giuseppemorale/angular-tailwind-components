@@ -1,5 +1,5 @@
 /*
- * Public API neutral of angular-tailwind-components
+ * Public API Surface of angular-tailwind-components
  */
 
 // Models & Types

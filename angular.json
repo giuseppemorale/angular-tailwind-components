@@ -39,14 +39,6 @@
             "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
             "compodoc": false,
             "port": 6006
-          },
-          "configurations": {
-            "stackblitz": {
-              "ci": true,
-              "host": "0.0.0.0",
-              "open": false,
-              "port": 6006
-            }
           }
         },
         "build-storybook": {

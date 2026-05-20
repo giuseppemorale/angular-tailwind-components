@@ -277,7 +277,7 @@ ng build angular-tailwind-components
 # Start Storybook (locale)
 npm run storybook
 
-# Storybook per StackBlitz (CI, host 0.0.0.0, porta 6006)
+# StackBlitz: build statico Storybook + serve (primo avvio ~1–2 min)
 npm run stackblitz
 ```
 

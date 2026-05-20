@@ -2,8 +2,6 @@
   "installDependencies": true,
   "startCommand": "npm run stackblitz",
   "env": {
-    "CI": "true",
-    "STACKBLITZ": "true",
-    "NODE_OPTIONS": "--max-old-space-size=6144"
+    "CI": "true"
   }
 }

@@ -2,8 +2,6 @@
 
 A comprehensive Angular component library built entirely with **Tailwind CSS v4** — zero additional UI dependencies.
 
-**[Live demo (Storybook) on StackBlitz](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz)**
-
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz)
 
 ## Features

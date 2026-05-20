@@ -1,6 +1,8 @@
 # Angular Tailwind Components
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz&title=Angular%20Tailwind%20Components%20%E2%80%94%20Storybook)
+
+Apri la demo live su StackBlitz: avvia **Storybook** (tutti i componenti, stesso sorgente del repo).
 
 A comprehensive Angular component library built entirely with **Tailwind CSS v4** — zero additional UI dependencies.
 
@@ -277,8 +279,11 @@ You can still override any token in your own CSS, for example:
 # Build the library
 ng build angular-tailwind-components
 
-# Start Storybook
+# Start Storybook (locale)
 npm run storybook
+
+# Storybook per StackBlitz (CI, host 0.0.0.0, porta 6006)
+npm run stackblitz
 ```
 
 ### Component Conventions

@@ -1,4 +1,7 @@
 {
   "installDependencies": true,
-  "startCommand": "npm run stackblitz"
+  "startCommand": "npm run stackblitz",
+  "env": {
+    "CI": "true"
+  }
 }

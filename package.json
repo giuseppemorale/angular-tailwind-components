@@ -1,6 +1,6 @@
 {
   "name": "angular-tailwind-components",
-  "version": "1.6.4",
+  "version": "1.6.3",
   "author": "Giuseppe Morale",
   "license": "MIT",
   "repository": {
@@ -26,8 +26,8 @@
     "test": "ng test",
     "release": "node scripts/release.js",
     "storybook": "ng run angular-tailwind-components:storybook",
+    "stackblitz": "ng run angular-tailwind-components:build-storybook:stackblitz && npx --yes serve@14 storybook-static -l tcp://0.0.0.0:6006 -s",
     "build:storybook": "ng run angular-tailwind-components:build-storybook",
-    "stackblitz": "ng run angular-tailwind-components:storybook:stackblitz",
     "prettier:write": "prettier --write projects/**/*.{ts,html,css} src/**/*.{ts,html,css}",
     "prettier:check": "prettier --check ."
   },
@@ -45,8 +45,6 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@analogjs/storybook-angular": "^2.5.1",
-    "@analogjs/vite-plugin-angular": "^2.5.1",
     "@angular-devkit/architect": "^0.2102.10",
     "@angular-devkit/build-angular": "^21.2.10",
     "@angular-devkit/core": "^21.2.10",
@@ -69,8 +67,6 @@
     "storybook": "^10.3.6",
     "tailwindcss": "^4.2.4",
     "typescript": "~5.9.2",
-    "vite": "^7.3.2",
-    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.8"
   }
 }

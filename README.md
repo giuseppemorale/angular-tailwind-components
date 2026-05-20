@@ -1,10 +1,10 @@
 # Angular Tailwind Components
 
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz&title=Angular%20Tailwind%20Components%20%E2%80%94%20Storybook)
+
+Apri la demo live su StackBlitz: avvia **Storybook** (tutti i componenti, stesso sorgente del repo).
+
 A comprehensive Angular component library built entirely with **Tailwind CSS v4** — zero additional UI dependencies.
-
-**[Live demo (Storybook) on StackBlitz](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz)**
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz)
 
 ## Features
 
@@ -33,7 +33,10 @@ Your consuming project must have **Tailwind CSS v4** configured. Add the library
 
 The published `styles/tailwind.css` scans the sibling `fesm2022` bundle plus library `.html` / `.ts` sources for development. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
 
-That stylesheet also includes Tailwind’s base import, so you do **not** need a separate `@import 'tailwindcss'` in your app.
+The same import also pulls in:
+@import 'tailwindcss';
+
+So you don't need to import the base styles
 
 ## Quick Start
 

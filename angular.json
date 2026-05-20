@@ -58,11 +58,6 @@
             "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
             "compodoc": false,
             "outputDir": "storybook-static"
-          },
-          "configurations": {
-            "stackblitz": {
-              "quiet": true
-            }
           }
         },
         "build-storybook-app": {

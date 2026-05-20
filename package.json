@@ -1,6 +1,6 @@
 {
   "name": "angular-tailwind-components",
-  "version": "1.6.3",
+  "version": "1.6.2",
   "author": "Giuseppe Morale",
   "license": "MIT",
   "repository": {
@@ -26,7 +26,7 @@
     "test": "ng test",
     "release": "node scripts/release.js",
     "storybook": "ng run angular-tailwind-components:storybook",
-    "stackblitz": "ng run angular-tailwind-components:build-storybook:stackblitz && npx --yes serve@14 storybook-static -l tcp://0.0.0.0:6006 -s",
+    "stackblitz": "ng run angular-tailwind-components:storybook:stackblitz",
     "build:storybook": "ng run angular-tailwind-components:build-storybook",
     "prettier:write": "prettier --write projects/**/*.{ts,html,css} src/**/*.{ts,html,css}",
     "prettier:check": "prettier --check ."

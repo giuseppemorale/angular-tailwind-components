@@ -1,7 +1,5 @@
 # Angular Tailwind Components
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/fork/github/giuseppemorale/angular-tailwind-components?startScript=stackblitz)
-
 A comprehensive Angular component library built entirely with **Tailwind CSS v4** — zero additional UI dependencies.
 
 ## Features

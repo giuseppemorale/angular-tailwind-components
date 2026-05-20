@@ -26,7 +26,6 @@
     "test": "ng test",
     "release": "node scripts/release.js",
     "storybook": "ng run angular-tailwind-components:storybook",
-    "stackblitz": "ng build angular-tailwind-components && node scripts/copy-icons.js dist && ng serve playground",
     "build:storybook": "ng run angular-tailwind-components:build-storybook",
     "prettier:write": "prettier --write projects/**/*.{ts,html,css} src/**/*.{ts,html,css}",
     "prettier:check": "prettier --check ."

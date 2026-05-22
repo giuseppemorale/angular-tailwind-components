@@ -1,4 +1,5 @@
 ---
+title: Storybook alignment
 description: When adding a new component to angular-tailwind-components, always add Storybook stories and Docs.mdx.
 globs: projects/angular-tailwind-components/src/lib/components/**/*.ts
 alwaysApply: false
@@ -12,3 +13,9 @@ Quando aggiungi un nuovo componente in `projects/angular-tailwind-components/src
 2. **Documentazione**: crea `storybook/components/<name>/Docs.mdx` con Meta, utilizzo, Canvas di anteprima e tabella proprietà (stesso stile degli altri componenti, es. Badge).
 3. Registra il componente in `projects/angular-tailwind-components/.storybook/preview.ts` (`ALL_COMPONENTS`) se non è già importabile globalmente nelle stories.
 4. Aggiorna `storybook/Introduction.mdx` e i **README** alla radice del repo e in `projects/angular-tailwind-components/` (conteggio componenti e voce in elenco) quando introduce un componente esposto pubblicamente.
+
+# Modifica componenti libreria
+
+Quando modifichi un componente in `projects/angular-tailwind-components/src/lib/components/`:
+1. **Storybook**: cerca la story `storybook/components/<name>/<name>.stories.ts` e aggiorna proprietà, valori o qualsiasi cosa sia stata modificata
+2. **Documentazione**: aggiorna `storybook/components/<name>/Docs.mdx` con le modifiche effettuate al componente.

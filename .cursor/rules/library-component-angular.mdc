@@ -1,0 +1,55 @@
+---
+title: Creazione e modifica componenti
+description: Convenzioni Angular per creare o modificare componenti della libreria (signals, OnPush, CVA, test Vitest, template).
+globs: projects/angular-tailwind-components/src/lib/components/**/*
+alwaysApply: false
+---
+
+# Componenti Angular (angular-tailwind-components)
+
+In `projects/angular-tailwind-components/src/lib/components/`: estendi `TailwindComponent`, selector `tailwind-<nome>`, classe `Tailwind<Nome>`, `imports` nel `@Component`.
+
+## Signals
+
+- API pubblica: `input()`, `output()`, `model()` — non decorator `@Input` / `@Output`.
+- Stato interno: `signal()`; derivati: `computed()`.
+- `effect()` solo per side effect leggeri (sync input esterni); evita logica pesante.
+- Two-way: `model()`; in CVA allinea in `writeValue` e chiama `onChange` / `onTouched`.
+
+## Change detection
+
+Su **Angular ≤ 21** imposta sempre `changeDetection: ChangeDetectionStrategy.OnPush`. Da Angular 22 è default — ometti `changeDetection` dopo la migrazione.
+
+## Form (ControlValueAccessor)
+
+Se usabile in form (`formControlName`, `ngModel`):
+
+- `implements ControlValueAccessor` + provider `NG_VALUE_ACCESSOR` con `forwardRef`.
+- `writeValue`, `registerOnChange`, `registerOnTouched`, `setDisabledState` (pattern `isDisabled = signal(false)`).
+- Esempi: `input`, `checkbox`, `select`, `toggle`, `textarea`.
+
+## Template
+
+- Logica nel `.ts`; template dichiarativo con `@if` / `@for` / `@switch`.
+- Componenti compositi: riusa il design system (`tailwind-select`, `tailwind-button`, …), non HTML nativo duplicato.
+- Esempio: `tailwind-pagination` usa `tailwind-select`, non `<select>`.
+
+## Test Vitest (obbligatorio)
+
+Dopo creazione o modifica significativa: crea/aggiorna `<nome>.component.spec.ts` seguendo la skill **`generate-component-vitest-test`**.
+
+Verifica con **un comando secco** (mai `ng test --watch` né processi in background):
+
+`npx ng test angular-tailwind-components --include='src/lib/components/<folder>/<nome>.component.spec.ts' --watch=false`
+
+## Storybook
+
+Vedi rule **`library-component-storybook`**: stories + `Docs.mdx` per componenti nuovi o modificati in modo rilevante.
+
+## Checklist
+
+- [ ] Signals + OnPush (≤ 21)
+- [ ] CVA se form-compatible
+- [ ] Template pulito con componenti DS
+- [ ] Spec Vitest verde
+- [ ] Storybook + Docs aggiornati

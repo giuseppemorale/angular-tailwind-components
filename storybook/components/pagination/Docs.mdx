@@ -74,9 +74,15 @@ Eredita `TailwindComponent` (`id`, `class`).
     </tr>
     <tr>
       <td><code>pageSize</code></td>
-      <td><code>number</code></td>
+      <td><code>ModelSignal&lt;number&gt;</code></td>
       <td><code>10</code></td>
-      <td>Elementi per pagina.</td>
+      <td>Elementi per pagina (two-way). Modificabile dalla select interna.</td>
+    </tr>
+    <tr>
+      <td><code>lengthOptions</code></td>
+      <td><code>number[]</code></td>
+      <td><code>[5, 10, 25, 50]</code></td>
+      <td>Valori del <code>tailwind-select</code> «record per pagina». Se vuoto, il select non viene mostrato.</td>
     </tr>
     <tr>
       <td><code>currentPage</code></td>
@@ -133,6 +139,16 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>onPageChange</code></td>
       <td><code>number</code></td>
       <td>Nuova pagina (1-based).</td>
+    </tr>
+    <tr>
+      <td><code>onPageSizeChange</code></td>
+      <td><code>number</code></td>
+      <td>Nuovo numero di record per pagina; la pagina corrente torna a <code>1</code>.</td>
+    </tr>
+    <tr>
+      <td><code>pageSizeChange</code></td>
+      <td><code>number</code></td>
+      <td>Alias two-way di <code>pageSize</code> (stesso payload di <code>onPageSizeChange</code>).</td>
     </tr>
   </tbody>
 </table>

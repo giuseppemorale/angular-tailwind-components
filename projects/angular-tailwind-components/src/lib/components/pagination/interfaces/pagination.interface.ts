@@ -4,4 +4,5 @@ export interface Pagination {
   readonly currentPage: number;
   readonly ariaLabel: string;
   readonly summary: string;
+  readonly lengthOptions?: readonly number[];
 }

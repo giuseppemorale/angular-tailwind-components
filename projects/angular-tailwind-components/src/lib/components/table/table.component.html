@@ -11,7 +11,7 @@
     <!-- `table-fixed`: consente `w-*` / `min-w-*` / `max-w-*` sulle celle e sugli `th` proiettati. -->
     <table class="w-full min-w-0 table-fixed text-sm text-left divide-y divide-neutral-100">
       <ng-content select="thead" />
-      @for (row of displayedData(); track row; let i = $index) {
+      @for (row of displayedData(); track $index; let i = $index) {
         <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />
       } @empty {
         <tbody>
@@ -28,7 +28,9 @@
       <div class="px-4 py-3 border-t border-neutral-200 bg-white">
         <tailwind-pagination
           [totalItems]="pagination()?.totalItems ?? data().length"
-          [pageSize]="pagination()?.pageSize ?? 10"
+          [pageSize]="pageSize()"
+          (pageSizeChange)="pageSize.set($event)"
+          [lengthOptions]="paginationLengthOptions()"
           [currentPage]="currentPage()"
           (onPageChange)="currentPage.set($event)"
           [ariaLabel]="pagination()?.ariaLabel ?? 'Pagination'"

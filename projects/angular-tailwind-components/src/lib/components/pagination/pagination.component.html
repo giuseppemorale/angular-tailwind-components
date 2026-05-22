@@ -1,9 +1,21 @@
 <div class="flex flex-wrap items-center justify-between gap-4 w-full">
-  @if (summary()) {
-    <span class="text-sm text-neutral-700 dark:text-neutral-300">
-      {{ summaryText() }}
-    </span>
-  }
+  <div class="flex flex-wrap items-center gap-3 min-w-0">
+    @if (summary()) {
+      <span class="text-sm text-neutral-700 dark:text-neutral-300">
+        {{ summaryText() }}
+      </span>
+    }
+
+    @if (lengthOptions().length > 0) {
+      <div class="w-20 shrink-0">
+        <tailwind-select
+          size="sm"
+          [options]="pageSizeSelectOptions()"
+          [value]="pageSize()"
+          (valueChange)="onPageSizeValueChange($event)" />
+      </div>
+    }
+  </div>
 
   <nav [attr.aria-label]="ariaLabel()" class="flex items-center gap-1">
     <!-- Previous -->

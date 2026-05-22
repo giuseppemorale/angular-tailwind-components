@@ -7,7 +7,8 @@ const meta: Meta<TailwindPagination> = {
   argTypes: {
     totalItems: { control: 'number' },
     pageSize: { control: 'number' },
-    currentPage: { control: 'number' }
+    currentPage: { control: 'number' },
+    lengthOptions: { control: 'object' }
   }
 };
 export default meta;

@@ -1,6 +1,6 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, HostListener, computed, contentChild, effect, inject, input, output, signal } from '@angular/core';
-import { Pagination, TailwindPagination } from '../pagination/pagination.component';
+import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
@@ -33,6 +33,9 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
   readonly paginationSummary = computed(
     () => this.pagination()?.summary ?? this.tailwindPaginationSummary ?? 'Showing {start}-{end} of {total}'
   );
+  readonly paginationLengthOptions = computed(
+    () => this.pagination()?.lengthOptions ?? [...DEFAULT_PAGINATION_LENGTH_OPTIONS]
+  );
 
   readonly onSortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
   readonly onSelectionChange = output<Set<number>>();
@@ -57,6 +60,7 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
   readonly sortDir = signal<'asc' | 'desc'>('asc');
   readonly selectedRows = signal<Set<number>>(new Set());
   readonly currentPage = signal<number>(1);
+  readonly pageSize = signal<number>(10);
 
   constructor() {
     super();
@@ -64,6 +68,12 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
       const fromInput = this.pagination()?.currentPage;
       if (fromInput != null && fromInput >= 1) {
         this.currentPage.set(fromInput);
+      }
+    });
+    effect(() => {
+      const fromInput = this.pagination()?.pageSize;
+      if (fromInput != null && fromInput > 0) {
+        this.pageSize.set(fromInput);
       }
     });
   }
@@ -88,7 +98,7 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
   readonly displayedData = computed(() => {
     const rows = this.sortedData();
     if (!this.paginated()) return rows;
-    const size = this.pagination()?.pageSize ?? 10;
+    const size = this.pageSize();
     const page = this.currentPage();
     return rows.slice((page - 1) * size, page * size);
   });

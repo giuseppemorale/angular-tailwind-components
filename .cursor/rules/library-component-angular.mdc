@@ -41,7 +41,7 @@ Su **Angular ≤ 21** imposta sempre `changeDetection: ChangeDetectionStrategy.O
 
 ## Form (ControlValueAccessor)
 
-Se usabile in form (`formControlName`, `ngModel`):
+Se usabile in form (`formControl`, `ngModel`):
 
 - `implements ControlValueAccessor` + provider `NG_VALUE_ACCESSOR` con `forwardRef`.
 - `writeValue`, `registerOnChange`, `registerOnTouched`, `setDisabledState` (pattern `isDisabled = signal(false)`).

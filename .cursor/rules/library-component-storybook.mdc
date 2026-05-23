@@ -1,6 +1,6 @@
 ---
 title: Storybook alignment
-description: When adding a new component to angular-tailwind-components, always add Storybook stories and Docs.mdx.
+description: When adding or modify a new component to angular-tailwind-components, always add Storybook stories and Docs.mdx.
 globs: projects/angular-tailwind-components/src/lib/components/**/*.ts
 alwaysApply: false
 ---

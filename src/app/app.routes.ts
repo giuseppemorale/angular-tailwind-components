@@ -4,19 +4,19 @@ export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   {
     path: 'home',
-    loadComponent: () => import('./pages/home/home.component').then((m) => m.HomeComponent)
+    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent)
   },
   {
     path: 'profile',
-    loadComponent: () => import('./pages/profile/profile.component').then((m) => m.ProfileComponent)
+    loadComponent: () => import('./pages/profile/profile.component').then(m => m.ProfileComponent)
   },
   {
     path: 'settings',
-    loadComponent: () => import('./pages/settings/settings.component').then((m) => m.SettingsComponent)
+    loadComponent: () => import('./pages/settings/settings.component').then(m => m.SettingsComponent)
   },
   {
     path: 'docs',
-    loadComponent: () => import('./pages/docs/docs.component').then((m) => m.DocsComponent)
+    loadComponent: () => import('./pages/docs/docs.component').then(m => m.DocsComponent)
   },
   { path: '**', redirectTo: 'home' }
 ];

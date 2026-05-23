@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  inject,
+  input,
+  model,
+  signal
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindComponent } from '../tailwind.component';

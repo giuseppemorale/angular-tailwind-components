@@ -2,7 +2,18 @@
   [ngClass]="computedClasses()"
   [disabled]="disabled()"
   [type]="type()"
+  [attr.role]="role()"
   [attr.aria-disabled]="disabled() || null"
   (click)="handleClick($event)">
-  <ng-content />
+  <span class="inline-flex min-w-0 items-center justify-center gap-2">
+    @if (icon() && iconPosition() === 'left') {
+      <tailwind-icon [icon]="icon()!" [size]="iconPixelSize()" class="shrink-0" />
+    }
+    <span class="tailwind-button-label inline-flex min-w-0 items-center empty:hidden">
+      <ng-content />
+    </span>
+    @if (icon() && iconPosition() === 'right') {
+      <tailwind-icon [icon]="icon()!" [size]="iconPixelSize()" class="shrink-0" />
+    }
+  </span>
 </button>

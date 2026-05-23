@@ -101,9 +101,10 @@ function isSemanticPaletteObject(value: object): value is TailwindThemeSemanticP
 /**
  * Normalizes object `colors` values: legacy flat shade map vs `{ shades, on? }`.
  */
-function normalizeSemanticColorObject(
-  value: Exclude<TailwindThemeSeverityColor, string>
-): { shades: TailwindThemeSemanticShades; on?: TailwindThemeSemanticShades } {
+function normalizeSemanticColorObject(value: Exclude<TailwindThemeSeverityColor, string>): {
+  shades: TailwindThemeSemanticShades;
+  on?: TailwindThemeSemanticShades;
+} {
   if (isSemanticPaletteObject(value)) {
     return { shades: value.shades, on: value.on };
   }

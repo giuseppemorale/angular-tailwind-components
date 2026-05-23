@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, input, OnDestroy, OnInit, output, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  input,
+  OnDestroy,
+  OnInit,
+  output,
+  signal,
+  viewChild
+} from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindMenuItem } from '../../models';
 

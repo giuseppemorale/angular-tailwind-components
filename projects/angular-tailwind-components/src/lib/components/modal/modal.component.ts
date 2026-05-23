@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, input, output, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  input,
+  output,
+  signal,
+  viewChild
+} from '@angular/core';
 import { TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 

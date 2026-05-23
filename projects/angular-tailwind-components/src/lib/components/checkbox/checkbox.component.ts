@@ -16,7 +16,7 @@ import { TailwindComponent } from '../tailwind.component';
   styleUrl: './checkbox.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TailwindCheckbox extends TailwindComponent implements ControlValueAccessor  {
+export class TailwindCheckbox extends TailwindComponent implements ControlValueAccessor {
   /** Label text */
   readonly label = input<string>('');
   /** Description text */
@@ -24,7 +24,7 @@ export class TailwindCheckbox extends TailwindComponent implements ControlValueA
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Unique ID */
-  
+
   /** Two-way bound checked state */
   readonly checked = model<boolean>(false);
 
@@ -70,4 +70,3 @@ export class TailwindCheckbox extends TailwindComponent implements ControlValueA
     this.onTouched();
   }
 }
-

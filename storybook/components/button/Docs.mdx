@@ -15,8 +15,8 @@ import * as ButtonStories from './button.stories';
 @Component({
   imports: [TailwindButton],
   template: `
-    <tailwind-button type="button" color="primary" kind="solid" size="md" [disabled]="false">
-      Button
+    <tailwind-button type="button" color="primary" kind="solid" size="md" icon="plus">
+      Add item
     </tailwind-button>`
 })
 export class ExampleComponent {}
@@ -73,6 +73,24 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>'button' | 'submit' | 'reset'</code></td>
       <td><code>'button'</code></td>
       <td>Attributo <code>type</code> nativo.</td>
+    </tr>
+    <tr>
+      <td><code>role</code></td>
+      <td><code>TailwindButtonRole</code></td>
+      <td><code>'button'</code></td>
+      <td>Attributo ARIA <code>role</code>.</td>
+    </tr>
+    <tr>
+      <td><code>icon</code></td>
+      <td><code>TailwindHeroicon | undefined</code></td>
+      <td>—</td>
+      <td>Icona Heroicons outline nel pulsante. Con il testo proiettato: icona + etichetta; senza contenuto: solo icona (padding quadrato).</td>
+    </tr>
+    <tr>
+      <td><code>iconPosition</code></td>
+      <td><code>'left' | 'right'</code></td>
+      <td><code>'left'</code></td>
+      <td>Posizione dell&apos;icona rispetto all&apos;etichetta.</td>
     </tr>
   </tbody>
 </table>

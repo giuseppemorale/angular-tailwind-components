@@ -1,4 +1,18 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, input, model, OnDestroy, signal, TemplateRef, ViewContainerRef, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  inject,
+  input,
+  model,
+  OnDestroy,
+  signal,
+  TemplateRef,
+  ViewContainerRef,
+  viewChild
+} from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { fromEvent, Subscription } from 'rxjs';

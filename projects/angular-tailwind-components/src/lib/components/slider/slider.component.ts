@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, booleanAttribute, Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  booleanAttribute,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  input,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -111,9 +121,7 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
 
   readonly fillStartPct = computed(() => (this.range() ? Math.min(this.lowPct(), this.highPct()) : 0));
 
-  readonly fillWidthPct = computed(() =>
-    this.range() ? Math.abs(this.highPct() - this.lowPct()) : this.singlePct()
-  );
+  readonly fillWidthPct = computed(() => (this.range() ? Math.abs(this.highPct() - this.lowPct()) : this.singlePct()));
 
   readonly tickPositions = computed(() => {
     if (!this.showTicks()) {

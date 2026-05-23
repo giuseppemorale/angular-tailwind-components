@@ -36,7 +36,4 @@ export type TailwindThemeSemanticPaletteObject = {
  * - **Flat object:** `Partial<Record<shade, string>>` — explicit CSS colors per shade (`'50'` … `'950'`); same as `{ shades: { … } }`.
  * - **Structured object:** `{ shades, on? }` — optional `on` defines foreground (contrast) per shade; written as `--color-on-<semantic>-<shade>`.
  */
-export type TailwindThemeSeverityColor =
-  | string
-  | TailwindThemeSemanticPaletteObject
-  | TailwindThemeSemanticShades;
+export type TailwindThemeSeverityColor = string | TailwindThemeSemanticPaletteObject | TailwindThemeSemanticShades;

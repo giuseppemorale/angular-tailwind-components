@@ -1,12 +1,22 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
-import { TailwindSize, TailwindColor, TailwindButtonKind } from '../../models';
+import type { TailwindHeroicon, TailwindIconPosition } from '../../models';
+import { TailwindSize, TailwindColor, TailwindButtonKind, TailwindButtonRole } from '../../models';
 import { TAILWIND_BUTTON_KIND } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
+import { TailwindIcon } from '../icon/icon.component';
+
+const iconPixelSizeMap: Record<TailwindSize, number> = {
+  xs: 14,
+  sm: 16,
+  md: 18,
+  lg: 20,
+  xl: 22
+};
 
 @Component({
+  imports: [NgClass, TailwindIcon],
   selector: 'tailwind-button',
-  imports: [NgClass],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,14 +38,22 @@ export class TailwindButton extends TailwindComponent {
   readonly disabled = input<boolean>(false);
   /** HTML button type attribute */
   readonly type = input<'button' | 'submit' | 'reset'>('button');
+  /** ARIA role attribute */
+  readonly role = input<TailwindButtonRole>('button');
+  /** Optional Heroicons outline icon inside the button */
+  readonly icon = input<TailwindHeroicon | undefined>();
+  /** Icon placement when both icon and label are shown */
+  readonly iconPosition = input<TailwindIconPosition>('left');
 
   /** Emitted when the button is clicked (not disabled). */
   readonly onClick = output<MouseEvent>();
 
+  readonly iconPixelSize = computed(() => iconPixelSizeMap[this.size()]);
+
   /** Computed Tailwind classes based on color, kind, size, and state */
   readonly computedClasses = computed(() => {
     const base = [
-      'inline-flex items-center justify-center gap-2',
+      'inline-flex items-center justify-center',
       'font-medium',
       'transition-all duration-150 ease-in-out',
       'focus-visible:outline-2 focus-visible:outline-offset-2',
@@ -55,8 +73,7 @@ export class TailwindButton extends TailwindComponent {
         'bg-success-600 text-on-success-600 hover:bg-success-700 hover:text-on-success-700 active:bg-success-800 active:text-on-success-800 border-transparent focus-visible:outline-success-600 shadow-sm',
       warning:
         'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-transparent focus-visible:outline-warning-500 shadow-sm',
-      info:
-        'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-transparent focus-visible:outline-info-600 shadow-sm'
+      info: 'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-transparent focus-visible:outline-info-600 shadow-sm'
     };
 
     /** Filled surface like `solid`, without box shadow or visible border. */
@@ -71,8 +88,7 @@ export class TailwindButton extends TailwindComponent {
         'bg-success-600 text-on-success-600 hover:bg-success-700 hover:text-on-success-700 active:bg-success-800 active:text-on-success-800 border-0 shadow-none focus-visible:outline-success-600',
       warning:
         'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-0 shadow-none focus-visible:outline-warning-500',
-      info:
-        'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-0 shadow-none focus-visible:outline-info-600'
+      info: 'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-0 shadow-none focus-visible:outline-info-600'
     };
 
     const outlinedMap: Record<TailwindColor, string> = {
@@ -130,17 +146,19 @@ export class TailwindButton extends TailwindComponent {
       xl: 'text-base px-6 py-3 rounded-lg'
     };
 
-    const iconSizeMap: Record<TailwindSize, string> = {
-      xs: 'p-1 rounded-sm',
-      sm: 'p-1.5 rounded-md',
-      md: 'p-2 rounded-md',
-      lg: 'p-2.5 rounded-lg',
-      xl: 'p-3 rounded-lg'
+    /** Square padding when `icon` is set and projected label is empty (icon-only). */
+    const iconOnlySizeMap: Record<TailwindSize, string> = {
+      xs: 'has-[.tailwind-button-label:empty]:p-1 has-[.tailwind-button-label:empty]:px-1',
+      sm: 'has-[.tailwind-button-label:empty]:p-1.5 has-[.tailwind-button-label:empty]:px-1.5',
+      md: 'has-[.tailwind-button-label:empty]:p-2 has-[.tailwind-button-label:empty]:px-2',
+      lg: 'has-[.tailwind-button-label:empty]:p-2.5 has-[.tailwind-button-label:empty]:px-2.5',
+      xl: 'has-[.tailwind-button-label:empty]:p-3 has-[.tailwind-button-label:empty]:px-3'
     };
 
-    return [...base, styleMap[this.kind()][this.color()] || styleMap['solid']['primary'], sizeMap[this.size()]].join(
-      ' '
-    );
+    const size = this.size();
+    const sizeClasses = [sizeMap[size], this.icon() ? iconOnlySizeMap[size] : ''].filter(Boolean).join(' ');
+
+    return [...base, styleMap[this.kind()][this.color()] || styleMap['solid']['primary'], sizeClasses].join(' ');
   });
 
   handleClick(event: MouseEvent): void {

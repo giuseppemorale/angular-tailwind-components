@@ -1,5 +1,16 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, computed, contentChild, effect, inject, input, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  computed,
+  contentChild,
+  effect,
+  inject,
+  input,
+  output,
+  signal
+} from '@angular/core';
 import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';

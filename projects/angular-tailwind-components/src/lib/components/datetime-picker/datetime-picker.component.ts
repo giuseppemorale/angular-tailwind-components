@@ -1,14 +1,40 @@
 import { formatDate } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, HostListener, inject, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  inject,
+  input,
+  signal
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 type Lang = 'it' | 'en';
 
-const I18N: Record<Lang, { months: string[]; weekDays: string[]; time: string; today: string; confirm: string; placeholder: string }> = {
+const I18N: Record<
+  Lang,
+  { months: string[]; weekDays: string[]; time: string; today: string; confirm: string; placeholder: string }
+> = {
   it: {
-    months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
+    months: [
+      'Gennaio',
+      'Febbraio',
+      'Marzo',
+      'Aprile',
+      'Maggio',
+      'Giugno',
+      'Luglio',
+      'Agosto',
+      'Settembre',
+      'Ottobre',
+      'Novembre',
+      'Dicembre'
+    ],
     weekDays: ['Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa', 'Do'],
     time: 'Ora',
     today: 'Oggi',
@@ -16,7 +42,20 @@ const I18N: Record<Lang, { months: string[]; weekDays: string[]; time: string; t
     placeholder: 'Seleziona data e ora'
   },
   en: {
-    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
     weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
     time: 'Time',
     today: 'Today',
@@ -73,12 +112,11 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
     }
   });
 
-  readonly monthYearLabel = computed(() =>
-    `${this.i18n.months[this.viewMonth()]} ${this.viewYear()}`
-  );
+  readonly monthYearLabel = computed(() => `${this.i18n.months[this.viewMonth()]} ${this.viewYear()}`);
 
   readonly calendarDays = computed(() => {
-    const y = this.viewYear(), m = this.viewMonth();
+    const y = this.viewYear(),
+      m = this.viewMonth();
     const offset = (new Date(y, m, 1).getDay() + 6) % 7; // Mon = 0
     const total = new Date(y, m + 1, 0).getDate();
     const days: number[] = Array(offset).fill(0);
@@ -98,9 +136,15 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
     this.viewYear.set(ref.getFullYear());
   }
 
-  registerOnChange(fn: (v: Date | null) => void): void { this.onChange = fn; }
-  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(disabled: boolean): void { this.isDisabled.set(disabled); }
+  registerOnChange(fn: (v: Date | null) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(disabled: boolean): void {
+    this.isDisabled.set(disabled);
+  }
 
   togglePanel(): void {
     if (this.isDisabled()) return;
@@ -123,18 +167,28 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
   }
 
   prevMonth(): void {
-    if (this.viewMonth() === 0) { this.viewMonth.set(11); this.viewYear.update(y => y - 1); }
-    else { this.viewMonth.update(m => m - 1); }
+    if (this.viewMonth() === 0) {
+      this.viewMonth.set(11);
+      this.viewYear.update(y => y - 1);
+    } else {
+      this.viewMonth.update(m => m - 1);
+    }
   }
 
   nextMonth(): void {
-    if (this.viewMonth() === 11) { this.viewMonth.set(0); this.viewYear.update(y => y + 1); }
-    else { this.viewMonth.update(m => m + 1); }
+    if (this.viewMonth() === 11) {
+      this.viewMonth.set(0);
+      this.viewYear.update(y => y + 1);
+    } else {
+      this.viewMonth.update(m => m + 1);
+    }
   }
 
   selectDay(day: number): void {
     const cur = this.draft();
-    this.draft.set(new Date(this.viewYear(), this.viewMonth(), day, cur?.getHours() ?? 0, cur?.getMinutes() ?? 0, 0, 0));
+    this.draft.set(
+      new Date(this.viewYear(), this.viewMonth(), day, cur?.getHours() ?? 0, cur?.getMinutes() ?? 0, 0, 0)
+    );
   }
 
   isSelected(day: number): boolean {

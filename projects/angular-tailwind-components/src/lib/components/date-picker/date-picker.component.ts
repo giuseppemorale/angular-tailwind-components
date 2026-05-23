@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  HostListener,
+  inject,
+  input,
+  model,
+  signal
+} from '@angular/core';
 import { formatDate } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
@@ -6,16 +17,45 @@ import { TailwindComponent } from '../tailwind.component';
 
 type Lang = 'it' | 'en';
 
-const I18N: Record<Lang, { months: string[]; weekDays: string[]; today: string; confirm: string; placeholder: string }> = {
+const I18N: Record<
+  Lang,
+  { months: string[]; weekDays: string[]; today: string; confirm: string; placeholder: string }
+> = {
   it: {
-    months: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
+    months: [
+      'Gennaio',
+      'Febbraio',
+      'Marzo',
+      'Aprile',
+      'Maggio',
+      'Giugno',
+      'Luglio',
+      'Agosto',
+      'Settembre',
+      'Ottobre',
+      'Novembre',
+      'Dicembre'
+    ],
     weekDays: ['Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa', 'Do'],
     today: 'Oggi',
     confirm: 'Applica',
     placeholder: 'Seleziona data'
   },
   en: {
-    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
     weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
     today: 'Today',
     confirm: 'Apply',
@@ -66,12 +106,11 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     }
   });
 
-  readonly monthYearLabel = computed(() =>
-    `${this.i18n.months[this.viewMonth()]} ${this.viewYear()}`
-  );
+  readonly monthYearLabel = computed(() => `${this.i18n.months[this.viewMonth()]} ${this.viewYear()}`);
 
   readonly calendarDays = computed(() => {
-    const y = this.viewYear(), m = this.viewMonth();
+    const y = this.viewYear(),
+      m = this.viewMonth();
     const offset = (new Date(y, m, 1).getDay() + 6) % 7; // Mon = 0
     const total = new Date(y, m + 1, 0).getDate();
     const days: number[] = Array(offset).fill(0);
@@ -90,9 +129,15 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     }
   }
 
-  registerOnChange(fn: (v: Date | null) => void): void { this.onChange = fn; }
-  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
-  setDisabledState(d: boolean): void { this.isDisabled.set(d); }
+  registerOnChange(fn: (v: Date | null) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(d: boolean): void {
+    this.isDisabled.set(d);
+  }
 
   toggleCalendar(): void {
     if (this.isDisabled()) return;
@@ -114,13 +159,21 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
   }
 
   prevMonth(): void {
-    if (this.viewMonth() === 0) { this.viewMonth.set(11); this.viewYear.update(y => y - 1); }
-    else { this.viewMonth.update(m => m - 1); }
+    if (this.viewMonth() === 0) {
+      this.viewMonth.set(11);
+      this.viewYear.update(y => y - 1);
+    } else {
+      this.viewMonth.update(m => m - 1);
+    }
   }
 
   nextMonth(): void {
-    if (this.viewMonth() === 11) { this.viewMonth.set(0); this.viewYear.update(y => y + 1); }
-    else { this.viewMonth.update(m => m + 1); }
+    if (this.viewMonth() === 11) {
+      this.viewMonth.set(0);
+      this.viewYear.update(y => y + 1);
+    } else {
+      this.viewMonth.update(m => m + 1);
+    }
   }
 
   selectDay(day: number): void {

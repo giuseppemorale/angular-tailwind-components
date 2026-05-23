@@ -16,7 +16,10 @@ const meta: Meta<TailwindButton> = {
     },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     disabled: { control: 'boolean' },
-    type: { control: 'select', options: ['button', 'submit', 'reset'] }
+    type: { control: 'select', options: ['button', 'submit', 'reset'] },
+    role: { control: 'select', options: ['button', 'menuitem', 'tab', 'switch', 'checkbox', 'radio'] },
+    icon: { control: 'text' },
+    iconPosition: { control: 'select', options: ['left', 'right'] }
   }
 };
 export default meta;
@@ -29,10 +32,32 @@ export const Button: StoryObj<TailwindButton> = {
         <tailwind-button ${argsToTemplate(args)}>Button</tailwind-button>
       </div>`
   }),
-  args: { type: 'button', color: 'primary', kind: 'solid', size: 'md', disabled: false }
+  args: { type: 'button', role: 'button', color: 'primary', kind: 'solid', size: 'md', disabled: false }
 };
 
-export const Flat: StoryObj<TailwindButton> = {
-  render: Button.render,
-  args: { ...Button.args, kind: 'flat', color: 'primary' }
+export const WithIcon: StoryObj<TailwindButton> = {
+  render: args => ({
+    props: args,
+    template: `
+      <div class="w-full">
+        <tailwind-button ${argsToTemplate(args)}>Add item</tailwind-button>
+      </div>`
+  }),
+  args: { ...Button.args, role: 'button', icon: 'plus', iconPosition: 'left' }
+};
+
+export const IconOnly: StoryObj<TailwindButton> = {
+  render: args => ({
+    props: args,
+    template: `
+      <div class="w-full">
+        <tailwind-button ${argsToTemplate(args)} aria-label="Add"></tailwind-button>
+      </div>`
+  }),
+  args: { ...Button.args, role: 'button', icon: 'plus' }
+};
+
+export const IconRight: StoryObj<TailwindButton> = {
+  render: WithIcon.render,
+  args: { ...WithIcon.args, role: 'button', iconPosition: 'right' }
 };

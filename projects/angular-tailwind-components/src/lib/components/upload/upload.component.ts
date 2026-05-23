@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, input, model, output, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  input,
+  model,
+  output,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';

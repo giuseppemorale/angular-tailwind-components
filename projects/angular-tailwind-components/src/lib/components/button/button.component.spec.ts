@@ -1,6 +1,13 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TAILWIND_BUTTON_KIND } from '../../tokens';
 import { TailwindButton } from './button.component';
+
+@Component({
+  imports: [TailwindButton],
+  template: `<tailwind-button icon="plus">Add</tailwind-button>`
+})
+class ButtonWithLabelHost {}
 
 describe('TailwindButton', () => {
   let fixture: ComponentFixture<TailwindButton>;
@@ -41,6 +48,19 @@ describe('TailwindButton', () => {
     button.click();
 
     expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('should set role to button by default', () => {
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.getAttribute('role')).toBe('button');
+  });
+
+  it('should apply custom role when set', () => {
+    fixture.componentRef.setInput('role', 'menuitem');
+    fixture.detectChanges();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.getAttribute('role')).toBe('menuitem');
   });
 
   it('should have disabled attribute when disabled', () => {
@@ -84,5 +104,58 @@ describe('TailwindButton', () => {
     expect(button.className).toContain('shadow-none');
     expect(button.className).toContain('border-0');
     expect(button.className).not.toContain('shadow-sm');
+  });
+
+  it('should render icon when icon input is set', () => {
+    fixture.componentRef.setInput('icon', 'plus');
+    fixture.detectChanges();
+
+    const icon = fixture.nativeElement.querySelector('tailwind-icon');
+    expect(icon).toBeTruthy();
+  });
+
+  it('should place icon before label when iconPosition is left', () => {
+    fixture.componentRef.setInput('icon', 'plus');
+    fixture.componentRef.setInput('iconPosition', 'left');
+    fixture.detectChanges();
+
+    const content: HTMLElement = fixture.nativeElement.querySelector('button > span');
+    const children = Array.from(content.children) as Element[];
+    expect(children[0]?.tagName.toLowerCase()).toBe('tailwind-icon');
+  });
+
+  it('should place icon after label when iconPosition is right', () => {
+    fixture.componentRef.setInput('icon', 'plus');
+    fixture.componentRef.setInput('iconPosition', 'right');
+    fixture.detectChanges();
+
+    const content: HTMLElement = fixture.nativeElement.querySelector('button > span');
+    const children = Array.from(content.children) as Element[];
+    expect(children.at(-1)?.tagName.toLowerCase()).toBe('tailwind-icon');
+  });
+
+  it('should apply icon-only padding classes when icon is set without label', () => {
+    fixture.componentRef.setInput('icon', 'plus');
+    fixture.componentRef.setInput('size', 'md');
+    fixture.detectChanges();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.className).toContain('has-[.tailwind-button-label:empty]:p-2');
+    expect(button.className).toContain('has-[.tailwind-button-label:empty]:px-2');
+  });
+
+  it('should use text padding when icon and label are present', async () => {
+    await TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [ButtonWithLabelHost]
+    }).compileComponents();
+
+    const hostFixture = TestBed.createComponent(ButtonWithLabelHost);
+    hostFixture.detectChanges();
+
+    const button: HTMLButtonElement = hostFixture.nativeElement.querySelector('button');
+
+    expect(button.className).toContain('px-4');
+    expect(button.className).toContain('py-2');
   });
 });

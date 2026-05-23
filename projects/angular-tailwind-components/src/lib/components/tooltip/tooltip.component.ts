@@ -1,4 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, signal, OnDestroy, AfterViewInit, NgZone, ElementRef, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+  signal,
+  OnDestroy,
+  AfterViewInit,
+  NgZone,
+  ElementRef,
+  viewChild
+} from '@angular/core';
 import { TailwindPosition } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { DOCUMENT } from '@angular/common';

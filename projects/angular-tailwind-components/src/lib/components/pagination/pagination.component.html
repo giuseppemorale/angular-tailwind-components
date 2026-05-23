@@ -18,45 +18,35 @@
   </div>
 
   <nav [attr.aria-label]="ariaLabel()" class="flex items-center gap-1">
-    <!-- Previous -->
-    <button
-      type="button"
+  <!-- Previous -->
+    <tailwind-button
+      kind="ghost"
+      color="transparent"
+      size="sm"
+      icon="chevron-left"
       [disabled]="currentPage() <= 1"
-      (click)="goToPage(currentPage() - 1)"
-      class="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
-      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path
-          fill-rule="evenodd"
-          d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-          clip-rule="evenodd" />
-      </svg>
-    </button>
+      ariaLabel="Previous page"
+      (onClick)="goToPage(currentPage() - 1)" />
 
     @for (page of visiblePages(); track page) {
-      <button
-        type="button"
-        (click)="goToPage(page)"
-        class="min-w-8 h-8 px-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
-        [class.bg-primary-600]="page === currentPage()"
-        [class.text-white]="page === currentPage()"
-        [class.text-neutral-600]="page !== currentPage()"
-        [class.hover:bg-neutral-100]="page !== currentPage()">
+      <tailwind-button
+        size="sm"
+        [kind]="page === currentPage() ? 'flat' : 'ghost'"
+        [color]="page === currentPage() ? 'primary' : 'secondary'"
+        class="min-w-8"
+        (onClick)="goToPage(page)">
         {{ page }}
-      </button>
+      </tailwind-button>
     }
 
     <!-- Next -->
-    <button
-      type="button"
+    <tailwind-button
+      kind="ghost"
+      color="transparent"
+      size="sm"
+      icon="chevron-right"
       [disabled]="currentPage() >= totalPages()"
-      (click)="goToPage(currentPage() + 1)"
-      class="p-2 rounded-lg text-neutral-500 hover:bg-neutral-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer">
-      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path
-          fill-rule="evenodd"
-          d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-          clip-rule="evenodd" />
-      </svg>
-    </button>
+      ariaLabel="Next page"
+      (onClick)="goToPage(currentPage() + 1)" />
   </nav>
 </div>

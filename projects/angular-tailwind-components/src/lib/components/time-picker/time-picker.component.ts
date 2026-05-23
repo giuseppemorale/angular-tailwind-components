@@ -12,6 +12,8 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
+import { TailwindIcon } from '../icon/icon.component';
+import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 
 type Lang = 'it' | 'en';
@@ -24,7 +26,7 @@ const I18N: Record<Lang, { placeholder: string; now: string; apply: string }> = 
 
 @Component({
   selector: 'tailwind-time-picker',
-  imports: [],
+  imports: [TailwindIcon, TailwindButton],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindTimePicker), multi: true }],
   templateUrl: './time-picker.component.html',
   styleUrl: './time-picker.component.css',

@@ -4,7 +4,7 @@
 export type TailwindSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 /** Color variants for buttons and interactive elements */
-export type TailwindColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info';
+export type TailwindColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'transparent';
 
 /** Button kinds */
 export type TailwindButtonKind = 'solid' | 'flat' | 'outlined' | 'ghost' | 'text';

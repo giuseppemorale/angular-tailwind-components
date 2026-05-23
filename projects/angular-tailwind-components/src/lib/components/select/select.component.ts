@@ -18,9 +18,11 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { fromEvent, Subscription } from 'rxjs';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindIcon],
   selector: 'tailwind-select',
   providers: [
     {

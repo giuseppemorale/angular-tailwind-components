@@ -12,52 +12,30 @@
       class="block w-full bg-white border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
       [disabled]="isDisabled()"
       (click)="togglePanel()" />
-    <svg
-      class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 pointer-events-none"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor">
-      <path
-        fill-rule="evenodd"
-        d="M5.75 2a.75.75 0 01.75.75V4h7V2.75a.75.75 0 011.5 0V4h.25A2.75 2.75 0 0118 6.75v8.5A2.75 2.75 0 0115.25 18H4.75A2.75 2.75 0 012 15.25v-8.5A2.75 2.75 0 014.75 4H5V2.75A.75.75 0 015.75 2zm-1 5.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h10.5c.69 0 1.25-.56 1.25-1.25v-6.5c0-.69-.56-1.25-1.25-1.25H4.75z"
-        clip-rule="evenodd" />
-    </svg>
+    <tailwind-icon
+      icon="calendar-days"
+      [size]="16"
+      class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
 
     @if (showPanel()) {
       <div
         class="absolute left-0 top-full z-popover mt-1 w-80 max-w-full rounded-xl border border-neutral-200 bg-white p-4 shadow-xl">
         <div class="flex items-center justify-between mb-3">
-          <button
-            type="button"
-            (click)="prevMonth()"
-            class="p-1 rounded-lg hover:bg-neutral-100 transition-colors cursor-pointer">
-            <svg
-              class="w-4 h-4 text-neutral-600"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                clip-rule="evenodd" />
-            </svg>
-          </button>
+          <tailwind-button
+            kind="ghost"
+            color="transparent"
+            size="sm"
+            icon="chevron-left"
+            ariaLabel="Previous month"
+            (onClick)="prevMonth()" />
           <span class="text-sm font-semibold text-neutral-800">{{ monthYearLabel() }}</span>
-          <button
-            type="button"
-            (click)="nextMonth()"
-            class="p-1 rounded-lg hover:bg-neutral-100 transition-colors cursor-pointer">
-            <svg
-              class="w-4 h-4 text-neutral-600"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                clip-rule="evenodd" />
-            </svg>
-          </button>
+          <tailwind-button
+            kind="ghost"
+            color="transparent"
+            size="sm"
+            icon="chevron-right"
+            ariaLabel="Next month"
+            (onClick)="nextMonth()" />
         </div>
         <div class="grid grid-cols-7 gap-0 mb-1">
           @for (day of weekDays; track day) {
@@ -109,20 +87,22 @@
           </select>
         </div>
         <div class="mt-2 pt-2 border-t border-neutral-100 flex items-center justify-between gap-2">
-          <button
-            type="button"
-            (click)="goToToday()"
+          <tailwind-button
+            kind="text"
+            color="primary"
+            size="xs"
             [disabled]="isDisabled()"
-            class="text-xs text-primary-600 font-medium hover:underline cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline">
+            (onClick)="goToToday()">
             {{ i18n.today }}
-          </button>
-          <button
-            type="button"
-            (click)="apply()"
+          </tailwind-button>
+          <tailwind-button
+            kind="solid"
+            color="primary"
+            size="sm"
             [disabled]="isDisabled() || !draft()"
-            class="px-3 py-1.5 text-xs font-medium rounded-md bg-primary-600 text-white hover:bg-primary-700 cursor-pointer disabled:bg-neutral-200 disabled:text-neutral-500 disabled:cursor-not-allowed">
+            (onClick)="apply()">
             {{ i18n.confirm }}
-          </button>
+          </tailwind-button>
         </div>
       </div>
     }

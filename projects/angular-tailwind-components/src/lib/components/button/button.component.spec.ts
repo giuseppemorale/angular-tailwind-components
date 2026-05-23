@@ -50,6 +50,15 @@ describe('TailwindButton', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
+  it('should set aria-label on the native button when ariaLabel is provided', () => {
+    fixture.componentRef.setInput('icon', 'plus');
+    fixture.componentRef.setInput('ariaLabel', 'Add item');
+    fixture.detectChanges();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.getAttribute('aria-label')).toBe('Add item');
+  });
+
   it('should set role to button by default', () => {
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     expect(button.getAttribute('role')).toBe('button');
@@ -104,6 +113,21 @@ describe('TailwindButton', () => {
     expect(button.className).toContain('shadow-none');
     expect(button.className).toContain('border-0');
     expect(button.className).not.toContain('shadow-sm');
+    expect(button.className).not.toContain('hover:bg-');
+    expect(button.className).not.toContain('active:bg-');
+  });
+
+  it('should keep transparent color without hover or active background tint', () => {
+    fixture.componentRef.setInput('color', 'transparent');
+    fixture.componentRef.setInput('kind', 'ghost');
+    fixture.detectChanges();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.className).toContain('bg-transparent');
+    expect(button.className).toContain('hover:bg-transparent');
+    expect(button.className).toContain('active:bg-transparent');
+    expect(button.className).not.toContain('hover:bg-neutral');
+    expect(button.className).not.toContain('hover:bg-primary');
   });
 
   it('should render icon when icon input is set', () => {

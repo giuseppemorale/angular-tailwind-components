@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindIcon],
   selector: 'tailwind-spinner',
   templateUrl: './spinner.component.html',
   styleUrl: './spinner.component.css',
@@ -26,25 +28,29 @@ export class TailwindSpinner extends TailwindComponent {
     return `${base} ${orient}`;
   });
 
-  readonly spinnerClasses = computed(() => {
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: 'w-3 h-3',
-      sm: 'w-4 h-4',
-      md: 'w-6 h-6',
-      lg: 'w-8 h-8',
-      xl: 'w-12 h-12'
+  readonly iconPixelSize = computed(() => {
+    const sizeMap: Record<TailwindSize, number> = {
+      xs: 16,
+      sm: 16,
+      md: 24,
+      lg: 32,
+      xl: 48
     };
+    return sizeMap[this.size()];
+  });
 
+  readonly iconClasses = computed(() => {
     const colorMap: Record<TailwindColor, string> = {
       primary: 'text-primary-600',
       secondary: 'text-secondary-600',
       success: 'text-success-600',
       warning: 'text-warning-600',
       danger: 'text-danger-600',
-      info: 'text-info-600'
+      info: 'text-info-600',
+      transparent: 'text-neutral-400'
     };
 
-    return `tailwind-spinner-svg ${sizeMap[this.size()]} ${colorMap[this.color()]}`;
+    return `animate-spin ${colorMap[this.color()]}`;
   });
 
   readonly labelClasses = computed(() => {

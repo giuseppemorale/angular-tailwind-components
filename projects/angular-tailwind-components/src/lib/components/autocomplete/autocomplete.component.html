@@ -1,0 +1,73 @@
+<div class="flex flex-col gap-1.5">
+  @if (label()) {
+    <label
+      [attr.for]="id() ? id() + '-inner' : null"
+      class="text-sm font-medium text-neutral-700"
+      [class.text-danger-600]="hasError()">
+      {{ label() }}
+    </label>
+  }
+
+  <input
+    type="text"
+    role="combobox"
+    aria-autocomplete="list"
+    [attr.id]="id() ? id() + '-inner' : null"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-controls]="listboxId()"
+    [attr.aria-activedescendant]="
+      isOpen() && activeIndex() >= 0 ? listboxId() + '-option-' + activeIndex() : null
+    "
+    [attr.aria-invalid]="hasError() || null"
+    [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+    [placeholder]="placeholder()"
+    [disabled]="isDisabled()"
+    [value]="searchQuery()"
+    [class]="inputClasses()"
+    (input)="onInputChange($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (keydown)="onKeydown($event)" />
+
+  <ng-content />
+
+  @if (helperText() && !hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500">{{ helperText() }}</p>
+  }
+  @if (errorText() && hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600">{{ errorText() }}</p>
+  }
+</div>
+
+<ng-template #panelTemplate>
+  <ul
+    role="listbox"
+    [attr.id]="listboxId()"
+    class="w-full bg-white border border-neutral-200 rounded-md shadow-lg py-1 max-h-60 overflow-auto">
+    @for (option of filteredOptions(); track option.value; let i = $index) {
+      <li
+        role="option"
+        [attr.id]="listboxId() + '-option-' + i"
+        [attr.aria-selected]="isOptionSelected(option)"
+        [attr.aria-disabled]="option.disabled || null"
+        [class]="optionClasses(i, option)"
+        (mousedown)="$event.preventDefault()"
+        (click)="selectOption(option)"
+        (mouseenter)="!option.disabled && activeIndex.set(i)">
+        @if (itemTemplate()) {
+          <ng-container
+            *ngTemplateOutlet="itemTemplate()!; context: itemContext(option, i)" />
+        } @else {
+          <span>{{ option.label }}</span>
+          @if (isOptionSelected(option)) {
+            <tailwind-icon icon="check" [size]="16" class="text-primary-600 shrink-0" aria-hidden="true" />
+          }
+        }
+      </li>
+    } @empty {
+      <li role="option" aria-disabled="true" class="px-3 py-2 text-sm text-neutral-400 cursor-default select-none">
+        {{ placeholder() || 'Nessun risultato' }}
+      </li>
+    }
+  </ul>
+</ng-template>

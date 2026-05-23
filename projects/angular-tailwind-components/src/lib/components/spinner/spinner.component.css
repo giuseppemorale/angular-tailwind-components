@@ -1,16 +1,3 @@
 :host {
   display: inline-flex;
 }
-
-@keyframes tailwind-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.tailwind-spinner-svg {
-  animation: tailwind-spin 0.75s linear infinite;
-}

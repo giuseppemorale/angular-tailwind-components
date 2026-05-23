@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindIcon],
   selector: 'tailwind-checkbox',
   providers: [
     {
@@ -39,6 +41,17 @@ export class TailwindCheckbox extends TailwindComponent implements ControlValueA
       md: 'w-5 h-5',
       lg: 'w-6 h-6',
       xl: 'w-7 h-7'
+    };
+    return sizeMap[this.size()];
+  });
+
+  readonly checkIconSize = computed(() => {
+    const sizeMap: Record<TailwindSize, number> = {
+      xs: 16,
+      sm: 16,
+      md: 20,
+      lg: 24,
+      xl: 28
     };
     return sizeMap[this.size()];
   });

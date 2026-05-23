@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, model, out
 import { TailwindOption } from '../../models';
 import { TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
 import { TailwindSelect } from '../select/select.component';
+import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 import { Pagination } from './interfaces/pagination.interface';
 export type { Pagination };
@@ -10,7 +11,7 @@ export const DEFAULT_PAGINATION_LENGTH_OPTIONS = [5, 10, 25, 50] as const;
 
 @Component({
   selector: 'tailwind-pagination',
-  imports: [TailwindSelect],
+  imports: [TailwindSelect, TailwindButton],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

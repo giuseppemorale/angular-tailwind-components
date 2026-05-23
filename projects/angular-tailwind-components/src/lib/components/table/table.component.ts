@@ -12,6 +12,7 @@ import {
   signal
 } from '@angular/core';
 import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
@@ -20,7 +21,7 @@ export type { TailwindTableSortHost };
 
 @Component({
   selector: 'tailwind-table',
-  imports: [NgTemplateOutlet, TailwindPagination],
+  imports: [NgTemplateOutlet, TailwindPagination, TailwindIcon],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -3,6 +3,7 @@
   [disabled]="disabled()"
   [type]="type()"
   [attr.role]="role()"
+  [attr.aria-label]="ariaLabel() || null"
   [attr.aria-disabled]="disabled() || null"
   (click)="handleClick($event)">
   <span class="inline-flex min-w-0 items-center justify-center gap-2">

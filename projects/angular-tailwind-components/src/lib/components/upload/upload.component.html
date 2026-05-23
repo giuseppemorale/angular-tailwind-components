@@ -30,13 +30,14 @@
         {{ buttonLabel() }}
       </tailwind-button>
       @if (showClear() && value()) {
-        <button
-          type="button"
-          class="text-sm font-medium text-primary-600 underline-offset-2 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+        <tailwind-button
+          kind="text"
+          color="primary"
+          size="sm"
           [disabled]="isDisabled()"
-          (click)="clear($event)">
+          (onClick)="clear($event)">
           {{ clearText() }}
-        </button>
+        </tailwind-button>
       }
     </div>
   } @else {
@@ -57,13 +58,15 @@
         <span class="text-xs text-neutral-500">{{ areaHint() }}</span>
       </div>
       @if (showClear() && value()) {
-        <button
-          type="button"
-          class="self-start text-sm font-medium text-primary-600 underline-offset-2 hover:underline disabled:cursor-not-allowed disabled:opacity-50"
+        <tailwind-button
+          kind="text"
+          color="primary"
+          size="sm"
+          class="self-start"
           [disabled]="isDisabled()"
-          (click)="clear($event)">
+          (onClick)="clear($event)">
           {{ clearText() }}
-        </button>
+        </tailwind-button>
       }
     </div>
   }

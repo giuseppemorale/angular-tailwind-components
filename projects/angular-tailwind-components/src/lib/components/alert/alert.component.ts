@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { TailwindSeverity } from '../../models';
+import { TailwindIcon } from '../icon/icon.component';
+import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindIcon, TailwindButton],
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
   styleUrl: './alert.component.css',

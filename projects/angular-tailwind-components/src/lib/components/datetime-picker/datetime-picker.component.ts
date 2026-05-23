@@ -12,6 +12,8 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
+import { TailwindIcon } from '../icon/icon.component';
+import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 
 type Lang = 'it' | 'en';
@@ -66,7 +68,7 @@ const I18N: Record<
 
 @Component({
   selector: 'tailwind-datetime-picker',
-  imports: [],
+  imports: [TailwindIcon, TailwindButton],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDateTimePicker), multi: true }],
   templateUrl: './datetime-picker.component.html',
   styleUrl: './datetime-picker.component.css',

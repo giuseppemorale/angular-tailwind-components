@@ -10,9 +10,11 @@ import {
   viewChild
 } from '@angular/core';
 import { TailwindSize } from '../../models';
+import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindButton],
   selector: 'tailwind-modal',
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css',

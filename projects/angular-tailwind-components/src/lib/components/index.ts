@@ -8,6 +8,7 @@ export * from './input-otp/input-otp.component';
 export * from './checkbox/checkbox.component';
 export * from './radio/radio-group.component';
 export * from './select/select.component';
+export * from './autocomplete/autocomplete.component';
 export * from './toggle/toggle.component';
 export * from './badge/badge.component';
 export * from './title/title.component';

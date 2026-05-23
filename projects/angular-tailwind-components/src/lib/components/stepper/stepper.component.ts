@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, contentChildren, input, model, effect } from '@angular/core';
 import { TailwindStep } from './step.component';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindIcon],
   selector: 'tailwind-stepper',
   templateUrl: './stepper.component.html',
   styleUrl: './stepper.component.css',

@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { TailwindPosition } from '../../models';
+import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindButton],
   selector: 'tailwind-drawer',
   templateUrl: './drawer.component.html',
   styleUrl: './drawer.component.css',

@@ -1,10 +1,7 @@
 <div class="w-full overflow-x-auto rounded-lg border border-neutral-200">
   @if (loading()) {
     <div class="flex items-center justify-center py-16 text-neutral-400">
-      <svg class="animate-spin w-6 h-6 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-      </svg>
+      <tailwind-icon icon="arrow-path" [size]="24" class="animate-spin mr-2 text-neutral-400" />
       Loading...
     </div>
   } @else {

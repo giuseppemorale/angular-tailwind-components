@@ -8,7 +8,7 @@ const meta: Meta<TailwindButton> = {
   argTypes: {
     color: {
       control: 'select',
-      options: ['primary', 'secondary', 'danger', 'success', 'warning', 'info']
+      options: ['primary', 'secondary', 'danger', 'success', 'warning', 'info', 'transparent']
     },
     kind: {
       control: 'select',

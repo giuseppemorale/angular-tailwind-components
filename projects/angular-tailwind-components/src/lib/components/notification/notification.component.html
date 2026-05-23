@@ -11,12 +11,13 @@
     }
   </div>
   @if (dismissible()) {
-    <button
-      type="button"
-      (click)="onDismiss.emit()"
-      class="shrink-0 p-1 -m-1 rounded-lg opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
-      aria-label="Dismiss">
-      <tailwind-icon icon="x-mark" [size]="16" class="shrink-0" />
-    </button>
+    <tailwind-button
+      kind="ghost"
+      color="transparent"
+      size="sm"
+      icon="x-mark"
+      class="shrink-0 -m-1 opacity-60 hover:opacity-100"
+      ariaLabel="Dismiss"
+      (onClick)="onDismiss.emit()" />
   }
 </div>

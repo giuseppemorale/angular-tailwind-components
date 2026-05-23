@@ -37,18 +37,12 @@
       </span>
     }
 
-    <svg
-      class="shrink-0 ml-2 w-4 h-4 text-neutral-400 transition-transform duration-150"
+    <tailwind-icon
+      icon="chevron-down"
+      [size]="16"
+      class="shrink-0 ml-2 text-neutral-400 transition-transform duration-150"
       [class.rotate-180]="isOpen()"
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      aria-hidden="true">
-      <path
-        fill-rule="evenodd"
-        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-        clip-rule="evenodd" />
-    </svg>
+      aria-hidden="true" />
   </button>
 
   @if (helperText() && !hasError()) {
@@ -81,17 +75,7 @@
         <span>{{ option.label }}</span>
 
         @if (isOptionSelected(option)) {
-          <svg
-            class="w-4 h-4 text-primary-600 shrink-0"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true">
-            <path
-              fill-rule="evenodd"
-              d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-              clip-rule="evenodd" />
-          </svg>
+          <tailwind-icon icon="check" [size]="16" class="text-primary-600 shrink-0" aria-hidden="true" />
         }
       </li>
     }

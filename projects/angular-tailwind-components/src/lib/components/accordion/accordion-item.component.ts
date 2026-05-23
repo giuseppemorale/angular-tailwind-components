@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
+import { TailwindIcon } from '../icon/icon.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  imports: [CommonModule],
+  imports: [CommonModule, TailwindIcon],
   selector: 'tailwind-accordion-item',
   templateUrl: './accordion-item.component.html',
   styleUrl: './accordion-item.component.css',

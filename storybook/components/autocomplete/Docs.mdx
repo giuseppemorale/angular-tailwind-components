@@ -1,0 +1,172 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AutocompleteStories from './autocomplete.stories';
+
+<Meta of={AutocompleteStories} />
+
+# Autocomplete
+
+`TailwindAutocomplete` è un campo typeahead con pannello suggerimenti, `ControlValueAccessor` (il valore del form si aggiorna **solo** alla selezione di un'opzione), output `onSearch` per ricerche async e template opzionale `#item` (stile [PrimeNG AutoComplete](https://primeng.org/autocomplete)).
+
+---
+
+## Utilizzo
+
+### Lista statica (filtro locale)
+
+```typescript
+@Component({
+  imports: [TailwindAutocomplete],
+  template: `
+    <tailwind-autocomplete
+      label="Paese"
+      placeholder="Cerca paese..."
+      [options]="countries"
+      [(value)]="countryCode"
+    />`
+})
+export class ExampleComponent {
+  countryCode: string | null = null;
+  countries = [
+    { value: 'IT', label: 'Italia' },
+    { value: 'FR', label: 'Francia' },
+  ];
+}
+```
+
+<Canvas of={AutocompleteStories.StaticCountries} />
+
+### Ricerca async
+
+Con `[filterLocally]="false"` il componente mostra le `options` fornite dal parent; su `(onSearch)` aggiorni l'elenco (es. chiamata HTTP).
+
+```typescript
+onSearch(query: string) {
+  this.filteredOptions = this.allCountries.filter(c =>
+    c.label.toLowerCase().startsWith(query.toLowerCase())
+  );
+}
+```
+
+<Canvas of={AutocompleteStories.AsyncSearch} />
+
+### Template opzione (`#item`)
+
+Nessuna direttiva: proietta un `ng-template` con reference `#item`.
+
+```html
+<tailwind-autocomplete [options]="countries" [(value)]="code">
+  <ng-template let-option #item>
+    <span class="flex items-center gap-2">
+      <span class="font-mono text-xs">{{ option.value }}</span>
+      <span>{{ option.label }}</span>
+    </span>
+  </ng-template>
+</tailwind-autocomplete>
+```
+
+Variabili di context: `let-option` (`$implicit`), `let-index="index"`, `let-selected="selected"`, `let-active="active"`.
+
+<Canvas of={AutocompleteStories.CustomItemTemplate} />
+
+## Stato errore
+
+<Canvas of={AutocompleteStories.WithError} />
+
+---
+
+## Properties
+
+### `TailwindAutocomplete (tailwind-autocomplete)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Placeholder dell'input e messaggio lista vuota.</td>
+    </tr>
+    <tr>
+      <td><code>options</code></td>
+      <td><code>TailwindOption&lt;T&gt;[]</code></td>
+      <td><code>[]</code></td>
+      <td>Opzioni suggerite.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td><code>xs | sm | md | lg | xl</code>.</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code> / <code>errorText</code> / <code>hasError</code></td>
+      <td>—</td>
+      <td>—</td>
+      <td>Come gli altri form control.</td>
+    </tr>
+    <tr>
+      <td><code>filterLocally</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Filtra le opzioni per <code>label</code> mentre si digita.</td>
+    </tr>
+    <tr>
+      <td><code>minSearchLength</code></td>
+      <td><code>number</code></td>
+      <td><code>0</code></td>
+      <td>Lunghezza minima query prima di aprire il pannello e emettere <code>onSearch</code>.</td>
+    </tr>
+    <tr>
+      <td><code>debounceMs</code></td>
+      <td><code>number</code></td>
+      <td><code>0</code></td>
+      <td>Debounce (ms) solo per <code>onSearch</code>.</td>
+    </tr>
+    <tr>
+      <td><code>forceSelection</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Al blur ripristina il label selezionato o svuota testo non valido.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;T | null&gt;</code></td>
+      <td><code>null</code></td>
+      <td>Valore form: impostato solo alla selezione.</td>
+    </tr>
+    <tr>
+      <td><code>onSearch</code></td>
+      <td><code>OutputEmitterRef&lt;string&gt;</code></td>
+      <td>—</td>
+      <td>Emesso con la query corrente (dopo debounce / soglia).</td>
+    </tr>
+  </tbody>
+</table>
+
+### `TailwindAutocompleteItemContext<T>`
+
+```typescript
+interface TailwindAutocompleteItemContext<T = unknown> {
+  $implicit: TailwindOption<T>;
+  option: TailwindOption<T>;
+  index: number;
+  selected: boolean;
+  active: boolean;
+}
+```

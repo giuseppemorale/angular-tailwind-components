@@ -16,7 +16,12 @@ Il componente ripete il template per ogni riga di `displayedData()`. La forma co
 ```html
 <tbody *tailwindTableRow="let row">
   <tr>
-    <td>{{ row['name'] }}</td>
+    <td>{{ row.name }}</td>
+    <td>{{ row.email }}</td>
+    <td>{{ row.role }}</td>
+    <td>
+      <tailwind-tag [variant]="row.status === 1 ? 'success' : 'danger'">{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag>
+    </td>
   </tr>
 </tbody>
 ```
@@ -56,8 +61,12 @@ Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bo
       </thead>
       <tbody *tailwindTableRow="let row">
         <tr>
-          <td>{{ row['name'] }}</td>
-          <td>{{ row['email'] }}</td>
+          <td>{{ row.name }}</td>
+          <td>{{ row.email }}</td>
+          <td>{{ row.role }}</td>
+          <td>
+            <tailwind-tag [variant]="row.status === 1 ? 'success' : 'danger'">{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag>
+          </td>
         </tr>
       </tbody>
     </tailwind-table>

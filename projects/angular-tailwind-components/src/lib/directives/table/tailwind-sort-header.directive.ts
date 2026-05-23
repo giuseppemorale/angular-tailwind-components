@@ -27,8 +27,7 @@ const MAX_TABLE_RESOLVE_ATTEMPTS = 24;
   selector: '[tailwindSortHeader]',
   standalone: true,
   host: {
-    class:
-      'flex cursor-pointer items-center gap-1.5 justify-start whitespace-nowrap text-left select-none hover:text-neutral-900',
+    class: 'cursor-pointer whitespace-nowrap text-left select-none hover:text-neutral-900',
     '[attr.tabindex]': '0',
     '[attr.data-sort-key]': 'sortKey()'
   }
@@ -39,6 +38,7 @@ export class TailwindSortHeaderDirective {
 
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
+  private labelWrapper?: HTMLElement;
   private readonly appRef = inject(ApplicationRef);
   private readonly environmentInjector = inject(EnvironmentInjector);
   private readonly injector = inject(Injector);
@@ -105,11 +105,12 @@ export class TailwindSortHeaderDirective {
     };
 
     if (!this.iconRef) {
+      const labelHost = this.ensureLabelWrapper();
       this.iconRef = createComponent(TailwindIcon, {
         environmentInjector: this.environmentInjector,
         elementInjector: this.injector
       });
-      this.renderer.appendChild(this.host.nativeElement, this.iconRef.location.nativeElement);
+      this.renderer.appendChild(labelHost, this.iconRef.location.nativeElement);
       this.appRef.attachView(this.iconRef.hostView);
     }
 
@@ -120,5 +121,31 @@ export class TailwindSortHeaderDirective {
       attributes: true,
       attributeFilter: [TW_TABLE_SORT_KEY_ATTR, TW_TABLE_SORT_DIR_ATTR]
     });
+  }
+
+  /** Keep `th` as `display: table-cell`; flex only on an inner wrapper (label + icon). */
+  private ensureLabelWrapper(): HTMLElement {
+    if (this.labelWrapper) return this.labelWrapper;
+
+    const th = this.host.nativeElement;
+    const existing = th.querySelector('[data-tw-sort-header-label]');
+    if (existing instanceof HTMLElement) {
+      this.labelWrapper = existing;
+      return existing;
+    }
+
+    const wrapper = this.renderer.createElement('span');
+    this.renderer.setAttribute(wrapper, 'data-tw-sort-header-label', '');
+    this.renderer.addClass(wrapper, 'inline-flex');
+    this.renderer.addClass(wrapper, 'items-center');
+    this.renderer.addClass(wrapper, 'gap-1.5');
+    this.renderer.addClass(wrapper, 'justify-start');
+
+    for (const child of Array.from(th.childNodes)) {
+      this.renderer.appendChild(wrapper, child);
+    }
+    this.renderer.appendChild(th, wrapper);
+    this.labelWrapper = wrapper;
+    return wrapper;
   }
 }

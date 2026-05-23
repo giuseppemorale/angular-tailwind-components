@@ -2,6 +2,8 @@
 
 A comprehensive Angular component library built entirely with **Tailwind CSS v4** — zero additional UI dependencies.
 
+**Live Storybook:** [angular-tailwind-components.vercel.app](https://angular-tailwind-components.vercel.app/)
+
 ## Features
 
 - 🎨 **36 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
@@ -10,7 +12,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
-- 📖 **Storybook** — Visual documentation for all components
+- 📖 **Storybook** — [Visual documentation](https://angular-tailwind-components.vercel.app/) for all components
 - 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
 
 ## Installation
@@ -272,12 +274,17 @@ You can still override any token in your own CSS, for example:
 
 ## Development
 
+Browse components in the hosted Storybook: [angular-tailwind-components.vercel.app](https://angular-tailwind-components.vercel.app/)
+
 ```bash
 # Build the library
 ng build angular-tailwind-components
 
-# Start Storybook
+# Start Storybook locally
 npm run storybook
+
+# Build static Storybook (output: storybook-static/)
+npm run build:storybook
 ```
 
 ### Component Conventions

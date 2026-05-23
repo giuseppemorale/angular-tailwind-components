@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import type { TailwindHeroicon, TailwindTitleTag } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
@@ -8,7 +8,8 @@ import { TailwindIcon } from '../icon/icon.component';
   selector: 'tailwind-title',
   imports: [NgTemplateOutlet, TailwindIcon],
   templateUrl: './title.component.html',
-  styleUrl: './title.component.css'
+  styleUrl: './title.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTitle extends TailwindComponent {
   /** Visible title text */

@@ -16,6 +16,25 @@ In `projects/angular-tailwind-components/src/lib/components/`: estendi `Tailwind
 - `effect()` solo per side effect leggeri (sync input esterni); evita logica pesante.
 - Two-way: `model()`; in CVA allinea in `writeValue` e chiama `onChange` / `onTouched`.
 
+## Definizione
+
+La definizione deve mantenere questa regola:
+
+1. imports
+2. selector
+3. templateUrl
+4. styleUrl (se presente)
+5. changeDetection
+6. providers (se necessari)
+
+Esempio:
+@Component({
+  imports: [TailwindIcon],
+  selector: 'tailwind-notification',
+  templateUrl: './notification.component.html',
+  styleUrl: './notification.component.css'
+})
+
 ## Change detection
 
 Su **Angular ≤ 21** imposta sempre `changeDetection: ChangeDetectionStrategy.OnPush`. Da Angular 22 è default — ometti `changeDetection` dopo la migrazione.

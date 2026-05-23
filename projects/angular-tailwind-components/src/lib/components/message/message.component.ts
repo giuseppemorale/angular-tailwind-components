@@ -1,11 +1,12 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindSeverity } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-message',
   templateUrl: './message.component.html',
-  styleUrl: './message.component.css'
+  styleUrl: './message.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindMessage extends TailwindComponent {
   readonly severity = input<TailwindSeverity>('info');

@@ -1,11 +1,12 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-progress-bar',
   templateUrl: './progress-bar.component.html',
-  styleUrl: './progress-bar.component.css'
+  styleUrl: './progress-bar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindProgressBar extends TailwindComponent {
   /** Current value (0-100) */

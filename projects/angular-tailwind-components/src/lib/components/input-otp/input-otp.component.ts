@@ -1,4 +1,4 @@
-import { Component, computed, forwardRef, input, model, output, signal, viewChildren, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, output, signal, viewChildren, ElementRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -13,7 +13,8 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './input-otp.component.html',
-  styleUrl: './input-otp.component.css'
+  styleUrl: './input-otp.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindInputOtp extends TailwindComponent implements ControlValueAccessor {
   /** Label text */

@@ -1,4 +1,4 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -13,7 +13,8 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.css'
+  styleUrl: './checkbox.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindCheckbox extends TailwindComponent implements ControlValueAccessor  {
   /** Label text */

@@ -1,4 +1,4 @@
-import { booleanAttribute, Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, booleanAttribute, Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -16,7 +16,8 @@ export type TailwindSliderValue = number | [number, number];
     }
   ],
   templateUrl: './slider.component.html',
-  styleUrl: './slider.component.css'
+  styleUrl: './slider.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSlider extends TailwindComponent implements ControlValueAccessor {
   /** Minimum bound */

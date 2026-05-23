@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TailwindSize, TailwindColor, TailwindButtonKind } from '../../models';
 import { TAILWIND_BUTTON_KIND } from '../../tokens';
@@ -8,7 +8,8 @@ import { TailwindComponent } from '../tailwind.component';
   selector: 'tailwind-button',
   imports: [NgClass],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.css'
+  styleUrl: './button.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindButton extends TailwindComponent {
   private readonly defaultKind = inject(TAILWIND_BUTTON_KIND, { optional: true });

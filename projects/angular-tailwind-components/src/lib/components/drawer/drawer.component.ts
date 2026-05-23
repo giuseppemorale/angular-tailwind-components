@@ -1,11 +1,12 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { TailwindPosition } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-drawer',
   templateUrl: './drawer.component.html',
-  styleUrl: './drawer.component.css'
+  styleUrl: './drawer.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindDrawer extends TailwindComponent {
   /** Drawer title */

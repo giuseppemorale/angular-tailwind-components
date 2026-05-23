@@ -1,11 +1,12 @@
-import { Component, contentChildren, input, model, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, contentChildren, input, model, effect } from '@angular/core';
 import { TailwindTab } from './tab.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-tab-group',
   templateUrl: './tab-group.component.html',
-  styleUrl: './tab-group.component.css'
+  styleUrl: './tab-group.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTabGroup extends TailwindComponent {
   /** Accessible label for the tab list */

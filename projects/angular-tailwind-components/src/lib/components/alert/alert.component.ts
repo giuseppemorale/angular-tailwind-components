@@ -1,11 +1,12 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { TailwindSeverity } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
-  styleUrl: './alert.component.css'
+  styleUrl: './alert.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindAlert extends TailwindComponent {
   /** Severity / color variant */

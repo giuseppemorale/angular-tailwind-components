@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, HostListener, computed, contentChild, effect, inject, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, computed, contentChild, effect, inject, input, output, signal } from '@angular/core';
 import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
@@ -12,6 +12,7 @@ export type { TailwindTableSortHost };
   imports: [NgTemplateOutlet, TailwindPagination],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-tw-sort-key]': 'sortKey()',
     '[attr.data-tw-sort-dir]': 'sortDir()'

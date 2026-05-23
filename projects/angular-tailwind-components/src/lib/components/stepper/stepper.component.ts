@@ -1,11 +1,12 @@
-import { Component, contentChildren, input, model, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, contentChildren, input, model, effect } from '@angular/core';
 import { TailwindStep } from './step.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-stepper',
   templateUrl: './stepper.component.html',
-  styleUrl: './stepper.component.css'
+  styleUrl: './stepper.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindStepper extends TailwindComponent {
   readonly activeIndex = model<number>(0);

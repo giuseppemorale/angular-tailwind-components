@@ -1,4 +1,4 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -13,7 +13,8 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './textarea.component.html',
-  styleUrl: './textarea.component.css'
+  styleUrl: './textarea.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTextarea extends TailwindComponent implements ControlValueAccessor {
   /** Label text */

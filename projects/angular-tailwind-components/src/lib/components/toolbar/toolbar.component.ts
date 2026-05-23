@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { TailwindMenuItem, TailwindSeverity } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindMenu } from '../menu/menu.component';
@@ -8,7 +8,8 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon, TailwindMenu],
   selector: 'tailwind-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.css'
+  styleUrl: './toolbar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindToolbar extends TailwindComponent {
   /** When true, uses rounded corners (`rounded-xl`). */
@@ -55,7 +56,7 @@ export class TailwindToolbar extends TailwindComponent {
     return map[v];
   });
 
-  /** Heroicons are `<img>`; on light-on-color variants tint SVG strokes to match `text-on-*`. */
+  /** On light-on-color variants, tint masked icons to match `text-on-*`. */
   readonly menuItemIconClasses = computed(() =>
     this.variant() !== 'default' && this.variant() !== 'warning' ? 'toolbar-menu-icon-on-light' : ''
   );

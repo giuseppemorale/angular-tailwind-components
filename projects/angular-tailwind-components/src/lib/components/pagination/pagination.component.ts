@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, model, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, model, output } from '@angular/core';
 import { TailwindOption } from '../../models';
 import { TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
 import { TailwindSelect } from '../select/select.component';
@@ -12,7 +12,8 @@ export const DEFAULT_PAGINATION_LENGTH_OPTIONS = [5, 10, 25, 50] as const;
   selector: 'tailwind-pagination',
   imports: [TailwindSelect],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.css'
+  styleUrl: './pagination.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindPagination extends TailwindComponent {
   private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });

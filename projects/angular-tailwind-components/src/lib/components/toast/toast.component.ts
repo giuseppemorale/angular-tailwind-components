@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 import { TailwindToastConfig } from './interfaces/toast-config.interface';
@@ -9,7 +9,8 @@ export type { TailwindToastConfig, TailwindToastItem };
 @Component({
   selector: 'tailwind-toast',
   templateUrl: './toast.component.html',
-  styleUrl: './toast.component.css'
+  styleUrl: './toast.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindToast extends TailwindComponent {
   readonly toastService = inject(TailwindToastService);

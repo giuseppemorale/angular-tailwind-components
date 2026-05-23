@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindComponent } from '../tailwind.component';
@@ -16,7 +16,8 @@ const I18N: Record<Lang, { placeholder: string; now: string; apply: string }> = 
   imports: [],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindTimePicker), multi: true }],
   templateUrl: './time-picker.component.html',
-  styleUrl: './time-picker.component.css'
+  styleUrl: './time-picker.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTimePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

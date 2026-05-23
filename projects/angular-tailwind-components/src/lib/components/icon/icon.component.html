@@ -1,8 +1,8 @@
-<img
-  class="block shrink-0"
-  [src]="src()"
-  [attr.width]="pixelSize()"
-  [attr.height]="pixelSize()"
-  [attr.alt]="icon()"
+<span
+  [class]="glyphClasses()"
+  [style.width.px]="pixelSize()"
+  [style.height.px]="pixelSize()"
+  [style.mask-image]="maskImage()"
+  [style.-webkit-mask-image]="maskImage()"
   [attr.aria-hidden]="true"
-  decoding="async" />
+  [attr.aria-label]="icon()"></span>

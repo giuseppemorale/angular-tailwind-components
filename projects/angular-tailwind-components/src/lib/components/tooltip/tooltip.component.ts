@@ -1,15 +1,4 @@
-import {
-  Component,
-  computed,
-  inject,
-  input,
-  signal,
-  OnDestroy,
-  AfterViewInit,
-  NgZone,
-  ElementRef,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal, OnDestroy, AfterViewInit, NgZone, ElementRef, viewChild } from '@angular/core';
 import { TailwindPosition } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { DOCUMENT } from '@angular/common';
@@ -17,7 +6,8 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'tailwind-tooltip',
   templateUrl: './tooltip.component.html',
-  styleUrl: './tooltip.component.css'
+  styleUrl: './tooltip.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTooltip extends TailwindComponent implements AfterViewInit, OnDestroy {
   /** Tooltip text */

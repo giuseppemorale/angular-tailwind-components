@@ -1,17 +1,4 @@
-import {
-  Component,
-  computed,
-  ElementRef,
-  forwardRef,
-  inject,
-  input,
-  model,
-  OnDestroy,
-  signal,
-  TemplateRef,
-  ViewContainerRef,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, inject, input, model, OnDestroy, signal, TemplateRef, ViewContainerRef, viewChild } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { fromEvent, Subscription } from 'rxjs';
@@ -29,7 +16,8 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './select.component.html',
-  styleUrl: './select.component.css'
+  styleUrl: './select.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSelect<T = unknown> extends TailwindComponent implements ControlValueAccessor, OnDestroy {
   private readonly overlay = inject(Overlay);

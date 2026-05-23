@@ -1,11 +1,12 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-spinner',
   templateUrl: './spinner.component.html',
-  styleUrl: './spinner.component.css'
+  styleUrl: './spinner.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSpinner extends TailwindComponent {
   /** Size variant */

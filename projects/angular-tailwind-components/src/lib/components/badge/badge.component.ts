@@ -1,11 +1,12 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-badge',
   templateUrl: './badge.component.html',
-  styleUrl: './badge.component.css'
+  styleUrl: './badge.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindBadge extends TailwindComponent {
   /** Color variant */

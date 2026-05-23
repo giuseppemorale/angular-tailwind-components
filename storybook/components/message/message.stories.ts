@@ -48,7 +48,7 @@ export const Severities: StoryObj<TailwindMessage> = {
         </tailwind-message>
         <tailwind-message severity="info">
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="info-circle" class="text-info-600 shrink-0" />
+            <tailwind-icon icon="information-circle" class="text-info-600 shrink-0" />
             <span>This is an informational message.</span>
           </div>
         </tailwind-message>

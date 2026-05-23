@@ -1,10 +1,11 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-card',
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  styleUrl: './card.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindCard extends TailwindComponent {
   /** Whether the card has elevated shadow */

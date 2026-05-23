@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import type { TailwindHeroicon, TailwindIconSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { TAILWIND_ICON_SIZE } from '../../tokens';
@@ -12,9 +12,11 @@ const clampIconSize = (value: number): number => {
 @Component({
   selector: 'tailwind-icon',
   host: {
-    class: 'inline-flex shrink-0 items-center justify-center'
+    '[class]': 'hostClasses()'
   },
-  templateUrl: './icon.component.html'
+  templateUrl: './icon.component.html',
+  styleUrl: './icon.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindIcon extends TailwindComponent {
   private readonly iconSize = inject(TAILWIND_ICON_SIZE, { optional: true });
@@ -27,4 +29,15 @@ export class TailwindIcon extends TailwindComponent {
   readonly src = computed(() => `/tailwind-icons/${this.icon()}.svg`);
 
   readonly pixelSize = computed(() => clampIconSize(this.size()));
+
+  /** Layout-only; custom `class` is applied to the inner glyph (color, spacing, etc.). */
+  readonly hostClasses = computed(() => 'inline-flex shrink-0 items-center justify-center');
+
+  /** Tailwind classes from `class` input, merged with the masked glyph base. */
+  readonly glyphClasses = computed(() => {
+    const custom = this.class();
+    return custom ? `tailwind-icon-glyph ${custom}` : 'tailwind-icon-glyph';
+  });
+
+  readonly maskImage = computed(() => `url("${this.src()}")`);
 }

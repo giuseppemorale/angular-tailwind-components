@@ -1,14 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  input,
-  OnDestroy,
-  OnInit,
-  output,
-  signal,
-  viewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, input, OnDestroy, OnInit, output, signal, viewChild } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindMenuItem } from '../../models';
 
@@ -18,7 +8,8 @@ const MIN_PANEL_WIDTH_PX = 192;
 @Component({
   selector: 'tailwind-menu',
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
+  styleUrl: './menu.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit {
   private openScheduleId: ReturnType<typeof setTimeout> | undefined;

@@ -1,11 +1,14 @@
-import { Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { TailwindSeverity } from '../../models';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindIcon],
   selector: 'tailwind-notification',
   templateUrl: './notification.component.html',
-  styleUrl: './notification.component.css'
+  styleUrl: './notification.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindNotification extends TailwindComponent {
   readonly title = input<string>('');
@@ -22,6 +25,6 @@ export class TailwindNotification extends TailwindComponent {
       danger: 'bg-danger-50 border-danger-200 text-danger-800',
       info: 'bg-info-50 border-info-200 text-info-800'
     };
-    return `flex items-start rounded-xl border p-4 ${variantMap[this.severity()]}`;
+    return `flex items-start rounded-lg border p-4 ${variantMap[this.severity()]}`;
   });
 }

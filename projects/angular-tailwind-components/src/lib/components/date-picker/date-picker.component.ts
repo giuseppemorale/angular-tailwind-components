@@ -1,4 +1,4 @@
-import { Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, forwardRef, HostListener, inject, input, model, signal } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
@@ -27,7 +27,8 @@ const I18N: Record<Lang, { months: string[]; weekDays: string[]; today: string; 
   selector: 'tailwind-date-picker',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDatePicker), multi: true }],
   templateUrl: './date-picker.component.html',
-  styleUrl: './date-picker.component.css'
+  styleUrl: './date-picker.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindDatePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

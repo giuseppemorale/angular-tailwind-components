@@ -193,6 +193,9 @@ async function main() {
   bumpVersion(newVersion);
   updateLibraryPackageJson(newVersion);
 
+  console.log('\nSyncing package-lock.json (npm install)...');
+  execSync('npm install', { stdio: 'inherit' });
+
   console.log('\nBuilding the library (verifica locale prima del publish su CI)...');
   execSync('npm run build', { stdio: 'inherit' });
 

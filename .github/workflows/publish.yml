@@ -38,14 +38,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
 
-      - name: Use npm from packageManager (Trusted Publishing requires npm >= 11.5.1)
-        run: |
-          corepack enable
-          corepack install
-          echo "node $(node --version)"
-          echo "npm $(npm --version)"
-          npm --version | grep -qE '^11\.' || (echo "::error::npm 11.x required" && exit 1)
-
       - name: Install dependencies
         run: npm ci
 
@@ -67,9 +59,9 @@ jobs:
         working-directory: dist/angular-tailwind-components
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          echo "Publishing ${VERSION} (OIDC / Trusted Publishing)..."
+          echo "Publishing ${VERSION}..."
           if echo "$VERSION" | grep -qiE '-RC[0-9]+$'; then
-            npm publish --access public --tag rc
+            npm publish --tag rc
           else
-            npm publish --access public
+            npm publish
           fi

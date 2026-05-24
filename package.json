@@ -25,6 +25,7 @@
     "watch": "node scripts/copy-icons.js sync && ng build angular-tailwind-components --watch --configuration development && node scripts/copy-icons.js dist",
     "test": "ng test",
     "release": "node scripts/release.js",
+    "fix-latest-tag": "node scripts/fix-latest-tag.js",
     "storybook": "ng run angular-tailwind-components:storybook",
     "build:storybook": "ng run angular-tailwind-components:build-storybook",
     "prettier:write": "prettier --write projects/**/*.{ts,html,css} src/**/*.{ts,html,css}",

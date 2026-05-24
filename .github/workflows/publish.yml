@@ -5,10 +5,6 @@ on:
     tags:
       - 'v*'
 
-permissions:
-  id-token: write
-  contents: read
-
 concurrency:
   group: npm-publish-${{ github.ref }}
   cancel-in-progress: true
@@ -17,7 +13,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
     steps:
       - name: Checkout
@@ -32,14 +27,16 @@ jobs:
             echo "::error::Il tag non punta a un commit presente su master. Pubblicazione annullata."
             exit 1
           fi
+          echo "Commit ${{ github.sha }} è su master — ok per pubblicare."
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '22.14'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
-      - name: Enable npm 11.13 (Trusted Publishing richiede npm >= 11.5.1)
+      - name: Use npm from packageManager
         run: corepack enable && corepack prepare npm@11.13.0 --activate && npm --version
 
       - name: Install dependencies
@@ -48,24 +45,23 @@ jobs:
       - name: Build library
         run: npm run build
 
-      - name: Verify package metadata
+      - name: Verify npm token
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          node -e "
-            const pkg = require('./dist/angular-tailwind-components/package.json');
-            console.log('repository:', JSON.stringify(pkg.repository));
-            if (!pkg.repository?.url?.includes('giuseppemorale/angular-tailwind-components')) {
-              process.exit(1);
-            }
-          "
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "::error::Secret NPM_TOKEN mancante. Crea un Granular Access Token su npmjs.com e aggiungilo in GitHub → Settings → Secrets."
+            exit 1
+          fi
+          npm whoami
 
-      - name: Publish to npm (Trusted Publishing / OIDC)
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          test -n "$ACTIONS_ID_TOKEN_REQUEST_URL" || (echo "::error::OIDC non disponibile" && exit 1)
-          unset NODE_AUTH_TOKEN
-          rm -f .npmrc ~/.npmrc
-          cd dist/angular-tailwind-components
           VERSION=$(node -p "require('./package.json').version")
-          echo "Publishing ${VERSION}..."
+          echo "Publishing version ${VERSION}..."
+          cd dist/angular-tailwind-components
           if echo "$VERSION" | grep -qiE '-RC[0-9]+$'; then
             npm publish --access public --tag rc
           else

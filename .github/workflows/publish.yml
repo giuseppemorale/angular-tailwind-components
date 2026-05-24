@@ -17,7 +17,6 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
       contents: read
     steps:
       - name: Checkout
@@ -41,9 +40,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
-      - name: Use npm from packageManager (OIDC requires npm >= 11.5.1)
-        run: corepack enable && corepack prepare npm@11.13.0 --activate && npm --version
-
       - name: Install dependencies
         run: npm ci
 
@@ -51,9 +47,11 @@ jobs:
         run: npm run build
 
       - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          echo "Publishing version ${VERSION} via Trusted Publishing (OIDC)..."
+          echo "Publishing version ${VERSION}..."
           cd dist/angular-tailwind-components
           if echo "$VERSION" | grep -qiE '-RC[0-9]+$'; then
             npm publish --access public --tag rc

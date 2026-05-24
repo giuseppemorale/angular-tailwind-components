@@ -6,7 +6,9 @@
     "url": "https://github.com/giuseppemorale/angular-tailwind-components"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "provenance": false
   },
   "files": [
     "fesm2022",

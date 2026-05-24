@@ -149,20 +149,12 @@ Vuoi procedere tramite RC (Release Candidate)? (y/n): `;
   return bumpByReleaseType(currentVersion, releaseType, withRc);
 }
 
-function checkNpmLogin() {
-  console.log('\nChecking npm login...');
+function assertOnMasterBranch() {
+  const branch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
 
-  try {
-    const who = execSync('npm whoami', { encoding: 'utf8' }).trim();
-    console.log(`Logged in as: ${who}`);
-  } catch {
-    console.error(
-      '\n❌ Non risulti autenticato su npm (401 / whoami fallito).\n' +
-        '   Esegui: npm login\n' +
-        '   Se usi 2FA "auth and publish", al publish serve: npm publish --otp=<codice>\n' +
-        '   oppure un Access Token con permesso di pubblicazione: https://www.npmjs.com/settings/~/tokens\n'
-    );
-    process.exit(1);
+  if (branch !== 'master') {
+    const current = branch || 'detached HEAD';
+    throw new Error(`Release consentita solo su master (branch attuale: "${current}").`);
   }
 }
 
@@ -179,37 +171,29 @@ function updateLibraryPackageJson(newVersion) {
   fs.writeFileSync(libPackageJsonPath, JSON.stringify(libPackageJson, null, 2) + '\n');
 }
 
-function publishToNpm(newVersion) {
-  console.log('\nPublishing to npm...');
+function pushReleaseTag(newVersion) {
+  const tag = `v${newVersion}`;
 
-  const publishArgs = ['publish', '--access', 'public'];
+  console.log(`\nCreating tag ${tag}...`);
+  execSync(`git tag ${tag}`, { stdio: 'inherit' });
 
-  if (isRcVersion(newVersion)) {
-    publishArgs.push('--tag', 'rc');
-    console.log('Pubblicazione RC con dist-tag "rc" (latest resta invariato).');
-  }
-
-  execSync(`npm ${publishArgs.join(' ')}`, {
-    cwd: path.join(__dirname, '../dist/angular-tailwind-components'),
-    stdio: 'inherit'
-  });
+  console.log('Pushing tag to trigger GitHub Actions publish...');
+  execSync(`git push origin ${tag}`, { stdio: 'inherit' });
 }
 
 async function main() {
+  assertOnMasterBranch();
+
   const currentVersion = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf8')).version;
   console.log(`Versione attuale: ${currentVersion}`);
 
   const newVersion = await determineNewVersion(currentVersion);
   console.log(`\nNuova versione: ${newVersion}`);
 
-  checkNpmLogin();
-
-  // ng-packagr writes dist/package.json from projects/.../package.json during
-  // build; publishing stale dist would republish the old version on npm.
   bumpVersion(newVersion);
   updateLibraryPackageJson(newVersion);
 
-  console.log('\nBuilding the library...');
+  console.log('\nBuilding the library (verifica locale prima del publish su CI)...');
   execSync('npm run build', { stdio: 'inherit' });
 
   console.log('\nCommitting changes...');
@@ -219,9 +203,13 @@ async function main() {
   console.log('Pushing to repository...');
   execSync('git push', { stdio: 'inherit' });
 
-  publishToNpm(newVersion);
+  pushReleaseTag(newVersion);
 
-  console.log(`\n✅ Release ${newVersion} completed successfully!`);
+  console.log(`\n✅ Release ${newVersion} preparata.`);
+  console.log(`   GitHub Actions pubblicherà su npm al push del tag v${newVersion}.`);
+  if (isRcVersion(newVersion)) {
+    console.log('   (RC: dist-tag "rc" su npm, "latest" resta invariato)');
+  }
 }
 
 main()

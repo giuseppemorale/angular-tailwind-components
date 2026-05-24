@@ -1,5 +1,5 @@
 const readline = require('readline');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -11,16 +11,17 @@ const ask = question =>
     rl.question(question, answer => resolve(answer));
   });
 
-function run(command, options = {}) {
-  return execSync(command, { encoding: 'utf8', stdio: options.silent ? 'pipe' : 'inherit', ...options });
-}
-
-function runQuiet(command) {
-  return execSync(command, { encoding: 'utf8', stdio: 'pipe' }).trim();
+function git(args, options = {}) {
+  const stdio = options.inherit ? 'inherit' : 'pipe';
+  const result = execFileSync('git', args, {
+    encoding: options.encoding ?? 'utf8',
+    stdio
+  });
+  return typeof result === 'string' ? result.trim() : result;
 }
 
 function assertOnMasterBranch() {
-  const branch = runQuiet('git branch --show-current');
+  const branch = git(['branch', '--show-current']);
 
   if (branch !== 'master') {
     const current = branch || 'detached HEAD';
@@ -29,7 +30,7 @@ function assertOnMasterBranch() {
 }
 
 function getLatestVersionTag() {
-  const tags = runQuiet('git tag -l "v*" --sort=-v:refname')
+  const tags = git(['tag', '-l', 'v*', '--sort=-v:refname'])
     .split('\n')
     .map(tag => tag.trim())
     .filter(Boolean);
@@ -41,6 +42,14 @@ function getLatestVersionTag() {
   return tags[0];
 }
 
+function resolveTagCommit(tag) {
+  try {
+    return git(['rev-list', '-n', '1', tag]);
+  } catch {
+    throw new Error(`Tag ${tag} non trovato. Esegui "git fetch --tags" o verifica che il tag esista.`);
+  }
+}
+
 function isYes(answer) {
   const normalized = answer.trim().toLowerCase();
   return normalized === 'y' || normalized === 'yes' || normalized === 's' || normalized === 'si';
@@ -48,7 +57,7 @@ function isYes(answer) {
 
 function deleteRemoteTag(tag) {
   try {
-    run(`git push origin :refs/tags/${tag}`);
+    git(['push', 'origin', `:refs/tags/${tag}`], { inherit: true });
   } catch {
     console.log(`Tag remoto ${tag} assente o già rimosso — continuo.`);
   }
@@ -58,11 +67,11 @@ async function main() {
   assertOnMasterBranch();
 
   console.log('Fetching tags...');
-  run('git fetch --tags');
+  git(['fetch', '--tags'], { inherit: true });
 
   const tag = getLatestVersionTag();
-  const taggedCommit = runQuiet(`git rev-parse ${tag}^{commit}`);
-  const headCommit = runQuiet('git rev-parse HEAD');
+  const taggedCommit = resolveTagCommit(tag);
+  const headCommit = git(['rev-parse', 'HEAD']);
 
   console.log(`\nUltimo tag: ${tag}`);
   console.log(`  commit del tag: ${taggedCommit}`);
@@ -73,8 +82,8 @@ async function main() {
     return;
   }
 
-  const taggedSubject = runQuiet(`git log -1 --format=%s ${taggedCommit}`);
-  const headSubject = runQuiet(`git log -1 --format=%s ${headCommit}`);
+  const taggedSubject = git(['log', '-1', '--format=%s', taggedCommit]);
+  const headSubject = git(['log', '-1', '--format=%s', headCommit]);
 
   console.log(`  messaggio tag:  ${taggedSubject}`);
   console.log(`  messaggio HEAD: ${headSubject}`);
@@ -89,7 +98,7 @@ async function main() {
   }
 
   try {
-    run(`git tag -d ${tag}`);
+    git(['tag', '-d', tag], { inherit: true });
   } catch {
     console.log(`Tag locale ${tag} assente — continuo.`);
   }
@@ -97,10 +106,10 @@ async function main() {
   deleteRemoteTag(tag);
 
   console.log(`\nCreating tag ${tag} on HEAD...`);
-  run(`git tag ${tag}`);
+  git(['tag', tag], { inherit: true });
 
   console.log('Pushing tag...');
-  run(`git push origin ${tag}`);
+  git(['push', 'origin', tag], { inherit: true });
 
   console.log(`\n✅ Tag ${tag} aggiornato su HEAD. GitHub Actions dovrebbe ripartire.`);
 }

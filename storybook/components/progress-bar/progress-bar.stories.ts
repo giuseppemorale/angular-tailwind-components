@@ -4,15 +4,15 @@ import { TailwindProgressBar } from '../../../projects/angular-tailwind-componen
 const meta: Meta<TailwindProgressBar> = {
   title: 'Components/ProgressBar',
   component: TailwindProgressBar,
-  args: {
-    value: 0,
-    label: '',
-    showLabel: true,
-    showValue: true,
-    variant: 'primary',
-    size: 'md',
-    indeterminate: false,
-    striped: false
+  argTypes: {
+    size: {
+      control: 'select',
+      options: ['xs', 'sm', 'md', 'lg', 'xl']
+    },
+    variant: {
+      control: 'select',
+      options: ['primary', 'success', 'warning', 'danger', 'info', 'transparent']
+    }
   }
 };
 export default meta;
@@ -45,9 +45,12 @@ export const AllVariants: StoryObj<TailwindProgressBar> = {
 
 export const Indeterminate: StoryObj<TailwindProgressBar> = {
   args: {
+    variant: 'primary',
+    size: 'md',
     indeterminate: true,
     label: 'Loading...',
     showValue: false,
+    showLabel: true,
     striped: false
   }
 };

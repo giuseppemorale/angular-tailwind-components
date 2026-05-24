@@ -11,9 +11,9 @@
           class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-all duration-200"
           [class.bg-primary-600]="i <= activeIndex()"
           [class.border-primary-600]="i <= activeIndex()"
-          [class.text-white]="i <= activeIndex()"
+          [class.text-on-primary-600]="i <= activeIndex()"
           [class.border-neutral-300]="i > activeIndex()"
-          [class.text-neutral-500]="i > activeIndex()">
+          [class.text-neutral-600]="i > activeIndex()">
           @if (step.completed()) {
             <tailwind-icon icon="check" [size]="16" />
           } @else {
@@ -23,12 +23,12 @@
         <div class="hidden sm:block">
           <p
             class="text-sm font-medium"
-            [class.text-primary-600]="i <= activeIndex()"
-            [class.text-neutral-500]="i > activeIndex()">
+            [class.text-primary-700]="i <= activeIndex()"
+            [class.text-neutral-700]="i > activeIndex()">
             {{ step.label() }}
           </p>
           @if (step.description()) {
-            <p class="text-xs text-neutral-400">{{ step.description() }}</p>
+            <p class="text-xs text-neutral-500">{{ step.description() }}</p>
           }
         </div>
       </button>

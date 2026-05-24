@@ -101,12 +101,12 @@ export class TailwindButton extends TailwindComponent {
       secondary:
         'bg-transparent text-neutral-700 border-neutral-300 hover:bg-neutral-50 active:bg-neutral-100 focus-visible:outline-neutral-500',
       danger:
-        'bg-transparent text-danger-600 border-danger-600 hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
+        'bg-transparent text-danger-800 border-danger-700 hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
       success:
-        'bg-transparent text-success-600 border-success-600 hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
+        'bg-transparent text-success-800 border-success-700 hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
       warning:
-        'bg-transparent text-warning-600 border-warning-500 hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-500',
-      info: 'bg-transparent text-info-600 border-info-600 hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
+        'bg-transparent text-warning-800 border-warning-700 hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-700',
+      info: 'bg-transparent text-info-800 border-info-700 hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
       transparent: transparentColorClasses
     };
 
@@ -117,12 +117,12 @@ export class TailwindButton extends TailwindComponent {
       secondary:
         'bg-transparent text-neutral-700 border-transparent hover:bg-neutral-100 active:bg-neutral-200 focus-visible:outline-neutral-500',
       danger:
-        'bg-transparent text-danger-600 border-transparent hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
+        'bg-transparent text-danger-800 border-transparent hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
       success:
-        'bg-transparent text-success-600 border-transparent hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
+        'bg-transparent text-success-800 border-transparent hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
       warning:
-        'bg-transparent text-warning-600 border-transparent hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-500',
-      info: 'bg-transparent text-info-600 border-transparent hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
+        'bg-transparent text-warning-800 border-transparent hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-700',
+      info: 'bg-transparent text-info-800 border-transparent hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
       transparent: transparentColorClasses
     };
 
@@ -130,10 +130,10 @@ export class TailwindButton extends TailwindComponent {
     const textMap: Record<TailwindColor, string> = {
       primary: 'bg-transparent text-primary-600 border-transparent focus-visible:outline-primary-600',
       secondary: 'bg-transparent text-neutral-700 border-transparent focus-visible:outline-neutral-500',
-      danger: 'bg-transparent text-danger-600 border-transparent focus-visible:outline-danger-600',
-      success: 'bg-transparent text-success-600 border-transparent focus-visible:outline-success-600',
-      warning: 'bg-transparent text-warning-600 border-transparent focus-visible:outline-warning-500',
-      info: 'bg-transparent text-info-600 border-transparent focus-visible:outline-info-600',
+      danger: 'bg-transparent text-danger-800 border-transparent focus-visible:outline-danger-600',
+      success: 'bg-transparent text-success-800 border-transparent focus-visible:outline-success-600',
+      warning: 'bg-transparent text-warning-800 border-transparent focus-visible:outline-warning-700',
+      info: 'bg-transparent text-info-800 border-transparent focus-visible:outline-info-600',
       transparent: transparentColorClasses
     };
 

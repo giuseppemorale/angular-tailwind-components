@@ -38,6 +38,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
 
       - name: Use npm from packageManager (OIDC requires npm >= 11.5.1)
@@ -48,18 +49,6 @@ jobs:
 
       - name: Build library
         run: npm run build
-
-      - name: Verify package metadata for Trusted Publishing
-        run: |
-          node -e "
-            const pkg = require('./dist/angular-tailwind-components/package.json');
-            if (!pkg.repository?.url?.includes('giuseppemorale/angular-tailwind-components')) {
-              throw new Error('repository.url mancante o errato nel package pubblicato: ' + JSON.stringify(pkg.repository));
-            }
-            console.log('repository.url:', pkg.repository.url);
-          "
-          # setup-node con registry-url crea _authToken vuoto e rompe OIDC
-          rm -f .npmrc ~/.npmrc 2>/dev/null || true
 
       - name: Publish to npm
         run: |

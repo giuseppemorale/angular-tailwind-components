@@ -27,6 +27,15 @@ describe('TailwindInput', () => {
     expect(label?.textContent).toContain('Test Label');
   });
 
+  it('should show required indicator', () => {
+    fixture.componentRef.setInput('label', 'Email');
+    fixture.componentRef.setInput('required', true);
+    fixture.detectChanges();
+
+    const required = fixture.nativeElement.querySelector('.text-danger-500');
+    expect(required?.textContent).toContain('*');
+  });
+
   it('should show error text when hasError', () => {
     fixture.componentRef.setInput('hasError', true);
     fixture.componentRef.setInput('errorText', 'This field is required');

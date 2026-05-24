@@ -149,6 +149,15 @@ Vuoi procedere tramite RC (Release Candidate)? (y/n): `;
   return bumpByReleaseType(currentVersion, releaseType, withRc);
 }
 
+function assertOnMasterBranch() {
+  const branch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
+
+  if (branch !== 'master') {
+    const current = branch || 'detached HEAD';
+    throw new Error(`Release consentita solo su master (branch attuale: "${current}").`);
+  }
+}
+
 function checkNpmLogin() {
   console.log('\nChecking npm login...');
 
@@ -196,6 +205,8 @@ function publishToNpm(newVersion) {
 }
 
 async function main() {
+  assertOnMasterBranch();
+
   const currentVersion = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf8')).version;
   console.log(`Versione attuale: ${currentVersion}`);
 

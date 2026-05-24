@@ -13,11 +13,8 @@ const ask = question =>
     rl.question(question, answer => resolve(answer));
   });
 
-const rootDir = path.join(__dirname, '..');
-const rootPackageJsonPath = path.join(rootDir, 'package.json');
-const libPackageJsonPath = path.join(rootDir, 'projects/angular-tailwind-components/package.json');
-const iconsMarkerPath = path.join(rootDir, 'node_modules/@iconify-json/heroicons/icons.json');
-const withLocalBuild = process.argv.includes('--with-build');
+const rootPackageJsonPath = path.join(__dirname, '../package.json');
+const libPackageJsonPath = path.join(__dirname, '../projects/angular-tailwind-components/package.json');
 
 function parseVersion(version) {
   const match = version.match(/^(\d+)\.(\d+)\.(\d+)(?:-RC(\d+))?$/i);
@@ -174,23 +171,6 @@ function updateLibraryPackageJson(newVersion) {
   fs.writeFileSync(libPackageJsonPath, JSON.stringify(libPackageJson, null, 2) + '\n');
 }
 
-function syncPackageLock() {
-  console.log('\nSyncing package-lock.json (npm install --package-lock-only)...');
-  execSync('npm install --package-lock-only', { stdio: 'inherit' });
-}
-
-function runLocalBuild() {
-  if (!fs.existsSync(iconsMarkerPath)) {
-    throw new Error(
-      `node_modules incompleto (${iconsMarkerPath}).\n` +
-        '   Esegui "npm install" con ng serve/Storybook chiusi, oppure ometti --with-build (build in CI).'
-    );
-  }
-
-  console.log('\nBuilding the library (verifica locale)...');
-  execSync('npm run build', { stdio: 'inherit' });
-}
-
 function pushReleaseTag(newVersion) {
   const tag = `v${newVersion}`;
 
@@ -213,14 +193,11 @@ async function main() {
   bumpVersion(newVersion);
   updateLibraryPackageJson(newVersion);
 
-  syncPackageLock();
+  console.log('\nSyncing package-lock.json (npm install)...');
+  execSync('npm install', { stdio: 'inherit' });
 
-  if (withLocalBuild) {
-    runLocalBuild();
-  } else {
-    console.log('\nBuild locale saltata — GitHub Actions eseguirà build e publish.');
-    console.log('   Per verificare in locale: npm run build (oppure npm run release -- --with-build).');
-  }
+  console.log('\nBuilding the library (verifica locale prima del publish su CI)...');
+  execSync('npm run build', { stdio: 'inherit' });
 
   console.log('\nCommitting changes...');
   execSync('git add .', { stdio: 'inherit' });

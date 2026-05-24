@@ -32,10 +32,10 @@ describe('TailwindUpload', () => {
     fixture.componentRef.setInput('buttonLabel', 'Upload');
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('[role="button"]')).toBeNull();
-    const buttons = fixture.nativeElement.querySelectorAll('button');
-    expect(buttons.length).toBeGreaterThanOrEqual(1);
-    expect(fixture.nativeElement.textContent).toContain('Upload');
+    const triggerButton = fixture.nativeElement.querySelector('button');
+    expect(triggerButton).toBeTruthy();
+    expect(triggerButton?.textContent).toContain('Upload');
+    expect(fixture.nativeElement.textContent).not.toContain('Drag and drop');
   });
 
   it('should implement CVA writeValue', () => {

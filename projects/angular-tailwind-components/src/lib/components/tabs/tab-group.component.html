@@ -1,6 +1,10 @@
 <!-- Tab Headers -->
-<div class="border-b border-neutral-200" role="tablist" [attr.aria-label]="ariaLabel()">
-  <nav class="flex -mb-px gap-1" [class.overflow-x-auto]="scrollable()">
+<div class="border-b border-neutral-200">
+  <nav
+    class="flex -mb-px gap-1"
+    [class.overflow-x-auto]="scrollable()"
+    role="tablist"
+    [attr.aria-label]="ariaLabel() || null">
     @for (tab of tabs(); track $index; let i = $index) {
       <button
         type="button"

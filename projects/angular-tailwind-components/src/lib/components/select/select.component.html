@@ -14,6 +14,7 @@
     [attr.id]="id() ? id() + '-inner' : null"
     role="combobox"
     aria-haspopup="listbox"
+    [attr.aria-label]="comboboxAriaLabel()"
     [attr.aria-expanded]="isOpen()"
     [attr.aria-invalid]="hasError() || null"
     [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
@@ -40,7 +41,7 @@
     <tailwind-icon
       icon="chevron-down"
       [size]="16"
-      class="shrink-0 ml-2 text-neutral-400 transition-transform duration-150"
+      class="shrink-0 ml-2 text-neutral-600 transition-transform duration-150"
       [class.rotate-180]="isOpen()"
       aria-hidden="true" />
   </button>

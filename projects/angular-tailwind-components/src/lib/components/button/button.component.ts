@@ -16,7 +16,7 @@ const iconPixelSizeMap: Record<TailwindSize, number> = {
 
 /** Always transparent background; no tint on hover, focus, or active. */
 const transparentColorClasses =
-  'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent border-transparent shadow-none text-neutral-500 focus-visible:outline-neutral-400';
+  'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent border-transparent shadow-none text-neutral-600 focus-visible:outline-neutral-400';
 
 @Component({
   imports: [NgClass, TailwindIcon],
@@ -74,11 +74,11 @@ export class TailwindButton extends TailwindComponent {
       secondary:
         'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 border-neutral-300 focus-visible:outline-neutral-500 shadow-sm',
       danger:
-        'bg-danger-600 text-on-danger-600 hover:bg-danger-700 hover:text-on-danger-700 active:bg-danger-800 active:text-on-danger-800 border-transparent focus-visible:outline-danger-600 shadow-sm',
+        'bg-danger-600 text-on-danger-600 hover:bg-danger-700 hover:text-on-danger-700 active:bg-danger-800 active:text-on-danger-800 border-transparent focus-visible:outline-danger-700 shadow-sm',
       success:
-        'bg-success-600 text-on-success-600 hover:bg-success-700 hover:text-on-success-700 active:bg-success-800 active:text-on-success-800 border-transparent focus-visible:outline-success-600 shadow-sm',
+        'bg-success-700 text-on-success-700 hover:bg-success-800 hover:text-on-success-800 active:bg-success-900 active:text-on-success-900 border-transparent focus-visible:outline-success-600 shadow-sm',
       warning:
-        'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-transparent focus-visible:outline-warning-500 shadow-sm',
+        'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-transparent focus-visible:outline-warning-600 shadow-sm',
       info: 'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-transparent focus-visible:outline-info-600 shadow-sm',
       transparent: transparentColorClasses
     };
@@ -89,8 +89,8 @@ export class TailwindButton extends TailwindComponent {
         'bg-primary-600 text-on-primary-600 border-0 shadow-none focus-visible:outline-primary-600',
       secondary: 'bg-neutral-100 text-neutral-800 border-0 shadow-none focus-visible:outline-neutral-500',
       danger: 'bg-danger-600 text-on-danger-600 border-0 shadow-none focus-visible:outline-danger-600',
-      success: 'bg-success-600 text-on-success-600 border-0 shadow-none focus-visible:outline-success-600',
-      warning: 'bg-warning-500 text-on-warning-500 border-0 shadow-none focus-visible:outline-warning-500',
+      success: 'bg-success-700 text-on-success-700 border-0 shadow-none focus-visible:outline-success-600',
+      warning: 'bg-warning-500 text-on-warning-500 border-0 shadow-none focus-visible:outline-warning-600',
       info: 'bg-info-600 text-on-info-600 border-0 shadow-none focus-visible:outline-info-600',
       transparent: transparentColorClasses
     };

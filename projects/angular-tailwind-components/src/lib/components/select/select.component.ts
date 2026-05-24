@@ -46,6 +46,8 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
 
   /** Label text */
   readonly label = input<string>('');
+  /** Accessible name for the combobox when `label` is omitted */
+  readonly ariaLabel = input<string>('');
   /** Placeholder text */
   readonly placeholder = input<string>('');
   /** Available options */
@@ -79,6 +81,19 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     const v = this.value();
     if (v == null || Array.isArray(v)) return null;
     return this.options().find(o => this.optionValueEquals(o.value, v)) ?? null;
+  });
+
+  /** Accessible name for the combobox when there is no visible `label` */
+  readonly comboboxAriaLabel = computed(() => {
+    if (this.label()) return null;
+    const base = this.ariaLabel();
+    if (!base) return null;
+    if (this.multiple()) {
+      const count = this.selectedOptions().length;
+      return count > 0 ? `${base}, ${count} selected` : base;
+    }
+    const selected = this.selectedOption();
+    return selected ? `${base}, ${selected.label}` : base;
   });
 
   /** Selected option objects in `options()` order (multiple mode only) */

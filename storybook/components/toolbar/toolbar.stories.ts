@@ -3,11 +3,27 @@ import { type TailwindMenuItem, TailwindToolbar } from '../../../projects/angula
 
 const horizontalMenu: TailwindMenuItem[] = [
   { label: 'Home', value: 'home' },
+  {
+    label: 'Products',
+    value: 'products',
+    items: [
+      { label: 'Catalog', value: 'catalog' },
+      { label: 'Pricing', value: 'pricing' }
+    ]
+  },
   { label: 'Docs', value: 'docs' }
 ];
 
 const verticalMenu: TailwindMenuItem[] = [
   { label: 'Dashboard', value: 'dashboard' },
+  {
+    label: 'Workspace',
+    value: 'workspace',
+    items: [
+      { label: 'Projects', value: 'projects' },
+      { label: 'Teams', value: 'teams' }
+    ]
+  },
   { label: 'Settings', value: 'settings' },
   { divider: true },
   { label: 'Profile', value: 'profile' }
@@ -28,7 +44,7 @@ const meta: Meta<TailwindToolbar> = {
     docs: {
       description: {
         component:
-          'App bar or side rail: **`[tailwind-toolbar-logo]`** and **`[tailwind-toolbar-end]`** via content projection (use attributes on native elements, e.g. `<div tailwind-toolbar-logo>`); central items come from the **`menu`** input (`TailwindMenuItem[]`), laid out as a row when **horizontal** and a column when **vertical** (dividers: vertical rule vs `<hr>`). Listen to **`onMenuSelect`** for clicks. **width="container"** applies only when **horizontal** (responsive width). **Vertical** toolbar is always **`h-full`** in its column (`w-full`).'
+          'App bar or side rail: **`[tailwind-toolbar-logo]`** and **`[tailwind-toolbar-end]`** via content projection (use attributes on native elements, e.g. `<div tailwind-toolbar-logo>`); central items come from the **`menu`** input (`TailwindMenuItem[]`), laid out as a row when **horizontal** and a column when **vertical** (dividers: vertical rule vs `<hr>`). Entries with **`items`** open a nested **`tailwind-menu`** on click (below in horizontal mode, to the right in vertical). Listen to **`onMenuSelect`** for leaf clicks only. **width="container"** applies only when **horizontal** (responsive width). **Vertical** toolbar is always **`h-full`** in its column (`w-full`).'
       },
       story: { height: '420px' }
     }
@@ -101,9 +117,9 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
           <div tailwind-toolbar-logo class="flex justify-center px-2">
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
-          <div tailwind-toolbar-end class="flex justify-center px-2">
-            <tailwind-button size="sm" color="secondary" kind="text">              
-              <tailwind-icon icon="arrow-right-end-on-rectangle" size="20" />
+          <div tailwind-toolbar-end>
+            <tailwind-button size="sm" color="secondary" kind="text" ariaLabel="Logout">
+              <tailwind-icon icon="arrow-right-end-on-rectangle" [size]="22" />
             </tailwind-button>
           </div>
         </tailwind-toolbar>

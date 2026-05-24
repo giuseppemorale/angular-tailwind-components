@@ -10,6 +10,7 @@
       <div class="w-20 shrink-0">
         <tailwind-select
           size="sm"
+          ariaLabel="Rows per page"
           [options]="pageSizeSelectOptions()"
           [value]="pageSize()"
           (valueChange)="onPageSizeValueChange($event)" />
@@ -34,6 +35,7 @@
         [kind]="page === currentPage() ? 'flat' : 'ghost'"
         [color]="page === currentPage() ? 'primary' : 'secondary'"
         class="min-w-8"
+        [ariaLabel]="pageButtonAriaLabel(page)"
         (onClick)="goToPage(page)">
         {{ page }}
       </tailwind-button>

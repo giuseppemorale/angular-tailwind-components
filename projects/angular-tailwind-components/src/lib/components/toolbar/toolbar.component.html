@@ -15,13 +15,44 @@
             (click)="mobileToolbarMenu.toggle($event)">
             <tailwind-icon icon="bars-3" [size]="22" [class]="menuItemIconClasses()" />
           </button>
-          <tailwind-menu #mobileToolbarMenu [items]="menu()" align="left" (onSelect)="selectMenuItem($event)" />
+          <tailwind-menu
+            #mobileToolbarMenu
+            [items]="mobileMenuItems()"
+            align="left"
+            (onSelect)="selectMenuItem($event)" />
         </div>
       }
       <div class="hidden min-w-0 flex-1 flex-row flex-wrap items-center gap-1 md:flex">
         @for (item of menu(); track menuTrackKey($index, item)) {
           @if (item.divider) {
             <span [class]="menuDividerLineClasses()" aria-hidden="true"></span>
+          } @else if (hasSubmenu(item)) {
+            <div [class]="menuItemWithSubmenuClasses()">
+              <button
+                type="button"
+                [disabled]="!!item.disabled"
+                [class]="menuItemButtonClasses()"
+                [class.px-2]="!!item.icon && !menuItemHasVisibleLabel(item)"
+                [class.py-2]="!!item.icon && !menuItemHasVisibleLabel(item)"
+                [attr.aria-label]="menuItemAriaLabel(item)"
+                [attr.aria-expanded]="itemMenu.isOpen()"
+                aria-haspopup="menu"
+                (click)="itemMenu.toggle($event)">
+                @if (item.icon) {
+                  <tailwind-icon [icon]="item.icon" [size]="20" [class]="menuItemIconClasses()" />
+                }
+                @if (menuItemHasVisibleLabel(item)) {
+                  {{ item.label }}
+                }
+                <tailwind-icon [icon]="submenuChevronIcon()" [size]="16" [class]="menuItemIconClasses()" />
+              </button>
+              <tailwind-menu
+                #itemMenu
+                [items]="item.items!"
+                [placement]="submenuPlacement()"
+                align="left"
+                (onSelect)="selectMenuItem($event)" />
+            </div>
           } @else {
             <button
               type="button"
@@ -47,6 +78,36 @@
       @for (item of menu(); track menuTrackKey($index, item)) {
         @if (item.divider) {
           <hr [class]="menuDividerRuleClasses()" />
+        } @else if (hasSubmenu(item)) {
+          <div [class]="menuItemWithSubmenuClasses()">
+            <button
+              type="button"
+              [disabled]="!!item.disabled"
+              [class]="menuItemButtonClasses()"
+              [class.justify-center]="!menuItemHasVisibleLabel(item)"
+              [attr.aria-label]="menuItemAriaLabel(item)"
+              [attr.aria-expanded]="itemMenu.isOpen()"
+              aria-haspopup="menu"
+              (click)="itemMenu.toggle($event)">
+              @if (item.icon) {
+                <tailwind-icon [icon]="item.icon" [size]="22" [class]="menuItemIconClasses()" />
+              }
+              @if (menuItemHasVisibleLabel(item)) {
+                <span class="min-w-0 flex-1">{{ item.label }}</span>
+              }
+              <tailwind-icon
+                [icon]="submenuChevronIcon()"
+                [size]="18"
+                [class]="menuItemIconClasses()"
+                [class.ml-auto]="menuItemHasVisibleLabel(item)" />
+            </button>
+            <tailwind-menu
+              #itemMenu
+              [items]="item.items!"
+              [placement]="submenuPlacement()"
+              align="left"
+              (onSelect)="selectMenuItem($event)" />
+          </div>
         } @else {
           <button
             type="button"
@@ -68,8 +129,11 @@
   }
   <div
     class="flex flex-wrap items-center gap-2 shrink-0"
+    [class.toolbar-end-vertical]="orientation() === 'vertical'"
     [class.justify-end]="orientation() === 'horizontal'"
-    [class.mt-auto]="orientation() === 'vertical'">
+    [class.mt-auto]="orientation() === 'vertical'"
+    [class.w-full]="orientation() === 'vertical'"
+    [class.justify-center]="orientation() === 'vertical'">
     <ng-content select="[tailwind-toolbar-end]" />
   </div>
 </div>

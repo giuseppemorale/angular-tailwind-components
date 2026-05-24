@@ -93,7 +93,7 @@ export class TailwindSortHeaderDirective {
       const icon = active ? (asc ? 'chevron-up' : 'chevron-down') : 'chevron-up-down';
       this.iconRef.setInput('icon', icon);
       this.iconRef.setInput('size', 14);
-      this.iconRef.setInput('class', active ? 'shrink-0 text-primary-600' : 'shrink-0 text-neutral-400');
+      this.iconRef.setInput('class', active ? 'shrink-0 text-primary-600' : 'shrink-0 text-neutral-600');
 
       this.renderer.setAttribute(
         this.host.nativeElement,

@@ -49,4 +49,5 @@ export interface TailwindMenuItem {
   disabled?: boolean;
   divider?: boolean;
   value?: string;
+  items?: TailwindMenuItem[];
 }

@@ -35,6 +35,22 @@ export class TailwindToolbar extends TailwindComponent {
   /** Emitted when a non-disabled, non-divider menu entry is activated. */
   readonly onMenuSelect = output<TailwindMenuItem>();
 
+  /** Flat list for the mobile hamburger (submenu children promoted one level). */
+  readonly mobileMenuItems = computed(() => this.flattenMenuItems(this.menu()));
+
+  readonly submenuPlacement = computed((): 'bottom' | 'right' =>
+    this.orientation() === 'horizontal' ? 'bottom' : 'right'
+  );
+
+  readonly submenuChevronIcon = computed(() =>
+    this.orientation() === 'horizontal' ? 'chevron-down' : 'chevron-right'
+  );
+
+  readonly menuItemWithSubmenuClasses = computed(() => {
+    const horizontal = this.orientation() === 'horizontal';
+    return horizontal ? 'relative inline-flex shrink-0' : 'relative w-full';
+  });
+
   readonly menuContainerClasses = computed(() =>
     this.orientation() === 'horizontal'
       ? 'min-w-0 flex-1 flex flex-row flex-wrap items-center gap-1'
@@ -133,11 +149,27 @@ export class TailwindToolbar extends TailwindComponent {
     return base.filter(Boolean).join(' ');
   });
 
+  hasSubmenu(item: TailwindMenuItem): boolean {
+    return Array.isArray(item.items) && item.items.length > 0;
+  }
+
   selectMenuItem(item: TailwindMenuItem): void {
-    if (item.divider || item.disabled) {
+    if (item.divider || item.disabled || this.hasSubmenu(item)) {
       return;
     }
     this.onMenuSelect.emit(item);
+  }
+
+  private flattenMenuItems(items: TailwindMenuItem[]): TailwindMenuItem[] {
+    const flat: TailwindMenuItem[] = [];
+    for (const item of items) {
+      if (this.hasSubmenu(item)) {
+        flat.push(...item.items!);
+      } else {
+        flat.push(item);
+      }
+    }
+    return flat;
   }
 
   /** True when `label` is a non-empty string after trim (icon-only entries omit or blank `label`). */

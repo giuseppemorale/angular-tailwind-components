@@ -11,7 +11,7 @@ import {
   viewChild
 } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
-import { TailwindMenuItem } from '../../models';
+import { TailwindMenuItem, TailwindPosition } from '../../models';
 
 /** Matches previous `min-w-48` floor when the anchor is narrower. */
 const MIN_PANEL_WIDTH_PX = 192;
@@ -34,6 +34,8 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
 
   readonly items = input<TailwindMenuItem[]>([]);
   readonly align = input<'left' | 'right'>('left');
+  /** `bottom` opens under the anchor; `right` opens beside it (e.g. vertical toolbar rail). */
+  readonly placement = input<Extract<TailwindPosition, 'bottom' | 'right'>>('bottom');
 
   readonly onSelect = output<TailwindMenuItem>();
 
@@ -135,6 +137,16 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
     const cbRect = cbRoot.getBoundingClientRect();
     const rect = anchor.getBoundingClientRect();
     const minWidth = Math.max(rect.width, MIN_PANEL_WIDTH_PX);
+
+    if (this.placement() === 'right') {
+      this.panelLayout.set({
+        top: rect.top - cbRect.top,
+        left: rect.right - cbRect.left,
+        minWidth
+      });
+      return;
+    }
+
     const top = rect.bottom - cbRect.top;
     if (this.align() === 'right') {
       this.panelLayout.set({

@@ -9,3 +9,14 @@
 :host .toolbar-menu-icon-on-light .tailwind-icon-glyph {
   filter: brightness(0) invert(1);
 }
+
+/* Vertical rail: end-slot actions span full width like icon-only menu buttons */
+:host .toolbar-end-vertical tailwind-button {
+  display: block;
+  width: 100%;
+}
+
+:host .toolbar-end-vertical tailwind-button > button {
+  width: 100%;
+  justify-content: center;
+}

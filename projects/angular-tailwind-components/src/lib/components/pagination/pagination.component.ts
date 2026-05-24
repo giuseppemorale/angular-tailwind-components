@@ -69,6 +69,10 @@ export class TailwindPagination extends TailwindComponent {
     }
   }
 
+  pageButtonAriaLabel(page: number): string {
+    return page === this.currentPage() ? `Page ${page}, current page` : `Page ${page}`;
+  }
+
   onPageSizeValueChange(value: number | number[] | null): void {
     if (typeof value !== 'number') return;
     this.setPageSize(value);

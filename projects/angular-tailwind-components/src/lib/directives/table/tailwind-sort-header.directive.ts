@@ -25,7 +25,6 @@ const MAX_TABLE_RESOLVE_ATTEMPTS = 24;
  */
 @Directive({
   selector: '[tailwindSortHeader]',
-  standalone: true,
   host: {
     class: 'cursor-pointer whitespace-nowrap text-left select-none hover:text-neutral-900',
     '[attr.tabindex]': '0',

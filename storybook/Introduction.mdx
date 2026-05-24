@@ -35,8 +35,6 @@ The same import also pulls in:
 
 So you don't need to import the base styles
 
-Or define your own theme tokens following the design system schema.
-
 ## Quick Start
 
 ```typescript
@@ -45,21 +43,25 @@ import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 
 
 @Component({
   selector: 'app-example',
-  standalone: true,
   imports: [TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle],
   template: `
-    <tailwind-input label="Email" placeholder="you@example.com" [(value)]="email" />
-    <tailwind-textarea label="Notes" placeholder="Optional notes" [(value)]="notes" />
-    <tailwind-toggle label="Notifications" [(checked)]="notifications" />
+  <form [formGroup]="form">
+    <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
+    <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
+    <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
     <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
+  </form>
   `
 })
 export class ExampleComponent {
-  email = '';
-  notes = '';
-  notifications = true;
+  form = new FormGroup({
+    email: new FormControl(''),
+    notes: new FormControl(''),
+    notifications: new FormControl(false)
+  });
+
   submit() {
-    /* ... */
+    console.log(this.form.value);
   }
 }
 ```

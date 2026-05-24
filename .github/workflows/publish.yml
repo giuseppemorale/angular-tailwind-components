@@ -39,10 +39,8 @@ jobs:
           node-version: '22.14'
           cache: 'npm'
 
-      - name: Upgrade npm (Trusted Publishing richiede npm >= 11.5.1)
-        run: |
-          npm install -g npm@11.13.0
-          npm --version
+      - name: Enable npm 11.13 (Trusted Publishing richiede npm >= 11.5.1)
+        run: corepack enable && corepack prepare npm@11.13.0 --activate && npm --version
 
       - name: Install dependencies
         run: npm ci

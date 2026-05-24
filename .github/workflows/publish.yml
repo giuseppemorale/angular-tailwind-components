@@ -6,7 +6,7 @@ on:
       - 'v*'
 
 permissions:
-  id-token: write
+  id-token: write  # Required for OIDC
   contents: read
 
 concurrency:
@@ -37,7 +37,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '22.14'
+          node-version: '22'
           cache: 'npm'
 
       - name: Use npm from packageManager (OIDC requires npm >= 11.5.1)
@@ -53,31 +53,18 @@ jobs:
         run: |
           node -e "
             const pkg = require('./dist/angular-tailwind-components/package.json');
-            const url = pkg.repository?.url || '';
-            if (!url.includes('giuseppemorale/angular-tailwind-components')) {
-              throw new Error('repository.url mancante o errato: ' + url);
+            if (!pkg.repository?.url?.includes('giuseppemorale/angular-tailwind-components')) {
+              throw new Error('repository.url mancante o errato nel package pubblicato: ' + JSON.stringify(pkg.repository));
             }
-            console.log('repository.url:', url);
+            console.log('repository.url:', pkg.repository.url);
           "
-
-      - name: Check OIDC is available
-        run: |
-          if [ -z "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
-            echo "::error::OIDC non disponibile. Verifica permissions.id-token: write sul job."
-            exit 1
-          fi
-          echo "OIDC disponibile per Trusted Publishing."
+          # setup-node con registry-url crea _authToken vuoto e rompe OIDC
+          rm -f .npmrc ~/.npmrc 2>/dev/null || true
 
       - name: Publish to npm
-        env:
-          NPM_CONFIG_PROVENANCE: 'false'
         run: |
-          unset NODE_AUTH_TOKEN
-          rm -f .npmrc ~/.npmrc "${GITHUB_WORKSPACE}/.npmrc" 2>/dev/null || true
-
           VERSION=$(node -p "require('./package.json').version")
           echo "Publishing version ${VERSION} via Trusted Publishing (OIDC)..."
-
           cd dist/angular-tailwind-components
           if echo "$VERSION" | grep -qiE '-RC[0-9]+$'; then
             npm publish --access public --tag rc

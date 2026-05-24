@@ -1,4 +1,4 @@
-import { TailwindButtonKind, TailwindSize } from '../../models';
+import { TailwindButtonKind, TailwindPasswordLabels, TailwindSize } from '../../models';
 import { TailwindThemeSeverityColor } from '../types/theme-config.types';
 
 /**
@@ -16,6 +16,8 @@ export interface TailwindComponentsConfig {
   buttonKind?: TailwindButtonKind;
   /** Maps to {@link TAILWIND_PAGINATION_SUMMARY}. */
   paginationSummary?: string;
+  /** Maps to {@link TAILWIND_PASSWORD_LABELS}. */
+  passwordLabels?: TailwindPasswordLabels;
 }
 
 export interface TailwindDefineThemeColors {

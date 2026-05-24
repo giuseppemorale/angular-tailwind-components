@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { TailwindButtonKind, TailwindSize } from '../models';
+import { TailwindButtonKind, TailwindPasswordLabels, TailwindSize } from '../models';
 
 export const TAILWIND_MODAL_DATA = new InjectionToken<unknown>('TAILWIND_MODAL_DATA');
 
@@ -18,3 +18,8 @@ export const TAILWIND_BUTTON_KIND = new InjectionToken<TailwindButtonKind>('TAIL
  * Use placeholders `{start}`, `{end}`, `{total}` (same rules as the `summary` input).
  */
 export const TAILWIND_PAGINATION_SUMMARY = new InjectionToken<string>('TAILWIND_PAGINATION_SUMMARY');
+
+/**
+ * Default labels for `tailwind-input-password` strength feedback when component inputs are omitted.
+ */
+export const TAILWIND_PASSWORD_LABELS = new InjectionToken<TailwindPasswordLabels>('TAILWIND_PASSWORD_LABELS');

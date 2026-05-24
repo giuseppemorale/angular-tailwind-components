@@ -2,6 +2,7 @@
 export * from './button/button.component';
 export * from './icon/icon.component';
 export * from './input/input.component';
+export * from './input-password/input-password.component';
 export * from './textarea/textarea.component';
 export * from './upload/upload.component';
 export * from './input-otp/input-otp.component';

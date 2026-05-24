@@ -6,7 +6,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **36 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **37 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -69,7 +69,7 @@ export class ExampleComponent {
 
 ## Application configuration (`defineTheme`)
 
-Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `buttonKind`, `paginationSummary`) and, when you pass **`colors`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
+Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `buttonKind`, `paginationSummary`, `passwordLabels`) and, when you pass **`colors`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
 
 `TailwindDefineThemeConfig` extends **`TailwindComponentsConfig`** with an optional **`colors`** field.
 
@@ -141,6 +141,7 @@ You can omit **`colors`** if you only need token defaults, or omit token keys if
 | `componentsSize` | `TAILWIND_COMPONENTS_SIZE` |
 | `buttonKind` | `TAILWIND_BUTTON_KIND` |
 | `paginationSummary` | `TAILWIND_PAGINATION_SUMMARY` |
+| `passwordLabels` | `TAILWIND_PASSWORD_LABELS` |
 
 **`provideTailwindComponents`** is still exported for backward compatibility (token providers only, same implementation as the token slice of `defineTheme`). It is **deprecated**; prefer **`defineTheme`**.
 
@@ -204,6 +205,7 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 ### Form Controls (with ControlValueAccessor)
 
 - **Input** (`tailwind-input`): Text, email, password, number, search
+- **Input Password** (`tailwind-input-password`): Password field with optional strength meter and show/hide toggle
 - **Textarea** (`tailwind-textarea`): Multi-line text with resize modes and rows/cols
 - **Upload** (`tailwind-upload`): File picker as button or drop zone; value as base64 data URL for forms, `filesSelected` for raw files
 - **Input OTP** (`tailwind-input-otp`): Multi-digit OTP / PIN with paste and keyboard navigation

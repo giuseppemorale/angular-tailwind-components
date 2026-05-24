@@ -188,6 +188,16 @@ function updateLibraryPackageJson(newVersion) {
   fs.writeFileSync(libPackageJsonPath, JSON.stringify(libPackageJson, null, 2) + '\n');
 }
 
+function pushReleaseTag(newVersion) {
+  const tag = `v${newVersion}`;
+
+  console.log(`\nCreating tag ${tag}...`);
+  execSync(`git tag ${tag}`, { stdio: 'inherit' });
+
+  console.log('Pushing tag...');
+  execSync(`git push origin ${tag}`, { stdio: 'inherit' });
+}
+
 function publishToNpm(newVersion) {
   console.log('\nPublishing to npm...');
 
@@ -215,8 +225,6 @@ async function main() {
 
   checkNpmLogin();
 
-  // ng-packagr writes dist/package.json from projects/.../package.json during
-  // build; publishing stale dist would republish the old version on npm.
   bumpVersion(newVersion);
   updateLibraryPackageJson(newVersion);
 
@@ -229,6 +237,8 @@ async function main() {
 
   console.log('Pushing to repository...');
   execSync('git push', { stdio: 'inherit' });
+
+  pushReleaseTag(newVersion);
 
   publishToNpm(newVersion);
 

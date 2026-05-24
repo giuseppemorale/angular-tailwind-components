@@ -12,7 +12,8 @@ import {
   TAILWIND_COMPONENTS_SIZE,
   TAILWIND_DATETIME_LANGUAGE,
   TAILWIND_ICON_SIZE,
-  TAILWIND_PAGINATION_SUMMARY
+  TAILWIND_PAGINATION_SUMMARY,
+  TAILWIND_PASSWORD_LABELS
 } from '../tokens';
 import { TailwindComponentsConfig, TailwindDefineThemeConfig } from './interfaces/theme-config.interface';
 import {
@@ -44,6 +45,9 @@ function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig)
   }
   if (config.paginationSummary !== undefined) {
     providers.push({ provide: TAILWIND_PAGINATION_SUMMARY, useValue: config.paginationSummary });
+  }
+  if (config.passwordLabels !== undefined) {
+    providers.push({ provide: TAILWIND_PASSWORD_LABELS, useValue: config.passwordLabels });
   }
 
   return providers;

@@ -1,0 +1,127 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as InputPasswordStories from './input-password.stories';
+
+<Meta of={InputPasswordStories} />
+
+# Input Password
+
+`TailwindInputPassword` è un campo password con supporto form (`ControlValueAccessor`), toggle opzionale per mostrare/nascondere il testo e pannello feedback con meter automatico (debole / buona / forte).
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindInputPassword],
+  template: `
+    <tailwind-input-password
+      label="Password"
+      placeholder="••••••••"
+      [feedback]="true"
+      [toggleMask]="true"
+      [formControl]="form.controls.password" />
+  `
+})
+export class ExampleComponent {}
+```
+
+## Label globali con defineTheme
+
+```typescript
+import { defineTheme } from 'angular-tailwind-components';
+
+defineTheme({
+  passwordLabels: {
+    prompt: 'Scegli una password',
+    weak: 'Debole',
+    medium: 'Buona',
+    strong: 'Forte'
+  }
+});
+```
+
+## Anteprima
+
+<Canvas of={InputPasswordStories.WithToggleMask} />
+
+---
+
+## Properties
+
+### `TailwindInputPassword (tailwind-input-password)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta del campo.</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Placeholder dell'input.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione del campo.</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo di aiuto sotto il campo.</td>
+    </tr>
+    <tr>
+      <td><code>errorText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Messaggio errore quando <code>hasError</code> è true.</td>
+    </tr>
+    <tr>
+      <td><code>hasError</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Stato errore visivo.</td>
+    </tr>
+    <tr>
+      <td><code>feedback</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Mostra il pannello meter durante la digitazione.</td>
+    </tr>
+    <tr>
+      <td><code>toggleMask</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Mostra il pulsante per rivelare/nascondere la password.</td>
+    </tr>
+    <tr>
+      <td><code>promptLabel</code>, <code>weakLabel</code>, <code>mediumLabel</code>, <code>strongLabel</code></td>
+      <td><code>string</code></td>
+      <td>da token</td>
+      <td>Override delle label del meter; default da <code>TAILWIND_PASSWORD_LABELS</code>.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Valore two-way (<code>[(value)]</code>) e CVA.</td>
+    </tr>
+  </tbody>
+</table>

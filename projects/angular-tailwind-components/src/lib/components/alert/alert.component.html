@@ -1,8 +1,8 @@
 @if (!dismissed()) {
-  <div [class]="computedClasses()" role="alert" [attr.aria-live]="severity() === 'danger' ? 'assertive' : 'polite'">
+  <div [class]="computedClasses()" role="alert" [attr.aria-live]="color() === 'danger' ? 'assertive' : 'polite'">
     <!-- Icon -->
     <div class="shrink-0 mt-0.5">
-      @switch (severity()) {
+      @switch (color()) {
         @case ('success') {
           <tailwind-icon icon="check-circle" [size]="20" />
         }
@@ -12,7 +12,16 @@
         @case ('danger') {
           <tailwind-icon icon="x-circle" [size]="20" />
         }
-        @case ('info') {
+        @case ('primary') {
+          <tailwind-icon icon="information-circle" [size]="20" />
+        }
+        @case ('secondary') {
+          <tailwind-icon icon="information-circle" [size]="20" />
+        }
+        @case ('transparent') {
+          <tailwind-icon icon="information-circle" [size]="20" />
+        }
+        @default {
           <tailwind-icon icon="information-circle" [size]="20" />
         }
       }
@@ -26,6 +35,11 @@
       <div class="text-sm">
         <ng-content />
       </div>
+      @if (showActions()) {
+        <div class="pt-3">
+          <ng-content select="[tailwind-alert-actions]" />
+        </div>
+      }
     </div>
 
     <!-- Dismiss button -->

@@ -5,9 +5,9 @@ const meta: Meta<TailwindTag> = {
   title: 'Components/Tag',
   component: TailwindTag,
   argTypes: {
-    variant: {
+    color: {
       control: 'select',
-      options: ['neutral', 'primary', 'success', 'warning', 'danger', 'info']
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent']
     }
   }
 };
@@ -16,9 +16,9 @@ export default meta;
 export const Tags: StoryObj<TailwindTag> = {
   render: args => ({
     props: args,
-    template: `<tailwind-tag ${argsToTemplate(args)}>${args.variant}</tailwind-tag>`
+    template: `<tailwind-tag ${argsToTemplate(args)}>${args.color}</tailwind-tag>`
   }),
   args: {
-    variant: 'neutral'
+    color: 'secondary'
   }
 };

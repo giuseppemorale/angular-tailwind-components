@@ -8,7 +8,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **37 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **36 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -53,7 +53,7 @@ import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 
     <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
     <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
     <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
-    <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
+    <tailwind-button color="primary" (onClick)="submit()">Submit</tailwind-button>
   </form>
   `
 })
@@ -83,12 +83,12 @@ import { defineTheme } from 'angular-tailwind-components';
 export const appConfig: ApplicationConfig = {
   providers: [
     defineTheme({
-      iconSize: 20,
-      datetimeLanguage: 'it',
-      componentsSize: 'md',
-      buttonKind: 'flat',
-      paginationSummary: 'Items {start}-{end} of {total}',
-      colors: {
+      ICON_SIZE: 20,
+      DATETIME_LANGUAGE: 'it',
+      COMPONENTS_SIZE: 'md',
+      BUTTON_KIND: 'flat',
+      PAGINATION_SUMMARY: 'Items {start}-{end} of {total}',
+      COLORS: {
         primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
         danger: 'rose',
         neutral: 'zinc'
@@ -129,11 +129,10 @@ You can omit **`colors`** if you only need token defaults, or omit token fields 
 
 ### Feedback
 
-- **Alert** (`tailwind-alert`): Contextual alerts (info, success, warning, danger)
+- **Alert** (`tailwind-alert`): Contextual alerts with icon, title, dismiss, and optional `tailwind-alert-actions` slot
 - **Spinner** (`tailwind-spinner`): Loading indicator
 - **Progress Bar** (`tailwind-progress-bar`): Determinate/indeterminate progress
 - **Toast** (`tailwind-toast-container`): Global toast notifications (use `TailwindToastService`)
-- **Notification** (`tailwind-notification`): Inline notification with actions
 - **Message** (`tailwind-message`): Form-level inline message
 - **Skeleton** (`tailwind-skeleton`): Loading placeholder
 

@@ -9,7 +9,7 @@ export class TailwindToastService {
 
   show(config: TailwindToastConfig): number {
     const id = this.nextId++;
-    const toast: TailwindToastItem = { id, severity: 'info', duration: 4000, dismissible: true, ...config };
+    const toast: TailwindToastItem = { id, color: 'info', duration: 4000, dismissible: true, ...config };
     this.toasts.update(list => [...list, toast]);
     if (toast.duration && toast.duration > 0) {
       setTimeout(() => this.dismiss(id), toast.duration);
@@ -18,16 +18,16 @@ export class TailwindToastService {
   }
 
   success(message: string, title?: string): number {
-    return this.show({ message, title, severity: 'success' });
+    return this.show({ message, title, color: 'success' });
   }
   warning(message: string, title?: string): number {
-    return this.show({ message, title, severity: 'warning' });
+    return this.show({ message, title, color: 'warning' });
   }
   danger(message: string, title?: string): number {
-    return this.show({ message, title, severity: 'danger' });
+    return this.show({ message, title, color: 'danger' });
   }
   info(message: string, title?: string): number {
-    return this.show({ message, title, severity: 'info' });
+    return this.show({ message, title, color: 'info' });
   }
 
   dismiss(id: number): void {

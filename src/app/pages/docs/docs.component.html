@@ -2,10 +2,10 @@
 
 <div class="flex flex-col gap-8">
   <div class="flex flex-col gap-3">
-    <tailwind-message severity="info">
+    <tailwind-message color="info" icon="information-circle">
       {{ 'DOCS.MESSAGE_INFO' | transloco }}
     </tailwind-message>
-    <tailwind-message severity="warning">
+    <tailwind-message color="warning" icon="shield-exclamation">
       {{ 'DOCS.MESSAGE_WARNING_BEFORE' | transloco
       }}<code class="text-xs bg-neutral-100 px-1 rounded">{{ 'DOCS.MESSAGE_WARNING_CODE' | transloco }}</code
       >{{ 'DOCS.MESSAGE_WARNING_AFTER' | transloco }}
@@ -20,7 +20,7 @@
       <tailwind-progress-bar
         [value]="progressDemo()"
         [label]="'DOCS.PROGRESS_LABEL' | transloco"
-        variant="primary"
+        color="primary"
         [showValue]="true" />
       <tailwind-button size="sm" kind="outlined" (onClick)="bumpProgress()">{{
         'DOCS.BTN_SIMULATE_PROGRESS' | transloco

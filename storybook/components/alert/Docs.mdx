@@ -5,7 +5,7 @@ import * as AlertStories from './alert.stories';
 
 # Alert
 
-`TailwindAlert` mostra un messaggio con severità (success, warning, danger, info), titolo opzionale e possibilità di chiusura.
+`TailwindAlert` mostra un messaggio con colore semantico, icona, titolo opzionale, chiusura e area azioni proiettate.
 
 ---
 
@@ -16,7 +16,7 @@ import * as AlertStories from './alert.stories';
   imports: [TailwindAlert],
   template: `
     <tailwind-alert
-      severity="info"
+      color="info"
       title="Information"
       [dismissible]="true">
       This is an informational alert.
@@ -48,8 +48,8 @@ Eredita gli input di host da `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>severity</code></td>
-      <td><code>'success' | 'warning' | 'danger' | 'info'</code></td>
+      <td><code>color</code></td>
+      <td><code>TailwindColor</code></td>
       <td><code>'info'</code></td>
       <td>Variante colore.</td>
     </tr>
@@ -58,12 +58,6 @@ Eredita gli input di host da `TailwindComponent` (`id`, `class`).
       <td><code>string</code></td>
       <td><code>''</code></td>
       <td>Titolo dell’alert.</td>
-    </tr>
-    <tr>
-      <td><code>message</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
-      <td>Testo principale.</td>
     </tr>
     <tr>
       <td><code>dismissible</code></td>
@@ -77,8 +71,16 @@ Eredita gli input di host da `TailwindComponent` (`id`, `class`).
       <td><code>true</code></td>
       <td>Bordo laterale evidenziato.</td>
     </tr>
+    <tr>
+      <td><code>showActions</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Mostra lo slot azioni sotto il messaggio.</td>
+    </tr>
   </tbody>
 </table>
+
+Il corpo del messaggio e le azioni si passano come contenuto proiettato. Per i pulsanti usa un elemento con attributo <code>tailwind-alert-actions</code> (stesso pattern di <code>tailwind-card-header</code>).
 
 ## Events
 

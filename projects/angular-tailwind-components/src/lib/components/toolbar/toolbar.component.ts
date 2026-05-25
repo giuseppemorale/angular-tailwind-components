@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { TailwindMenuItem, TailwindSeverity } from '../../models';
+import { TailwindColor, TailwindMenuItem } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindMenu } from '../menu/menu.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -23,9 +23,9 @@ export class TailwindToolbar extends TailwindComponent {
   readonly elevated = input<boolean>(false);
   /**
    * Colore di superficie della barra: `default` mantiene sfondo bianco;
-   * i valori `TailwindSeverity` applicano tinte semantiche (come alert/notification).
+   * i valori `TailwindColor` applicano tinte semantiche (come alert).
    */
-  readonly variant = input<TailwindSeverity | 'default'>('default');
+  readonly color = input<TailwindColor | 'default'>('default');
   /** `horizontal` for a top app bar; `vertical` for a side rail (logo → menu → end). */
   readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
 
@@ -59,22 +59,30 @@ export class TailwindToolbar extends TailwindComponent {
 
   /** Foreground on semantic surface (`text-on-*`), aligned with solid toolbar shade per variant. */
   readonly variantContrastTextClass = computed((): string | null => {
-    const v = this.variant();
-    if (v === 'default') {
+    const v = this.color();
+    if (v === 'default' || v === 'transparent') {
       return null;
     }
-    const map: Record<TailwindSeverity, string> = {
+    const contrastMap: Record<TailwindColor, string> = {
+      primary: 'text-on-primary-600',
+      secondary: 'text-on-neutral-600',
       success: 'text-on-success-600',
       warning: 'text-on-warning-500',
       danger: 'text-on-danger-600',
-      info: 'text-on-info-600'
+      info: 'text-on-info-600',
+      transparent: 'text-neutral-700'
     };
-    return map[v];
+    return contrastMap[v];
   });
 
   /** On light-on-color variants, tint masked icons to match `text-on-*`. */
   readonly menuItemIconClasses = computed(() =>
-    this.variant() !== 'default' && this.variant() !== 'warning' ? 'toolbar-menu-icon-on-light' : ''
+    this.color() !== 'default' &&
+    this.color() !== 'transparent' &&
+    this.color() !== 'warning' &&
+    this.color() !== 'secondary'
+      ? 'toolbar-menu-icon-on-light'
+      : ''
   );
 
   readonly menuItemToneClasses = computed(() => {
@@ -103,13 +111,13 @@ export class TailwindToolbar extends TailwindComponent {
   );
 
   readonly menuDividerLineClasses = computed(() =>
-    this.variant() === 'default'
+    this.color() === 'default'
       ? 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-200'
       : 'mx-0.5 h-5 w-px shrink-0 self-center bg-white/30'
   );
 
   readonly menuDividerRuleClasses = computed(() =>
-    this.variant() === 'default'
+    this.color() === 'default'
       ? 'my-1 w-full border-0 border-t border-neutral-100'
       : 'my-1 w-full border-0 border-t border-white/25'
   );
@@ -122,17 +130,21 @@ export class TailwindToolbar extends TailwindComponent {
         : 'container mx-auto h-16'
       : 'h-full w-full';
 
-    const variant = this.variant();
-    const surfaceMap: Record<TailwindSeverity | 'default', string> = {
-      default: 'bg-white border border-neutral-200',
+    const variant = this.color();
+    const surfaceMap: Record<TailwindColor, string> = {
+      primary: 'bg-primary-600 border border-white/20',
+      secondary: 'bg-neutral-600 border border-white/20',
       success: 'bg-success-600 border border-white/20',
       warning: 'bg-warning-500 border border-white/20',
       danger: 'bg-danger-600 border border-white/20',
-      info: 'bg-info-600 border border-white/20'
+      info: 'bg-info-600 border border-white/20',
+      transparent: 'bg-white border border-neutral-200'
     };
+    const surface =
+      variant === 'default' ? 'bg-white border border-neutral-200' : surfaceMap[variant];
 
     const base = [
-      surfaceMap[variant] ?? surfaceMap.default,
+      surface,
       this.variantContrastTextClass() ?? '',
       'flex',
       sizeClasses,

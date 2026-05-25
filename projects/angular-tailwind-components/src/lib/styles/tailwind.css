@@ -10,7 +10,7 @@
 @source "../**/*.ts";
 
 /*
- * `defineTheme({ colors: { primary: 'indigo', … } })` points semantic tokens at `var(--color-<palette>-*)`.
+ * `defineTheme({ COLORS: { primary: 'indigo', … } })` points semantic tokens at `var(--color-<palette>-*)`.
  * Tailwind only emits `--color-<palette>-*` for palettes referenced in scanned content unless we safelist
  * them here (see https://tailwindcss.com/docs/detecting-classes-in-source-files#safelisting-specific-utilities).
  */

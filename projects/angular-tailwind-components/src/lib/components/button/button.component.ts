@@ -126,7 +126,7 @@ export class TailwindButton extends TailwindComponent {
       transparent: transparentColorClasses
     };
 
-    /** Text color from severity only; background stays transparent on hover/active. */
+    /** Text color from semantic color only; background stays transparent on hover/active. */
     const textMap: Record<TailwindColor, string> = {
       primary: 'bg-transparent text-primary-600 border-transparent focus-visible:outline-primary-600',
       secondary: 'bg-transparent text-neutral-700 border-transparent focus-visible:outline-neutral-500',

@@ -6,7 +6,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **37 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **36 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -50,7 +50,7 @@ import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 
     <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
     <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
     <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
-    <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
+    <tailwind-button color="primary" (onClick)="submit()">Submit</tailwind-button>
   </form>
   `
 })
@@ -69,9 +69,9 @@ export class ExampleComponent {
 
 ## Application configuration (`defineTheme`)
 
-Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `buttonKind`, `paginationSummary`, `passwordLabels`, `titleScale`) and, when you pass **`colors`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
+Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`ICON_SIZE`, `DATETIME_LANGUAGE`, `COMPONENTS_SIZE`, `BUTTON_KIND`, `PAGINATION_SUMMARY`, `PASSWORD_LABELS`, `TITLE_SCALE`) and, when you pass **`COLORS`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
 
-`TailwindDefineThemeConfig` extends **`TailwindComponentsConfig`** with an optional **`colors`** field.
+`TailwindDefineThemeConfig` extends **`TailwindComponentsConfig`** with an optional **`COLORS`** field.
 
 ### Example (tokens + colors)
 
@@ -82,12 +82,12 @@ import { defineTheme } from 'angular-tailwind-components';
 export const appConfig: ApplicationConfig = {
   providers: [
     defineTheme({
-      iconSize: 20,
-      datetimeLanguage: 'it',
-      componentsSize: 'md',
-      buttonKind: 'flat',
-      paginationSummary: 'Visualizzati {start}-{end} di {total}',
-      colors: {
+      ICON_SIZE: 20,
+      DATETIME_LANGUAGE: 'it',
+      COMPONENTS_SIZE: 'md',
+      BUTTON_KIND: 'flat',
+      PAGINATION_SUMMARY: 'Visualizzati {start}-{end} di {total}',
+      COLORS: {
         primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
         danger: 'rose',
         neutral: 'zinc'
@@ -102,10 +102,10 @@ export const appConfig: ApplicationConfig = {
 ```typescript
 providers: [
   defineTheme({
-    iconSize: 20,
-    datetimeLanguage: 'it',
-    componentsSize: 'md',
-    paginationSummary: 'Items {start}-{end} of {total}'
+    ICON_SIZE: 20,
+    DATETIME_LANGUAGE: 'it',
+    COMPONENTS_SIZE: 'md',
+    PAGINATION_SUMMARY: 'Items {start}-{end} of {total}'
   })
 ];
 ```
@@ -113,7 +113,7 @@ providers: [
 ### Example: colors only
 
 ```typescript
-providers: [defineTheme({ colors: { primary: 'indigo', neutral: 'zinc' } })];
+providers: [defineTheme({ COLORS: { primary: 'indigo', neutral: 'zinc' } })];
 ```
 
 ### Example: spread a shared config object
@@ -123,33 +123,34 @@ import { ApplicationConfig } from '@angular/core';
 import { defineTheme, type TailwindComponentsConfig } from 'angular-tailwind-components';
 
 const shared: TailwindComponentsConfig = {
-  componentsSize: 'md',
-  datetimeLanguage: 'it'
+  COMPONENTS_SIZE: 'md',
+  DATETIME_LANGUAGE: 'it'
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [defineTheme({ ...shared, colors: { primary: 'indigo' } })]
+  providers: [defineTheme({ ...shared, COLORS: { primary: 'indigo' } })]
 };
 ```
 
-You can omit **`colors`** if you only need token defaults, or omit token keys if you only need theme colors.
+You can omit **`COLORS`** if you only need token defaults, or omit token keys if you only need theme colors.
 
 | Config key | Token |
 | --- | --- |
-| `iconSize` | `TAILWIND_ICON_SIZE` |
-| `datetimeLanguage` | `TAILWIND_DATETIME_LANGUAGE` |
-| `componentsSize` | `TAILWIND_COMPONENTS_SIZE` |
-| `buttonKind` | `TAILWIND_BUTTON_KIND` |
-| `paginationSummary` | `TAILWIND_PAGINATION_SUMMARY` |
-| `passwordLabels` | `TAILWIND_PASSWORD_LABELS` |
+| `ICON_SIZE` | `TAILWIND_ICON_SIZE` |
+| `DATETIME_LANGUAGE` | `TAILWIND_DATETIME_LANGUAGE` |
+| `COMPONENTS_SIZE` | `TAILWIND_COMPONENTS_SIZE` |
+| `BUTTON_KIND` | `TAILWIND_BUTTON_KIND` |
+| `PAGINATION_SUMMARY` | `TAILWIND_PAGINATION_SUMMARY` |
+| `PASSWORD_LABELS` | `TAILWIND_PASSWORD_LABELS` |
+| `TITLE_SCALE` | `TAILWIND_TITLE_SCALE` |
 
 **`provideTailwindComponents`** is still exported for backward compatibility (token providers only, same implementation as the token slice of `defineTheme`). It is **deprecated**; prefer **`defineTheme`**.
 
 ## Theme colors (`defineTheme`)
 
-The optional **`colors`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Color application is a **no-op during SSR** (browser only).
+The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Color application is a **no-op during SSR** (browser only).
 
-| `colors` key | CSS variables | Default palette in `tailwind.css` |
+| `COLORS` key | CSS variables | Default palette in `tailwind.css` |
 | --- | --- | --- |
 | `primary` | `--color-primary-*`, `--color-on-primary-*` | Tailwind `blue` |
 | `neutral` | `--color-neutral-*`, `--color-on-neutral-*` | Tailwind `slate` |
@@ -181,7 +182,7 @@ Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. I
 
    ```typescript
    defineTheme({
-     colors: {
+     COLORS: {
        success: {
          shades: { 600: '#14532d', 700: '#0f3d21' },
          on: { 600: '#ecfdf5', 700: '#ecfdf5' }
@@ -198,7 +199,7 @@ When you pass a **palette string** (e.g. `primary: 'indigo'`), the target variab
 
 ## Content slots
 
-Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-drawer`, `tailwind-notification`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
+Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-drawer`, `tailwind-alert`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
 
 ## Components
 
@@ -229,11 +230,10 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 
 ### Feedback
 
-- **Alert** (`tailwind-alert`): Contextual alerts (info, success, warning, danger)
+- **Alert** (`tailwind-alert`): Contextual alerts with icon, title, dismiss, and optional `tailwind-alert-actions` slot
 - **Spinner** (`tailwind-spinner`): Loading indicator
 - **Progress Bar** (`tailwind-progress-bar`): Determinate/indeterminate progress
 - **Toast** (`tailwind-toast-container`): Global toast notifications (use `TailwindToastService`)
-- **Notification** (`tailwind-notification`): Inline notification with actions
 - **Message** (`tailwind-message`): Form-level inline message
 - **Skeleton** (`tailwind-skeleton`): Loading placeholder
 

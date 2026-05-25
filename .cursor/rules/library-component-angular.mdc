@@ -30,9 +30,9 @@ La definizione deve mantenere questa regola:
 Esempio:
 @Component({
   imports: [TailwindIcon],
-  selector: 'tailwind-notification',
-  templateUrl: './notification.component.html',
-  styleUrl: './notification.component.css'
+  selector: 'tailwind-alert',
+  templateUrl: './alert.component.html',
+  styleUrl: './alert.component.css'
 })
 
 ## Change detection

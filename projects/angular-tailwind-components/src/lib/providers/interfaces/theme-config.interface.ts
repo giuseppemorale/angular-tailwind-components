@@ -13,22 +13,22 @@ import { TailwindThemeSeverityColor } from '../types/theme-config.types';
  */
 export interface TailwindComponentsConfig {
   /** Maps to {@link TAILWIND_ICON_SIZE} (default icon pixel size when omitted). */
-  iconSize?: number;
+  ICON_SIZE?: number;
   /** Maps to {@link TAILWIND_DATETIME_LANGUAGE}. */
-  datetimeLanguage?: 'it' | 'en';
+  DATETIME_LANGUAGE?: 'it' | 'en';
   /** Maps to {@link TAILWIND_COMPONENTS_SIZE}. */
-  componentsSize?: TailwindSize;
+  COMPONENTS_SIZE?: TailwindSize;
   /** Maps to {@link TAILWIND_BUTTON_KIND} (default `kind` on `tailwind-button`). */
-  buttonKind?: TailwindButtonKind;
+  BUTTON_KIND?: TailwindButtonKind;
   /** Maps to {@link TAILWIND_PAGINATION_SUMMARY}. */
-  paginationSummary?: string;
+  PAGINATION_SUMMARY?: string;
   /** Maps to {@link TAILWIND_PASSWORD_LABELS}. */
-  passwordLabels?: TailwindPasswordLabels;
+  PASSWORD_LABELS?: TailwindPasswordLabels;
   /**
    * Maps to {@link TAILWIND_TITLE_SCALE} (merged onto {@link DEFAULT_TAILWIND_TITLE_SCALE}).
    * Overrides typography classes and icon pixel size per `h1`–`h6`.
    */
-  titleScale?: Partial<Record<TailwindTitleTag, Partial<TailwindTitleTagScale>>>;
+  TITLE_SCALE?: Partial<Record<TailwindTitleTag, Partial<TailwindTitleTagScale>>>;
 }
 
 export interface TailwindDefineThemeColors {
@@ -47,5 +47,5 @@ export interface TailwindDefineThemeColors {
 
 export interface TailwindDefineThemeConfig extends TailwindComponentsConfig {
   /** Overrides semantic colors on `:root` at startup (browser only). */
-  colors?: TailwindDefineThemeColors;
+  COLORS?: TailwindDefineThemeColors;
 }

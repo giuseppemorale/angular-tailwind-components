@@ -1,3 +1,41 @@
 :host {
   display: block;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.tailwind-tab-scroll-btn--start,
+.tailwind-tab-scroll-btn--end {
+  display: flex;
+  align-self: stretch;
+}
+
+.tailwind-tab-scroll-btn--start {
+  border-right: 1px solid rgb(229 229 229);
+}
+
+.tailwind-tab-scroll-btn--end {
+  border-left: 1px solid rgb(229 229 229);
+}
+
+.tailwind-tab-scroll-btn--start ::ng-deep button,
+.tailwind-tab-scroll-btn--end ::ng-deep button {
+  height: 100%;
+  border-radius: 0;
+}
+
+/* Scrollable tab strip: no native scrollbar; use chevron nav buttons. */
+.tailwind-tab-list--scrollable {
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tailwind-tab-list--scrollable::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }

@@ -9,7 +9,7 @@ const meta: Meta<TailwindProgressBar> = {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     },
-    variant: {
+    color: {
       control: 'select',
       options: ['primary', 'success', 'warning', 'danger', 'info', 'transparent']
     }
@@ -23,7 +23,7 @@ export const ProgressBar: StoryObj<TailwindProgressBar> = {
     label: 'Upload Progress',
     showLabel: true,
     showValue: true,
-    variant: 'primary',
+    color: 'primary',
     size: 'md',
     indeterminate: false,
     striped: false
@@ -34,10 +34,10 @@ export const AllVariants: StoryObj<TailwindProgressBar> = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-4">
-        <tailwind-progress-bar [value]="30" label="Primary" variant="primary" />
-        <tailwind-progress-bar [value]="50" label="Success" variant="success" />
-        <tailwind-progress-bar [value]="70" label="Warning" variant="warning" />
-        <tailwind-progress-bar [value]="90" label="Danger" variant="danger" />
+        <tailwind-progress-bar [value]="30" label="Primary" color="primary" />
+        <tailwind-progress-bar [value]="50" label="Success" color="success" />
+        <tailwind-progress-bar [value]="70" label="Warning" color="warning" />
+        <tailwind-progress-bar [value]="90" label="Danger" color="danger" />
       </div>
     `
   })
@@ -45,7 +45,7 @@ export const AllVariants: StoryObj<TailwindProgressBar> = {
 
 export const Indeterminate: StoryObj<TailwindProgressBar> = {
   args: {
-    variant: 'primary',
+    color: 'primary',
     size: 'md',
     indeterminate: true,
     label: 'Loading...',

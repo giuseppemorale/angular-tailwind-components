@@ -6,13 +6,17 @@ const meta: Meta<TailwindAlert> = {
   title: 'Components/Alert',
   component: TailwindAlert,
   argTypes: {
-    severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] },
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent']
+    },
     title: { control: 'text' },
     dismissible: { control: 'boolean' },
-    bordered: { control: 'boolean' }
+    bordered: { control: 'boolean' },
+    showActions: { control: 'boolean' }
   },
   args: {
-    severity: 'info',
+    color: 'info',
     title: '',
     dismissible: false,
     bordered: true
@@ -28,9 +32,36 @@ export const Alert: StoryObj<TailwindAlert> = {
     </tailwind-alert>`
   }),
   args: {
-    severity: 'info',
+    color: 'info',
     title: 'Information',
     dismissible: false,
-    bordered: true
+    bordered: true,
+    showActions: false
   }
+};
+
+export const WithActions: StoryObj<TailwindAlert> = {
+  render: () => ({
+    template: `
+      <div class="flex flex-col gap-3 max-w-lg">
+        <tailwind-alert color="warning" title="Storage almost full" [dismissible]="true" [showActions]="true" [bordered]="false">
+          You are using 4.8 GB of your 5 GB storage limit.
+          <div tailwind-alert-actions>
+            <div class="flex gap-2">
+              <tailwind-button size="sm" color="warning" kind="outlined">Manage storage</tailwind-button>
+              <tailwind-button size="sm" color="warning" kind="text">Dismiss</tailwind-button>
+            </div>
+          </div>
+        </tailwind-alert>
+        <tailwind-alert color="info" title="New update available" [dismissible]="true" [showActions]="true" [bordered]="false">
+          Version 2.0 includes performance improvements and new features.
+          <div tailwind-alert-actions>
+            <div class="flex gap-2">
+              <tailwind-button size="sm">Update now</tailwind-button>
+              <tailwind-button size="sm" color="secondary" kind="text">Later</tailwind-button>
+            </div>
+          </div>
+        </tailwind-alert>
+      </div>`
+  })
 };

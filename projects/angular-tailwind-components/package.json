@@ -1,6 +1,6 @@
 {
   "name": "angular-tailwind-components",
-  "version": "2.0.0-RC1",
+  "version": "2.0.0-RC2",
   "files": [
     "fesm2022",
     "types",

@@ -27,7 +27,7 @@ const meta: Meta<TailwindSlider> = {
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
     showTicks: { control: 'boolean' },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-    variant: {
+    color: {
       control: 'select',
       options: ['primary', 'success', 'warning', 'danger', 'info']
     }
@@ -53,7 +53,7 @@ export const Slider: StoryObj<TailwindSlider> = {
     orientation: 'horizontal',
     showTicks: false,
     size: 'md',
-    variant: 'primary'
+    color: 'primary'
   }
 };
 
@@ -76,7 +76,7 @@ export const Range: StoryObj<TailwindSlider> = {
     orientation: 'horizontal',
     showTicks: false,
     size: 'md',
-    variant: 'primary'
+    color: 'primary'
   }
 };
 
@@ -98,6 +98,6 @@ export const Vertical: StoryObj<TailwindSlider> = {
     orientation: 'vertical',
     showTicks: true,
     size: 'md',
-    variant: 'primary'
+    color: 'primary'
   }
 };

@@ -79,13 +79,13 @@ Eredita `TailwindComponent` (`id`, `class`).
 
 ## Scala titoli con defineTheme
 
-Tipografia e dimensione icona per ogni `titleTag` sono configurabili a livello app con **`defineTheme({ titleScale: … })`** (token `TAILWIND_TITLE_SCALE`). I valori non specificati restano quelli di default della libreria (`DEFAULT_TAILWIND_TITLE_SCALE`).
+Tipografia e dimensione icona per ogni `titleTag` sono configurabili a livello app con **`defineTheme({ TITLE_SCALE: … })`** (token `TAILWIND_TITLE_SCALE`). I valori non specificati restano quelli di default della libreria (`DEFAULT_TAILWIND_TITLE_SCALE`).
 
 ```typescript
 import { defineTheme } from 'angular-tailwind-components';
 
 defineTheme({
-  titleScale: {
+  TITLE_SCALE: {
     h1: { classes: 'text-4xl font-extrabold text-primary-800', iconSize: 36 },
     h2: { iconSize: 28 }
   }

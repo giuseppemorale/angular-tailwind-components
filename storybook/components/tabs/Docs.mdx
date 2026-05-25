@@ -15,7 +15,7 @@ import * as TabsStories from './tabs.stories';
 @Component({
   imports: [TailwindTabGroup, TailwindTab],
   template: `
-    <tailwind-tab-group ariaLabel="Example" [scrollable]="false" [(activeIndex)]="index">
+    <tailwind-tab-group color="primary" ariaLabel="Example" [scrollable]="false" [(activeIndex)]="index">
       <tailwind-tab label="Overview">Overview content</tailwind-tab>
       <tailwind-tab label="Details">Details content</tailwind-tab>
     </tailwind-tab-group>`
@@ -54,10 +54,16 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Etichetta lista tab.</td>
     </tr>
     <tr>
+      <td><code>color</code></td>
+      <td><code>TailwindColor</code></td>
+      <td><code>'primary'</code></td>
+      <td>Colore della tab attiva (testo e indicatore sotto).</td>
+    </tr>
+    <tr>
       <td><code>scrollable</code></td>
       <td><code>boolean</code></td>
       <td><code>false</code></td>
-      <td>Scroll orizzontale tab.</td>
+      <td>Scroll orizzontale con <code>tailwind-button</code> (<code>kind="ghost"</code>, <code>color="transparent"</code>); rotella/trackpad sulla lista tab.</td>
     </tr>
     <tr>
       <td><code>activeIndex</code></td>

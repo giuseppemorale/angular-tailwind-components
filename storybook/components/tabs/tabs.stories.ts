@@ -6,9 +6,16 @@ const meta: Meta = {
   title: 'Components/Tabs',
   component: TailwindTabGroup,
   parameters: { docs: { story: { height: '300px' } } },
+  argTypes: {
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent']
+    }
+  },
   args: {
     ariaLabel: '',
-    scrollable: false
+    scrollable: false,
+    color: 'primary'
   }
 };
 export default meta;
@@ -34,7 +41,8 @@ export const Tabs: StoryObj<TailwindTabGroup> = {
   }),
   args: {
     ariaLabel: 'Tabs',
-    scrollable: false
+    scrollable: false,
+    color: 'primary'
   }
 };
 

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TailwindSeverity, TailwindSize } from '../../models';
+import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -17,8 +17,8 @@ export class TailwindProgressBar extends TailwindComponent {
   readonly showLabel = input<boolean>(true);
   /** Show percentage value */
   readonly showValue = input<boolean>(true);
-  /** Color variant */
-  readonly variant = input<TailwindSeverity | 'primary'>('primary');
+  /** Semantic color */
+  readonly color = input<TailwindColor>('primary');
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Indeterminate mode (animated) */
@@ -41,18 +41,17 @@ export class TailwindProgressBar extends TailwindComponent {
   });
 
   readonly barClasses = computed(() => {
-    const variantMap: Record<string, string> = {
+    const colorMap: Record<TailwindColor, string> = {
       primary: 'bg-primary-600',
+      secondary: 'bg-neutral-500',
       success: 'bg-success-600',
       warning: 'bg-warning-500',
       danger: 'bg-danger-600',
-      info: 'bg-info-600'
+      info: 'bg-info-600',
+      transparent: 'bg-neutral-300'
     };
 
-    const base = [
-      'h-full rounded-full transition-all duration-300 ease-out',
-      variantMap[this.variant()] ?? variantMap['primary']
-    ];
+    const base = ['h-full rounded-full transition-all duration-300 ease-out', colorMap[this.color()]];
 
     if (this.indeterminate()) {
       base.push('tailwind-progress-indeterminate');

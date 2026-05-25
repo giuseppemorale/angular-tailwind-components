@@ -33,26 +33,26 @@ import {
 function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig): Provider[] {
   const providers: Provider[] = [];
 
-  if (config.iconSize !== undefined) {
-    providers.push({ provide: TAILWIND_ICON_SIZE, useValue: config.iconSize });
+  if (config.ICON_SIZE !== undefined) {
+    providers.push({ provide: TAILWIND_ICON_SIZE, useValue: config.ICON_SIZE });
   }
-  if (config.datetimeLanguage !== undefined) {
-    providers.push({ provide: TAILWIND_DATETIME_LANGUAGE, useValue: config.datetimeLanguage });
+  if (config.DATETIME_LANGUAGE !== undefined) {
+    providers.push({ provide: TAILWIND_DATETIME_LANGUAGE, useValue: config.DATETIME_LANGUAGE });
   }
-  if (config.componentsSize !== undefined) {
-    providers.push({ provide: TAILWIND_COMPONENTS_SIZE, useValue: config.componentsSize });
+  if (config.COMPONENTS_SIZE !== undefined) {
+    providers.push({ provide: TAILWIND_COMPONENTS_SIZE, useValue: config.COMPONENTS_SIZE });
   }
-  if (config.buttonKind !== undefined) {
-    providers.push({ provide: TAILWIND_BUTTON_KIND, useValue: config.buttonKind });
+  if (config.BUTTON_KIND !== undefined) {
+    providers.push({ provide: TAILWIND_BUTTON_KIND, useValue: config.BUTTON_KIND });
   }
-  if (config.paginationSummary !== undefined) {
-    providers.push({ provide: TAILWIND_PAGINATION_SUMMARY, useValue: config.paginationSummary });
+  if (config.PAGINATION_SUMMARY !== undefined) {
+    providers.push({ provide: TAILWIND_PAGINATION_SUMMARY, useValue: config.PAGINATION_SUMMARY });
   }
-  if (config.passwordLabels !== undefined) {
-    providers.push({ provide: TAILWIND_PASSWORD_LABELS, useValue: config.passwordLabels });
+  if (config.PASSWORD_LABELS !== undefined) {
+    providers.push({ provide: TAILWIND_PASSWORD_LABELS, useValue: config.PASSWORD_LABELS });
   }
-  if (config.titleScale !== undefined) {
-    providers.push({ provide: TAILWIND_TITLE_SCALE, useValue: resolveTailwindTitleScale(config.titleScale) });
+  if (config.TITLE_SCALE !== undefined) {
+    providers.push({ provide: TAILWIND_TITLE_SCALE, useValue: resolveTailwindTitleScale(config.TITLE_SCALE) });
   }
 
   return providers;
@@ -62,7 +62,7 @@ function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig)
  * Registers environment-scoped providers for library injection tokens only (no theme `colors`).
  * Prefer {@link defineTheme}, which registers the same tokens when set plus optional CSS variables.
  *
- * @deprecated Use {@link defineTheme} with the same fields (`iconSize`, `datetimeLanguage`, `titleScale`, etc.).
+ * @deprecated Use {@link defineTheme} with the same fields (`ICON_SIZE`, `DATETIME_LANGUAGE`, `TITLE_SCALE`, etc.).
  */
 export function provideTailwindComponents(config: TailwindComponentsConfig): EnvironmentProviders {
   return makeEnvironmentProviders(providersFromTailwindComponentsConfig(config));
@@ -154,7 +154,7 @@ function pushOnShadeVariables(
  * Exported for unit tests.
  */
 export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeConfig): Array<[string, string]> {
-  const colors = config.colors;
+  const colors = config.COLORS;
   if (!colors) {
     return [];
   }
@@ -201,7 +201,7 @@ function applyTailwindThemeToElement(element: HTMLElement, config: TailwindDefin
 
 /**
  * Registers environment-scoped library defaults: optional **injection tokens** from {@link TailwindComponentsConfig}
- * plus an app initializer that applies optional **`colors`** on
+ * plus an app initializer that applies optional **`COLORS`** on
  * `document.documentElement` in the browser. Add as a single entry in `providers` (no spread).
  *
  * Palette **strings** (e.g. `'indigo'`) rely on `--color-indigo-*` existing in the CSS bundle; the

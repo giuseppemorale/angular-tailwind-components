@@ -54,14 +54,14 @@ const meta: Meta<TailwindToolbar> = {
     width: { control: 'select', options: ['full', 'container'] },
     elevated: { control: 'boolean' },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    variant: { control: 'select', options: ['default', 'info', 'success', 'warning', 'danger'] }
+    color: { control: 'select', options: ['default', 'info', 'success', 'warning', 'danger'] }
   },
   args: {
     rounded: true,
     width: 'full',
     elevated: false,
     orientation: 'horizontal',
-    variant: 'default'
+    color: 'default'
   }
 };
 export default meta;
@@ -76,7 +76,7 @@ export const Horizontal: StoryObj<TailwindToolbar> = {
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
           <div tailwind-toolbar-end class="flex gap-2">
-            <tailwind-button kind="flat" color="${args.variant}">Register</tailwind-button>
+            <tailwind-button kind="flat" color="${args.color}">Register</tailwind-button>
           </div>
         </tailwind-toolbar>
         @if (lastSelection) {

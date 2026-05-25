@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TailwindSize, TailwindSeverity } from '../../models';
+import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindMeterSegment } from './interfaces/meter-segment.interface';
 
@@ -48,8 +48,8 @@ export class TailwindMeter extends TailwindComponent {
     const cap = this.scaleMax();
     return this.segments().map(seg => {
       const pct = cap > 0 ? (Math.max(0, seg.value) / cap) * 100 : 0;
-      const variant = seg.variant ?? 'primary';
-      return { ...seg, widthPct: pct, barClass: this.variantToBarClass(variant) };
+      const color = seg.color ?? 'primary';
+      return { ...seg, widthPct: pct, barClass: this.barClassForColor(color) };
     });
   });
 
@@ -57,18 +57,20 @@ export class TailwindMeter extends TailwindComponent {
     () => `flex w-full overflow-hidden rounded-full bg-neutral-200 ${this.trackHeightClass()}`
   );
 
-  legendSwatchClass(variant?: TailwindSeverity | 'primary'): string {
-    return this.variantToBarClass(variant ?? 'primary');
+  legendSwatchClass(color?: TailwindColor): string {
+    return this.barClassForColor(color ?? 'primary');
   }
 
-  private variantToBarClass(variant: TailwindSeverity | 'primary'): string {
-    const map: Record<string, string> = {
+  private barClassForColor(color: TailwindColor): string {
+    const colorMap: Record<TailwindColor, string> = {
       primary: 'bg-primary-600',
+      secondary: 'bg-neutral-500',
       success: 'bg-success-600',
       warning: 'bg-warning-500',
       danger: 'bg-danger-600',
-      info: 'bg-info-600'
+      info: 'bg-info-600',
+      transparent: 'bg-neutral-300'
     };
-    return map[variant] ?? map['primary'];
+    return colorMap[color];
   }
 }

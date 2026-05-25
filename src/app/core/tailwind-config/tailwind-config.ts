@@ -1,11 +1,11 @@
 import { TailwindComponentsConfig } from 'angular-tailwind-components';
 
 export const TAILWIND_CONFIG: TailwindComponentsConfig = {
-  componentsSize: 'md',
-  datetimeLanguage: 'it',
-  buttonKind: 'flat',
-  paginationSummary: 'Elementi da {start} a {end} di {total}',
-  passwordLabels: {
+  COMPONENTS_SIZE: 'md',
+  DATETIME_LANGUAGE: 'it',
+  BUTTON_KIND: 'flat',
+  PAGINATION_SUMMARY: 'Elementi da {start} a {end} di {total}',
+  PASSWORD_LABELS: {
     prompt: 'Scegli una password',
     weak: 'Debole',
     medium: 'Buona',

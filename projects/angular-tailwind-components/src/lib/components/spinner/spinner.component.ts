@@ -42,7 +42,7 @@ export class TailwindSpinner extends TailwindComponent {
   readonly iconClasses = computed(() => {
     const colorMap: Record<TailwindColor, string> = {
       primary: 'text-primary-600',
-      secondary: 'text-secondary-600',
+      secondary: 'text-neutral-600',
       success: 'text-success-600',
       warning: 'text-warning-600',
       danger: 'text-danger-600',

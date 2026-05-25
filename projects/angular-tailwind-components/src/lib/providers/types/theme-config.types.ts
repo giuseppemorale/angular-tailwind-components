@@ -28,7 +28,7 @@ export type TailwindThemeSemanticPaletteObject = {
 };
 
 /**
- * Values for each `colors` entry in {@link TailwindDefineThemeConfig} (exported type name).
+ * Values for each semantic key in {@link TailwindDefineThemeConfig} `COLORS` (exported type name).
  *
  * - **String:** Tailwind palette family name (lowercase), e.g. `'indigo'` for utilities like `bg-indigo-600`.
  *   See the [Tailwind color reference](https://tailwindcss.com/docs/colors) for all built-in names and previews.

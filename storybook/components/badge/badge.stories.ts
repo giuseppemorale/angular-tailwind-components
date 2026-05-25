@@ -5,7 +5,10 @@ const meta: Meta<TailwindBadge> = {
   title: 'Components/Badge',
   component: TailwindBadge,
   argTypes: {
-    variant: { control: 'select', options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'] },
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent']
+    },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     dot: { control: 'boolean' },
     rounded: { control: 'boolean' }
@@ -18,5 +21,5 @@ export const Badge: StoryObj<TailwindBadge> = {
     props: args,
     template: `<tailwind-badge ${argsToTemplate(args)}>Badge</tailwind-badge>`
   }),
-  args: { variant: 'primary', size: 'md', dot: false, rounded: false }
+  args: { color: 'primary', size: 'md', dot: false, rounded: false }
 };

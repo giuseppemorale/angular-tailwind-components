@@ -5,10 +5,10 @@ import {
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const sampleSegments: TailwindMeterSegment[] = [
-  { label: 'Apps', value: 25, variant: 'primary' },
-  { label: 'Messages', value: 15, variant: 'info' },
-  { label: 'Media', value: 20, variant: 'warning' },
-  { label: 'System', value: 10, variant: 'danger' }
+  { label: 'Apps', value: 25, color: 'primary' },
+  { label: 'Messages', value: 15, color: 'info' },
+  { label: 'Media', value: 20, color: 'warning' },
+  { label: 'System', value: 10, color: 'danger' }
 ];
 
 const meta: Meta<TailwindMeter> = {
@@ -18,7 +18,7 @@ const meta: Meta<TailwindMeter> = {
     docs: {
       description: {
         component:
-          'Segmented **meter** bar (PrimeNG MeterGroup–style): pass `segments` with `label`, `value`, and optional `variant`. Values are scaled against **max** (default 100).'
+          'Segmented **meter** bar (PrimeNG MeterGroup–style): pass `segments` with `label`, `value`, and optional `color`. Values are scaled against **max** (default 100).'
       }
     }
   },
@@ -56,7 +56,7 @@ export const SingleSegment: Story = {
   render: args => ({
     props: {
       ...args,
-      segments: [{ label: 'Complete', value: 72, variant: 'success' }] satisfies TailwindMeterSegment[]
+      segments: [{ label: 'Complete', value: 72, color: 'success' }] satisfies TailwindMeterSegment[]
     },
     template: `
       <div class="max-w-xl">
@@ -72,8 +72,8 @@ export const CustomMax: Story = {
     props: {
       ...args,
       segments: [
-        { label: 'A', value: 50, variant: 'primary' },
-        { label: 'B', value: 50, variant: 'info' }
+        { label: 'A', value: 50, color: 'primary' },
+        { label: 'B', value: 50, color: 'info' }
       ] as TailwindMeterSegment[]
     },
     template: `

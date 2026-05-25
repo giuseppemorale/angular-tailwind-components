@@ -12,9 +12,6 @@ export type TailwindButtonKind = 'solid' | 'flat' | 'outlined' | 'ghost' | 'text
 /** ARIA role for `TailwindButton` */
 export type TailwindButtonRole = 'button' | 'menuitem' | 'tab' | 'switch' | 'checkbox' | 'radio';
 
-/** Alert/feedback color variants */
-export type TailwindSeverity = 'success' | 'warning' | 'danger' | 'info';
-
 /** Position variants for overlays */
 export type TailwindPosition = 'top' | 'bottom' | 'left' | 'right';
 

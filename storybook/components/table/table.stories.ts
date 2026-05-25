@@ -75,7 +75,7 @@ export const Table: StoryObj<TailwindTable> = {
             <td class="min-w-0 truncate">{{ row.email }}</td>
             <td>{{ row.role }}</td>
             <td>
-              <tailwind-tag [variant]="row.status === 1 ? 'success' : 'danger'">{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag>
+              <tailwind-tag [color]="row.status === 1 ? 'success' : 'danger'">{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag>
             </td>
           </tr>
         </tbody>

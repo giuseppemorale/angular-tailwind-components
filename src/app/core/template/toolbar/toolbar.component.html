@@ -6,11 +6,11 @@
   [menu]="menu"
   [orientation]="'horizontal'"
   (onMenuSelect)="onMenuSelect($event)">
-  <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">
+  <div tailwind-toolbar-logo class="text-lg font-semibold text-blue-600">
     <img src="/logo.png" [attr.alt]="'TOOLBAR.LOGO_ALT' | transloco" class="h-8 w-8" />
   </div>
   <div tailwind-toolbar-end class="flex gap-2">
-    <tailwind-button size="sm" color="secondary" kind="outlined">
+    <tailwind-button size="sm" color="neutral" kind="outlined">
       {{ 'TOOLBAR.CTA.SIGN_IN' | transloco }}
     </tailwind-button>
     <tailwind-button size="sm">{{ 'TOOLBAR.CTA.SIGN_UP' | transloco }}</tailwind-button>

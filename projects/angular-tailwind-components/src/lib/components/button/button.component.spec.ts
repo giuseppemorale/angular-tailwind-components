@@ -80,14 +80,14 @@ describe('TailwindButton', () => {
     expect(button.disabled).toBe(true);
   });
 
-  it('should apply color and kind classes', () => {
-    fixture.componentRef.setInput('color', 'danger');
+  it('should apply palette style vars for solid kind', () => {
+    fixture.componentRef.setInput('color', 'red');
     fixture.componentRef.setInput('kind', 'solid');
     fixture.detectChanges();
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    expect(button.className).toContain('bg-danger-600');
-    expect(button.className).toContain('text-on-danger-600');
+    expect(button.className).toContain('tw-btn-solid');
+    expect(button.style.getPropertyValue('--tw-btn-bg')).toContain('--color-red-600');
   });
 
   it('should use TAILWIND_BUTTON_KIND as default kind when input is omitted', async () => {
@@ -113,21 +113,16 @@ describe('TailwindButton', () => {
     expect(button.className).toContain('shadow-none');
     expect(button.className).toContain('border-0');
     expect(button.className).not.toContain('shadow-sm');
-    expect(button.className).not.toContain('hover:bg-');
-    expect(button.className).not.toContain('active:bg-');
   });
 
-  it('should keep transparent color without hover or active background tint', () => {
-    fixture.componentRef.setInput('color', 'transparent');
+  it('should use ghost kind with transparent background class', () => {
+    fixture.componentRef.setInput('color', 'neutral');
     fixture.componentRef.setInput('kind', 'ghost');
     fixture.detectChanges();
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.className).toContain('tw-btn-ghost');
     expect(button.className).toContain('bg-transparent');
-    expect(button.className).toContain('hover:bg-transparent');
-    expect(button.className).toContain('active:bg-transparent');
-    expect(button.className).not.toContain('hover:bg-neutral');
-    expect(button.className).not.toContain('hover:bg-primary');
   });
 
   it('should render icon when icon input is set', () => {

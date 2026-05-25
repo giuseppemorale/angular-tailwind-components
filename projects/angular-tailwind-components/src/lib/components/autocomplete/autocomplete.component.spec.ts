@@ -42,7 +42,7 @@ describe('TailwindAutocomplete', () => {
     fixture.componentRef.setInput('errorText', 'Campo obbligatorio');
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.text-danger-600')?.textContent).toContain('Campo obbligatorio');
+    expect(fixture.nativeElement.querySelector('.text-red-600')?.textContent).toContain('Campo obbligatorio');
   });
 
   it('should update searchQuery on input without setting CVA value', () => {

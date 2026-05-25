@@ -20,7 +20,7 @@ import * as ProgressBarStories from './progress-bar.stories';
       label="Upload progress"
       [showLabel]="true"
       [showValue]="true"
-      variant="primary"
+      color="neutral"
       size="md"
       [indeterminate]="false"
       [striped]="false"
@@ -76,10 +76,10 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Mostra percentuale.</td>
     </tr>
     <tr>
-      <td><code>variant</code></td>
-      <td><code>TailwindSeverity | 'primary'</code></td>
-      <td><code>'primary'</code></td>
-      <td>Colore barra.</td>
+      <td><code>color</code></td>
+      <td><code>TailwindPalette</code></td>
+      <td><code>'neutral'</code></td>
+      <td>Palette Tailwind per la barra di avanzamento.</td>
     </tr>
     <tr>
       <td><code>size</code></td>

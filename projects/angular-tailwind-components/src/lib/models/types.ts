@@ -3,17 +3,40 @@
 /** Size variants for components */
 export type TailwindSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-/** Color variants for buttons and interactive elements */
-export type TailwindColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'transparent';
+/** Built-in Tailwind CSS palette families (https://tailwindcss.com/docs/colors) */
+export const TAILWIND_PALETTES = [
+  'slate',
+  'gray',
+  'zinc',
+  'neutral',
+  'stone',
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose'
+] as const;
+
+/** Color input for colorable components — any Tailwind palette family */
+export type TailwindPalette = (typeof TAILWIND_PALETTES)[number];
 
 /** Button kinds */
 export type TailwindButtonKind = 'solid' | 'flat' | 'outlined' | 'ghost' | 'text';
 
 /** ARIA role for `TailwindButton` */
 export type TailwindButtonRole = 'button' | 'menuitem' | 'tab' | 'switch' | 'checkbox' | 'radio';
-
-/** Alert/feedback color variants */
-export type TailwindSeverity = 'success' | 'warning' | 'danger' | 'info';
 
 /** Position variants for overlays */
 export type TailwindPosition = 'top' | 'bottom' | 'left' | 'right';

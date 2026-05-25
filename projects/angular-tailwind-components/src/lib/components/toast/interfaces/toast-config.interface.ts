@@ -1,9 +1,9 @@
-import { TailwindSeverity } from '../../../models';
+import { TailwindPalette } from '../../../models';
 
 export interface TailwindToastConfig {
   message: string;
   title?: string;
-  severity?: TailwindSeverity;
+  color?: TailwindPalette;
   duration?: number;
   dismissible?: boolean;
 }

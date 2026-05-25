@@ -10,7 +10,7 @@
       [value]="displayValue()"
       [placeholder]="i18n.placeholder"
       [disabled]="isDisabled()"
-      class="block w-full bg-white border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
+      class="block w-full bg-white border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline focus:outline-neutral-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
       (click)="togglePanel()" />
     <tailwind-icon
       icon="clock"
@@ -22,7 +22,7 @@
         class="absolute left-0 top-full z-popover mt-1 w-52 rounded-xl border border-neutral-200 bg-white p-4 shadow-xl">
         <div class="flex items-center gap-2">
           <select
-            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-neutral-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled()"
             (change)="onHourChange($event)">
             @for (h of hours; track h) {
@@ -33,7 +33,7 @@
           </select>
           <span class="text-neutral-400 text-sm shrink-0">:</span>
           <select
-            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-neutral-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled()"
             (change)="onMinuteChange($event)">
             @for (m of minutes; track m) {
@@ -46,7 +46,7 @@
         <div class="mt-2 pt-2 border-t border-neutral-100 flex items-center justify-between gap-2">
           <tailwind-button
             kind="text"
-            color="primary"
+            color="blue"
             size="xs"
             [disabled]="isDisabled()"
             (onClick)="goToNow()">
@@ -54,7 +54,7 @@
           </tailwind-button>
           <tailwind-button
             kind="solid"
-            color="primary"
+            color="blue"
             size="sm"
             [disabled]="isDisabled()"
             (onClick)="apply()">

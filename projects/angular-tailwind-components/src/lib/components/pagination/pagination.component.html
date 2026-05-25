@@ -22,7 +22,7 @@
   <!-- Previous -->
     <tailwind-button
       kind="ghost"
-      color="transparent"
+      color="neutral"
       size="sm"
       icon="chevron-left"
       [disabled]="currentPage() <= 1"
@@ -33,7 +33,7 @@
       <tailwind-button
         size="sm"
         [kind]="page === currentPage() ? 'flat' : 'ghost'"
-        [color]="page === currentPage() ? 'primary' : 'secondary'"
+        [color]="page === currentPage() ? 'blue' : 'neutral'"
         class="min-w-8"
         [ariaLabel]="pageButtonAriaLabel(page)"
         (onClick)="goToPage(page)">
@@ -44,7 +44,7 @@
     <!-- Next -->
     <tailwind-button
       kind="ghost"
-      color="transparent"
+      color="neutral"
       size="sm"
       icon="chevron-right"
       [disabled]="currentPage() >= totalPages()"

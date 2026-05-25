@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TailwindSize } from '../../models';
+import { TailwindPalette, TailwindSize } from '../../models';
+import {
+  accentStyleVars,
+  contrastTextClass,
+  focusRingStyleVar,
+  PALETTE_ACCENT_SHADE,
+  PALETTE_FOCUS_SHADE
+} from '../../utils/palette.util';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
@@ -19,21 +26,13 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindCheckbox extends TailwindComponent implements ControlValueAccessor {
-  /** Label text */
   readonly label = input<string>('');
-  /** Description text */
   readonly description = input<string>('');
-  /** Size variant */
   readonly size = input<TailwindSize>('md');
-  /** Unique ID */
-
-  /** Two-way bound checked state */
+  readonly color = input<TailwindPalette>('neutral');
   readonly checked = model<boolean>(false);
-
-  /** Internal disabled state */
   readonly isDisabled = signal(false);
 
-  /** Box size class based on size input */
   readonly boxSizeClass = computed(() => {
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'w-3.5 h-3.5',
@@ -60,7 +59,13 @@ export class TailwindCheckbox extends TailwindComponent implements ControlValueA
     return sizeMap[this.size()];
   });
 
-  // CVA
+  readonly accentStyles = computed(() => ({
+    ...accentStyleVars(this.color(), PALETTE_ACCENT_SHADE),
+    ...focusRingStyleVar(this.color(), PALETTE_FOCUS_SHADE)
+  }));
+
+  readonly checkIconClass = computed(() => contrastTextClass(this.color(), PALETTE_ACCENT_SHADE));
+
   private onChange: (value: boolean) => void = () => {};
   private onTouched: () => void = () => {};
 

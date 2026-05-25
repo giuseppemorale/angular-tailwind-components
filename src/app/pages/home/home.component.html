@@ -3,7 +3,7 @@
 <tailwind-divider [label]="'HOME.DIVIDER_FEEDBACK' | transloco" />
 
 <div class="flex flex-col gap-8">
-  <tailwind-alert severity="info" [title]="'HOME.ALERT_WELCOME_TITLE' | transloco">
+  <tailwind-alert color="sky" [title]="'HOME.ALERT_WELCOME_TITLE' | transloco">
     {{ 'HOME.ALERT_WELCOME_BODY' | transloco }}
   </tailwind-alert>
 
@@ -11,13 +11,13 @@
     <tailwind-card>
       <div tailwind-card-header class="flex flex-wrap items-center gap-2 justify-between">
         <tailwind-title titleTag="h4" [text]="'HOME.CARD_BUILD_TITLE' | transloco" />
-        <tailwind-badge variant="success" size="sm">{{ 'HOME.BADGE_OK' | transloco }}</tailwind-badge>
+        <tailwind-badge color="green" size="sm">{{ 'HOME.BADGE_OK' | transloco }}</tailwind-badge>
       </div>
       <p class="text-sm text-neutral-600 m-0">
         {{ 'HOME.CARD_BUILD_BODY' | transloco }}
       </p>
       <div tailwind-card-footer class="flex justify-end gap-2">
-        <tailwind-button kind="outlined" color="secondary" size="sm">{{
+        <tailwind-button kind="outlined" color="neutral" size="sm">{{
           'HOME.BTN_DETAILS' | transloco
         }}</tailwind-button>
         <tailwind-button size="sm">{{ 'HOME.BTN_OPEN' | transloco }}</tailwind-button>
@@ -27,8 +27,8 @@
     <tailwind-card [hasFooter]="false">
       <div tailwind-card-header class="flex flex-wrap items-center gap-2">
         <tailwind-title titleTag="h4" [text]="'HOME.TAG_SECTION_TITLE' | transloco" icon="tag" />
-        <tailwind-badge variant="warning" [dot]="true">{{ 'HOME.BADGE_BETA' | transloco }}</tailwind-badge>
-        <tailwind-badge variant="neutral" size="sm">{{ 'HOME.BADGE_V0' | transloco }}</tailwind-badge>
+        <tailwind-badge color="amber" [dot]="true">{{ 'HOME.BADGE_BETA' | transloco }}</tailwind-badge>
+        <tailwind-badge color="neutral" size="sm">{{ 'HOME.BADGE_V0' | transloco }}</tailwind-badge>
       </div>
       <p class="text-sm text-neutral-600 m-0">
         {{ 'HOME.CARD_TAGS_BODY' | transloco }}
@@ -57,11 +57,11 @@
         <tr>
           <td class="min-w-0">{{ row.nameKey | transloco }}</td>
           <td>
-            <tailwind-tag [variant]="row.variant">{{ row.statusKey | transloco }}</tailwind-tag>
+            <tailwind-tag [color]="row.color">{{ row.statusKey | transloco }}</tailwind-tag>
           </td>
           <td class="w-52 whitespace-nowrap">
             <div class="flex flex-wrap items-center gap-2">
-              <tailwind-button kind="outlined" color="secondary" size="sm">
+              <tailwind-button kind="outlined" color="neutral" size="sm">
                 {{ 'HOME.TABLE_BTN_EDIT' | transloco }}
               </tailwind-button>
               <tailwind-button size="sm">{{ 'HOME.TABLE_BTN_DETAILS' | transloco }}</tailwind-button>

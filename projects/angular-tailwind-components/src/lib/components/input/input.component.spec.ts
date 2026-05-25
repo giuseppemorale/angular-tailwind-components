@@ -32,7 +32,7 @@ describe('TailwindInput', () => {
     fixture.componentRef.setInput('errorText', 'This field is required');
     fixture.detectChanges();
 
-    const error = fixture.nativeElement.querySelector('.text-danger-600');
+    const error = fixture.nativeElement.querySelector('.text-red-600');
     expect(error?.textContent).toContain('This field is required');
   });
 

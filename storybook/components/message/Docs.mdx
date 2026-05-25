@@ -15,7 +15,7 @@ import * as MessageStories from './message.stories';
 @Component({
   imports: [TailwindMessage],
   template: `
-    <tailwind-message severity="info">
+    <tailwind-message color="sky">
       This is an informational message.
     </tailwind-message>`
 })
@@ -45,7 +45,7 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>severity</code></td>
+      <td><code>color</code></td>
       <td><code>'success' | 'warning' | 'danger' | 'info'</code></td>
       <td><code>'info'</code></td>
       <td>Variante colore.</td>

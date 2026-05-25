@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
-import { TailwindSeverity } from '../../models';
+import { TailwindPalette } from '../../models';
+import { feedbackSurfaceClasses } from '../../utils/palette.util';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -12,8 +13,8 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindAlert extends TailwindComponent {
-  /** Severity / color variant */
-  readonly severity = input<TailwindSeverity>('info');
+  /** Tailwind palette family */
+  readonly color = input<TailwindPalette>('sky');
   /** Alert title */
   readonly title = input<string>('');
   /** Whether the alert can be dismissed */
@@ -27,19 +28,22 @@ export class TailwindAlert extends TailwindComponent {
   /** Internal dismissed state */
   readonly dismissed = signal(false);
 
+  readonly alertIcon = computed((): 'check-circle' | 'exclamation-triangle' | 'x-circle' | 'information-circle' => {
+    const map: Partial<
+      Record<TailwindPalette, 'check-circle' | 'exclamation-triangle' | 'x-circle' | 'information-circle'>
+    > = {
+      green: 'check-circle',
+      amber: 'exclamation-triangle',
+      red: 'x-circle',
+      sky: 'information-circle'
+    };
+    return map[this.color()] ?? 'information-circle';
+  });
+
   readonly computedClasses = computed(() => {
     const base = 'flex gap-3 p-4 rounded-lg';
-
-    const variantMap: Record<TailwindSeverity, string> = {
-      success: 'bg-success-50 text-success-800 border-success-200',
-      warning: 'bg-warning-50 text-warning-800 border-warning-200',
-      danger: 'bg-danger-50 text-danger-800 border-danger-200',
-      info: 'bg-info-50 text-info-800 border-info-200'
-    };
-
     const borderClass = this.bordered() ? 'border-l-4' : 'border';
-
-    return `${base} ${variantMap[this.severity()]} ${borderClass}`;
+    return `${base} ${feedbackSurfaceClasses(this.color())} ${borderClass}`;
   });
 
   dismiss(): void {

@@ -5,7 +5,6 @@ import {
   TailwindTitleTag,
   TailwindTitleTagScale
 } from '../../models';
-import { TailwindThemeSeverityColor } from '../types/theme-config.types';
 
 /**
  * Optional app-wide values for library `InjectionToken`s.
@@ -31,21 +30,5 @@ export interface TailwindComponentsConfig {
   titleScale?: Partial<Record<TailwindTitleTag, Partial<TailwindTitleTagScale>>>;
 }
 
-export interface TailwindDefineThemeColors {
-  primary?: TailwindThemeSeverityColor;
-  neutral?: TailwindThemeSeverityColor;
-  success?: TailwindThemeSeverityColor;
-  warning?: TailwindThemeSeverityColor;
-  danger?: TailwindThemeSeverityColor;
-  /**
-   * Alias for {@link TailwindDefineThemeColors.danger}; writes the same `--color-danger-*` variables.
-   * Ignored when `danger` is set.
-   */
-  error?: TailwindThemeSeverityColor;
-  info?: TailwindThemeSeverityColor;
-}
-
-export interface TailwindDefineThemeConfig extends TailwindComponentsConfig {
-  /** Overrides semantic colors on `:root` at startup (browser only). */
-  colors?: TailwindDefineThemeColors;
-}
+/** @deprecated Use {@link TailwindComponentsConfig} — `colors` removed; use per-component `color` palette inputs. */
+export type TailwindDefineThemeConfig = TailwindComponentsConfig;

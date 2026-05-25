@@ -1,6 +1,6 @@
 <div class="tailwind-upload-wrapper flex flex-col gap-1.5">
   @if (label()) {
-    <label [attr.for]="fileInputId()" class="text-sm font-medium text-neutral-700" [class.text-danger-600]="hasError()">
+    <label [attr.for]="fileInputId()" class="text-sm font-medium text-neutral-700" [class.text-red-600]="hasError()">
       {{ label() }}
     </label>
   }
@@ -22,7 +22,7 @@
     <div class="flex flex-wrap items-center gap-2">
       <tailwind-button
         type="button"
-        color="primary"
+        color="blue"
         kind="solid"
         [size]="size()"
         [disabled]="isDisabled()"
@@ -32,7 +32,7 @@
       @if (showClear() && value()) {
         <tailwind-button
           kind="text"
-          color="primary"
+          color="blue"
           size="sm"
           [disabled]="isDisabled()"
           (onClick)="clear($event)">
@@ -60,7 +60,7 @@
       @if (showClear() && value()) {
         <tailwind-button
           kind="text"
-          color="primary"
+          color="blue"
           size="sm"
           class="self-start"
           [disabled]="isDisabled()"
@@ -83,7 +83,7 @@
     </p>
   }
   @if (errorText() && hasError()) {
-    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-danger-600">
+    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-red-600">
       {{ errorText() }}
     </p>
   }

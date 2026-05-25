@@ -15,7 +15,7 @@ import * as TitleStories from './title.stories';
 @Component({
   imports: [TailwindTitle],
   template: `
-    <tailwind-title titleTag="h1" text="Dashboard" class="text-primary-700" />
+    <tailwind-title titleTag="h1" text="Dashboard" class="text-blue-700" />
     <tailwind-title titleTag="h2" text="Impostazioni" icon="cog-6-tooth" />
   `
 })
@@ -86,7 +86,7 @@ import { defineTheme } from 'angular-tailwind-components';
 
 defineTheme({
   titleScale: {
-    h1: { classes: 'text-4xl font-extrabold text-primary-800', iconSize: 36 },
+    h1: { classes: 'text-4xl font-extrabold text-blue-800', iconSize: 36 },
     h2: { iconSize: 28 }
   }
 });

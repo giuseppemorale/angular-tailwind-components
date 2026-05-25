@@ -28,7 +28,7 @@ Il componente struttura il proprio contenuto con tre slot (selettori attributo):
     <div tailwind-modal-footer>
       <div class="flex justify-end gap-3">
         <tailwind-button kind="outlined" (click)="ref.close()">Annulla</tailwind-button>
-        <tailwind-button color="primary" (click)="ref.close(true)">Conferma</tailwind-button>
+        <tailwind-button color="blue" (click)="ref.close(true)">Conferma</tailwind-button>
       </div>
     </div>
   `
@@ -95,7 +95,7 @@ interface DeleteData { itemName: string }
       <p>Stai per eliminare <strong>{{ data.itemName }}</strong>.</p>
     </div>
     <div tailwind-modal-footer class="flex justify-end">
-      <tailwind-button color="danger" (click)="ref.close(true)">Elimina</tailwind-button>
+      <tailwind-button color="red" (click)="ref.close(true)">Elimina</tailwind-button>
     </div>
   `
 })

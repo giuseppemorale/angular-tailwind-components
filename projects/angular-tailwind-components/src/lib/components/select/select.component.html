@@ -3,7 +3,7 @@
     <label
       [attr.for]="id() ? id() + '-inner' : null"
       class="text-sm font-medium text-neutral-700"
-      [class.text-danger-600]="hasError()">
+      [class.text-red-600]="hasError()">
       {{ label() }}
     </label>
   }
@@ -50,7 +50,7 @@
     <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500">{{ helperText() }}</p>
   }
   @if (errorText() && hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600">{{ errorText() }}</p>
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-red-600">{{ errorText() }}</p>
   }
 </div>
 
@@ -76,7 +76,7 @@
         <span>{{ option.label }}</span>
 
         @if (isOptionSelected(option)) {
-          <tailwind-icon icon="check" [size]="16" class="text-primary-600 shrink-0" aria-hidden="true" />
+          <tailwind-icon icon="check" [size]="16" class="text-neutral-600 shrink-0" aria-hidden="true" />
         }
       </li>
     }

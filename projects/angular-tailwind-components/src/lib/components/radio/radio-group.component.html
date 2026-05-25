@@ -22,12 +22,12 @@
           [disabled]="isDisabled() || !!option.disabled"
           (change)="onRadioChange(option.value)" />
         <div
-          class="w-full h-full rounded-full border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1 flex items-center justify-center"
+          class="w-full h-full rounded-full border-2 transition-all duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-neutral-500/30 peer-focus-visible:ring-offset-1 flex items-center justify-center"
           [class.border-neutral-300]="value() !== option.value"
-          [class.border-primary-600]="value() === option.value">
+          [class.border-neutral-600]="value() === option.value">
           @if (value() === option.value) {
             <div
-              class="rounded-full bg-primary-600 transition-transform duration-150 scale-100"
+              class="rounded-full bg-neutral-600 transition-transform duration-150 scale-100"
               [class]="dotSizeClass()"></div>
           }
         </div>

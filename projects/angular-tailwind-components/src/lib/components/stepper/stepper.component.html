@@ -9,9 +9,9 @@
         [attr.aria-current]="activeIndex() === i ? 'step' : null">
         <div
           class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-all duration-200"
-          [class.bg-primary-600]="i <= activeIndex()"
-          [class.border-primary-600]="i <= activeIndex()"
-          [class.text-on-primary-600]="i <= activeIndex()"
+          [class.bg-neutral-600]="i <= activeIndex()"
+          [class.border-neutral-600]="i <= activeIndex()"
+          [class.text-white]="i <= activeIndex()"
           [class.border-neutral-300]="i > activeIndex()"
           [class.text-neutral-600]="i > activeIndex()">
           @if (step.completed()) {
@@ -23,7 +23,7 @@
         <div class="hidden sm:block">
           <p
             class="text-sm font-medium"
-            [class.text-primary-700]="i <= activeIndex()"
+            [class.text-neutral-700]="i <= activeIndex()"
             [class.text-neutral-700]="i > activeIndex()">
             {{ step.label() }}
           </p>
@@ -35,7 +35,7 @@
       @if (!last) {
         <div
           class="flex-1 h-0.5 mx-3 rounded-full transition-colors duration-200"
-          [class.bg-primary-600]="i < activeIndex()"
+          [class.bg-neutral-600]="i < activeIndex()"
           [class.bg-neutral-200]="i >= activeIndex()"></div>
       }
     </div>

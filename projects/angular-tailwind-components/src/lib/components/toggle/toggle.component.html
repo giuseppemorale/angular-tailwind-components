@@ -7,6 +7,7 @@
     [attr.aria-labelledby]="switchAria().labelledBy"
     [disabled]="isDisabled()"
     [class]="trackClasses()"
+    [style]="accentStyles()"
     (click)="toggle()">
     <span [class]="thumbClasses()" aria-hidden="true"></span>
   </button>

@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import type { TailwindHeroicon, TailwindIconPosition } from '../../models';
-import { TailwindSize, TailwindColor, TailwindButtonKind, TailwindButtonRole } from '../../models';
+import { TailwindSize, TailwindPalette, TailwindButtonKind, TailwindButtonRole } from '../../models';
 import { TAILWIND_BUTTON_KIND } from '../../tokens';
+import { buttonKindClasses, buttonPaletteStyleVars } from '../../utils/button-palette.util';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 
@@ -14,10 +15,6 @@ const iconPixelSizeMap: Record<TailwindSize, number> = {
   xl: 22
 };
 
-/** Always transparent background; no tint on hover, focus, or active. */
-const transparentColorClasses =
-  'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent border-transparent shadow-none text-neutral-600 focus-visible:outline-neutral-400';
-
 @Component({
   imports: [NgClass, TailwindIcon],
   selector: 'tailwind-button',
@@ -28,8 +25,8 @@ const transparentColorClasses =
 export class TailwindButton extends TailwindComponent {
   private readonly defaultKind = inject(TAILWIND_BUTTON_KIND, { optional: true });
 
-  /** Visual color */
-  readonly color = input<TailwindColor>('primary');
+  /** Tailwind palette family for button surfaces */
+  readonly color = input<TailwindPalette>('neutral');
   /**
    * Visual kind: `flat` = filled like `solid` without border, shadow, or hover/active background change;
    * `ghost` = transparent with hover tint; `text` = text color only, no hover background.
@@ -56,95 +53,10 @@ export class TailwindButton extends TailwindComponent {
 
   readonly iconPixelSize = computed(() => iconPixelSizeMap[this.size()]);
 
-  /** Computed Tailwind classes based on color, kind, size, and state */
+  readonly paletteStyle = computed(() => buttonPaletteStyleVars(this.color()));
+
+  /** Computed Tailwind classes based on kind, size, and state */
   readonly computedClasses = computed(() => {
-    const base = [
-      'inline-flex items-center justify-center',
-      'font-medium',
-      'transition-all duration-150 ease-in-out',
-      'focus-visible:outline-2 focus-visible:outline-offset-2',
-      'disabled:cursor-not-allowed disabled:opacity-50',
-      'cursor-pointer',
-      'border'
-    ];
-
-    const solidMap: Record<TailwindColor, string> = {
-      primary:
-        'bg-primary-600 text-on-primary-600 hover:bg-primary-700 hover:text-on-primary-700 active:bg-primary-800 active:text-on-primary-800 border-transparent focus-visible:outline-primary-600 shadow-sm',
-      secondary:
-        'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 border-neutral-300 focus-visible:outline-neutral-500 shadow-sm',
-      danger:
-        'bg-danger-600 text-on-danger-600 hover:bg-danger-700 hover:text-on-danger-700 active:bg-danger-800 active:text-on-danger-800 border-transparent focus-visible:outline-danger-700 shadow-sm',
-      success:
-        'bg-success-700 text-on-success-700 hover:bg-success-800 hover:text-on-success-800 active:bg-success-900 active:text-on-success-900 border-transparent focus-visible:outline-success-600 shadow-sm',
-      warning:
-        'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-transparent focus-visible:outline-warning-600 shadow-sm',
-      info: 'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-transparent focus-visible:outline-info-600 shadow-sm',
-      transparent: transparentColorClasses
-    };
-
-    /** Filled surface like `solid`, without box shadow, border, or hover/active tint. */
-    const flatMap: Record<TailwindColor, string> = {
-      primary:
-        'bg-primary-600 text-on-primary-600 border-0 shadow-none focus-visible:outline-primary-600',
-      secondary: 'bg-neutral-100 text-neutral-800 border-0 shadow-none focus-visible:outline-neutral-500',
-      danger: 'bg-danger-600 text-on-danger-600 border-0 shadow-none focus-visible:outline-danger-600',
-      success: 'bg-success-700 text-on-success-700 border-0 shadow-none focus-visible:outline-success-600',
-      warning: 'bg-warning-500 text-on-warning-500 border-0 shadow-none focus-visible:outline-warning-600',
-      info: 'bg-info-600 text-on-info-600 border-0 shadow-none focus-visible:outline-info-600',
-      transparent: transparentColorClasses
-    };
-
-    const outlinedMap: Record<TailwindColor, string> = {
-      primary:
-        'bg-transparent text-primary-600 border-primary-600 hover:bg-primary-50 active:bg-primary-100 focus-visible:outline-primary-600',
-      secondary:
-        'bg-transparent text-neutral-700 border-neutral-300 hover:bg-neutral-50 active:bg-neutral-100 focus-visible:outline-neutral-500',
-      danger:
-        'bg-transparent text-danger-800 border-danger-700 hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
-      success:
-        'bg-transparent text-success-800 border-success-700 hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
-      warning:
-        'bg-transparent text-warning-800 border-warning-700 hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-700',
-      info: 'bg-transparent text-info-800 border-info-700 hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
-      transparent: transparentColorClasses
-    };
-
-    /** Transparent + hover/active background tint (former `text` look). */
-    const ghostMap: Record<TailwindColor, string> = {
-      primary:
-        'bg-transparent text-primary-600 border-transparent hover:bg-primary-50 active:bg-primary-100 focus-visible:outline-primary-600',
-      secondary:
-        'bg-transparent text-neutral-700 border-transparent hover:bg-neutral-100 active:bg-neutral-200 focus-visible:outline-neutral-500',
-      danger:
-        'bg-transparent text-danger-800 border-transparent hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
-      success:
-        'bg-transparent text-success-800 border-transparent hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
-      warning:
-        'bg-transparent text-warning-800 border-transparent hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-700',
-      info: 'bg-transparent text-info-800 border-transparent hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
-      transparent: transparentColorClasses
-    };
-
-    /** Text color from severity only; background stays transparent on hover/active. */
-    const textMap: Record<TailwindColor, string> = {
-      primary: 'bg-transparent text-primary-600 border-transparent focus-visible:outline-primary-600',
-      secondary: 'bg-transparent text-neutral-700 border-transparent focus-visible:outline-neutral-500',
-      danger: 'bg-transparent text-danger-800 border-transparent focus-visible:outline-danger-600',
-      success: 'bg-transparent text-success-800 border-transparent focus-visible:outline-success-600',
-      warning: 'bg-transparent text-warning-800 border-transparent focus-visible:outline-warning-700',
-      info: 'bg-transparent text-info-800 border-transparent focus-visible:outline-info-600',
-      transparent: transparentColorClasses
-    };
-
-    const styleMap = {
-      solid: solidMap,
-      flat: flatMap,
-      outlined: outlinedMap,
-      ghost: ghostMap,
-      text: textMap
-    };
-
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs px-2 py-1 rounded-sm',
       sm: 'text-sm px-3 py-1.5 rounded-md',
@@ -153,7 +65,6 @@ export class TailwindButton extends TailwindComponent {
       xl: 'text-base px-6 py-3 rounded-lg'
     };
 
-    /** Square padding when `icon` is set and projected label is empty (icon-only). */
     const iconOnlySizeMap: Record<TailwindSize, string> = {
       xs: 'has-[.tailwind-button-label:empty]:p-1 has-[.tailwind-button-label:empty]:px-1',
       sm: 'has-[.tailwind-button-label:empty]:p-1.5 has-[.tailwind-button-label:empty]:px-1.5',
@@ -165,7 +76,7 @@ export class TailwindButton extends TailwindComponent {
     const size = this.size();
     const sizeClasses = [sizeMap[size], this.icon() ? iconOnlySizeMap[size] : ''].filter(Boolean).join(' ');
 
-    return [...base, styleMap[this.kind()][this.color()] || styleMap['solid']['primary'], sizeClasses].join(' ');
+    return [buttonKindClasses(this.kind()), sizeClasses].join(' ');
   });
 
   handleClick(event: MouseEvent): void {

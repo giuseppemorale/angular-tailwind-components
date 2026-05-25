@@ -54,14 +54,17 @@ const meta: Meta<TailwindToolbar> = {
     width: { control: 'select', options: ['full', 'container'] },
     elevated: { control: 'boolean' },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
-    variant: { control: 'select', options: ['default', 'info', 'success', 'warning', 'danger'] }
+    color: {
+      control: 'select',
+      options: [undefined, 'sky', 'green', 'amber', 'red', 'blue', 'indigo'] as const
+    }
   },
   args: {
     rounded: true,
     width: 'full',
     elevated: false,
     orientation: 'horizontal',
-    variant: 'default'
+    color: undefined
   }
 };
 export default meta;
@@ -72,11 +75,11 @@ export const Horizontal: StoryObj<TailwindToolbar> = {
     template: `
       <div class="space-y-2">
         <tailwind-toolbar ${argsToTemplate(args)} [menu]="menu" (onMenuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
-          <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">
+          <div tailwind-toolbar-logo class="text-lg font-semibold text-blue-600">
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
           <div tailwind-toolbar-end class="flex gap-2">
-            <tailwind-button kind="flat" color="${args.variant}">Register</tailwind-button>
+            <tailwind-button kind="flat" color="blue">Register</tailwind-button>
           </div>
         </tailwind-toolbar>
         @if (lastSelection) {
@@ -118,7 +121,7 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
           <div tailwind-toolbar-end>
-            <tailwind-button size="sm" color="secondary" kind="text" ariaLabel="Logout">
+            <tailwind-button size="sm" color="neutral" kind="text" ariaLabel="Logout">
               <tailwind-icon icon="arrow-right-end-on-rectangle" [size]="22" />
             </tailwind-button>
           </div>
@@ -151,7 +154,7 @@ export const VerticalSidebar: StoryObj<TailwindToolbar> = {
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
           <div tailwind-toolbar-end class="px-2">
-            <tailwind-button size="sm" color="secondary" kind="text">Logout</tailwind-button>
+            <tailwind-button size="sm" color="neutral" kind="text">Logout</tailwind-button>
           </div>
         </tailwind-toolbar>
         <div class="flex-1 rounded-lg bg-neutral-50 p-4 text-sm text-neutral-600">Main content</div>

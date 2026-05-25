@@ -13,8 +13,8 @@
         [attr.aria-selected]="activeIndex() === i"
         [attr.aria-controls]="tab.id() ? tab.id() : null"
         [disabled]="tab.disabled()"
-        class="group relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/30 focus-visible:rounded-t-lg"
-        [class.text-primary-600]="activeIndex() === i"
+        class="group relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-500/30 focus-visible:rounded-t-lg"
+        [class.text-neutral-600]="activeIndex() === i"
         [class.text-neutral-500]="activeIndex() !== i"
         [class.hover:text-neutral-700]="activeIndex() !== i && !tab.disabled()"
         [class.opacity-50]="tab.disabled()"
@@ -24,7 +24,7 @@
         <!-- Active indicator -->
         <span
           class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200"
-          [class.bg-primary-600]="activeIndex() === i"
+          [class.bg-neutral-600]="activeIndex() === i"
           [class.scale-x-100]="activeIndex() === i"
           [class.scale-x-0]="activeIndex() !== i"></span>
       </button>

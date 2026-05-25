@@ -1,24 +1,9 @@
 @if (!dismissed()) {
-  <div [class]="computedClasses()" role="alert" [attr.aria-live]="severity() === 'danger' ? 'assertive' : 'polite'">
-    <!-- Icon -->
+  <div [class]="computedClasses()" role="alert" [attr.aria-live]="color() === 'red' ? 'assertive' : 'polite'">
     <div class="shrink-0 mt-0.5">
-      @switch (severity()) {
-        @case ('success') {
-          <tailwind-icon icon="check-circle" [size]="20" />
-        }
-        @case ('warning') {
-          <tailwind-icon icon="exclamation-triangle" [size]="20" />
-        }
-        @case ('danger') {
-          <tailwind-icon icon="x-circle" [size]="20" />
-        }
-        @case ('info') {
-          <tailwind-icon icon="information-circle" [size]="20" />
-        }
-      }
+      <tailwind-icon [icon]="alertIcon()" [size]="20" />
     </div>
 
-    <!-- Content -->
     <div class="flex-1 min-w-0">
       @if (title()) {
         <h3 class="text-sm font-semibold mb-0.5">{{ title() }}</h3>
@@ -28,11 +13,10 @@
       </div>
     </div>
 
-    <!-- Dismiss button -->
     @if (dismissible()) {
       <tailwind-button
         kind="ghost"
-        color="transparent"
+        color="neutral"
         size="sm"
         icon="x-mark"
         class="shrink-0 -m-1 opacity-70 hover:opacity-100"

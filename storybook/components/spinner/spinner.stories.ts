@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TailwindSpinner } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TAILWIND_PALETTES, TailwindSpinner } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSpinner> = {
   title: 'Components/Spinner',
@@ -10,7 +10,7 @@ const meta: Meta<TailwindSpinner> = {
       control: { type: 'select' }
     },
     color: {
-      options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info'],
+      options: [...TAILWIND_PALETTES],
       control: { type: 'select' }
     },
     label: { control: 'text' },
@@ -26,7 +26,7 @@ export default meta;
 export const Spinner: StoryObj<TailwindSpinner> = {
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'blue',
     label: '',
     ariaLabel: 'Loading',
     orientation: 'horizontal'
@@ -36,7 +36,7 @@ export const Spinner: StoryObj<TailwindSpinner> = {
 export const WithLabel: StoryObj<TailwindSpinner> = {
   args: {
     size: 'md',
-    color: 'primary',
+    color: 'blue',
     label: 'Loading data...',
     ariaLabel: 'Loading',
     orientation: 'horizontal'

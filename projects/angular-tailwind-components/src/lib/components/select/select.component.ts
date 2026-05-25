@@ -115,8 +115,8 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     };
 
     const stateClass = this.hasError()
-      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-neutral-300 focus:outline-primary-500';
+      ? 'border-red-400 focus:outline-red-500 text-red-900'
+      : 'border-neutral-300 focus:outline-neutral-500';
 
     const layout = this.multiple() ? 'items-start' : 'items-center';
 
@@ -158,7 +158,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
       isDisabled
         ? 'text-neutral-400 cursor-not-allowed'
         : isSelected
-          ? 'bg-primary-50 text-primary-700 font-medium'
+          ? 'bg-neutral-50 text-neutral-700 font-medium'
           : isActive
             ? 'bg-neutral-100 text-neutral-900'
             : 'text-neutral-800 hover:bg-neutral-50'

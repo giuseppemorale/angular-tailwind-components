@@ -32,13 +32,13 @@ describe('TailwindIcon', () => {
   });
 
   it('should apply custom class to the inner glyph, not only the host', () => {
-    fixture.componentRef.setInput('class', 'text-danger-600 shrink-0');
+    fixture.componentRef.setInput('class', 'text-red-600 shrink-0');
     fixture.detectChanges();
 
     const host: HTMLElement = fixture.nativeElement;
     const glyph: HTMLElement = fixture.nativeElement.querySelector('.tailwind-icon-glyph');
 
-    expect(glyph.classList.contains('text-danger-600')).toBe(true);
+    expect(glyph.classList.contains('text-red-600')).toBe(true);
     expect(glyph.classList.contains('shrink-0')).toBe(true);
     expect(host.classList.contains('inline-flex')).toBe(true);
     expect(host.classList.contains('items-center')).toBe(true);

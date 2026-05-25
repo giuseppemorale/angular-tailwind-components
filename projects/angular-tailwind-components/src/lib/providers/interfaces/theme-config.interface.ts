@@ -1,4 +1,10 @@
-import { TailwindButtonKind, TailwindPasswordLabels, TailwindSize } from '../../models';
+import {
+  TailwindButtonKind,
+  TailwindPasswordLabels,
+  TailwindSize,
+  TailwindTitleTag,
+  TailwindTitleTagScale
+} from '../../models';
 import { TailwindThemeSeverityColor } from '../types/theme-config.types';
 
 /**
@@ -18,6 +24,11 @@ export interface TailwindComponentsConfig {
   paginationSummary?: string;
   /** Maps to {@link TAILWIND_PASSWORD_LABELS}. */
   passwordLabels?: TailwindPasswordLabels;
+  /**
+   * Maps to {@link TAILWIND_TITLE_SCALE} (merged onto {@link DEFAULT_TAILWIND_TITLE_SCALE}).
+   * Overrides typography classes and icon pixel size per `h1`–`h6`.
+   */
+  titleScale?: Partial<Record<TailwindTitleTag, Partial<TailwindTitleTagScale>>>;
 }
 
 export interface TailwindDefineThemeColors {

@@ -7,13 +7,15 @@ import {
   type EnvironmentProviders,
   type Provider
 } from '@angular/core';
+import { resolveTailwindTitleScale } from '../models';
 import {
   TAILWIND_BUTTON_KIND,
   TAILWIND_COMPONENTS_SIZE,
   TAILWIND_DATETIME_LANGUAGE,
   TAILWIND_ICON_SIZE,
   TAILWIND_PAGINATION_SUMMARY,
-  TAILWIND_PASSWORD_LABELS
+  TAILWIND_PASSWORD_LABELS,
+  TAILWIND_TITLE_SCALE
 } from '../tokens';
 import { TailwindComponentsConfig, TailwindDefineThemeConfig } from './interfaces/theme-config.interface';
 import {
@@ -49,6 +51,9 @@ function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig)
   if (config.passwordLabels !== undefined) {
     providers.push({ provide: TAILWIND_PASSWORD_LABELS, useValue: config.passwordLabels });
   }
+  if (config.titleScale !== undefined) {
+    providers.push({ provide: TAILWIND_TITLE_SCALE, useValue: resolveTailwindTitleScale(config.titleScale) });
+  }
 
   return providers;
 }
@@ -57,7 +62,7 @@ function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig)
  * Registers environment-scoped providers for library injection tokens only (no theme `colors`).
  * Prefer {@link defineTheme}, which registers the same tokens when set plus optional CSS variables.
  *
- * @deprecated Use {@link defineTheme} with the same fields (`iconSize`, `datetimeLanguage`, etc.).
+ * @deprecated Use {@link defineTheme} with the same fields (`iconSize`, `datetimeLanguage`, `titleScale`, etc.).
  */
 export function provideTailwindComponents(config: TailwindComponentsConfig): EnvironmentProviders {
   return makeEnvironmentProviders(providersFromTailwindComponentsConfig(config));

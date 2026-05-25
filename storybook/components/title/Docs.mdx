@@ -74,3 +74,22 @@ Eredita `TailwindComponent` (`id`, `class`).
 </table>
 
 `:host { display: contents }` fa sì che nel layout conti soprattutto l’elemento heading reale.
+
+---
+
+## Scala titoli con defineTheme
+
+Tipografia e dimensione icona per ogni `titleTag` sono configurabili a livello app con **`defineTheme({ titleScale: … })`** (token `TAILWIND_TITLE_SCALE`). I valori non specificati restano quelli di default della libreria (`DEFAULT_TAILWIND_TITLE_SCALE`).
+
+```typescript
+import { defineTheme } from 'angular-tailwind-components';
+
+defineTheme({
+  titleScale: {
+    h1: { classes: 'text-4xl font-extrabold text-primary-800', iconSize: 36 },
+    h2: { iconSize: 28 }
+  }
+});
+```
+
+Puoi anche fornire il token direttamente nei `providers` del componente o del modulo.

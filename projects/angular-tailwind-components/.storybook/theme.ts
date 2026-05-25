@@ -1,11 +1,12 @@
 import { create } from 'storybook/theming';
+import { STORYBOOK_VERSION } from './version';
 
 const brandTitle = [
   '<span class="atc-storybook-brand">',
   '<img src="/logo.png" width="32" height="32" alt="Logo Angular Tailwind Components" />',
   '<div class="atc-storybook-brand__content">',
-  '<span class="atc-storybook-brand__title">Angular Tailwind</span>',
-  '<span class="atc-storybook-brand__subtitle">Components</span>',
+  '<span class="atc-storybook-brand__title">Angular Tailwind Components</span>',
+  `<span class="atc-storybook-brand__subtitle">Storybook v${STORYBOOK_VERSION}</span>`,
   '</div>',
   '</span>'
 ].join('');

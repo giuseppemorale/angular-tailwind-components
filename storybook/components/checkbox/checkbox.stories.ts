@@ -15,7 +15,7 @@ export default meta;
 export const Checkbox: StoryObj<TailwindCheckbox> = {
   render: args => ({
     props: args,
-    template: `<tailwind-checkbox [label]="label" [size]="size" [checked]="checked"></tailwind-checkbox>`
+    template: `<tailwind-checkbox [label]="label" [size]="size" [(checked)]="checked"></tailwind-checkbox>`
   }),
   args: { label: 'Accept terms and conditions', size: 'md', checked: false }
 };

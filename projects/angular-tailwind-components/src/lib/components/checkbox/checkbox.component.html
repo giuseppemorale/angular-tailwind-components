@@ -1,6 +1,6 @@
 <div class="inline-flex items-center gap-2.5 select-none" [class.opacity-50]="isDisabled()">
   <label
-    class="relative flex items-center justify-center shrink-0"
+    [class]="labelClasses()"
     [class.cursor-pointer]="!isDisabled()"
     [class.cursor-not-allowed]="isDisabled()"
     [attr.for]="id() ? id() + '-inner' : null">
@@ -14,7 +14,7 @@
       [attr.aria-labelledby]="label() && id() ? id() + '-label' : null"
       (change)="onCheckboxChange($event)" />
     <div
-      class="w-full h-full border-2 transition-all duration-150 flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
+      class="size-full border-2 transition-all duration-150 flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
       [class.rounded-sm]="size() === 'xs' || size() === 'sm'"
       [class.rounded-md]="size() !== 'xs' && size() !== 'sm'"
       [class.border-neutral-300]="!checked()"

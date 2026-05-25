@@ -45,6 +45,10 @@ export class TailwindCheckbox extends TailwindComponent implements ControlValueA
     return sizeMap[this.size()];
   });
 
+  readonly labelClasses = computed(
+    () => `relative flex items-center justify-center shrink-0 ${this.boxSizeClass()}`
+  );
+
   readonly checkIconSize = computed(() => {
     const sizeMap: Record<TailwindSize, number> = {
       xs: 16,

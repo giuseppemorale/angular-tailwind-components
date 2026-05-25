@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TailwindPalette, TailwindSize } from '../../models';
-import { accentStyleVars, focusRingStyleVar, PALETTE_ACCENT_SHADE, PALETTE_FOCUS_SHADE } from '../../utils/palette.util';
+import { TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -18,18 +17,20 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindToggle extends TailwindComponent implements ControlValueAccessor {
+  /** Label text */
   readonly label = input<string>('');
+  /** Aria label for accessibility */
   readonly ariaLabel = input<string>('');
+  /** Size variant */
   readonly size = input<TailwindSize>('md');
-  readonly color = input<TailwindPalette>('neutral');
+
+  /** Two-way bound checked state */
   readonly checked = model<boolean>(false);
+
+  /** Internal disabled state */
   readonly isDisabled = signal(false);
 
-  readonly accentStyles = computed(() => ({
-    ...accentStyleVars(this.color(), PALETTE_ACCENT_SHADE),
-    ...focusRingStyleVar(this.color(), PALETTE_FOCUS_SHADE)
-  }));
-
+  /** Track (background) classes */
   readonly trackClasses = computed(() => {
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'w-7 h-4',
@@ -43,15 +44,16 @@ export class TailwindToggle extends TailwindComponent implements ControlValueAcc
       'relative inline-flex shrink-0 rounded-full',
       'border-2 border-transparent',
       'transition-colors duration-200 ease-in-out',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--tw-focus-ring)]',
+      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600',
       'cursor-pointer disabled:cursor-not-allowed'
     ];
 
-    const stateClass = this.checked() ? 'bg-[color:var(--tw-accent-bg)]' : 'bg-neutral-300';
+    const stateClass = this.checked() ? 'bg-primary-600' : 'bg-neutral-300';
 
     return [...base, sizeMap[this.size()], stateClass].join(' ');
   });
 
+  /** `aria-label` / `aria-labelledby` for the switch (label text is not a hit target) */
   readonly switchAria = computed(() => {
     const al = this.ariaLabel();
     if (al) {
@@ -68,6 +70,7 @@ export class TailwindToggle extends TailwindComponent implements ControlValueAcc
     return { label: 'Toggle', labelledBy: null };
   });
 
+  /** Thumb (knob) classes */
   readonly thumbClasses = computed(() => {
     const sizeMap: Record<TailwindSize, { thumb: string; translateOn: string }> = {
       xs: { thumb: 'w-3 h-3', translateOn: 'translate-x-3' },
@@ -90,6 +93,7 @@ export class TailwindToggle extends TailwindComponent implements ControlValueAcc
     return [...base, config.thumb, translateClass].join(' ');
   });
 
+  // CVA
   private onChange: (value: boolean) => void = () => {};
   private onTouched: () => void = () => {};
 

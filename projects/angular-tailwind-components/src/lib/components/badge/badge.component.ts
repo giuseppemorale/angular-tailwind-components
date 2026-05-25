@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TailwindPalette, TailwindSize } from '../../models';
-import { softBadgeClasses } from '../../utils/palette.util';
+import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -10,14 +9,28 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindBadge extends TailwindComponent {
-  readonly color = input<TailwindPalette>('neutral');
+  /** Color variant */
+  readonly variant = input<TailwindSeverity | 'neutral' | 'primary'>('primary');
+  /** Size variant */
   readonly size = input<TailwindSize>('md');
+  /** Show a dot indicator */
   readonly dot = input<boolean>(false);
+  /** Shape variant */
   readonly rounded = input<boolean>(false);
+  /** Accessible label */
   readonly ariaLabel = input<string>('');
 
   readonly computedClasses = computed(() => {
     const base = ['inline-flex items-center gap-1 font-medium', 'leading-none'];
+
+    const variantMap: Record<string, string> = {
+      primary: 'bg-primary-100 text-primary-700',
+      neutral: 'bg-neutral-100 text-neutral-700',
+      success: 'bg-success-100 text-success-700',
+      warning: 'bg-warning-100 text-warning-800',
+      danger: 'bg-danger-100 text-danger-700',
+      info: 'bg-info-100 text-info-700'
+    };
 
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-[10px] px-1.5 py-0.5',
@@ -29,6 +42,6 @@ export class TailwindBadge extends TailwindComponent {
 
     const shape = this.rounded() ? 'rounded-full' : 'rounded-md';
 
-    return [...base, softBadgeClasses(this.color()), sizeMap[this.size()], shape].join(' ');
+    return [...base, variantMap[this.variant()] ?? variantMap['primary'], sizeMap[this.size()], shape].join(' ');
   });
 }

@@ -14,7 +14,7 @@ import { DEFAULT_TAILWIND_PASSWORD_LABELS, TailwindSize } from '../../models';
 import { TAILWIND_PASSWORD_LABELS } from '../../tokens';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
-import { computePasswordStrength, passwordStrengthMeterFill } from '../../utils/password-strength.util';
+import { computePasswordStrength, passwordStrengthMeterFill } from './password-strength.util';
 
 @Component({
   imports: [TailwindIcon],
@@ -69,7 +69,9 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
   readonly strengthLevel = computed(() => this.strength().level);
   readonly meterFill = computed(() => passwordStrengthMeterFill(this.strengthLevel()));
 
-  readonly showFeedbackPanel = computed(() => this.feedback() && this.isFocused() && this.value().length > 0);
+  readonly showFeedbackPanel = computed(
+    () => this.feedback() && this.isFocused() && this.value().length > 0
+  );
 
   readonly resolvedLabels = computed(() => {
     const defaults = this.themeLabels ?? DEFAULT_TAILWIND_PASSWORD_LABELS;
@@ -115,8 +117,8 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
     };
 
     const stateClass = this.hasError()
-      ? 'border-red-400 focus:outline-red-500 text-red-900'
-      : 'border-neutral-300 focus:outline-neutral-500 text-neutral-900';
+      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
+      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
     return [...base, sizeMap[this.size()], stateClass, this.inputPaddingClass()].filter(Boolean).join(' ');
   });
@@ -124,7 +126,8 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
   readonly meterSegmentClasses = computed(() => {
     const fill = this.meterFill();
     const level = this.strengthLevel();
-    const activeClass = level === 'weak' ? 'bg-red-500' : level === 'medium' ? 'bg-amber-500' : 'bg-green-600';
+    const activeClass =
+      level === 'weak' ? 'bg-danger-500' : level === 'medium' ? 'bg-warning-500' : 'bg-success-600';
 
     return [0, 1, 2].map(index => {
       const isActive = index < fill;

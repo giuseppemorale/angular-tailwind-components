@@ -40,13 +40,4 @@ describe('TailwindCheckbox', () => {
     const label = fixture.nativeElement.querySelector('.text-neutral-800');
     expect(label?.textContent).toContain('Accept terms');
   });
-
-  it('should apply palette accent CSS variables when color is set', () => {
-    fixture.componentRef.setInput('color', 'emerald');
-    fixture.componentRef.setInput('checked', true);
-    fixture.detectChanges();
-
-    const box: HTMLElement = fixture.nativeElement.querySelector('label > div');
-    expect(box.style.getPropertyValue('--tw-accent-bg')).toContain('--color-emerald-600');
-  });
 });

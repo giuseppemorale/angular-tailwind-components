@@ -14,14 +14,15 @@
       [attr.aria-labelledby]="label() && id() ? id() + '-label' : null"
       (change)="onCheckboxChange($event)" />
     <div
-      class="size-full border-2 transition-all duration-150 flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-(--tw-focus-ring)/30 peer-focus-visible:ring-offset-1 border-(--tw-accent-border) bg-(--tw-accent-bg)"
-      [style]="accentStyles()"
+      class="size-full border-2 transition-all duration-150 flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
       [class.rounded-sm]="size() === 'xs' || size() === 'sm'"
       [class.rounded-md]="size() !== 'xs' && size() !== 'sm'"
-      [class.!border-neutral-300]="!checked()"
-      [class.!bg-white]="!checked()">
+      [class.border-neutral-300]="!checked()"
+      [class.bg-white]="!checked()"
+      [class.border-primary-600]="checked()"
+      [class.bg-primary-600]="checked()">
       @if (checked()) {
-        <tailwind-icon icon="check" [size]="checkIconSize()" [class]="checkIconClass() + ' shrink-0'" />
+        <tailwind-icon icon="check" [size]="checkIconSize()" class="text-white shrink-0" />
       }
     </div>
   </label>

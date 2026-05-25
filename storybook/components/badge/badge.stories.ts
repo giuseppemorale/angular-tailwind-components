@@ -1,11 +1,11 @@
 import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
-import { TAILWIND_PALETTES, TailwindBadge } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindBadge } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindBadge> = {
   title: 'Components/Badge',
   component: TailwindBadge,
   argTypes: {
-    color: { control: 'select', options: [...TAILWIND_PALETTES] },
+    variant: { control: 'select', options: ['primary', 'neutral', 'success', 'warning', 'danger', 'info'] },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     dot: { control: 'boolean' },
     rounded: { control: 'boolean' }
@@ -18,5 +18,5 @@ export const Badge: StoryObj<TailwindBadge> = {
     props: args,
     template: `<tailwind-badge ${argsToTemplate(args)}>Badge</tailwind-badge>`
   }),
-  args: { color: 'neutral', size: 'md', dot: false, rounded: false }
+  args: { variant: 'primary', size: 'md', dot: false, rounded: false }
 };

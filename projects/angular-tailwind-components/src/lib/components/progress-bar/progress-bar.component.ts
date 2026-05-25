@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TailwindPalette, TailwindSize } from '../../models';
-import { filledBarClasses } from '../../utils/palette.util';
+import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -10,13 +9,21 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindProgressBar extends TailwindComponent {
+  /** Current value (0-100) */
   readonly value = input<number>(0);
+  /** Label text */
   readonly label = input<string>('');
+  /** Show the label row */
   readonly showLabel = input<boolean>(true);
+  /** Show percentage value */
   readonly showValue = input<boolean>(true);
-  readonly color = input<TailwindPalette>('neutral');
+  /** Color variant */
+  readonly variant = input<TailwindSeverity | 'primary'>('primary');
+  /** Size variant */
   readonly size = input<TailwindSize>('md');
+  /** Indeterminate mode (animated) */
   readonly indeterminate = input<boolean>(false);
+  /** Whether to use striped pattern */
   readonly striped = input<boolean>(false);
 
   readonly clampedValue = computed(() => Math.max(0, Math.min(100, this.value())));
@@ -34,9 +41,18 @@ export class TailwindProgressBar extends TailwindComponent {
   });
 
   readonly barClasses = computed(() => {
-    const palette = this.color();
-    const shade = palette === 'amber' || palette === 'yellow' ? 500 : 600;
-    const base = ['h-full rounded-full transition-all duration-300 ease-out', filledBarClasses(palette, shade)];
+    const variantMap: Record<string, string> = {
+      primary: 'bg-primary-600',
+      success: 'bg-success-600',
+      warning: 'bg-warning-500',
+      danger: 'bg-danger-600',
+      info: 'bg-info-600'
+    };
+
+    const base = [
+      'h-full rounded-full transition-all duration-300 ease-out',
+      variantMap[this.variant()] ?? variantMap['primary']
+    ];
 
     if (this.indeterminate()) {
       base.push('tailwind-progress-indeterminate');

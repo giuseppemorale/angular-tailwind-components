@@ -15,7 +15,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — Visual documentation for all components
-- 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults; per-component **`color`** uses any [Tailwind palette](https://tailwindcss.com/docs/colors) (default `neutral`)
+- 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
 
 ## Installation
 
@@ -53,7 +53,7 @@ import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 
     <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
     <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
     <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
-    <tailwind-button color="neutral" (onClick)="submit()">Submit</tailwind-button>
+    <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
   </form>
   `
 })
@@ -72,7 +72,7 @@ export class ExampleComponent {
 
 ## Application configuration
 
-Use **`defineTheme`** from `angular-tailwind-components` for app-wide **injection token** defaults. It returns **`EnvironmentProviders`**: add one entry to `bootstrapApplication` / `ApplicationConfig.providers` (no spread).
+Use **`defineTheme`** from `angular-tailwind-components` for app-wide **injection token** defaults and optional **`colors`** (runtime CSS variables on `document.documentElement`). It returns **`EnvironmentProviders`**: add one entry to `bootstrapApplication` / `ApplicationConfig.providers` (no spread).
 
 ### Example
 
@@ -87,13 +87,18 @@ export const appConfig: ApplicationConfig = {
       datetimeLanguage: 'it',
       componentsSize: 'md',
       buttonKind: 'flat',
-      paginationSummary: 'Items {start}-{end} of {total}'
+      paginationSummary: 'Items {start}-{end} of {total}',
+      colors: {
+        primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
+        danger: 'rose',
+        neutral: 'zinc'
+      }
     })
   ]
 };
 ```
 
-Set accents per component with **`color`** (`blue`, `indigo`, `emerald`, …). See the [Tailwind color reference](https://tailwindcss.com/docs/colors) and the [package README](https://github.com/giuseppemorale/angular-tailwind-components/blob/main/projects/angular-tailwind-components/README.md#application-configuration-definetheme).
+You can omit **`colors`** if you only need token defaults, or omit token fields if you only need theme colors. For string palette names, see the [Tailwind color reference](https://tailwindcss.com/docs/colors). Full API (including **`TailwindThemeSeverityColor`**) and the token → `InjectionToken` table are in the [package README](https://github.com/giuseppemorale/angular-tailwind-components/blob/main/projects/angular-tailwind-components/README.md#application-configuration-definetheme).
 
 ## Components
 

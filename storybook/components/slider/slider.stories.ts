@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
-import { TAILWIND_PALETTES, TailwindSlider } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindSlider } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSlider> = {
   title: 'Forms/Slider',
@@ -27,7 +27,10 @@ const meta: Meta<TailwindSlider> = {
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
     showTicks: { control: 'boolean' },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
-    color: { control: 'select', options: [...TAILWIND_PALETTES] }
+    variant: {
+      control: 'select',
+      options: ['primary', 'success', 'warning', 'danger', 'info']
+    }
   }
 };
 export default meta;
@@ -50,7 +53,7 @@ export const Slider: StoryObj<TailwindSlider> = {
     orientation: 'horizontal',
     showTicks: false,
     size: 'md',
-    color: 'neutral'
+    variant: 'primary'
   }
 };
 
@@ -73,7 +76,7 @@ export const Range: StoryObj<TailwindSlider> = {
     orientation: 'horizontal',
     showTicks: false,
     size: 'md',
-    color: 'neutral'
+    variant: 'primary'
   }
 };
 
@@ -95,6 +98,6 @@ export const Vertical: StoryObj<TailwindSlider> = {
     orientation: 'vertical',
     showTicks: true,
     size: 'md',
-    color: 'neutral'
+    variant: 'primary'
   }
 };

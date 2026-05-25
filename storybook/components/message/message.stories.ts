@@ -10,7 +10,7 @@ const meta: Meta<TailwindMessage> = {
     })
   ],
   argTypes: {
-    color: { control: 'select', options: ['slate','gray','zinc','neutral','stone','red','orange','amber','yellow','lime','green','emerald','teal','cyan','sky','blue','indigo','violet','purple','fuchsia','pink','rose'] }
+    severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] }
   }
 };
 export default meta;
@@ -28,27 +28,27 @@ export const Severities: StoryObj<TailwindMessage> = {
     props: args,
     template: `
       <div class="flex flex-col gap-2 max-w-md">
-        <tailwind-message color="green">
+        <tailwind-message severity="success">
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="check-circle" class="text-green-600 shrink-0" />
+            <tailwind-icon icon="check-circle" class="text-success-600 shrink-0" />
             <span>Operation completed successfully.</span>
           </div>
         </tailwind-message>
-        <tailwind-message color="amber">
+        <tailwind-message severity="warning">
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="shield-exclamation" class="text-amber-600 shrink-0" />
+            <tailwind-icon icon="shield-exclamation" class="text-warning-600 shrink-0" />
             <span>Please review before proceeding.</span>
           </div>
         </tailwind-message>
-        <tailwind-message color="red">
+        <tailwind-message severity="danger">
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="x-circle" class="text-red-600 shrink-0" />
+            <tailwind-icon icon="x-circle" class="text-danger-600 shrink-0" />
             <span>An error occurred during the operation.</span>
           </div>
         </tailwind-message>
-        <tailwind-message color="sky">
+        <tailwind-message severity="info">
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="information-circle" class="text-sky-600 shrink-0" />
+            <tailwind-icon icon="information-circle" class="text-info-600 shrink-0" />
             <span>This is an informational message.</span>
           </div>
         </tailwind-message>
@@ -64,13 +64,13 @@ export const InForm: StoryObj<TailwindMessage> = {
         <tailwind-input label="Email" placeholder="Enter your email" />
         <tailwind-message ${argsToTemplate(args)}>
           <div class="flex items-center gap-2">
-            <tailwind-icon icon="x-circle" class="text-red-600 shrink-0" />
+            <tailwind-icon icon="x-circle" class="text-danger-600 shrink-0" />
             This email is already in use.
           </div>
         </tailwind-message>
       </div>`
   }),
   args: {
-    color: 'red'
+    severity: 'danger'
   }
 };

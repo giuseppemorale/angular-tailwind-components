@@ -16,7 +16,7 @@ import * as AlertStories from './alert.stories';
   imports: [TailwindAlert],
   template: `
     <tailwind-alert
-      color="sky"
+      severity="info"
       title="Information"
       [dismissible]="true">
       This is an informational alert.
@@ -48,7 +48,7 @@ Eredita gli input di host da `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>color</code></td>
+      <td><code>severity</code></td>
       <td><code>'success' | 'warning' | 'danger' | 'info'</code></td>
       <td><code>'info'</code></td>
       <td>Variante colore.</td>

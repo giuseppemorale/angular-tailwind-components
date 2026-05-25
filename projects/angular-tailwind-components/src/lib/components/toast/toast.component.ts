@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { TailwindPalette } from '../../models';
-import { feedbackSurfaceClasses } from '../../utils/palette.util';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindButton } from '../button/button.component';
 
@@ -18,8 +16,4 @@ export type { TailwindToastConfig, TailwindToastItem };
 })
 export class TailwindToast extends TailwindComponent {
   readonly toastService = inject(TailwindToastService);
-
-  toastClasses(color: TailwindPalette = 'sky'): string {
-    return `pointer-events-auto rounded-xl border shadow-lg p-4 flex gap-3 animate-in slide-in-from-right-full duration-300 ${feedbackSurfaceClasses(color)}`;
-  }
 }

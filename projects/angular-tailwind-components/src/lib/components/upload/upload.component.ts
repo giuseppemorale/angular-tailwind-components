@@ -92,19 +92,19 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
     if (this.isDragOver()) {
       return [
         ...base,
-        'cursor-pointer border-neutral-500 bg-neutral-50/60 text-neutral-800 focus-visible:outline-neutral-500'
+        'cursor-pointer border-primary-500 bg-primary-50/60 text-neutral-800 focus-visible:outline-primary-500'
       ].join(' ');
     }
     if (this.hasError()) {
       return [
         ...base,
-        'cursor-pointer border-red-400 bg-red-50/40 text-red-900 focus-visible:outline-red-500 hover:border-red-500'
+        'cursor-pointer border-danger-400 bg-danger-50/40 text-danger-900 focus-visible:outline-danger-500 hover:border-danger-500'
       ].join(' ');
     }
     return [
       ...base,
-      'cursor-pointer border-neutral-300 bg-neutral-50/50 text-neutral-800 focus-visible:outline-neutral-500',
-      'hover:border-neutral-400 hover:bg-neutral-50/30'
+      'cursor-pointer border-neutral-300 bg-neutral-50/50 text-neutral-800 focus-visible:outline-primary-500',
+      'hover:border-primary-400 hover:bg-primary-50/30'
     ].join(' ');
   });
 

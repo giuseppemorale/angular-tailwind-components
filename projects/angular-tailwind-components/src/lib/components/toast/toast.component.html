@@ -1,6 +1,16 @@
 <div class="fixed bottom-4 right-4 z-1080 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
   @for (toast of toastService.toasts(); track toast.id) {
-    <div [class]="toastClasses(toast.color ?? 'sky')" role="alert">
+    <div
+      class="pointer-events-auto rounded-xl border shadow-lg p-4 flex gap-3 animate-in slide-in-from-right-full duration-300"
+      [class.bg-success-50]="toast.severity === 'success'"
+      [class.border-success-200]="toast.severity === 'success'"
+      [class.bg-warning-50]="toast.severity === 'warning'"
+      [class.border-warning-200]="toast.severity === 'warning'"
+      [class.bg-danger-50]="toast.severity === 'danger'"
+      [class.border-danger-200]="toast.severity === 'danger'"
+      [class.bg-info-50]="toast.severity === 'info'"
+      [class.border-info-200]="toast.severity === 'info'"
+      role="alert">
       <div class="flex-1 min-w-0">
         @if (toast.title) {
           <p class="text-sm font-semibold mb-0.5">{{ toast.title }}</p>
@@ -10,7 +20,7 @@
       @if (toast.dismissible) {
         <tailwind-button
           kind="ghost"
-          color="neutral"
+          color="transparent"
           size="sm"
           icon="x-mark"
           class="shrink-0 opacity-60 hover:opacity-100"

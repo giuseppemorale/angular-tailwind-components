@@ -6,13 +6,13 @@ const meta: Meta<TailwindAlert> = {
   title: 'Components/Alert',
   component: TailwindAlert,
   argTypes: {
-    color: { control: 'select', options: ['slate','gray','zinc','neutral','stone','red','orange','amber','yellow','lime','green','emerald','teal','cyan','sky','blue','indigo','violet','purple','fuchsia','pink','rose'] },
+    severity: { control: 'select', options: ['success', 'warning', 'danger', 'info'] },
     title: { control: 'text' },
     dismissible: { control: 'boolean' },
     bordered: { control: 'boolean' }
   },
   args: {
-    color: 'sky',
+    severity: 'info',
     title: '',
     dismissible: false,
     bordered: true
@@ -28,7 +28,7 @@ export const Alert: StoryObj<TailwindAlert> = {
     </tailwind-alert>`
   }),
   args: {
-    color: 'sky',
+    severity: 'info',
     title: 'Information',
     dismissible: false,
     bordered: true

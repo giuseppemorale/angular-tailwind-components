@@ -149,8 +149,8 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
     };
 
     const stateClass = this.hasError()
-      ? 'border-red-400 focus:outline-red-500 text-red-900'
-      : 'border-neutral-300 focus:outline-neutral-500 text-neutral-900';
+      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
+      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
     return [
       'block w-full bg-white border transition-colors duration-150',
@@ -206,7 +206,7 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
       isDisabled
         ? 'text-neutral-400 cursor-not-allowed'
         : isSelected
-          ? 'bg-neutral-50 text-neutral-700 font-medium'
+          ? 'bg-primary-50 text-primary-700 font-medium'
           : isActive
             ? 'bg-neutral-100 text-neutral-900'
             : 'text-neutral-800 hover:bg-neutral-50'

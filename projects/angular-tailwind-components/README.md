@@ -13,7 +13,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — [Visual documentation](https://angular-tailwind-components.vercel.app/) for all components
-- 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults; per-component **`color`** uses any [Tailwind palette](https://tailwindcss.com/docs/colors) (default `neutral`)
+- 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
 
 ## Installation
 
@@ -50,7 +50,7 @@ import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 
     <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
     <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
     <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
-    <tailwind-button color="neutral" (onClick)="submit()">Submit</tailwind-button>
+    <tailwind-button variant="primary" (onClick)="submit()">Submit</tailwind-button>
   </form>
   `
 })
@@ -69,9 +69,11 @@ export class ExampleComponent {
 
 ## Application configuration (`defineTheme`)
 
-Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `buttonKind`, `paginationSummary`, `passwordLabels`, `titleScale`). Add **one** entry to `providers` without spreading.
+Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`iconSize`, `datetimeLanguage`, `componentsSize`, `buttonKind`, `paginationSummary`, `passwordLabels`, `titleScale`) and, when you pass **`colors`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
 
-### Example
+`TailwindDefineThemeConfig` extends **`TailwindComponentsConfig`** with an optional **`colors`** field.
+
+### Example (tokens + colors)
 
 ```typescript
 import { ApplicationConfig } from '@angular/core';
@@ -84,13 +86,53 @@ export const appConfig: ApplicationConfig = {
       datetimeLanguage: 'it',
       componentsSize: 'md',
       buttonKind: 'flat',
-      paginationSummary: 'Visualizzati {start}-{end} di {total}'
+      paginationSummary: 'Visualizzati {start}-{end} di {total}',
+      colors: {
+        primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
+        danger: 'rose',
+        neutral: 'zinc'
+      }
     })
   ]
 };
 ```
 
-Brand and accent colors are set per component with the **`color`** input (`TailwindPalette`: `blue`, `indigo`, `emerald`, …). Default is **`neutral`** when omitted.
+### Example: tokens only
+
+```typescript
+providers: [
+  defineTheme({
+    iconSize: 20,
+    datetimeLanguage: 'it',
+    componentsSize: 'md',
+    paginationSummary: 'Items {start}-{end} of {total}'
+  })
+];
+```
+
+### Example: colors only
+
+```typescript
+providers: [defineTheme({ colors: { primary: 'indigo', neutral: 'zinc' } })];
+```
+
+### Example: spread a shared config object
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { defineTheme, type TailwindComponentsConfig } from 'angular-tailwind-components';
+
+const shared: TailwindComponentsConfig = {
+  componentsSize: 'md',
+  datetimeLanguage: 'it'
+};
+
+export const appConfig: ApplicationConfig = {
+  providers: [defineTheme({ ...shared, colors: { primary: 'indigo' } })]
+};
+```
+
+You can omit **`colors`** if you only need token defaults, or omit token keys if you only need theme colors.
 
 | Config key | Token |
 | --- | --- |
@@ -103,17 +145,56 @@ Brand and accent colors are set per component with the **`color`** input (`Tailw
 
 **`provideTailwindComponents`** is still exported for backward compatibility (token providers only, same implementation as the token slice of `defineTheme`). It is **deprecated**; prefer **`defineTheme`**.
 
-## Component colors (`TailwindPalette`)
+## Theme colors (`defineTheme`)
 
-Colorable components expose **`color`** with one of the 22 built-in Tailwind families (`slate`, `gray`, …, `rose`). Export **`TAILWIND_PALETTES`** for Storybook controls and validators. Default is **`neutral`**.
+The optional **`colors`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Color application is a **no-op during SSR** (browser only).
 
-Migration from older API:
+| `colors` key | CSS variables | Default palette in `tailwind.css` |
+| --- | --- | --- |
+| `primary` | `--color-primary-*`, `--color-on-primary-*` | Tailwind `blue` |
+| `neutral` | `--color-neutral-*`, `--color-on-neutral-*` | Tailwind `slate` |
+| `success` | `--color-success-*`, `--color-on-success-*` | Tailwind `green` |
+| `warning` | `--color-warning-*`, `--color-on-warning-*` | Tailwind `amber` |
+| `danger` | `--color-danger-*`, `--color-on-danger-*` | Tailwind `red` |
+| `error` | Same as `danger` if `danger` is omitted | — |
+| `info` | `--color-info-*`, `--color-on-info-*` | Tailwind `sky` |
 
-| Before | After |
-| --- | --- |
-| `color="primary"` | `color="blue"` (or your brand palette) |
-| `severity="success"` on alert | `color="green"` |
-| `defineTheme({ colors: { primary: 'indigo' } })` | `color="indigo"` on each component |
+### `TailwindThemeSeverityColor`
+
+Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. It can be any of the following:
+
+1. **A string — Tailwind palette name**  
+   Use the lowercase **family name** only (the segment between the utility prefix and the shade), e.g. `bg-indigo-600` → `'indigo'`, `text-slate-500` → `'slate'`.  
+   The full list of built-in names and swatches is in the official **[Tailwind CSS color reference](https://tailwindcss.com/docs/colors)** — pick any name from that page for the string form.  
+   For each configured shade, `defineTheme` sets `--color-<semantic>-<shade>` to `var(--color-<that-name>-<shade>)`.  
+   **Foreground / contrast:** built-in components that sit on saturated semantic backgrounds (solid buttons, tags, semantic toolbar) use utilities like `text-on-success-600`, backed by **`--color-on-<semantic>-<shade>`** defaults in the library `@theme`. With a **palette string**, you usually do **not** need to set `on` yourself — Tailwind’s scales stay internally consistent.
+
+2. **A partial object — per-shade CSS (legacy flat form)**  
+   Keys are optional shade steps: `'50'`, `'100'`, …, `'950'`. Values are any valid CSS color (`#hex`, `rgb()`, `oklch()`, `var(--color-fuchsia-600)`, etc.). Only the keys you pass are written to `--color-<semantic>-<shade>`.  
+   **Optional `on`:** if you override background shades with custom values, set matching foreground tokens by using the structured form below so text stays readable.
+
+3. **A structured object — `{ shades, on? }`**  
+   - **`shades`**: same as the flat object: maps to `--color-<semantic>-<shade>`.  
+   - **`on`**: optional partial map of the same shade keys → CSS colors for **`--color-on-<semantic>-<shade>`** (recommended foreground on that semantic background). Solid `tailwind-button` / `tailwind-tag` / semantic `tailwind-toolbar` read these via `text-on-*` utilities.
+
+   Example:
+
+   ```typescript
+   defineTheme({
+     colors: {
+       success: {
+         shades: { 600: '#14532d', 700: '#0f3d21' },
+         on: { 600: '#ecfdf5', 700: '#ecfdf5' }
+       }
+     }
+   });
+   ```
+
+   When you use a **string**, shade coverage matches the library tokens: `primary` and `neutral` include `950`; `success`, `warning`, `danger`, and `info` stop at `900`.
+
+When you pass a **palette string** (e.g. `primary: 'indigo'`), the target variables `--color-indigo-*` must exist in the compiled CSS. Tailwind v4 only emits palette variables that are referenced at build time, so the library’s `tailwind.css` **safelists** the default Tailwind families (`slate`, `gray`, `indigo`, …) with `@source inline(...)`. For a custom family name not covered there, use the object form with explicit colors, or add your own `@source inline("bg-<name>-{50,{100..900..100},950}")` in your app stylesheet.
+
+`defineTheme` is a no-op during **SSR** (browser only).
 
 ## Content slots
 
@@ -186,7 +267,16 @@ The library uses a comprehensive design system defined via Tailwind CSS v4 `@the
 
 ### Customization
 
-Prefer **`defineTheme({ … })`** in `ApplicationConfig.providers` for tokens (see [Application configuration](#application-configuration-definetheme)). Layout tokens (font, radius, shadow) can still be overridden in your app `@theme` block.
+Prefer **`defineTheme({ … })`** in `ApplicationConfig.providers` for tokens and semantic colors (see [Application configuration](#application-configuration-definetheme)).
+
+You can still override any token in your own CSS, for example:
+
+```css
+@theme {
+  --color-primary-500: var(--color-violet-500);
+  --color-primary-600: var(--color-violet-600);
+}
+```
 
 ## Development
 

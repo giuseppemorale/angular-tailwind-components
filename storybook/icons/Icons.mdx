@@ -26,7 +26,7 @@ Per mostrare un’icona usa **`TailwindIcon`** con:
 
 - **`icon`**: `TailwindHeroicon` (obbligatorio)
 - **`size`**: numero **pixel** per larghezza e altezza (**16–64**, valori fuori range vengono clampati); se omesso usa il token **`TAILWIND_ICON_SIZE`** se presente, altrimenti **24**
-- **`class`**: classi Tailwind applicate al glifo interno (es. `text-green-600`, `shrink-0`); le utility `text-*` impostano il colore dell’icona
+- **`class`**: classi Tailwind applicate al glifo interno (es. `text-success-600`, `shrink-0`); le utility `text-*` impostano il colore dell’icona
 
 Il componente carica **`/tailwind-icons/<nome>.svg`** come maschera CSS (URL dalla root del sito che serve l’app). Le SVG non sono incorporate nel bundle JS: il browser le scarica come risorse statiche.
 

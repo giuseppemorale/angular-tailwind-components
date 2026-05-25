@@ -15,7 +15,7 @@ import * as NotificationStories from './notification.stories';
 @Component({
   imports: [TailwindNotification],
   template: `
-    <tailwind-notification color="sky" title="Information" [dismissible]="true">
+    <tailwind-notification severity="info" title="Information" [dismissible]="true">
       Corpo della notifica.
     </tailwind-notification>`
 })
@@ -51,8 +51,8 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Titolo.</td>
     </tr>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindPalette</code></td>
+      <td><code>severity</code></td>
+      <td><code>TailwindSeverity</code></td>
       <td><code>'info'</code></td>
       <td>Variante colore.</td>
     </tr>

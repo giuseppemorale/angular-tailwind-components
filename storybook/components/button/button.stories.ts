@@ -1,12 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { argsToTemplate } from '@storybook/angular';
-import { TAILWIND_PALETTES, TailwindButton } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindButton } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindButton> = {
   title: 'Components/Button',
   component: TailwindButton,
   argTypes: {
-    color: { control: 'select', options: [...TAILWIND_PALETTES] },
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'danger', 'success', 'warning', 'info', 'transparent']
+    },
     kind: {
       control: 'select',
       options: ['solid', 'flat', 'outlined', 'ghost', 'text']
@@ -29,7 +32,7 @@ export const Button: StoryObj<TailwindButton> = {
         <tailwind-button ${argsToTemplate(args)}>Button</tailwind-button>
       </div>`
   }),
-  args: { type: 'button', role: 'button', color: 'blue', kind: 'solid', size: 'md', disabled: false }
+  args: { type: 'button', role: 'button', color: 'primary', kind: 'solid', size: 'md', disabled: false }
 };
 
 export const WithIcon: StoryObj<TailwindButton> = {

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { TailwindMenuItem, TailwindPalette } from '../../models';
-import { contrastTextClass, filledBarClasses, PALETTE_ACCENT_SHADE } from '../../utils/palette.util';
+import { TailwindMenuItem, TailwindSeverity } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindMenu } from '../menu/menu.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -13,15 +12,30 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindToolbar extends TailwindComponent {
+  /** When true, uses rounded corners (`rounded-xl`). */
   readonly rounded = input<boolean>(true);
+  /**
+   * Orizzontale: `full` = `w-full`; `container` = larghezza responsiva (95% / 85% / 75%) centrata.
+   * Verticale: ignorato per l’altezza — il rail è sempre `h-full w-full` nella colonna.
+   */
   readonly width = input<'full' | 'container'>('full');
+  /** Applies a stronger drop shadow. */
   readonly elevated = input<boolean>(false);
-  /** Surface palette; omit for white default bar */
-  readonly color = input<TailwindPalette | undefined>(undefined);
+  /**
+   * Colore di superficie della barra: `default` mantiene sfondo bianco;
+   * i valori `TailwindSeverity` applicano tinte semantiche (come alert/notification).
+   */
+  readonly variant = input<TailwindSeverity | 'default'>('default');
+  /** `horizontal` for a top app bar; `vertical` for a side rail (logo → menu → end). */
   readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
+
+  /** Navigation / actions rendered between logo and end slots. */
   readonly menu = input<TailwindMenuItem[]>([]);
+
+  /** Emitted when a non-disabled, non-divider menu entry is activated. */
   readonly onMenuSelect = output<TailwindMenuItem>();
 
+  /** Flat list for the mobile hamburger (submenu children promoted one level). */
   readonly mobileMenuItems = computed(() => this.flattenMenuItems(this.menu()));
 
   readonly submenuPlacement = computed((): 'bottom' | 'right' =>
@@ -43,25 +57,28 @@ export class TailwindToolbar extends TailwindComponent {
       : 'min-w-0 flex-1 flex flex-col gap-1.5 overflow-y-auto min-h-0'
   );
 
-  readonly colorContrastTextClass = computed((): string | null => {
-    const palette = this.color();
-    if (!palette) {
+  /** Foreground on semantic surface (`text-on-*`), aligned with solid toolbar shade per variant. */
+  readonly variantContrastTextClass = computed((): string | null => {
+    const v = this.variant();
+    if (v === 'default') {
       return null;
     }
-    const shade = palette === 'amber' || palette === 'yellow' ? 500 : PALETTE_ACCENT_SHADE;
-    return contrastTextClass(palette, shade);
+    const map: Record<TailwindSeverity, string> = {
+      success: 'text-on-success-600',
+      warning: 'text-on-warning-500',
+      danger: 'text-on-danger-600',
+      info: 'text-on-info-600'
+    };
+    return map[v];
   });
 
-  readonly menuItemIconClasses = computed(() => {
-    const palette = this.color();
-    if (!palette || palette === 'amber' || palette === 'yellow') {
-      return '';
-    }
-    return 'toolbar-menu-icon-on-light';
-  });
+  /** On light-on-color variants, tint masked icons to match `text-on-*`. */
+  readonly menuItemIconClasses = computed(() =>
+    this.variant() !== 'default' && this.variant() !== 'warning' ? 'toolbar-menu-icon-on-light' : ''
+  );
 
   readonly menuItemToneClasses = computed(() => {
-    const contrast = this.colorContrastTextClass();
+    const contrast = this.variantContrastTextClass();
     if (!contrast) {
       return 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900';
     }
@@ -86,15 +103,15 @@ export class TailwindToolbar extends TailwindComponent {
   );
 
   readonly menuDividerLineClasses = computed(() =>
-    this.color()
-      ? 'mx-0.5 h-5 w-px shrink-0 self-center bg-white/30'
-      : 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-200'
+    this.variant() === 'default'
+      ? 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-200'
+      : 'mx-0.5 h-5 w-px shrink-0 self-center bg-white/30'
   );
 
   readonly menuDividerRuleClasses = computed(() =>
-    this.color()
-      ? 'my-1 w-full border-0 border-t border-white/25'
-      : 'my-1 w-full border-0 border-t border-neutral-100'
+    this.variant() === 'default'
+      ? 'my-1 w-full border-0 border-t border-neutral-100'
+      : 'my-1 w-full border-0 border-t border-white/25'
   );
 
   readonly rootClasses = computed(() => {
@@ -105,15 +122,18 @@ export class TailwindToolbar extends TailwindComponent {
         : 'container mx-auto h-16'
       : 'h-full w-full';
 
-    const palette = this.color();
-    const shade = palette && (palette === 'amber' || palette === 'yellow') ? 500 : PALETTE_ACCENT_SHADE;
-    const surface = palette
-      ? `${filledBarClasses(palette, shade)} border border-white/20`
-      : 'bg-white border border-neutral-200';
+    const variant = this.variant();
+    const surfaceMap: Record<TailwindSeverity | 'default', string> = {
+      default: 'bg-white border border-neutral-200',
+      success: 'bg-success-600 border border-white/20',
+      warning: 'bg-warning-500 border border-white/20',
+      danger: 'bg-danger-600 border border-white/20',
+      info: 'bg-info-600 border border-white/20'
+    };
 
     const base = [
-      surface,
-      this.colorContrastTextClass() ?? '',
+      surfaceMap[variant] ?? surfaceMap.default,
+      this.variantContrastTextClass() ?? '',
       'flex',
       sizeClasses,
       this.rounded() ? 'rounded-xl' : 'rounded-none',
@@ -152,11 +172,13 @@ export class TailwindToolbar extends TailwindComponent {
     return flat;
   }
 
+  /** True when `label` is a non-empty string after trim (icon-only entries omit or blank `label`). */
   menuItemHasVisibleLabel(item: TailwindMenuItem): boolean {
     const label = item.label;
     return typeof label === 'string' && label.trim().length > 0;
   }
 
+  /** Accessible name when there is no visible label (`value`, trimmed). */
   menuItemAriaLabel(item: TailwindMenuItem): string | null {
     if (this.menuItemHasVisibleLabel(item)) {
       return null;

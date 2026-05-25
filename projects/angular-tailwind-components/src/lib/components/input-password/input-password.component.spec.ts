@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TAILWIND_PASSWORD_LABELS } from '../../tokens';
 import { TailwindInputPassword } from './input-password.component';
-import { computePasswordStrength, passwordStrengthMeterFill } from '../../utils/password-strength.util';
+import { computePasswordStrength, passwordStrengthMeterFill } from './password-strength.util';
 
 describe('computePasswordStrength', () => {
   it('returns weak for empty password', () => {
@@ -61,7 +61,7 @@ describe('TailwindInputPassword', () => {
     fixture.componentRef.setInput('errorText', 'Password required');
     fixture.detectChanges();
 
-    const error = fixture.nativeElement.querySelector('.text-red-600');
+    const error = fixture.nativeElement.querySelector('.text-danger-600');
     expect(error?.textContent).toContain('Password required');
   });
 

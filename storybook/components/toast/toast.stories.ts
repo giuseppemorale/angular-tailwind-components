@@ -11,11 +11,11 @@ import { Component, inject } from '@angular/core';
   imports: [TailwindToast, TailwindButton],
   template: ` <div class="flex flex-wrap gap-3">
     <tailwind-toast />
-    <tailwind-button color="green" (click)="showSuccess()">Success</tailwind-button>
-    <tailwind-button color="amber" (click)="showWarning()">Warning</tailwind-button>
-    <tailwind-button color="red" (click)="showDanger()">Error</tailwind-button>
+    <tailwind-button color="success" (click)="showSuccess()">Success</tailwind-button>
+    <tailwind-button color="warning" (click)="showWarning()">Warning</tailwind-button>
+    <tailwind-button color="danger" (click)="showDanger()">Error</tailwind-button>
     <tailwind-button (click)="showInfo()">Info</tailwind-button>
-    <tailwind-button color="neutral" kind="text" (click)="toastService.clear()">Clear All</tailwind-button>
+    <tailwind-button color="secondary" kind="text" (click)="toastService.clear()">Clear All</tailwind-button>
   </div>`
 })
 class ToastStoryComponent {

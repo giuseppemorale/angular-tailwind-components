@@ -2,49 +2,6 @@
   display: inline-block;
 }
 
-.tw-btn-solid {
-  background-color: var(--tw-btn-bg);
-  color: var(--tw-btn-fg);
-  border-color: transparent;
-}
-
-.tw-btn-solid:hover:not(:disabled) {
-  background-color: var(--tw-btn-bg-hover);
-}
-
-.tw-btn-solid:active:not(:disabled) {
-  background-color: var(--tw-btn-bg-active);
-}
-
-.tw-btn-outlined {
-  color: var(--tw-btn-accent-fg);
-  border-color: var(--tw-btn-accent-border);
-}
-
-.tw-btn-outlined:hover:not(:disabled) {
-  background-color: var(--tw-btn-soft-bg);
-}
-
-.tw-btn-outlined:active:not(:disabled) {
-  background-color: var(--tw-btn-soft-bg-active);
-}
-
-.tw-btn-ghost {
-  color: var(--tw-btn-accent-fg);
-}
-
-.tw-btn-ghost:hover:not(:disabled) {
-  background-color: var(--tw-btn-soft-bg);
-}
-
-.tw-btn-ghost:active:not(:disabled) {
-  background-color: var(--tw-btn-soft-bg-active);
-}
-
-.tw-btn-text {
-  color: var(--tw-btn-accent-fg);
-}
-
 .tailwind-btn-spinner {
   animation: tailwind-spin 1s linear infinite;
   width: 1em;

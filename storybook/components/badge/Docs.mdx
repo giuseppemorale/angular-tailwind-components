@@ -14,7 +14,7 @@ import * as BadgeStories from './badge.stories';
 ```typescript
 @Component({
   imports: [TailwindBadge],
-  template: `<tailwind-badge color="neutral" size="md">Badge</tailwind-badge>`
+  template: `<tailwind-badge variant="primary" size="md">Badge</tailwind-badge>`
 })
 export class ExampleComponent {}
 ```
@@ -42,10 +42,10 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindPalette</code></td>
-      <td><code>'neutral'</code></td>
-      <td>Palette Tailwind per sfondo e testo.</td>
+      <td><code>variant</code></td>
+      <td><code>TailwindSeverity | 'neutral' | 'primary'</code></td>
+      <td><code>'primary'</code></td>
+      <td>Colore di sfondo e testo.</td>
     </tr>
     <tr>
       <td><code>size</code></td>

@@ -10,8 +10,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TailwindPalette, TailwindSize } from '../../models';
-import { paletteVar, PALETTE_ACCENT_SHADE, PALETTE_FOCUS_SHADE } from '../../utils/palette.util';
+import { TailwindSeverity, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 /** Value model: single number or sorted pair when `range` is true */
@@ -45,8 +44,8 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
   readonly showTicks = input<boolean>(false);
   /** Control size */
   readonly size = input<TailwindSize>('md');
-  /** Track fill / thumb palette */
-  readonly color = input<TailwindPalette>('neutral');
+  /** Track fill / thumb color */
+  readonly variant = input<TailwindSeverity | 'primary'>('primary');
 
   readonly trackRef = viewChild<ElementRef<HTMLElement>>('track');
 
@@ -107,11 +106,11 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
    * `bg-*` utilities are not present in the compiled stylesheet (Tailwind content scan).
    */
   readonly accentVars = computed(() => {
-    const palette = this.color();
+    const name = this.variant();
     return {
-      fill: paletteVar(palette, PALETTE_FOCUS_SHADE),
-      thumb: paletteVar(palette, PALETTE_ACCENT_SHADE),
-      ring: paletteVar(palette, PALETTE_FOCUS_SHADE)
+      fill: `var(--color-${name}-500)`,
+      thumb: `var(--color-${name}-600)`,
+      ring: `var(--color-${name}-500)`
     };
   });
 

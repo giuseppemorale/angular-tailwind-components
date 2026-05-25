@@ -25,7 +25,7 @@ export const Card: StoryObj<TailwindCard> = {
         <tailwind-title tailwind-card-header titleTag="h3" text="Card Title" />
         <p class="text-neutral-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <div tailwind-card-footer class="flex justify-end gap-2">
-          <tailwind-button color="neutral" kind="text" size="sm">Cancel</tailwind-button>
+          <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
           <tailwind-button size="sm">Confirm</tailwind-button>
         </div>
       </tailwind-card>`
@@ -46,7 +46,7 @@ export const NoHeader: StoryObj<TailwindCard> = {
       <tailwind-card ${argsToTemplate(args)} style="max-width:400px" [hasHeader]="false">
         <p class="text-neutral-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <div tailwind-card-footer class="flex justify-end gap-2">
-          <tailwind-button color="neutral" kind="text" size="sm">Cancel</tailwind-button>
+          <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
           <tailwind-button size="sm">Confirm</tailwind-button>
         </div>
       </tailwind-card>`
@@ -86,7 +86,7 @@ export const Elevated: StoryObj<TailwindCard> = {
         <tailwind-title tailwind-card-header titleTag="h3" text="Card Title" />
         <p class="text-neutral-600 text-sm">This is the card body content. It can contain any HTML.</p>
         <div tailwind-card-footer class="flex justify-end gap-2">
-          <tailwind-button color="neutral" kind="text" size="sm">Cancel</tailwind-button>
+          <tailwind-button color="secondary" kind="text" size="sm">Cancel</tailwind-button>
           <tailwind-button size="sm">Confirm</tailwind-button>
         </div>
       </tailwind-card>`

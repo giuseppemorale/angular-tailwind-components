@@ -17,8 +17,8 @@ import {
       <p class="text-neutral-700">This action cannot be undone. Do you want to proceed?</p>
     </div>
     <div tailwind-modal-footer class="flex justify-end gap-3">
-      <tailwind-button color="neutral" kind="outlined" (click)="ref.close()">Cancel</tailwind-button>
-      <tailwind-button color="blue" (click)="ref.close(true)">Confirm</tailwind-button>
+      <tailwind-button color="secondary" kind="outlined" (click)="ref.close()">Cancel</tailwind-button>
+      <tailwind-button color="primary" (click)="ref.close(true)">Confirm</tailwind-button>
     </div>
   `
 })
@@ -35,7 +35,7 @@ class ConfirmModalComponent {
       @if (resolved()) {
         <p class="text-sm text-neutral-600">
           Result:
-          <strong [class]="confirmed() ? 'text-green-600' : 'text-neutral-400'">
+          <strong [class]="confirmed() ? 'text-success-600' : 'text-neutral-400'">
             {{ confirmed() ? 'Confirmed ✓' : 'Dismissed' }}
           </strong>
         </p>
@@ -102,8 +102,8 @@ export const SimpleModal: StoryObj<TailwindModal> = {
             <p class="text-neutral-700">This action cannot be undone. Do you want to proceed?</p>
           </div>
           <div tailwind-modal-footer class="flex justify-end gap-3">
-            <tailwind-button color="neutral" kind="outlined" (click)="modal.close()">Cancel</tailwind-button>
-            <tailwind-button color="blue" (click)="modal.close()">Confirm</tailwind-button>
+            <tailwind-button color="secondary" kind="outlined" (click)="modal.close()">Cancel</tailwind-button>
+            <tailwind-button color="primary" (click)="modal.close()">Confirm</tailwind-button>
           </div>
         </tailwind-modal>
       </div>

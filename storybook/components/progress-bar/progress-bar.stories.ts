@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TAILWIND_PALETTES, TailwindProgressBar } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindProgressBar } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindProgressBar> = {
   title: 'Components/ProgressBar',
@@ -9,7 +9,10 @@ const meta: Meta<TailwindProgressBar> = {
       control: 'select',
       options: ['xs', 'sm', 'md', 'lg', 'xl']
     },
-    color: { control: 'select', options: [...TAILWIND_PALETTES] }
+    variant: {
+      control: 'select',
+      options: ['primary', 'success', 'warning', 'danger', 'info', 'transparent']
+    }
   }
 };
 export default meta;
@@ -20,7 +23,7 @@ export const ProgressBar: StoryObj<TailwindProgressBar> = {
     label: 'Upload Progress',
     showLabel: true,
     showValue: true,
-    color: 'neutral',
+    variant: 'primary',
     size: 'md',
     indeterminate: false,
     striped: false
@@ -31,10 +34,10 @@ export const AllVariants: StoryObj<TailwindProgressBar> = {
   render: () => ({
     template: `
       <div class="flex flex-col gap-4">
-        <tailwind-progress-bar [value]="30" label="Neutral" color="neutral" />
-        <tailwind-progress-bar [value]="50" label="Green" color="green" />
-        <tailwind-progress-bar [value]="70" label="Amber" color="amber" />
-        <tailwind-progress-bar [value]="90" label="Red" color="red" />
+        <tailwind-progress-bar [value]="30" label="Primary" variant="primary" />
+        <tailwind-progress-bar [value]="50" label="Success" variant="success" />
+        <tailwind-progress-bar [value]="70" label="Warning" variant="warning" />
+        <tailwind-progress-bar [value]="90" label="Danger" variant="danger" />
       </div>
     `
   })
@@ -42,7 +45,7 @@ export const AllVariants: StoryObj<TailwindProgressBar> = {
 
 export const Indeterminate: StoryObj<TailwindProgressBar> = {
   args: {
-    color: 'neutral',
+    variant: 'primary',
     size: 'md',
     indeterminate: true,
     label: 'Loading...',

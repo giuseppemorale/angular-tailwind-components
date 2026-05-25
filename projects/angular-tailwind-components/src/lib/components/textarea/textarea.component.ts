@@ -72,8 +72,8 @@ export class TailwindTextarea extends TailwindComponent implements ControlValueA
     };
 
     const stateClass = this.hasError()
-      ? 'border-red-400 focus:outline-red-500 text-red-900'
-      : 'border-neutral-300 focus:outline-neutral-500 text-neutral-900';
+      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
+      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
     return [...base, sizeMap[this.size()], resizeMap[this.resize()], stateClass].join(' ');
   });

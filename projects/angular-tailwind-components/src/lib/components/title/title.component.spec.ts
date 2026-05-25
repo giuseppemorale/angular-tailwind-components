@@ -49,7 +49,7 @@ describe('TailwindTitle', () => {
           provide: TAILWIND_TITLE_SCALE,
           useValue: {
             ...DEFAULT_TAILWIND_TITLE_SCALE,
-            h2: { classes: 'text-4xl font-black text-neutral-600', iconSize: 40 }
+            h2: { classes: 'text-4xl font-black text-primary-600', iconSize: 40 }
           }
         }
       ]
@@ -62,7 +62,7 @@ describe('TailwindTitle', () => {
 
     const heading: HTMLHeadingElement = fixture.nativeElement.querySelector('h2');
     expect(heading.className).toContain('text-4xl');
-    expect(heading.className).toContain('text-neutral-600');
+    expect(heading.className).toContain('text-primary-600');
     expect(component.iconSize()).toBe(40);
   });
 });

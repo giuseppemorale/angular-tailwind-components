@@ -27,13 +27,13 @@ import { TailwindMeter, TailwindMeterSegment } from 'angular-tailwind-components
 })
 export class ExampleComponent {
   segments: TailwindMeterSegment[] = [
-    { label: 'Apps', value: 40, color: 'neutral' },
-    { label: 'Other', value: 60, color: 'sky' }
+    { label: 'Apps', value: 40, variant: 'primary' },
+    { label: 'Other', value: 60, variant: 'info' }
   ];
 }
 ```
 
-Il tipo `TailwindMeterSegment` è esportato dalla libreria (`label`, `value`, `color?` con `TailwindPalette`, default `neutral`).
+Il tipo `TailwindMeterSegment` è esportato dalla libreria (`label`, `value`, `variant?` con `TailwindSeverity | 'primary'`).
 
 ## Anteprima
 

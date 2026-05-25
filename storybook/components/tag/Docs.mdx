@@ -14,7 +14,7 @@ import * as TagStories from './tag.stories';
 ```typescript
 @Component({
   imports: [TailwindTag],
-  template: `<tailwind-tag color="neutral">Label</tailwind-tag>`
+  template: `<tailwind-tag variant="neutral">Label</tailwind-tag>`
 })
 export class ExampleComponent {}
 ```
@@ -42,10 +42,10 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindPalette</code></td>
+      <td><code>variant</code></td>
+      <td><code>TailwindSeverity | 'neutral' | 'primary'</code></td>
       <td><code>'neutral'</code></td>
-      <td>Palette Tailwind per sfondo.</td>
+      <td>Colore di sfondo.</td>
     </tr>
   </tbody>
 </table>

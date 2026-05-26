@@ -1,8 +1,8 @@
-<app-header [items]="breadcrumb" [description]="'REGISTRATION.INTRO' | transloco" />
+<app-header class="mb-3" [items]="breadcrumb" [description]="'REGISTRATION.INTRO' | transloco" />
 
 <tailwind-card [hasFooter]="false">
   <div tailwind-card-header>
-    <tailwind-title titleTag="h3" [text]="'REGISTRATION.TITLE' | transloco" icon="user-plus" />
+    <tailwind-title titleTag="h4" [text]="'REGISTRATION.TITLE' | transloco" icon="user-plus" />
   </div>
 
   @if (!registerDone()) {

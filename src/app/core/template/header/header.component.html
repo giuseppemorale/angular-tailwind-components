@@ -1,8 +1,8 @@
 <tailwind-breadcrumb [items]="items()"></tailwind-breadcrumb>
-<div class="py-3">
+<div class="py-3" [ngClass]="class()">
   <tailwind-title [titleTag]="titleTag()" [text]="page().label"></tailwind-title>
   @if (description(); as description) {
-    <p class="text-neutral-600 text-sm max-w-2xl pt-2">
+    <p class="text-neutral-600 text-sm max-w-4xl pt-2">
       {{ description }}
     </p>
   }

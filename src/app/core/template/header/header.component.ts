@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import {
   TailwindBreadcrumb,
@@ -7,12 +8,14 @@ import {
 } from 'angular-tailwind-components';
 
 @Component({
-  imports: [TailwindBreadcrumb, TailwindTitle],
+  imports: [NgClass, TailwindBreadcrumb, TailwindTitle],
   selector: 'app-header',
   templateUrl: './header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
+  readonly class = input<string>('');
+
   readonly items = input.required<TailwindBreadcrumbItem[]>();
 
   readonly titleTag = input<TailwindTitleTag>('h1');

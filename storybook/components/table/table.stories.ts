@@ -97,6 +97,7 @@ export const Table: StoryObj<TailwindTable> = {
     emptyColspan: 4,
     paginated: true,
     pagination: {
+      totalItems: rows.length,
       pageSize: 10,
       currentPage: 1,
       ariaLabel: 'Paginazione',

@@ -15,6 +15,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
+import { TailwindCalendarPanel } from '../calendar-panel/calendar-panel.component';
+import { CalendarView } from '../calendar-panel/calendar-view';
 import { TailwindComponent } from '../tailwind.component';
 
 type Lang = 'it' | 'en';
@@ -66,7 +68,7 @@ const I18N: Record<
 };
 
 @Component({
-  imports: [TailwindIcon, TailwindButton],
+  imports: [TailwindIcon, TailwindButton, TailwindCalendarPanel],
   selector: 'tailwind-date-picker',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDatePicker), multi: true }],
   templateUrl: './date-picker.component.html',
@@ -78,7 +80,6 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
   private readonly lang: Lang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
 
   protected readonly i18n = I18N[this.lang];
-  protected readonly weekDays = this.i18n.weekDays;
 
   readonly label = input<string>('');
   readonly placeholder = input<string | undefined>(undefined);
@@ -90,6 +91,7 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
 
   readonly isDisabled = signal(false);
   readonly showCalendar = signal(false);
+  readonly calendarView = signal<CalendarView>('days');
   readonly viewMonth = signal(new Date().getMonth());
   readonly viewYear = signal(new Date().getFullYear());
 
@@ -107,18 +109,6 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     } catch {
       return formatDate(d, fmt, 'en-US');
     }
-  });
-
-  readonly monthYearLabel = computed(() => `${this.i18n.months[this.viewMonth()]} ${this.viewYear()}`);
-
-  readonly calendarDays = computed(() => {
-    const y = this.viewYear(),
-      m = this.viewMonth();
-    const offset = (new Date(y, m, 1).getDay() + 6) % 7; // Mon = 0
-    const total = new Date(y, m + 1, 0).getDate();
-    const days: number[] = Array(offset).fill(0);
-    for (let i = 1; i <= total; i++) days.push(i);
-    return days;
   });
 
   private onChange: (v: Date | null) => void = () => {};
@@ -149,6 +139,7 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
       const ref = this.value() ?? new Date();
       this.viewMonth.set(ref.getMonth());
       this.viewYear.set(ref.getFullYear());
+      this.calendarView.set('days');
     }
     this.showCalendar.update(v => !v);
   }
@@ -161,37 +152,8 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     this.showCalendar.set(false);
   }
 
-  prevMonth(): void {
-    if (this.viewMonth() === 0) {
-      this.viewMonth.set(11);
-      this.viewYear.update(y => y - 1);
-    } else {
-      this.viewMonth.update(m => m - 1);
-    }
-  }
-
-  nextMonth(): void {
-    if (this.viewMonth() === 11) {
-      this.viewMonth.set(0);
-      this.viewYear.update(y => y + 1);
-    } else {
-      this.viewMonth.update(m => m + 1);
-    }
-  }
-
   selectDay(day: number): void {
     this.draft.set(new Date(this.viewYear(), this.viewMonth(), day));
-  }
-
-  isSelected(day: number): boolean {
-    const d = this.draft();
-    if (!d) return false;
-    return d.getFullYear() === this.viewYear() && d.getMonth() === this.viewMonth() && d.getDate() === day;
-  }
-
-  isToday(day: number): boolean {
-    const t = new Date();
-    return t.getFullYear() === this.viewYear() && t.getMonth() === this.viewMonth() && t.getDate() === day;
   }
 
   goToToday(): void {

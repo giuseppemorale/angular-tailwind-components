@@ -1,0 +1,125 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CalendarPanelStories from './calendar-panel.stories';
+
+<Meta of={CalendarPanelStories} />
+
+# Calendar Panel
+
+`TailwindCalendarPanel` è un calendario inline per la selezione di una **data** (`Date | null`). È un `ControlValueAccessor` e si integra con reactive forms e `ngModel`.
+
+Usalo quando serve solo la griglia calendario (senza campo input), ad esempio in modali, filtri o layout personalizzati. Per un campo con popover usa **`TailwindDatePicker`**.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindCalendarPanel, ReactiveFormsModule],
+  template: `
+    <tailwind-calendar-panel [formControl]="birthDate" />
+  `
+})
+export class ExampleComponent {
+  birthDate = new FormControl<Date | null>(null);
+}
+```
+
+Two-way binding con `value`:
+
+```html
+<tailwind-calendar-panel [(value)]="selectedDate" />
+```
+
+---
+
+## Anteprima
+
+<Canvas of={CalendarPanelStories.CalendarPanel} />
+
+<Canvas of={CalendarPanelStories.WithReactiveForm} />
+
+---
+
+## Navigazione
+
+- **Frecce**: mese precedente/successivo (vista giorni) o intervallo di 12 anni (vista anni).
+- **Intestazione** (es. `Maggio 2026`): apre la griglia **anni** → poi **mesi** → torna ai giorni.
+- **Oggi**: porta al mese corrente e seleziona la data odierna (aggiorna subito il valore del form).
+
+La selezione di un giorno aggiorna immediatamente il valore (nessun pulsante Applica).
+
+---
+
+## Modalità embedded
+
+Con `[embedded]="true"` il pannello non gestisce il valore del form: emette solo `(daySelect)` e si aspetta `highlightDate` dal genitore. È il modo in cui **DatePicker** e **DateTimePicker** lo incorporano nel popover.
+
+---
+
+## Properties
+
+### `TailwindCalendarPanel (tailwind-calendar-panel)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;Date | null&gt;</code></td>
+      <td><code>null</code></td>
+      <td>Data selezionata (two-way). Valore del CVA.</td>
+    </tr>
+    <tr>
+      <td><code>embedded</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Solo UI calendario; valore gestito dal componente padre.</td>
+    </tr>
+    <tr>
+      <td><code>highlightDate</code></td>
+      <td><code>Date | null</code></td>
+      <td><code>null</code></td>
+      <td>Data evidenziata in modalità embedded.</td>
+    </tr>
+    <tr>
+      <td><code>months</code> / <code>weekDays</code></td>
+      <td><code>string[]</code></td>
+      <td><em>da lingua</em></td>
+      <td>Override etichette; altrimenti da <code>TAILWIND_DATETIME_LANGUAGE</code>.</td>
+    </tr>
+    <tr>
+      <td><code>calendarView</code></td>
+      <td><code>'days' | 'months' | 'years'</code></td>
+      <td><code>'days'</code></td>
+      <td>Vista corrente (two-way).</td>
+    </tr>
+    <tr>
+      <td><code>viewMonth</code> / <code>viewYear</code></td>
+      <td><code>number</code></td>
+      <td>mese/anno correnti</td>
+      <td>Mese e anno visualizzati (two-way).</td>
+    </tr>
+    <tr>
+      <td><code>daySelect</code></td>
+      <td><code>Output&lt;number&gt;</code></td>
+      <td>—</td>
+      <td>Giorno cliccato (solo embedded).</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Lingua
+
+Come DatePicker e DateTimePicker, usa il token **`TAILWIND_DATETIME_LANGUAGE`** (`'it'` | `'en'`, default `'it'`).

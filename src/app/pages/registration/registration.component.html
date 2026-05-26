@@ -39,16 +39,14 @@
               [formControl]="datiGenerali.controls.dataNascita"
               [label]="'REGISTRATION.FIELD_BIRTH' | transloco"
               [placeholder]="'REGISTRATION.FIELD_BIRTH_PH' | transloco" />
-            <div class="sm:col-span-2">
-              <tailwind-select
-                id="reg-cittadinanza"
-                [formControl]="datiGenerali.controls.cittadinanza"
-                [label]="'REGISTRATION.FIELD_CITIZENSHIP' | transloco"
-                [options]="citizenships()"
-                [placeholder]="'REGISTRATION.FIELD_CITIZENSHIP_PH' | transloco"
-                [hasError]="datiGenerali.controls.cittadinanza | error"
-                [errorText]="'REGISTRATION.ERROR_REQUIRED' | transloco" />
-            </div>
+            <tailwind-select
+              id="reg-cittadinanza"
+              [formControl]="datiGenerali.controls.cittadinanza"
+              [label]="'REGISTRATION.FIELD_CITIZENSHIP' | transloco"
+              [options]="citizenships()"
+              [placeholder]="'REGISTRATION.FIELD_CITIZENSHIP_PH' | transloco"
+              [hasError]="datiGenerali.controls.cittadinanza | error"
+              [errorText]="'REGISTRATION.ERROR_REQUIRED' | transloco" />
           </div>
         </form>
         <div class="flex justify-end mt-6">

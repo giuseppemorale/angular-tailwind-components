@@ -1,0 +1,131 @@
+<div
+  [class.rounded-xl]="!embedded()"
+  [class.border]="!embedded()"
+  [class.border-neutral-200]="!embedded()"
+  [class.bg-white]="!embedded()"
+  [class.p-4]="!embedded()"
+  [class.shadow-sm]="!embedded()"
+  [class.w-72]="!embedded()"
+  [class.max-w-full]="!embedded()"
+  [class.opacity-50]="!embedded() && isDisabled()"
+  [class.pointer-events-none]="!embedded() && isDisabled()">
+  <div class="flex items-center justify-between mb-3">
+    @if (showNavChevrons()) {
+      <tailwind-button
+        kind="ghost"
+        color="transparent"
+        size="sm"
+        icon="chevron-left"
+        ariaLabel="Previous"
+        [disabled]="isDisabled()"
+        (onClick)="prev()" />
+    } @else {
+      <span class="w-8" aria-hidden="true"></span>
+    }
+    @if (headerClickable()) {
+      <button
+        type="button"
+        class="text-sm font-semibold text-neutral-800 rounded-md px-2 py-1 hover:bg-neutral-100 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        [disabled]="isDisabled()"
+        (click)="onHeaderClick()">
+        {{ headerLabel() }}
+      </button>
+    } @else {
+      <span class="text-sm font-semibold text-neutral-800 px-2 py-1">{{ headerLabel() }}</span>
+    }
+    @if (showNavChevrons()) {
+      <tailwind-button
+        kind="ghost"
+        color="transparent"
+        size="sm"
+        icon="chevron-right"
+        ariaLabel="Next"
+        [disabled]="isDisabled()"
+        (onClick)="next()" />
+    } @else {
+      <span class="w-8" aria-hidden="true"></span>
+    }
+  </div>
+
+  @switch (calendarView()) {
+    @case ('years') {
+      <div class="grid grid-cols-3 gap-1">
+        @for (year of yearOptions(); track year) {
+          <button
+            type="button"
+            [disabled]="isDisabled()"
+            (click)="selectYear(year)"
+            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50"
+            [class.bg-primary-600]="isSelectedYear(year)"
+            [class.text-white]="isSelectedYear(year)"
+            [class.hover:bg-primary-700]="isSelectedYear(year)"
+            [class.text-neutral-700]="!isSelectedYear(year) && !isCurrentYear(year)"
+            [class.font-semibold]="isCurrentYear(year) && !isSelectedYear(year)"
+            [class.text-primary-600]="isCurrentYear(year) && !isSelectedYear(year)">
+            {{ year }}
+          </button>
+        }
+      </div>
+    }
+    @case ('months') {
+      <div class="grid grid-cols-3 gap-1">
+        @for (month of shortMonths(); track $index) {
+          <button
+            type="button"
+            [disabled]="isDisabled()"
+            (click)="selectMonth($index)"
+            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50"
+            [class.bg-primary-600]="isSelectedMonth($index)"
+            [class.text-white]="isSelectedMonth($index)"
+            [class.hover:bg-primary-700]="isSelectedMonth($index)"
+            [class.text-neutral-700]="!isSelectedMonth($index) && !isCurrentMonth($index)"
+            [class.font-semibold]="isCurrentMonth($index) && !isSelectedMonth($index)"
+            [class.text-primary-600]="isCurrentMonth($index) && !isSelectedMonth($index)">
+            {{ month }}
+          </button>
+        }
+      </div>
+    }
+    @default {
+      <div class="grid grid-cols-7 gap-0 mb-1">
+        @for (day of effectiveWeekDays(); track day) {
+          <div class="text-center text-xs font-medium text-neutral-400 py-1">{{ day }}</div>
+        }
+      </div>
+      <div class="grid grid-cols-7 gap-0">
+        @for (day of calendarDays(); track $index) {
+          @if (day === 0) {
+            <div></div>
+          } @else {
+            <button
+              type="button"
+              [disabled]="isDisabled()"
+              (click)="selectDay(day)"
+              class="h-8 w-8 mx-auto rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50"
+              [class.bg-primary-600]="isSelectedDay(day)"
+              [class.text-white]="isSelectedDay(day)"
+              [class.hover:bg-primary-700]="isSelectedDay(day)"
+              [class.text-neutral-700]="!isSelectedDay(day) && !isToday(day)"
+              [class.font-semibold]="isToday(day)"
+              [class.text-primary-600]="isToday(day) && !isSelectedDay(day)">
+              {{ day }}
+            </button>
+          }
+        }
+      </div>
+    }
+  }
+
+  @if (!embedded()) {
+    <div class="mt-2 pt-2 border-t border-neutral-100">
+      <tailwind-button
+        kind="text"
+        color="primary"
+        size="xs"
+        [disabled]="isDisabled()"
+        (onClick)="goToToday()">
+        {{ i18n.today }}
+      </tailwind-button>
+    </div>
+  }
+</div>

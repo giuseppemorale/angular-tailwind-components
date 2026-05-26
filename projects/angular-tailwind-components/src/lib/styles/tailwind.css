@@ -8,6 +8,7 @@
 @source "../fesm2022";
 @source "../**/*.html";
 @source "../**/*.ts";
+@source inline("grid-cols-{3,7}");
 
 /*
  * `defineTheme({ COLORS: { primary: 'indigo', … } })` points semantic tokens at `var(--color-<palette>-*)`.

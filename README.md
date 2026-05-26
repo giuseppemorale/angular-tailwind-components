@@ -6,7 +6,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **36 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **37 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular 21** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -215,6 +215,7 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Select** (`tailwind-select`): Native select with custom styling
 - **Autocomplete** (`tailwind-autocomplete`): Typeahead with optional async search and custom option template (`#item`)
 - **Toggle** (`tailwind-toggle`): Switch on/off
+- **CalendarPanel** (`tailwind-calendar-panel`): Inline calendar for date selection
 - **DatePicker** (`tailwind-date-picker`): Calendar date selection
 - **TimePicker** (`tailwind-time-picker`): Time input
 - **DateTimePicker** (`tailwind-datetime-picker`): Combined date + time

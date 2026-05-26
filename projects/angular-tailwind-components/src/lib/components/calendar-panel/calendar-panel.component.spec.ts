@@ -61,7 +61,7 @@ describe('TailwindCalendarPanel', () => {
   });
 
   it('emits daySelect only in embedded mode', () => {
-    fixture.componentRef.setInput('embedded', true);
+    component.embedded.set(true);
     fixture.detectChanges();
 
     const daySpy = vi.fn();
@@ -82,5 +82,15 @@ describe('TailwindCalendarPanel', () => {
     expect(component.value()).toEqual(new Date(1995, 6, 20));
     expect(component.viewMonth()).toBe(6);
     expect(component.viewYear()).toBe(1995);
+  });
+
+  it('disables days outside min/max range', () => {
+    fixture.componentRef.setInput('minDate', new Date(2026, 4, 10));
+    fixture.componentRef.setInput('maxDate', new Date(2026, 4, 20));
+    fixture.detectChanges();
+
+    expect(component.isDayDisabled(9)).toBe(true);
+    expect(component.isDayDisabled(10)).toBe(false);
+    expect(component.isDayDisabled(21)).toBe(true);
   });
 });

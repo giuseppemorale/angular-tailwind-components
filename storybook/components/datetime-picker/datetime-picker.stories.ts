@@ -32,6 +32,22 @@ export const DateTimepicker: StoryObj<TailwindDateTimePicker> = {
   }
 };
 
+export const WithMinMax: StoryObj<TailwindDateTimePicker> = {
+  render: args => ({
+    props: args,
+    template: `
+      <div class="max-w-2xl min-h-128 overflow-visible pb-8">
+        <tailwind-datetime-picker ${argsToTemplate(args)}></tailwind-datetime-picker>
+      </div>
+    `
+  }),
+  args: {
+    label: 'Appointment Date & Time',
+    minDate: new Date(2026, 4, 1),
+    maxDate: new Date(2026, 4, 31)
+  }
+};
+
 export const WithReactiveForm: StoryObj<TailwindDateTimePicker> = {
   decorators: [
     moduleMetadata({

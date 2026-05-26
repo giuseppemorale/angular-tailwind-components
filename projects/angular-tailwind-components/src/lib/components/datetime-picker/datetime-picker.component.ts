@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -7,13 +8,16 @@ import {
   forwardRef,
   HostListener,
   inject,
+  Injector,
   input,
-  signal
+  signal,
+  viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
+import { isTodayInRange, resolveRangeBounds } from '../calendar-panel/calendar-date-range';
 import { TailwindCalendarPanel } from '../calendar-panel/calendar-panel.component';
 import { CalendarView } from '../calendar-panel/calendar-view';
 import { TailwindComponent } from '../tailwind.component';
@@ -78,6 +82,8 @@ const I18N: Record<
 })
 export class TailwindDateTimePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly injector = inject(Injector);
+  private readonly calendarPanel = viewChild(TailwindCalendarPanel);
   private readonly lang: Lang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
 
   protected readonly i18n = I18N[this.lang];
@@ -88,6 +94,8 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
   readonly placeholder = input<string | undefined>(undefined);
   /** Angular [DatePipe](https://angular.dev/api/common/DatePipe) format string. */
   readonly format = input<string>('dd/MM/yyyy HH:mm');
+  readonly minDate = input<Date | null | undefined>(undefined);
+  readonly maxDate = input<Date | null | undefined>(undefined);
 
   readonly selected = signal<Date | null>(null);
   readonly draft = signal<Date | null>(null);
@@ -96,6 +104,10 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
   readonly calendarView = signal<CalendarView>('days');
   readonly viewMonth = signal(new Date().getMonth());
   readonly viewYear = signal(new Date().getFullYear());
+
+  readonly isTodaySelectable = computed(() =>
+    isTodayInRange(resolveRangeBounds(this.minDate(), this.maxDate()))
+  );
 
   readonly effectivePlaceholder = computed(() => {
     const p = this.placeholder();
@@ -150,6 +162,9 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
       this.calendarView.set('days');
     }
     this.showPanel.set(opening);
+    if (opening) {
+      afterNextRender(() => this.calendarPanel()?.embedded.set(true), { injector: this.injector });
+    }
   }
 
   apply(): void {
@@ -167,6 +182,7 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
   }
 
   goToToday(): void {
+    if (!this.isTodaySelectable()) return;
     const t = this.todayNow();
     this.viewMonth.set(t.getMonth());
     this.viewYear.set(t.getFullYear());

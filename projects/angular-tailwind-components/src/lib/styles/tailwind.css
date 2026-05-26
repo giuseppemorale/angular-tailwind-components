@@ -9,6 +9,8 @@
 @source "../**/*.html";
 @source "../**/*.ts";
 @source inline("grid-cols-{3,7}");
+@source inline("disabled:text-neutral-400");
+@source inline("z-popover");
 
 /*
  * `defineTheme({ COLORS: { primary: 'indigo', … } })` points semantic tokens at `var(--color-<palette>-*)`.
@@ -235,6 +237,10 @@
   --z-popover: 1060;
   --z-tooltip: 1070;
   --z-toast: 1080;
+}
+
+@utility z-popover {
+  z-index: var(--z-popover);
 }
 
 /* CDK overlays (select, password feedback, …) above page content */

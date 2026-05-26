@@ -9,7 +9,7 @@
       readonly
       [value]="displayValue()"
       [placeholder]="effectivePlaceholder()"
-      class="block w-full bg-white border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
+      class="block w-full bg-white border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
       [disabled]="isDisabled()"
       (click)="toggleCalendar()" />
     <tailwind-icon
@@ -21,7 +21,6 @@
       <div
         class="absolute left-0 top-full z-popover mt-1 w-72 max-w-[min(18rem,calc(100vw-2rem))] rounded-xl border border-neutral-200 bg-white p-4 shadow-xl">
         <tailwind-calendar-panel
-          embedded
           [calendarView]="calendarView()"
           (calendarViewChange)="calendarView.set($event)"
           [viewMonth]="viewMonth()"
@@ -29,9 +28,16 @@
           [viewYear]="viewYear()"
           (viewYearChange)="viewYear.set($event)"
           [highlightDate]="draft()"
+          [minDate]="minDate()"
+          [maxDate]="maxDate()"
           (daySelect)="selectDay($event)" />
         <div class="mt-2 pt-2 border-t border-neutral-100 flex items-center justify-between gap-2">
-          <tailwind-button kind="text" color="primary" size="xs" [disabled]="isDisabled()" (onClick)="goToToday()">
+          <tailwind-button
+            kind="text"
+            [color]="isTodaySelectable() ? 'primary' : 'secondary'"
+            size="xs"
+            [disabled]="isDisabled() || !isTodaySelectable()"
+            (onClick)="goToToday()">
             {{ i18n.today }}
           </tailwind-button>
           <tailwind-button

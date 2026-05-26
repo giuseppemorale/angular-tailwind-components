@@ -45,15 +45,15 @@ Two-way binding con `value`:
 
 - **Frecce**: mese precedente/successivo (vista giorni) o intervallo di 12 anni (vista anni).
 - **Intestazione** (es. `Maggio 2026`): apre la griglia **anni** → poi **mesi** → torna ai giorni.
-- **Oggi**: porta al mese corrente e seleziona la data odierna (aggiorna subito il valore del form).
+- **Oggi**: porta al mese corrente e seleziona la data odierna (aggiorna subito il valore del form). Se oggi è fuori da `minDate`/`maxDate`, il pulsante resta visibile ma disabilitato.
 
 La selezione di un giorno aggiorna immediatamente il valore (nessun pulsante Applica).
 
 ---
 
-## Modalità embedded
+## Uso interno nei picker
 
-Con `[embedded]="true"` il pannello non gestisce il valore del form: emette solo `(daySelect)` e si aspetta `highlightDate` dal genitore. È il modo in cui **DatePicker** e **DateTimePicker** lo incorporano nel popover.
+**DatePicker** e **DateTimePicker** impostano `embedded` a `true` sul pannello via `ViewChild` all’apertura del popover. In quella modalità il calendario non aggiorna il CVA da solo: emette `(daySelect)` e usa `highlightDate` per il draft del padre (footer «Oggi» / «Applica» nel picker).
 
 ---
 
@@ -74,22 +74,22 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
+      <td><code>minDate</code> / <code>maxDate</code></td>
+      <td><code>Date | null</code></td>
+      <td><em>nessun limite</em></td>
+      <td>Limiti inclusivi (solo parte data). Anni, mesi e giorni fuori range sono disabilitati nel calendario.</td>
+    </tr>
+    <tr>
       <td><code>value</code></td>
       <td><code>ModelSignal&lt;Date | null&gt;</code></td>
       <td><code>null</code></td>
       <td>Data selezionata (two-way). Valore del CVA.</td>
     </tr>
     <tr>
-      <td><code>embedded</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Solo UI calendario; valore gestito dal componente padre.</td>
-    </tr>
-    <tr>
       <td><code>highlightDate</code></td>
       <td><code>Date | null</code></td>
       <td><code>null</code></td>
-      <td>Data evidenziata in modalità embedded.</td>
+      <td>Data evidenziata quando il padre imposta <code>embedded</code> (picker).</td>
     </tr>
     <tr>
       <td><code>months</code> / <code>weekDays</code></td>
@@ -113,7 +113,7 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>daySelect</code></td>
       <td><code>Output&lt;number&gt;</code></td>
       <td>—</td>
-      <td>Giorno cliccato (solo embedded).</td>
+      <td>Giorno cliccato (solo quando il padre imposta <code>embedded</code>).</td>
     </tr>
   </tbody>
 </table>

@@ -53,15 +53,15 @@
         @for (year of yearOptions(); track year) {
           <button
             type="button"
-            [disabled]="isDisabled()"
+            [disabled]="isDisabled() || isYearDisabled(year)"
             (click)="selectYear(year)"
-            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50"
+            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
             [class.bg-primary-600]="isSelectedYear(year)"
             [class.text-white]="isSelectedYear(year)"
             [class.hover:bg-primary-700]="isSelectedYear(year)"
             [class.text-neutral-700]="!isSelectedYear(year) && !isCurrentYear(year)"
             [class.font-semibold]="isCurrentYear(year) && !isSelectedYear(year)"
-            [class.text-primary-600]="isCurrentYear(year) && !isSelectedYear(year)">
+            [class.text-primary-700]="isCurrentYear(year) && !isSelectedYear(year)">
             {{ year }}
           </button>
         }
@@ -72,15 +72,15 @@
         @for (month of shortMonths(); track $index) {
           <button
             type="button"
-            [disabled]="isDisabled()"
+            [disabled]="isDisabled() || isMonthDisabled($index)"
             (click)="selectMonth($index)"
-            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50"
+            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
             [class.bg-primary-600]="isSelectedMonth($index)"
             [class.text-white]="isSelectedMonth($index)"
             [class.hover:bg-primary-700]="isSelectedMonth($index)"
             [class.text-neutral-700]="!isSelectedMonth($index) && !isCurrentMonth($index)"
             [class.font-semibold]="isCurrentMonth($index) && !isSelectedMonth($index)"
-            [class.text-primary-600]="isCurrentMonth($index) && !isSelectedMonth($index)">
+            [class.text-primary-700]="isCurrentMonth($index) && !isSelectedMonth($index)">
             {{ month }}
           </button>
         }
@@ -89,7 +89,7 @@
     @default {
       <div class="grid grid-cols-7 gap-0 mb-1">
         @for (day of effectiveWeekDays(); track day) {
-          <div class="text-center text-xs font-medium text-neutral-400 py-1">{{ day }}</div>
+          <div class="text-center text-xs font-medium text-neutral-600 py-1">{{ day }}</div>
         }
       </div>
       <div class="grid grid-cols-7 gap-0">
@@ -99,15 +99,15 @@
           } @else {
             <button
               type="button"
-              [disabled]="isDisabled()"
+              [disabled]="isDisabled() || isDayDisabled(day)"
               (click)="selectDay(day)"
-              class="h-8 w-8 mx-auto rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-50"
+              class="h-8 w-8 mx-auto rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
               [class.bg-primary-600]="isSelectedDay(day)"
               [class.text-white]="isSelectedDay(day)"
               [class.hover:bg-primary-700]="isSelectedDay(day)"
               [class.text-neutral-700]="!isSelectedDay(day) && !isToday(day)"
               [class.font-semibold]="isToday(day)"
-              [class.text-primary-600]="isToday(day) && !isSelectedDay(day)">
+              [class.text-primary-700]="isToday(day) && !isSelectedDay(day)">
               {{ day }}
             </button>
           }
@@ -120,9 +120,9 @@
     <div class="mt-2 pt-2 border-t border-neutral-100">
       <tailwind-button
         kind="text"
-        color="primary"
+        [color]="isTodaySelectable() ? 'primary' : 'secondary'"
         size="xs"
-        [disabled]="isDisabled()"
+        [disabled]="isDisabled() || !isTodaySelectable()"
         (onClick)="goToToday()">
         {{ i18n.today }}
       </tailwind-button>

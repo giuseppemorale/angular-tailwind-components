@@ -34,6 +34,7 @@ export * from './tag/tag.component';
 export * from './table/table.component';
 export * from './calendar-panel/calendar-panel.component';
 export * from './calendar-panel/calendar-view';
+export * from './calendar-panel/calendar-date-range';
 export * from './date-picker/date-picker.component';
 export * from './time-picker/time-picker.component';
 export * from './datetime-picker/datetime-picker.component';

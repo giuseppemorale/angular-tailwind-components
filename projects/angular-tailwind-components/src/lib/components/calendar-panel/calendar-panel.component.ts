@@ -1,5 +1,4 @@
 import {
-  booleanAttribute,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -14,6 +13,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
+import {
+  isCalendarDayInRange,
+  isCalendarMonthInRange,
+  isCalendarYearInRange,
+  isTodayInRange,
+  resolveRangeBounds
+} from './calendar-date-range';
 import { calendarLabelsFor, CalendarLang } from './calendar-i18n';
 import { CalendarView, yearPageStartFor, YEARS_PER_PAGE } from './calendar-view';
 
@@ -30,11 +36,17 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
 
   protected readonly i18n = calendarLabelsFor(this.lang);
 
-  /** When true, only emits `daySelect`; parent owns value and footer (date/datetime picker). */
-  readonly embedded = input(false, { transform: booleanAttribute });
   readonly months = input<string[] | undefined>(undefined);
   readonly weekDays = input<string[] | undefined>(undefined);
   readonly highlightDate = input<Date | null>(null);
+  readonly minDate = input<Date | null | undefined>(undefined);
+  readonly maxDate = input<Date | null | undefined>(undefined);
+
+  /**
+   * When true, only emits `daySelect`; parent owns value and footer.
+   * Set to `true` by date/datetime picker hosts via `ViewChild`.
+   */
+  readonly embedded = signal(false);
 
   readonly calendarView = model<CalendarView>('days');
   readonly viewMonth = model(new Date().getMonth());
@@ -48,6 +60,9 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
   readonly effectiveMonths = computed(() => this.months() ?? this.i18n.months);
   readonly effectiveWeekDays = computed(() => this.weekDays() ?? this.i18n.weekDays);
   readonly effectiveHighlight = computed(() => (this.embedded() ? this.highlightDate() : this.value()));
+
+  readonly rangeBounds = computed(() => resolveRangeBounds(this.minDate(), this.maxDate()));
+  readonly isTodaySelectable = computed(() => isTodayInRange(this.rangeBounds()));
 
   private readonly yearPageStart = signal(yearPageStartFor(new Date().getFullYear()));
 
@@ -140,19 +155,19 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
   }
 
   selectYear(year: number): void {
-    if (this.isDisabled()) return;
+    if (this.isDisabled() || this.isYearDisabled(year)) return;
     this.viewYear.set(year);
     this.calendarView.set('months');
   }
 
   selectMonth(month: number): void {
-    if (this.isDisabled()) return;
+    if (this.isDisabled() || this.isMonthDisabled(month)) return;
     this.viewMonth.set(month);
     this.calendarView.set('days');
   }
 
   selectDay(day: number): void {
-    if (this.isDisabled()) return;
+    if (this.isDisabled() || this.isDayDisabled(day)) return;
     if (this.embedded()) {
       this.daySelect.emit(day);
       return;
@@ -164,7 +179,7 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
   }
 
   goToToday(): void {
-    if (this.isDisabled()) return;
+    if (this.isDisabled() || !this.isTodaySelectable()) return;
     const t = new Date();
     this.viewMonth.set(t.getMonth());
     this.viewYear.set(t.getFullYear());
@@ -202,6 +217,18 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
   isCurrentMonth(month: number): boolean {
     const t = new Date();
     return t.getFullYear() === this.viewYear() && t.getMonth() === month;
+  }
+
+  isYearDisabled(year: number): boolean {
+    return !isCalendarYearInRange(year, this.rangeBounds());
+  }
+
+  isMonthDisabled(month: number): boolean {
+    return !isCalendarMonthInRange(this.viewYear(), month, this.rangeBounds());
+  }
+
+  isDayDisabled(day: number): boolean {
+    return !isCalendarDayInRange(this.viewYear(), this.viewMonth(), day, this.rangeBounds());
   }
 
   private shiftMonth(delta: number): void {

@@ -12,30 +12,51 @@
     <tailwind-editor-toolbar
       [groups]="toolbarGroups()"
       [disabled]="toolbarDisabled()"
+      [isCodeView]="isCodeView()"
+      [codeViewLabel]="labels().codeView"
+      [codeViewExitLabel]="labels().codeViewExit"
+      [textStyleLabel]="labels().textStyle"
       [activeCommands]="activeCommands()"
       [blockFormat]="blockFormat()"
       [size]="size()"
       (commandClick)="onToolbarCommand($event)" />
 
-    <div
-      #editable
-      [attr.id]="id() ? id() + '-surface' : null"
-      class="tailwind-editor-surface prose-editor overflow-y-auto"
-      [class]="surfaceClasses()"
-      [style.min-height]="minHeight()"
-      [attr.contenteditable]="isEditable()"
-      [attr.data-placeholder]="placeholder() || null"
-      role="textbox"
-      [attr.aria-multiline]="true"
-      [attr.aria-readonly]="readonly() || null"
-      [attr.aria-disabled]="isDisabled() || null"
-      [attr.aria-invalid]="hasError() || null"
-      [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
-      (input)="onSurfaceInput()"
-      (blur)="onSurfaceBlur()"
-      (focus)="onSurfaceFocus()"
-      (paste)="onPaste($event)"
-      (keydown)="onKeydown($event)"></div>
+    @if (isCodeView()) {
+      <textarea
+        [attr.id]="id() ? id() + '-surface' : null"
+        class="tailwind-editor-source block w-full font-mono text-sm resize-y"
+        [class]="sourceClasses()"
+        [style.min-height]="minHeight()"
+        [placeholder]="labels().htmlSourcePlaceholder"
+        [readonly]="!isEditable()"
+        [attr.aria-readonly]="readonly() || null"
+        [attr.aria-disabled]="isDisabled() || null"
+        [attr.aria-invalid]="hasError() || null"
+        [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+        [value]="sourceHtml()"
+        (input)="onSourceInput($event)"
+        (blur)="onSourceBlur()"></textarea>
+    } @else {
+      <div
+        #editable
+        [attr.id]="id() ? id() + '-surface' : null"
+        class="tailwind-editor-surface prose-editor overflow-y-auto"
+        [class]="surfaceClasses()"
+        [style.min-height]="minHeight()"
+        [attr.contenteditable]="isEditable()"
+        [attr.data-placeholder]="placeholder() || null"
+        role="textbox"
+        [attr.aria-multiline]="true"
+        [attr.aria-readonly]="readonly() || null"
+        [attr.aria-disabled]="isDisabled() || null"
+        [attr.aria-invalid]="hasError() || null"
+        [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+        (input)="onSurfaceInput()"
+        (blur)="onSurfaceBlur()"
+        (focus)="onSurfaceFocus()"
+        (paste)="onPaste($event)"
+        (keydown)="onKeydown($event)"></div>
+    }
   </div>
 
   <input
@@ -64,25 +85,41 @@
 </div>
 
 <tailwind-modal #linkModal size="sm" [closeOnBackdrop]="true">
-  Insert link
+  {{ labels().linkModalTitle }}
   <div tailwind-modal-content class="flex flex-col gap-3">
-    <tailwind-input label="URL" placeholder="https://example.com" [(value)]="linkUrl" />
-    <tailwind-input label="Text (optional)" placeholder="Link label" [(value)]="linkText" />
+    <tailwind-input
+      [label]="labels().linkUrlLabel"
+      [placeholder]="labels().linkUrlPlaceholder"
+      [(value)]="linkUrl" />
+    <tailwind-input
+      [label]="labels().linkTextLabel"
+      [placeholder]="labels().linkTextPlaceholder"
+      [(value)]="linkText" />
   </div>
   <div tailwind-modal-footer class="flex justify-end gap-2">
-    <tailwind-button kind="ghost" color="secondary" (onClick)="linkModal.close()">Cancel</tailwind-button>
-    <tailwind-button color="primary" (onClick)="confirmLink()">Insert</tailwind-button>
+    <tailwind-button kind="ghost" color="secondary" (onClick)="linkModal.close()">
+      {{ labels().cancel }}
+    </tailwind-button>
+    <tailwind-button color="primary" (onClick)="confirmLink()">{{ labels().insert }}</tailwind-button>
   </div>
 </tailwind-modal>
 
 <tailwind-modal #imageUrlModal size="sm" [closeOnBackdrop]="true">
-  Insert image
+  {{ labels().imageModalTitle }}
   <div tailwind-modal-content class="flex flex-col gap-3">
-    <tailwind-input label="Image URL" placeholder="https://example.com/image.png" [(value)]="imageUrl" />
-    <tailwind-input label="Alt text" placeholder="Description" [(value)]="imageAlt" />
+    <tailwind-input
+      [label]="labels().imageUrlLabel"
+      [placeholder]="labels().imageUrlPlaceholder"
+      [(value)]="imageUrl" />
+    <tailwind-input
+      [label]="labels().imageAltLabel"
+      [placeholder]="labels().imageAltPlaceholder"
+      [(value)]="imageAlt" />
   </div>
   <div tailwind-modal-footer class="flex justify-end gap-2">
-    <tailwind-button kind="ghost" color="secondary" (onClick)="imageUrlModal.close()">Cancel</tailwind-button>
-    <tailwind-button color="primary" (onClick)="confirmImageUrl()">Insert</tailwind-button>
+    <tailwind-button kind="ghost" color="secondary" (onClick)="imageUrlModal.close()">
+      {{ labels().cancel }}
+    </tailwind-button>
+    <tailwind-button color="primary" (onClick)="confirmImageUrl()">{{ labels().insert }}</tailwind-button>
   </div>
 </tailwind-modal>

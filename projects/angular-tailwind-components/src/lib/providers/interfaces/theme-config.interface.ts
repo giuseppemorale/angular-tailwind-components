@@ -1,5 +1,6 @@
 import {
   TailwindButtonKind,
+  TailwindEditorLabels,
   TailwindPasswordLabels,
   TailwindSize,
   TailwindTitleTag,
@@ -24,6 +25,8 @@ export interface TailwindComponentsConfig {
   PAGINATION_SUMMARY?: string;
   /** Maps to {@link TAILWIND_PASSWORD_LABELS}. */
   PASSWORD_LABELS?: TailwindPasswordLabels;
+  /** Maps to {@link TAILWIND_EDITOR_LABELS}. */
+  EDITOR_LABELS?: TailwindEditorLabels;
   /**
    * Maps to {@link TAILWIND_TITLE_SCALE} (merged onto {@link DEFAULT_TAILWIND_TITLE_SCALE}).
    * Overrides typography classes and icon pixel size per `h1`–`h6`.

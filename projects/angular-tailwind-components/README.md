@@ -69,7 +69,7 @@ export class ExampleComponent {
 
 ## Application configuration (`defineTheme`)
 
-Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`ICON_SIZE`, `DATETIME_LANGUAGE`, `COMPONENTS_SIZE`, `BUTTON_KIND`, `PAGINATION_SUMMARY`, `PASSWORD_LABELS`, `TITLE_SCALE`) and, when you pass **`COLORS`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
+Use **`defineTheme`** from `angular-tailwind-components` as the single app-level entry: it registers **`EnvironmentProviders`** for optional **injection tokens** (`ICON_SIZE`, `DATETIME_LANGUAGE`, `COMPONENTS_SIZE`, `BUTTON_KIND`, `PAGINATION_SUMMARY`, `PASSWORD_LABELS`, `EDITOR_LABELS`, `TITLE_SCALE`) and, when you pass **`COLORS`**, an app initializer that applies semantic CSS variables on `document.documentElement` in the browser. Add **one** entry to `providers` without spreading.
 
 `TailwindDefineThemeConfig` extends **`TailwindComponentsConfig`** with an optional **`COLORS`** field.
 
@@ -142,6 +142,7 @@ You can omit **`COLORS`** if you only need token defaults, or omit token keys if
 | `BUTTON_KIND` | `TAILWIND_BUTTON_KIND` |
 | `PAGINATION_SUMMARY` | `TAILWIND_PAGINATION_SUMMARY` |
 | `PASSWORD_LABELS` | `TAILWIND_PASSWORD_LABELS` |
+| `EDITOR_LABELS` | `TAILWIND_EDITOR_LABELS` |
 | `TITLE_SCALE` | `TAILWIND_TITLE_SCALE` |
 
 **`provideTailwindComponents`** is still exported for backward compatibility (token providers only, same implementation as the token slice of `defineTheme`). It is **deprecated**; prefer **`defineTheme`**.

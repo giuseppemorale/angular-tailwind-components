@@ -17,6 +17,7 @@ export type EditorCommand =
   | 'link'
   | 'imageUrl'
   | 'imageUpload'
+  | 'code'
   | 'undo'
   | 'redo'
   | 'removeFormat';

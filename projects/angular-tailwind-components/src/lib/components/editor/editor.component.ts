@@ -1,8 +1,11 @@
 import {
+  afterNextRender,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  inject,
+  Injector,
   OnDestroy,
   computed,
   effect,
@@ -14,7 +17,8 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TailwindSize } from '../../models';
+import { DEFAULT_TAILWIND_EDITOR_LABELS, TailwindEditorLabels, TailwindSize } from '../../models';
+import { TAILWIND_EDITOR_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
 import { TailwindInput } from '../input/input.component';
 import { TailwindModal } from '../modal/modal.component';
@@ -75,8 +79,18 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   readonly htmlChange = output<string>();
 
   readonly isDisabled = signal(false);
+  readonly isCodeView = signal(false);
+  readonly sourceHtml = signal('');
   readonly activeCommands = signal<Set<EditorCommand>>(new Set());
   readonly blockFormat = signal<EditorBlockFormat>('p');
+
+  private readonly injector = inject(Injector);
+  private readonly themeLabels = inject(TAILWIND_EDITOR_LABELS, { optional: true });
+
+  readonly labels = computed<TailwindEditorLabels>(() => ({
+    ...DEFAULT_TAILWIND_EDITOR_LABELS,
+    ...this.themeLabels
+  }));
 
   readonly linkUrl = model('');
   readonly linkText = model('');
@@ -96,20 +110,20 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   );
 
   readonly wrapperClasses = computed(() => {
-    const base = [
-      'tailwind-editor rounded-md border bg-white overflow-hidden transition-colors duration-150',
-      'focus-within:outline focus-within:outline-2 focus-within:outline-offset-2'
-    ];
+    const base = ['tailwind-editor rounded-md border bg-white overflow-hidden transition-colors duration-150'];
     if (this.isDisabled()) {
       return [...base, 'opacity-60 cursor-not-allowed border-neutral-200'].join(' ');
     }
     if (this.hasError()) {
-      return [...base, 'border-danger-400 focus-within:outline-danger-500'].join(' ');
+      return [...base, 'border-danger-400'].join(' ');
     }
-    return [...base, 'border-neutral-300 focus-within:outline-primary-500'].join(' ');
+    return [...base, 'border-neutral-300'].join(' ');
   });
 
-  readonly surfaceClasses = computed(() => {
+  readonly surfaceClasses = computed(() => this.fieldSurfaceClasses('cursor-text'));
+  readonly sourceClasses = computed(() => this.fieldSurfaceClasses('cursor-text resize-y'));
+
+  private fieldSurfaceClasses(cursor: string): string {
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs px-2 py-2',
       sm: 'text-sm px-2.5 py-2',
@@ -118,9 +132,14 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
       xl: 'text-base px-4 py-3.5'
     };
     const readonlyClass =
-      this.readonly() || this.isDisabled() ? 'bg-neutral-50 cursor-default' : 'bg-white cursor-text';
-    return [sizeMap[this.size()], readonlyClass, 'outline-none'].join(' ');
-  });
+      this.readonly() || this.isDisabled() ? 'bg-neutral-50 cursor-default' : `bg-white ${cursor}`;
+    const focusClass = this.isEditable()
+      ? this.hasError()
+        ? 'outline-none focus:ring-1 focus:ring-inset focus:ring-danger-400'
+        : 'outline-none focus:ring-1 focus:ring-inset focus:ring-primary-500'
+      : 'outline-none';
+    return [sizeMap[this.size()], readonlyClass, focusClass, 'transition-shadow duration-150'].join(' ');
+  }
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
@@ -138,7 +157,8 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
   ngAfterViewInit(): void {
     const html = this.value();
-    if (html) {
+    this.sourceHtml.set(html);
+    if (html && !this.isCodeView()) {
       this.setDomHtml(html, false);
     }
   }
@@ -151,7 +171,10 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     this.syncingFromWrite = true;
     const html = value ?? '';
     this.value.set(html);
-    this.setDomHtml(html, false);
+    this.sourceHtml.set(html);
+    if (!this.isCodeView()) {
+      this.setDomHtml(html, false);
+    }
     this.syncingFromWrite = false;
   }
 
@@ -189,8 +212,26 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     this.refreshActiveCommands();
   }
 
+  onSourceInput(event: Event): void {
+    if (!this.isEditable() || !this.isCodeView() || this.syncingFromWrite) return;
+    const html = (event.target as HTMLTextAreaElement).value;
+    this.sourceHtml.set(html);
+    const normalized = this.sanitize() ? sanitizeEditorHtml(html) : html;
+    this.emitValue(normalized);
+  }
+
+  onSourceBlur(): void {
+    this.onTouched();
+  }
+
   onToolbarCommand(command: EditorCommand): void {
     if (this.toolbarDisabled()) return;
+
+    if (command === 'code') {
+      this.toggleCodeView();
+      return;
+    }
+    if (this.isCodeView()) return;
 
     if (command === 'link') {
       this.linkUrl.set('');
@@ -320,8 +361,32 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     this.selectionListener = null;
   }
 
+  private toggleCodeView(): void {
+    if (this.isCodeView()) {
+      const raw = this.sourceHtml();
+      const html = this.sanitize() ? sanitizeEditorHtml(raw) : raw;
+      this.sourceHtml.set(html);
+      this.isCodeView.set(false);
+      this.emitValue(html);
+      afterNextRender(
+        () => {
+          this.setDomHtml(html, true);
+        },
+        { injector: this.injector }
+      );
+      return;
+    }
+
+    this.detachSelectionListener();
+    const raw = this.editable().nativeElement.innerHTML;
+    const html = this.sanitize() ? sanitizeEditorHtml(raw) : raw;
+    this.sourceHtml.set(html);
+    this.isCodeView.set(true);
+    this.emitValue(html);
+  }
+
   private refreshActiveCommands(): void {
-    if (!this.isEditable()) return;
+    if (!this.isEditable() || this.isCodeView()) return;
     const el = this.editable().nativeElement;
     this.activeCommands.set(getActiveCommands(el));
     const block = getActiveBlockCommand(el);
@@ -341,7 +406,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
         : max >= 1024
           ? `${Math.round(max / 1024)} KB`
           : `${max} bytes`;
-    return `Image exceeds maximum size (${maxLabel}).`;
+    return this.labels().imageMaxSizeError.replace('{max}', maxLabel);
   }
 
   private readImageAsDataUrl(file: File): Promise<string> {

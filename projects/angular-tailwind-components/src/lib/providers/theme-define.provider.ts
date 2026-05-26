@@ -14,6 +14,7 @@ import {
   TAILWIND_DATETIME_LANGUAGE,
   TAILWIND_ICON_SIZE,
   TAILWIND_PAGINATION_SUMMARY,
+  TAILWIND_EDITOR_LABELS,
   TAILWIND_PASSWORD_LABELS,
   TAILWIND_TITLE_SCALE
 } from '../tokens';
@@ -50,6 +51,9 @@ function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig)
   }
   if (config.PASSWORD_LABELS !== undefined) {
     providers.push({ provide: TAILWIND_PASSWORD_LABELS, useValue: config.PASSWORD_LABELS });
+  }
+  if (config.EDITOR_LABELS !== undefined) {
+    providers.push({ provide: TAILWIND_EDITOR_LABELS, useValue: config.EDITOR_LABELS });
   }
   if (config.TITLE_SCALE !== undefined) {
     providers.push({ provide: TAILWIND_TITLE_SCALE, useValue: resolveTailwindTitleScale(config.TITLE_SCALE) });

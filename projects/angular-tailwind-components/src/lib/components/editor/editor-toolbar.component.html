@@ -8,11 +8,11 @@
         @if (item.kind === 'headingSelect') {
           <tailwind-select
             class="editor-heading-select w-38"
-            [ariaLabel]="item.ariaLabel"
+            [ariaLabel]="textStyleLabel()"
             [size]="size()"
             [options]="headingOptions"
             [value]="blockFormat()"
-            [disabled]="disabled()"
+            [disabled]="isItemDisabled(item)"
             (valueChange)="onHeadingChange($event)" />
         } @else {
           <tailwind-button
@@ -21,8 +21,8 @@
             [color]="isActive(item.command) ? 'secondary' : 'transparent'"
             [size]="size()"
             [icon]="item.icon"
-            [disabled]="disabled()"
-            [ariaLabel]="item.ariaLabel"
+            [disabled]="isItemDisabled(item)"
+            [ariaLabel]="buttonAriaLabel(item)"
             [attr.aria-pressed]="isActive(item.command) ? 'true' : 'false'"
             (onClick)="onCommand(item.command, $event)" />
         }

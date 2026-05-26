@@ -32,6 +32,21 @@ export class ExampleComponent {
 }
 ```
 
+### `defineTheme` — etichette modali e code view
+
+```typescript
+defineTheme({
+  EDITOR_LABELS: {
+    linkModalTitle: 'Inserisci link',
+    cancel: 'Annulla',
+    insert: 'Inserisci',
+    codeView: 'Modifica HTML',
+    codeViewExit: 'Editor visuale',
+    // …altre chiavi di TailwindEditorLabels
+  }
+});
+```
+
 ## Anteprima
 
 <Canvas of={EditorStories.Editor} />
@@ -107,9 +122,32 @@ Eredita `TailwindComponent` (`id`, `class`).
 
 ### Output
 
-| Output | Tipo | Descrizione |
-|--------|------|-------------|
-| `htmlChange` | `string` | HTML sanitizzato ad ogni modifica utente (non su `writeValue` programmatico). |
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Output</th>
+      <th>Tipo</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>htmlChange</code></td>
+      <td><code>string</code></td>
+      <td>HTML sanitizzato ad ogni modifica utente (non su <code>writeValue</code> programmatico).</td>
+    </tr>
+  </tbody>
+</table>
+
+### Toolbar — comando `code`
+
+Il pulsante **code** (`icon: code-bracket`) alterna l’editor visuale e una **textarea** per modificare l’HTML a mano. In modalità codice gli altri comandi della toolbar sono disabilitati.
+
+---
+
+## `TAILWIND_EDITOR_LABELS`
+
+Token opzionale (anche via `defineTheme` con `EDITOR_LABELS`) per titoli modali link/immagine, pulsanti, placeholder della sorgente HTML e messaggi di validazione. Default: `DEFAULT_TAILWIND_EDITOR_LABELS`.
 
 ---
 

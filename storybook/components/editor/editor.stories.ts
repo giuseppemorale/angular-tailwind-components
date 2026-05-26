@@ -90,14 +90,9 @@ export const WithError: StoryObj<TailwindEditor> = {
   selector: 'sb-html-change-demo',
   imports: [TailwindEditor],
   template: `
-    <tailwind-editor
-      label="Live preview"
-      placeholder="Type here…"
-      [(value)]="html"
-      (htmlChange)="onChange($event)"
-    />
-    <p class="mt-3 text-xs text-neutral-600">htmlChange count: {{ changeCount }}</p>
-    <pre class="mt-2 text-xs bg-neutral-100 p-3 rounded-md overflow-auto max-h-32">{{ html }}</pre>
+    <tailwind-editor label="Live preview" placeholder="Type here…" [(value)]="html" (htmlChange)="onChange($event)" />
+    <p class="mt-3 text-xs text-neutral-600">htmlChange count: {{ changeCount() }}</p>
+    <pre class="mt-2 text-xs bg-neutral-100 p-3 rounded-md overflow-auto max-h-32">{{ html() }}</pre>
   `
 })
 class HtmlChangeDemoComponent {

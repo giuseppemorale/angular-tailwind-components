@@ -1,5 +1,11 @@
 import { InjectionToken } from '@angular/core';
-import { TailwindButtonKind, TailwindPasswordLabels, TailwindSize, type TailwindTitleScale } from '../models';
+import {
+  TailwindButtonKind,
+  TailwindEditorLabels,
+  TailwindPasswordLabels,
+  TailwindSize,
+  type TailwindTitleScale
+} from '../models';
 
 export const TAILWIND_MODAL_DATA = new InjectionToken<unknown>('TAILWIND_MODAL_DATA');
 
@@ -23,6 +29,11 @@ export const TAILWIND_PAGINATION_SUMMARY = new InjectionToken<string>('TAILWIND_
  * Default labels for `tailwind-input-password` strength feedback when component inputs are omitted.
  */
 export const TAILWIND_PASSWORD_LABELS = new InjectionToken<TailwindPasswordLabels>('TAILWIND_PASSWORD_LABELS');
+
+/**
+ * Default labels for `tailwind-editor` modals and code view when component inputs are omitted.
+ */
+export const TAILWIND_EDITOR_LABELS = new InjectionToken<TailwindEditorLabels>('TAILWIND_EDITOR_LABELS');
 
 /**
  * Per-tag typography and icon size for `tailwind-title` when `titleTag` is set.

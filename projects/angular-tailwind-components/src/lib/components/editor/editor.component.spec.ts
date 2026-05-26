@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
+import { TAILWIND_EDITOR_LABELS } from '../../tokens';
 import { TailwindEditor } from './editor.component';
 
 describe('TailwindEditor', () => {
@@ -65,5 +66,35 @@ describe('TailwindEditor', () => {
     surface.dispatchEvent(new InputEvent('input', { bubbles: true }));
     fixture.detectChanges();
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('should toggle code view and show HTML textarea', () => {
+    const surface = fixture.nativeElement.querySelector('.tailwind-editor-surface') as HTMLElement;
+    surface.innerHTML = '<p>Hi</p>';
+    fixture.detectChanges();
+
+    component.onToolbarCommand('code');
+    fixture.detectChanges();
+
+    expect(component.isCodeView()).toBe(true);
+    expect(fixture.nativeElement.querySelector('.tailwind-editor-source')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.tailwind-editor-surface')).toBeFalsy();
+  });
+
+  it('should use labels from TAILWIND_EDITOR_LABELS token', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [TailwindEditor],
+      providers: [
+        {
+          provide: TAILWIND_EDITOR_LABELS,
+          useValue: { linkModalTitle: 'Custom link title' }
+        }
+      ]
+    }).compileComponents();
+
+    const customFixture = TestBed.createComponent(TailwindEditor);
+    customFixture.detectChanges();
+    expect(customFixture.componentInstance.labels().linkModalTitle).toBe('Custom link title');
   });
 });

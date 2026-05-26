@@ -31,6 +31,7 @@ const FULL_GROUPS: EditorToolbarGroup[] = [
   },
   {
     items: [
+      { kind: 'button', command: 'code', icon: 'code-bracket', ariaLabel: 'Edit HTML' },
       { kind: 'button', command: 'undo', icon: 'arrow-uturn-left', ariaLabel: 'Undo' },
       { kind: 'button', command: 'redo', icon: 'arrow-uturn-right', ariaLabel: 'Redo' },
       { kind: 'button', command: 'removeFormat', icon: 'x-mark', ariaLabel: 'Clear formatting' }

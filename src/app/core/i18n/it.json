@@ -95,7 +95,7 @@
     "FIELD_BIO_PLACEHOLDER": "Breve descrizione...",
     "TOGGLE_NOTIFY": "Ricevi notifiche sulle novità della libreria",
     "SPINNER_LABEL": "Salvataggio in corso",
-    "LAST_SAVE": "Ultimo salvataggio: —",
+    "LAST_SAVE": "Ultimo salvataggio: {{ date }}",
     "BTN_SAVE": "Salva"
   },
   "SETTINGS": {

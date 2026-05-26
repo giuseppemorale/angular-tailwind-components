@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
@@ -7,9 +7,9 @@ import {
   TailwindDivider,
   TailwindInput,
   TailwindSpinner,
-  TailwindTextarea,
   TailwindTitle,
-  TailwindToggle
+  TailwindToggle,
+  TailwindEditor
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
 
@@ -21,7 +21,7 @@ import { HeaderComponent } from '../../core/template/header/header.component';
     TailwindTitle,
     TailwindDivider,
     TailwindInput,
-    TailwindTextarea,
+    TailwindEditor,
     TailwindToggle,
     TailwindButton,
     TailwindSpinner,
@@ -39,6 +39,10 @@ export class ProfileComponent {
 
   readonly saving = signal(false);
 
+  readonly lastSave = signal<Date | undefined>(undefined);
+
+  readonly saveString = computed(() => (this.lastSave() ? this.lastSave()?.toLocaleString() : '—'));
+
   readonly form = new FormGroup({
     name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -47,8 +51,10 @@ export class ProfileComponent {
   });
 
   simulateSave(): void {
-    console.log(this.form.value);
     this.saving.set(true);
-    setTimeout(() => this.saving.set(false), 1200);
+    setTimeout(() => {
+      this.saving.set(false);
+      this.lastSave.set(new Date());
+    }, 1200);
   }
 }

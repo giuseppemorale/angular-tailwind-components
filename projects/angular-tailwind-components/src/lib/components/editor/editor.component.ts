@@ -55,7 +55,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   private static nextFileId = 0;
   private readonly fallbackFileId = `tw-editor-img-${TailwindEditor.nextFileId++}`;
 
-  readonly editable = viewChild.required<ElementRef<HTMLElement>>('editable');
+  readonly editable = viewChild<ElementRef<HTMLElement>>('editable');
   readonly linkModal = viewChild<TailwindModal>('linkModal');
   readonly imageUrlModal = viewChild<TailwindModal>('imageUrlModal');
   readonly imageFileInput = viewChild<ElementRef<HTMLInputElement>>('imageFileInput');
@@ -191,8 +191,10 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   }
 
   onSurfaceInput(): void {
-    if (!this.isEditable() || this.syncingFromWrite) return;
-    const raw = this.editable().nativeElement.innerHTML;
+    if (!this.isEditable() || this.isCodeView() || this.syncingFromWrite) return;
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+    const raw = el.innerHTML;
     const html = this.sanitize() ? sanitizeEditorHtml(raw) : raw;
     if (html !== raw) {
       this.setDomHtml(html, true);
@@ -251,14 +253,18 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
       return;
     }
 
-    executeEditorCommand(this.editable().nativeElement, command);
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+    executeEditorCommand(el, command);
     this.syncFromDom();
   }
 
   confirmLink(): void {
     const url = this.linkUrl().trim();
     if (!url) return;
-    insertLink(this.editable().nativeElement, url, this.linkText());
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+    insertLink(el, url, this.linkText());
     this.linkModal()?.close();
     this.syncFromDom();
   }
@@ -266,7 +272,9 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   confirmImageUrl(): void {
     const url = this.imageUrl().trim();
     if (!url) return;
-    insertImage(this.editable().nativeElement, url, this.imageAlt());
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+    insertImage(el, url, this.imageAlt());
     this.imageUrlModal()?.close();
     this.syncFromDom();
   }
@@ -285,7 +293,9 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     }
 
     void this.readImageAsDataUrl(file).then(dataUrl => {
-      insertImage(this.editable().nativeElement, dataUrl, file.name);
+      const el = this.editable()?.nativeElement;
+      if (!el) return;
+      insertImage(el, dataUrl, file.name);
       this.syncFromDom();
       input.value = '';
       this.imageValidationError.set('');
@@ -293,13 +303,17 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   }
 
   onPaste(event: ClipboardEvent): void {
-    if (!this.isEditable()) return;
-    handleEditorPaste(event, this.editable().nativeElement, this.sanitize());
+    if (!this.isEditable() || this.isCodeView()) return;
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+    handleEditorPaste(event, el, this.sanitize());
     this.syncFromDom();
   }
 
   onKeydown(event: KeyboardEvent): void {
-    if (!this.isEditable()) return;
+    if (!this.isEditable() || this.isCodeView()) return;
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
     if (!event.ctrlKey && !event.metaKey) return;
 
     const key = event.key.toLowerCase();
@@ -313,13 +327,13 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     const command = map[key];
     if (!command) return;
     if (key === 'z' && event.shiftKey) {
-      executeEditorCommand(this.editable().nativeElement, 'redo');
+      executeEditorCommand(el, 'redo');
       event.preventDefault();
       this.syncFromDom();
       return;
     }
     event.preventDefault();
-    executeEditorCommand(this.editable().nativeElement, command);
+    executeEditorCommand(el, command);
     this.syncFromDom();
   }
 
@@ -330,7 +344,9 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   }
 
   private syncFromDom(): void {
-    const raw = this.editable().nativeElement.innerHTML;
+    const el = this.editable()?.nativeElement;
+    if (!el || this.isCodeView()) return;
+    const raw = el.innerHTML;
     const html = this.sanitize() ? sanitizeEditorHtml(raw) : raw;
     if (html !== raw) {
       this.setDomHtml(html, true);
@@ -340,7 +356,8 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   }
 
   private setDomHtml(html: string, restoreFocus: boolean): void {
-    const el = this.editable().nativeElement;
+    const el = this.editable()?.nativeElement;
+    if (!el || this.isCodeView()) return;
     const normalized = html || '';
     if (el.innerHTML === normalized) return;
     el.innerHTML = normalized || '';
@@ -378,7 +395,9 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     }
 
     this.detachSelectionListener();
-    const raw = this.editable().nativeElement.innerHTML;
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+    const raw = el.innerHTML;
     const html = this.sanitize() ? sanitizeEditorHtml(raw) : raw;
     this.sourceHtml.set(html);
     this.isCodeView.set(true);
@@ -387,7 +406,8 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
   private refreshActiveCommands(): void {
     if (!this.isEditable() || this.isCodeView()) return;
-    const el = this.editable().nativeElement;
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
     this.activeCommands.set(getActiveCommands(el));
     const block = getActiveBlockCommand(el);
     if (block === 'p' || block === 'h1' || block === 'h2' || block === 'h3' || block === 'h4' || block === 'h5' || block === 'h6') {

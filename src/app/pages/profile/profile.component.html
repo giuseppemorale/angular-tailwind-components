@@ -21,7 +21,7 @@
           [label]="'PROFILE.FIELD_EMAIL_LABEL' | transloco"
           [placeholder]="'PROFILE.FIELD_EMAIL_PLACEHOLDER' | transloco"
           [helperText]="'PROFILE.FIELD_EMAIL_HELPER' | transloco" />
-        <tailwind-textarea
+        <tailwind-editor
           class="mb-2"
           [formControl]="form.controls.bio"
           [label]="'PROFILE.FIELD_BIO_LABEL' | transloco"
@@ -40,11 +40,11 @@
           [label]="'PROFILE.SPINNER_LABEL' | transloco"
           [ariaLabel]="'PROFILE.SPINNER_LABEL' | transloco" />
       } @else {
-        <span class="text-xs text-neutral-500">{{ 'PROFILE.LAST_SAVE' | transloco }}</span>
+        <span class="text-xs text-neutral-500">{{ 'PROFILE.LAST_SAVE' | transloco: { date: saveString() } }}</span>
       }
-      <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">{{
-        'PROFILE.BTN_SAVE' | transloco
-      }}</tailwind-button>
+      <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">
+        {{ 'PROFILE.BTN_SAVE' | transloco }}
+      </tailwind-button>
     </div>
   </tailwind-card>
 </div>

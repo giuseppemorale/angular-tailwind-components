@@ -36,6 +36,15 @@ describe('TailwindEditor', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
+  it('should apply writeValue in code view without requiring editable element', () => {
+    component.onToolbarCommand('code');
+    fixture.detectChanges();
+    component.writeValue('<p>Code mode</p>');
+    fixture.detectChanges();
+    expect(component.value()).toBe('<p>Code mode</p>');
+    expect(component.sourceHtml()).toBe('<p>Code mode</p>');
+  });
+
   it('should set disabled state', () => {
     component.setDisabledState(true);
     expect(component.isDisabled()).toBe(true);

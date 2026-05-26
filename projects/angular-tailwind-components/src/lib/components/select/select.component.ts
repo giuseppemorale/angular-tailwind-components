@@ -62,12 +62,16 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   readonly hasError = input<boolean>(false);
   /** When true, value is `T[]` and several options can be selected */
   readonly multiple = input(false);
+  /** Disables the control (also set via `setDisabledState` when used as CVA) */
+  readonly disabled = input<boolean>(false);
 
   /** Selected value: `T | null` when single, `T[]` when `multiple` */
   readonly value = model<T | T[] | null>(null);
 
-  /** Internal disabled state */
-  readonly isDisabled = signal(false);
+  private readonly formDisabled = signal(false);
+
+  /** Whether the combobox is disabled */
+  readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
 
   /** Whether the dropdown panel is open */
   readonly isOpen = signal(false);
@@ -188,7 +192,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   }
 
   setDisabledState(disabled: boolean): void {
-    this.isDisabled.set(disabled);
+    this.formDisabled.set(disabled);
   }
 
   ngOnDestroy(): void {

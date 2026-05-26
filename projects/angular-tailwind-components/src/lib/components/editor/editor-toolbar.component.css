@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+:host ::ng-deep .editor-heading-select > .flex.flex-col {
+  gap: 0;
+}
+
+:host ::ng-deep .editor-heading-select button[role='combobox'] {
+  min-height: 2rem;
+}

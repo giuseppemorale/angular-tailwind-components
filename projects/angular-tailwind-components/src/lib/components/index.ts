@@ -50,3 +50,5 @@ export * from './divider/divider.component';
 export * from './meter/interfaces/meter-segment.interface';
 export * from './meter/meter.component';
 export * from './slider/slider.component';
+export * from './editor/editor.component';
+export * from './editor/models/editor-command.type';

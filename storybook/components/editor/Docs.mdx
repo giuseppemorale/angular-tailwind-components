@@ -1,0 +1,128 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as EditorStories from './editor.stories';
+
+<Meta of={EditorStories} />
+
+# Editor
+
+`TailwindEditor` is a WYSIWYG rich-text field built with a native `contenteditable` surface and browser editing APIs — no third-party editor libraries. The form value is **sanitized HTML**. A toolbar provides formatting commands; link and image insertion use design-system modals.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindEditor],
+  template: `
+    <tailwind-editor
+      label="Article body"
+      placeholder="Write your content…"
+      toolbar="full"
+      [(value)]="body"
+      (htmlChange)="onBodyChange($event)"
+    />`
+})
+export class ExampleComponent {
+  body = '<p>Hello <strong>world</strong></p>';
+
+  onBodyChange(html: string): void {
+    console.log('HTML updated', html);
+  }
+}
+```
+
+## Anteprima
+
+<Canvas of={EditorStories.Editor} />
+
+---
+
+## Properties
+
+### `TailwindEditor (tailwind-editor)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>label</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta.</td>
+    </tr>
+    <tr>
+      <td><code>placeholder</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo placeholder (CSS su area vuota).</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>HTML sanitizzato (two-way / CVA).</td>
+    </tr>
+    <tr>
+      <td><code>readonly</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Testo non editabile; toolbar visibile ma disabilitata.</td>
+    </tr>
+    <tr>
+      <td><code>toolbar</code></td>
+      <td><code>'full' | 'minimal' | EditorCommand[]</code></td>
+      <td><code>'full'</code></td>
+      <td>Comandi in toolbar. Con <code>full</code>, gli heading sono in un menu a tendina (Paragraph, H1–H6).</td>
+    </tr>
+    <tr>
+      <td><code>imageUrlEnabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Pulsante immagine da URL.</td>
+    </tr>
+    <tr>
+      <td><code>imageUploadEnabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Pulsante upload immagine (data URL).</td>
+    </tr>
+    <tr>
+      <td><code>sanitize</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Sanitizza HTML in uscita (whitelist tag/attributi).</td>
+    </tr>
+  </tbody>
+</table>
+
+### Output
+
+| Output | Tipo | Descrizione |
+|--------|------|-------------|
+| `htmlChange` | `string` | HTML sanitizzato ad ogni modifica utente (non su `writeValue` programmatico). |
+
+---
+
+## Readonly
+
+<Canvas of={EditorStories.Readonly} />
+
+## Sicurezza
+
+L'HTML viene filtrato con una whitelist di tag e attributi. Script, handler `on*`, e URL `javascript:` sono rimossi. Per contenuti da utenti non fidati, validare anche lato server.
+
+## Limiti
+
+- Basato su `document.execCommand` (deprecato ma supportato); comportamento può variare tra browser.
+- Tabelle e editing collaborativo non sono inclusi nella v1.
+- Immagini base64 possono aumentare molto la dimensione del valore form.

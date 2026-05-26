@@ -1,0 +1,88 @@
+<div class="tailwind-editor-wrapper flex flex-col gap-1.5">
+  @if (label()) {
+    <label
+      [attr.for]="id() ? id() + '-surface' : null"
+      class="text-sm font-medium text-neutral-700"
+      [class.text-danger-600]="hasError()">
+      {{ label() }}
+    </label>
+  }
+
+  <div [class]="wrapperClasses()">
+    <tailwind-editor-toolbar
+      [groups]="toolbarGroups()"
+      [disabled]="toolbarDisabled()"
+      [activeCommands]="activeCommands()"
+      [blockFormat]="blockFormat()"
+      [size]="size()"
+      (commandClick)="onToolbarCommand($event)" />
+
+    <div
+      #editable
+      [attr.id]="id() ? id() + '-surface' : null"
+      class="tailwind-editor-surface prose-editor overflow-y-auto"
+      [class]="surfaceClasses()"
+      [style.min-height]="minHeight()"
+      [attr.contenteditable]="isEditable()"
+      [attr.data-placeholder]="placeholder() || null"
+      role="textbox"
+      [attr.aria-multiline]="true"
+      [attr.aria-readonly]="readonly() || null"
+      [attr.aria-disabled]="isDisabled() || null"
+      [attr.aria-invalid]="hasError() || null"
+      [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+      (input)="onSurfaceInput()"
+      (blur)="onSurfaceBlur()"
+      (focus)="onSurfaceFocus()"
+      (paste)="onPaste($event)"
+      (keydown)="onKeydown($event)"></div>
+  </div>
+
+  <input
+    #imageFileInput
+    type="file"
+    class="sr-only"
+    tabindex="-1"
+    [id]="fileInputId()"
+    [accept]="accept()"
+    (change)="onImageFileChange($event)" />
+
+  @if (imageValidationError()) {
+    <p class="text-xs text-danger-600">{{ imageValidationError() }}</p>
+  }
+
+  @if (helperText() && !hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500">
+      {{ helperText() }}
+    </p>
+  }
+  @if (errorText() && hasError()) {
+    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600">
+      {{ errorText() }}
+    </p>
+  }
+</div>
+
+<tailwind-modal #linkModal size="sm" [closeOnBackdrop]="true">
+  Insert link
+  <div tailwind-modal-content class="flex flex-col gap-3">
+    <tailwind-input label="URL" placeholder="https://example.com" [(value)]="linkUrl" />
+    <tailwind-input label="Text (optional)" placeholder="Link label" [(value)]="linkText" />
+  </div>
+  <div tailwind-modal-footer class="flex justify-end gap-2">
+    <tailwind-button kind="ghost" color="secondary" (onClick)="linkModal.close()">Cancel</tailwind-button>
+    <tailwind-button color="primary" (onClick)="confirmLink()">Insert</tailwind-button>
+  </div>
+</tailwind-modal>
+
+<tailwind-modal #imageUrlModal size="sm" [closeOnBackdrop]="true">
+  Insert image
+  <div tailwind-modal-content class="flex flex-col gap-3">
+    <tailwind-input label="Image URL" placeholder="https://example.com/image.png" [(value)]="imageUrl" />
+    <tailwind-input label="Alt text" placeholder="Description" [(value)]="imageAlt" />
+  </div>
+  <div tailwind-modal-footer class="flex justify-end gap-2">
+    <tailwind-button kind="ghost" color="secondary" (onClick)="imageUrlModal.close()">Cancel</tailwind-button>
+    <tailwind-button color="primary" (onClick)="confirmImageUrl()">Insert</tailwind-button>
+  </div>
+</tailwind-modal>

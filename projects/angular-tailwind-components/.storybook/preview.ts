@@ -46,7 +46,8 @@ import {
   TailwindUpload,
   TailwindDivider,
   TailwindMeter,
-  TailwindSlider
+  TailwindSlider,
+  TailwindEditor
 } from '../src/public-api';
 
 const ALL_COMPONENTS = [
@@ -94,7 +95,8 @@ const ALL_COMPONENTS = [
   TailwindUpload,
   TailwindDivider,
   TailwindMeter,
-  TailwindSlider
+  TailwindSlider,
+  TailwindEditor
 ];
 
 const preview: Preview = {

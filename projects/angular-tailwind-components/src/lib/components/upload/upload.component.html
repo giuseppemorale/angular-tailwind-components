@@ -30,12 +30,7 @@
         {{ buttonLabel() }}
       </tailwind-button>
       @if (showClear() && value()) {
-        <tailwind-button
-          kind="text"
-          color="primary"
-          size="sm"
-          [disabled]="isDisabled()"
-          (onClick)="clear($event)">
+        <tailwind-button kind="text" color="primary" [disabled]="isDisabled()" (onClick)="clear($event)">
           {{ clearText() }}
         </tailwind-button>
       }
@@ -61,7 +56,6 @@
         <tailwind-button
           kind="text"
           color="primary"
-          size="sm"
           class="self-start"
           [disabled]="isDisabled()"
           (onClick)="clear($event)">

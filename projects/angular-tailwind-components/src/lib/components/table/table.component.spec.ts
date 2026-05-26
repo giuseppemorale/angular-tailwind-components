@@ -70,6 +70,14 @@ describe('TailwindTable', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
+  it('should set scope="col" on projected thead th elements', () => {
+    const headers = [...fixture.nativeElement.querySelectorAll('thead th')] as HTMLElement[];
+    expect(headers.length).toBeGreaterThan(0);
+    for (const th of headers) {
+      expect(th.getAttribute('scope')).toBe('col');
+    }
+  });
+
   it('should render search input when searchable is true', () => {
     expect(fixture.nativeElement.querySelector('tailwind-input')).toBeTruthy();
   });

@@ -42,11 +42,17 @@ Ogni iterazione produce un `<tbody>` separato (consentito in HTML5). Per righe z
 
 Solo le colonne che devono ordinare usano la direttiva su **`<th>`** (testo dell’intestazione come contenuto dell’elemento, senza `button`). **`tailwind-table`** intercetta click e tastiera (delegation) e applica l’ordinamento; non servono riferimenti (`#tbl`) né input sulla tabella.
 
+Su ogni **`<th>`** dentro **`<thead>`** proiettato, `tailwind-table` imposta automaticamente **`scope="col"`** (non serve dichiararlo nel template). Se serve un altro valore (es. `scope="row"`), impostalo esplicitamente: non viene sovrascritto.
+
 ---
 
 ## Utilizzo
 
-Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bordi, padding, tipografia) è definito in **`table.component.css`** con selettori **`:where(...)`** e `@layer components`, così le **classi Tailwind** che metti su celle e intestazioni (`w-*`, `min-w-*`, `max-w-*`, `p-*`, ecc.) hanno la precedenza sui default. La `<table>` interna usa **`table-layout: fixed`** e `min-w-0`: puoi controllare le larghezze delle colonne direttamente sugli **`th`** / **`td`** del template proiettato.
+Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bordi, padding, tipografia) è definito in **`table.component.css`** con selettori **`:where(...)`** e `@layer components`, così le **classi Tailwind** che metti su celle e intestazioni (`min-w-*`, `max-w-*`, `w-*`, `truncate`, `p-*`, ecc.) hanno la precedenza sui default.
+
+La `<table>` interna usa **`table-layout: auto`**: le colonne si adattano al contenuto. Ogni **`th`** / **`td`** ha **`min-width: 7.5rem` (120px)** di default (variabile CSS **`--tw-table-col-min-width`** sul host `tailwind-table`). Il contenitore ha **`overflow-x-auto`**: su schermi stretti compare lo scroll orizzontale invece di schiacciare le colonne.
+
+Per colonne con testo lungo (es. email), usa **`max-w-*`** + **`truncate`** sulle celle; per azioni con pulsanti, **`whitespace-nowrap`** sulla colonna.
 
 ```typescript
 @Component({
@@ -55,8 +61,8 @@ Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bo
     <tailwind-table [data]="rows" [paginated]="true" [pagination]="pagination" [emptyColspan]="2">
       <thead>
         <tr>
-          <th scope="col" tailwindSortHeader sortKey="name">Nome</th>
-          <th scope="col">Email</th>
+          <th tailwindSortHeader sortKey="name">Nome</th>
+          <th>Email</th>
         </tr>
       </thead>
       <tbody *tailwindTableRow="let row">

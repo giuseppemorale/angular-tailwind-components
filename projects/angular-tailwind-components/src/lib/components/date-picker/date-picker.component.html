@@ -40,12 +40,7 @@
             (onClick)="goToToday()">
             {{ i18n.today }}
           </tailwind-button>
-          <tailwind-button
-            kind="solid"
-            color="primary"
-            size="sm"
-            [disabled]="isDisabled() || !draft()"
-            (onClick)="apply()">
+          <tailwind-button kind="solid" color="primary" [disabled]="isDisabled() || !draft()" (onClick)="apply()">
             {{ i18n.confirm }}
           </tailwind-button>
         </div>

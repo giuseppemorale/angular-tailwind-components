@@ -44,20 +44,10 @@
           </select>
         </div>
         <div class="mt-2 pt-2 border-t border-neutral-100 flex items-center justify-between gap-2">
-          <tailwind-button
-            kind="text"
-            color="primary"
-            size="xs"
-            [disabled]="isDisabled()"
-            (onClick)="goToNow()">
+          <tailwind-button kind="text" color="primary" size="xs" [disabled]="isDisabled()" (onClick)="goToNow()">
             {{ i18n.now }}
           </tailwind-button>
-          <tailwind-button
-            kind="solid"
-            color="primary"
-            size="sm"
-            [disabled]="isDisabled()"
-            (onClick)="apply()">
+          <tailwind-button kind="solid" color="primary" [disabled]="isDisabled()" (onClick)="apply()">
             {{ i18n.apply }}
           </tailwind-button>
         </div>

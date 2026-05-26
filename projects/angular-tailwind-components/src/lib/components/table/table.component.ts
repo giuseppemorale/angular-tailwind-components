@@ -2,14 +2,17 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   HostListener,
+  afterNextRender,
   computed,
   contentChild,
   effect,
   inject,
   input,
   output,
-  signal
+  signal,
+  untracked
 } from '@angular/core';
 import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
 import { TailwindIcon } from '../icon/icon.component';
@@ -32,6 +35,7 @@ export type { TailwindTableSortHost };
   }
 })
 export class TailwindTable extends TailwindComponent implements TailwindTableSortHost {
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
 
   readonly data = input<any[]>([]);
@@ -93,6 +97,19 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
       if (fromInput != null && fromInput > 0) {
         this.pageSize.set(fromInput);
       }
+    });
+    effect(() => {
+      if (!this.loading()) {
+        untracked(() => queueMicrotask(() => this.applyColumnHeaderScope()));
+      }
+    });
+    afterNextRender(() => this.applyColumnHeaderScope());
+  }
+
+  /** Projected `<thead>` is compiled in the parent; set `scope="col"` on header cells here. */
+  private applyColumnHeaderScope(): void {
+    this.elementRef.nativeElement.querySelectorAll('thead th:not([scope])').forEach((th: Element) => {
+      th.setAttribute('scope', 'col');
     });
   }
 

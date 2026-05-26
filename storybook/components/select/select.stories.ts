@@ -90,7 +90,7 @@ export const Sizes: StoryObj<TailwindSelect> = {
     template: `
       <div class="flex flex-col gap-4 max-w-lg">
         <tailwind-select label="xs" size="xs" placeholder="xs" [options]="options" />
-        <tailwind-select label="sm" size="sm" placeholder="sm" [options]="options" />
+        <tailwind-select label="sm" placeholder="sm" [options]="options" />
         <tailwind-select label="md" size="md" placeholder="md" [options]="options" />
         <tailwind-select label="lg" size="lg" placeholder="lg" [options]="options" />
         <tailwind-select label="xl" size="xl" placeholder="xl" [options]="options" />

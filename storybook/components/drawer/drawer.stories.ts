@@ -28,8 +28,8 @@ export const Drawer: StoryObj<TailwindDrawer> = {
           <p class="text-sm text-neutral-600 mb-4">This is the drawer content. You can place any content here.</p>
           <tailwind-input label="Name" placeholder="Enter your name" />
           <div class="mt-4 flex gap-2">
-            <tailwind-button size="sm" (click)="drawer.close()">Save</tailwind-button>
-            <tailwind-button size="sm" color="secondary" kind="text" (click)="drawer.close()">Cancel</tailwind-button>
+            <tailwind-button (click)="drawer.close()">Save</tailwind-button>
+            <tailwind-button color="secondary" kind="text" (click)="drawer.close()">Cancel</tailwind-button>
           </div>
         </tailwind-drawer>
       </div>`

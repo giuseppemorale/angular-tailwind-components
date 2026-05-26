@@ -69,10 +69,10 @@ export const Table: StoryObj<TailwindTable> = {
         [pagination]="pagination">
         <thead>
           <tr>
-            <th scope="col" class="w-[22%]" tailwindSortHeader sortKey="name">Name</th>
-            <th scope="col" class="min-w-0 w-[38%]" tailwindSortHeader sortKey="email">Email</th>
-            <th scope="col" class="w-[20%]">Role</th>
-            <th scope="col" class="w-[20%]">Status</th>
+            <th tailwindSortHeader sortKey="name">Name</th>
+            <th class="max-w-xs" tailwindSortHeader sortKey="email">Email</th>
+            <th>Role</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody *tailwindTableRow="let row">

@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindDatePicker } from '../../../projects/angular-tailwind-components/src/public-api';
 import { componentWrapperDecorator } from '@storybook/angular';
 
-const storyWrapper = (story: string) =>
-  `<div class="max-w-xl min-h-[32rem] overflow-visible pb-24">${story}</div>`;
+const storyWrapper = (story: string) => `<div class="max-w-xl min-h-128 overflow-visible pb-24">${story}</div>`;
 
 const meta: Meta<TailwindDatePicker> = {
   title: 'Forms/DatePicker',

@@ -34,6 +34,8 @@
     "TABLE_CARD_BODY": "Esempio con ordinamento sulla prima colonna, tag di stato e azioni nella colonna finale.",
     "TABLE_COL_NAME": "Componente",
     "TABLE_COL_STATUS": "Stato",
+    "TABLE_COL_VERSION": "Versione",
+    "TABLE_COL_EOS": "EOS (end of support)",
     "TABLE_COL_ACTIONS": "Azioni",
     "TABLE_EMPTY": "Nessun dato da mostrare.",
     "TABLE_ROW_INPUT": "Input",

@@ -48,8 +48,8 @@ export const WithActions: StoryObj<TailwindAlert> = {
           You are using 4.8 GB of your 5 GB storage limit.
           <div tailwind-alert-actions>
             <div class="flex gap-2">
-              <tailwind-button size="sm" color="warning" kind="outlined">Manage storage</tailwind-button>
-              <tailwind-button size="sm" color="warning" kind="text">Dismiss</tailwind-button>
+              <tailwind-button color="warning" kind="outlined">Manage storage</tailwind-button>
+              <tailwind-button color="warning" kind="text">Dismiss</tailwind-button>
             </div>
           </div>
         </tailwind-alert>
@@ -57,8 +57,8 @@ export const WithActions: StoryObj<TailwindAlert> = {
           Version 2.0 includes performance improvements and new features.
           <div tailwind-alert-actions>
             <div class="flex gap-2">
-              <tailwind-button size="sm">Update now</tailwind-button>
-              <tailwind-button size="sm" color="secondary" kind="text">Later</tailwind-button>
+              <tailwind-button>Update now</tailwind-button>
+              <tailwind-button color="secondary" kind="text">Later</tailwind-button>
             </div>
           </div>
         </tailwind-alert>

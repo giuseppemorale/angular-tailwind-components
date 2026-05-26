@@ -17,8 +17,8 @@
       Loading...
     </div>
   } @else {
-    <!-- `table-fixed`: consente `w-*` / `min-w-*` / `max-w-*` sulle celle e sugli `th` proiettati. -->
-    <table class="w-full min-w-0 table-fixed text-sm text-left divide-y divide-neutral-100">
+    <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
+    <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-neutral-100">
       <ng-content select="thead" />
       @for (row of displayedData(); track $index; let i = $index) {
         <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />

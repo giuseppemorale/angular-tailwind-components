@@ -11,16 +11,14 @@
     <tailwind-card>
       <div tailwind-card-header class="flex flex-wrap items-center gap-2 justify-between">
         <tailwind-title titleTag="h4" [text]="'HOME.CARD_BUILD_TITLE' | transloco" />
-        <tailwind-badge color="success" size="sm">{{ 'HOME.BADGE_OK' | transloco }}</tailwind-badge>
+        <tailwind-badge color="success">{{ 'HOME.BADGE_OK' | transloco }}</tailwind-badge>
       </div>
       <p class="text-sm text-neutral-600 m-0">
         {{ 'HOME.CARD_BUILD_BODY' | transloco }}
       </p>
       <div tailwind-card-footer class="flex justify-end gap-2">
-        <tailwind-button kind="outlined" color="secondary" size="sm">{{
-          'HOME.BTN_DETAILS' | transloco
-        }}</tailwind-button>
-        <tailwind-button size="sm">{{ 'HOME.BTN_OPEN' | transloco }}</tailwind-button>
+        <tailwind-button kind="outlined" color="secondary">{{ 'HOME.BTN_DETAILS' | transloco }}</tailwind-button>
+        <tailwind-button>{{ 'HOME.BTN_OPEN' | transloco }}</tailwind-button>
       </div>
     </tailwind-card>
 
@@ -28,7 +26,7 @@
       <div tailwind-card-header class="flex flex-wrap items-center gap-2">
         <tailwind-title titleTag="h4" [text]="'HOME.TAG_SECTION_TITLE' | transloco" icon="tag" />
         <tailwind-badge color="warning" [dot]="true">{{ 'HOME.BADGE_BETA' | transloco }}</tailwind-badge>
-        <tailwind-badge color="secondary" size="sm">{{ 'HOME.BADGE_V0' | transloco }}</tailwind-badge>
+        <tailwind-badge color="secondary">{{ 'HOME.BADGE_V0' | transloco }}</tailwind-badge>
       </div>
       <p class="text-sm text-neutral-600 m-0">
         {{ 'HOME.CARD_TAGS_BODY' | transloco }}
@@ -43,28 +41,36 @@
     <p class="text-sm text-neutral-600 m-0 mb-4">
       {{ 'HOME.TABLE_CARD_BODY' | transloco }}
     </p>
-    <tailwind-table [data]="tableRows" [emptyMessage]="'HOME.TABLE_EMPTY' | transloco" [emptyColspan]="3">
+    <tailwind-table [data]="tableRows" [emptyMessage]="'HOME.TABLE_EMPTY' | transloco" [emptyColspan]="5">
       <thead>
         <tr>
-          <th class="min-w-0" scope="col" tailwindSortHeader sortKey="nameKey">
+          <th tailwindSortHeader sortKey="nameKey">
             {{ 'HOME.TABLE_COL_NAME' | transloco }}
           </th>
-          <th scope="col">{{ 'HOME.TABLE_COL_STATUS' | transloco }}</th>
-          <th class="w-52" scope="col">{{ 'HOME.TABLE_COL_ACTIONS' | transloco }}</th>
+          <th>{{ 'HOME.TABLE_COL_STATUS' | transloco }}</th>
+          <th tailwindSortHeader sortKey="version">
+            {{ 'HOME.TABLE_COL_VERSION' | transloco }}
+          </th>
+          <th tailwindSortHeader sortKey="eos">
+            {{ 'HOME.TABLE_COL_EOS' | transloco }}
+          </th>
+          <th class="w-60">{{ 'HOME.TABLE_COL_ACTIONS' | transloco }}</th>
         </tr>
       </thead>
       <tbody *tailwindTableRow="let row">
         <tr>
-          <td class="min-w-0">{{ row.nameKey | transloco }}</td>
+          <td>{{ row.nameKey | transloco }}</td>
           <td>
             <tailwind-tag [color]="row.variant">{{ row.statusKey | transloco }}</tailwind-tag>
           </td>
-          <td class="w-52 whitespace-nowrap">
+          <td class="tabular-nums">{{ row.version }}</td>
+          <td class="text-neutral-500">{{ row.eos }}</td>
+          <td class="whitespace-nowrap w-60">
             <div class="flex flex-wrap items-center gap-2">
-              <tailwind-button kind="outlined" color="secondary" size="sm">
+              <tailwind-button kind="outlined" color="secondary">
                 {{ 'HOME.TABLE_BTN_EDIT' | transloco }}
               </tailwind-button>
-              <tailwind-button size="sm">{{ 'HOME.TABLE_BTN_DETAILS' | transloco }}</tailwind-button>
+              <tailwind-button>{{ 'HOME.TABLE_BTN_DETAILS' | transloco }}</tailwind-button>
             </div>
           </td>
         </tr>

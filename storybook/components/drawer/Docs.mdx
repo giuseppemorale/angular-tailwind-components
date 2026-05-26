@@ -19,7 +19,7 @@ import * as DrawerStories from './drawer.stories';
       <tailwind-button (click)="drawer.open()">Open drawer</tailwind-button>
       <tailwind-drawer #drawer title="Drawer Title" position="right" [closeOnBackdrop]="true">
         <p>Contenuto</p>
-        <tailwind-button size="sm" (click)="drawer.close()">Close</tailwind-button>
+        <tailwind-button (click)="drawer.close()">Close</tailwind-button>
       </tailwind-drawer>
     </div>`
 })

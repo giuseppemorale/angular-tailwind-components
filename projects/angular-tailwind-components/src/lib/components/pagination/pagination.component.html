@@ -9,7 +9,6 @@
     @if (lengthOptions().length > 0) {
       <div class="w-20 shrink-0">
         <tailwind-select
-          size="sm"
           ariaLabel="Rows per page"
           [options]="pageSizeSelectOptions()"
           [value]="pageSize()"
@@ -19,11 +18,10 @@
   </div>
 
   <nav [attr.aria-label]="ariaLabel()" class="flex items-center gap-1">
-  <!-- Previous -->
+    <!-- Previous -->
     <tailwind-button
       kind="ghost"
       color="transparent"
-      size="sm"
       icon="chevron-left"
       [disabled]="currentPage() <= 1"
       ariaLabel="Previous page"
@@ -31,7 +29,6 @@
 
     @for (page of visiblePages(); track page) {
       <tailwind-button
-        size="sm"
         [kind]="page === currentPage() ? 'flat' : 'ghost'"
         [color]="page === currentPage() ? 'primary' : 'secondary'"
         class="min-w-8"
@@ -45,7 +42,6 @@
     <tailwind-button
       kind="ghost"
       color="transparent"
-      size="sm"
       icon="chevron-right"
       [disabled]="currentPage() >= totalPages()"
       ariaLabel="Next page"

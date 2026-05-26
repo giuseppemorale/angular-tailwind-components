@@ -118,7 +118,7 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
           <div tailwind-toolbar-end>
-            <tailwind-button size="sm" color="secondary" kind="text" ariaLabel="Logout">
+            <tailwind-button color="secondary" kind="text" ariaLabel="Logout">
               <tailwind-icon icon="arrow-right-end-on-rectangle" [size]="22" />
             </tailwind-button>
           </div>
@@ -151,7 +151,7 @@ export const VerticalSidebar: StoryObj<TailwindToolbar> = {
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
           <div tailwind-toolbar-end class="px-2">
-            <tailwind-button size="sm" color="secondary" kind="text">Logout</tailwind-button>
+            <tailwind-button color="secondary" kind="text">Logout</tailwind-button>
           </div>
         </tailwind-toolbar>
         <div class="flex-1 rounded-lg bg-neutral-50 p-4 text-sm text-neutral-600">Main content</div>

@@ -1,6 +1,7 @@
 @layer components {
   :host {
     display: block;
+    --tw-table-col-min-width: 7.5rem; /* 120px — override con style/class sul host se serve */
   }
 
   /*
@@ -14,6 +15,7 @@
   }
 
   :host ::ng-deep :where(thead th) {
+    min-width: var(--tw-table-col-min-width);
     padding: 0.75rem 1rem;
     font-weight: 600;
     color: var(--color-neutral-700);
@@ -23,8 +25,10 @@
   }
 
   :host ::ng-deep :where(tbody td) {
+    min-width: var(--tw-table-col-min-width);
     padding: 0.75rem 1rem;
     color: var(--color-neutral-700);
+    vertical-align: middle;
   }
 
   :host ::ng-deep :where(tbody td[colspan]) {

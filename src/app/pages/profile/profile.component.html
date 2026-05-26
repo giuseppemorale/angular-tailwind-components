@@ -37,7 +37,6 @@
     <div tailwind-card-footer class="flex flex-wrap items-center gap-3 justify-between">
       @if (saving()) {
         <tailwind-spinner
-          size="sm"
           [label]="'PROFILE.SPINNER_LABEL' | transloco"
           [ariaLabel]="'PROFILE.SPINNER_LABEL' | transloco" />
       } @else {

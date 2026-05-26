@@ -8,7 +8,8 @@
     "CTA": {
       "SIGN_IN": "Accedi",
       "SIGN_UP": "Registrati"
-    }
+    },
+    "REGISTRATION": "Registrazione"
   },
   "FOOTER": {
     "COPYRIGHT": "© Angular Tailwind Components 2026 - All rights reserved"
@@ -111,6 +112,48 @@
     "TOGGLE_TELEMETRY": "Consenti telemetria anonima (solo demo)",
     "DENSITY_COMFORTABLE": "Comoda",
     "DENSITY_COMPACT": "Compatta"
+  },
+  "REGISTRATION": {
+    "TITLE": "Crea il tuo account",
+    "INTRO": "Flusso di registrazione a tre step con stepper lineare: dati anagrafici, credenziali e riepilogo con conferma password.",
+    "STEPS": {
+      "GENERAL": "Dati generali",
+      "GENERAL_DESC": "Nome, cognome e anagrafica",
+      "ACCOUNT": "Account",
+      "ACCOUNT_DESC": "Username e password",
+      "REVIEW": "Panoramica",
+      "REVIEW_DESC": "Verifica e conferma"
+    },
+    "FIELD_NAME": "Nome",
+    "FIELD_NAME_PH": "Il tuo nome",
+    "FIELD_SURNAME": "Cognome",
+    "FIELD_SURNAME_PH": "Il tuo cognome",
+    "FIELD_GENDER": "Sesso",
+    "FIELD_GENDER_PH": "Seleziona il sesso",
+    "FIELD_BIRTH": "Data di nascita",
+    "FIELD_BIRTH_PH": "Seleziona la data",
+    "FIELD_CITIZENSHIP": "Cittadinanza",
+    "FIELD_CITIZENSHIP_PH": "Seleziona la cittadinanza",
+    "FIELD_USERNAME": "Username",
+    "FIELD_USERNAME_PH": "Scegli un username",
+    "FIELD_PASSWORD": "Password",
+    "FIELD_PASSWORD_PH": "Scegli una password",
+    "FIELD_CONFIRM_PASSWORD": "Conferma password",
+    "FIELD_CONFIRM_PASSWORD_PH": "Ripeti la password",
+    "FIELD_TERMS": "Accetto i termini e le condizioni (demo)",
+    "GENDER_M": "Maschio",
+    "GENDER_F": "Femmina",
+    "GENDER_A": "Altro",
+    "BTN_NEXT": "Avanti",
+    "BTN_BACK": "Indietro",
+    "BTN_SUBMIT": "Registrati",
+    "BTN_HOME": "Torna alla home",
+    "ERROR_REQUIRED": "Campo obbligatorio",
+    "ERROR_USERNAME": "Username tra 3 e 32 caratteri",
+    "ERROR_PASSWORD": "Password tra 8 e 32 caratteri",
+    "ERROR_PASSWORD_MISMATCH": "Le password non coincidono",
+    "SUCCESS_TITLE": "Registrazione completata",
+    "SUCCESS_BODY": "Demo completata: i dati sono stati loggati in console. In un'app reale qui seguirebbe l'attivazione account."
   },
   "DOCS": {
     "PAGE_TITLE": "Documentazione",

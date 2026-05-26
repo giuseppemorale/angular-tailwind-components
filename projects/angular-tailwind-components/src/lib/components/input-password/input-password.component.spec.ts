@@ -97,7 +97,7 @@ describe('TailwindInputPassword', () => {
     expect(input.type).toBe('text');
   });
 
-  it('should show feedback panel on focus when feedback is enabled', () => {
+  it('should show feedback panel in overlay on focus when feedback is enabled', async () => {
     fixture.componentRef.setInput('feedback', true);
     component.writeValue('abc123');
     fixture.detectChanges();
@@ -105,11 +105,29 @@ describe('TailwindInputPassword', () => {
     const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
     input.dispatchEvent(new Event('focus'));
     fixture.detectChanges();
+    await fixture.whenStable();
 
-    expect(fixture.nativeElement.querySelector('[role="region"]')).toBeTruthy();
+    expect(document.querySelector('.cdk-overlay-container [role="region"]')).toBeTruthy();
+  });
+
+  it('should close feedback overlay on blur', async () => {
+    fixture.componentRef.setInput('feedback', true);
+    component.writeValue('abc123');
+    fixture.detectChanges();
+
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
+    input.dispatchEvent(new Event('focus'));
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(document.querySelector('.cdk-overlay-container [role="region"]')).toBeTruthy();
+
+    input.dispatchEvent(new Event('blur'));
+    fixture.detectChanges();
+    expect(document.querySelector('.cdk-overlay-container [role="region"]')).toBeFalsy();
   });
 
   it('should use labels from TAILWIND_PASSWORD_LABELS token', async () => {
+    document.querySelector('.cdk-overlay-container')?.remove();
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [TailwindInputPassword],
@@ -134,8 +152,9 @@ describe('TailwindInputPassword', () => {
     const input: HTMLInputElement = tokenFixture.nativeElement.querySelector('input');
     input.dispatchEvent(new Event('focus'));
     tokenFixture.detectChanges();
+    await tokenFixture.whenStable();
 
-    expect(tokenFixture.nativeElement.textContent).toContain('Choose password');
-    expect(tokenFixture.nativeElement.textContent).toContain('Too weak');
+    expect(document.body.textContent).toContain('Choose password');
+    expect(document.body.textContent).toContain('Too weak');
   });
 });

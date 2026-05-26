@@ -2,13 +2,20 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   forwardRef,
   HostListener,
   inject,
   input,
   model,
-  signal
+  OnDestroy,
+  signal,
+  TemplateRef,
+  ViewContainerRef,
+  viewChild
 } from '@angular/core';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DEFAULT_TAILWIND_PASSWORD_LABELS, TailwindSize } from '../../models';
 import { TAILWIND_PASSWORD_LABELS } from '../../tokens';
@@ -30,8 +37,14 @@ import { computePasswordStrength, passwordStrengthMeterFill } from './password-s
   styleUrl: './input-password.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TailwindInputPassword extends TailwindComponent implements ControlValueAccessor {
+export class TailwindInputPassword extends TailwindComponent implements ControlValueAccessor, OnDestroy {
+  private readonly overlay = inject(Overlay);
+  private readonly vcr = inject(ViewContainerRef);
+  private readonly elRef = inject(ElementRef<HTMLElement>);
   private readonly themeLabels = inject(TAILWIND_PASSWORD_LABELS, { optional: true });
+  private readonly feedbackPanelTemplate = viewChild.required<TemplateRef<unknown>>('feedbackPanelTemplate');
+
+  private feedbackOverlayRef: OverlayRef | null = null;
 
   /** Label text */
   readonly label = input<string>('');
@@ -139,6 +152,10 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
 
+  ngOnDestroy(): void {
+    this.closeFeedbackPanel();
+  }
+
   writeValue(value: string): void {
     this.value.set(value ?? '');
   }
@@ -159,14 +176,17 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
     const val = (event.target as HTMLInputElement).value;
     this.value.set(val);
     this.onChange(val);
+    this.syncFeedbackPanel();
   }
 
   onFocus(): void {
     this.isFocused.set(true);
+    this.syncFeedbackPanel();
   }
 
   onBlur(): void {
     this.isFocused.set(false);
+    this.closeFeedbackPanel();
     this.onTouched();
   }
 
@@ -179,5 +199,49 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
     if (this.showFeedbackPanel()) {
       this.isFocused.set(false);
     }
+  }
+
+  private syncFeedbackPanel(): void {
+    if (this.showFeedbackPanel()) {
+      queueMicrotask(() => this.openFeedbackPanel());
+    } else {
+      this.closeFeedbackPanel();
+    }
+  }
+
+  private openFeedbackPanel(): void {
+    if (this.feedbackOverlayRef) {
+      return;
+    }
+
+    const trigger = this.elRef.nativeElement.querySelector('input');
+    if (!trigger) {
+      return;
+    }
+
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(trigger)
+      .withPositions([
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top', offsetY: 4 },
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom', offsetY: -4 }
+      ])
+      .withFlexibleDimensions(false)
+      .withPush(true);
+
+    this.feedbackOverlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      panelClass: 'tailwind-overlay-popover'
+    });
+
+    const portal = new TemplatePortal(this.feedbackPanelTemplate(), this.vcr);
+    this.feedbackOverlayRef.attach(portal);
+  }
+
+  private closeFeedbackPanel(): void {
+    this.feedbackOverlayRef?.detach();
+    this.feedbackOverlayRef?.dispose();
+    this.feedbackOverlayRef = null;
   }
 }

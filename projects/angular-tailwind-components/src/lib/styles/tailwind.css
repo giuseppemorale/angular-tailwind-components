@@ -235,3 +235,8 @@
   --z-tooltip: 1070;
   --z-toast: 1080;
 }
+
+/* CDK overlays (select, password feedback, …) above page content */
+.cdk-overlay-container {
+  z-index: var(--z-popover);
+}

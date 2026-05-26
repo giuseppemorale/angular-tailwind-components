@@ -5,7 +5,7 @@ import * as TableStories from './table.stories';
 
 # Table
 
-`TailwindTable` gestisce contenitore, ordinamento e paginazione client-side su `data`. L’header è proiettato (`<thead>`). Il corpo si definisce con **`tailwindTableRow`** sulla riga template (vedi sotto).
+`TailwindTable` gestisce contenitore, ricerca client-side (OR su tutti i campi di ogni riga), ordinamento e paginazione su `data`. L’header è proiettato (`<thead>`). Il corpo si definisce con **`tailwindTableRow`** sulla riga template (vedi sotto).
 
 ---
 
@@ -106,7 +106,25 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>data</code></td>
       <td><code>Record&lt;string, unknown&gt;[]</code></td>
       <td><code>[]</code></td>
-      <td>Righe dati (ordinamento e slice paginazione applicati dal componente).</td>
+      <td>Righe dati (ricerca, ordinamento e slice paginazione applicati dal componente).</td>
+    </tr>
+    <tr>
+      <td><code>searchable</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra un <code>tailwind-input</code> in alto a sinistra; filtra le righe in OR su tutti i valori dell’oggetto riga.</td>
+    </tr>
+    <tr>
+      <td><code>searchLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>'Cerca'</code></td>
+      <td>Label del campo di ricerca (<code>tailwind-input</code>).</td>
+    </tr>
+    <tr>
+      <td><code>searchPlaceholder</code></td>
+      <td><code>string</code></td>
+      <td><code>'Cerca...'</code></td>
+      <td>Placeholder del campo di ricerca.</td>
     </tr>
     <tr>
       <td><code>selectable</code></td>

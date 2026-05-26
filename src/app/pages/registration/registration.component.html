@@ -1,0 +1,165 @@
+<app-header [items]="breadcrumb" [description]="'REGISTRATION.INTRO' | transloco" />
+
+<tailwind-card [hasFooter]="false">
+  <div tailwind-card-header>
+    <tailwind-title titleTag="h3" [text]="'REGISTRATION.TITLE' | transloco" icon="user-plus" />
+  </div>
+
+  @if (!registerDone()) {
+    <tailwind-stepper #stepper [linear]="true">
+      <tailwind-step
+        [label]="'REGISTRATION.STEPS.GENERAL' | transloco"
+        [description]="'REGISTRATION.STEPS.GENERAL_DESC' | transloco">
+        <form [formGroup]="datiGenerali" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <tailwind-input
+              id="reg-nome"
+              [formControl]="datiGenerali.controls.nome"
+              [label]="'REGISTRATION.FIELD_NAME' | transloco"
+              [placeholder]="'REGISTRATION.FIELD_NAME_PH' | transloco"
+              [hasError]="datiGenerali.controls.nome | error"
+              [errorText]="'REGISTRATION.ERROR_REQUIRED' | transloco" />
+            <tailwind-input
+              id="reg-cognome"
+              [formControl]="datiGenerali.controls.cognome"
+              [label]="'REGISTRATION.FIELD_SURNAME' | transloco"
+              [placeholder]="'REGISTRATION.FIELD_SURNAME_PH' | transloco"
+              [hasError]="datiGenerali.controls.cognome | error"
+              [errorText]="'REGISTRATION.ERROR_REQUIRED' | transloco" />
+            <tailwind-select
+              id="reg-genere"
+              [formControl]="datiGenerali.controls.genere"
+              [label]="'REGISTRATION.FIELD_GENDER' | transloco"
+              [options]="genders()"
+              [placeholder]="'REGISTRATION.FIELD_GENDER_PH' | transloco"
+              [hasError]="datiGenerali.controls.genere | error"
+              [errorText]="'REGISTRATION.ERROR_REQUIRED' | transloco" />
+            <tailwind-date-picker
+              id="reg-data-nascita"
+              [formControl]="datiGenerali.controls.dataNascita"
+              [label]="'REGISTRATION.FIELD_BIRTH' | transloco"
+              [placeholder]="'REGISTRATION.FIELD_BIRTH_PH' | transloco" />
+            <div class="sm:col-span-2">
+              <tailwind-select
+                id="reg-cittadinanza"
+                [formControl]="datiGenerali.controls.cittadinanza"
+                [label]="'REGISTRATION.FIELD_CITIZENSHIP' | transloco"
+                [options]="citizenships()"
+                [placeholder]="'REGISTRATION.FIELD_CITIZENSHIP_PH' | transloco"
+                [hasError]="datiGenerali.controls.cittadinanza | error"
+                [errorText]="'REGISTRATION.ERROR_REQUIRED' | transloco" />
+            </div>
+          </div>
+        </form>
+        <div class="flex justify-end mt-6">
+          <tailwind-button icon="arrow-right" iconPosition="right" (onClick)="firstStepNext()">
+            {{ 'REGISTRATION.BTN_NEXT' | transloco }}
+          </tailwind-button>
+        </div>
+      </tailwind-step>
+
+      <tailwind-step
+        [label]="'REGISTRATION.STEPS.ACCOUNT' | transloco"
+        [description]="'REGISTRATION.STEPS.ACCOUNT_DESC' | transloco">
+        <form [formGroup]="datiUtente" class="space-y-4">
+          <tailwind-input
+            id="reg-username"
+            [formControl]="datiUtente.controls.username"
+            [label]="'REGISTRATION.FIELD_USERNAME' | transloco"
+            [placeholder]="'REGISTRATION.FIELD_USERNAME_PH' | transloco"
+            [hasError]="datiUtente.controls.username | error"
+            [errorText]="'REGISTRATION.ERROR_USERNAME' | transloco" />
+          <tailwind-input-password
+            id="reg-password"
+            [feedback]="true"
+            [toggleMask]="true"
+            [formControl]="datiUtente.controls.password"
+            [label]="'REGISTRATION.FIELD_PASSWORD' | transloco"
+            [placeholder]="'REGISTRATION.FIELD_PASSWORD_PH' | transloco"
+            [hasError]="datiUtente.controls.password | error"
+            [errorText]="'REGISTRATION.ERROR_PASSWORD' | transloco" />
+        </form>
+        <div class="flex justify-between mt-6">
+          <tailwind-button color="secondary" kind="outlined" icon="arrow-left" (onClick)="stepper.previous()">
+            {{ 'REGISTRATION.BTN_BACK' | transloco }}
+          </tailwind-button>
+          <tailwind-button icon="arrow-right" iconPosition="right" (onClick)="secondStepNext()">
+            {{ 'REGISTRATION.BTN_NEXT' | transloco }}
+          </tailwind-button>
+        </div>
+      </tailwind-step>
+
+      <tailwind-step
+        [label]="'REGISTRATION.STEPS.REVIEW' | transloco"
+        [description]="'REGISTRATION.STEPS.REVIEW_DESC' | transloco">
+        <form [formGroup]="riepilogo" class="space-y-4">
+          <dl
+            class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm rounded-lg border border-neutral-200 p-4 bg-neutral-50">
+            <div>
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_NAME' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">{{ riepilogo.controls.nome.value }}</dd>
+            </div>
+            <div>
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_SURNAME' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">{{ riepilogo.controls.cognome.value }}</dd>
+            </div>
+            <div>
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_GENDER' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">{{ genderLabel(riepilogo.controls.genere.value) }}</dd>
+            </div>
+            <div>
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_BIRTH' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">
+                @if (riepilogo.controls.dataNascita.value; as birth) {
+                  {{ birth | date: 'dd/MM/yyyy' }}
+                }
+              </dd>
+            </div>
+            <div class="sm:col-span-2">
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_CITIZENSHIP' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">
+                {{ citizenshipLabel(riepilogo.controls.cittadinanza.value) }}
+              </dd>
+            </div>
+            <div class="sm:col-span-2">
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_USERNAME' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">{{ riepilogo.controls.username.value }}</dd>
+            </div>
+          </dl>
+
+          <tailwind-input-password
+            id="reg-confirm-password"
+            [formControl]="riepilogo.controls.confirmPassword"
+            [label]="'REGISTRATION.FIELD_CONFIRM_PASSWORD' | transloco"
+            [placeholder]="'REGISTRATION.FIELD_CONFIRM_PASSWORD_PH' | transloco"
+            [hasError]="(riepilogo.controls.confirmPassword | error) || passwordMismatch()"
+            [errorText]="
+              passwordMismatch()
+                ? ('REGISTRATION.ERROR_PASSWORD_MISMATCH' | transloco)
+                : ('REGISTRATION.ERROR_PASSWORD' | transloco)
+            " />
+
+          <tailwind-checkbox
+            id="reg-terms"
+            [formControl]="riepilogo.controls.terms"
+            [label]="'REGISTRATION.FIELD_TERMS' | transloco" />
+        </form>
+
+        <div class="flex justify-between mt-6">
+          <tailwind-button color="secondary" kind="outlined" icon="arrow-left" (onClick)="stepper.previous()">
+            {{ 'REGISTRATION.BTN_BACK' | transloco }}
+          </tailwind-button>
+          <tailwind-button icon="check" [disabled]="submitting()" (onClick)="submit()">
+            {{ 'REGISTRATION.BTN_SUBMIT' | transloco }}
+          </tailwind-button>
+        </div>
+      </tailwind-step>
+    </tailwind-stepper>
+  } @else {
+    <div class="flex flex-col items-center gap-4 py-8 text-center">
+      <p class="text-lg font-semibold text-neutral-900">{{ 'REGISTRATION.SUCCESS_TITLE' | transloco }}</p>
+      <p class="text-sm text-neutral-600 max-w-md">{{ 'REGISTRATION.SUCCESS_BODY' | transloco }}</p>
+      <tailwind-button (onClick)="goToLogin()">{{ 'REGISTRATION.BTN_HOME' | transloco }}</tailwind-button>
+    </div>
+  }
+</tailwind-card>

@@ -1,3 +1,15 @@
+@if (searchable()) {
+  <div class="pt-4 pb-3">
+    <div class="max-w-xs">
+      <tailwind-input
+        [label]="searchLabel()"
+        type="search"
+        [placeholder]="searchPlaceholder()"
+        [value]="searchQuery()"
+        (valueChange)="onSearchChange($event)" />
+    </div>
+  </div>
+}
 <div class="w-full overflow-x-auto rounded-lg border border-neutral-200">
   @if (loading()) {
     <div class="flex items-center justify-center py-16 text-neutral-400">
@@ -21,10 +33,10 @@
       }
     </table>
 
-    @if (paginated() && data().length > 0) {
+    @if (paginated() && sortedData().length > 0) {
       <div class="px-4 py-3 border-t border-neutral-200 bg-white">
         <tailwind-pagination
-          [totalItems]="pagination()?.totalItems ?? data().length"
+          [totalItems]="pagination()?.totalItems ?? sortedData().length"
           [pageSize]="pageSize()"
           (pageSizeChange)="pageSize.set($event)"
           [lengthOptions]="paginationLengthOptions()"

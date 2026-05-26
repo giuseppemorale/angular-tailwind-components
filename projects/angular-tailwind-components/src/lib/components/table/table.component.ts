@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
 import { TailwindIcon } from '../icon/icon.component';
+import { TailwindInput } from '../input/input.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
@@ -21,7 +22,7 @@ export type { TailwindTableSortHost };
 
 @Component({
   selector: 'tailwind-table',
-  imports: [NgTemplateOutlet, TailwindPagination, TailwindIcon],
+  imports: [NgTemplateOutlet, TailwindPagination, TailwindIcon, TailwindInput],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +35,9 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
   private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
 
   readonly data = input<any[]>([]);
+  readonly searchable = input<boolean>(true);
+  readonly searchLabel = input<string>('Cerca');
+  readonly searchPlaceholder = input<string>('Cerca...');
   readonly selectable = input<boolean>(false);
   readonly striped = input<boolean>(false);
   readonly loading = input<boolean>(false);
@@ -71,6 +75,7 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
 
   readonly sortKey = signal<string>('');
   readonly sortDir = signal<'asc' | 'desc'>('asc');
+  readonly searchQuery = signal('');
   readonly selectedRows = signal<Set<number>>(new Set());
   readonly currentPage = signal<number>(1);
   readonly pageSize = signal<number>(10);
@@ -91,8 +96,17 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
     });
   }
 
+  readonly filteredData = computed(() => {
+    const rows = this.data();
+    const query = this.searchQuery().trim().toLowerCase();
+    if (!this.searchable() || !query) return rows;
+    return rows.filter(row =>
+      Object.values(row).some(value => value != null && String(value).toLowerCase().includes(query))
+    );
+  });
+
   readonly sortedData = computed(() => {
-    let rows = [...this.data()];
+    let rows = [...this.filteredData()];
     const key = this.sortKey();
     if (key) {
       const dir = this.sortDir() === 'asc' ? 1 : -1;
@@ -115,6 +129,11 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
     const page = this.currentPage();
     return rows.slice((page - 1) * size, page * size);
   });
+
+  onSearchChange(value: string): void {
+    this.searchQuery.set(value);
+    this.currentPage.set(1);
+  }
 
   sort(key: string): void {
     if (this.sortKey() === key) {

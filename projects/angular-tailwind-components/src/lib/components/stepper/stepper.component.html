@@ -1,42 +1,28 @@
 <!-- Step indicators -->
-<div class="flex items-center mb-6">
+<div class="flex items-start mb-6">
   @for (step of steps(); track step.label(); let i = $index; let last = $last) {
-    <div class="flex items-center" [class.flex-1]="!last">
+    <div class="flex min-w-0" [class.flex-1]="!last">
       <button
         type="button"
         (click)="goToStep(i)"
-        class="flex items-center gap-2 cursor-pointer group"
+        class="flex items-start gap-2 cursor-pointer group text-left"
         [attr.aria-current]="activeIndex() === i ? 'step' : null">
-        <div
-          class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-all duration-200"
-          [class.bg-primary-600]="i <= activeIndex()"
-          [class.border-primary-600]="i <= activeIndex()"
-          [class.text-on-primary-600]="i <= activeIndex()"
-          [class.border-neutral-300]="i > activeIndex()"
-          [class.text-neutral-600]="i > activeIndex()">
+        <div [class]="stepCircleClass(i)">
           @if (step.completed()) {
             <tailwind-icon icon="check" [size]="16" />
           } @else {
             {{ i + 1 }}
           }
         </div>
-        <div class="hidden sm:block">
-          <p
-            class="text-sm font-medium"
-            [class.text-primary-700]="i <= activeIndex()"
-            [class.text-neutral-700]="i > activeIndex()">
-            {{ step.label() }}
-          </p>
+        <div class="hidden sm:block min-w-0">
+          <p [class]="stepLabelClass(i)">{{ step.label() }}</p>
           @if (step.description()) {
-            <p class="text-xs text-neutral-500">{{ step.description() }}</p>
+            <p class="text-xs text-neutral-500 text-left">{{ step.description() }}</p>
           }
         </div>
       </button>
       @if (!last) {
-        <div
-          class="flex-1 h-0.5 mx-3 rounded-full transition-colors duration-200"
-          [class.bg-primary-600]="i < activeIndex()"
-          [class.bg-neutral-200]="i >= activeIndex()"></div>
+        <div [class]="connectorClass(i)"></div>
       }
     </div>
   }

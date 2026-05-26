@@ -6,6 +6,9 @@ const meta: Meta<TailwindTable> = {
   component: TailwindTable,
   parameters: { docs: { story: { height: '500px' } } },
   argTypes: {
+    searchable: { control: 'boolean' },
+    searchLabel: { control: 'text' },
+    searchPlaceholder: { control: 'text' },
     selectable: { control: 'boolean' },
     striped: { control: 'boolean' },
     loading: { control: 'boolean' },
@@ -54,6 +57,9 @@ export const Table: StoryObj<TailwindTable> = {
     template: `
       <tailwind-table
         [data]="data"
+        [searchable]="searchable"
+        [searchLabel]="searchLabel"
+        [searchPlaceholder]="searchPlaceholder"
         [selectable]="selectable"
         [striped]="striped"
         [loading]="loading"
@@ -83,13 +89,14 @@ export const Table: StoryObj<TailwindTable> = {
     `
   }),
   args: {
+    searchable: true,
+    searchPlaceholder: 'Cerca...',
     selectable: false,
     striped: false,
     loading: false,
     emptyColspan: 4,
     paginated: true,
     pagination: {
-      totalItems: rows.length,
       pageSize: 10,
       currentPage: 1,
       ariaLabel: 'Paginazione',

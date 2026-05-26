@@ -16,10 +16,10 @@
       icon="calendar-days"
       [size]="16"
       class="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 pointer-events-none" />
-  </div>
 
-  @if (showCalendar()) {
-    <div class="absolute z-popover mt-1 bg-white rounded-xl border border-neutral-200 shadow-xl p-4 w-72">
+    @if (showCalendar()) {
+      <div
+        class="absolute left-0 top-full z-popover mt-1 w-72 max-w-[min(18rem,calc(100vw-2rem))] rounded-xl border border-neutral-200 bg-white p-4 shadow-xl">
       <!-- Month/Year nav -->
       <div class="flex items-center justify-between mb-3">
         <tailwind-button
@@ -83,6 +83,7 @@
           {{ i18n.confirm }}
         </tailwind-button>
       </div>
-    </div>
-  }
+      </div>
+    }
+  </div>
 </div>

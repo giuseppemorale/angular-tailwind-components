@@ -33,7 +33,7 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
   };
 
   readonly items = input<TailwindMenuItem[]>([]);
-  readonly align = input<'left' | 'right'>('left');
+  readonly align = input<Exclude<TailwindPosition, 'top' | 'bottom'>>('left');
   /** `bottom` opens under the anchor; `right` opens beside it (e.g. vertical toolbar rail). */
   readonly placement = input<Extract<TailwindPosition, 'bottom' | 'right'>>('bottom');
 

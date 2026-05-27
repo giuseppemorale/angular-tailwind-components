@@ -15,6 +15,7 @@ const meta: Meta = {
   args: {
     ariaLabel: '',
     scrollable: false,
+    stretch: false,
     color: 'primary'
   }
 };
@@ -41,6 +42,36 @@ export const Tabs: StoryObj<TailwindTabGroup> = {
   }),
   args: {
     ariaLabel: 'Tabs',
+    scrollable: false,
+    stretch: false,
+    color: 'primary'
+  }
+};
+
+export const Stretch: StoryObj<TailwindTabGroup> = {
+  render: args => ({
+    props: args,
+    template: `
+      <div class="max-w-xl w-full">
+        <tailwind-tab-group ${argsToTemplate(args)}>
+          <tailwind-tab label="Overview">
+            <p class="text-sm text-neutral-600">This is the overview tab content.</p>
+          </tailwind-tab>
+          <tailwind-tab label="Features">
+            <p class="text-sm text-neutral-600">Feature list goes here.</p>
+          </tailwind-tab>
+          <tailwind-tab label="Pricing">
+            <p class="text-sm text-neutral-600">Pricing information.</p>
+          </tailwind-tab>
+          <tailwind-tab label="Support">
+            <p class="text-sm text-neutral-600">Support and help content.</p>
+          </tailwind-tab>
+        </tailwind-tab-group>
+      </div>`
+  }),
+  args: {
+    ariaLabel: 'Stretched Tabs',
+    stretch: true,
     scrollable: false,
     color: 'primary'
   }

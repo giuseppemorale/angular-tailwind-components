@@ -15,6 +15,7 @@
   <nav
     #tabList
     class="tailwind-tab-list flex -mb-px gap-1"
+    [class.w-full]="stretch() && !scrollable()"
     [class.flex-1]="scrollable()"
     [class.min-w-0]="scrollable()"
     [class.tailwind-tab-list--scrollable]="scrollable()"

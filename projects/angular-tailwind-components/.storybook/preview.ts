@@ -1,5 +1,19 @@
 import { provideRouter } from '@angular/router';
-import type { Preview } from '@storybook/angular';
+import type { Preview, StoryContext } from '@storybook/angular';
+
+/** Preferisce il template inline della story rispetto al solo tag host del wrapper. */
+function preferInlineTemplateSource(source: string, context: StoryContext): string {
+  try {
+    const story = context.originalStoryFn?.(context.args, context);
+    const template = story?.template?.trim();
+    if (template) {
+      return template;
+    }
+  } catch {
+    // story senza template inline
+  }
+  return source?.trim() ?? '';
+}
 import { applicationConfig, moduleMetadata } from '@storybook/angular';
 import {
   TailwindAccordion,
@@ -117,6 +131,16 @@ const preview: Preview = {
       }
     },
     docs: {
+      codePanel: true,
+      canvas: {
+        sourceState: 'shown'
+      },
+      source: {
+        type: 'dynamic',
+        state: 'open',
+        language: 'html',
+        transform: preferInlineTemplateSource
+      },
       story: {
         height: '300px'
       }

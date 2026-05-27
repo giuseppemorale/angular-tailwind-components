@@ -5,9 +5,9 @@ const meta: Meta<TailwindMenu> = {
   title: 'Components/Menu',
   component: TailwindMenu,
   parameters: { docs: { story: { height: '320px' } } },
-  args: {
+  argTypes: {
     items: [],
-    align: 'left'
+    align: { control: 'select', options: ['left', 'right'] }
   }
 };
 export default meta;
@@ -17,8 +17,10 @@ export const Menu: Story = {
   render: args => ({
     props: args,
     template: `
-      <tailwind-button (click)="menu.open($event)">Open Menù</tailwind-button>
-      <tailwind-menu #menu ${argsToTemplate(args)}></tailwind-menu>
+      <div class="flex justify-center">
+        <tailwind-button (click)="menu.open($event)">Open Menù</tailwind-button>
+        <tailwind-menu #menu ${argsToTemplate(args)}></tailwind-menu>
+      </div>
       `
   }),
   args: {
@@ -28,6 +30,7 @@ export const Menu: Story = {
       { label: 'Help', value: 'help' },
       { divider: true },
       { label: 'Sign out', value: 'signout' }
-    ]
+    ],
+    align: 'left'
   }
 };

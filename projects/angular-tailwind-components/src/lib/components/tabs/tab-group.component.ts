@@ -32,6 +32,8 @@ export class TailwindTabGroup extends TailwindComponent {
   readonly ariaLabel = input<string>('');
   /** Whether tabs can scroll horizontally */
   readonly scrollable = input<boolean>(false);
+  /** When true, tab buttons grow equally to fill the tab list width */
+  readonly stretch = input<boolean>(false);
   /** Accent color for the active tab label and underline indicator */
   readonly color = input<TailwindColor>('primary');
 
@@ -181,8 +183,10 @@ export class TailwindTabGroup extends TailwindComponent {
 
   tabButtonClass(index: number, disabled: boolean): string {
     const active = this.activeIndex() === index;
+    const stretched = this.stretch() && !this.scrollable();
     return [
-      'group relative shrink-0 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150',
+      'group relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150',
+      stretched ? 'flex-1 min-w-0 text-center' : 'shrink-0',
       'focus-visible:outline-none focus-visible:ring-2 focus-visible:rounded-t-lg',
       this.focusRingClass(),
       active ? this.activeTextClass() : 'text-neutral-500',

@@ -8,6 +8,7 @@ import {
   inject,
   input
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { TailwindTooltip } from '../../components/tooltip/tooltip.component';
 import { TailwindPosition } from '../../models';
 
@@ -27,6 +28,7 @@ export class TailwindTooltipDirective implements OnDestroy {
 
   private viewContainerRef = inject(ViewContainerRef);
   private el = inject(ElementRef);
+  private document = inject(DOCUMENT);
 
   private get host(): HTMLElement {
     return this.el.nativeElement;
@@ -35,6 +37,10 @@ export class TailwindTooltipDirective implements OnDestroy {
   @HostListener('mouseenter')
   @HostListener('focusin')
   show(): void {
+    if (!this.tooltip()?.trim()) {
+      return;
+    }
+
     this.clearHideTimeout();
 
     if (this.componentRef) {
@@ -107,6 +113,10 @@ export class TailwindTooltipDirective implements OnDestroy {
     }
 
     this.componentRef = this.viewContainerRef.createComponent(TailwindTooltip);
+    const tooltipHost = this.componentRef.location.nativeElement as HTMLElement;
+    if (tooltipHost.parentNode !== this.document.body) {
+      this.document.body.appendChild(tooltipHost);
+    }
     this.updateTooltipComponent();
 
     setTimeout(() => {

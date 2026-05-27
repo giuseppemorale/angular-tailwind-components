@@ -1,5 +1,11 @@
-<div #tooltipEl role="tooltip" [class]="tooltipClasses()" [style.top.px]="topPos()" [style.left.px]="leftPos()">
-  {{ text() }}
-  <!-- Arrow -->
-  <div [class]="arrowClasses()"></div>
+<div #tooltipEl role="tooltip" [class]="tooltipShellClasses()" [style.top.px]="topPos()" [style.left.px]="leftPos()">
+  <div [class]="tooltipBodyClasses()">{{ text() }}</div>
+  <svg
+    [class]="arrowSpec().className"
+    [attr.viewBox]="arrowSpec().viewBox"
+    [attr.width]="arrowSpec().width"
+    [attr.height]="arrowSpec().height"
+    aria-hidden="true">
+    <path [attr.d]="arrowSpec().path" fill="var(--color-neutral-900)" shape-rendering="geometricPrecision" />
+  </svg>
 </div>

@@ -46,5 +46,9 @@ export interface TailwindMenuItem {
   disabled?: boolean;
   divider?: boolean;
   value?: string;
+  /** Tooltip text on toolbar menu buttons (especially icon-only entries). */
+  tooltip?: string;
+  /** Tooltip position relative to the trigger. Toolbar default: `right`. */
+  tooltipPosition?: TailwindPosition;
   items?: Exclude<TailwindMenuItem, 'items'>[];
 }

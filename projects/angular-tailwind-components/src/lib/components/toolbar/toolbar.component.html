@@ -36,6 +36,8 @@
                 [class.py-2]="!!item.icon && !menuItemHasVisibleLabel(item)"
                 [attr.aria-label]="menuItemAriaLabel(item)"
                 [attr.aria-expanded]="itemMenu.isOpen()"
+                [tooltip]="menuItemTooltip(item)"
+                [tooltipPosition]="menuItemTooltipPosition(item)"
                 aria-haspopup="menu"
                 (click)="itemMenu.toggle($event)">
                 @if (item.icon) {
@@ -61,6 +63,8 @@
               [class.px-2]="!!item.icon && !menuItemHasVisibleLabel(item)"
               [class.py-2]="!!item.icon && !menuItemHasVisibleLabel(item)"
               [attr.aria-label]="menuItemAriaLabel(item)"
+              [tooltip]="menuItemTooltip(item)"
+              [tooltipPosition]="menuItemTooltipPosition(item)"
               (click)="selectMenuItem(item)">
               @if (item.icon) {
                 <tailwind-icon [icon]="item.icon" [size]="20" [class]="menuItemIconClasses()" />
@@ -87,6 +91,8 @@
               [class.justify-center]="!menuItemHasVisibleLabel(item)"
               [attr.aria-label]="menuItemAriaLabel(item)"
               [attr.aria-expanded]="itemMenu.isOpen()"
+              [tooltip]="menuItemTooltip(item)"
+              [tooltipPosition]="menuItemTooltipPosition(item)"
               aria-haspopup="menu"
               (click)="itemMenu.toggle($event)">
               @if (item.icon) {
@@ -115,6 +121,8 @@
             [class]="menuItemButtonClasses()"
             [class.justify-center]="!menuItemHasVisibleLabel(item)"
             [attr.aria-label]="menuItemAriaLabel(item)"
+            [tooltip]="menuItemTooltip(item)"
+            [tooltipPosition]="menuItemTooltipPosition(item)"
             (click)="selectMenuItem(item)">
             @if (item.icon) {
               <tailwind-icon [icon]="item.icon" [size]="22" [class]="menuItemIconClasses()" />

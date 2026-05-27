@@ -83,4 +83,17 @@ describe('TailwindToolbar', () => {
     fixture.detectChanges();
     expect(component.submenuPlacement()).toBe('right');
   });
+
+  it('should return trimmed tooltip text or empty string', () => {
+    expect(component.menuItemTooltip({ value: 'home', tooltip: '  Home  ' })).toBe('Home');
+    expect(component.menuItemTooltip({ value: 'home' })).toBe('');
+    expect(component.menuItemTooltip({ value: 'home', tooltip: '   ' })).toBe('');
+  });
+
+  it('should default tooltip position to right and honor item override', () => {
+    expect(component.menuItemTooltipPosition({ value: 'home', tooltip: 'Home' })).toBe('right');
+    expect(
+      component.menuItemTooltipPosition({ value: 'settings', tooltip: 'Settings', tooltipPosition: 'left' })
+    ).toBe('left');
+  });
 });

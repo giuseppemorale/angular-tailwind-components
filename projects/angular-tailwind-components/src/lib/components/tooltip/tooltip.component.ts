@@ -41,28 +41,55 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
 
   private scrollListener = () => this.updatePosition();
 
-  readonly tooltipClasses = computed(() => {
+  readonly tooltipShellClasses = computed(() => {
     const base = [
-      'fixed z-[1070] px-3 py-1.5',
-      'text-xs font-medium text-white bg-neutral-900 rounded-lg',
-      'shadow-lg whitespace-nowrap pointer-events-none',
-      'transition-opacity duration-150',
+      'fixed z-[1070] pointer-events-none transition-opacity duration-150',
       this.isVisible() ? 'opacity-100' : 'opacity-0'
     ];
     return base.join(' ');
   });
 
-  readonly arrowClasses = computed(() => {
-    const base = 'absolute w-2 h-2 bg-neutral-900 rotate-45';
+  readonly tooltipBodyClasses = computed(
+    () =>
+      'relative z-[1] text-xs font-medium text-white bg-neutral-900 rounded-lg shadow-lg whitespace-nowrap px-3 py-1.5'
+  );
 
-    const posMap: Record<TailwindPosition, string> = {
-      top: 'top-full left-1/2 -translate-x-1/2 -mt-1',
-      bottom: 'bottom-full left-1/2 -translate-x-1/2 -mb-1',
-      left: 'left-full top-1/2 -translate-y-1/2 -ml-1',
-      right: 'right-full top-1/2 -translate-y-1/2 -mr-1'
+  readonly arrowSpec = computed(() => {
+    const specs: Record<
+      TailwindPosition,
+      { className: string; viewBox: string; width: number; height: number; path: string }
+    > = {
+      top: {
+        className: 'tooltip-arrow tooltip-arrow-down',
+        viewBox: '0 0 12 7',
+        width: 12,
+        height: 7,
+        path: 'M0 0 H12 L6 7 Z'
+      },
+      bottom: {
+        className: 'tooltip-arrow tooltip-arrow-up',
+        viewBox: '0 0 12 7',
+        width: 12,
+        height: 7,
+        path: 'M0 7 H12 L6 0 Z'
+      },
+      left: {
+        className: 'tooltip-arrow tooltip-arrow-right',
+        viewBox: '0 0 7 12',
+        width: 7,
+        height: 12,
+        path: 'M0 0 V12 L7 6 Z'
+      },
+      right: {
+        className: 'tooltip-arrow tooltip-arrow-left',
+        viewBox: '0 0 7 12',
+        width: 7,
+        height: 12,
+        path: 'M7 0 V12 L0 6 Z'
+      }
     };
 
-    return `${base} ${posMap[this.position()]}`;
+    return specs[this.position()];
   });
 
   ngAfterViewInit() {
@@ -119,8 +146,8 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
     }
 
     this.ngZone.run(() => {
-      this.topPos.set(top - origin.top);
-      this.leftPos.set(left - origin.left);
+      this.topPos.set(Math.round(top - origin.top));
+      this.leftPos.set(Math.round(left - origin.left));
     });
   }
 

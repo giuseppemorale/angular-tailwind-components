@@ -42,6 +42,25 @@ Con **orientation** `vertical`, le voci del menu sono in colonna; con `divider: 
 
 Una voce con **`items`** (sottomenu) apre un **`tailwind-menu`** al click: sotto la voce in toolbar orizzontale, a destra nel rail verticale. **`onMenuSelect`** viene emesso solo per le voci foglia (senza `items`).
 
+### Voci menu (`TailwindMenuItem`)
+
+Oltre a `label`, `icon`, `value`, `disabled`, `divider` e `items`, ogni voce del menu toolbar può definire:
+
+| Campo | Tipo | Default toolbar | Descrizione |
+|-------|------|-----------------|-------------|
+| `tooltip` | `string` | — | Testo del tooltip al passaggio del mouse. Utile con voci **solo icona** (senza `label` visibile). |
+| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'right'` | Posizione del tooltip rispetto al pulsante. Default `right` per rail a sinistra; usa `left` se la toolbar è a destra. |
+
+Esempio rail verticale solo icone:
+
+```typescript
+menu: TailwindMenuItem[] = [
+  { icon: 'home', value: 'home', tooltip: 'Home' },
+  { icon: 'bell', value: 'notifications', tooltip: 'Notifiche' },
+  { icon: 'cog-6-tooth', value: 'settings', tooltip: 'Impostazioni', tooltipPosition: 'left' }
+];
+```
+
 ## Anteprima
 
 <Canvas meta={ToolbarStories} of={ToolbarStories.Horizontal} />

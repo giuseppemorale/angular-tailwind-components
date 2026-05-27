@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { TailwindColor, TailwindMenuItem } from '../../models';
+import { TailwindTooltipDirective } from '../../directives/tooltip/tooltip.directive';
+import { TailwindColor, TailwindMenuItem, TailwindPosition } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindMenu } from '../menu/menu.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
-  imports: [TailwindIcon, TailwindMenu],
+  imports: [TailwindIcon, TailwindMenu, TailwindTooltipDirective],
   selector: 'tailwind-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.css',
@@ -201,5 +202,14 @@ export class TailwindToolbar extends TailwindComponent {
 
   menuTrackKey(index: number, item: TailwindMenuItem): string {
     return item.value ?? item.label ?? String(index);
+  }
+
+  menuItemTooltip(item: TailwindMenuItem): string {
+    const tooltip = item.tooltip?.trim();
+    return tooltip ?? '';
+  }
+
+  menuItemTooltipPosition(item: TailwindMenuItem): TailwindPosition {
+    return item.tooltipPosition ?? 'right';
   }
 }

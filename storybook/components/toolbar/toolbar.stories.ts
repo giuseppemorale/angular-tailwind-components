@@ -30,11 +30,11 @@ const verticalMenu: TailwindMenuItem[] = [
 ];
 
 const iconOnlyMenu: TailwindMenuItem[] = [
-  { icon: 'home', value: 'home' },
-  { icon: 'document-text', value: 'docs' },
+  { icon: 'home', value: 'home', tooltip: 'Home' },
+  { icon: 'document-text', value: 'docs', tooltip: 'Documentazione' },
   { divider: true },
-  { icon: 'bell', value: 'notifications' },
-  { icon: 'cog-6-tooth', value: 'settings' }
+  { icon: 'bell', value: 'notifications', tooltip: 'Notifiche' },
+  { icon: 'cog-6-tooth', value: 'settings', tooltip: 'Impostazioni' }
 ];
 
 const meta: Meta<TailwindToolbar> = {
@@ -92,14 +92,14 @@ export const ContainerWidth: StoryObj<TailwindToolbar> = {
   render: Horizontal.render
 };
 
-/** Rail verticale con voci solo icona (`label` vuoto / assente, `aria-label` da `value`). */
+/** Rail verticale con voci solo icona (`label` vuoto / assente, `aria-label` da `value`, tooltip da `tooltip`). */
 export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
   parameters: {
     docs: {
       story: { height: '520px' },
       description: {
         story:
-          'Voci solo icona: **`label`** assente o stringa vuota; **`aria-label`** da **`value`** (meglio testo leggibile). Layout come sidebar verticale.'
+          'Voci solo icona: **`label`** assente o stringa vuota; **`aria-label`** da **`value`**; **`tooltip`** per etichetta al passaggio del mouse (default posizione **`right`**). Layout come sidebar verticale.'
       }
     }
   },

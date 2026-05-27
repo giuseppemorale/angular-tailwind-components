@@ -16,6 +16,8 @@ const ask = question =>
 const rootPackageJsonPath = path.join(__dirname, '../package.json');
 const libPackageJsonPath = path.join(__dirname, '../projects/angular-tailwind-components/package.json');
 
+const STABLE_VERSION_PATTERN = /^(\d+)\.(\d+)\.(\d+)$/;
+
 function parseVersion(version) {
   const match = version.match(/^(\d+)\.(\d+)\.(\d+)(?:-RC(\d+))?$/i);
 
@@ -29,6 +31,20 @@ function parseVersion(version) {
     patch: parseInt(match[3], 10),
     rc: match[4] != null ? parseInt(match[4], 10) : null,
     isRc: match[4] != null
+  };
+}
+
+function parseStableVersion(version) {
+  const match = version.trim().match(STABLE_VERSION_PATTERN);
+
+  if (!match) {
+    return null;
+  }
+
+  return {
+    major: parseInt(match[1], 10),
+    minor: parseInt(match[2], 10),
+    patch: parseInt(match[3], 10)
   };
 }
 
@@ -67,6 +83,30 @@ function bumpByReleaseType(currentVersion, releaseType, withRc) {
   }
 }
 
+function customVersion(versionStr, withRc) {
+  const parsed = parseStableVersion(versionStr);
+
+  if (!parsed) {
+    throw new Error(`Formato versione non valido: "${versionStr}". Usa M.m.p (es. 22.0.0).`);
+  }
+
+  return formatVersion({ ...parsed, rc: withRc ? 1 : null });
+}
+
+async function askCustomVersion(currentVersion) {
+  const prompt = `\nVersione attuale: ${currentVersion}\nInserisci la nuova versione (formato M.m.p, es. 22.0.0): `;
+
+  for (;;) {
+    const input = (await ask(prompt)).trim();
+
+    if (parseStableVersion(input)) {
+      return input;
+    }
+
+    console.log('Formato non valido. Usa tre numeri separati da punto (M.m.p), es. 22.0.0.');
+  }
+}
+
 function advanceRc(currentVersion) {
   const version = parseVersion(currentVersion);
 
@@ -101,6 +141,9 @@ function isYes(answer) {
   return normalized === 'y' || normalized === 'yes' || normalized === 's' || normalized === 'si';
 }
 
+const rcQuestion = `
+Vuoi procedere tramite RC (Release Candidate)? (y/n): `;
+
 async function determineNewVersion(currentVersion) {
   if (isRcVersion(currentVersion)) {
     const nextRc = advanceRc(currentVersion);
@@ -132,20 +175,24 @@ Quale tipo di release vuoi?
 1 = major
 2 = minor
 3 = patch
-Enter a number (1-3): `;
+4 = custom (versione completa M.m.p)
+Enter a number (1-4): `;
 
   const releaseAnswer = (await ask(releaseQuestion)).trim();
-  const releaseTypeMap = { 1: 'major', 2: 'minor', 3: 'patch' };
+  const releaseTypeMap = { 1: 'major', 2: 'minor', 3: 'patch', 4: 'custom' };
   const releaseType = releaseTypeMap[releaseAnswer];
 
   if (!releaseType) {
-    throw new Error('Opzione non valida. Deve essere 1, 2 o 3.');
+    throw new Error('Opzione non valida. Deve essere 1, 2, 3 o 4.');
   }
 
-  const rcQuestion = `
-Vuoi procedere tramite RC (Release Candidate)? (y/n): `;
-  const withRc = isYes(await ask(rcQuestion));
+  if (releaseType === 'custom') {
+    const customVersionStr = await askCustomVersion(currentVersion);
+    const withRc = isYes(await ask(rcQuestion));
+    return customVersion(customVersionStr, withRc);
+  }
 
+  const withRc = isYes(await ask(rcQuestion));
   return bumpByReleaseType(currentVersion, releaseType, withRc);
 }
 

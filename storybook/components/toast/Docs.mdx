@@ -100,4 +100,32 @@ La configurazione (`TailwindToastConfig`) supporta messaggio, titolo opzionale, 
 
 ### `TailwindToast` (`tailwind-toast`)
 
-Eredita `TailwindComponent` (`id`, `class`). Legge lo stato dal servizio e non espone input pubblici oltre all’ereditarietà host.
+Eredita `TailwindComponent` (`id`, `class`). Legge lo stato dal servizio.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Input</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>vertical</code></td>
+      <td><code>'top'</code></td>
+      <td>Ancoraggio verticale: <code>top</code> o <code>bottom</code> (offset <code>*-8</code>).</td>
+    </tr>
+    <tr>
+      <td><code>horizontal</code></td>
+      <td><code>'right'</code></td>
+      <td>Ancoraggio orizzontale: <code>left</code> o <code>right</code> (offset <code>*-8</code>).</td>
+    </tr>
+  </tbody>
+</table>
+
+Esempio con stack in basso a sinistra:
+
+```html
+<tailwind-toast vertical="bottom" horizontal="left" />
+```

@@ -1,8 +1,8 @@
-<div class="fixed top-8 right-8 z-1080 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+<div [class]="containerClasses()">
   @for (toast of toastService.toasts(); track toast.id) {
     <div
-      class="pointer-events-auto rounded-xl border shadow-lg p-4 flex gap-3 animate-in slide-in-from-right-full duration-300"
-      [class]="surfaceClass(toast.color)"
+      class="pointer-events-auto rounded-xl border shadow-lg p-4 flex gap-3 animate-in duration-300"
+      [class]="enterAnimationClass() + ' ' + surfaceClass(toast.color)"
       role="alert">
       <div class="flex-1 min-w-0">
         @if (toast.title || toast.icon) {

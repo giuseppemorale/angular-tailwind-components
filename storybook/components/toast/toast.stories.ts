@@ -10,7 +10,7 @@ import { Component, inject } from '@angular/core';
   selector: 'tailwind-toast-story',
   imports: [TailwindToast, TailwindButton],
   template: ` <div class="flex flex-wrap gap-3">
-    <tailwind-toast />
+    <tailwind-toast [vertical]="vertical" [horizontal]="horizontal" />
     <tailwind-button color="success" (click)="showSuccess()">Success</tailwind-button>
     <tailwind-button color="warning" (click)="showWarning()">Warning</tailwind-button>
     <tailwind-button color="danger" (click)="showDanger()">Error</tailwind-button>
@@ -19,6 +19,9 @@ import { Component, inject } from '@angular/core';
   </div>`
 })
 class ToastStoryComponent {
+  vertical: 'top' | 'bottom' = 'top';
+  horizontal: 'left' | 'right' = 'right';
+
   readonly toastService = inject(TailwindToastService);
 
   showSuccess() {
@@ -38,6 +41,14 @@ class ToastStoryComponent {
 const meta: Meta = {
   title: 'Components/Toast',
   component: ToastStoryComponent,
+  argTypes: {
+    vertical: { control: 'radio', options: ['top', 'bottom'] },
+    horizontal: { control: 'radio', options: ['left', 'right'] }
+  },
+  args: {
+    vertical: 'top',
+    horizontal: 'right'
+  },
   parameters: {
     docs: {
       story: { height: '300px' }

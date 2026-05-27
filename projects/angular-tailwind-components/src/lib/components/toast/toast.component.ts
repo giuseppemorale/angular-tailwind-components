@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { TailwindColor } from '../../models';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { TailwindColor, TailwindPosition } from '../../models';
 import { TailwindToastService } from '../../services';
 import { TailwindButton } from '../button/button.component';
 import { TailwindIcon } from '../icon/icon.component';
@@ -18,6 +18,30 @@ export type { TailwindToastConfig, TailwindToastItem };
 })
 export class TailwindToast extends TailwindComponent {
   readonly toastService = inject(TailwindToastService);
+
+  /** Vertical anchor of the toast stack */
+  readonly vertical = input<Exclude<TailwindPosition, 'left' | 'right'>>('top');
+  /** Horizontal anchor of the toast stack */
+  readonly horizontal = input<Exclude<TailwindPosition, 'top' | 'bottom'>>('right');
+
+  readonly containerClasses = computed(() => {
+    const classes = [
+      'fixed z-1080 flex flex-col gap-2 max-w-sm w-full pointer-events-none',
+      this.vertical() === 'top' ? 'top-8' : 'bottom-8',
+      this.horizontal() === 'left' ? 'left-8' : 'right-8'
+    ];
+    return classes.join(' ');
+  });
+
+  readonly enterAnimationClass = computed(() => {
+    if (this.horizontal() === 'left') {
+      return 'slide-in-from-left-full';
+    }
+    if (this.vertical() === 'bottom') {
+      return 'slide-in-from-bottom-full';
+    }
+    return 'slide-in-from-right-full';
+  });
 
   surfaceClass(color: TailwindColor | undefined): string {
     const colorMap: Record<TailwindColor, string> = {

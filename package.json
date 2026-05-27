@@ -33,7 +33,7 @@
   "private": false,
   "packageManager": "npm@11.13.0",
   "dependencies": {
-    "@angular/cdk": "^21.2.10",
+    "@angular/cdk": "^21.2.13",
     "@angular/common": "^21.2.12",
     "@angular/compiler": "^21.2.12",
     "@angular/core": "^21.2.12",
@@ -44,11 +44,11 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "^0.2102.10",
-    "@angular-devkit/build-angular": "^21.2.10",
-    "@angular-devkit/core": "^21.2.10",
-    "@angular/build": "^21.2.10",
-    "@angular/cli": "^21.2.10",
+    "@angular-devkit/architect": "^0.2102.13",
+    "@angular-devkit/build-angular": "^21.2.13",
+    "@angular-devkit/core": "^21.2.13",
+    "@angular/build": "^21.2.13",
+    "@angular/cli": "^21.2.13",
     "@angular/compiler-cli": "^21.2.12",
     "@angular/platform-browser-dynamic": "^21.2.12",
     "@compodoc/compodoc": "^1.2.1",

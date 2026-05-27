@@ -159,6 +159,11 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
       }
     });
     effect(() => {
+      const el = this.editable()?.nativeElement;
+      if (!el || this.isCodeView()) return;
+      el.contentEditable = this.isEditable() ? 'true' : 'false';
+    });
+    effect(() => {
       this.toolbarMouseDownListener?.();
       this.toolbarMouseDownListener = null;
       const wrapper = this.editorWrapper()?.nativeElement;
@@ -225,6 +230,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   }
 
   onEditorMouseDown(event: MouseEvent): void {
+    if (!this.isEditable()) return;
     const target = event.target as HTMLElement;
     if (!target.closest('.tailwind-editor-toolbar button')) return;
     const el = this.editable()?.nativeElement;

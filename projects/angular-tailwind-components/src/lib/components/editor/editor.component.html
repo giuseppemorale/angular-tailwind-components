@@ -43,7 +43,7 @@
         class="tailwind-editor-surface prose-editor overflow-y-auto"
         [class]="surfaceClasses()"
         [style.min-height]="minHeight()"
-        [attr.contenteditable]="isEditable()"
+        [attr.contenteditable]="isEditable() ? 'true' : 'false'"
         [attr.data-placeholder]="placeholder() || null"
         role="textbox"
         [attr.aria-multiline]="true"

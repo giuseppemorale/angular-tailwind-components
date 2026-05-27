@@ -83,7 +83,18 @@ export const Editor: StoryObj<TailwindEditor> = {
   },
   render: args => ({
     props: args,
-    template: '<sb-editor-story />',
+    template: `<sb-editor-story
+      [label]="label"
+      [placeholder]="placeholder"
+      [minHeight]="minHeight"
+      [size]="size"
+      [toolbar]="toolbar"
+      [helperText]="helperText"
+      [hasError]="hasError"
+      [errorText]="errorText"
+      [readonly]="readonly"
+      [imageUrlEnabled]="imageUrlEnabled"
+      [imageUploadEnabled]="imageUploadEnabled" />`,
     moduleMetadata: { imports: [EditorStoryComponent] }
   })
 };

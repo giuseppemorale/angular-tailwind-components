@@ -174,6 +174,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   goToLogin(): void {
-    void this.router.navigateByUrl('/');
+    void this.router.navigateByUrl('/login');
   }
 }

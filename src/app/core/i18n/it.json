@@ -142,6 +142,20 @@
     "DENSITY_COMFORTABLE": "Comoda",
     "DENSITY_COMPACT": "Compatta"
   },
+  "LOGIN": {
+    "TITLE": "Accedi",
+    "INTRO": "Inserisci le tue credenziali per accedere all'app di prova.",
+    "FIELD_EMAIL": "Email",
+    "FIELD_EMAIL_PH": "nome@esempio.it",
+    "FIELD_PASSWORD": "Password",
+    "FIELD_PASSWORD_PH": "La tua password",
+    "FIELD_REMEMBER": "Ricordami su questo dispositivo",
+    "BTN_SUBMIT": "Accedi",
+    "NO_ACCOUNT": "Non hai un account?",
+    "LINK_REGISTER": "Registrati",
+    "ERROR_EMAIL": "Inserisci un indirizzo email valido",
+    "ERROR_PASSWORD": "Password obbligatoria (min. 8 caratteri)"
+  },
   "REGISTRATION": {
     "TITLE": "Crea il tuo account",
     "INTRO": "Flusso di registrazione a tre step con stepper lineare: dati anagrafici, credenziali e riepilogo con conferma password.",

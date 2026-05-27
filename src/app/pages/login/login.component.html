@@ -1,0 +1,47 @@
+<app-header class="mb-3" [items]="breadcrumb" [description]="'LOGIN.INTRO' | transloco" />
+
+<div class="h-[60vh] flex justify-center items-center">
+  <tailwind-card class="w-full max-w-md" [hasFooter]="false">
+    <div tailwind-card-header>
+      <tailwind-title titleTag="h4" [text]="'LOGIN.TITLE' | transloco" icon="arrow-right-on-rectangle" />
+    </div>
+
+    <form [formGroup]="form" class="space-y-4" (ngSubmit)="submit()">
+      <tailwind-input
+        id="login-email"
+        type="email"
+        autocomplete="email"
+        [formControl]="form.controls.email"
+        [label]="'LOGIN.FIELD_EMAIL' | transloco"
+        [placeholder]="'LOGIN.FIELD_EMAIL_PH' | transloco"
+        [hasError]="form.controls.email | error"
+        [errorText]="'LOGIN.ERROR_EMAIL' | transloco" />
+
+      <tailwind-input-password
+        id="login-password"
+        autocomplete="current-password"
+        [toggleMask]="true"
+        [formControl]="form.controls.password"
+        [label]="'LOGIN.FIELD_PASSWORD' | transloco"
+        [placeholder]="'LOGIN.FIELD_PASSWORD_PH' | transloco"
+        [hasError]="form.controls.password | error"
+        [errorText]="'LOGIN.ERROR_PASSWORD' | transloco" />
+
+      <tailwind-checkbox
+        id="login-remember"
+        [formControl]="form.controls.remember"
+        [label]="'LOGIN.FIELD_REMEMBER' | transloco" />
+
+      <tailwind-button type="submit" class="w-full" icon="arrow-right-on-rectangle" [disabled]="submitting()">
+        {{ 'LOGIN.BTN_SUBMIT' | transloco }}
+      </tailwind-button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-neutral-600">
+      {{ 'LOGIN.NO_ACCOUNT' | transloco }}
+      <a routerLink="/registration" class="font-medium text-primary-600 hover:text-primary-700">
+        {{ 'LOGIN.LINK_REGISTER' | transloco }}
+      </a>
+    </p>
+  </tailwind-card>
+</div>

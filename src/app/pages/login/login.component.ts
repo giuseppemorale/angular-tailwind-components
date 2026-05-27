@@ -1,0 +1,78 @@
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
+import {
+  TailwindButton,
+  TailwindCard,
+  TailwindCheckbox,
+  TailwindInput,
+  TailwindInputPassword,
+  TailwindTitle,
+  TailwindToastService
+} from 'angular-tailwind-components';
+import { HeaderComponent } from '../../core/template/header/header.component';
+import { ErrorPipe } from '../../core/pipe/error.pipe';
+
+@Component({
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    HeaderComponent,
+    TailwindCard,
+    TailwindTitle,
+    TailwindInput,
+    TailwindInputPassword,
+    TailwindCheckbox,
+    TailwindButton,
+    TranslocoPipe,
+    ErrorPipe
+  ],
+  selector: 'app-page-login',
+  templateUrl: './login.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class LoginComponent {
+  private readonly router = inject(Router);
+  private readonly toastService = inject(TailwindToastService);
+
+  readonly breadcrumb = [
+    { label: 'Home', link: '/', icon: 'home' },
+    { label: 'Accedi', link: '/login' }
+  ];
+
+  readonly submitting = signal(false);
+
+  readonly form = new FormGroup({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email]
+    }),
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(8)]
+    }),
+    remember: new FormControl(false, { nonNullable: true })
+  });
+
+  submit(): void {
+    this.form.markAllAsTouched();
+    if (!this.form.valid) {
+      return;
+    }
+
+    this.submitting.set(true);
+    const payload = this.form.getRawValue();
+    console.log('[login demo]', payload);
+
+    setTimeout(() => {
+      this.submitting.set(false);
+      this.toastService.success(
+        'Accesso effettuato',
+        'Benvenuto! Reindirizzamento alla home…',
+        'check-circle'
+      );
+      void this.router.navigateByUrl('/home');
+    }, 800);
+  }
+}

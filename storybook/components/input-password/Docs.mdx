@@ -26,19 +26,19 @@ import * as InputPasswordStories from './input-password.stories';
 export class ExampleComponent {}
 ```
 
-## Label globali con defineTheme
+## Label globali con provideTailwindConfig
 
 ```typescript
-import { defineTheme } from 'angular-tailwind-components';
+import { provideTailwindConfig } from 'angular-tailwind-components';
 
-defineTheme({
+provideTailwindConfig(() => ({
   PASSWORD_LABELS: {
     prompt: 'Scegli una password',
     weak: 'Debole',
     medium: 'Buona',
     strong: 'Forte'
   }
-});
+}));
 ```
 
 ## Anteprima

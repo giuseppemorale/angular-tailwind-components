@@ -15,7 +15,7 @@ export type TailwindThemeColorShade =
   | '900'
   | '950';
 
-/** Explicit semantic palette shades only (legacy flat object form for `defineTheme` colors). */
+/** Explicit semantic palette shades only (legacy flat object form for `provideTailwindConfig` colors). */
 export type TailwindThemeSemanticShades = Partial<Record<TailwindThemeColorShade, string>>;
 
 /**

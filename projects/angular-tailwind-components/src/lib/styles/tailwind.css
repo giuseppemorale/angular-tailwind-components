@@ -13,7 +13,7 @@
 @source inline("z-popover");
 
 /*
- * `defineTheme({ COLORS: { primary: 'indigo', … } })` points semantic tokens at `var(--color-<palette>-*)`.
+ * `provideTailwindConfig(() => ({ COLORS: { primary: 'indigo', … } }))` points semantic tokens at `var(--color-<palette>-*)`.
  * Tailwind only emits `--color-<palette>-*` for palettes referenced in scanned content unless we safelist
  * them here (see https://tailwindcss.com/docs/detecting-classes-in-source-files#safelisting-specific-utilities).
  */
@@ -121,7 +121,7 @@
 
   /*
    * Foreground on semantic backgrounds (`text-on-success-600`, …).
-   * `defineTheme` may set `--color-on-<semantic>-<shade>` when colors use `{ shades, on }`.
+   * `provideTailwindConfig` may set `--color-on-<semantic>-<shade>` when colors use `{ shades, on }`.
    * String palettes inherit these defaults (tuned for default Tailwind scales).
    */
   --color-on-primary-50: var(--color-neutral-900);

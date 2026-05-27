@@ -22,16 +22,16 @@ class ToastStoryComponent {
   readonly toastService = inject(TailwindToastService);
 
   showSuccess() {
-    this.toastService.success('Saved successfully!', 'Success');
+    this.toastService.success('Success', 'Saved successfully!', 'check-circle');
   }
   showWarning() {
-    this.toastService.warning('Session expires in 5 minutes.', 'Warning');
+    this.toastService.warning('Warning', 'Session expires in 5 minutes.', 'exclamation-triangle');
   }
   showDanger() {
-    this.toastService.danger('Failed to save changes.', 'Error');
+    this.toastService.danger('Error', 'Failed to save changes.', 'x-circle');
   }
   showInfo() {
-    this.toastService.info('New version available.', 'Info');
+    this.toastService.info('Info', 'New version available.', 'information-circle');
   }
 }
 

@@ -31,12 +31,13 @@ export const TAILWIND_PAGINATION_SUMMARY = new InjectionToken<string>('TAILWIND_
 export const TAILWIND_PASSWORD_LABELS = new InjectionToken<TailwindPasswordLabels>('TAILWIND_PASSWORD_LABELS');
 
 /**
- * Default labels for `tailwind-editor` modals and code view when component inputs are omitted.
+ * Labels for `tailwind-editor` (modals, code view, toolbar).
+ * Defaults to {@link DEFAULT_TAILWIND_EDITOR_LABELS}; override via {@link provideTailwindConfig} with `Partial` keys only.
  */
 export const TAILWIND_EDITOR_LABELS = new InjectionToken<TailwindEditorLabels>('TAILWIND_EDITOR_LABELS');
 
 /**
  * Per-tag typography and icon size for `tailwind-title` when `titleTag` is set.
- * Defaults to {@link DEFAULT_TAILWIND_TITLE_SCALE}; override via {@link defineTheme} or a `Provider`.
+ * Defaults to {@link DEFAULT_TAILWIND_TITLE_SCALE}; override via {@link provideTailwindConfig} or a `Provider`.
  */
 export const TAILWIND_TITLE_SCALE = new InjectionToken<TailwindTitleScale>('TAILWIND_TITLE_SCALE');

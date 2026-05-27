@@ -1,12 +1,19 @@
-<div class="fixed bottom-4 right-4 z-1080 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+<div class="fixed top-8 right-8 z-1080 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
   @for (toast of toastService.toasts(); track toast.id) {
     <div
       class="pointer-events-auto rounded-xl border shadow-lg p-4 flex gap-3 animate-in slide-in-from-right-full duration-300"
       [class]="surfaceClass(toast.color)"
       role="alert">
       <div class="flex-1 min-w-0">
-        @if (toast.title) {
-          <p class="text-sm font-semibold mb-0.5">{{ toast.title }}</p>
+        @if (toast.title || toast.icon) {
+          <div class="flex items-center gap-2 mb-0.5">
+            @if (toast.icon) {
+              <tailwind-icon [icon]="toast.icon" [size]="20" [class]="iconClass(toast.color)" />
+            }
+            @if (toast.title) {
+              <p class="text-sm font-semibold min-w-0">{{ toast.title }}</p>
+            }
+          </div>
         }
         <p class="text-sm">{{ toast.message }}</p>
       </div>

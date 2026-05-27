@@ -23,7 +23,7 @@ export const DEFAULT_TAILWIND_TITLE_SCALE: TailwindTitleScale = {
 
 /**
  * Merges optional partial overrides onto {@link DEFAULT_TAILWIND_TITLE_SCALE}.
- * Used by {@link defineTheme} and when providing {@link TAILWIND_TITLE_SCALE} directly.
+ * Used by {@link provideTailwindConfig} and when providing {@link TAILWIND_TITLE_SCALE} directly.
  */
 export function resolveTailwindTitleScale(
   partial?: Partial<Record<TailwindTitleTag, Partial<TailwindTitleTagScale>>>

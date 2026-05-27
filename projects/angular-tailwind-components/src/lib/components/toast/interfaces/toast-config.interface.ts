@@ -1,8 +1,9 @@
-import { TailwindColor } from '../../../models';
+import { TailwindColor, TailwindHeroicon } from '../../../models';
 
 export interface TailwindToastConfig {
+  title: string;
   message: string;
-  title?: string;
+  icon?: TailwindHeroicon;
   color?: TailwindColor;
   duration?: number;
   dismissible?: boolean;

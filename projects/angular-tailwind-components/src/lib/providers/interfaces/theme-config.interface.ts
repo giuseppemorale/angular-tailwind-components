@@ -10,7 +10,7 @@ import { TailwindThemeSeverityColor } from '../types/theme-config.types';
 
 /**
  * Optional app-wide values for library `InjectionToken`s.
- * Pass only the keys you need; {@link defineTheme} registers matching `Provider`s.
+ * Pass only the keys you need; {@link provideTailwindConfig} registers matching `Provider`s.
  */
 export interface TailwindComponentsConfig {
   /** Maps to {@link TAILWIND_ICON_SIZE} (default icon pixel size when omitted). */
@@ -25,8 +25,11 @@ export interface TailwindComponentsConfig {
   PAGINATION_SUMMARY?: string;
   /** Maps to {@link TAILWIND_PASSWORD_LABELS}. */
   PASSWORD_LABELS?: TailwindPasswordLabels;
-  /** Maps to {@link TAILWIND_EDITOR_LABELS}. */
-  EDITOR_LABELS?: TailwindEditorLabels;
+  /**
+   * Maps to {@link TAILWIND_EDITOR_LABELS} (merged onto {@link DEFAULT_TAILWIND_EDITOR_LABELS}).
+   * Pass only the keys to override; omitted keys keep library defaults.
+   */
+  EDITOR_LABELS?: Partial<TailwindEditorLabels>;
   /**
    * Maps to {@link TAILWIND_TITLE_SCALE} (merged onto {@link DEFAULT_TAILWIND_TITLE_SCALE}).
    * Overrides typography classes and icon pixel size per `h1`–`h6`.

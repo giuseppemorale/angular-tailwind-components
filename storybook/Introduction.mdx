@@ -15,7 +15,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — Visual documentation for all components
-- 🎭 **Customizable** — **`defineTheme()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
+- 🎭 **Customizable** — **`provideTailwindConfig()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
 
 ## Installation
 
@@ -72,33 +72,33 @@ export class ExampleComponent {
 
 ## Application configuration
 
-Use **`defineTheme`** from `angular-tailwind-components` for app-wide **injection token** defaults and optional **`colors`** (runtime CSS variables on `document.documentElement`). It returns **`EnvironmentProviders`**: add one entry to `bootstrapApplication` / `ApplicationConfig.providers` (no spread).
+Use **`provideTailwindConfig`** from `angular-tailwind-components` for app-wide **injection token** defaults and optional **`colors`** (runtime CSS variables on `document.documentElement`). Pass a **factory** so you can use `inject()` (e.g. for i18n). It returns **`EnvironmentProviders`**: add one entry to `bootstrapApplication` / `ApplicationConfig.providers` (no spread).
 
 ### Example
 
 ```typescript
 import { ApplicationConfig } from '@angular/core';
-import { defineTheme } from 'angular-tailwind-components';
+import { provideTailwindConfig, provideTailwindThemeColors } from 'angular-tailwind-components';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    defineTheme({
+    provideTailwindConfig(() => ({
       ICON_SIZE: 20,
       DATETIME_LANGUAGE: 'it',
       COMPONENTS_SIZE: 'md',
       BUTTON_KIND: 'flat',
       PAGINATION_SUMMARY: 'Items {start}-{end} of {total}',
-      COLORS: {
-        primary: 'violet', // Forma oggetto: { 600: '#4f46e5', 700: '#4338ca' }
-        danger: 'rose',
-        neutral: 'zinc'
-      }
-    })
+    })),
+    provideTailwindThemeColors(() => ({
+      primary: 'violet',
+      danger: 'rose',
+      neutral: 'zinc'
+    }))
   ]
 };
 ```
 
-You can omit **`colors`** if you only need token defaults, or omit token fields if you only need theme colors. For string palette names, see the [Tailwind color reference](https://tailwindcss.com/docs/colors). Full API (including **`TailwindThemeSeverityColor`**) and the token → `InjectionToken` table are in the [package README](https://github.com/giuseppemorale/angular-tailwind-components/blob/main/projects/angular-tailwind-components/README.md#application-configuration-definetheme).
+You can omit **`colors`** if you only need token defaults, or omit token fields if you only need theme colors. For string palette names, see the [Tailwind color reference](https://tailwindcss.com/docs/colors). Full API (including **`TailwindThemeSeverityColor`**) and the token → `InjectionToken` table are in the [package README](https://github.com/giuseppemorale/angular-tailwind-components/blob/main/projects/angular-tailwind-components/README.md#application-configuration-providetailwindconfig).
 
 ## Components
 

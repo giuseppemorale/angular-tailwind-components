@@ -1,4 +1,6 @@
-import { buildTailwindThemeVariableEntries } from './theme-define.provider';
+import { TestBed } from '@angular/core/testing';
+import { buildTailwindThemeVariableEntries, provideTailwindConfig } from './theme-define.provider';
+import { TAILWIND_BUTTON_KIND } from '../tokens';
 
 describe('buildTailwindThemeVariableEntries', () => {
   it('maps string palette to var references for each shade', () => {
@@ -49,5 +51,15 @@ describe('buildTailwindThemeVariableEntries', () => {
     });
     expect(entries).toContainEqual(['--color-info-600', '#00f']);
     expect(entries.some(([k]) => k.includes('foo'))).toBe(false);
+  });
+});
+
+describe('provideTailwindConfig', () => {
+  it('registers token values from a factory (inject-safe context)', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig(() => ({ BUTTON_KIND: 'outlined' }))]
+    });
+
+    expect(TestBed.inject(TAILWIND_BUTTON_KIND)).toBe('outlined');
   });
 });

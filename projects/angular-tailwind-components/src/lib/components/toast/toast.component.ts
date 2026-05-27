@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TailwindColor } from '../../models';
 import { TailwindToastService } from '../../services';
 import { TailwindButton } from '../button/button.component';
+import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindToastConfig } from './interfaces/toast-config.interface';
 import { TailwindToastItem } from './interfaces/toast-item.interface';
@@ -9,7 +10,7 @@ import { TailwindToastItem } from './interfaces/toast-item.interface';
 export type { TailwindToastConfig, TailwindToastItem };
 
 @Component({
-  imports: [TailwindButton],
+  imports: [TailwindButton, TailwindIcon],
   selector: 'tailwind-toast',
   templateUrl: './toast.component.html',
   styleUrl: './toast.component.css',
@@ -29,5 +30,18 @@ export class TailwindToast extends TailwindComponent {
       transparent: 'bg-white border-neutral-200'
     };
     return colorMap[color ?? 'info'];
+  }
+
+  iconClass(color: TailwindColor | undefined): string {
+    const iconMap: Record<TailwindColor, string> = {
+      primary: 'text-primary-600',
+      secondary: 'text-neutral-600',
+      success: 'text-success-600',
+      warning: 'text-warning-600',
+      danger: 'text-danger-600',
+      info: 'text-info-600',
+      transparent: 'text-neutral-500'
+    };
+    return iconMap[color ?? 'info'];
   }
 }

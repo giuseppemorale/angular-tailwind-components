@@ -32,19 +32,17 @@ export class ExampleComponent {
 }
 ```
 
-### `defineTheme` — etichette modali e code view
+### `provideTailwindConfig` — etichette modali e code view
 
 ```typescript
-defineTheme({
+provideTailwindConfig(() => ({
   EDITOR_LABELS: {
     linkModalTitle: 'Inserisci link',
     cancel: 'Annulla',
-    insert: 'Inserisci',
-    codeView: 'Modifica HTML',
-    codeViewExit: 'Editor visuale',
-    // …altre chiavi di TailwindEditorLabels
+    insert: 'Inserisci'
+    // Altre chiavi: default della libreria (DEFAULT_TAILWIND_EDITOR_LABELS)
   }
-});
+}));
 ```
 
 ## Anteprima
@@ -147,7 +145,7 @@ Il pulsante **code** (`icon: code-bracket`) alterna l’editor visuale e una **t
 
 ## `TAILWIND_EDITOR_LABELS`
 
-Token opzionale (anche via `defineTheme` con `EDITOR_LABELS`) per titoli modali link/immagine, pulsanti, placeholder della sorgente HTML e messaggi di validazione. Default: `DEFAULT_TAILWIND_EDITOR_LABELS`.
+Token opzionale (anche via `provideTailwindConfig` con `EDITOR_LABELS`) per titoli modali link/immagine, pulsanti, placeholder della sorgente HTML e messaggi di validazione. Default: `DEFAULT_TAILWIND_EDITOR_LABELS`.
 
 ---
 

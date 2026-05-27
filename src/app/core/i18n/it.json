@@ -14,6 +14,33 @@
   "FOOTER": {
     "COPYRIGHT": "© Angular Tailwind Components 2026 - All rights reserved"
   },
+  "TAILWIND_CONFIG": {
+    "PAGINATION_SUMMARY": "Elementi da {start} a {end} di {total}",
+    "PASSWORD_LABELS": {
+      "PROMPT": "Scegli una password",
+      "WEAK": "Debole",
+      "MEDIUM": "Buona",
+      "STRONG": "Forte"
+    },
+    "EDITOR_LABELS": {
+      "LINK_MODAL_TITLE": "Inserisci link",
+      "IMAGE_MODAL_TITLE": "Inserisci immagine",
+      "IMAGE_URL_LABEL": "URL immagine",
+      "IMAGE_URL_PLACEHOLDER": "https://example.com/image.png",
+      "IMAGE_ALT_LABEL": "Testo alternativo",
+      "IMAGE_ALT_PLACEHOLDER": "Descrizione",
+      "LINK_URL_LABEL": "URL link",
+      "LINK_URL_PLACEHOLDER": "https://example.com",
+      "LINK_TEXT_LABEL": "Testo link",
+      "LINK_TEXT_PLACEHOLDER": "Link label",
+      "HTML_SOURCE_PLACEHOLDER": "Modifica HTML source…",
+      "IMAGE_MAX_SIZE_ERROR": "Immagine supera la dimensione massima ({max}).",
+      "CANCEL": "Annulla",
+      "INSERT": "Inserisci",
+      "CODE_VIEW": "Modifica HTML",
+      "CODE_VIEW_EXIT": "Editor visuale"
+    }
+  },
   "HOME": {
     "BREADCRUMB": "Home",
     "INTRO": "Panoramica rapida con card, alert e badge per provare il layout e gli stati visivi dei componenti.",

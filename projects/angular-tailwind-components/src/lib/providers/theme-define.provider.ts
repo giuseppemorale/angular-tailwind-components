@@ -1,13 +1,14 @@
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import {
   inject,
+  InjectionToken,
   makeEnvironmentProviders,
   PLATFORM_ID,
   provideAppInitializer,
   type EnvironmentProviders,
   type Provider
 } from '@angular/core';
-import { resolveTailwindTitleScale } from '../models';
+import { resolveTailwindEditorLabels, resolveTailwindTitleScale } from '../models';
 import {
   TAILWIND_BUTTON_KIND,
   TAILWIND_COMPONENTS_SIZE,
@@ -18,7 +19,11 @@ import {
   TAILWIND_PASSWORD_LABELS,
   TAILWIND_TITLE_SCALE
 } from '../tokens';
-import { TailwindComponentsConfig, TailwindDefineThemeConfig } from './interfaces/theme-config.interface';
+import {
+  TailwindComponentsConfig,
+  TailwindDefineThemeColors,
+  TailwindDefineThemeConfig
+} from './interfaces/theme-config.interface';
 import {
   TailwindThemeColorShade,
   TailwindThemeSemantic,
@@ -27,49 +32,39 @@ import {
   TailwindThemeSeverityColor
 } from './types/theme-config.types';
 
-/**
- * Builds `Provider` entries for each set field on `config`.
- * Used by {@link defineTheme} and {@link provideTailwindComponents}.
- */
-function providersFromTailwindComponentsConfig(config: TailwindComponentsConfig): Provider[] {
-  const providers: Provider[] = [];
+function providersFromConfigFactory(config: () => TailwindComponentsConfig): Provider[] {
+  const fromConfig = <T>(
+    token: InjectionToken<T>,
+    select: (c: TailwindComponentsConfig) => T | undefined,
+    map?: (value: NonNullable<T>) => T
+  ): Provider => ({
+    provide: token,
+    useFactory: () => {
+      const value = select(config());
+      if (value === undefined) {
+        return undefined;
+      }
+      return map ? map(value as NonNullable<T>) : value;
+    }
+  });
 
-  if (config.ICON_SIZE !== undefined) {
-    providers.push({ provide: TAILWIND_ICON_SIZE, useValue: config.ICON_SIZE });
-  }
-  if (config.DATETIME_LANGUAGE !== undefined) {
-    providers.push({ provide: TAILWIND_DATETIME_LANGUAGE, useValue: config.DATETIME_LANGUAGE });
-  }
-  if (config.COMPONENTS_SIZE !== undefined) {
-    providers.push({ provide: TAILWIND_COMPONENTS_SIZE, useValue: config.COMPONENTS_SIZE });
-  }
-  if (config.BUTTON_KIND !== undefined) {
-    providers.push({ provide: TAILWIND_BUTTON_KIND, useValue: config.BUTTON_KIND });
-  }
-  if (config.PAGINATION_SUMMARY !== undefined) {
-    providers.push({ provide: TAILWIND_PAGINATION_SUMMARY, useValue: config.PAGINATION_SUMMARY });
-  }
-  if (config.PASSWORD_LABELS !== undefined) {
-    providers.push({ provide: TAILWIND_PASSWORD_LABELS, useValue: config.PASSWORD_LABELS });
-  }
-  if (config.EDITOR_LABELS !== undefined) {
-    providers.push({ provide: TAILWIND_EDITOR_LABELS, useValue: config.EDITOR_LABELS });
-  }
-  if (config.TITLE_SCALE !== undefined) {
-    providers.push({ provide: TAILWIND_TITLE_SCALE, useValue: resolveTailwindTitleScale(config.TITLE_SCALE) });
-  }
-
-  return providers;
+  return [
+    fromConfig(TAILWIND_ICON_SIZE, c => c.ICON_SIZE),
+    fromConfig(TAILWIND_DATETIME_LANGUAGE, c => c.DATETIME_LANGUAGE),
+    fromConfig(TAILWIND_COMPONENTS_SIZE, c => c.COMPONENTS_SIZE),
+    fromConfig(TAILWIND_BUTTON_KIND, c => c.BUTTON_KIND),
+    fromConfig(TAILWIND_PAGINATION_SUMMARY, c => c.PAGINATION_SUMMARY),
+    fromConfig(TAILWIND_PASSWORD_LABELS, c => c.PASSWORD_LABELS),
+    fromConfig(TAILWIND_EDITOR_LABELS, c => c.EDITOR_LABELS, v => resolveTailwindEditorLabels(v)),
+    fromConfig(TAILWIND_TITLE_SCALE, c => c.TITLE_SCALE, v => resolveTailwindTitleScale(v))
+  ];
 }
 
 /**
- * Registers environment-scoped providers for library injection tokens only (no theme `colors`).
- * Prefer {@link defineTheme}, which registers the same tokens when set plus optional CSS variables.
- *
- * @deprecated Use {@link defineTheme} with the same fields (`ICON_SIZE`, `DATETIME_LANGUAGE`, `TITLE_SCALE`, etc.).
+ * @deprecated Use {@link provideTailwindConfig}(() => config) instead.
  */
 export function provideTailwindComponents(config: TailwindComponentsConfig): EnvironmentProviders {
-  return makeEnvironmentProviders(providersFromTailwindComponentsConfig(config));
+  return provideTailwindConfig(() => config);
 }
 
 const SHADES_WITH_950 = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
@@ -111,9 +106,6 @@ function isSemanticPaletteObject(value: object): value is TailwindThemeSemanticP
   );
 }
 
-/**
- * Normalizes object `colors` values: legacy flat shade map vs `{ shades, on? }`.
- */
 function normalizeSemanticColorObject(value: Exclude<TailwindThemeSeverityColor, string>): {
   shades: TailwindThemeSemanticShades;
   on?: TailwindThemeSemanticShades;
@@ -154,7 +146,7 @@ function pushOnShadeVariables(
 }
 
 /**
- * Builds `[CSS custom property name, value]` pairs for {@link defineTheme}.
+ * Builds `[CSS custom property name, value]` pairs for semantic `COLORS`.
  * Exported for unit tests.
  */
 export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeConfig): Array<[string, string]> {
@@ -197,32 +189,39 @@ export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeCon
   return entries;
 }
 
-function applyTailwindThemeToElement(element: HTMLElement, config: TailwindDefineThemeConfig): void {
-  for (const [prop, val] of buildTailwindThemeVariableEntries(config)) {
+function applyTailwindThemeToElement(element: HTMLElement, colors: TailwindDefineThemeColors): void {
+  for (const [prop, val] of buildTailwindThemeVariableEntries({ COLORS: colors })) {
     element.style.setProperty(prop, val);
   }
 }
 
 /**
- * Registers environment-scoped library defaults: optional **injection tokens** from {@link TailwindComponentsConfig}
- * plus an app initializer that applies optional **`COLORS`** on
- * `document.documentElement` in the browser. Add as a single entry in `providers` (no spread).
+ * Overrides library injection tokens (`ICON_SIZE`, `DATETIME_LANGUAGE`, `EDITOR_LABELS`, …).
+ * Pass a factory so you can use `inject()` (e.g. for translated labels).
  *
- * Palette **strings** (e.g. `'indigo'`) rely on `--color-indigo-*` existing in the CSS bundle; the
- * library stylesheet safelists Tailwind’s default palette names for that reason.
+ * Token values are resolved on first injection (after your app initializers run).
+ * For runtime semantic **`COLORS`**, use {@link provideTailwindThemeColors} separately.
  */
-export function defineTheme(config: TailwindDefineThemeConfig): EnvironmentProviders {
-  const tokenProviders: Provider[] = providersFromTailwindComponentsConfig(config);
+export function provideTailwindConfig(
+  config: () => TailwindComponentsConfig
+): EnvironmentProviders {
+  return makeEnvironmentProviders(providersFromConfigFactory(config));
+}
 
+/**
+ * Applies semantic `COLORS` on `document.documentElement` at startup (browser only).
+ * Register after i18n (or other) initializers if the factory uses `inject()`.
+ */
+export function provideTailwindThemeColors(
+  colors: () => TailwindDefineThemeColors
+): EnvironmentProviders {
   return makeEnvironmentProviders([
-    ...tokenProviders,
     provideAppInitializer(() => {
       const platformId = inject(PLATFORM_ID);
       if (!isPlatformBrowser(platformId)) {
         return;
       }
-      const doc = inject(DOCUMENT);
-      applyTailwindThemeToElement(doc.documentElement, config);
+      applyTailwindThemeToElement(inject(DOCUMENT).documentElement, colors());
     })
   ]);
 }

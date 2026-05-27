@@ -39,7 +39,7 @@ import { TailwindToastService, TailwindButton } from 'angular-tailwind-component
 @Component({
   imports: [TailwindButton],
   template: `
-    <tailwind-button (click)="toast.success('Saved!', 'Success')">Success</tailwind-button>
+    <tailwind-button (click)="toast.success('Success', 'Saved!', 'check-circle')">Success</tailwind-button>
   `
 })
 export class ExampleComponent {
@@ -70,19 +70,19 @@ Servizio `providedIn: 'root'`.
       <td>Aggiunge un toast; restituisce l’id numerico.</td>
     </tr>
     <tr>
-      <td><code>success(message, title?)</code></td>
+      <td><code>success(title, message, icon?)</code></td>
       <td>Toast con colore success.</td>
     </tr>
     <tr>
-      <td><code>warning(message, title?)</code></td>
+      <td><code>warning(title, message, icon?)</code></td>
       <td>Toast warning.</td>
     </tr>
     <tr>
-      <td><code>danger(message, title?)</code></td>
+      <td><code>danger(title, message, icon?)</code></td>
       <td>Toast danger.</td>
     </tr>
     <tr>
-      <td><code>info(message, title?)</code></td>
+      <td><code>info(title, message, icon?)</code></td>
       <td>Toast info.</td>
     </tr>
     <tr>
@@ -96,7 +96,7 @@ Servizio `providedIn: 'root'`.
   </tbody>
 </table>
 
-La configurazione (`TailwindToastConfig`) supporta almeno messaggio, titolo opzionale, `color`, durata e dismissibile (vedi sorgente).
+La configurazione (`TailwindToastConfig`) supporta messaggio, titolo opzionale, icona opzionale (`TailwindHeroicon`), `color`, durata e dismissibile (vedi sorgente).
 
 ### `TailwindToast` (`tailwind-toast`)
 

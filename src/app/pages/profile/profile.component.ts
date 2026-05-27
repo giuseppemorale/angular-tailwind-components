@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
@@ -9,7 +9,8 @@ import {
   TailwindSpinner,
   TailwindTitle,
   TailwindToggle,
-  TailwindEditor
+  TailwindEditor,
+  TailwindToastService
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
 
@@ -32,6 +33,8 @@ import { HeaderComponent } from '../../core/template/header/header.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
+  private readonly toastService = inject(TailwindToastService);
+
   readonly breadcrumb = [
     { label: 'Home', link: '/', icon: 'home' },
     { label: 'Profilo', link: '/profile' }
@@ -55,6 +58,7 @@ export class ProfileComponent {
     setTimeout(() => {
       this.saving.set(false);
       this.lastSave.set(new Date());
+      this.toastService.success('Salvataggio', 'Salvataggio effettuato con successo', 'check-circle');
     }, 1200);
   }
 }

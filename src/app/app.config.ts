@@ -1,9 +1,9 @@
 import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
-import { defineTheme } from 'angular-tailwind-components';
 import { provideTransloco, TranslocoService } from '@jsverse/transloco';
+import { routes } from './app.routes';
 import { options } from './core/transloco/transloco.options';
+import { provideTailwindConfig } from 'angular-tailwind-components';
 import { TAILWIND_CONFIG } from './core/tailwind-config/tailwind-config';
 
 const inizializeApp = () => {
@@ -17,8 +17,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideTransloco(options),
-    provideBrowserGlobalErrorListeners(),
     provideAppInitializer(inizializeApp),
-    defineTheme(TAILWIND_CONFIG)
+    provideTailwindConfig(TAILWIND_CONFIG),
+    provideBrowserGlobalErrorListeners()
   ]
 };

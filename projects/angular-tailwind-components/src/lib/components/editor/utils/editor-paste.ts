@@ -1,5 +1,5 @@
+import { insertHtml, insertText } from './editor-commands';
 import { sanitizeEditorHtml } from './editor-html-sanitizer';
-import { insertHtml } from './editor-commands';
 
 /** Handle paste: insert sanitized HTML or plain text. */
 export function handleEditorPaste(event: ClipboardEvent, root: HTMLElement, sanitize: boolean): void {
@@ -19,6 +19,6 @@ export function handleEditorPaste(event: ClipboardEvent, root: HTMLElement, sani
   }
 
   if (plain) {
-    document.execCommand('insertText', false, plain);
+    insertText(root, plain);
   }
 }

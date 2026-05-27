@@ -26,10 +26,20 @@ const ALLOWED_TAGS = new Set([
 ]);
 
 const GLOBAL_ATTRS = new Set(['title']);
+const ALLOWED_TEXT_ALIGN = new Set(['left', 'center', 'right', 'justify']);
+
 const TAG_ATTRS: Record<string, Set<string>> = {
   a: new Set(['href', 'target', 'rel']),
   img: new Set(['src', 'alt', 'width', 'height'])
 };
+
+function sanitizeTextAlignStyle(style: string): string | null {
+  const match = style.match(/text-align\s*:\s*(left|center|right|justify)\b/i);
+  if (!match) return null;
+  const value = match[1].toLowerCase();
+  if (!ALLOWED_TEXT_ALIGN.has(value)) return null;
+  return `text-align: ${value}`;
+}
 
 function isSafeUrl(url: string, allowDataImage: boolean): boolean {
   const trimmed = url.trim();
@@ -54,7 +64,12 @@ function sanitizeElement(el: Element): void {
       return;
     }
     if (name === 'style') {
-      el.removeAttribute(attr.name);
+      const safeStyle = sanitizeTextAlignStyle(attr.value);
+      if (safeStyle) {
+        el.setAttribute(attr.name, safeStyle);
+      } else {
+        el.removeAttribute(attr.name);
+      }
       return;
     }
     const allowed = TAG_ATTRS[tag] ?? GLOBAL_ATTRS;

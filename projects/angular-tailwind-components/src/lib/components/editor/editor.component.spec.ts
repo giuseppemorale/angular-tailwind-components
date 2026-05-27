@@ -8,12 +8,6 @@ describe('TailwindEditor', () => {
   let component: TailwindEditor;
 
   beforeEach(async () => {
-    Object.defineProperty(document, 'execCommand', {
-      value: vi.fn().mockReturnValue(true),
-      configurable: true,
-      writable: true
-    });
-
     await TestBed.configureTestingModule({
       imports: [TailwindEditor]
     }).compileComponents();

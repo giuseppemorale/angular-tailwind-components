@@ -95,7 +95,7 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>toolbar</code></td>
       <td><code>'full' | 'minimal' | EditorCommand[]</code></td>
       <td><code>'full'</code></td>
-      <td>Comandi in toolbar. Con <code>full</code>, gli heading sono in un menu a tendina (Paragraph, H1–H6).</td>
+      <td>Comandi in toolbar. Con <code>full</code>, gli heading sono in un menu a tendina (Paragraph, H1-H6); accanto alle liste: allineamento sinistra, centro, destra e giustifica (<code>alignLeft</code>, <code>alignCenter</code>, <code>alignRight</code>, <code>alignJustify</code>).</td>
     </tr>
     <tr>
       <td><code>imageUrlEnabled</code></td>
@@ -113,7 +113,7 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>sanitize</code></td>
       <td><code>boolean</code></td>
       <td><code>true</code></td>
-      <td>Sanitizza HTML in uscita (whitelist tag/attributi).</td>
+      <td>Sanitizza HTML in uscita (whitelist tag/attributi). Consente <code>style</code> solo con <code>text-align: left|center|right|justify</code>.</td>
     </tr>
   </tbody>
 </table>
@@ -137,6 +137,10 @@ Eredita `TailwindComponent` (`id`, `class`).
   </tbody>
 </table>
 
+### Toolbar — allineamento testo
+
+Con preset <code>full</code>, i quattro pulsanti dopo elenco puntato/numerato applicano <code>text-align</code> sul blocco corrente (sinistra, centro, destra, giustifica). Il valore form include <code>style="text-align: …"</code> sui tag di blocco; il sanitizer rimuove le altre proprietà CSS da <code>style</code>.
+
 ### Toolbar — comando `code`
 
 Il pulsante **code** (`icon: code-bracket`) alterna l’editor visuale e una **textarea** per modificare l’HTML a mano. In modalità codice gli altri comandi della toolbar sono disabilitati.
@@ -159,6 +163,6 @@ L'HTML viene filtrato con una whitelist di tag e attributi. Script, handler `on*
 
 ## Limiti
 
-- Basato su `document.execCommand` (deprecato ma supportato); comportamento può variare tra browser.
+- Formattazione via Selection API e manipolazione DOM; undo/redo con stack HTML interno (non `document.execCommand`).
 - Tabelle e editing collaborativo non sono inclusi nella v1.
 - Immagini base64 possono aumentare molto la dimensione del valore form.

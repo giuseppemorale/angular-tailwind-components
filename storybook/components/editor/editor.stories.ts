@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { Component, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
+import type { EditorCommand, EditorToolbarPreset } from '../../../projects/angular-tailwind-components/src/lib/components/editor/models/editor-command.type';
+import type { TailwindSize } from '../../../projects/angular-tailwind-components/src/public-api';
 import { TailwindEditor } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindEditor> = {
@@ -23,10 +25,47 @@ const meta: Meta<TailwindEditor> = {
     imageUploadEnabled: { control: 'boolean' },
     helperText: { control: 'text' },
     errorText: { control: 'text' },
-    hasError: { control: 'boolean' }
+    hasError: { control: 'boolean' },
+    value: { control: false, table: { disable: true } }
   }
 };
 export default meta;
+
+@Component({
+  selector: 'sb-editor-story',
+  imports: [TailwindEditor],
+  template: `
+    <tailwind-editor
+      [label]="label()"
+      [placeholder]="placeholder()"
+      [minHeight]="minHeight()"
+      [size]="size()"
+      [toolbar]="toolbar()"
+      [helperText]="helperText()"
+      [hasError]="hasError()"
+      [errorText]="errorText()"
+      [readonly]="readonly()"
+      [imageUrlEnabled]="imageUrlEnabled()"
+      [imageUploadEnabled]="imageUploadEnabled()"
+      [(value)]="html" />
+    <pre class="mt-4 text-xs bg-neutral-100 p-3 rounded-md overflow-auto max-h-32" tabindex="-1">{{ html() }}</pre>
+  `
+})
+class EditorStoryComponent {
+  readonly label = input('Description');
+  readonly placeholder = input('Start writing…');
+  readonly minHeight = input('14rem');
+  readonly size = input<TailwindSize>('md');
+  readonly toolbar = input<EditorToolbarPreset | EditorCommand[]>('full');
+  readonly helperText = input('');
+  readonly errorText = input('');
+  readonly hasError = input(false);
+  readonly readonly = input(false);
+  readonly imageUrlEnabled = input(true);
+  readonly imageUploadEnabled = input(true);
+
+  readonly html = signal('<p>Edit <strong>this</strong> content.</p>');
+}
 
 export const Editor: StoryObj<TailwindEditor> = {
   args: {
@@ -43,27 +82,9 @@ export const Editor: StoryObj<TailwindEditor> = {
     imageUploadEnabled: true
   },
   render: args => ({
-    props: {
-      ...args,
-      value: '<p>Edit <strong>this</strong> content.</p>'
-    },
-    template: `
-      <tailwind-editor
-        [label]="label"
-        [placeholder]="placeholder"
-        [minHeight]="minHeight"
-        [size]="size"
-        [toolbar]="toolbar"
-        [helperText]="helperText"
-        [hasError]="hasError"
-        [errorText]="errorText"
-        [readonly]="readonly"
-        [imageUrlEnabled]="imageUrlEnabled"
-        [imageUploadEnabled]="imageUploadEnabled"
-        [(value)]="value"
-      />
-      <pre class="mt-4 text-xs bg-neutral-100 p-3 rounded-md overflow-auto max-h-32">{{ value }}</pre>
-    `
+    props: args,
+    template: '<sb-editor-story />',
+    moduleMetadata: { imports: [EditorStoryComponent] }
   })
 };
 
@@ -92,7 +113,7 @@ export const WithError: StoryObj<TailwindEditor> = {
   template: `
     <tailwind-editor label="Live preview" placeholder="Type here…" [(value)]="html" (htmlChange)="onChange($event)" />
     <p class="mt-3 text-xs text-neutral-600">htmlChange count: {{ changeCount() }}</p>
-    <pre class="mt-2 text-xs bg-neutral-100 p-3 rounded-md overflow-auto max-h-32">{{ html() }}</pre>
+    <pre class="mt-2 text-xs bg-neutral-100 p-3 rounded-md overflow-auto max-h-32" tabindex="-1">{{ html() }}</pre>
   `
 })
 class HtmlChangeDemoComponent {

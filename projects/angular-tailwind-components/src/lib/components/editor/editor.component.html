@@ -8,7 +8,7 @@
     </label>
   }
 
-  <div [class]="wrapperClasses()">
+  <div #editorWrapper [class]="wrapperClasses()">
     <tailwind-editor-toolbar
       [groups]="toolbarGroups()"
       [disabled]="toolbarDisabled()"
@@ -52,7 +52,7 @@
         [attr.aria-invalid]="hasError() || null"
         [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
         (input)="onSurfaceInput()"
-        (blur)="onSurfaceBlur()"
+        (blur)="onSurfaceBlur($event)"
         (focus)="onSurfaceFocus()"
         (paste)="onPaste($event)"
         (keydown)="onKeydown($event)"></div>

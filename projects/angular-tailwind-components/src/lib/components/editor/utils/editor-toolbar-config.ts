@@ -24,6 +24,14 @@ const FULL_GROUPS: EditorToolbarGroup[] = [
   },
   {
     items: [
+      { kind: 'button', command: 'alignLeft', icon: 'bars-3-center-left', ariaLabel: 'Align left' },
+      { kind: 'button', command: 'alignCenter', icon: 'bars-3', ariaLabel: 'Align center' },
+      { kind: 'button', command: 'alignRight', icon: 'bars-3-bottom-right', ariaLabel: 'Align right' },
+      { kind: 'button', command: 'alignJustify', icon: 'bars-4', ariaLabel: 'Justify' }
+    ]
+  },
+  {
+    items: [
       { kind: 'button', command: 'link', icon: 'link', ariaLabel: 'Insert link' },
       { kind: 'button', command: 'imageUrl', icon: 'photo', ariaLabel: 'Insert image from URL' },
       { kind: 'button', command: 'imageUpload', icon: 'arrow-up-tray', ariaLabel: 'Upload image' }

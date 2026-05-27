@@ -27,14 +27,16 @@ import { TailwindEditorToolbar } from './editor-toolbar.component';
 import type { EditorCommand, EditorToolbarPreset } from './models/editor-command.type';
 import type { EditorBlockFormat } from './models/editor-command.type';
 import {
+  EditorHistory,
   executeEditorCommand,
   getActiveBlockCommand,
+  getActiveCommands,
   insertImage,
-  insertLink
+  insertLink,
+  saveEditorSelection
 } from './utils/editor-commands';
 import { sanitizeEditorHtml } from './utils/editor-html-sanitizer';
 import { handleEditorPaste } from './utils/editor-paste';
-import { getActiveCommands } from './utils/editor-selection';
 import { filterToolbarGroups, resolveToolbarGroups } from './utils/editor-toolbar-config';
 
 @Component({
@@ -56,6 +58,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   private readonly fallbackFileId = `tw-editor-img-${TailwindEditor.nextFileId++}`;
 
   readonly editable = viewChild<ElementRef<HTMLElement>>('editable');
+  readonly editorWrapper = viewChild<ElementRef<HTMLElement>>('editorWrapper');
   readonly linkModal = viewChild<TailwindModal>('linkModal');
   readonly imageUrlModal = viewChild<TailwindModal>('imageUrlModal');
   readonly imageFileInput = viewChild<ElementRef<HTMLInputElement>>('imageFileInput');
@@ -144,7 +147,9 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
   private selectionListener: (() => void) | null = null;
+  private toolbarMouseDownListener: (() => void) | null = null;
   private syncingFromWrite = false;
+  private readonly history = new EditorHistory();
 
   constructor() {
     super();
@@ -153,11 +158,21 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
         this.activeCommands.set(new Set());
       }
     });
+    effect(() => {
+      this.toolbarMouseDownListener?.();
+      this.toolbarMouseDownListener = null;
+      const wrapper = this.editorWrapper()?.nativeElement;
+      if (!wrapper) return;
+      const handler = (event: MouseEvent) => this.onEditorMouseDown(event);
+      wrapper.addEventListener('mousedown', handler, true);
+      this.toolbarMouseDownListener = () => wrapper.removeEventListener('mousedown', handler, true);
+    });
   }
 
   ngAfterViewInit(): void {
     const html = this.value();
     this.sourceHtml.set(html);
+    this.history.reset(html);
     if (html && !this.isCodeView()) {
       this.setDomHtml(html, false);
     }
@@ -165,13 +180,18 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
   ngOnDestroy(): void {
     this.detachSelectionListener();
+    this.toolbarMouseDownListener?.();
+    this.toolbarMouseDownListener = null;
   }
 
   writeValue(value: string | null): void {
-    this.syncingFromWrite = true;
     const html = value ?? '';
+    if (html === this.value()) return;
+
+    this.syncingFromWrite = true;
     this.value.set(html);
     this.sourceHtml.set(html);
+    this.history.reset(html);
     if (!this.isCodeView()) {
       this.setDomHtml(html, false);
     }
@@ -200,16 +220,29 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
       this.setDomHtml(html, true);
     }
     this.emitValue(html);
+    this.history.push(html);
     this.refreshActiveCommands();
   }
 
-  onSurfaceBlur(): void {
+  onEditorMouseDown(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.tailwind-editor-toolbar button')) return;
+    const el = this.editable()?.nativeElement;
+    if (el && !this.isCodeView()) saveEditorSelection(el);
+    event.preventDefault();
+  }
+
+  onSurfaceBlur(event: FocusEvent): void {
+    const next = event.relatedTarget as HTMLElement | null;
+    if (next?.closest('.tailwind-editor-toolbar')) return;
     this.onTouched();
     this.detachSelectionListener();
   }
 
   onSurfaceFocus(): void {
     if (!this.isEditable()) return;
+    const el = this.editable()?.nativeElement;
+    if (el) saveEditorSelection(el);
     this.attachSelectionListener();
     this.refreshActiveCommands();
   }
@@ -255,8 +288,20 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
     const el = this.editable()?.nativeElement;
     if (!el) return;
+
+    if (command === 'undo' || command === 'redo') {
+      const html = command === 'undo' ? this.history.undo() : this.history.redo();
+      if (html != null) {
+        this.setDomHtml(html, true);
+        this.emitValue(html);
+        this.refreshActiveCommands();
+      }
+      return;
+    }
+
     executeEditorCommand(el, command);
     this.syncFromDom();
+    saveEditorSelection(el);
   }
 
   confirmLink(): void {
@@ -327,19 +372,19 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     const command = map[key];
     if (!command) return;
     if (key === 'z' && event.shiftKey) {
-      executeEditorCommand(el, 'redo');
       event.preventDefault();
-      this.syncFromDom();
+      this.onToolbarCommand('redo');
       return;
     }
     event.preventDefault();
-    executeEditorCommand(el, command);
-    this.syncFromDom();
+    this.onToolbarCommand(command);
   }
 
   private emitValue(html: string): void {
-    this.value.set(html);
-    this.onChange(html);
+    if (html !== this.value()) {
+      this.value.set(html);
+      this.onChange(html);
+    }
     this.htmlChange.emit(html);
   }
 
@@ -352,6 +397,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
       this.setDomHtml(html, true);
     }
     this.emitValue(html);
+    this.history.push(html);
     this.refreshActiveCommands();
   }
 
@@ -368,7 +414,12 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
   private attachSelectionListener(): void {
     if (this.selectionListener) return;
-    const handler = () => this.refreshActiveCommands();
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+    const handler = () => {
+      saveEditorSelection(el);
+      this.refreshActiveCommands();
+    };
     document.addEventListener('selectionchange', handler);
     this.selectionListener = () => document.removeEventListener('selectionchange', handler);
   }

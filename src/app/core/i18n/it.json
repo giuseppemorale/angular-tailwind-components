@@ -252,6 +252,7 @@
     "BTN_OPEN_MODAL": "Apri modal demo",
     "MODAL_TITLE": "Esporta documentazione",
     "MODAL_BODY": "In un'app reale qui partirebbe il download o la condivisione del capitolo selezionato.",
+    "MODAL_BTN_EXPORT": "Esporta",
     "MODAL_BTN_CLOSE": "Chiudi"
   }
 }

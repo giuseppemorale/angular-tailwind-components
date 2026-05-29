@@ -9,6 +9,25 @@ alwaysApply: false
 
 In `projects/angular-tailwind-components/src/lib/components/`: estendi `TailwindComponent`, selector `tailwind-<nome>`, classe `Tailwind<Nome>`, `imports` nel `@Component`.
 
+## Struttura cartella
+
+Riferimento: `calendar-panel/`.
+
+**Root del componente** — solo artefatti Angular:
+
+- `*.component.ts`, `*.component.html`, `*.component.css` (o `.scss`), `*.component.spec.ts`
+- Più componenti nella stessa cartella (es. `accordion/`, `tabs/`): stesso pattern per ogni componente
+
+**Non** lasciare in root: util, tipi, i18n, spec di moduli non-component.
+
+**Sottocartelle semantiche** per il resto:
+
+- `util/` — funzioni pure, helper, i18n, logica di vista (es. `calendar-date-range.ts`)
+- `interfaces/` — tipi condivisi
+- `models/` — enum / modelli di dominio
+
+Spec dei file in `util/`: `util/<nome>.spec.ts` accanto al sorgente.
+
 ## Signals
 
 - API pubblica: `input()`, `output()`, `model()` — non decorator `@Input` / `@Output`.
@@ -67,6 +86,7 @@ Vedi rule **`library-component-storybook`**: stories + `Docs.mdx` per componenti
 
 ## Checklist
 
+- [ ] Root cartella: solo `*.component.*` + sottocartelle (`util/`, `interfaces/`, …)
 - [ ] Signals + OnPush (≤ 21)
 - [ ] CVA se form-compatible
 - [ ] Template pulito con componenti DS

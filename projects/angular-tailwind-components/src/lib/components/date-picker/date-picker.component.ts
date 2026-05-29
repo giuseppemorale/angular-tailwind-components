@@ -18,9 +18,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
-import { isTodayInRange, resolveRangeBounds } from '../calendar-panel/calendar-date-range';
+import { isTodayInRange, resolveRangeBounds } from '../calendar-panel/util/calendar-date-range';
 import { TailwindCalendarPanel } from '../calendar-panel/calendar-panel.component';
-import { CalendarView } from '../calendar-panel/calendar-view';
+import { CalendarView } from '../calendar-panel/util/calendar-view';
 import { TailwindComponent } from '../tailwind.component';
 
 type Lang = 'it' | 'en';

@@ -21,17 +21,17 @@ import {
   isCalendarYearInRange,
   isTodayInRange,
   resolveRangeBounds
-} from './calendar-date-range';
-import { calendarLabelsFor, CalendarLang } from './calendar-i18n';
-import { CalendarView, yearPageStartFor, YEARS_PER_PAGE } from './calendar-view';
+} from './util/calendar-date-range';
+import { calendarLabelsFor, CalendarLang } from './util/calendar-i18n';
+import { CalendarView, yearPageStartFor, YEARS_PER_PAGE } from './util/calendar-view';
 
 @Component({
   imports: [TailwindButton],
   selector: 'tailwind-calendar-panel',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindCalendarPanel), multi: true }],
   templateUrl: './calendar-panel.component.html',
   styleUrl: './calendar-panel.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindCalendarPanel), multi: true }]
 })
 export class TailwindCalendarPanel extends TailwindComponent implements ControlValueAccessor {
   private readonly lang: CalendarLang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';

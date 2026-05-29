@@ -18,6 +18,11 @@ export function coerceCalendarDate(value: unknown): Date | undefined {
   return undefined;
 }
 
+/** Like {@link coerceCalendarDate} but returns `null` for empty or invalid values. */
+export function coerceCalendarDateOrNull(value: unknown): Date | null {
+  return coerceCalendarDate(value) ?? null;
+}
+
 export function startOfCalendarDay(d: Date): number {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 }

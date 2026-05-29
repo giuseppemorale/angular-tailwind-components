@@ -1,5 +1,6 @@
 import {
   coerceCalendarDate,
+  coerceCalendarDateOrNull,
   isCalendarDayInRange,
   isCalendarMonthInRange,
   isCalendarYearInRange,
@@ -12,6 +13,12 @@ describe('calendar-date-range', () => {
   it('coerceCalendarDate accepts ISO strings', () => {
     const d = coerceCalendarDate('2026-01-15T00:00:00.000Z');
     expect(d?.getFullYear()).toBe(2026);
+  });
+
+  it('coerceCalendarDateOrNull accepts timestamps', () => {
+    const ts = new Date(2026, 4, 15).getTime();
+    expect(coerceCalendarDateOrNull(ts)).toEqual(new Date(2026, 4, 15));
+    expect(coerceCalendarDateOrNull(null)).toBeNull();
   });
 
   it('resolveRangeBounds swaps inverted min/max', () => {

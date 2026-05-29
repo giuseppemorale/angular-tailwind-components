@@ -1,4 +1,4 @@
-<app-header [items]="breadcrumb" [description]="'PROFILE.INTRO' | transloco" />
+<app-header [items]="breadcrumb" [description]="'SETTINGS.INTRO' | transloco" />
 
 <div class="flex flex-col gap-8">
   <tailwind-tab-group [ariaLabel]="'SETTINGS.TABS_ARIA' | transloco" [(activeIndex)]="tabIndex">
@@ -13,6 +13,22 @@
             [placeholder]="'SETTINGS.FIELD_DENSITY_PLACEHOLDER' | transloco"
             [options]="densityOptions"
             [(value)]="theme" />
+          <tailwind-autocomplete
+            [label]="'SETTINGS.FIELD_LOCALE_LABEL' | transloco"
+            [placeholder]="'SETTINGS.FIELD_LOCALE_PLACEHOLDER' | transloco"
+            [options]="localeOptions"
+            [filterLocally]="true"
+            [(value)]="locale" />
+          <tailwind-radio-group
+            [label]="'SETTINGS.FIELD_THEME_MODE_LABEL' | transloco"
+            [options]="themeModeOptions"
+            [(value)]="themeMode" />
+          <div class="flex flex-col gap-1">
+            <span class="text-sm font-medium text-neutral-800">
+              {{ 'SETTINGS.FIELD_FONT_SCALE_LABEL' | transloco }}: {{ fontScaleControl.value }}
+            </span>
+            <tailwind-slider [min]="12" [max]="20" [step]="1" [formControl]="fontScaleControl" />
+          </div>
           <tailwind-divider [label]="'SETTINGS.DIVIDER_PREFERENCES' | transloco" />
           <tailwind-toggle id="settings-reduced" [label]="'SETTINGS.TOGGLE_REDUCED_MOTION' | transloco" />
           <tailwind-toggle id="settings-high-contrast" [label]="'SETTINGS.TOGGLE_FOCUS_HIGHLIGHT' | transloco" />

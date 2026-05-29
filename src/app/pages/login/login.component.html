@@ -2,8 +2,11 @@
 
 <div class="h-[60vh] flex justify-center items-center">
   <tailwind-card class="w-full max-w-md" [hasFooter]="false">
-    <div tailwind-card-header>
+    <div tailwind-card-header class="flex flex-wrap items-center justify-between gap-2">
       <tailwind-title titleTag="h4" [text]="'LOGIN.TITLE' | transloco" icon="arrow-right-on-rectangle" />
+      <tailwind-button kind="text" color="secondary" (onClick)="helpDrawer.open()">
+        {{ 'LOGIN.BTN_HELP' | transloco }}
+      </tailwind-button>
     </div>
 
     <form [formGroup]="form" class="space-y-4" (ngSubmit)="submit()">
@@ -17,20 +20,34 @@
         [hasError]="form.controls.email | error"
         [errorText]="'LOGIN.ERROR_EMAIL' | transloco" />
 
-      <tailwind-input-password
-        id="login-password"
-        autocomplete="current-password"
-        [toggleMask]="true"
-        [formControl]="form.controls.password"
-        [label]="'LOGIN.FIELD_PASSWORD' | transloco"
-        [placeholder]="'LOGIN.FIELD_PASSWORD_PH' | transloco"
-        [hasError]="form.controls.password | error"
-        [errorText]="'LOGIN.ERROR_PASSWORD' | transloco" />
+      @if (useOtp()) {
+        <tailwind-input-otp
+          id="login-otp"
+          [formControl]="form.controls.otp"
+          [label]="'LOGIN.FIELD_OTP' | transloco"
+          [length]="6"
+          [helperText]="'LOGIN.FIELD_OTP_HELPER' | transloco" />
+      } @else {
+        <tailwind-input-password
+          id="login-password"
+          autocomplete="current-password"
+          [toggleMask]="true"
+          [formControl]="form.controls.password"
+          [label]="'LOGIN.FIELD_PASSWORD' | transloco"
+          [placeholder]="'LOGIN.FIELD_PASSWORD_PH' | transloco"
+          [hasError]="form.controls.password | error"
+          [errorText]="'LOGIN.ERROR_PASSWORD' | transloco" />
+      }
 
-      <tailwind-checkbox
-        id="login-remember"
-        [formControl]="form.controls.remember"
-        [label]="'LOGIN.FIELD_REMEMBER' | transloco" />
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <tailwind-checkbox
+          id="login-remember"
+          [formControl]="form.controls.remember"
+          [label]="'LOGIN.FIELD_REMEMBER' | transloco" />
+        <tailwind-button type="button" kind="text" color="secondary" (onClick)="toggleOtpMode()">
+          {{ (useOtp() ? 'LOGIN.LINK_PASSWORD_MODE' : 'LOGIN.LINK_OTP_MODE') | transloco }}
+        </tailwind-button>
+      </div>
 
       <tailwind-button type="submit" class="w-full" icon="arrow-right-on-rectangle" [disabled]="submitting()">
         {{ 'LOGIN.BTN_SUBMIT' | transloco }}
@@ -45,3 +62,10 @@
     </p>
   </tailwind-card>
 </div>
+
+<tailwind-drawer #helpDrawer [title]="'LOGIN.DRAWER_TITLE' | transloco" position="right">
+  <p class="text-sm text-neutral-600 m-0">{{ 'LOGIN.DRAWER_BODY' | transloco }}</p>
+  <div class="mt-4">
+    <tailwind-button (onClick)="helpDrawer.close()">{{ 'LOGIN.DRAWER_BTN_CLOSE' | transloco }}</tailwind-button>
+  </div>
+</tailwind-drawer>

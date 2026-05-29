@@ -5,11 +5,13 @@ import {
   TailwindButton,
   TailwindCard,
   TailwindDivider,
+  TailwindEditor,
   TailwindInput,
   TailwindSpinner,
+  TailwindTextarea,
   TailwindTitle,
   TailwindToggle,
-  TailwindEditor,
+  TailwindUpload,
   TailwindToastService
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
@@ -22,7 +24,9 @@ import { HeaderComponent } from '../../core/template/header/header.component';
     TailwindTitle,
     TailwindDivider,
     TailwindInput,
+    TailwindTextarea,
     TailwindEditor,
+    TailwindUpload,
     TailwindToggle,
     TailwindButton,
     TailwindSpinner,
@@ -49,7 +53,9 @@ export class ProfileComponent {
   readonly form = new FormGroup({
     name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
+    notes: new FormControl<string>('', { nonNullable: true }),
     bio: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+    avatar: new FormControl<string | null>(null),
     notify: new FormControl<boolean>(false, { nonNullable: true })
   });
 

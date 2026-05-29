@@ -8,12 +8,14 @@ import {
   TailwindCard,
   TailwindCheckbox,
   TailwindDatePicker,
+  TailwindDateTimePicker,
   TailwindInput,
   TailwindInputPassword,
   TailwindOption,
   TailwindSelect,
   TailwindStep,
   TailwindStepper,
+  TailwindTimePicker,
   TailwindTitle
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
@@ -37,6 +39,8 @@ import { ErrorPipe } from '../../core/pipe/error.pipe';
     TailwindInputPassword,
     TailwindSelect,
     TailwindDatePicker,
+    TailwindTimePicker,
+    TailwindDateTimePicker,
     TailwindCheckbox,
     TailwindButton,
     TranslocoPipe,
@@ -70,7 +74,9 @@ export class RegistrationComponent implements OnInit {
     cognome: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(2)] }),
     genere: new FormControl<RegistrationGender>('M', { nonNullable: true, validators: [Validators.required] }),
     dataNascita: new FormControl<Date | null>(null, { validators: [Validators.required] }),
-    cittadinanza: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+    cittadinanza: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    orarioPreferito: new FormControl('09:00', { nonNullable: true }),
+    appuntamento: new FormControl<Date | null>(null)
   });
 
   readonly datiUtente = new FormGroup<RegistrationAccountForm>({
@@ -90,6 +96,8 @@ export class RegistrationComponent implements OnInit {
     genere: new FormControl<RegistrationGender>({ value: 'M', disabled: true }, { nonNullable: true }),
     dataNascita: new FormControl<Date | null>({ value: null, disabled: true }),
     cittadinanza: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
+    orarioPreferito: new FormControl({ value: '09:00', disabled: true }, { nonNullable: true }),
+    appuntamento: new FormControl<Date | null>({ value: null, disabled: true }),
     username: new FormControl({ value: '', disabled: true }, { nonNullable: true }),
     confirmPassword: new FormControl('', {
       nonNullable: true,
@@ -140,6 +148,8 @@ export class RegistrationComponent implements OnInit {
         genere: general.genere,
         dataNascita: general.dataNascita,
         cittadinanza: general.cittadinanza,
+        orarioPreferito: general.orarioPreferito,
+        appuntamento: general.appuntamento,
         username: this.datiUtente.controls.username.value
       });
       this.passwordMismatch.set(false);

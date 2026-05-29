@@ -6,7 +6,9 @@ import {
   TailwindButton,
   TailwindCard,
   TailwindCheckbox,
+  TailwindDrawer,
   TailwindInput,
+  TailwindInputOtp,
   TailwindInputPassword,
   TailwindTitle,
   TailwindToastService
@@ -23,8 +25,10 @@ import { ErrorPipe } from '../../core/pipe/error.pipe';
     TailwindTitle,
     TailwindInput,
     TailwindInputPassword,
+    TailwindInputOtp,
     TailwindCheckbox,
     TailwindButton,
+    TailwindDrawer,
     TranslocoPipe,
     ErrorPipe
   ],
@@ -42,6 +46,7 @@ export class LoginComponent {
   ];
 
   readonly submitting = signal(false);
+  readonly useOtp = signal(false);
 
   readonly form = new FormGroup({
     email: new FormControl('', {
@@ -52,17 +57,30 @@ export class LoginComponent {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(8)]
     }),
+    otp: new FormControl('', { nonNullable: true }),
     remember: new FormControl(false, { nonNullable: true })
   });
 
+  toggleOtpMode(): void {
+    this.useOtp.update(v => !v);
+    this.form.controls.password.reset();
+    this.form.controls.otp.reset();
+  }
+
   submit(): void {
     this.form.markAllAsTouched();
-    if (!this.form.valid) {
+    if (this.useOtp()) {
+      if (!this.form.controls.email.valid || this.form.controls.otp.value.length < 6) {
+        return;
+      }
+    } else if (!this.form.valid) {
       return;
     }
 
     this.submitting.set(true);
-    const payload = this.form.getRawValue();
+    const payload = this.useOtp()
+      ? { email: this.form.controls.email.value, otp: this.form.controls.otp.value }
+      : this.form.getRawValue();
     console.log('[login demo]', payload);
 
     setTimeout(() => {

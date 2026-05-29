@@ -105,9 +105,7 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
   readonly viewMonth = signal(new Date().getMonth());
   readonly viewYear = signal(new Date().getFullYear());
 
-  readonly isTodaySelectable = computed(() =>
-    isTodayInRange(resolveRangeBounds(this.minDate(), this.maxDate()))
-  );
+  readonly isTodaySelectable = computed(() => isTodayInRange(resolveRangeBounds(this.minDate(), this.maxDate())));
 
   readonly effectivePlaceholder = computed(() => {
     const p = this.placeholder();

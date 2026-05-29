@@ -82,9 +82,7 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
   readonly strengthLevel = computed(() => this.strength().level);
   readonly meterFill = computed(() => passwordStrengthMeterFill(this.strengthLevel()));
 
-  readonly showFeedbackPanel = computed(
-    () => this.feedback() && this.isFocused() && this.value().length > 0
-  );
+  readonly showFeedbackPanel = computed(() => this.feedback() && this.isFocused() && this.value().length > 0);
 
   readonly resolvedLabels = computed(() => {
     const defaults = this.themeLabels ?? DEFAULT_TAILWIND_PASSWORD_LABELS;
@@ -139,8 +137,7 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
   readonly meterSegmentClasses = computed(() => {
     const fill = this.meterFill();
     const level = this.strengthLevel();
-    const activeClass =
-      level === 'weak' ? 'bg-danger-500' : level === 'medium' ? 'bg-warning-500' : 'bg-success-600';
+    const activeClass = level === 'weak' ? 'bg-danger-500' : level === 'medium' ? 'bg-warning-500' : 'bg-success-600';
 
     return [0, 1, 2].map(index => {
       const isActive = index < fill;

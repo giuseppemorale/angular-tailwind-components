@@ -85,11 +85,7 @@ export class LoginComponent {
 
     setTimeout(() => {
       this.submitting.set(false);
-      this.toastService.success(
-        'Accesso effettuato',
-        'Benvenuto! Reindirizzamento alla home…',
-        'check-circle'
-      );
+      this.toastService.success('Accesso effettuato', 'Benvenuto! Reindirizzamento alla home…', 'check-circle');
       void this.router.navigateByUrl('/home');
     }, 800);
   }

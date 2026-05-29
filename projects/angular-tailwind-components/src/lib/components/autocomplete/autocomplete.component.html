@@ -15,9 +15,7 @@
     [attr.id]="id() ? id() + '-inner' : null"
     [attr.aria-expanded]="isOpen()"
     [attr.aria-controls]="listboxId()"
-    [attr.aria-activedescendant]="
-      isOpen() && activeIndex() >= 0 ? listboxId() + '-option-' + activeIndex() : null
-    "
+    [attr.aria-activedescendant]="isOpen() && activeIndex() >= 0 ? listboxId() + '-option-' + activeIndex() : null"
     [attr.aria-invalid]="hasError() || null"
     [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
     [placeholder]="placeholder()"
@@ -55,8 +53,7 @@
         (click)="selectOption(option)"
         (mouseenter)="!option.disabled && activeIndex.set(i)">
         @if (itemTemplate()) {
-          <ng-container
-            *ngTemplateOutlet="itemTemplate()!; context: itemContext(option, i)" />
+          <ng-container *ngTemplateOutlet="itemTemplate()!; context: itemContext(option, i)" />
         } @else {
           <span>{{ option.label }}</span>
           @if (isOptionSelected(option)) {

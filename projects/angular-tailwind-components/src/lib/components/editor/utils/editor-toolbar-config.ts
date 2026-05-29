@@ -67,9 +67,7 @@ for (const group of FULL_GROUPS) {
   }
 }
 
-export function resolveToolbarGroups(
-  toolbar: EditorToolbarPreset | EditorCommand[]
-): EditorToolbarGroup[] {
+export function resolveToolbarGroups(toolbar: EditorToolbarPreset | EditorCommand[]): EditorToolbarGroup[] {
   if (Array.isArray(toolbar)) {
     const items = toolbar
       .map(cmd => BUTTON_BY_COMMAND.get(cmd))

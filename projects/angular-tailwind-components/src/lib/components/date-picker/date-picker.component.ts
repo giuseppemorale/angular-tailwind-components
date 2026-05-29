@@ -108,9 +108,7 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     return p?.trim() ? p : this.i18n.placeholder;
   });
 
-  readonly isTodaySelectable = computed(() =>
-    isTodayInRange(resolveRangeBounds(this.minDate(), this.maxDate()))
-  );
+  readonly isTodaySelectable = computed(() => isTodayInRange(resolveRangeBounds(this.minDate(), this.maxDate())));
 
   readonly displayValue = computed(() => {
     const d = this.value();

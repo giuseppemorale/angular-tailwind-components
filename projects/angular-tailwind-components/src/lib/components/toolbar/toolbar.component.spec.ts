@@ -92,8 +92,8 @@ describe('TailwindToolbar', () => {
 
   it('should default tooltip position to right and honor item override', () => {
     expect(component.menuItemTooltipPosition({ value: 'home', tooltip: 'Home' })).toBe('right');
-    expect(
-      component.menuItemTooltipPosition({ value: 'settings', tooltip: 'Settings', tooltipPosition: 'left' })
-    ).toBe('left');
+    expect(component.menuItemTooltipPosition({ value: 'settings', tooltip: 'Settings', tooltipPosition: 'left' })).toBe(
+      'left'
+    );
   });
 });

@@ -99,9 +99,7 @@ describe('TailwindTable', () => {
     input.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    const names = [...fixture.nativeElement.querySelectorAll('.row-name')].map(
-      (el: Element) => el.textContent?.trim()
-    );
+    const names = [...fixture.nativeElement.querySelectorAll('.row-name')].map((el: Element) => el.textContent?.trim());
     expect(names).toEqual(['Bob']);
   });
 
@@ -111,9 +109,7 @@ describe('TailwindTable', () => {
     input.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    const names = [...fixture.nativeElement.querySelectorAll('.row-name')].map(
-      (el: Element) => el.textContent?.trim()
-    );
+    const names = [...fixture.nativeElement.querySelectorAll('.row-name')].map((el: Element) => el.textContent?.trim());
     expect(names).toEqual(['Carol']);
   });
 

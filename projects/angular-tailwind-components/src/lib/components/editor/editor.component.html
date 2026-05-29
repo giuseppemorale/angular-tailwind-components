@@ -87,10 +87,7 @@
 <tailwind-modal #linkModal size="sm" [closeOnBackdrop]="true">
   {{ labels().linkModalTitle }}
   <div tailwind-modal-content class="flex flex-col gap-3">
-    <tailwind-input
-      [label]="labels().linkUrlLabel"
-      [placeholder]="labels().linkUrlPlaceholder"
-      [(value)]="linkUrl" />
+    <tailwind-input [label]="labels().linkUrlLabel" [placeholder]="labels().linkUrlPlaceholder" [(value)]="linkUrl" />
     <tailwind-input
       [label]="labels().linkTextLabel"
       [placeholder]="labels().linkTextPlaceholder"

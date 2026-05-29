@@ -39,9 +39,7 @@
     <div tailwind-card-header class="flex flex-wrap items-center justify-between gap-2">
       <tailwind-title titleTag="h3" [text]="'DOCS.SKELETON_SECTION_TITLE' | transloco" icon="rectangle-stack" />
       <tailwind-button kind="outlined" color="secondary" (onClick)="toggleSkeletonPreview()">
-        {{
-          (showSkeletonPreview() ? 'DOCS.BTN_HIDE_SKELETON' : 'DOCS.BTN_SHOW_SKELETON') | transloco
-        }}
+        {{ (showSkeletonPreview() ? 'DOCS.BTN_HIDE_SKELETON' : 'DOCS.BTN_SHOW_SKELETON') | transloco }}
       </tailwind-button>
     </div>
     @if (showSkeletonPreview()) {

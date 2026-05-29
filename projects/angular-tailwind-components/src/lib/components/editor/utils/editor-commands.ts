@@ -11,19 +11,7 @@ const BLOCK_FORMAT_TAGS = new Set<EditorBlockFormat | 'blockquote'>([
   'blockquote'
 ]);
 
-const BLOCK_TAGS = new Set([
-  'P',
-  'DIV',
-  'H1',
-  'H2',
-  'H3',
-  'H4',
-  'H5',
-  'H6',
-  'BLOCKQUOTE',
-  'LI',
-  'PRE'
-]);
+const BLOCK_TAGS = new Set(['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'BLOCKQUOTE', 'LI', 'PRE']);
 
 type InlineFormat = 'bold' | 'italic' | 'underline' | 'strikethrough';
 type TextAlign = 'left' | 'center' | 'right' | 'justify';
@@ -35,18 +23,7 @@ const INLINE_FORMAT: Record<InlineFormat, { tag: string; alt: string[] }> = {
   strikethrough: { tag: 's', alt: ['strike', 'del'] }
 };
 
-const INLINE_REMOVE_TAGS = new Set([
-  'strong',
-  'b',
-  'em',
-  'i',
-  'u',
-  's',
-  'strike',
-  'del',
-  'span',
-  'font'
-]);
+const INLINE_REMOVE_TAGS = new Set(['strong', 'b', 'em', 'i', 'u', 's', 'strike', 'del', 'span', 'font']);
 
 /** HTML snapshot stack for undo/redo. */
 export class EditorHistory {
@@ -115,8 +92,7 @@ function applySelection(range: Range): void {
 
 function resolveRange(root: HTMLElement): Range | null {
   const selection = document.getSelection();
-  const live =
-    selection?.rangeCount && selectionInsideEditor(root) ? selection.getRangeAt(0).cloneRange() : null;
+  const live = selection?.rangeCount && selectionInsideEditor(root) ? selection.getRangeAt(0).cloneRange() : null;
   const saved = getSavedRange(root);
 
   if (live && !live.collapsed) return live;
@@ -562,11 +538,7 @@ function isCommandActive(root: HTMLElement, command: EditorCommand): boolean {
 }
 
 function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function escapeAttr(text: string): string {

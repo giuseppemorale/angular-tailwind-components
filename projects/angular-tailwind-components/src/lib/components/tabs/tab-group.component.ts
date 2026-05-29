@@ -116,8 +116,7 @@ export class TailwindTabGroup extends TailwindComponent {
       return;
     }
 
-    const delta =
-      Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+    const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
     if (delta === 0) {
       return;
     }

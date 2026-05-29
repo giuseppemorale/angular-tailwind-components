@@ -85,8 +85,7 @@ export class TailwindButton extends TailwindComponent {
 
     /** Filled surface like `solid`, without box shadow, border, or hover/active tint. */
     const flatMap: Record<TailwindColor, string> = {
-      primary:
-        'bg-primary-600 text-on-primary-600 border-0 shadow-none focus-visible:outline-primary-600',
+      primary: 'bg-primary-600 text-on-primary-600 border-0 shadow-none focus-visible:outline-primary-600',
       secondary: 'bg-neutral-100 text-neutral-800 border-0 shadow-none focus-visible:outline-neutral-500',
       danger: 'bg-danger-600 text-on-danger-600 border-0 shadow-none focus-visible:outline-danger-600',
       success: 'bg-success-700 text-on-success-700 border-0 shadow-none focus-visible:outline-success-600',

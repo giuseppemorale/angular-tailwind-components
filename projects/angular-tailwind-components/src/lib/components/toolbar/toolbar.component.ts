@@ -141,8 +141,7 @@ export class TailwindToolbar extends TailwindComponent {
       info: 'bg-info-600 border border-white/20',
       transparent: 'bg-white border border-neutral-200'
     };
-    const surface =
-      variant === 'default' ? 'bg-white border border-neutral-200' : surfaceMap[variant];
+    const surface = variant === 'default' ? 'bg-white border border-neutral-200' : surfaceMap[variant];
 
     const base = [
       surface,

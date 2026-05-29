@@ -64,9 +64,7 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
   private readonly coercedValue = computed(() => coerceCalendarDateOrNull(this.value()));
   private readonly coercedHighlightDate = computed(() => coerceCalendarDateOrNull(this.highlightDate()));
 
-  readonly effectiveHighlight = computed(() =>
-    this.embedded() ? this.coercedHighlightDate() : this.coercedValue()
-  );
+  readonly effectiveHighlight = computed(() => (this.embedded() ? this.coercedHighlightDate() : this.coercedValue()));
 
   readonly rangeBounds = computed(() => resolveRangeBounds(this.minDate(), this.maxDate()));
   readonly isTodaySelectable = computed(() => isTodayInRange(this.rangeBounds()));

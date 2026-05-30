@@ -134,8 +134,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
       lg: 'text-base px-3.5 py-3',
       xl: 'text-base px-4 py-3.5'
     };
-    const readonlyClass =
-      this.readonly() || this.isDisabled() ? 'bg-neutral-50 cursor-default' : `bg-white ${cursor}`;
+    const readonlyClass = this.readonly() || this.isDisabled() ? 'bg-neutral-50 cursor-default' : `bg-white ${cursor}`;
     const focusClass = this.isEditable()
       ? this.hasError()
         ? 'outline-none focus:ring-1 focus:ring-inset focus:ring-danger-400'
@@ -467,7 +466,15 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     if (!el) return;
     this.activeCommands.set(getActiveCommands(el));
     const block = getActiveBlockCommand(el);
-    if (block === 'p' || block === 'h1' || block === 'h2' || block === 'h3' || block === 'h4' || block === 'h5' || block === 'h6') {
+    if (
+      block === 'p' ||
+      block === 'h1' ||
+      block === 'h2' ||
+      block === 'h3' ||
+      block === 'h4' ||
+      block === 'h5' ||
+      block === 'h6'
+    ) {
       this.blockFormat.set(block);
     } else {
       this.blockFormat.set('p');

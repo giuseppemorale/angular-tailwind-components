@@ -31,9 +31,7 @@ export interface TailwindEditorLabels {
  * Merges optional partial overrides onto {@link DEFAULT_TAILWIND_EDITOR_LABELS}.
  * Used by {@link provideTailwindConfig} and when providing {@link TAILWIND_EDITOR_LABELS} directly.
  */
-export function resolveTailwindEditorLabels(
-  overrides?: Partial<TailwindEditorLabels>
-): TailwindEditorLabels {
+export function resolveTailwindEditorLabels(overrides?: Partial<TailwindEditorLabels>): TailwindEditorLabels {
   return { ...DEFAULT_TAILWIND_EDITOR_LABELS, ...overrides };
 }
 

@@ -8,6 +8,14 @@
 
     <div class="flex flex-col gap-4">
       <form [formGroup]="form">
+        <tailwind-upload
+          class="mb-4 block"
+          variant="button"
+          [label]="'PROFILE.FIELD_AVATAR_LABEL' | transloco"
+          [buttonLabel]="'PROFILE.FIELD_AVATAR_BTN' | transloco"
+          accept="image/*"
+          [formControl]="form.controls.avatar"
+          [helperText]="'PROFILE.FIELD_AVATAR_HELPER' | transloco" />
         <tailwind-input
           class="mb-2"
           id="profile-display"
@@ -21,6 +29,14 @@
           [label]="'PROFILE.FIELD_EMAIL_LABEL' | transloco"
           [placeholder]="'PROFILE.FIELD_EMAIL_PLACEHOLDER' | transloco"
           [helperText]="'PROFILE.FIELD_EMAIL_HELPER' | transloco" />
+        <tailwind-textarea
+          class="mb-2"
+          id="profile-notes"
+          [rows]="3"
+          [formControl]="form.controls.notes"
+          [label]="'PROFILE.FIELD_NOTES_LABEL' | transloco"
+          [placeholder]="'PROFILE.FIELD_NOTES_PLACEHOLDER' | transloco"
+          [helperText]="'PROFILE.FIELD_NOTES_HELPER' | transloco" />
         <tailwind-editor
           class="mb-2"
           [formControl]="form.controls.bio"

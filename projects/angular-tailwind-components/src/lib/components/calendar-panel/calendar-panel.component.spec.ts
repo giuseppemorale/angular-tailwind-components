@@ -84,6 +84,17 @@ describe('TailwindCalendarPanel', () => {
     expect(component.viewYear()).toBe(1995);
   });
 
+  it('coerces numeric value from bindings (e.g. Storybook date control)', () => {
+    const ts = new Date(2027, 0, 20).getTime();
+    fixture.componentRef.setInput('value', ts);
+    fixture.detectChanges();
+    expect(component.value()).toEqual(new Date(2027, 0, 20));
+    expect(component.viewMonth()).toBe(0);
+    expect(component.viewYear()).toBe(2027);
+    expect(() => component.isSelectedDay(20)).not.toThrow();
+    expect(component.isSelectedDay(20)).toBe(true);
+  });
+
   it('disables days outside min/max range', () => {
     fixture.componentRef.setInput('minDate', new Date(2026, 4, 10));
     fixture.componentRef.setInput('maxDate', new Date(2026, 4, 20));

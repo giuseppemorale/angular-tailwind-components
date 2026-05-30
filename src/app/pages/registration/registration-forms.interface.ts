@@ -8,6 +8,8 @@ export interface RegistrationGeneralForm {
   genere: FormControl<RegistrationGender>;
   dataNascita: FormControl<Date | null>;
   cittadinanza: FormControl<string>;
+  orarioPreferito: FormControl<string>;
+  appuntamento: FormControl<Date | null>;
 }
 
 export interface RegistrationAccountForm {
@@ -21,6 +23,8 @@ export interface RegistrationReviewForm {
   genere: FormControl<RegistrationGender>;
   dataNascita: FormControl<Date | null>;
   cittadinanza: FormControl<string>;
+  orarioPreferito: FormControl<string>;
+  appuntamento: FormControl<Date | null>;
   username: FormControl<string>;
   confirmPassword: FormControl<string>;
   terms: FormControl<boolean>;

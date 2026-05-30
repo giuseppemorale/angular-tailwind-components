@@ -47,6 +47,16 @@
               [placeholder]="'REGISTRATION.FIELD_CITIZENSHIP_PH' | transloco"
               [hasError]="datiGenerali.controls.cittadinanza | error"
               [errorText]="'REGISTRATION.ERROR_REQUIRED' | transloco" />
+            <tailwind-time-picker
+              id="reg-orario"
+              [formControl]="datiGenerali.controls.orarioPreferito"
+              [label]="'REGISTRATION.FIELD_PREFERRED_TIME' | transloco" />
+            <tailwind-datetime-picker
+              id="reg-appuntamento"
+              class="sm:col-span-2"
+              [formControl]="datiGenerali.controls.appuntamento"
+              [label]="'REGISTRATION.FIELD_APPOINTMENT' | transloco"
+              [placeholder]="'REGISTRATION.FIELD_APPOINTMENT_PH' | transloco" />
           </div>
         </form>
         <div class="flex justify-end mt-6">
@@ -117,6 +127,20 @@
               <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_CITIZENSHIP' | transloco }}</dt>
               <dd class="font-medium text-neutral-900">
                 {{ citizenshipLabel(riepilogo.controls.cittadinanza.value) }}
+              </dd>
+            </div>
+            <div>
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_PREFERRED_TIME' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">{{ riepilogo.controls.orarioPreferito.value }}</dd>
+            </div>
+            <div>
+              <dt class="text-neutral-500">{{ 'REGISTRATION.FIELD_APPOINTMENT' | transloco }}</dt>
+              <dd class="font-medium text-neutral-900">
+                @if (riepilogo.controls.appuntamento.value; as appointment) {
+                  {{ appointment | date: 'dd/MM/yyyy HH:mm' }}
+                } @else {
+                  —
+                }
               </dd>
             </div>
             <div class="sm:col-span-2">

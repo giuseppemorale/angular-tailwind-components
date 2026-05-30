@@ -6,10 +6,7 @@ import { TailwindTab } from './tab.component';
 @Component({
   imports: [TailwindTabGroup, TailwindTab],
   template: `
-    <tailwind-tab-group
-      [stretch]="stretch"
-      [scrollable]="scrollable"
-      [(activeIndex)]="activeIndex">
+    <tailwind-tab-group [stretch]="stretch" [scrollable]="scrollable" [(activeIndex)]="activeIndex">
       <tailwind-tab label="Tab A">Content A</tailwind-tab>
       <tailwind-tab label="Tab B">Content B</tailwind-tab>
       <tailwind-tab label="Tab C">Content C</tailwind-tab>

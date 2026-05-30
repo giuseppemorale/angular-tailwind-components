@@ -18,6 +18,11 @@ export function coerceCalendarDate(value: unknown): Date | undefined {
   return undefined;
 }
 
+/** Like {@link coerceCalendarDate} but returns `null` for empty or invalid values. */
+export function coerceCalendarDateOrNull(value: unknown): Date | null {
+  return coerceCalendarDate(value) ?? null;
+}
+
 export function startOfCalendarDay(d: Date): number {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
 }
@@ -35,12 +40,7 @@ export function resolveRangeBounds(minDate?: unknown, maxDate?: unknown): Calend
   return { minTs, maxTs };
 }
 
-export function isCalendarDayInRange(
-  year: number,
-  month: number,
-  day: number,
-  bounds: CalendarRangeBounds
-): boolean {
+export function isCalendarDayInRange(year: number, month: number, day: number, bounds: CalendarRangeBounds): boolean {
   const ts = new Date(year, month, day).getTime();
   if (bounds.minTs != null && ts < bounds.minTs) return false;
   if (bounds.maxTs != null && ts > bounds.maxTs) return false;

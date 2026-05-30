@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   forwardRef,
   inject,
   input,
@@ -14,22 +15,23 @@ import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 import {
+  coerceCalendarDateOrNull,
   isCalendarDayInRange,
   isCalendarMonthInRange,
   isCalendarYearInRange,
   isTodayInRange,
   resolveRangeBounds
-} from './calendar-date-range';
-import { calendarLabelsFor, CalendarLang } from './calendar-i18n';
-import { CalendarView, yearPageStartFor, YEARS_PER_PAGE } from './calendar-view';
+} from './util/calendar-date-range';
+import { calendarLabelsFor, CalendarLang } from './util/calendar-i18n';
+import { CalendarView, yearPageStartFor, YEARS_PER_PAGE } from './util/calendar-view';
 
 @Component({
   imports: [TailwindButton],
   selector: 'tailwind-calendar-panel',
-  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindCalendarPanel), multi: true }],
   templateUrl: './calendar-panel.component.html',
   styleUrl: './calendar-panel.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindCalendarPanel), multi: true }]
 })
 export class TailwindCalendarPanel extends TailwindComponent implements ControlValueAccessor {
   private readonly lang: CalendarLang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
@@ -59,7 +61,10 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
 
   readonly effectiveMonths = computed(() => this.months() ?? this.i18n.months);
   readonly effectiveWeekDays = computed(() => this.weekDays() ?? this.i18n.weekDays);
-  readonly effectiveHighlight = computed(() => (this.embedded() ? this.highlightDate() : this.value()));
+  private readonly coercedValue = computed(() => coerceCalendarDateOrNull(this.value()));
+  private readonly coercedHighlightDate = computed(() => coerceCalendarDateOrNull(this.highlightDate()));
+
+  readonly effectiveHighlight = computed(() => (this.embedded() ? this.coercedHighlightDate() : this.coercedValue()));
 
   readonly rangeBounds = computed(() => resolveRangeBounds(this.minDate(), this.maxDate()));
   readonly isTodaySelectable = computed(() => isTodayInRange(this.rangeBounds()));
@@ -68,6 +73,26 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
 
   private onChange: (v: Date | null) => void = () => {};
   private onTouched: () => void = () => {};
+
+  constructor() {
+    super();
+    /** Storybook date controls pass timestamps; keep the model as a real `Date`. */
+    effect(() => {
+      const raw = this.value();
+      if (raw instanceof Date) return;
+      const d = coerceCalendarDateOrNull(raw);
+      if (d !== raw) this.value.set(d);
+    });
+    /** Keeps the visible month in sync when `value` is set from outside (e.g. Storybook controls). */
+    effect(() => {
+      if (this.embedded()) return;
+      const d = this.coercedValue();
+      if (!d) return;
+      this.viewMonth.set(d.getMonth());
+      this.viewYear.set(d.getFullYear());
+      this.yearPageStart.set(yearPageStartFor(d.getFullYear()));
+    });
+  }
 
   readonly headerLabel = computed(() => {
     const view = this.calendarView();
@@ -101,8 +126,8 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
     return days;
   });
 
-  writeValue(v: Date | null): void {
-    const d = v && !isNaN(v.getTime()) ? v : null;
+  writeValue(v: unknown): void {
+    const d = coerceCalendarDateOrNull(v);
     this.value.set(d);
     const ref = d ?? new Date();
     this.viewMonth.set(ref.getMonth());

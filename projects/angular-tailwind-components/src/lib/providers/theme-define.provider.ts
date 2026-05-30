@@ -55,8 +55,16 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
     fromConfig(TAILWIND_BUTTON_KIND, c => c.BUTTON_KIND),
     fromConfig(TAILWIND_PAGINATION_SUMMARY, c => c.PAGINATION_SUMMARY),
     fromConfig(TAILWIND_PASSWORD_LABELS, c => c.PASSWORD_LABELS),
-    fromConfig(TAILWIND_EDITOR_LABELS, c => c.EDITOR_LABELS, v => resolveTailwindEditorLabels(v)),
-    fromConfig(TAILWIND_TITLE_SCALE, c => c.TITLE_SCALE, v => resolveTailwindTitleScale(v))
+    fromConfig(
+      TAILWIND_EDITOR_LABELS,
+      c => c.EDITOR_LABELS,
+      v => resolveTailwindEditorLabels(v)
+    ),
+    fromConfig(
+      TAILWIND_TITLE_SCALE,
+      c => c.TITLE_SCALE,
+      v => resolveTailwindTitleScale(v)
+    )
   ];
 }
 
@@ -202,9 +210,7 @@ function applyTailwindThemeToElement(element: HTMLElement, colors: TailwindDefin
  * Token values are resolved on first injection (after your app initializers run).
  * For runtime semantic **`COLORS`**, use {@link provideTailwindThemeColors} separately.
  */
-export function provideTailwindConfig(
-  config: () => TailwindComponentsConfig
-): EnvironmentProviders {
+export function provideTailwindConfig(config: () => TailwindComponentsConfig): EnvironmentProviders {
   return makeEnvironmentProviders(providersFromConfigFactory(config));
 }
 
@@ -212,9 +218,7 @@ export function provideTailwindConfig(
  * Applies semantic `COLORS` on `document.documentElement` at startup (browser only).
  * Register after i18n (or other) initializers if the factory uses `inject()`.
  */
-export function provideTailwindThemeColors(
-  colors: () => TailwindDefineThemeColors
-): EnvironmentProviders {
+export function provideTailwindThemeColors(colors: () => TailwindDefineThemeColors): EnvironmentProviders {
   return makeEnvironmentProviders([
     provideAppInitializer(() => {
       const platformId = inject(PLATFORM_ID);

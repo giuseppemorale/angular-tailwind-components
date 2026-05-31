@@ -25,8 +25,7 @@ The **library major matches the Angular major** in your app (library **21.x** â†
 
 | Library | Angular | Tailwind CSS | Notes |
 | :------ | :------ | :----------- | :---- |
-| **21.x** | 21 | 4 | **Current.** Recommended for all new projects on Angular 21. |
-| **2.x** | 21 | 4 | **Legacy.** Earlier line with transitional numbering; prefer **21.x** for new work. |
+| **21.x** | 21 | 4 | **Current.** Use on Angular 21 apps. |
 | **22.x** | 22 | 4 | Planned â€” when Angular 22 is supported and tested. |
 | **23+** | same major as Angular | 4 | Each new Angular major gets a matching library major. |
 
@@ -35,8 +34,6 @@ The **library major matches the Angular major** in your app (library **21.x** â†
 ```bash
 npm install angular-tailwind-components@21
 ```
-
-**Migrating from 2.x:** same Angular 21 + Tailwind 4 stack â€” run `npm install angular-tailwind-components@21` and pin `@21` for latest 21.x fixes.
 
 ### Peer dependencies
 

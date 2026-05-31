@@ -54,7 +54,7 @@ export const WithActions: StoryObj<TailwindAlert> = {
           </div>
         </tailwind-alert>
         <tailwind-alert color="info" title="New update available" [dismissible]="true" [showActions]="true" [bordered]="false">
-          Version 2.0 includes performance improvements and new features.
+          Version 21.0 includes performance improvements and new features.
           <div tailwind-alert-actions>
             <div class="flex gap-2">
               <tailwind-button>Update now</tailwind-button>

@@ -19,26 +19,26 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ### Versioning rule
 
-From **v21** onward, the **library major matches the Angular major** in your app (for example, library **22.x** targets **Angular 22**).
-
-**v2** is the release available today for **Angular 21**. It uses transitional numbering; **v21** will be the semver-aligned major for the same Angular generation once the library is fully stabilized.
+The **library major matches the Angular major** in your app (library **21.x** → **Angular 21**, **22.x** → **Angular 22**, and so on).
 
 ### Which version should I use?
 
 | Library | Angular | Tailwind CSS | Notes |
 | :------ | :------ | :----------- | :---- |
-| **2.x** | 21 | 4 | **Current.** Use on Angular 21 apps today. |
-| **21.x** | 21 | 4 | Planned — same stack as v2, aligned semver. |
-| **22.x** | 22 | 4 | Planned — after Angular 22 upgrade and testing. |
+| **21.x** | 21 | 4 | **Current.** Recommended for all new projects on Angular 21. |
+| **2.x** | 21 | 4 | **Legacy.** Earlier line with transitional numbering; prefer **21.x** for new work. |
+| **22.x** | 22 | 4 | Planned — when Angular 22 is supported and tested. |
 | **23+** | same major as Angular | 4 | Each new Angular major gets a matching library major. |
 
-**Install today (Angular 21):**
+**Install (Angular 21):**
 
 ```bash
-npm install angular-tailwind-components@2
+npm install angular-tailwind-components@21
 ```
 
-### Peer dependencies (v2)
+**Migrating from 2.x:** same Angular 21 + Tailwind 4 stack — run `npm install angular-tailwind-components@21` and pin `@21` for latest 21.x fixes.
+
+### Peer dependencies
 
 Your app should use:
 

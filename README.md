@@ -8,12 +8,45 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 - 🎨 **38 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
-- ⚡ **Angular 21** — Signals, standalone components, modern control flow
+- ⚡ **Angular** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
 - 🧪 **Tested** — Unit tests with Vitest
 - 📖 **Storybook** — [Visual documentation](https://angular-tailwind-components.vercel.app/) for all components
 - 🎭 **Customizable** — **`provideTailwindConfig()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
+
+## Compatibility
+
+### Versioning rule
+
+From **v21** onward, the **library major matches the Angular major** in your app (for example, library **22.x** targets **Angular 22**).
+
+**v2** is the release available today for **Angular 21**. It uses transitional numbering; **v21** will be the semver-aligned major for the same Angular generation once the library is fully stabilized.
+
+### Which version should I use?
+
+| Library | Angular | Tailwind CSS | Notes |
+| :------ | :------ | :----------- | :---- |
+| **2.x** | 21 | 4 | **Current.** Use on Angular 21 apps today. |
+| **21.x** | 21 | 4 | Planned — same stack as v2, aligned semver. |
+| **22.x** | 22 | 4 | Planned — after Angular 22 upgrade and testing. |
+| **23+** | same major as Angular | 4 | Each new Angular major gets a matching library major. |
+
+**Install today (Angular 21):**
+
+```bash
+npm install angular-tailwind-components@2
+```
+
+### Peer dependencies (v2)
+
+Your app should use:
+
+- **Angular** 21 — `@angular/core` and related packages `^21`
+- **Tailwind CSS** 4 — `tailwindcss` `^4`
+- **PostCSS** 8 — `postcss` `^8`
+
+Exact ranges for the version you install are listed under [peerDependencies on npm](https://www.npmjs.com/package/angular-tailwind-components?activeTab=dependencies).
 
 ## Installation
 

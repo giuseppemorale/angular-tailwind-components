@@ -328,7 +328,7 @@ export const TAILWIND_HEROICON_NAMES = [
   'wrench',
   'wrench-screwdriver',
   'x-circle',
-  'x-mark'
+  'x-mark',
 ] as const;
 
 /** Use names listed in {@link TAILWIND_HEROICON_NAMES} (compile-time union omitted — large sets break Angular template inference). */

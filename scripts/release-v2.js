@@ -3,8 +3,9 @@
  *
  * Prerequisiti: branch develop, working tree pulito consigliato.
  *
- * SNAPSHOT (es. 2.1.0-SNAPSHOT):
- *   → stacca la prima RC (2.1.0-RC1), build, commit, push, tag, publish @rc
+ * SNAPSHOT (es. 2.1.1-SNAPSHOT):
+ *   → scegli tipo release (major / minor / patch / custom) rispetto all’ultima stabile
+ *   → stacca la prima RC (es. 2.1.0-RC1), build, commit, push, tag, publish @rc
  *
  * RC (es. 2.1.0-RC2):
  *   1 = avanza RC
@@ -109,12 +110,96 @@ function formatSnapshot({ major, minor, patch }) {
   return `${major}.${minor}.${patch}-SNAPSHOT`;
 }
 
-function snapshotBaseToFirstRc(version) {
-  const parsed = parseVersion(version);
+const STABLE_VERSION_PATTERN = /^(\d+)\.(\d+)\.(\d+)$/;
+
+function parseStableVersionString(versionStr) {
+  const match = versionStr.trim().match(STABLE_VERSION_PATTERN);
+  if (!match) {
+    return null;
+  }
+  return {
+    major: parseInt(match[1], 10),
+    minor: parseInt(match[2], 10),
+    patch: parseInt(match[3], 10)
+  };
+}
+
+/**
+ * Da X.Y.Z-SNAPSHOT (develop dopo release X.Y.(Z-1)) ricava l’ultima stabile di riferimento.
+ */
+function lastStableFromSnapshot(snapshotVersion) {
+  const parsed = parseVersion(snapshotVersion);
   if (parsed.kind !== 'snapshot') {
-    throw new Error(`Attesa versione SNAPSHOT, trovata: ${version}`);
+    throw new Error(`Attesa versione SNAPSHOT, trovata: ${snapshotVersion}`);
+  }
+  return {
+    major: parsed.major,
+    minor: parsed.minor,
+    patch: Math.max(0, parsed.patch - 1)
+  };
+}
+
+function bumpStableReference(ref, releaseType) {
+  switch (releaseType) {
+    case 'major':
+      return { major: ref.major + 1, minor: 0, patch: 0 };
+    case 'minor':
+      return { major: ref.major, minor: ref.minor + 1, patch: 0 };
+    case 'patch':
+      return { major: ref.major, minor: ref.minor, patch: ref.patch + 1 };
+    default:
+      throw new Error(`Tipo di release non valido: ${releaseType}`);
+  }
+}
+
+function firstRcFromStableTarget(targetStable) {
+  const parsed = parseStableVersionString(targetStable);
+  if (!parsed) {
+    throw new Error(`Versione stabile non valida: "${targetStable}". Usa M.m.p.`);
   }
   return formatRc({ ...parsed, rc: 1 });
+}
+
+async function askCustomStableVersion() {
+  const prompt = '\nInserisci la versione da rilasciare (formato M.m.p, es. 2.1.0): ';
+
+  for (;;) {
+    const input = (await ask(prompt)).trim();
+    if (parseStableVersionString(input)) {
+      return input;
+    }
+    console.log('Formato non valido. Usa tre numeri separati da punto (M.m.p), es. 2.1.0.');
+  }
+}
+
+async function askReleaseTypeFromSnapshot(snapshotVersion) {
+  const reference = lastStableFromSnapshot(snapshotVersion);
+  const refLabel = formatStable(reference);
+
+  console.log(`\nVersione SNAPSHOT: ${snapshotVersion}`);
+  console.log(`Ultima stabile di riferimento: ${refLabel}`);
+
+  const releaseQuestion = `
+Quale versione vuoi rilasciare?
+1 = major  (${refLabel} → ${formatStable(bumpStableReference(reference, 'major'))})
+2 = minor  (${refLabel} → ${formatStable(bumpStableReference(reference, 'minor'))})
+3 = patch  (${refLabel} → ${formatStable(bumpStableReference(reference, 'patch'))})
+4 = custom (versione completa M.m.p)
+Inserisci un numero (1-4): `;
+
+  const releaseAnswer = (await ask(releaseQuestion)).trim();
+  const releaseTypeMap = { 1: 'major', 2: 'minor', 3: 'patch', 4: 'custom' };
+  const releaseType = releaseTypeMap[releaseAnswer];
+
+  if (!releaseType) {
+    throw new Error('Opzione non valida. Deve essere 1, 2, 3 o 4.');
+  }
+
+  if (releaseType === 'custom') {
+    return askCustomStableVersion();
+  }
+
+  return formatStable(bumpStableReference(reference, releaseType));
 }
 
 function advanceRcVersion(version) {
@@ -241,10 +326,10 @@ async function determineReleaseStep(currentVersion) {
   const parsed = parseVersion(currentVersion);
 
   if (parsed.kind === 'snapshot') {
-    const firstRc = snapshotBaseToFirstRc(currentVersion);
-    console.log(`\nVersione SNAPSHOT: ${currentVersion}`);
-    console.log(`Prima RC: ${firstRc}`);
-    await confirm('Staccare la RC');
+    const targetStable = await askReleaseTypeFromSnapshot(currentVersion);
+    const firstRc = firstRcFromStableTarget(targetStable);
+    console.log(`\nPrima RC: ${firstRc}`);
+    await confirm(`Staccare ${firstRc}`);
     return { nextVersion: firstRc, mode: 'rc' };
   }
 

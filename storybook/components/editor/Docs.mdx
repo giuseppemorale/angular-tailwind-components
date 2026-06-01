@@ -80,8 +80,38 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Testo placeholder (CSS su area vuota).</td>
     </tr>
     <tr>
-      <td><code>value</code></td>
+      <td><code>minHeight</code></td>
       <td><code>string</code></td>
+      <td><code>'12rem'</code></td>
+      <td>Altezza minima dell&apos;area di editing (CSS).</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione del campo e della toolbar.</td>
+    </tr>
+    <tr>
+      <td><code>helperText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo di aiuto sotto il campo.</td>
+    </tr>
+    <tr>
+      <td><code>errorText</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Messaggio errore quando <code>hasError</code> è true.</td>
+    </tr>
+    <tr>
+      <td><code>hasError</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Stato errore visivo.</td>
+    </tr>
+    <tr>
+      <td><code>value</code></td>
+      <td><code>ModelSignal&lt;string&gt;</code></td>
       <td><code>''</code></td>
       <td>HTML sanitizzato (two-way / CVA).</td>
     </tr>
@@ -108,6 +138,18 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>boolean</code></td>
       <td><code>true</code></td>
       <td>Pulsante upload immagine (data URL).</td>
+    </tr>
+    <tr>
+      <td><code>accept</code></td>
+      <td><code>string</code></td>
+      <td><code>'image/*'</code></td>
+      <td>Attributo <code>accept</code> dell&apos;input file per l&apos;upload immagine.</td>
+    </tr>
+    <tr>
+      <td><code>maxFileSizeBytes</code></td>
+      <td><code>number | undefined</code></td>
+      <td><code>undefined</code></td>
+      <td>Dimensione massima file immagine; oltre soglia la selezione viene rifiutata.</td>
     </tr>
     <tr>
       <td><code>sanitize</code></td>

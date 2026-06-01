@@ -74,7 +74,7 @@ Eredita `TailwindComponent` (`id`, `class`).
     </tr>
     <tr>
       <td><code>options</code></td>
-      <td><code>TailwindOption[]</code></td>
+      <td><code>TailwindOptionGroup&lt;T&gt;[]</code></td>
       <td><code>[]</code></td>
       <td>Oggetti <code>value</code> / <code>label</code>.</td>
     </tr>
@@ -92,8 +92,8 @@ Eredita `TailwindComponent` (`id`, `class`).
     </tr>
     <tr>
       <td><code>value</code></td>
-      <td><code>ModelSignal&lt;string&gt;</code></td>
-      <td><code>''</code></td>
+      <td><code>ModelSignal&lt;T | null&gt;</code></td>
+      <td><code>null</code></td>
       <td>Valore selezionato (two-way).</td>
     </tr>
   </tbody>

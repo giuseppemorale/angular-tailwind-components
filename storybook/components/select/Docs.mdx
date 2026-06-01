@@ -100,6 +100,12 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>Etichetta.</td>
     </tr>
     <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Nome accessibile del combobox se <code>label</code> è omessa.</td>
+    </tr>
+    <tr>
       <td><code>placeholder</code></td>
       <td><code>string</code></td>
       <td><code>''</code></td>
@@ -107,7 +113,7 @@ Eredita `TailwindComponent` (`id`, `class`).
     </tr>
     <tr>
       <td><code>options</code></td>
-      <td><code>TailwindOption[]</code></td>
+      <td><code>TailwindOption&lt;T&gt;[]</code></td>
       <td><code>[]</code></td>
       <td>Elenco opzioni. Ogni opzione può avere <code>disabled?: boolean</code>.</td>
     </tr>
@@ -116,12 +122,6 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>TailwindSize</code></td>
       <td><code>'md'</code></td>
       <td>Dimensione: <code>xs | sm | md | lg | xl</code>.</td>
-    </tr>
-    <tr>
-      <td><code>required</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Mostra asterisco accanto alla label.</td>
     </tr>
     <tr>
       <td><code>helperText</code></td>
@@ -146,6 +146,12 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td><code>boolean</code></td>
       <td><code>false</code></td>
       <td>Se <code>true</code>, il valore è <code>T[]</code> e si possono selezionare più opzioni; con <code>ControlValueAccessor</code> il form riceve un array.</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Disabilita il controllo (combinato con <code>setDisabledState</code> da form).</td>
     </tr>
     <tr>
       <td><code>value</code></td>

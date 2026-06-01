@@ -71,6 +71,30 @@ describe('TailwindEditor', () => {
     expect(spy).toHaveBeenCalled();
   });
 
+  it('should insert two spaces when Tab is pressed in code view', () => {
+    component.onToolbarCommand('code');
+    fixture.detectChanges();
+
+    const textarea = fixture.nativeElement.querySelector('.tailwind-editor-source') as HTMLTextAreaElement;
+    textarea.value = '<p></p>';
+    textarea.selectionStart = textarea.selectionEnd = 3;
+    textarea.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })
+    );
+    fixture.detectChanges();
+
+    expect(textarea.value).toBe('<p>  </p>');
+    expect(textarea.selectionStart).toBe(5);
+  });
+
+  it('should show line numbers in code view', () => {
+    component.onToolbarCommand('code');
+    fixture.detectChanges();
+
+    const numbers = fixture.nativeElement.querySelectorAll('.tailwind-editor-line-number');
+    expect(numbers.length).toBeGreaterThan(0);
+  });
+
   it('should toggle code view and show HTML textarea', () => {
     const surface = fixture.nativeElement.querySelector('.tailwind-editor-surface') as HTMLElement;
     surface.innerHTML = '<p>Hi</p>';

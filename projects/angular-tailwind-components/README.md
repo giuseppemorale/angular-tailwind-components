@@ -7,7 +7,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 ## Features
 
 - 🎨 **43 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
-- 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
+- 🎯 **Pure Tailwind CSS** — No third-party UI component frameworks
 - ⚡ **Angular** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
 - ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support

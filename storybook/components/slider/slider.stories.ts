@@ -14,7 +14,7 @@ const meta: Meta<TailwindSlider> = {
     docs: {
       description: {
         component:
-          'Accessible **slider** with optional **range** mode, horizontal or vertical layout, step snapping, and optional ticks. Implements `ControlValueAccessor` (`number` or `[number, number]` when `range` is true). API inspired by PrimeNG Slider.'
+          'Accessible **slider** with optional **range** mode, horizontal or vertical layout, step snapping, and optional ticks. Implements `ControlValueAccessor` (`number` or `[number, number]` when `range` is true).'
       },
       story: { height: '280px' }
     }

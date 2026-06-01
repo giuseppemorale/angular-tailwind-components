@@ -22,20 +22,34 @@
       (commandClick)="onToolbarCommand($event)" />
 
     @if (isCodeView()) {
-      <textarea
-        [attr.id]="id() ? id() + '-surface' : null"
-        class="tailwind-editor-source block w-full font-mono text-sm resize-y"
-        [class]="sourceClasses()"
-        [style.min-height]="minHeight()"
-        [placeholder]="labels().htmlSourcePlaceholder"
-        [readonly]="!isEditable()"
-        [attr.aria-readonly]="readonly() || null"
-        [attr.aria-disabled]="isDisabled() || null"
-        [attr.aria-invalid]="hasError() || null"
-        [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
-        [value]="sourceHtml()"
-        (input)="onSourceInput($event)"
-        (blur)="onSourceBlur()"></textarea>
+      <div
+        class="tailwind-editor-source-panel font-mono resize-y overflow-hidden"
+        [class]="sourcePanelClasses()"
+        [style.min-height]="minHeight()">
+        <div
+          #sourceLineNumbers
+          class="tailwind-editor-line-numbers"
+          aria-hidden="true">
+          @for (line of sourceLineNumbersList(); track line) {
+            <span class="tailwind-editor-line-number">{{ line }}</span>
+          }
+        </div>
+        <textarea
+          #sourceTextarea
+          [attr.id]="id() ? id() + '-surface' : null"
+          class="tailwind-editor-source"
+          [class]="sourceClasses()"
+          [placeholder]="labels().htmlSourcePlaceholder"
+          [readonly]="!isEditable()"
+          [attr.aria-readonly]="readonly() || null"
+          [attr.aria-disabled]="isDisabled() || null"
+          [attr.aria-invalid]="hasError() || null"
+          [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+          (input)="onSourceInput($event)"
+          (keydown)="onSourceKeydown($event)"
+          (scroll)="onSourceScroll()"
+          (blur)="onSourceBlur()"></textarea>
+      </div>
     } @else {
       <div
         #editable
@@ -52,6 +66,7 @@
         [attr.aria-invalid]="hasError() || null"
         [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
         (input)="onSurfaceInput()"
+        (beforeinput)="onSurfaceBeforeInput($event)"
         (blur)="onSurfaceBlur($event)"
         (focus)="onSurfaceFocus()"
         (paste)="onPaste($event)"

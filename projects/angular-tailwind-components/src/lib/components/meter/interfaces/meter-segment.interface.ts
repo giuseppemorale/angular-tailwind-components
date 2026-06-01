@@ -1,6 +1,6 @@
 import { TailwindColor } from '../../../models';
 
-/** One segment in a meter bar (inspired by PrimeNG MeterGroup). */
+/** One segment in a meter bar. */
 export interface TailwindMeterSegment {
   /** Legend label */
   label: string;

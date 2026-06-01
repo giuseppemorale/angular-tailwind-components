@@ -31,12 +31,14 @@ import {
   executeEditorCommand,
   getActiveBlockCommand,
   getActiveCommands,
+  handleEditorEnter,
   insertImage,
   insertLink,
   saveEditorSelection
 } from './utils/editor-commands';
 import { sanitizeEditorHtml } from './utils/editor-html-sanitizer';
 import { handleEditorPaste } from './utils/editor-paste';
+import { prettifyEditorHtml } from './utils/editor-html-format';
 import { filterToolbarGroups, resolveToolbarGroups } from './utils/editor-toolbar-config';
 
 @Component({
@@ -58,6 +60,8 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   private readonly fallbackFileId = `tw-editor-img-${TailwindEditor.nextFileId++}`;
 
   readonly editable = viewChild<ElementRef<HTMLElement>>('editable');
+  readonly sourceTextarea = viewChild<ElementRef<HTMLTextAreaElement>>('sourceTextarea');
+  readonly sourceLineNumbers = viewChild<ElementRef<HTMLElement>>('sourceLineNumbers');
   readonly editorWrapper = viewChild<ElementRef<HTMLElement>>('editorWrapper');
   readonly linkModal = viewChild<TailwindModal>('linkModal');
   readonly imageUrlModal = viewChild<TailwindModal>('imageUrlModal');
@@ -124,7 +128,33 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   });
 
   readonly surfaceClasses = computed(() => this.fieldSurfaceClasses('cursor-text'));
-  readonly sourceClasses = computed(() => this.fieldSurfaceClasses('cursor-text resize-y'));
+  readonly sourceClasses = computed(() => this.codeSourceClasses());
+  readonly sourcePanelClasses = computed(() => this.codeSourcePanelClasses());
+  readonly sourceLineNumbersList = computed(() => {
+    const lines = this.sourceHtml().split('\n').length;
+    return Array.from({ length: Math.max(1, lines) }, (_, index) => index + 1);
+  });
+
+  private codeSourcePanelClasses(): string {
+    const sizeMap: Record<TailwindSize, string> = {
+      xs: 'text-xs',
+      sm: 'text-sm',
+      md: 'text-sm',
+      lg: 'text-base',
+      xl: 'text-base'
+    };
+    return sizeMap[this.size()];
+  }
+
+  private codeSourceClasses(): string {
+    const focusClass = this.isEditable()
+      ? this.hasError()
+        ? 'outline-none focus:ring-1 focus:ring-inset focus:ring-danger-400'
+        : 'outline-none focus:ring-1 focus:ring-inset focus:ring-slate-500'
+      : 'outline-none';
+    const cursor = this.readonly() || this.isDisabled() ? 'cursor-default' : 'cursor-text';
+    return [focusClass, cursor].join(' ');
+  }
 
   private fieldSurfaceClasses(cursor: string): string {
     const sizeMap: Record<TailwindSize, string> = {
@@ -194,9 +224,12 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
     this.syncingFromWrite = true;
     this.value.set(html);
-    this.sourceHtml.set(html);
+    const source = this.isCodeView() ? prettifyEditorHtml(html) : html;
+    this.sourceHtml.set(source);
     this.history.reset(html);
-    if (!this.isCodeView()) {
+    if (this.isCodeView()) {
+      afterNextRender(() => this.patchSourceTextarea(source), { injector: this.injector });
+    } else {
       this.setDomHtml(html, false);
     }
     this.syncingFromWrite = false;
@@ -255,13 +288,49 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   onSourceInput(event: Event): void {
     if (!this.isEditable() || !this.isCodeView() || this.syncingFromWrite) return;
     const html = (event.target as HTMLTextAreaElement).value;
-    this.sourceHtml.set(html);
-    const normalized = this.sanitize() ? sanitizeEditorHtml(html) : html;
-    this.emitValue(normalized);
+    this.syncSourceHtml(html);
+  }
+
+  onSourceKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Tab' || !this.isEditable() || !this.isCodeView()) return;
+
+    event.preventDefault();
+    const textarea = event.target as HTMLTextAreaElement;
+    const { selectionStart, selectionEnd, value } = textarea;
+    const updated = `${value.slice(0, selectionStart)}  ${value.slice(selectionEnd)}`;
+    const caret = selectionStart + 2;
+    this.patchSourceTextarea(updated, { start: caret, end: caret });
+    this.syncSourceHtml(updated);
+  }
+
+  onSourceScroll(): void {
+    const gutter = this.sourceLineNumbers()?.nativeElement;
+    const textarea = this.sourceTextarea()?.nativeElement;
+    if (gutter && textarea) {
+      gutter.scrollTop = textarea.scrollTop;
+    }
   }
 
   onSourceBlur(): void {
     this.onTouched();
+  }
+
+  private syncSourceHtml(html: string): void {
+    this.sourceHtml.set(html);
+    // Keep raw HTML while editing source; sanitize when returning to visual mode.
+    this.emitValue(html);
+  }
+
+  private patchSourceTextarea(html: string, selection?: { start: number; end: number }): void {
+    const textarea = this.sourceTextarea()?.nativeElement;
+    if (!textarea) return;
+
+    textarea.value = html;
+
+    if (selection) {
+      textarea.selectionStart = selection.start;
+      textarea.selectionEnd = selection.end;
+    }
   }
 
   onToolbarCommand(command: EditorCommand): void {
@@ -360,10 +429,40 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     this.syncFromDom();
   }
 
+  private isShiftEnter(event: InputEvent): boolean {
+    return 'getModifierState' in event && typeof event.getModifierState === 'function' && event.getModifierState('Shift');
+  }
+
+  onSurfaceBeforeInput(event: InputEvent): void {
+    if (!this.isEditable() || this.isCodeView()) return;
+    const el = this.editable()?.nativeElement;
+    if (!el) return;
+
+    const { inputType } = event;
+    if (inputType !== 'insertParagraph' && inputType !== 'insertLineBreak') return;
+    if (inputType === 'insertLineBreak' && this.isShiftEnter(event)) return;
+
+    if (handleEditorEnter(el)) {
+      event.preventDefault();
+      this.syncFromDom();
+      saveEditorSelection(el);
+    }
+  }
+
   onKeydown(event: KeyboardEvent): void {
     if (!this.isEditable() || this.isCodeView()) return;
     const el = this.editable()?.nativeElement;
     if (!el) return;
+
+    if (event.key === 'Enter' && !event.shiftKey) {
+      if (handleEditorEnter(el)) {
+        event.preventDefault();
+        this.syncFromDom();
+        saveEditorSelection(el);
+        return;
+      }
+    }
+
     if (!event.ctrlKey && !event.metaKey) return;
 
     const key = event.key.toLowerCase();
@@ -436,7 +535,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
   private toggleCodeView(): void {
     if (this.isCodeView()) {
-      const raw = this.sourceHtml();
+      const raw = this.sourceTextarea()?.nativeElement.value ?? this.sourceHtml();
       const html = this.sanitize() ? sanitizeEditorHtml(raw) : raw;
       this.sourceHtml.set(html);
       this.isCodeView.set(false);
@@ -455,9 +554,11 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     if (!el) return;
     const raw = el.innerHTML;
     const html = this.sanitize() ? sanitizeEditorHtml(raw) : raw;
-    this.sourceHtml.set(html);
+    const formatted = prettifyEditorHtml(html);
+    this.sourceHtml.set(formatted);
     this.isCodeView.set(true);
     this.emitValue(html);
+    afterNextRender(() => this.patchSourceTextarea(formatted), { injector: this.injector });
   }
 
   private refreshActiveCommands(): void {

@@ -18,7 +18,7 @@ const meta: Meta<TailwindMeter> = {
     docs: {
       description: {
         component:
-          'Segmented **meter** bar (PrimeNG MeterGroup–style): pass `segments` with `label`, `value`, and optional `color`. Values are scaled against **max** (default 100).'
+          'Segmented **meter** bar: pass `segments` with `label`, `value`, and optional `color`. Values are scaled against **max** (default 100).'
       }
     }
   },

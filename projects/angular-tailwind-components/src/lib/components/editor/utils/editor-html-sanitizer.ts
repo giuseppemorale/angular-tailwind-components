@@ -25,7 +25,7 @@ const ALLOWED_TAGS = new Set([
   'div'
 ]);
 
-const GLOBAL_ATTRS = new Set(['title']);
+const GLOBAL_ATTRS = new Set(['title', 'class']);
 const ALLOWED_TEXT_ALIGN = new Set(['left', 'center', 'right', 'justify']);
 
 const TAG_ATTRS: Record<string, Set<string>> = {

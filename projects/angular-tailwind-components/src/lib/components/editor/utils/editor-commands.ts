@@ -13,6 +13,8 @@ const BLOCK_FORMAT_TAGS = new Set<EditorBlockFormat | 'blockquote'>([
 
 const BLOCK_TAGS = new Set(['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'BLOCKQUOTE', 'LI', 'PRE']);
 
+const HEADING_TAGS = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
+
 type InlineFormat = 'bold' | 'italic' | 'underline' | 'strikethrough';
 type TextAlign = 'left' | 'center' | 'right' | 'justify';
 
@@ -318,16 +320,132 @@ function setTextAlign(root: HTMLElement, range: Range, align: TextAlign): boolea
   return blocks.length > 0;
 }
 
+function blockContentRange(block: HTMLElement): Range {
+  const blockRange = document.createRange();
+  blockRange.selectNodeContents(block);
+  return blockRange;
+}
+
+function rangeCoversBlockContents(range: Range, block: HTMLElement): boolean {
+  const blockRange = blockContentRange(block);
+  return (
+    range.compareBoundaryPoints(Range.START_TO_START, blockRange) <= 0 &&
+    range.compareBoundaryPoints(Range.END_TO_END, blockRange) >= 0
+  );
+}
+
+function intersectRangeWithBlock(range: Range, block: HTMLElement): Range {
+  const blockRange = blockContentRange(block);
+  const intersection = document.createRange();
+
+  if (range.compareBoundaryPoints(Range.START_TO_START, blockRange) > 0) {
+    intersection.setStart(range.startContainer, range.startOffset);
+  } else {
+    intersection.setStart(block, 0);
+  }
+
+  if (range.compareBoundaryPoints(Range.END_TO_END, blockRange) < 0) {
+    intersection.setEnd(range.endContainer, range.endOffset);
+  } else {
+    intersection.setEnd(block, block.childNodes.length);
+  }
+
+  return intersection;
+}
+
+function hasMeaningfulContents(fragment: DocumentFragment | null): boolean {
+  if (!fragment || !fragment.childNodes.length) return false;
+  if (fragment.textContent?.trim()) return true;
+  return [...fragment.childNodes].some(
+    node => node.nodeType !== Node.TEXT_NODE || (node.textContent?.length ?? 0) > 0
+  );
+}
+
+function replaceBlockTag(block: HTMLElement, tagName: string): void {
+  const next = document.createElement(tagName);
+  if (block.style.cssText) next.style.cssText = block.style.cssText;
+  next.innerHTML = block.innerHTML;
+  block.replaceWith(next);
+}
+
+/** Split a block so only the intersecting range gets `tagName`; before/after keep the original tag. */
+function splitBlockApplyTag(block: HTMLElement, intersection: Range, tagName: string): void {
+  const parent = block.parentNode;
+  if (!parent) return;
+
+  const originalTag = block.tagName.toLowerCase();
+  const style = block.style.cssText;
+  const blockRange = blockContentRange(block);
+
+  const beforeRange = blockRange.cloneRange();
+  beforeRange.setEnd(intersection.startContainer, intersection.startOffset);
+
+  const afterRange = blockRange.cloneRange();
+  afterRange.setStart(intersection.endContainer, intersection.endOffset);
+
+  const middleRange = intersection.cloneRange();
+
+  const afterContents = !afterRange.collapsed ? afterRange.extractContents() : null;
+  const middleContents = middleRange.extractContents();
+  const beforeContents = !beforeRange.collapsed ? beforeRange.extractContents() : null;
+
+  const insert: HTMLElement[] = [];
+
+  if (hasMeaningfulContents(beforeContents)) {
+    const before = document.createElement(originalTag);
+    if (style) before.style.cssText = style;
+    before.appendChild(beforeContents!);
+    insert.push(before);
+  }
+
+  const middle = document.createElement(tagName);
+  if (style) middle.style.cssText = style;
+  middle.appendChild(middleContents);
+  insert.push(middle);
+
+  if (hasMeaningfulContents(afterContents)) {
+    const after = document.createElement(originalTag);
+    if (style) after.style.cssText = style;
+    after.appendChild(afterContents!);
+    insert.push(after);
+  }
+
+  for (const el of insert) {
+    parent.insertBefore(el, block);
+  }
+  block.remove();
+}
+
+function applyBlockTagToBlock(block: HTMLElement, range: Range, tagName: string): void {
+  if (block.tagName.toLowerCase() === tagName.toLowerCase()) return;
+
+  if (rangeCoversBlockContents(range, block)) {
+    replaceBlockTag(block, tagName);
+    return;
+  }
+
+  splitBlockApplyTag(block, intersectRangeWithBlock(range, block), tagName);
+}
+
 function setBlockTag(root: HTMLElement, range: Range, tagName: string): boolean {
   const blocks = getBlocksForRange(root, range);
   for (const block of blocks) {
-    if (block.tagName.toLowerCase() === tagName.toLowerCase()) continue;
-    const next = document.createElement(tagName);
-    if (block.style.cssText) next.style.cssText = block.style.cssText;
-    next.innerHTML = block.innerHTML;
-    block.replaceWith(next);
+    applyBlockTagToBlock(block, range, tagName);
   }
   return blocks.length > 0;
+}
+
+function toggleBlockquote(root: HTMLElement, range: Range): boolean {
+  const blocks = getBlocksForRange(root, range);
+  if (!blocks.length) return false;
+
+  const unwrap = blocks.every(block => block.tagName.toLowerCase() === 'blockquote');
+  const targetTag = unwrap ? 'p' : 'blockquote';
+
+  for (const block of blocks) {
+    applyBlockTagToBlock(block, range, targetTag);
+  }
+  return true;
 }
 
 function unwrapList(list: HTMLElement): void {
@@ -470,7 +588,7 @@ function runCommand(root: HTMLElement, command: string, range: Range): boolean {
     case 'removeFormat':
       return removeFormatInRange(root, range);
     case 'blockquote':
-      return setBlockTag(root, range, 'blockquote');
+      return toggleBlockquote(root, range);
     case 'p':
     case 'h1':
     case 'h2':
@@ -532,6 +650,10 @@ function isCommandActive(root: HTMLElement, command: EditorCommand): boolean {
       const block = getBlockParent(selection.anchorNode, root);
       return !!block && block.style.textAlign === 'justify';
     }
+    case 'blockquote': {
+      const block = getBlockParent(selection.anchorNode, root);
+      return block?.tagName.toLowerCase() === 'blockquote';
+    }
     default:
       return false;
   }
@@ -543,6 +665,141 @@ function escapeHtml(text: string): string {
 
 function escapeAttr(text: string): string {
   return escapeHtml(text).replace(/'/g, '&#39;');
+}
+
+const ENTER_HANDLED_TAGS = new Set(['p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'li']);
+
+function isHeadingBlock(block: HTMLElement): boolean {
+  return HEADING_TAGS.has(block.tagName.toLowerCase());
+}
+
+function isEnterHandledBlock(block: HTMLElement): boolean {
+  return ENTER_HANDLED_TAGS.has(block.tagName.toLowerCase());
+}
+
+function tagAfterSplit(block: HTMLElement): string {
+  const tag = block.tagName.toLowerCase();
+  if (tag === 'li') return 'li';
+  if (isHeadingBlock(block) || tag === 'blockquote') return 'p';
+  return 'p';
+}
+
+function isCaretAtStartOfBlock(block: HTMLElement, range: Range): boolean {
+  if (!range.collapsed) return false;
+  const start = document.createRange();
+  start.selectNodeContents(block);
+  start.collapse(true);
+  return range.compareBoundaryPoints(Range.START_TO_START, start) === 0;
+}
+
+/** True when only whitespace and <br> remain between the caret and the block end. */
+function isEffectivelyAtEndOfBlock(block: HTMLElement, range: Range): boolean {
+  if (!range.collapsed) return false;
+
+  const tail = document.createRange();
+  tail.selectNodeContents(block);
+  tail.setStart(range.startContainer, range.startOffset);
+
+  return !hasMeaningfulContent(tail.cloneContents());
+}
+
+function hasMeaningfulContent(fragment: DocumentFragment): boolean {
+  return walkMeaningfulNodes(fragment);
+}
+
+function walkMeaningfulNodes(node: Node | DocumentFragment): boolean {
+  for (const child of node.childNodes) {
+    if (child.nodeType === Node.TEXT_NODE) {
+      if (child.textContent?.trim()) return true;
+      continue;
+    }
+    if (child.nodeType === Node.ELEMENT_NODE) {
+      const el = child as Element;
+      if (el.tagName === 'BR') continue;
+      if (walkMeaningfulNodes(el)) return true;
+    }
+  }
+  return false;
+}
+
+function trimTrailingBreaks(block: HTMLElement): void {
+  while (block.lastChild?.nodeName === 'BR') {
+    block.removeChild(block.lastChild);
+  }
+}
+
+function createEmptyBlock(tagName: string): HTMLElement {
+  const block = document.createElement(tagName);
+  block.appendChild(document.createElement('br'));
+  return block;
+}
+
+function placeCaretInNewBlock(root: HTMLElement, block: HTMLElement): void {
+  const range = document.createRange();
+  range.selectNodeContents(block);
+  range.collapse(true);
+  commitRange(root, range);
+}
+
+function insertBlockAfter(block: HTMLElement, root: HTMLElement): void {
+  trimTrailingBreaks(block);
+  const next = createEmptyBlock(tagAfterSplit(block));
+  block.after(next);
+  placeCaretInNewBlock(root, next);
+}
+
+function insertBlockBefore(block: HTMLElement, root: HTMLElement): void {
+  const prev = createEmptyBlock(tagAfterSplit(block));
+  block.before(prev);
+  placeCaretInNewBlock(root, prev);
+}
+
+function splitBlockAtCaret(block: HTMLElement, root: HTMLElement, range: Range): void {
+  const after = document.createRange();
+  after.selectNodeContents(block);
+  after.setStart(range.startContainer, range.startOffset);
+
+  const next = document.createElement(tagAfterSplit(block));
+  const afterContents = after.extractContents();
+  if (afterContents.childNodes.length) {
+    next.appendChild(afterContents);
+  } else {
+    next.appendChild(document.createElement('br'));
+  }
+
+  trimTrailingBreaks(block);
+  block.after(next);
+  placeCaretInNewBlock(root, next);
+}
+
+/**
+ * Enter at the end of a block inserts a new block after it (never <br> inside at EOL).
+ * Shift+Enter keeps the browser soft line break.
+ */
+export function handleEditorEnter(root: HTMLElement): boolean {
+  const selection = document.getSelection();
+  if (!selection?.rangeCount || !selectionInsideEditor(root)) return false;
+
+  const range = selection.getRangeAt(0);
+  if (!range.collapsed) return false;
+
+  const block = getBlockParent(range.startContainer, root);
+  if (!block || !isEnterHandledBlock(block)) return false;
+
+  const empty = !block.textContent?.trim();
+
+  if (isEffectivelyAtEndOfBlock(block, range) || empty) {
+    insertBlockAfter(block, root);
+    return true;
+  }
+
+  if (isCaretAtStartOfBlock(block, range)) {
+    insertBlockBefore(block, root);
+    return true;
+  }
+
+  splitBlockAtCaret(block, root, range);
+  return true;
 }
 
 /** Focus the editable surface (selection is applied separately). */
@@ -648,6 +905,7 @@ export function getActiveCommands(root: HTMLElement): Set<EditorCommand> {
     'italic',
     'underline',
     'strikethrough',
+    'blockquote',
     'bulletList',
     'orderedList',
     'alignLeft',
@@ -661,7 +919,7 @@ export function getActiveCommands(root: HTMLElement): Set<EditorCommand> {
   }
 
   const block = getActiveBlockFormat(root);
-  if (block) active.add(block);
+  if (block && block !== 'blockquote') active.add(block);
 
   return active;
 }

@@ -2,12 +2,51 @@
   display: block;
 }
 
+.tailwind-editor-source-panel {
+  display: flex;
+  background-color: #0f172a;
+}
+
+.tailwind-editor-line-numbers {
+  flex-shrink: 0;
+  overflow: hidden;
+  padding: 0.625rem 0.5rem 0.625rem 0.75rem;
+  text-align: right;
+  color: #64748b;
+  line-height: 1.6;
+  user-select: none;
+  border-right: 1px solid #1e293b;
+}
+
+.tailwind-editor-line-number {
+  display: block;
+  min-width: 1.5rem;
+  min-height: 1.6em;
+}
+
 .tailwind-editor-source {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
   border: 0;
   border-radius: 0;
-  tab-size: 2;
-  white-space: pre-wrap;
+  background-color: transparent;
+  color: #f8fafc;
+  padding: 0.625rem 1rem 0.625rem 0.75rem;
+  line-height: 1.6;
+  white-space: pre;
+  overflow: auto;
   word-break: break-word;
+  caret-color: #f8fafc;
+  resize: none;
+}
+
+.tailwind-editor-source::placeholder {
+  color: #94a3b8;
+}
+
+.tailwind-editor-source:read-only {
+  opacity: 0.85;
 }
 
 .tailwind-editor-surface:empty::before {

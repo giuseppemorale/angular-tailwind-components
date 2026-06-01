@@ -138,6 +138,7 @@ class HtmlChangeDemoComponent {
 }
 
 export const HtmlChange: StoryObj = {
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: '<sb-html-change-demo />',
     moduleMetadata: {

@@ -46,6 +46,7 @@ export const WithImage: StoryObj<TailwindAvatar> = {
 
 export const Sizes: StoryObj<TailwindAvatar> = {
   name: 'Dimensioni',
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="flex items-end gap-3">
@@ -61,6 +62,7 @@ export const Sizes: StoryObj<TailwindAvatar> = {
 
 export const Statuses: StoryObj<TailwindAvatar> = {
   name: 'Status',
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="flex items-center gap-4">

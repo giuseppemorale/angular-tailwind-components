@@ -1,0 +1,73 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as IconStories from './icon.stories';
+
+<Meta of={IconStories} />
+
+# Icon
+
+`TailwindIcon` mostra un’icona **Heroicons outline** tramite maschera CSS su `/tailwind-icons/<nome>.svg`.
+
+Per l’elenco completo dei nomi disponibili vedi **[Docs → Icons](/?path=/docs/docs-icons--docs)** (catalogo con ricerca e copia negli appunti).
+
+---
+
+## Utilizzo
+
+```typescript
+import { TailwindIcon } from 'angular-tailwind-components';
+
+@Component({
+  imports: [TailwindIcon],
+  template: `<tailwind-icon icon="bell" [size]="24" class="text-primary-600" />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={IconStories.Icon} />
+
+## Dimensioni e colori
+
+<Canvas of={IconStories.Sizes} />
+
+<Canvas of={IconStories.Colors} />
+
+---
+
+## Properties
+
+### `TailwindIcon (tailwind-icon)`
+
+Eredita `TailwindComponent` (`id`, `class` — le classi si applicano al glifo).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>icon</code></td>
+      <td><code>TailwindHeroicon</code></td>
+      <td>—</td>
+      <td>Nome icona in kebab-case (obbligatorio)</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>number</code></td>
+      <td>24 o <code>TAILWIND_ICON_SIZE</code></td>
+      <td>Larghezza e altezza in px (16–64, clampati)</td>
+    </tr>
+    <tr>
+      <td><code>class</code></td>
+      <td><code>string</code></td>
+      <td>—</td>
+      <td>Classi sul glifo (es. <code>text-success-600</code>, <code>shrink-0</code>)</td>
+    </tr>
+  </tbody>
+</table>

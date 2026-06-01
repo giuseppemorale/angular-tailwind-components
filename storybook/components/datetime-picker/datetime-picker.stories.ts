@@ -49,6 +49,7 @@ export const WithMinMax: StoryObj<TailwindDateTimePicker> = {
 };
 
 export const WithReactiveForm: StoryObj<TailwindDateTimePicker> = {
+  parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
       imports: [ReactiveFormsModule, TailwindDateTimePicker, JsonPipe]

@@ -31,6 +31,7 @@ export const ProgressBar: StoryObj<TailwindProgressBar> = {
 };
 
 export const AllVariants: StoryObj<TailwindProgressBar> = {
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="flex flex-col gap-4">

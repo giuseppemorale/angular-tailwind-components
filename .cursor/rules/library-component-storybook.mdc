@@ -19,3 +19,24 @@ Quando aggiungi un nuovo componente in `projects/angular-tailwind-components/src
 Quando modifichi un componente in `projects/angular-tailwind-components/src/lib/components/`:
 1. **Storybook**: cerca la story `storybook/components/<name>/<name>.stories.ts` e aggiorna proprietà, valori o qualsiasi cosa sia stata modificata
 2. **Documentazione**: aggiorna `storybook/components/<name>/Docs.mdx` con le modifiche effettuate al componente.
+
+# Story di varianti: disabilita i controls
+
+Quando una story serve solo a **mostrare varianti** (dimensioni, colori, stati, griglie, demo reactive form, cataloghi, ecc.) con template **statico** o senza legare gli `args` al template (`argsToTemplate`, `props: args`), i controlli Storybook **non hanno effetto** sul canvas.
+
+In quel caso aggiungi sempre:
+
+```typescript
+parameters: { controls: { disable: true } }
+```
+
+sulla singola story (non sul `meta` globale, così la story principale resta interattiva).
+
+**Applica** quando, ad esempio:
+- `render: () => ({ template: \`...\` })` con valori hardcoded (es. riga di `size="xs"` … `size="xl"`);
+- più istanze del componente con `color` / `status` / utility `text-*` diversi nella stessa story;
+- demo integrazione (form control, i18n, disabled) senza binding agli `args` della story.
+
+**Non applicare** quando la story usa `args` + `props: args` / `argsToTemplate(args)` (o il render di default del `component` con `args`): lì i controls devono restare attivi.
+
+Esempi nel repo: `avatar.stories.ts` (Dimensioni, Status), `icon.stories.ts` (Dimensioni, Colori), `chip.stories.ts` (Colori), `message.stories.ts` (Message), `calendar-panel.stories.ts` (WithReactiveForm).

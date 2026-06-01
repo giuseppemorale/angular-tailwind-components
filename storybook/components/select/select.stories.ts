@@ -85,6 +85,7 @@ export const Multiple: StoryObj<TailwindSelect<string>> = {
 
 export const Sizes: StoryObj<TailwindSelect> = {
   name: 'Dimensioni',
+  parameters: { controls: { disable: true } },
   render: () => ({
     props: { options: FRAMEWORKS },
     template: `

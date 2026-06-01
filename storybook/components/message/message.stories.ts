@@ -22,7 +22,8 @@ export default meta;
 
 /** Four stacked rows; canvas height overrides global docs default so nothing is clipped. */
 export const Message: StoryObj<TailwindMessage> = {
-  render: args => ({
+  parameters: { controls: { disable: true } },
+  render: () => ({
     template: `
       <div class="flex flex-col gap-2 max-w-md">
         <tailwind-message color="success" icon="check-circle">

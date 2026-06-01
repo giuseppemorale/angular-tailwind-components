@@ -15,6 +15,7 @@ export default meta;
 
 export const Usage: StoryObj = {
   tags: ['!dev'],
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <tailwind-accordion>

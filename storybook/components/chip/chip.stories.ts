@@ -26,6 +26,7 @@ export const Chip: StoryObj<TailwindChip> = {
 
 export const Colors: StoryObj<TailwindChip> = {
   name: 'Colori',
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="flex flex-wrap gap-2">
@@ -41,13 +42,8 @@ export const Colors: StoryObj<TailwindChip> = {
 };
 
 export const NotRemovable: StoryObj<TailwindChip> = {
-  args: {
-    removable: false,
-    disabled: false
-  },
-
   name: 'Non rimovibile',
-
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `<tailwind-chip [removable]="false">Read only</tailwind-chip>`
   })

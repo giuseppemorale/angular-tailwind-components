@@ -21,6 +21,7 @@ export const TimePicker: StoryObj<TailwindTimePicker> = {
 };
 
 export const WithReactiveForm: StoryObj<TailwindTimePicker> = {
+  parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
       imports: [ReactiveFormsModule, TailwindTimePicker, JsonPipe]
@@ -41,6 +42,7 @@ export const WithReactiveForm: StoryObj<TailwindTimePicker> = {
 };
 
 export const EnglishLanguage: StoryObj<TailwindTimePicker> = {
+  parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
       providers: [{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'en' }],
@@ -57,6 +59,7 @@ export const EnglishLanguage: StoryObj<TailwindTimePicker> = {
 };
 
 export const Disabled: StoryObj<TailwindTimePicker> = {
+  parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
       imports: [ReactiveFormsModule, TailwindTimePicker]

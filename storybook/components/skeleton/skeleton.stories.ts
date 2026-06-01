@@ -27,6 +27,7 @@ export const Skeleton: StoryObj<TailwindSkeleton> = {
 };
 
 export const CardSkeleton: StoryObj<TailwindSkeleton> = {
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="max-w-lg">
@@ -54,6 +55,7 @@ export const CardSkeleton: StoryObj<TailwindSkeleton> = {
 };
 
 export const AllVariants: StoryObj<TailwindSkeleton> = {
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="space-y-4 max-w-xs">

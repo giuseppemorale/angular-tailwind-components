@@ -40,6 +40,7 @@ export const Stepper: StoryObj<TailwindStepper> = {
 };
 
 export const Colors: StoryObj<TailwindStepper> = {
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="flex flex-col gap-10">

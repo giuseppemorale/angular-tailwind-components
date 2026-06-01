@@ -41,6 +41,7 @@ export const Alert: StoryObj<TailwindAlert> = {
 };
 
 export const WithActions: StoryObj<TailwindAlert> = {
+  parameters: { controls: { disable: true } },
   render: () => ({
     template: `
       <div class="flex flex-col gap-3 max-w-lg">

@@ -49,6 +49,7 @@ export const WithIcon: StoryObj<TailwindTitle> = {
 
 export const HeadingLevels: StoryObj<TailwindTitle> = {
   parameters: {
+    controls: { disable: true },
     docs: {
       description: {
         story: 'Scala tipografica predefinita per ogni `titleTag` (`h1`–`h6`).'

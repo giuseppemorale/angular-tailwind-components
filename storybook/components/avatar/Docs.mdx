@@ -1,0 +1,109 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as AvatarStories from './avatar.stories';
+
+<Meta of={AvatarStories} />
+
+# Avatar
+
+`TailwindAvatar` mostra un'immagine profilo, le iniziali derivate da `name` o un'icona fallback, con indicatore di stato opzionale.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindAvatar],
+  template: `
+    <tailwind-avatar name="Giuseppe Morale" size="md" status="success" />
+  `
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={AvatarStories.Avatar} />
+
+## Con immagine
+
+<Canvas of={AvatarStories.WithImage} />
+
+## Dimensioni
+
+<Canvas of={AvatarStories.Sizes} />
+
+## Status
+
+Il pallino di status usa i colori semantici del design system (`TailwindColor`). Ometti `status` per nasconderlo.
+
+<Canvas of={AvatarStories.Statuses} />
+
+---
+
+## Properties
+
+### `TailwindAvatar (tailwind-avatar)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>src</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>URL immagine profilo.</td>
+    </tr>
+    <tr>
+      <td><code>alt</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Testo alternativo dell'immagine.</td>
+    </tr>
+    <tr>
+      <td><code>name</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Nome usato per le iniziali e l'etichetta accessibile.</td>
+    </tr>
+    <tr>
+      <td><code>initials</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Iniziali esplicite (sovrascrivono `name`).</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'md'</code></td>
+      <td>Dimensione.</td>
+    </tr>
+    <tr>
+      <td><code>shape</code></td>
+      <td><code>'circle' | 'rounded'</code></td>
+      <td><code>'circle'</code></td>
+      <td>Forma dell'avatar.</td>
+    </tr>
+    <tr>
+      <td><code>color</code></td>
+      <td><code>TailwindColor</code></td>
+      <td><code>'secondary'</code></td>
+      <td>Colore di sfondo per iniziali o fallback icona.</td>
+    </tr>
+    <tr>
+      <td><code>status</code></td>
+      <td><code>TailwindColor | undefined</code></td>
+      <td><code>undefined</code></td>
+      <td>Colore del pallino di status; ometti l'input per nasconderlo.</td>
+    </tr>
+  </tbody>
+</table>

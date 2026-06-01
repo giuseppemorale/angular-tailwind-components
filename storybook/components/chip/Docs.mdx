@@ -1,0 +1,109 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as ChipStories from './chip.stories';
+
+<Meta of={ChipStories} />
+
+# Chip
+
+`TailwindChip` è un'etichetta compatta e rimovibile, utile per filtri, tag input e selezione multipla.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindChip],
+  template: `
+    <tailwind-chip color="secondary" (removed)="onRemove()">
+      Angular
+    </tailwind-chip>
+  `
+})
+export class ExampleComponent {
+  onRemove() {
+    console.log('removed');
+  }
+}
+```
+
+## Anteprima
+
+<Canvas of={ChipStories.Chip} />
+
+## Colori
+
+<Canvas of={ChipStories.Colors} />
+
+## Non rimovibile
+
+<Canvas of={ChipStories.NotRemovable} />
+
+---
+
+## Properties
+
+### `TailwindChip (tailwind-chip)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>color</code></td>
+      <td><code>TailwindColor</code></td>
+      <td><code>'secondary'</code></td>
+      <td>Colore di sfondo e testo.</td>
+    </tr>
+    <tr>
+      <td><code>size</code></td>
+      <td><code>TailwindSize</code></td>
+      <td><code>'sm'</code></td>
+      <td>Dimensione.</td>
+    </tr>
+    <tr>
+      <td><code>removable</code></td>
+      <td><code>boolean</code></td>
+      <td><code>true</code></td>
+      <td>Mostra il pulsante di rimozione.</td>
+    </tr>
+    <tr>
+      <td><code>truncate</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Tronca il testo con ellissi in contenitori stretti (es. multi-select).</td>
+    </tr>
+    <tr>
+      <td><code>disabled</code></td>
+      <td><code>boolean</code></td>
+      <td><code>false</code></td>
+      <td>Disabilita la rimozione.</td>
+    </tr>
+    <tr>
+      <td><code>ariaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>''</code></td>
+      <td>Etichetta accessibile del chip.</td>
+    </tr>
+    <tr>
+      <td><code>removeAriaLabel</code></td>
+      <td><code>string</code></td>
+      <td><code>'Remove'</code></td>
+      <td>Etichetta accessibile del pulsante rimuovi.</td>
+    </tr>
+    <tr>
+      <td><code>removed</code></td>
+      <td><code>output</code></td>
+      <td>—</td>
+      <td>Emesso quando l'utente rimuove il chip.</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,13 @@
+<span [class]="computedClasses()" [attr.aria-label]="ariaLabel() || null">
+  <span [class]="labelClasses()"><ng-content /></span>
+  @if (removable()) {
+    <button
+      type="button"
+      [class]="removeButtonClasses()"
+      [attr.aria-label]="removeAriaLabel()"
+      [disabled]="disabled()"
+      (click)="onRemove($event)">
+      <tailwind-icon icon="x-mark" [size]="removeIconSize()" aria-hidden="true" />
+    </button>
+  }
+</span>

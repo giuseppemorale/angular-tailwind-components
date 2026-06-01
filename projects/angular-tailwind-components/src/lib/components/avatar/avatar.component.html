@@ -1,0 +1,17 @@
+<span [class]="hostClasses()" role="img" [attr.aria-label]="accessibleLabel()">
+  <span [class]="innerClasses()">
+    @if (showImage()) {
+      <img [src]="src()" [alt]="alt() || name() || 'Avatar'" [class]="imageClasses()" (error)="onImageError()" />
+    } @else if (computedInitials()) {
+      <span [class]="initialsClasses()">{{ computedInitials() }}</span>
+    } @else {
+      <span [class]="fallbackClasses()">
+        <tailwind-icon icon="user" [size]="iconSize()" aria-hidden="true" />
+      </span>
+    }
+  </span>
+
+  @if (status()) {
+    <span [class]="statusDotClasses()" aria-hidden="true"></span>
+  }
+</span>

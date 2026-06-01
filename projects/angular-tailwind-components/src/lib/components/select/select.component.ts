@@ -18,11 +18,12 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { fromEvent, Subscription } from 'rxjs';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindChip } from '../chip/chip.component';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
-  imports: [TailwindIcon],
+  imports: [TailwindChip, TailwindIcon],
   selector: 'tailwind-select',
   providers: [
     {
@@ -108,6 +109,18 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     return this.options().filter(o => arr.some(sv => this.optionValueEquals(o.value, sv)));
   });
 
+  /** Chip size derived from select size (multiple mode) */
+  readonly chipSize = computed((): TailwindSize => {
+    const map: Record<TailwindSize, TailwindSize> = {
+      xs: 'xs',
+      sm: 'xs',
+      md: 'sm',
+      lg: 'sm',
+      xl: 'md'
+    };
+    return map[this.size()];
+  });
+
   /** Classes for the trigger button */
   readonly triggerClasses = computed(() => {
     const sizeMap: Record<TailwindSize, string> = {
@@ -122,11 +135,8 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
       : 'border-neutral-300 focus:outline-primary-500';
 
-    const layout = this.multiple() ? 'items-start' : 'items-center';
-
     return [
-      'flex justify-between w-full bg-white border transition-colors duration-150',
-      layout,
+      'flex items-center justify-between w-full bg-white border transition-colors duration-150',
       'pr-3 cursor-pointer text-left',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed',
@@ -282,6 +292,18 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     } else {
       this.openDropdown();
     }
+  }
+
+  removeSelectedOption(option: TailwindOption<T>): void {
+    if (this.isDisabled()) return;
+    const v = this.value();
+    const current = Array.isArray(v) ? [...v] : [];
+    const idx = current.findIndex(sv => this.optionValueEquals(sv, option.value));
+    if (idx < 0) return;
+    current.splice(idx, 1);
+    this.value.set(current);
+    this.onChange(current);
+    this.onTouched();
   }
 
   selectOption(option: TailwindOption<T>): void {

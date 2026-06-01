@@ -28,7 +28,17 @@
           {{ placeholder() }}
         } @else {
           @for (opt of selectedOptions(); track opt) {
-            <span class="rounded-md bg-neutral-100 px-2 py-0.5 text-sm text-neutral-800">{{ opt.label }}</span>
+            <tailwind-chip
+              color="secondary"
+              [size]="chipSize()"
+              [truncate]="true"
+              [removable]="!isDisabled()"
+              [removeAriaLabel]="'Remove ' + opt.label"
+              [ariaLabel]="opt.label"
+              (removed)="removeSelectedOption(opt)"
+              (click)="$event.stopPropagation()">
+              {{ opt.label }}
+            </tailwind-chip>
           }
         }
       </span>
@@ -38,12 +48,14 @@
       </span>
     }
 
-    <tailwind-icon
-      icon="chevron-down"
-      [size]="16"
-      class="shrink-0 ml-2 text-neutral-600 transition-transform duration-150"
-      [class.rotate-180]="isOpen()"
-      aria-hidden="true" />
+    <span class="inline-flex shrink-0 self-center items-center justify-center">
+      <tailwind-icon
+        icon="chevron-down"
+        [size]="16"
+        class="text-neutral-600 transition-transform duration-150"
+        [class.rotate-180]="isOpen()"
+        aria-hidden="true" />
+    </span>
   </button>
 
   @if (helperText() && !hasError()) {

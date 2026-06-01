@@ -12,6 +12,8 @@ export * from './select/select.component';
 export * from './autocomplete/autocomplete.component';
 export * from './toggle/toggle.component';
 export * from './badge/badge.component';
+export * from './chip/chip.component';
+export * from './avatar/avatar.component';
 export * from './title/title.component';
 export * from './card/card.component';
 export * from './alert/alert.component';

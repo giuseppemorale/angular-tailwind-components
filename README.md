@@ -6,7 +6,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **38 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **43 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No Angular Material, Ng-Zorro, or other UI frameworks
 - ⚡ **Angular** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -28,12 +28,6 @@ The **library major matches the Angular major** in your app (library **21.x** �
 | **21.x** | 21 | 4 | **Current.** Use on Angular 21 apps. |
 | **22.x** | 22 | 4 | Planned — when Angular 22 is supported and tested. |
 | **23+** | same major as Angular | 4 | Each new Angular major gets a matching library major. |
-
-**Install (Angular 21):**
-
-```bash
-npm install angular-tailwind-components@21
-```
 
 ### Peer dependencies
 
@@ -243,9 +237,10 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Input OTP** (`tailwind-input-otp`): Multi-digit OTP / PIN with paste and keyboard navigation
 - **Checkbox** (`tailwind-checkbox`): Single checkbox with label
 - **Radio Group** (`tailwind-radio-group`): Radio button group with options
-- **Select** (`tailwind-select`): Native select with custom styling
+- **Select** (`tailwind-select`): Custom combobox with CDK overlay, keyboard navigation, and optional multi-select with removable chips
 - **Autocomplete** (`tailwind-autocomplete`): Typeahead with optional async search and custom option template (`#item`)
 - **Toggle** (`tailwind-toggle`): Switch on/off
+- **Slider** (`tailwind-slider`): Single or range slider with optional ticks (`ControlValueAccessor`)
 - **CalendarPanel** (`tailwind-calendar-panel`): Inline calendar for date selection
 - **DatePicker** (`tailwind-date-picker`): Calendar date selection
 - **TimePicker** (`tailwind-time-picker`): Time input
@@ -256,8 +251,9 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Button** (`tailwind-button`): Primary, secondary, outline, ghost, danger
 - **Badge** (`tailwind-badge`): Status badges with dot indicator
 - **Card** (`tailwind-card`): Content card with header/body/footer
-- **Chip** (`tailwind-chip`): Removable tags
+- **Chip** (`tailwind-chip`): Removable compact labels for filters and multi-select
 - **Tag** (`tailwind-tag`): Semantic labels
+- **Avatar** (`tailwind-avatar`): Profile image, initials, or icon fallback with optional status dot (`TailwindColor`)
 - **Title** (`tailwind-title`): Semantic headings (`h1`–`h6`) with required `text` and optional Heroicons outline icon
 
 ### Feedback
@@ -285,6 +281,9 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Tooltip** (`tailwind-tooltip`): Hover tooltip
 - **Form** (`tailwind-form`): Form wrapper
 - **Table** (`tailwind-table`): Data table with projected header/rows, client-side sort and pagination
+- **Toolbar** (`tailwind-toolbar`): Semantic action bar with optional slots
+- **Divider** (`tailwind-divider`): Horizontal or vertical separator with optional label
+- **Meter** (`tailwind-meter`): Segmented proportional bar with optional legend
 
 ## Design System
 

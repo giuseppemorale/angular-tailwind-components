@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindChip } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindChip> = {
-  title: 'Components/Chip',
+  title: 'Display/Chip',
   component: TailwindChip,
   argTypes: {
     color: {

@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindToggle } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindToggle> = {
-  title: 'Forms/Toggle',
+  title: 'Form Controls/Toggle',
   component: TailwindToggle,
   argTypes: {
     label: { control: 'text' },

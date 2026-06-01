@@ -5,7 +5,7 @@ import type { TailwindSize } from '../../../projects/angular-tailwind-components
 import { TailwindEditor } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindEditor> = {
-  title: 'Forms/Editor',
+  title: 'Form Controls/Editor',
   component: TailwindEditor,
   parameters: {
     docs: {

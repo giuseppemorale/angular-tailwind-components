@@ -38,7 +38,7 @@ const iconOnlyMenu: TailwindMenuItem[] = [
 ];
 
 const meta: Meta<TailwindToolbar> = {
-  title: 'Components/Toolbar',
+  title: 'Navigation/Toolbar',
   component: TailwindToolbar,
   parameters: {
     docs: {

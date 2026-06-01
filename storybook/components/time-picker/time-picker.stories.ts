@@ -7,7 +7,7 @@ import {
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTimePicker> = {
-  title: 'Forms/TimePicker',
+  title: 'Form Controls/TimePicker',
   component: TailwindTimePicker,
   parameters: { docs: { story: { height: '220px' } } },
   argTypes: {

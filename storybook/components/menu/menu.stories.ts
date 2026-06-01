@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindMenu } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindMenu> = {
-  title: 'Components/Menu',
+  title: 'Navigation/Menu',
   component: TailwindMenu,
   parameters: { docs: { story: { height: '320px' } } },
   argTypes: {

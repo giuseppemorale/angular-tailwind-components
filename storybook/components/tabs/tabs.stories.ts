@@ -3,7 +3,7 @@ import { argsToTemplate } from '@storybook/angular';
 import { TailwindTabGroup } from '../../../projects/angular-tailwind-components/src/lib/components/tabs/tab-group.component';
 
 const meta: Meta = {
-  title: 'Components/Tabs',
+  title: 'Navigation/Tabs',
   component: TailwindTabGroup,
   parameters: { docs: { story: { height: '300px' } } },
   argTypes: {

@@ -6,7 +6,7 @@ import {
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTooltipDirective> = {
-  title: 'Components/Tooltip',
+  title: 'Overlay/Tooltip',
   component: TailwindTooltipDirective,
   argTypes: {
     tooltip: { control: 'text' },

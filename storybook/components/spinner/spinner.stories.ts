@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TAILWIND_HEROICON_NAMES, TailwindSpinner } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSpinner> = {
-  title: 'Components/Spinner',
+  title: 'Feedback/Spinner',
   component: TailwindSpinner,
   argTypes: {
     size: {

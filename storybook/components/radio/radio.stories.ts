@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindRadioGroup } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindRadioGroup> = {
-  title: 'Forms/RadioGroup',
+  title: 'Form Controls/RadioGroup',
   component: TailwindRadioGroup
 };
 export default meta;

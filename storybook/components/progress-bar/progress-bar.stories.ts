@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindProgressBar } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindProgressBar> = {
-  title: 'Components/ProgressBar',
+  title: 'Feedback/ProgressBar',
   component: TailwindProgressBar,
   argTypes: {
     size: {

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindStepper } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindStepper> = {
-  title: 'Components/Stepper',
+  title: 'Navigation/Stepper',
   component: TailwindStepper,
   parameters: { docs: { story: { height: '350px' } } },
   argTypes: {

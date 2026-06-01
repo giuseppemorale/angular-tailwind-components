@@ -3,7 +3,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { TailwindCard, TailwindSkeleton } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSkeleton> = {
-  title: 'Components/Skeleton',
+  title: 'Feedback/Skeleton',
   component: TailwindSkeleton,
   decorators: [
     moduleMetadata({

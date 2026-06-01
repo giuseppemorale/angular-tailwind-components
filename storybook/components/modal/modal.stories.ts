@@ -71,7 +71,7 @@ class ProgrammaticWrapperComponent {
 }
 
 const meta: Meta<TailwindModal> = {
-  title: 'Components/Modal',
+  title: 'Overlay/Modal',
   component: TailwindModal,
   parameters: {
     docs: {

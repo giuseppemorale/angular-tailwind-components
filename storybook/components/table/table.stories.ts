@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindTable } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTable> = {
-  title: 'Components/Table',
+  title: 'Layout/Table',
   component: TailwindTable,
   parameters: { docs: { story: { height: '500px' } } },
   argTypes: {

@@ -152,7 +152,16 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Introduction', 'Docs', 'Components'],
+        order: [
+          'Introduction',
+          'Docs',
+          'Form Controls',
+          'Display',
+          'Feedback',
+          'Navigation',
+          'Layout',
+          'Overlay'
+        ],
         method: 'alphabetical'
       }
     }

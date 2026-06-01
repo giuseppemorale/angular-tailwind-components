@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindTag } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTag> = {
-  title: 'Components/Tag',
+  title: 'Display/Tag',
   component: TailwindTag,
   argTypes: {
     color: {

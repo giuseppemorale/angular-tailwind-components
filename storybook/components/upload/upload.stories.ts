@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindUpload } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindUpload> = {
-  title: 'Forms/Upload',
+  title: 'Form Controls/Upload',
   component: TailwindUpload,
   parameters: {
     docs: {

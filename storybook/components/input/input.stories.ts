@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindInput } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindInput> = {
-  title: 'Forms/Input',
+  title: 'Form Controls/Input',
   component: TailwindInput,
   argTypes: {
     label: { control: 'text' },

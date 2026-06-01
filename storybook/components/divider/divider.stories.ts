@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindDivider } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindDivider> = {
-  title: 'Components/Divider',
+  title: 'Layout/Divider',
   component: TailwindDivider,
   parameters: {
     docs: {

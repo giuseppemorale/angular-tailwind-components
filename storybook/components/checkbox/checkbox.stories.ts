@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindCheckbox } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindCheckbox> = {
-  title: 'Forms/Checkbox',
+  title: 'Form Controls/Checkbox',
   component: TailwindCheckbox,
   argTypes: {
     label: { control: 'text' },

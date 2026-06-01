@@ -3,7 +3,7 @@ import { argsToTemplate } from '@storybook/angular';
 import { TailwindButton } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindButton> = {
-  title: 'Components/Button',
+  title: 'Display/Button',
   component: TailwindButton,
   argTypes: {
     color: {

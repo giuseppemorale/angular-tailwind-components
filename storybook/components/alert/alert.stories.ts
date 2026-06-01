@@ -3,7 +3,7 @@ import { argsToTemplate } from '@storybook/angular';
 import { TailwindAlert } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindAlert> = {
-  title: 'Components/Alert',
+  title: 'Feedback/Alert',
   component: TailwindAlert,
   argTypes: {
     color: {

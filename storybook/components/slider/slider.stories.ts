@@ -3,7 +3,7 @@ import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@story
 import { TailwindSlider } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSlider> = {
-  title: 'Forms/Slider',
+  title: 'Form Controls/Slider',
   component: TailwindSlider,
   decorators: [
     moduleMetadata({

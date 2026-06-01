@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TAILWIND_HEROICON_NAMES, TailwindIcon } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindIcon> = {
-  title: 'Components/Icon',
+  title: 'Display/Icon',
   component: TailwindIcon,
   argTypes: {
     icon: { control: 'select', options: TAILWIND_HEROICON_NAMES },

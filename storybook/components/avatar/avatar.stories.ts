@@ -1,10 +1,19 @@
 import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindAvatar } from '../../../projects/angular-tailwind-components/src/public-api';
 
-const STATUS_COLORS = [undefined, 'primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent'] as const;
+const STATUS_COLORS = [
+  undefined,
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'danger',
+  'info',
+  'transparent'
+] as const;
 
 const meta: Meta<TailwindAvatar> = {
-  title: 'Components/Avatar',
+  title: 'Display/Avatar',
   component: TailwindAvatar,
   argTypes: {
     color: {
@@ -28,7 +37,7 @@ export const Avatar: StoryObj<TailwindAvatar> = {
     template: `<tailwind-avatar ${argsToTemplate(args)} />`
   }),
   args: {
-    name: 'Giuseppe Morale',
+    name: 'John Doe',
     size: 'md',
     shape: 'circle',
     color: 'secondary'
@@ -52,11 +61,11 @@ export const Sizes: StoryObj<TailwindAvatar> = {
   render: () => ({
     template: `
       <div class="flex items-end gap-3">
-        <tailwind-avatar name="Giuseppe Morale" size="xs" />
-        <tailwind-avatar name="Giuseppe Morale" size="sm" />
-        <tailwind-avatar name="Giuseppe Morale" size="md" />
-        <tailwind-avatar name="Giuseppe Morale" size="lg" />
-        <tailwind-avatar name="Giuseppe Morale" size="xl" />
+        <tailwind-avatar name="John Doe" size="xs" />
+        <tailwind-avatar name="John Doe" size="sm" />
+        <tailwind-avatar name="John Doe" size="md" />
+        <tailwind-avatar name="John Doe" size="lg" />
+        <tailwind-avatar name="John Doe" size="xl" />
       </div>
     `
   })

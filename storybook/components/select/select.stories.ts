@@ -9,7 +9,7 @@ const FRAMEWORKS = [
 ];
 
 const meta: Meta<TailwindSelect> = {
-  title: 'Forms/Select',
+  title: 'Form Controls/Select',
   component: TailwindSelect,
   parameters: { docs: { story: { height: '300px' } } }
 };

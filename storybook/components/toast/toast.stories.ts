@@ -30,7 +30,7 @@ class ToastStoryComponent {
 }
 
 const meta: Meta<ToastStoryComponent> = {
-  title: 'Components/Toast',
+  title: 'Feedback/Toast',
   component: ToastStoryComponent,
   argTypes: {
     vertical: { control: 'radio', options: ['top', 'bottom'] },

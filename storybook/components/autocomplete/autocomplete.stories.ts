@@ -18,7 +18,7 @@ const COUNTRIES: TailwindOption<string>[] = [
 ];
 
 const meta: Meta<TailwindAutocomplete<string>> = {
-  title: 'Forms/Autocomplete',
+  title: 'Form Controls/Autocomplete',
   component: TailwindAutocomplete,
   parameters: { docs: { story: { height: '320px' } } }
 };

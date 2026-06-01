@@ -5,7 +5,7 @@ type AccordionItemsArgs = {
 };
 
 const meta: Meta<AccordionItemsArgs> = {
-  title: 'Components/Accordion',
+  title: 'Layout/Accordion',
   parameters: { docs: { story: { height: '300px' } } },
   argTypes: {
     items: { control: 'object', table: { category: 'Items' } }

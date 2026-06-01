@@ -7,7 +7,7 @@ import {
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindCard> = {
-  title: 'Components/Card',
+  title: 'Display/Card',
   component: TailwindCard,
   decorators: [
     moduleMetadata({

@@ -38,7 +38,8 @@
             "tsConfig": "projects/angular-tailwind-components/tsconfig.storybook.json",
             "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
             "compodoc": false,
-            "port": 6006
+            "port": 6006,
+            "ci": true
           }
         },
         "build-storybook": {

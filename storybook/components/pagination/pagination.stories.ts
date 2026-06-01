@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindPagination } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindPagination> = {
-  title: 'Components/Pagination',
+  title: 'Navigation/Pagination',
   component: TailwindPagination,
   argTypes: {
     totalItems: { control: 'number' },

@@ -12,7 +12,7 @@ const sampleSegments: TailwindMeterSegment[] = [
 ];
 
 const meta: Meta<TailwindMeter> = {
-  title: 'Components/Meter',
+  title: 'Layout/Meter',
   component: TailwindMeter,
   parameters: {
     docs: {

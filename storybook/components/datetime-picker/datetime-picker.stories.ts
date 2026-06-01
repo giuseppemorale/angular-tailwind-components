@@ -4,7 +4,7 @@ import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@story
 import { TailwindDateTimePicker } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindDateTimePicker> = {
-  title: 'Forms/DateTimePicker',
+  title: 'Form Controls/DateTimePicker',
   component: TailwindDateTimePicker,
   /** Altezza generosa: il pannello calendario è alto e altrimenti viene tagliato da overflow nei contenitori Storybook. */
   parameters: { docs: { story: { height: '720px' } } },

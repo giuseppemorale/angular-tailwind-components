@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TAILWIND_HEROICON_NAMES, TailwindTitle } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTitle> = {
-  title: 'Components/Title',
+  title: 'Display/Title',
   component: TailwindTitle,
   argTypes: {
     titleTag: {

@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindBreadcrumb } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindBreadcrumb> = {
-  title: 'Components/Breadcrumb',
+  title: 'Navigation/Breadcrumb',
   component: TailwindBreadcrumb,
   args: {
     ariaLabel: 'Breadcrumb',

@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindBadge } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindBadge> = {
-  title: 'Components/Badge',
+  title: 'Display/Badge',
   component: TailwindBadge,
   argTypes: {
     color: {

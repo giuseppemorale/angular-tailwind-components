@@ -20,14 +20,14 @@ describe('TailwindAvatar', () => {
   });
 
   it('should derive initials from name', () => {
-    fixture.componentRef.setInput('name', 'Giuseppe Morale');
+    fixture.componentRef.setInput('name', 'John Doe');
     fixture.detectChanges();
 
     expect(fixture.nativeElement.textContent).toContain('GM');
   });
 
   it('should use explicit initials when provided', () => {
-    fixture.componentRef.setInput('name', 'Giuseppe Morale');
+    fixture.componentRef.setInput('name', 'John Doe');
     fixture.componentRef.setInput('initials', 'AB');
     fixture.detectChanges();
 
@@ -49,11 +49,11 @@ describe('TailwindAvatar', () => {
   });
 
   it('should expose accessible label from name', () => {
-    fixture.componentRef.setInput('name', 'Giuseppe Morale');
+    fixture.componentRef.setInput('name', 'John Doe');
     fixture.detectChanges();
 
     const host = fixture.nativeElement.querySelector('[role="img"]');
-    expect(host?.getAttribute('aria-label')).toBe('Giuseppe Morale');
+    expect(host?.getAttribute('aria-label')).toBe('John Doe');
   });
 
   it('should render status dot when status is set', () => {

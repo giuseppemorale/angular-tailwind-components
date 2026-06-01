@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindInputOtp } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindInputOtp> = {
-  title: 'Forms/Input OTP',
+  title: 'Form Controls/Input OTP',
   component: TailwindInputOtp,
   argTypes: {
     length: { control: { type: 'number', min: 1, max: 12 } },

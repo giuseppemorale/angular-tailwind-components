@@ -2,7 +2,7 @@ import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { TailwindDrawer } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta = {
-  title: 'Components/Drawer',
+  title: 'Navigation/Drawer',
   component: TailwindDrawer,
   parameters: {
     docs: {

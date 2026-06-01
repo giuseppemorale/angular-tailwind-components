@@ -36,7 +36,7 @@ function previousMonthRange() {
 }
 
 const meta: Meta<TailwindCalendarPanel> = {
-  title: 'Forms/CalendarPanel',
+  title: 'Form Controls/CalendarPanel',
   component: TailwindCalendarPanel,
   decorators: [componentWrapperDecorator(story => `<div class="max-w-sm overflow-visible pb-8">${story}</div>`)],
   parameters: { docs: { story: { height: '420px' } } },

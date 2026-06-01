@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/angular';
 import { TailwindTextarea } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTextarea> = {
-  title: 'Forms/Textarea',
+  title: 'Form Controls/Textarea',
   component: TailwindTextarea,
   parameters: {
     docs: {

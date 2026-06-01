@@ -28,9 +28,40 @@
         <tailwind-badge color="warning" [dot]="true">{{ 'HOME.BADGE_BETA' | transloco }}</tailwind-badge>
         <tailwind-badge color="secondary">{{ 'HOME.BADGE_V0' | transloco }}</tailwind-badge>
       </div>
-      <p class="text-sm text-neutral-600 m-0">
+      <p class="text-sm text-neutral-600 m-0 mb-4">
         {{ 'HOME.CARD_TAGS_BODY' | transloco }}
       </p>
+      <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide m-0 mb-2">
+        {{ 'HOME.TAG_SUBSECTION' | transloco }}
+      </p>
+      <div class="flex flex-wrap gap-2 mb-5">
+        <tailwind-tag color="success">{{ 'HOME.TAG_DEMO_STABLE' | transloco }}</tailwind-tag>
+        <tailwind-tag color="warning">{{ 'HOME.TAG_DEMO_BETA' | transloco }}</tailwind-tag>
+        <tailwind-tag color="danger">{{ 'HOME.TAG_DEMO_DEPRECATED' | transloco }}</tailwind-tag>
+      </div>
+      <p class="text-xs font-medium text-neutral-500 uppercase tracking-wide m-0 mb-2">
+        {{ 'HOME.CHIP_SUBSECTION' | transloco }}
+      </p>
+      <div class="flex flex-wrap gap-2 mb-3">
+        <tailwind-chip color="primary">{{ 'HOME.CHIP_DEMO_PRIMARY' | transloco }}</tailwind-chip>
+        <tailwind-chip color="secondary">{{ 'HOME.CHIP_DEMO_SECONDARY' | transloco }}</tailwind-chip>
+        <tailwind-chip color="success">{{ 'HOME.CHIP_DEMO_SUCCESS' | transloco }}</tailwind-chip>
+        <tailwind-chip color="warning">{{ 'HOME.CHIP_DEMO_WARNING' | transloco }}</tailwind-chip>
+        <tailwind-chip color="danger">{{ 'HOME.CHIP_DEMO_DANGER' | transloco }}</tailwind-chip>
+        <tailwind-chip color="info">{{ 'HOME.CHIP_DEMO_INFO' | transloco }}</tailwind-chip>
+        <tailwind-chip [removable]="false">{{ 'HOME.CHIP_DEMO_READONLY' | transloco }}</tailwind-chip>
+      </div>
+      <p class="text-sm text-neutral-600 m-0 mb-2">{{ 'HOME.CHIP_REMOVABLE_HINT' | transloco }}</p>
+      <div class="flex flex-wrap gap-2">
+        @for (chip of activeChips(); track chip) {
+          <tailwind-chip [removeAriaLabel]="'HOME.CHIP_REMOVE_ARIA' | transloco: { label: chip }" (removed)="removeChip(chip)">
+            {{ chip }}
+          </tailwind-chip>
+        }
+        @if (activeChips().length === 0) {
+          <span class="text-sm text-neutral-500">{{ 'HOME.CHIP_ALL_REMOVED' | transloco }}</span>
+        }
+      </div>
     </tailwind-card>
   </div>
 

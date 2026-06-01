@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
   TailwindAlert,
   TailwindBadge,
   TailwindButton,
+  TailwindChip,
   TailwindCard,
   TailwindDivider,
   TailwindSortHeaderDirective,
@@ -30,6 +31,7 @@ import { TABLE_DATA } from './data/data';
     TailwindTableRowDirective,
     TailwindSortHeaderDirective,
     TailwindTag,
+    TailwindChip,
     TranslocoPipe
   ],
   selector: 'app-page-home',
@@ -45,4 +47,11 @@ export class HomeComponent {
 
   /** Righe demo per `tailwind-table` (chiavi i18n in `nameKey` / `statusKey`). */
   readonly tableRows: TableRow[] = TABLE_DATA;
+
+  /** Chip rimovibili per la demo interattiva. */
+  readonly activeChips = signal(['Angular', 'TypeScript', 'Tailwind CSS']);
+
+  removeChip(label: string): void {
+    this.activeChips.update(chips => chips.filter(chip => chip !== label));
+  }
 }

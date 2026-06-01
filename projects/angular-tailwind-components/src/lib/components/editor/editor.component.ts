@@ -56,8 +56,8 @@ import { filterToolbarGroups, resolveToolbarGroups } from './utils/editor-toolba
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindEditor extends TailwindComponent implements ControlValueAccessor, OnDestroy, AfterViewInit {
-  private static nextFileId = 0;
-  private readonly fallbackFileId = `tw-editor-img-${TailwindEditor.nextFileId++}`;
+  private static nextFieldId = 0;
+  private readonly fallbackFieldId = `tw-editor-${TailwindEditor.nextFieldId++}`;
 
   readonly editable = viewChild<ElementRef<HTMLElement>>('editable');
   readonly sourceTextarea = viewChild<ElementRef<HTMLTextAreaElement>>('sourceTextarea');
@@ -107,7 +107,18 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
 
   readonly isEditable = computed(() => !this.readonly() && !this.isDisabled());
   readonly toolbarDisabled = computed(() => this.readonly() || this.isDisabled());
-  readonly fileInputId = computed(() => this.id() ?? this.fallbackFileId);
+  readonly fieldId = computed(() => this.id() ?? this.fallbackFieldId);
+  readonly surfaceId = computed(() => `${this.fieldId()}-surface`);
+  readonly labelId = computed(() => `${this.fieldId()}-label`);
+  readonly helperId = computed(() => `${this.fieldId()}-helper`);
+  readonly fileInputId = computed(() => `${this.fieldId()}-file`);
+  readonly surfaceAriaLabelledBy = computed(() => (this.label() ? this.labelId() : null));
+  readonly surfaceAriaLabel = computed(() =>
+    this.label() ? null : (this.placeholder() || this.labels().surfaceAriaLabel)
+  );
+  /** Only when `contenteditable` is false; never set with `contenteditable="true"` (HTML-ARIA). */
+  readonly surfaceAriaReadonly = computed(() => (this.readonly() && !this.isDisabled() ? true : null));
+  readonly surfaceAriaDisabled = computed(() => (this.isDisabled() ? true : null));
 
   readonly toolbarGroups = computed(() =>
     filterToolbarGroups(resolveToolbarGroups(this.toolbar()), {

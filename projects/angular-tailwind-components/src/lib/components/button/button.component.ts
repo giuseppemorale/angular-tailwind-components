@@ -50,6 +50,8 @@ export class TailwindButton extends TailwindComponent {
   readonly iconPosition = input<TailwindIconPosition>('left');
   /** Accessible name for icon-only buttons */
   readonly ariaLabel = input<string>('');
+  /** Toggle state for toolbar-style buttons (`aria-pressed` on the native control). */
+  readonly ariaPressed = input<boolean | undefined>(undefined);
 
   /** Emitted when the button is clicked (not disabled). */
   readonly onClick = output<MouseEvent>();

@@ -12,6 +12,57 @@
     </tailwind-message>
   </div>
 
+  <tailwind-card [hasFooter]="false">
+    <div tailwind-card-header>
+      <tailwind-title titleTag="h3" [text]="'DOCS.BUTTON_SECTION_TITLE' | transloco" icon="cursor-arrow-rays" />
+    </div>
+    <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'DOCS.BUTTON_HINT' | transloco }}</p>
+    <div class="flex flex-wrap gap-2 mb-6">
+      <tailwind-button kind="solid">{{ 'DOCS.BTN_KIND_SOLID' | transloco }}</tailwind-button>
+      <tailwind-button kind="flat">{{ 'DOCS.BTN_KIND_FLAT' | transloco }}</tailwind-button>
+      <tailwind-button kind="outlined" color="secondary">{{ 'DOCS.BTN_KIND_OUTLINED' | transloco }}</tailwind-button>
+      <tailwind-button kind="ghost" color="secondary">{{ 'DOCS.BTN_KIND_GHOST' | transloco }}</tailwind-button>
+      <tailwind-button kind="text" color="primary">{{ 'DOCS.BTN_KIND_TEXT' | transloco }}</tailwind-button>
+    </div>
+    <p class="text-sm text-neutral-600 m-0 mb-3">{{ 'DOCS.BUTTON_TOOLBAR_HINT' | transloco }}</p>
+    <div class="flex flex-wrap items-center gap-1 rounded-lg border border-neutral-200 bg-neutral-50 p-2 w-fit">
+      <tailwind-button
+        kind="ghost"
+        color="transparent"
+        size="sm"
+        icon="bold"
+        [ariaPressed]="toolbarBoldPressed()"
+        [ariaLabel]="'DOCS.BTN_TOOLBAR_BOLD_ARIA' | transloco"
+        (onClick)="toggleToolbarBold()" />
+      <tailwind-button
+        kind="ghost"
+        color="transparent"
+        size="sm"
+        icon="italic"
+        [ariaLabel]="'DOCS.BTN_TOOLBAR_ITALIC_ARIA' | transloco" />
+      <tailwind-button
+        kind="ghost"
+        color="transparent"
+        size="sm"
+        icon="underline"
+        [ariaLabel]="'DOCS.BTN_TOOLBAR_UNDERLINE_ARIA' | transloco" />
+    </div>
+  </tailwind-card>
+
+  <tailwind-card [hasFooter]="false">
+    <div tailwind-card-header>
+      <tailwind-title titleTag="h3" [text]="'DOCS.EDITOR_SECTION_TITLE' | transloco" icon="pencil-square" />
+    </div>
+    <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'DOCS.EDITOR_HINT' | transloco }}</p>
+    <tailwind-editor
+      [(value)]="editorDemo"
+      [label]="'DOCS.EDITOR_LABEL' | transloco"
+      [placeholder]="'DOCS.EDITOR_PLACEHOLDER' | transloco"
+      [helperText]="'DOCS.EDITOR_HELPER' | transloco"
+      toolbar="full"
+      minHeight="10rem" />
+  </tailwind-card>
+
   <tailwind-card [hasFooter]="false" [elevated]="true">
     <div tailwind-card-header>
       <tailwind-title titleTag="h3" [text]="'DOCS.PROGRESS_SECTION_TITLE' | transloco" icon="book-open" />

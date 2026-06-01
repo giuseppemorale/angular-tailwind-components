@@ -23,6 +23,10 @@ export interface TailwindEditorLabels {
   insert: string;
   /** Placeholder for the HTML source textarea. */
   htmlSourcePlaceholder: string;
+  /** Accessible name for the editor surface when no visible `label` is set. */
+  surfaceAriaLabel: string;
+  /** Accessible name for the hidden image file input. */
+  imageFileInputAriaLabel: string;
   /** Image upload validation; use `{max}` for the formatted size limit. */
   imageMaxSizeError: string;
 }
@@ -52,5 +56,7 @@ export const DEFAULT_TAILWIND_EDITOR_LABELS: TailwindEditorLabels = {
   cancel: 'Cancel',
   insert: 'Insert',
   htmlSourcePlaceholder: 'Edit HTML source…',
+  surfaceAriaLabel: 'Rich text editor',
+  imageFileInputAriaLabel: 'Upload image',
   imageMaxSizeError: 'Image exceeds maximum size ({max}).'
 };

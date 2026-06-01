@@ -1,7 +1,6 @@
 <div
   class="tailwind-editor-toolbar flex flex-wrap items-center gap-1 p-2 border-b border-neutral-200 bg-neutral-50/80"
-  role="toolbar"
-  [attr.aria-disabled]="disabled() || null">
+  role="toolbar">
   @for (group of groups(); track $index; let lastGroup = $last) {
     <div class="flex flex-wrap items-center gap-0.5">
       @for (item of group.items; track item.kind === 'button' ? item.command : 'headingSelect') {
@@ -23,7 +22,7 @@
             [icon]="item.icon"
             [disabled]="isItemDisabled(item)"
             [ariaLabel]="buttonAriaLabel(item)"
-            [attr.aria-pressed]="isActive(item.command) ? 'true' : 'false'"
+            [ariaPressed]="isActive(item.command)"
             (onClick)="onCommand(item.command, $event)" />
         }
       }

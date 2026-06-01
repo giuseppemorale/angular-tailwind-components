@@ -1,7 +1,7 @@
 <div class="tailwind-editor-wrapper flex flex-col gap-1.5">
   @if (label()) {
     <label
-      [attr.for]="id() ? id() + '-surface' : null"
+      [attr.id]="labelId()"
       class="text-sm font-medium text-neutral-700"
       [class.text-danger-600]="hasError()">
       {{ label() }}
@@ -36,15 +36,16 @@
         </div>
         <textarea
           #sourceTextarea
-          [attr.id]="id() ? id() + '-surface' : null"
+          [attr.id]="surfaceId()"
           class="tailwind-editor-source"
           [class]="sourceClasses()"
           [placeholder]="labels().htmlSourcePlaceholder"
-          [readonly]="!isEditable()"
-          [attr.aria-readonly]="readonly() || null"
-          [attr.aria-disabled]="isDisabled() || null"
+          [disabled]="isDisabled()"
+          [readonly]="readonly() && !isDisabled()"
+          [attr.aria-labelledby]="surfaceAriaLabelledBy()"
+          [attr.aria-label]="surfaceAriaLabel()"
           [attr.aria-invalid]="hasError() || null"
-          [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+          [attr.aria-describedby]="(helperText() || errorText()) ? helperId() : null"
           (input)="onSourceInput($event)"
           (keydown)="onSourceKeydown($event)"
           (scroll)="onSourceScroll()"
@@ -53,7 +54,7 @@
     } @else {
       <div
         #editable
-        [attr.id]="id() ? id() + '-surface' : null"
+        [attr.id]="surfaceId()"
         class="tailwind-editor-surface prose-editor overflow-y-auto"
         [class]="surfaceClasses()"
         [style.min-height]="minHeight()"
@@ -61,10 +62,12 @@
         [attr.data-placeholder]="placeholder() || null"
         role="textbox"
         [attr.aria-multiline]="true"
-        [attr.aria-readonly]="readonly() || null"
-        [attr.aria-disabled]="isDisabled() || null"
+        [attr.aria-labelledby]="surfaceAriaLabelledBy()"
+        [attr.aria-label]="surfaceAriaLabel()"
+        [attr.aria-readonly]="surfaceAriaReadonly()"
+        [attr.aria-disabled]="surfaceAriaDisabled()"
         [attr.aria-invalid]="hasError() || null"
-        [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+        [attr.aria-describedby]="(helperText() || errorText()) ? helperId() : null"
         (input)="onSurfaceInput()"
         (beforeinput)="onSurfaceBeforeInput($event)"
         (blur)="onSurfaceBlur($event)"
@@ -81,6 +84,7 @@
     tabindex="-1"
     [id]="fileInputId()"
     [accept]="accept()"
+    [attr.aria-label]="labels().imageFileInputAriaLabel"
     (change)="onImageFileChange($event)" />
 
   @if (imageValidationError()) {
@@ -88,12 +92,12 @@
   }
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500">
+    <p [attr.id]="helperId()" class="text-xs text-neutral-500">
       {{ helperText() }}
     </p>
   }
   @if (errorText() && hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600">
+    <p [attr.id]="helperId()" class="text-xs text-danger-600">
       {{ errorText() }}
     </p>
   }

@@ -21,6 +21,13 @@ export const TABLE_DATA = [
     eos: '-'
   },
   {
+    nameKey: 'HOME.TABLE_ROW_EDITOR',
+    variant: 'warning',
+    statusKey: 'HOME.TABLE_STATUS_BETA',
+    version: '0.9.0',
+    eos: '-'
+  },
+  {
     nameKey: 'HOME.TABLE_ROW_CHECKBOX',
     variant: 'success',
     statusKey: 'HOME.TABLE_STATUS_STABLE',
@@ -81,6 +88,13 @@ export const TABLE_DATA = [
     variant: 'warning',
     statusKey: 'HOME.TABLE_STATUS_BETA',
     version: '0.8.0',
+    eos: '-'
+  },
+  {
+    nameKey: 'HOME.TABLE_ROW_CHIP',
+    variant: 'success',
+    statusKey: 'HOME.TABLE_STATUS_STABLE',
+    version: '1.0.0',
     eos: '-'
   },
   {

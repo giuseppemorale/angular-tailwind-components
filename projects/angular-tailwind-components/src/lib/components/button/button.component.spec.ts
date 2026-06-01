@@ -59,6 +59,16 @@ describe('TailwindButton', () => {
     expect(button.getAttribute('aria-label')).toBe('Add item');
   });
 
+  it('should set aria-pressed on the native button, not the host', () => {
+    fixture.componentRef.setInput('ariaPressed', true);
+    fixture.detectChanges();
+
+    const host: HTMLElement = fixture.nativeElement;
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button')!;
+    expect(button.getAttribute('aria-pressed')).toBe('true');
+    expect(host.getAttribute('aria-pressed')).toBeNull();
+  });
+
   it('should set role to button by default', () => {
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     expect(button.getAttribute('role')).toBe('button');

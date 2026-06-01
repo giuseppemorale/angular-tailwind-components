@@ -5,6 +5,7 @@ import {
   TailwindAccordionItem,
   TailwindButton,
   TailwindCard,
+  TailwindEditor,
   TailwindMessage,
   TailwindMeter,
   TailwindModalService,
@@ -30,6 +31,7 @@ import { ExportDocsModalComponent } from '../settings/components/export-docs-mod
     TailwindPagination,
     TailwindSkeleton,
     TailwindMeter,
+    TailwindEditor,
     TranslocoPipe
   ],
   selector: 'app-page-docs',
@@ -48,6 +50,8 @@ export class DocsComponent {
   readonly docPageSize = model(5);
   readonly progressDemo = model(38);
   readonly showSkeletonPreview = signal(false);
+  readonly editorDemo = model('<p>Editor ricco con toolbar, link e immagini.</p>');
+  readonly toolbarBoldPressed = signal(false);
 
   readonly docTotalItems = 23;
 
@@ -65,6 +69,10 @@ export class DocsComponent {
 
   toggleSkeletonPreview(): void {
     this.showSkeletonPreview.update(v => !v);
+  }
+
+  toggleToolbarBold(): void {
+    this.toolbarBoldPressed.update(v => !v);
   }
 
   openExportModal(): void {

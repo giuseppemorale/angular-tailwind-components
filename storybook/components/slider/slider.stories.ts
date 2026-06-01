@@ -36,6 +36,7 @@ const meta: Meta<TailwindSlider> = {
 export default meta;
 
 export const Slider: StoryObj<TailwindSlider> = {
+  parameters: { controls: { exclude: ['range'] } },
   render: args => ({
     props: { model: 40, ...args },
     template: `
@@ -58,7 +59,10 @@ export const Slider: StoryObj<TailwindSlider> = {
 };
 
 export const Range: StoryObj<TailwindSlider> = {
-  parameters: { docs: { story: { height: '320px' } } },
+  parameters: {
+    docs: { story: { height: '320px' } },
+    controls: { exclude: ['orientation'] }
+  },
   render: args => ({
     props: { model: [20, 70] as [number, number], ...args },
     template: `
@@ -81,7 +85,10 @@ export const Range: StoryObj<TailwindSlider> = {
 };
 
 export const Vertical: StoryObj<TailwindSlider> = {
-  parameters: { docs: { story: { height: '380px' } } },
+  parameters: {
+    docs: { story: { height: '380px' } },
+    controls: { exclude: ['range'] }
+  },
   render: args => ({
     props: { ...args, model: 35 },
     template: `

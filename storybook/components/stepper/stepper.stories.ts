@@ -64,6 +64,7 @@ export const Colors: StoryObj<TailwindStepper> = {
 };
 
 export const Linear: StoryObj<TailwindStepper> = {
+  parameters: { controls: { exclude: ['linear'] } },
   args: { color: 'primary' },
   render: args => ({
     props: args,

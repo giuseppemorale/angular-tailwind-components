@@ -25,6 +25,7 @@ const meta: Meta<TailwindAlert> = {
 export default meta;
 
 export const Alert: StoryObj<TailwindAlert> = {
+  parameters: { controls: { exclude: ['showActions'] } },
   render: args => ({
     props: args,
     template: `<tailwind-alert ${argsToTemplate(args)}>

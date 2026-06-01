@@ -22,6 +22,7 @@ const meta: Meta = {
 export default meta;
 
 export const Tabs: StoryObj<TailwindTabGroup> = {
+  parameters: { controls: { exclude: ['stretch'] } },
   render: args => ({
     props: args,
     template: `
@@ -49,6 +50,7 @@ export const Tabs: StoryObj<TailwindTabGroup> = {
 };
 
 export const Stretch: StoryObj<TailwindTabGroup> = {
+  parameters: { controls: { exclude: ['scrollable'] } },
   render: args => ({
     props: args,
     template: `
@@ -78,6 +80,7 @@ export const Stretch: StoryObj<TailwindTabGroup> = {
 };
 
 export const Scrollable: StoryObj<TailwindTabGroup> = {
+  parameters: { controls: { exclude: ['stretch'] } },
   render: args => ({
     props: args,
     template: `

@@ -22,6 +22,7 @@ const meta: Meta<TailwindAvatar> = {
 export default meta;
 
 export const Avatar: StoryObj<TailwindAvatar> = {
+  parameters: { controls: { exclude: ['src', 'alt', 'status', 'initials'] } },
   render: args => ({
     props: args,
     template: `<tailwind-avatar ${argsToTemplate(args)} />`
@@ -36,6 +37,7 @@ export const Avatar: StoryObj<TailwindAvatar> = {
 
 export const WithImage: StoryObj<TailwindAvatar> = {
   name: 'Con immagine',
+  parameters: { controls: { exclude: ['name', 'color', 'initials'] } },
   args: {
     src: 'https://i.pravatar.cc/150?u=angular-tailwind',
     alt: 'User avatar',

@@ -45,6 +45,7 @@ export const AllVariants: StoryObj<TailwindProgressBar> = {
 };
 
 export const Indeterminate: StoryObj<TailwindProgressBar> = {
+  parameters: { controls: { exclude: ['value', 'showValue', 'striped'] } },
   args: {
     color: 'primary',
     size: 'md',

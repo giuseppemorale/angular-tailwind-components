@@ -18,6 +18,7 @@ const meta: Meta<TailwindInputPassword> = {
 export default meta;
 
 export const Basic: StoryObj<TailwindInputPassword> = {
+  parameters: { controls: { exclude: ['feedback', 'toggleMask', 'hasError', 'errorText'] } },
   args: {
     label: 'Password',
     placeholder: 'Enter your password',
@@ -31,6 +32,7 @@ export const Basic: StoryObj<TailwindInputPassword> = {
 };
 
 export const WithFeedback: StoryObj<TailwindInputPassword> = {
+  parameters: { controls: { exclude: ['toggleMask', 'hasError', 'errorText'] } },
   args: {
     ...Basic.args,
     feedback: true,
@@ -39,6 +41,7 @@ export const WithFeedback: StoryObj<TailwindInputPassword> = {
 };
 
 export const WithToggleMask: StoryObj<TailwindInputPassword> = {
+  parameters: { controls: { exclude: ['hasError', 'errorText'] } },
   args: {
     ...WithFeedback.args,
     toggleMask: true
@@ -46,6 +49,7 @@ export const WithToggleMask: StoryObj<TailwindInputPassword> = {
 };
 
 export const WithError: StoryObj<TailwindInputPassword> = {
+  parameters: { controls: { exclude: ['feedback', 'toggleMask', 'helperText'] } },
   args: {
     ...Basic.args,
     hasError: true,

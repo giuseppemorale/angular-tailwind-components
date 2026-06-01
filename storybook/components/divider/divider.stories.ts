@@ -48,6 +48,7 @@ export const WithLabel: Story = {
 };
 
 export const VerticalInFlex: Story = {
+  parameters: { controls: { exclude: ['label', 'inset'] } },
   args: { orientation: 'vertical' },
   render: args => ({
     props: args,

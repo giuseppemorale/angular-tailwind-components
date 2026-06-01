@@ -100,6 +100,7 @@ export const Editor: StoryObj<TailwindEditor> = {
 };
 
 export const Readonly: StoryObj<TailwindEditor> = {
+  parameters: { controls: { exclude: ['hasError', 'errorText', 'imageUrlEnabled', 'imageUploadEnabled'] } },
   args: {
     ...Editor.args,
     readonly: true,
@@ -109,6 +110,7 @@ export const Readonly: StoryObj<TailwindEditor> = {
 };
 
 export const WithError: StoryObj<TailwindEditor> = {
+  parameters: { controls: { exclude: ['readonly', 'imageUrlEnabled', 'imageUploadEnabled'] } },
   args: {
     ...Editor.args,
     hasError: true,

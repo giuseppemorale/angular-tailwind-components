@@ -40,6 +40,7 @@ export const Card: StoryObj<TailwindCard> = {
 };
 
 export const NoHeader: StoryObj<TailwindCard> = {
+  parameters: { controls: { exclude: ['hasHeader', 'headerBg'] } },
   render: args => ({
     props: args,
     template: `
@@ -61,6 +62,7 @@ export const NoHeader: StoryObj<TailwindCard> = {
 };
 
 export const NoFooter: StoryObj<TailwindCard> = {
+  parameters: { controls: { exclude: ['hasFooter', 'headerBg'] } },
   render: args => ({
     props: args,
     template: `
@@ -79,6 +81,7 @@ export const NoFooter: StoryObj<TailwindCard> = {
 };
 
 export const Elevated: StoryObj<TailwindCard> = {
+  parameters: { controls: { exclude: ['elevated'] } },
   render: args => ({
     props: args,
     template: `

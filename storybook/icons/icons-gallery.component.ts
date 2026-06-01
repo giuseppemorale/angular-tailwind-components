@@ -1,11 +1,8 @@
-import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
-import { ChangeDetectionStrategy, Component, computed, effect, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
 import { TAILWIND_HEROICON_NAMES } from '../../projects/angular-tailwind-components/src/lib/models/icons';
 import { TailwindIcon } from '../../projects/angular-tailwind-components/src/public-api';
 
 const GALLERY_COLUMNS = 5;
-/** Altezza riga: tile h-28 (7rem) + gap verticale tra righe (1rem). */
-const GALLERY_ROW_HEIGHT_PX = 128;
 
 function chunk<T>(items: readonly T[], size: number): T[][] {
   const rows: T[][] = [];
@@ -16,13 +13,11 @@ function chunk<T>(items: readonly T[], size: number): T[][] {
 }
 
 @Component({
-  imports: [TailwindIcon, ScrollingModule],
+  imports: [TailwindIcon],
   selector: 'storybook-icons-gallery',
   template: `
     <div class="mb-6 flex flex-col gap-2 text-neutral-800 dark:text-neutral-100">
-      <label class="text-sm font-medium text-neutral-700 dark:text-neutral-300" for="icons-search">
-        Cerca icona
-      </label>
+      <label class="text-sm font-medium text-neutral-700 dark:text-neutral-300" for="icons-search"> Cerca icona </label>
       <input
         id="icons-search"
         type="search"
@@ -32,55 +27,49 @@ function chunk<T>(items: readonly T[], size: number): T[][] {
         (input)="onSearchInput($event)" />
       <p class="text-sm text-neutral-500 dark:text-neutral-400">
         {{ filteredIcons().length }} / {{ iconCount }} icone · clicca un’icona per copiare
-        <code class="text-neutral-600 dark:text-neutral-300">'nome'</code>
+        <code class="text-neutral-600 dark:text-neutral-300">nome</code>
       </p>
     </div>
 
     @if (filteredIcons().length === 0) {
-      <p class="text-sm text-neutral-500 dark:text-neutral-400">
-        Nessuna icona corrisponde a «{{ query().trim() }}».
-      </p>
+      <p class="text-sm text-neutral-500 dark:text-neutral-400">Nessuna icona corrisponde a «{{ query().trim() }}».</p>
     } @else {
-      <cdk-virtual-scroll-viewport
-        [itemSize]="rowHeightPx"
-        class="h-[min(70vh,48rem)] w-full text-neutral-800 dark:text-neutral-100">
-        <div
-          *cdkVirtualFor="let row of iconRows(); track trackRow($index, row)"
-          class="mb-4 grid grid-cols-5 gap-4">
-          @for (name of row; track name) {
-            <button
-              type="button"
-              class="flex h-28 flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border border-neutral-200 bg-white p-3 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:border-blue-500 dark:hover:bg-blue-950/30"
-              [attr.aria-label]="'Copia ' + quotedName(name) + ' negli appunti'"
-              (click)="copyIcon(name)">
-              <tailwind-icon class="shrink-0" [icon]="name" [size]="24" />
-              <code
-                class="line-clamp-3 min-h-0 w-full break-all text-center font-mono text-[12px] leading-snug"
-                [class.text-blue-600]="copiedName() === name"
-                [class.dark:text-blue-400]="copiedName() === name"
-                [class.text-neutral-600]="copiedName() !== name"
-                [class.dark:text-neutral-400]="copiedName() !== name">
-                @if (copiedName() === name) {
-                  Copiato!
-                } @else {
-                  {{ name }}
-                }
-              </code>
-            </button>
-          }
-        </div>
-      </cdk-virtual-scroll-viewport>
+      <div class="max-h-[min(70vh,48rem)] w-full overflow-y-auto text-neutral-800 dark:text-neutral-100">
+        @for (row of iconRows(); track trackRow($index, row)) {
+          <div class="mb-4 grid grid-cols-5 gap-4">
+            @for (name of row; track name) {
+              <button
+                type="button"
+                class="flex h-28 flex-col items-center justify-center gap-2 overflow-hidden rounded-lg border border-neutral-200 bg-white p-3 shadow-sm transition-colors hover:border-blue-400 hover:bg-blue-50/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:border-blue-500 dark:hover:bg-blue-950/30 cursor-pointer"
+                [attr.aria-label]="'Copia ' + name + ' negli appunti'"
+                (click)="copyIcon(name)">
+                <tailwind-icon class="shrink-0 text-neutral-800 dark:text-neutral-100" [icon]="name" [size]="24" />
+                <code
+                  class="line-clamp-3 min-h-0 w-full break-all text-center font-mono text-[12px] leading-snug"
+                  [class.text-blue-600]="copiedName() === name"
+                  [class.dark:text-blue-400]="copiedName() === name"
+                  [class.text-neutral-600]="copiedName() !== name"
+                  [class.dark:text-neutral-400]="copiedName() !== name">
+                  @if (copiedName() === name) {
+                    Copiato!
+                  } @else {
+                    {{ name }}
+                  }
+                </code>
+              </button>
+            }
+          </div>
+        }
+      </div>
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StorybookIconsGalleryComponent {
   readonly iconCount = TAILWIND_HEROICON_NAMES.length;
-  readonly rowHeightPx = GALLERY_ROW_HEIGHT_PX;
   readonly query = signal('');
   readonly copiedName = signal<string | null>(null);
 
-  private readonly viewport = viewChild(CdkVirtualScrollViewport);
   private copyResetTimeout: ReturnType<typeof setTimeout> | undefined;
 
   readonly filteredIcons = computed(() => {
@@ -93,19 +82,8 @@ export class StorybookIconsGalleryComponent {
 
   readonly iconRows = computed(() => chunk(this.filteredIcons(), GALLERY_COLUMNS));
 
-  constructor() {
-    effect(() => {
-      this.filteredIcons();
-      queueMicrotask(() => this.viewport()?.checkViewportSize());
-    });
-  }
-
   trackRow(index: number, row: readonly string[]): string {
     return `${index}-${row[0] ?? ''}-${row.length}`;
-  }
-
-  quotedName(name: string): string {
-    return `'${name}'`;
   }
 
   onSearchInput(event: Event): void {
@@ -113,8 +91,7 @@ export class StorybookIconsGalleryComponent {
   }
 
   copyIcon(name: string): void {
-    const text = this.quotedName(name);
-    void this.writeClipboard(text).then(ok => {
+    void this.writeClipboard(name).then(ok => {
       if (!ok) {
         return;
       }

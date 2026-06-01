@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TailwindColor, TailwindSize } from '../../models';
+import { TailwindColor, TailwindHeroicon, TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
@@ -11,6 +11,8 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSpinner extends TailwindComponent {
+  /** Heroicons outline name for the spinning glyph */
+  readonly icon = input<TailwindHeroicon>('arrow-path');
   /** Size variant */
   readonly size = input<TailwindSize>('md');
   /** Color uses Tailwind text color class */

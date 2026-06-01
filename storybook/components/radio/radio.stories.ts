@@ -19,6 +19,7 @@ export const RadioGroup: StoryObj<TailwindRadioGroup> = {
 };
 
 export const Horizontal: StoryObj<TailwindRadioGroup> = {
+  parameters: { controls: { exclude: ['label'] } },
   args: {
     orientation: 'horizontal',
     options: [

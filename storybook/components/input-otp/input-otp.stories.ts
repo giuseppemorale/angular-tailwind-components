@@ -20,6 +20,7 @@ const meta: Meta<TailwindInputOtp> = {
 export default meta;
 
 export const OTP: StoryObj<TailwindInputOtp> = {
+  parameters: { controls: { exclude: ['separator', 'separatorAfterIndex'] } },
   args: {
     label: 'Verification code',
     length: 6,
@@ -36,6 +37,7 @@ export const OTP: StoryObj<TailwindInputOtp> = {
 };
 
 export const WithSeparator: StoryObj<TailwindInputOtp> = {
+  parameters: { controls: { exclude: ['mask'] } },
   args: {
     ...OTP.args,
     label: 'OTP',
@@ -46,6 +48,7 @@ export const WithSeparator: StoryObj<TailwindInputOtp> = {
 };
 
 export const Masked: StoryObj<TailwindInputOtp> = {
+  parameters: { controls: { exclude: ['separator', 'separatorAfterIndex'] } },
   args: {
     ...OTP.args,
     label: 'PIN',

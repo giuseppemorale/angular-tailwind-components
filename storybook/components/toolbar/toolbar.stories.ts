@@ -95,6 +95,7 @@ export const ContainerWidth: StoryObj<TailwindToolbar> = {
 /** Rail verticale con voci solo icona (`label` vuoto / assente, `aria-label` da `value`, tooltip da `tooltip`). */
 export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
   parameters: {
+    controls: { exclude: ['width'] },
     docs: {
       story: { height: '520px' },
       description: {
@@ -135,7 +136,10 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
 };
 
 export const VerticalSidebar: StoryObj<TailwindToolbar> = {
-  parameters: { docs: { story: { height: '520px' } } },
+  parameters: {
+    controls: { exclude: ['width'] },
+    docs: { story: { height: '520px' } }
+  },
   args: {
     orientation: 'vertical',
     elevated: true,

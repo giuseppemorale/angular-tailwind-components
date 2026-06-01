@@ -16,6 +16,7 @@ const meta: Meta<TailwindSelect> = {
 export default meta;
 
 export const Select: StoryObj<TailwindSelect> = {
+  parameters: { controls: { exclude: ['multiple', 'hasError', 'errorText', 'disabled'] } },
   render: args => ({
     props: args,
     template: `
@@ -33,6 +34,7 @@ export const Select: StoryObj<TailwindSelect> = {
 
 export const WithDisabledOptions: StoryObj<TailwindSelect> = {
   name: 'Con opzioni disabilitate',
+  parameters: { controls: { exclude: ['multiple', 'hasError', 'errorText'] } },
   render: args => ({
     props: args,
     template: `
@@ -55,6 +57,7 @@ export const WithDisabledOptions: StoryObj<TailwindSelect> = {
 
 export const WithError: StoryObj<TailwindSelect> = {
   name: 'Stato errore',
+  parameters: { controls: { exclude: ['multiple'] } },
   render: args => ({
     props: args,
     template: `
@@ -74,6 +77,7 @@ export const WithError: StoryObj<TailwindSelect> = {
 
 export const Multiple: StoryObj<TailwindSelect<string>> = {
   name: 'Selezione multipla',
+  parameters: { controls: { exclude: ['hasError', 'errorText'] } },
   args: {
     label: 'Framework',
     placeholder: 'Scegli uno o più framework',

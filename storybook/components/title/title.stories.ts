@@ -18,6 +18,7 @@ const meta: Meta<TailwindTitle> = {
 export default meta;
 
 export const Title: StoryObj<TailwindTitle> = {
+  parameters: { controls: { exclude: ['icon'] } },
   render: args => ({
     props: args,
     template: `<tailwind-title ${argsToTemplate(args)} />`

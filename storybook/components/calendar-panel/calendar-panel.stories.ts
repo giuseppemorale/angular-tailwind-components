@@ -64,6 +64,7 @@ const meta: Meta<TailwindCalendarPanel> = {
 export default meta;
 
 export const CalendarPanel: StoryObj<TailwindCalendarPanel> = {
+  parameters: { controls: { exclude: ['minDate', 'maxDate', 'highlightDate'] } },
   args: {
     value: new Date(2026, 4, 15),
     calendarView: 'days',
@@ -73,11 +74,13 @@ export const CalendarPanel: StoryObj<TailwindCalendarPanel> = {
 };
 
 export const WithMinMax: StoryObj<TailwindCalendarPanel> = {
+  parameters: { controls: { exclude: ['highlightDate'] } },
   args: dateAroundToday(-5, 5)
 };
 
 /** Oggi fuori dal range: il pulsante «Oggi» è visibile ma disabilitato. */
 export const WithMinMaxTodayDisabled: StoryObj<TailwindCalendarPanel> = {
+  parameters: { controls: { exclude: ['highlightDate'] } },
   args: previousMonthRange()
 };
 
@@ -103,6 +106,7 @@ export const WithReactiveForm: StoryObj<TailwindCalendarPanel> = {
 };
 
 export const EnglishLanguage: StoryObj<TailwindCalendarPanel> = {
+  parameters: { controls: { exclude: ['minDate', 'maxDate', 'highlightDate'] } },
   decorators: [
     moduleMetadata({
       providers: [{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'en' }],

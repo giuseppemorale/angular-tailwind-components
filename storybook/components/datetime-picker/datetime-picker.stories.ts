@@ -17,6 +17,7 @@ const meta: Meta<TailwindDateTimePicker> = {
 export default meta;
 
 export const DateTimepicker: StoryObj<TailwindDateTimePicker> = {
+  parameters: { controls: { exclude: ['minDate', 'maxDate'] } },
   render: args => ({
     props: args,
     template: `

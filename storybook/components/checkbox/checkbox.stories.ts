@@ -13,6 +13,7 @@ const meta: Meta<TailwindCheckbox> = {
 export default meta;
 
 export const Checkbox: StoryObj<TailwindCheckbox> = {
+  parameters: { controls: { exclude: ['description'] } },
   render: args => ({
     props: args,
     template: `<tailwind-checkbox [label]="label" [size]="size" [(checked)]="checked"></tailwind-checkbox>`

@@ -25,6 +25,7 @@ const meta: Meta<TailwindButton> = {
 export default meta;
 
 export const Button: StoryObj<TailwindButton> = {
+  parameters: { controls: { exclude: ['icon', 'iconPosition'] } },
   render: args => ({
     props: args,
     template: `
@@ -47,6 +48,7 @@ export const WithIcon: StoryObj<TailwindButton> = {
 };
 
 export const IconOnly: StoryObj<TailwindButton> = {
+  parameters: { controls: { exclude: ['iconPosition'] } },
   render: args => ({
     props: args,
     template: `

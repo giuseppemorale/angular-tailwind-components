@@ -26,6 +26,7 @@ export default meta;
 
 export const StaticCountries: StoryObj<TailwindAutocomplete<string>> = {
   name: 'Nazioni (filtro locale)',
+  parameters: { controls: { exclude: ['debounceMs', 'minSearchLength'] } },
   render: args => ({
     props: { ...args, countryCode: null as string | null },
     template: `
@@ -78,6 +79,21 @@ class AutocompleteAsyncStoryComponent {
 
 export const AsyncSearch: StoryObj<TailwindAutocomplete<string>> = {
   name: 'Ricerca async',
+  parameters: {
+    controls: {
+      exclude: [
+        'options',
+        'filterLocally',
+        'minSearchLength',
+        'forceSelection',
+        'hasError',
+        'errorText',
+        'helperText',
+        'size',
+        'value'
+      ]
+    }
+  },
   decorators: [
     moduleMetadata({
       imports: [AutocompleteAsyncStoryComponent]
@@ -101,6 +117,7 @@ export const AsyncSearch: StoryObj<TailwindAutocomplete<string>> = {
 
 export const CustomItemTemplate: StoryObj<TailwindAutocomplete<string>> = {
   name: 'Template opzione (#item)',
+  parameters: { controls: { exclude: ['debounceMs', 'minSearchLength', 'hasError', 'errorText', 'helperText'] } },
   render: args => ({
     props: { ...args, countryCode: null as string | null },
     template: `
@@ -126,6 +143,7 @@ export const CustomItemTemplate: StoryObj<TailwindAutocomplete<string>> = {
 
 export const WithError: StoryObj<TailwindAutocomplete<string>> = {
   name: 'Stato errore',
+  parameters: { controls: { exclude: ['debounceMs', 'minSearchLength', 'filterLocally'] } },
   render: args => ({
     props: args,
     template: `

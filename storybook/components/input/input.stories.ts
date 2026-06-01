@@ -17,6 +17,7 @@ const meta: Meta<TailwindInput> = {
 export default meta;
 
 export const Input: StoryObj<TailwindInput> = {
+  parameters: { controls: { exclude: ['errorText', 'hasError'] } },
   args: {
     label: 'Email',
     placeholder: 'Enter your email',
@@ -29,6 +30,7 @@ export const Input: StoryObj<TailwindInput> = {
 };
 
 export const WithError: StoryObj<TailwindInput> = {
+  parameters: { controls: { exclude: ['helperText'] } },
   args: {
     label: 'Username',
     placeholder: 'Enter username',

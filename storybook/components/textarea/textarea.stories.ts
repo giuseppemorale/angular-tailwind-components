@@ -28,6 +28,7 @@ const meta: Meta<TailwindTextarea> = {
 export default meta;
 
 export const Textarea: StoryObj<TailwindTextarea> = {
+  parameters: { controls: { exclude: ['errorText', 'hasError'] } },
   args: {
     label: 'Note',
     placeholder: 'Write something…',
@@ -41,6 +42,7 @@ export const Textarea: StoryObj<TailwindTextarea> = {
 };
 
 export const WithError: StoryObj<TailwindTextarea> = {
+  parameters: { controls: { exclude: ['helperText'] } },
   args: {
     label: 'Feedback',
     placeholder: 'Tell us what went wrong',

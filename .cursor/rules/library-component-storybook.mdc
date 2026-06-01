@@ -39,4 +39,18 @@ sulla singola story (non sul `meta` globale, così la story principale resta int
 
 **Non applicare** quando la story usa `args` + `props: args` / `argsToTemplate(args)` (o il render di default del `component` con `args`): lì i controls devono restare attivi.
 
-Esempi nel repo: `avatar.stories.ts` (Dimensioni, Status), `icon.stories.ts` (Dimensioni, Colori), `chip.stories.ts` (Colori), `message.stories.ts` (Message), `calendar-panel.stories.ts` (WithReactiveForm).
+# Story interattive: escludi controlli inutili
+
+Quando una story è interattiva (`args` legati al canvas) ma **non usa** alcune proprietà nel suo scenario (es. `orientation` senza `label` nello spinner, `icon` su un button solo testo, `minDate`/`maxDate` sul datepicker base), nascondi i controlli irrilevanti **solo su quella story**:
+
+```typescript
+parameters: {
+  controls: { exclude: ['orientation', 'label'] }
+}
+```
+
+Non disabilitare tutti i controls (`disable: true`) se la story resta giocabile: usa `exclude` per il sottoinsieme inutile. Le story di varianti statiche restano con `disable: true`.
+
+Esempi nel repo: `spinner.stories.ts` (Spinner vs WithLabel), `button.stories.ts` (Button vs IconOnly), `avatar.stories.ts` (Avatar vs WithImage).
+
+Esempi `disable: true`: `avatar.stories.ts` (Dimensioni, Status), `icon.stories.ts` (Dimensioni, Colori), `chip.stories.ts` (Colori), `message.stories.ts` (Message), `calendar-panel.stories.ts` (WithReactiveForm).

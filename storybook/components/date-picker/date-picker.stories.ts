@@ -13,10 +13,12 @@ const meta: Meta<TailwindDatePicker> = {
 export default meta;
 
 export const Datepicker: StoryObj<TailwindDatePicker> = {
+  parameters: { controls: { exclude: ['minDate', 'maxDate'] } },
   args: { label: 'Date of Birth', placeholder: 'Pick a date' }
 };
 
 export const WithMinMax: StoryObj<TailwindDatePicker> = {
+  parameters: { controls: { exclude: ['placeholder', 'format', 'minDate', 'maxDate'] } },
   render: args => ({
     props: {
       label: args.label,
@@ -39,6 +41,7 @@ export const WithMinMax: StoryObj<TailwindDatePicker> = {
 
 /** Oggi fuori dal range: apri il calendario e verifica che "Oggi" sia visibile ma disabilitato. */
 export const WithMinMaxTodayDisabled: StoryObj<TailwindDatePicker> = {
+  parameters: { controls: { exclude: ['placeholder', 'format', 'minDate', 'maxDate'] } },
   render: args => ({
     props: {
       label: args.label,

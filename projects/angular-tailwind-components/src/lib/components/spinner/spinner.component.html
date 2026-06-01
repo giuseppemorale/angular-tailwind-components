@@ -1,5 +1,5 @@
 <div [class]="containerClasses()" role="status" [attr.aria-label]="ariaLabel()">
-  <tailwind-icon icon="arrow-path" [size]="iconPixelSize()" [class]="iconClasses()" />
+  <tailwind-icon [icon]="icon()" [size]="iconPixelSize()" [class]="iconClasses()" />
 
   @if (label()) {
     <span [class]="labelClasses()">{{ label() }}</span>

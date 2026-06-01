@@ -31,6 +31,7 @@ const meta: Meta<TailwindUpload> = {
 export default meta;
 
 export const Area: StoryObj<TailwindUpload> = {
+  parameters: { controls: { exclude: ['buttonLabel'] } },
   render: args => ({
     props: args,
     template: `
@@ -53,6 +54,7 @@ export const Area: StoryObj<TailwindUpload> = {
 
 export const ButtonVariant: StoryObj<TailwindUpload> = {
   name: 'Button',
+  parameters: { controls: { exclude: ['areaTitle', 'areaHint'] } },
   render: args => ({
     props: args,
     template: `

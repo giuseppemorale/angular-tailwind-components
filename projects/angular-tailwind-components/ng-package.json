@@ -8,6 +8,11 @@
       "output": "."
     },
     {
+      "glob": "README.md",
+      "input": ".",
+      "output": "."
+    },
+    {
       "glob": "**/*.svg",
       "input": "./icons",
       "output": "icons"

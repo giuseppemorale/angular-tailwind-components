@@ -273,8 +273,32 @@ function pushReleaseTag(newVersion) {
   execSync(`git push origin ${tag}`, { stdio: 'inherit' });
 }
 
+function assertDistPackageReady() {
+  const distDir = path.join(__dirname, '../dist/angular-tailwind-components');
+  const distPackageJson = path.join(distDir, 'package.json');
+  const distReadme = path.join(distDir, 'README.md');
+
+  if (!fs.existsSync(distPackageJson)) {
+    throw new Error(`Manca ${distPackageJson}. Esegui prima: npm run build`);
+  }
+
+  if (!fs.existsSync(distReadme)) {
+    throw new Error(`Manca ${distReadme}. Il README deve essere nel pacchetto dist.`);
+  }
+
+  const distPkg = JSON.parse(fs.readFileSync(distPackageJson, 'utf8'));
+
+  if (!distPkg.module || !fs.existsSync(path.join(distDir, 'fesm2022'))) {
+    throw new Error(
+      'dist/angular-tailwind-components non sembra un build ng-packagr valido. ' +
+        'Pubblica solo da quella cartella, non dalla root del monorepo.'
+    );
+  }
+}
+
 function publishToNpm(newVersion) {
   console.log('\nPublishing to npm...');
+  assertDistPackageReady();
 
   const publishArgs = ['publish', '--access', 'public'];
 

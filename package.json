@@ -1,6 +1,7 @@
 {
   "name": "angular-tailwind-components",
-  "version": "21.2.0",
+  "version": "21.2.1",
+  "description": "Angular UI component library built with Tailwind CSS v4 — signals, standalone components, 40+ components.",
   "author": "Giuseppe Morale",
   "license": "LicenseRef-ATC-1.0",
   "repository": {
@@ -25,12 +26,13 @@
     "watch": "node scripts/copy-icons.js sync && ng build angular-tailwind-components --watch --configuration development && node scripts/copy-icons.js dist",
     "test": "ng test",
     "release": "node scripts/release.js",
+    "publish:dist": "npm run build && npm publish --access public --prefix dist/angular-tailwind-components",
     "storybook": "ng run angular-tailwind-components:storybook",
     "build:storybook": "ng run angular-tailwind-components:build-storybook",
     "prettier:write": "prettier --write projects/**/*.{ts,html,css} src/**/*.{ts,html,css}",
     "prettier:check": "prettier --check ."
   },
-  "private": false,
+  "private": true,
   "packageManager": "npm@11.13.0",
   "dependencies": {
     "@angular/cdk": "^21.2.13",

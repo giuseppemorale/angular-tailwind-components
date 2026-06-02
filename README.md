@@ -56,9 +56,12 @@ Your consuming project must have **Tailwind CSS v4** configured. Add the library
 The published `styles/tailwind.css` scans the sibling `fesm2022` bundle plus library `.html` / `.ts` sources for development. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
 
 The same import also pulls in:
-@import 'tailwindcss';
 
-So you don't need to import the base styles
+```css
+@import 'tailwindcss';
+```
+
+So you do not need a separate base Tailwind import in your app.
 
 ## Quick Start
 
@@ -334,7 +337,7 @@ npm run build:storybook
 
 ## License
 
-This project is licensed under the **Angular Tailwind Components License 1.0 (ATC-1.0)**. See [LICENSE](./LICENSE) for the full text.
+This project is licensed under the **Angular Tailwind Components License 1.0 (ATC-1.0)**. See the [LICENSE](https://github.com/giuseppemorale/angular-tailwind-components/blob/master/LICENSE) file for the full text.
 
 - You may use the library in applications and **sell those applications** (including commercial and enterprise use).
 - You may **not** sell or distribute the library itself (or a substantial repackaging of it) as a standalone UI/component library product.

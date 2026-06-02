@@ -16,6 +16,17 @@ const ask = question =>
 const rootPackageJsonPath = path.join(__dirname, '../package.json');
 const libPackageJsonPath = path.join(__dirname, '../projects/angular-tailwind-components/package.json');
 
+/** npm registry fields copied from root package.json into the published library manifest */
+const NPM_METADATA_KEYS = [
+  'description',
+  'author',
+  'license',
+  'repository',
+  'homepage',
+  'bugs',
+  'keywords'
+];
+
 const STABLE_VERSION_PATTERN = /^(\d+)\.(\d+)\.(\d+)$/;
 
 function parseVersion(version) {
@@ -227,12 +238,29 @@ function bumpVersion(newVersion) {
   execSync(`npm version ${newVersion} --no-git-tag-version`, { stdio: 'inherit' });
 }
 
+function syncNpmMetadataFromRoot(rootPackageJson, libPackageJson) {
+  for (const key of NPM_METADATA_KEYS) {
+    if (rootPackageJson[key] !== undefined) {
+      libPackageJson[key] = rootPackageJson[key];
+    } else {
+      delete libPackageJson[key];
+    }
+  }
+
+  return libPackageJson;
+}
+
 function updateLibraryPackageJson(newVersion) {
   console.log('Updating library package.json...');
 
+  const rootPackageJson = JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf8'));
   const libPackageJson = JSON.parse(fs.readFileSync(libPackageJsonPath, 'utf8'));
+
+  syncNpmMetadataFromRoot(rootPackageJson, libPackageJson);
   libPackageJson.version = newVersion;
+
   fs.writeFileSync(libPackageJsonPath, JSON.stringify(libPackageJson, null, 2) + '\n');
+  console.log('Synced npm metadata (keywords, license, repository, …) from root package.json.');
 }
 
 function pushReleaseTag(newVersion) {

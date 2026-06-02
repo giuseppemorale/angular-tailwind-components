@@ -1,8 +1,8 @@
 {
   "name": "angular-tailwind-components",
-  "version": "21.1.0",
+  "version": "21.2.0",
   "author": "Giuseppe Morale",
-  "license": "MIT",
+  "license": "LicenseRef-ATC-1.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/giuseppemorale/angular-tailwind-components"

@@ -1,6 +1,22 @@
 {
   "name": "angular-tailwind-components",
-  "version": "21.1.0",
+  "version": "21.2.0",
+  "author": "Giuseppe Morale",
+  "license": "LicenseRef-ATC-1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giuseppemorale/angular-tailwind-components"
+  },
+  "homepage": "https://github.com/giuseppemorale/angular-tailwind-components",
+  "bugs": {
+    "url": "https://github.com/giuseppemorale/angular-tailwind-components/issues",
+    "email": "morale-giuseppe@live.it"
+  },
+  "keywords": [
+    "angular",
+    "tailwind",
+    "components"
+  ],
   "files": [
     "fesm2022",
     "types",

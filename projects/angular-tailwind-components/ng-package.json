@@ -3,6 +3,11 @@
   "dest": "../../dist/angular-tailwind-components",
   "assets": [
     {
+      "glob": "LICENSE",
+      "input": ".",
+      "output": "."
+    },
+    {
       "glob": "**/*.svg",
       "input": "./icons",
       "output": "icons"

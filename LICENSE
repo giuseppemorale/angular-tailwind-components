@@ -1,0 +1,44 @@
+Angular Tailwind Components License 1.0 (ATC-1.0)
+
+Copyright (c) 2026 Giuseppe Morale
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to use,
+copy, modify, and incorporate the Software into applications, including
+commercial, internal, and enterprise applications, and to sell, license, and
+distribute those applications, subject to the following conditions:
+
+1. Applications. You may use the Software as part of any application or
+   service. Products that include or depend on the Software may be sold,
+   licensed, or otherwise commercialized without additional permission from
+   the copyright holder.
+
+2. No resale of the Software. You may not sell, license, sublicense, rent,
+   lease, or otherwise distribute for consideration the Software, or a
+   derivative work of the Software, when the primary value of what you
+   distribute is the Software itself (or a substantial portion of it).
+   This includes, without limitation, offering the Software (or a fork or
+   repackaging of it) as a standalone UI library, component library, icon
+   bundle primarily sourced from this package, template pack, or competing
+   product whose main purpose is to supply library components to third
+   parties.
+
+3. Notices. The above copyright notice and this permission notice shall be
+   included in all copies or substantial portions of the Software that you
+   redistribute (if redistribution is otherwise permitted under this
+   license).
+
+4. Third-Party Components. Files and assets bundled with the Software that
+   are identified as third-party or that are subject to their own license
+   terms (including, without limitation, Heroicons SVG icons under the MIT
+   License) are not covered by ATC-1.0. Those components remain governed
+   solely by their respective licenses. Nothing in this license restricts
+   your rights under those third-party licenses.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

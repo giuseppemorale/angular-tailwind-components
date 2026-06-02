@@ -334,6 +334,9 @@ npm run build:storybook
 
 ## License
 
-MIT
+This project is licensed under the **Angular Tailwind Components License 1.0 (ATC-1.0)**. See [LICENSE](./LICENSE) for the full text.
 
-The bundled **[Heroicons](https://heroicons.com/)** outline SVG icons are © [Tailwind Labs](https://tailwindcss.com/), licensed under the [MIT License](https://github.com/tailwindlabs/heroicons/blob/master/LICENSE).
+- You may use the library in applications and **sell those applications** (including commercial and enterprise use).
+- You may **not** sell or distribute the library itself (or a substantial repackaging of it) as a standalone UI/component library product.
+
+**Third-party assets** bundled with this project keep their original licenses and are not covered by ATC-1.0. In particular, the bundled **[Heroicons](https://heroicons.com/)** outline SVG icons are © [Tailwind Labs](https://tailwindcss.com/), licensed under the [MIT License](https://github.com/tailwindlabs/heroicons/blob/master/LICENSE).

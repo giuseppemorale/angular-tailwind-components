@@ -2,9 +2,12 @@
   display: block;
   flex-shrink: 0;
   background-color: currentColor;
+  /* Firefox defaults SVG masks to luminance; outline Heroicons are stroke-only (fill="none"). */
+  mask-mode: alpha;
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;
+  -webkit-mask-mode: alpha;
   -webkit-mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;

@@ -41,6 +41,48 @@
 @source inline("bg-rose-{50,{100..900..100},950}");
 
 /*
+ * Semantic design tokens (`primary`, `neutral`, …) — safelisted for npm consumers.
+ * `@theme` below registers `--color-primary-*`, but Tailwind only emits matching utilities
+ * (e.g. `bg-primary-600`, `text-on-primary-600`) when they appear in scanned content.
+ * In a published app `@source "../fesm2022"` may not be scanned by the host build; without
+ * these lines, only default Tailwind palettes (e.g. `bg-neutral-100`) exist → primary buttons look gray.
+ */
+@source inline("bg-primary-{50,{100..900..100},950}");
+@source inline("text-primary-{50,{100..900..100},950}");
+@source inline("text-on-primary-{50,{100..900..100},950}");
+@source inline("border-primary-{50,{100..900..100},950}");
+@source inline("outline-primary-{50,{100..900..100},950}");
+@source inline("bg-neutral-{50,{100..900..100},950}");
+@source inline("text-neutral-{50,{100..900..100},950}");
+@source inline("text-on-neutral-{50,{100..900..100},950}");
+@source inline("border-neutral-{50,{100..900..100},950}");
+@source inline("bg-success-{50,{100..900..100}}");
+@source inline("text-success-{50,{100..900..100}}");
+@source inline("text-on-success-{50,{100..900..100}}");
+@source inline("border-success-{50,{100..900..100}}");
+@source inline("bg-warning-{50,{100..900..100}}");
+@source inline("text-warning-{50,{100..900..100}}");
+@source inline("text-on-warning-{50,{100..900..100}}");
+@source inline("border-warning-{50,{100..900..100}}");
+@source inline("bg-danger-{50,{100..900..100}}");
+@source inline("text-danger-{50,{100..900..100}}");
+@source inline("text-on-danger-{50,{100..900..100}}");
+@source inline("border-danger-{50,{100..900..100}}");
+@source inline("bg-info-{50,{100..900..100}}");
+@source inline("text-info-{50,{100..900..100}}");
+@source inline("text-on-info-{50,{100..900..100}}");
+@source inline("border-info-{50,{100..900..100}}");
+@source inline("{hover:,active:,focus-visible:,focus:,disabled:,peer-focus-visible:,md:,lg:,sm:,max-md:,group-hover:,placeholder:,}bg-primary-{50,{100..900..100},950}");
+@source inline("{hover:,active:,focus-visible:,focus:,disabled:,}text-on-primary-{500,600,700,800}");
+@source inline("{hover:,active:,focus-visible:,focus:,disabled:,}text-primary-{50,{100..900..100},950}");
+@source inline("{hover:,active:,focus-visible:,}outline-primary-{500,600,700}");
+@source inline("{hover:,active:,}bg-neutral-{50,{100..900..100},950}");
+@source inline("{hover:,active:,}bg-success-{600,700,800,900}");
+@source inline("{hover:,active:,}bg-warning-{500,600,700}");
+@source inline("{hover:,active:,}bg-danger-{50,{100..900..100}}");
+@source inline("{hover:,active:,}bg-info-{600,700,800}");
+
+/*
  * Angular Tailwind Components — Design System
  * Customizable theme tokens via Tailwind v4 @theme directive
  */

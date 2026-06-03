@@ -133,24 +133,26 @@ describe('applyTailwindThemeColors', () => {
     expect(style?.textContent).toContain('@layer theme');
     expect(style?.textContent).toContain('--color-primary-600: #3a7d44;');
     expect(document.documentElement.getAttribute('data-tailwind-theme')).toBe('');
-    expect(document.documentElement.getAttribute('style') ?? '').not.toContain('--color-primary');
+    expect(document.documentElement.style.getPropertyValue('--color-primary-600').trim()).toBe('#3a7d44');
   });
 
-  it('updates existing style on second apply', () => {
+  it('updates existing style and html variables on second apply', () => {
     applyTailwindThemeColors(document, { primary: { 600: '#111' } });
     applyTailwindThemeColors(document, { primary: { 600: '#222' } });
 
     const styles = document.head.querySelectorAll(`#${TAILWIND_THEME_STYLE_ID}`);
     expect(styles.length).toBe(1);
     expect(styles[0]?.textContent).toContain('--color-primary-600: #222;');
+    expect(document.documentElement.style.getPropertyValue('--color-primary-600').trim()).toBe('#222');
   });
 
-  it('removes style element and html marker when colors resolve to empty css', () => {
+  it('removes style element, html marker, and inline variables when colors resolve to empty css', () => {
     applyTailwindThemeColors(document, { primary: { 600: '#111' } });
     applyTailwindThemeColors(document, {});
 
     expect(document.getElementById(TAILWIND_THEME_STYLE_ID)).toBeNull();
     expect(document.documentElement.hasAttribute('data-tailwind-theme')).toBe(false);
+    expect(document.documentElement.style.getPropertyValue('--color-primary-600').trim()).toBe('');
   });
 });
 

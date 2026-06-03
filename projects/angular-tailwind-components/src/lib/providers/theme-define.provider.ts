@@ -248,16 +248,67 @@ export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string
   return `@layer theme {\n  :root[${TAILWIND_THEME_HTML_ATTR}],\n  :host {\n${declarations}\n  }\n}`;
 }
 
+/** Angular production build sets global `ngDevMode` to `false`. */
+declare const ngDevMode: boolean | undefined;
+
+/** Tracks custom properties last applied on `<html>` so they can be cleared on update/remove. */
+const APPLIED_VARS_DATASET_KEY = 'appliedVars';
+
+function clearAppliedThemeVariables(document: Document, style: HTMLElement | null): void {
+  const root = document.documentElement;
+  const previous = style?.dataset[APPLIED_VARS_DATASET_KEY]?.split(',').filter(Boolean) ?? [];
+  for (const prop of previous) {
+    root.style.removeProperty(prop);
+  }
+}
+
+function stylesheetHasPrimaryUtility(document: Document): boolean {
+  for (const sheet of document.styleSheets) {
+    let rules: CSSRuleList;
+    try {
+      rules = sheet.cssRules;
+    } catch {
+      continue;
+    }
+    for (let i = 0; i < rules.length; i++) {
+      const text = rules[i]?.cssText ?? '';
+      if (text.includes('.bg-primary-600') || text.includes('.bg-primary-600:')) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function warnIfSemanticUtilitiesMissing(document: Document): void {
+  if (typeof ngDevMode !== 'undefined' && ngDevMode === false) {
+    return;
+  }
+  if (stylesheetHasPrimaryUtility(document)) {
+    return;
+  }
+  console.warn(
+    '[angular-tailwind-components] Semantic utilities such as `.bg-primary-600` were not found in the compiled CSS. ' +
+      'Add `angular-tailwind-components/styles/tailwind.css` to your global styles (it already includes `@import "tailwindcss"`). ' +
+      'Using only `@import "tailwindcss"` in your app does not register `primary` / `on-primary` tokens — buttons may look gray.'
+  );
+}
+
 /**
  * Injects or updates `#tailwind-theme-colors` in `document.head` (browser only).
  * Exported for unit tests.
+ *
+ * Variables are written on `<html style="…">` (highest cascade priority for `:root`) and duplicated
+ * in `@layer theme` for `:host` (web components / shadow roots).
  */
 export function applyTailwindThemeColors(document: Document, colors: TailwindDefineThemeColors): void {
-  const css = buildTailwindThemeCss(colors);
+  const entries = buildTailwindThemeVariableEntries({ COLORS: colors });
   const existing = document.getElementById(TAILWIND_THEME_STYLE_ID);
   const root = document.documentElement;
 
-  if (!css) {
+  clearAppliedThemeVariables(document, existing);
+
+  if (entries.length === 0) {
     existing?.remove();
     root.removeAttribute(TAILWIND_THEME_HTML_ATTR);
     return;
@@ -265,12 +316,21 @@ export function applyTailwindThemeColors(document: Document, colors: TailwindDef
 
   root.setAttribute(TAILWIND_THEME_HTML_ATTR, '');
 
+  const appliedKeys: string[] = [];
+  for (const [prop, val] of entries) {
+    root.style.setProperty(prop, val);
+    appliedKeys.push(prop);
+  }
+
+  const css = buildTailwindThemeCss(colors);
   const style = existing ?? document.createElement('style');
   style.id = TAILWIND_THEME_STYLE_ID;
   style.dataset['tailwindTheme'] = '';
+  style.dataset[APPLIED_VARS_DATASET_KEY] = appliedKeys.join(',');
   style.textContent = css;
 
   document.head.appendChild(style);
+  warnIfSemanticUtilitiesMissing(document);
 }
 
 /**

@@ -47,21 +47,24 @@ npm install angular-tailwind-components
 
 ### Prerequisites
 
-Your consuming project must have **Tailwind CSS v4** configured. Add the library stylesheet (it includes `@import "tailwindcss"`, design tokens, and **`@source` paths** so utilities used inside library components are generated without extra setup):
+Install peer dependencies **Tailwind CSS v4** (`tailwindcss`, `postcss`) in your app.
 
-```css
-@import 'angular-tailwind-components/styles/tailwind.css';
+Register the library stylesheet in **`angular.json`** under your application target (`architect.build.options.styles`). This is required so semantic tokens and utilities (`bg-primary-600`, `text-on-primary-*`, …) are emitted in the compiled CSS:
+
+```json
+"styles": [
+  "node_modules/angular-tailwind-components/styles/tailwind.css",
+  "src/styles.css"
+]
 ```
 
-The published `styles/tailwind.css` scans the sibling `fesm2022` bundle plus library `.html` / `.ts` sources for development. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
+That file already includes `@import "tailwindcss"`, the library `@theme` block (`primary`, `neutral`, `success`, …), and `@source` paths for classes used inside library components.
 
-The same import also pulls in:
+Do **not** use only `@import "tailwindcss"` in `src/styles.css` — it does not register semantic `primary` / `on-primary` tokens; primary buttons may look gray even when `provideTailwindThemeColors` is configured.
 
-```css
-@import 'tailwindcss';
-```
+Keep `src/styles.css` for app-specific global rules (fonts, layout, etc.) only. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
 
-So you do not need a separate base Tailwind import in your app.
+An `@import 'angular-tailwind-components/styles/tailwind.css'` inside a CSS file may fail to resolve library `@source` paths in some Angular builds; prefer the `node_modules/...` entry in `angular.json` above.
 
 ## Quick Start
 
@@ -177,7 +180,7 @@ You can omit **`COLORS`** if you only need token defaults, or omit token keys if
 
 ## Theme colors (`provideTailwindThemeColors`)
 
-The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. At startup, **`provideTailwindThemeColors`** injects a single `<style id="tailwind-theme-colors">` in `document.head` with a `:root { … }` block — variables are **not** written to the `style` attribute on `<html>`. Color application is a **no-op during SSR** (browser only).
+The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Requires the library stylesheet in `angular.json` (see [Prerequisites](#prerequisites)) so those utilities exist in the compiled CSS. At startup, **`provideTailwindThemeColors`** sets the variables on `<html>` and injects `<style id="tailwind-theme-colors">` (`@layer theme`, including `:host`). Color application is a **no-op during SSR** (browser only).
 
 | `COLORS` key | CSS variables | Default palette in `tailwind.css` |
 | --- | --- | --- |

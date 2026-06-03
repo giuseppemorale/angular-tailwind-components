@@ -124,6 +124,36 @@ function normalizeSemanticColorObject(value: Exclude<TailwindThemeSeverityColor,
   return { shades: value as TailwindThemeSemanticShades };
 }
 
+/** Default `--color-on-<semantic>-<shade>` values aligned with `tailwind.css` `@theme`. */
+function defaultOnColorForShade(semantic: TailwindThemeSemantic, shade: TailwindThemeColorShade): string {
+  const shadeNum = Number(shade);
+  switch (semantic) {
+    case 'warning':
+      return shadeNum >= 700 ? '#ffffff' : 'var(--color-neutral-900)';
+    case 'neutral':
+      return shadeNum >= 600 ? '#ffffff' : 'var(--color-neutral-900)';
+    default:
+      return shadeNum >= 500 ? '#ffffff' : 'var(--color-neutral-900)';
+  }
+}
+
+function resolveOnShadesForCustomPalette(
+  semantic: TailwindThemeSemantic,
+  shades: TailwindThemeSemanticShades,
+  on: TailwindThemeSemanticShades | undefined
+): TailwindThemeSemanticShades {
+  const resolved: TailwindThemeSemanticShades = { ...on };
+  for (const shade of Object.keys(shades)) {
+    if (!isValidShadeKey(shade) || shades[shade] === undefined || shades[shade] === '') {
+      continue;
+    }
+    if (resolved[shade] === undefined || resolved[shade] === '') {
+      resolved[shade] = defaultOnColorForShade(semantic, shade);
+    }
+  }
+  return resolved;
+}
+
 function pushShadeVariables(
   semantic: TailwindThemeSemantic,
   shades: TailwindThemeSemanticShades,
@@ -190,7 +220,7 @@ export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeCon
     } else {
       const { shades, on } = normalizeSemanticColorObject(value);
       pushShadeVariables(semantic, shades, entries);
-      pushOnShadeVariables(semantic, on, entries);
+      pushOnShadeVariables(semantic, resolveOnShadesForCustomPalette(semantic, shades, on), entries);
     }
   }
 
@@ -200,8 +230,14 @@ export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeCon
 /** `id` of the injected `<style>` that holds semantic theme variables on `:root`. */
 export const TAILWIND_THEME_STYLE_ID = 'tailwind-theme-colors';
 
+/** `data-*` attribute on `<html>` while a runtime theme override is active. */
+export const TAILWIND_THEME_HTML_ATTR = 'data-tailwind-theme';
+
 /**
- * Builds a `:root { … }` stylesheet from semantic `COLORS`. Exported for unit tests.
+ * Builds an `@layer theme` stylesheet from semantic `COLORS`. Exported for unit tests.
+ *
+ * Tailwind v4 registers semantic tokens in `@layer theme` on `:root`/`:host`; overrides must
+ * live in the same layer (and beat defaults via attribute selector + source order).
  */
 export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string {
   const entries = buildTailwindThemeVariableEntries({ COLORS: colors });
@@ -209,7 +245,7 @@ export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string
     return '';
   }
   const declarations = entries.map(([prop, val]) => `  ${prop}: ${val};`).join('\n');
-  return `:root {\n${declarations}\n}`;
+  return `@layer theme {\n  :root[${TAILWIND_THEME_HTML_ATTR}],\n  :host {\n${declarations}\n  }\n}`;
 }
 
 /**
@@ -219,20 +255,22 @@ export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string
 export function applyTailwindThemeColors(document: Document, colors: TailwindDefineThemeColors): void {
   const css = buildTailwindThemeCss(colors);
   const existing = document.getElementById(TAILWIND_THEME_STYLE_ID);
+  const root = document.documentElement;
 
   if (!css) {
     existing?.remove();
+    root.removeAttribute(TAILWIND_THEME_HTML_ATTR);
     return;
   }
+
+  root.setAttribute(TAILWIND_THEME_HTML_ATTR, '');
 
   const style = existing ?? document.createElement('style');
   style.id = TAILWIND_THEME_STYLE_ID;
   style.dataset['tailwindTheme'] = '';
   style.textContent = css;
 
-  if (!existing) {
-    document.head.appendChild(style);
-  }
+  document.head.appendChild(style);
 }
 
 /**
@@ -247,7 +285,7 @@ export function provideTailwindConfig(config: () => TailwindComponentsConfig): E
 }
 
 /**
- * Applies semantic `COLORS` via `<style id="tailwind-theme-colors">` on `:root` at startup (browser only).
+ * Applies semantic `COLORS` via `<style id="tailwind-theme-colors">` in `@layer theme` at startup (browser only).
  * Register after i18n (or other) initializers if the factory uses `inject()`.
  */
 export function provideTailwindThemeColors(colors: () => TailwindDefineThemeColors): EnvironmentProviders {
@@ -257,7 +295,12 @@ export function provideTailwindThemeColors(colors: () => TailwindDefineThemeColo
       if (!isPlatformBrowser(platformId)) {
         return;
       }
-      applyTailwindThemeColors(inject(DOCUMENT), colors());
+      const document = inject(DOCUMENT);
+      const resolved = colors();
+      const apply = (): void => applyTailwindThemeColors(document, resolved);
+      apply();
+      // Re-apply after async stylesheets load (Angular may defer bundled CSS behind JS).
+      globalThis.addEventListener?.('load', apply, { once: true });
     })
   ]);
 }

@@ -4,6 +4,16 @@
     --tw-table-col-min-width: 7.5rem; /* 120px — override con style/class sul host se serve */
   }
 
+  /* Toolbar solo se c’è ricerca o contenuto in [tailwind-table-tools] (nessuna direttiva marker). */
+  :host .tw-table-toolbar {
+    display: none;
+  }
+
+  :host .tw-table-toolbar:has(tailwind-input),
+  :host .tw-table-toolbar:has([tailwind-table-tools]) {
+    display: flex;
+  }
+
   /*
    * Stili di default con `:where(...)` sulla parte «tipo elemento» del selettore:
    * la specificità contributiva è 0, così le utility Tailwind su `th` / `td` proiettate

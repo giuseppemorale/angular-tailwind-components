@@ -1,5 +1,4 @@
-@if (showToolbar()) {
-  <div class="flex flex-wrap items-end justify-between gap-4 pt-4 pb-3">
+<div class="tw-table-toolbar flex flex-wrap items-end justify-between gap-4 pt-4 pb-3">
     @if (searchable()) {
       <div class="max-w-xs shrink-0">
         <tailwind-input
@@ -13,8 +12,7 @@
     <div class="flex flex-wrap items-center gap-2 min-w-0" [class.ml-auto]="searchable()">
       <ng-content select="[tailwind-table-tools]" />
     </div>
-  </div>
-}
+</div>
 <div class="w-full rounded-lg border border-neutral-200">
   @if (loading()) {
     <div class="flex items-center justify-center py-16 text-neutral-400">

@@ -20,7 +20,6 @@ import { TailwindInput } from '../input/input.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
-import { TailwindTableToolsDirective } from '../../directives/table/tailwind-table-tools.directive';
 import { TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
 export type { TailwindTableSortHost };
 
@@ -63,9 +62,6 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
   readonly onSelectionChange = output<Set<number>>();
 
   readonly rowTemplate = contentChild.required(TailwindTableRowDirective);
-  private readonly tableTools = contentChild(TailwindTableToolsDirective, { descendants: true });
-
-  readonly showToolbar = computed(() => this.searchable() || !!this.tableTools());
 
   rowContext(row: Record<string, unknown>, index: number): Record<string, unknown> {
     return {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
-import { TailwindTableToolsDirective } from '../../directives/table/tailwind-table-tools.directive';
 import { TailwindTable } from './table.component';
 
 const ROWS = [
@@ -56,7 +55,7 @@ class TableNoSearchHostComponent {
 }
 
 @Component({
-  imports: [TailwindTable, TailwindTableRowDirective, TailwindTableToolsDirective],
+  imports: [TailwindTable, TailwindTableRowDirective],
   template: `
     <tailwind-table [data]="rows" [paginated]="true">
       <div tailwind-table-tools data-testid="table-tools">

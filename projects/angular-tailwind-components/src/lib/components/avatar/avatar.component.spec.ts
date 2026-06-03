@@ -23,7 +23,7 @@ describe('TailwindAvatar', () => {
     fixture.componentRef.setInput('name', 'John Doe');
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('GM');
+    expect(fixture.nativeElement.textContent).toContain('JD');
   });
 
   it('should use explicit initials when provided', () => {

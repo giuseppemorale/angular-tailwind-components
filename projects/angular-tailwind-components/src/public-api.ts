@@ -8,6 +8,9 @@ export * from './lib/models';
 // Directives
 export * from './lib/directives';
 
+// Pipes
+export * from './lib/pipes';
+
 // Components
 export * from './lib/components';
 

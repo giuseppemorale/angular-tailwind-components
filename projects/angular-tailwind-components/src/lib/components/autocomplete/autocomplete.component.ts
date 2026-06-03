@@ -25,6 +25,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent, Subscription } from 'rxjs';
 import { TailwindOption, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
+import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindIcon } from '../icon/icon.component';
 
 /** Context passed to the `#item` ng-template. */
@@ -37,7 +38,7 @@ export interface TailwindAutocompleteItemContext<T = unknown> {
 }
 
 @Component({
-  imports: [NgTemplateOutlet, TailwindIcon],
+  imports: [NgTemplateOutlet, TailwindIcon, TailwindSafeHtmlPipe],
   selector: 'tailwind-autocomplete',
   providers: [
     {

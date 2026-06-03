@@ -50,7 +50,23 @@ Su ogni **`<th>`** dentro **`<thead>`** proiettato, `tailwind-table` imposta aut
 
 Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bordi, padding, tipografia) è definito in **`table.component.css`** con selettori **`:where(...)`** e `@layer components`, così le **classi Tailwind** che metti su celle e intestazioni (`min-w-*`, `max-w-*`, `w-*`, `truncate`, `p-*`, ecc.) hanno la precedenza sui default.
 
-La `<table>` interna usa **`table-layout: auto`**: le colonne si adattano al contenuto. Ogni **`th`** / **`td`** ha **`min-width: 7.5rem` (120px)** di default (variabile CSS **`--tw-table-col-min-width`** sul host `tailwind-table`). Il contenitore ha **`overflow-x-auto`**: su schermi stretti compare lo scroll orizzontale invece di schiacciare le colonne.
+La `<table>` interna usa **`table-layout: auto`**: le colonne si adattano al contenuto. Ogni **`th`** / **`td`** ha **`min-width: 7.5rem` (120px)** di default (variabile CSS **`--tw-table-col-min-width`** sul host `tailwind-table`). Solo la **tabella** è in un wrapper con **`overflow-x-auto`**; la **paginazione** resta fissa sotto il bordo e non scorre orizzontalmente con le colonne.
+
+### Toolbar (`tailwind-table-tools`)
+
+Con `searchable` attivo (default), ricerca e azioni custom stanno su una riga **`flex justify-between`**. Proietta contenuto a destra con l’attributo **`tailwind-table-tools`**:
+
+```html
+<tailwind-table [data]="rows">
+  <div tailwind-table-tools>
+    <tailwind-button icon="arrow-path">Refresh</tailwind-button>
+  </div>
+  <thead>...</thead>
+  <tbody *tailwindTableRow="let row">...</tbody>
+</tailwind-table>
+```
+
+La toolbar compare anche con `searchable="false"` se proietti `[tailwind-table-tools]`.
 
 Per colonne con testo lungo (es. email), usa **`max-w-*`** + **`truncate`** sulle celle; per azioni con pulsanti, **`whitespace-nowrap`** sulla colonna.
 

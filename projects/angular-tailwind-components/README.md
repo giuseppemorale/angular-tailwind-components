@@ -226,9 +226,22 @@ When you pass a **palette string** (e.g. `primary: 'indigo'`), the target variab
 
 `provideTailwindThemeColors` is a no-op during **SSR** (browser only).
 
+## Pipes
+
+- **SafeHtml** (`TailwindSafeHtmlPipe`, template name `safehtml`): Sanitizes HTML via Angular `DomSanitizer` for safe `[innerHTML]` binding. Used internally by form components for `errorText` and `helperText`; you can import it in your app for custom messages.
+
+```typescript
+import { TailwindSafeHtmlPipe } from 'angular-tailwind-components';
+
+@Component({
+  imports: [TailwindSafeHtmlPipe],
+  template: `<p [innerHTML]="message | safehtml"></p>`
+})
+```
+
 ## Content slots
 
-Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-drawer`, `tailwind-alert`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
+Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-table`, `tailwind-drawer`, `tailwind-alert`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
 
 ## Components
 

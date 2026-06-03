@@ -36,4 +36,57 @@
     text-align: center;
     color: var(--color-neutral-400);
   }
+
+  /*
+   * Scrollbar: non usare scrollbar-width/scrollbar-color insieme a ::-webkit-scrollbar
+   * su Chromium 121+ (le proprietà standard annullano i pseudo-elementi e tornano i pulsanti Windows).
+   */
+  @supports not selector(::-webkit-scrollbar) {
+    :host .tw-table-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-neutral-400) var(--color-neutral-200);
+    }
+  }
+
+  @supports selector(::-webkit-scrollbar) {
+    :host .tw-table-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    :host .tw-table-scroll::-webkit-scrollbar:vertical {
+      width: 0;
+    }
+
+    :host .tw-table-scroll::-webkit-scrollbar-track {
+      background-color: var(--color-neutral-200);
+    }
+
+    :host .tw-table-scroll::-webkit-scrollbar-thumb {
+      background-color: var(--color-neutral-400);
+      border-radius: 2px;
+    }
+
+    :host .tw-table-scroll::-webkit-scrollbar-thumb:hover {
+      background-color: var(--color-neutral-500);
+    }
+
+    :host .tw-table-scroll::-webkit-scrollbar-corner {
+      background-color: var(--color-neutral-200);
+    }
+
+    :host .tw-table-scroll::-webkit-scrollbar-button,
+    :host .tw-table-scroll::-webkit-scrollbar-button:single-button,
+    :host .tw-table-scroll::-webkit-scrollbar-button:double-button,
+    :host .tw-table-scroll::-webkit-scrollbar-button:horizontal,
+    :host .tw-table-scroll::-webkit-scrollbar-button:horizontal:decrement,
+    :host .tw-table-scroll::-webkit-scrollbar-button:horizontal:increment,
+    :host .tw-table-scroll::-webkit-scrollbar-button:vertical:decrement,
+    :host .tw-table-scroll::-webkit-scrollbar-button:vertical:increment {
+      display: none;
+      width: 0;
+      height: 0;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+  }
 }

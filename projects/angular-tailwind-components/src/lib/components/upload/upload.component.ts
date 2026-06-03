@@ -13,12 +13,13 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
+import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-upload',
-  imports: [TailwindIcon, TailwindButton],
+  imports: [TailwindIcon, TailwindButton, TailwindSafeHtmlPipe],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

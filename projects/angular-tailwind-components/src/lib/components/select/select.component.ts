@@ -18,12 +18,13 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { fromEvent, Subscription } from 'rxjs';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindChip } from '../chip/chip.component';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
-  imports: [TailwindChip, TailwindIcon],
+  imports: [TailwindChip, TailwindIcon, TailwindSafeHtmlPipe],
   selector: 'tailwind-select',
   providers: [
     {

@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
+import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
+  imports: [TailwindSafeHtmlPipe],
   selector: 'tailwind-input',
   providers: [
     {

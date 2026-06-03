@@ -19,12 +19,13 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DEFAULT_TAILWIND_PASSWORD_LABELS, TailwindSize } from '../../models';
 import { TAILWIND_PASSWORD_LABELS } from '../../tokens';
+import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 import { computePasswordStrength, passwordStrengthMeterFill } from './password-strength.util';
 
 @Component({
-  imports: [TailwindIcon],
+  imports: [TailwindIcon, TailwindSafeHtmlPipe],
   selector: 'tailwind-input-password',
   providers: [
     {

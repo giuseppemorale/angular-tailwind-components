@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
+import { TailwindTableToolsDirective } from '../../directives/table/tailwind-table-tools.directive';
 import { TailwindTable } from './table.component';
 
 const ROWS = [
@@ -51,6 +52,30 @@ class TableHostComponent {
   `
 })
 class TableNoSearchHostComponent {
+  rows = ROWS;
+}
+
+@Component({
+  imports: [TailwindTable, TailwindTableRowDirective, TailwindTableToolsDirective],
+  template: `
+    <tailwind-table [data]="rows" [paginated]="true">
+      <div tailwind-table-tools data-testid="table-tools">
+        <button type="button">Refresh</button>
+      </div>
+      <thead>
+        <tr>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody *tailwindTableRow="let row">
+        <tr>
+          <td>{{ row.name }}</td>
+        </tr>
+      </tbody>
+    </tailwind-table>
+  `
+})
+class TableWithToolsHostComponent {
   rows = ROWS;
 }
 
@@ -111,6 +136,25 @@ describe('TailwindTable', () => {
 
     const names = [...fixture.nativeElement.querySelectorAll('.row-name')].map((el: Element) => el.textContent?.trim());
     expect(names).toEqual(['Carol']);
+  });
+
+  it('should keep pagination outside the horizontal scroll container', () => {
+    const paginatedFixture = TestBed.createComponent(TableWithToolsHostComponent);
+    paginatedFixture.detectChanges();
+
+    const pagination = paginatedFixture.nativeElement.querySelector('tailwind-pagination');
+    const scrollContainer = paginatedFixture.nativeElement.querySelector('.overflow-x-auto');
+    expect(pagination).toBeTruthy();
+    expect(scrollContainer).toBeTruthy();
+    expect(scrollContainer.contains(pagination)).toBe(false);
+  });
+
+  it('should project table tools beside search', () => {
+    const toolsFixture = TestBed.createComponent(TableWithToolsHostComponent);
+    toolsFixture.detectChanges();
+
+    expect(toolsFixture.nativeElement.querySelector('[data-testid="table-tools"]')).toBeTruthy();
+    expect(toolsFixture.nativeElement.querySelector('.justify-between')).toBeTruthy();
   });
 
   it('should show all rows when search query is empty', () => {

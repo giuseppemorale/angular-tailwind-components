@@ -1,37 +1,44 @@
-@if (searchable()) {
-  <div class="pt-4 pb-3">
-    <div class="max-w-xs">
-      <tailwind-input
-        [label]="searchLabel()"
-        type="search"
-        [placeholder]="searchPlaceholder()"
-        [value]="searchQuery()"
-        (valueChange)="onSearchChange($event)" />
+@if (showToolbar()) {
+  <div class="flex flex-wrap items-end justify-between gap-4 pt-4 pb-3">
+    @if (searchable()) {
+      <div class="max-w-xs shrink-0">
+        <tailwind-input
+          [label]="searchLabel()"
+          type="search"
+          [placeholder]="searchPlaceholder()"
+          [value]="searchQuery()"
+          (valueChange)="onSearchChange($event)" />
+      </div>
+    }
+    <div class="flex flex-wrap items-center gap-2 min-w-0" [class.ml-auto]="searchable()">
+      <ng-content select="[tailwind-table-tools]" />
     </div>
   </div>
 }
-<div class="w-full overflow-x-auto rounded-lg border border-neutral-200">
+<div class="w-full rounded-lg border border-neutral-200">
   @if (loading()) {
     <div class="flex items-center justify-center py-16 text-neutral-400">
       <tailwind-icon icon="arrow-path" [size]="24" class="animate-spin mr-2 text-neutral-400" />
       Loading...
     </div>
   } @else {
-    <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
-    <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-neutral-100">
-      <ng-content select="thead" />
-      @for (row of displayedData(); track $index; let i = $index) {
-        <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />
-      } @empty {
-        <tbody>
-          <tr>
-            <td [attr.colspan]="emptyColspan()">
-              {{ emptyMessage() }}
-            </td>
-          </tr>
-        </tbody>
-      }
-    </table>
+    <div class="tw-table-scroll overflow-x-auto">
+      <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
+      <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-neutral-100">
+        <ng-content select="thead" />
+        @for (row of displayedData(); track $index; let i = $index) {
+          <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />
+        } @empty {
+          <tbody>
+            <tr>
+              <td [attr.colspan]="emptyColspan()">
+                {{ emptyMessage() }}
+              </td>
+            </tr>
+          </tbody>
+        }
+      </table>
+    </div>
 
     @if (paginated() && sortedData().length > 0) {
       <div class="px-4 py-3 border-t border-neutral-200 bg-white">

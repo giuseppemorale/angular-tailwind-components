@@ -41,3 +41,15 @@ export const WithError: StoryObj<TailwindInput> = {
     errorText: 'Username is already taken'
   }
 };
+
+export const WithHtmlError: StoryObj<TailwindInput> = {
+  parameters: { controls: { disable: true } },
+  args: {
+    label: 'Terms',
+    placeholder: '',
+    type: 'text',
+    size: 'md',
+    hasError: true,
+    errorText: 'You must accept the <a href="/terms" target="_blank">terms and conditions</a>'
+  }
+};

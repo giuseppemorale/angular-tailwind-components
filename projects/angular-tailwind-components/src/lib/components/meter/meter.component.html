@@ -12,7 +12,7 @@
           class="h-full min-w-0 transition-all duration-300 ease-out"
           [class]="seg.barClass"
           [style.width.%]="seg.widthPct"
-          [attr.title]="seg.label + ': ' + seg.value"></div>
+          [attr.title]="seg.label + ': ' + formatSegmentValue(seg.value)"></div>
       }
     }
   </div>
@@ -23,7 +23,7 @@
         <span class="inline-flex items-center gap-1.5">
           <span class="inline-block size-2 rounded-sm shrink-0" [class]="legendSwatchClass(seg.color)"></span>
           <span class="text-neutral-700">{{ seg.label }}</span>
-          <span class="text-neutral-500">({{ seg.value }})</span>
+          <span class="text-neutral-500">({{ formatSegmentValue(seg.value) }})</span>
         </span>
       }
     </div>

@@ -21,6 +21,8 @@ export class TailwindMeter extends TailwindComponent {
   readonly showLabels = input<boolean>(true);
   /** Track height */
   readonly size = input<TailwindSize>('md');
+  /** Decimal places for segment values in legend and tooltips */
+  readonly decimals = input<number>(0);
 
   readonly trackHeightClass = computed(() => {
     const map: Record<TailwindSize, string> = {
@@ -59,6 +61,10 @@ export class TailwindMeter extends TailwindComponent {
 
   legendSwatchClass(color?: TailwindColor): string {
     return this.barClassForColor(color ?? 'primary');
+  }
+
+  formatSegmentValue(value: number): string {
+    return value.toFixed(this.decimals());
   }
 
   private barClassForColor(color: TailwindColor): string {

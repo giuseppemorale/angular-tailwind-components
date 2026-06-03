@@ -19,6 +19,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DEFAULT_TAILWIND_EDITOR_LABELS, TailwindEditorLabels, TailwindSize } from '../../models';
 import { TAILWIND_EDITOR_LABELS } from '../../tokens';
+import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindButton } from '../button/button.component';
 import { TailwindInput } from '../input/input.component';
 import { TailwindModal } from '../modal/modal.component';
@@ -42,7 +43,7 @@ import { prettifyEditorHtml } from './utils/editor-html-format';
 import { filterToolbarGroups, resolveToolbarGroups } from './utils/editor-toolbar-config';
 
 @Component({
-  imports: [TailwindEditorToolbar, TailwindModal, TailwindInput, TailwindButton],
+  imports: [TailwindEditorToolbar, TailwindModal, TailwindInput, TailwindButton, TailwindSafeHtmlPipe],
   selector: 'tailwind-editor',
   providers: [
     {

@@ -36,6 +36,17 @@ describe('TailwindInput', () => {
     expect(error?.textContent).toContain('This field is required');
   });
 
+  it('should render HTML in error text', () => {
+    fixture.componentRef.setInput('hasError', true);
+    fixture.componentRef.setInput('errorText', 'Read the <a href="/terms">terms</a>');
+    fixture.detectChanges();
+
+    const link = fixture.nativeElement.querySelector('.text-danger-600 a');
+    expect(link).toBeTruthy();
+    expect(link?.getAttribute('href')).toBe('/terms');
+    expect(link?.textContent).toContain('terms');
+  });
+
   it('should update value on input', () => {
     const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
     input.value = 'test value';

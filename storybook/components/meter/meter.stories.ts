@@ -25,11 +25,13 @@ const meta: Meta<TailwindMeter> = {
   argTypes: {
     max: { control: { type: 'number' } },
     showLabels: { control: 'boolean' },
+    decimals: { control: { type: 'number', min: 0, max: 6, step: 1 } },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] }
   },
   args: {
     max: 100,
     showLabels: true,
+    decimals: 0,
     size: 'md'
   }
 };
@@ -46,6 +48,7 @@ export const MultiSegment: Story = {
           [segments]="segments"
           [max]="max"
           [showLabels]="showLabels"
+          [decimals]="decimals"
           [size]="size" />
       </div>
     `
@@ -60,7 +63,27 @@ export const SingleSegment: Story = {
     },
     template: `
       <div class="max-w-xl">
-        <tailwind-meter [segments]="segments" [max]="max" [showLabels]="showLabels" [size]="size" />
+        <tailwind-meter [segments]="segments" [max]="max" [showLabels]="showLabels" [decimals]="decimals" [size]="size" />
+      </div>
+    `
+  })
+};
+
+export const FloatDecimals: Story = {
+  args: { decimals: 1, max: 100 },
+  render: args => ({
+    props: {
+      ...args,
+      segments: [
+        { label: 'IT', value: 51.28205128205128, color: 'primary' },
+        { label: 'EN', value: 20.51282051282051, color: 'info' },
+        { label: 'DE', value: 17.94871794871795, color: 'danger' },
+        { label: 'FR', value: 10.256410256410255, color: 'success' }
+      ] as TailwindMeterSegment[]
+    },
+    template: `
+      <div class="max-w-xl">
+        <tailwind-meter [segments]="segments" [max]="max" [showLabels]="showLabels" [decimals]="decimals" [size]="size" />
       </div>
     `
   })
@@ -78,7 +101,7 @@ export const CustomMax: Story = {
     },
     template: `
       <div class="max-w-xl">
-        <tailwind-meter [segments]="segments" [max]="max" [showLabels]="showLabels" [size]="size" />
+        <tailwind-meter [segments]="segments" [max]="max" [showLabels]="showLabels" [decimals]="decimals" [size]="size" />
       </div>
     `
   })

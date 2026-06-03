@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TailwindTable } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindButton, TailwindTable } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTable> = {
   title: 'Layout/Table',
@@ -104,4 +104,32 @@ export const Table: StoryObj<TailwindTable> = {
       summary: 'Visualizzati {start} - {end} di {total} risultati'
     }
   }
+};
+
+export const WithTableTools: StoryObj<TailwindTable> = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    props: { data: rows },
+    template: `
+      <tailwind-table [data]="data" [paginated]="true">
+        <div tailwind-table-tools class="flex items-center gap-2">
+          <tailwind-button kind="ghost" icon="arrow-path" size="sm">Refresh</tailwind-button>
+        </div>
+        <thead>
+          <tr>
+            <th tailwindSortHeader sortKey="name">Name</th>
+            <th class="min-w-[28rem]" tailwindSortHeader sortKey="email">Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody *tailwindTableRow="let row">
+          <tr>
+            <td>{{ row.name }}</td>
+            <td class="whitespace-nowrap">{{ row.email }}</td>
+            <td>{{ row.role }}</td>
+          </tr>
+        </tbody>
+      </tailwind-table>
+    `
+  })
 };

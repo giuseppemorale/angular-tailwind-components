@@ -1,5 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { buildTailwindThemeVariableEntries, provideTailwindConfig } from './theme-define.provider';
+import {
+  applyTailwindThemeColors,
+  buildTailwindThemeCss,
+  buildTailwindThemeVariableEntries,
+  provideTailwindConfig,
+  TAILWIND_THEME_STYLE_ID
+} from './theme-define.provider';
 import { TAILWIND_BUTTON_KIND } from '../tokens';
 
 describe('buildTailwindThemeVariableEntries', () => {
@@ -51,6 +57,60 @@ describe('buildTailwindThemeVariableEntries', () => {
     });
     expect(entries).toContainEqual(['--color-info-600', '#00f']);
     expect(entries.some(([k]) => k.includes('foo'))).toBe(false);
+  });
+});
+
+describe('buildTailwindThemeCss', () => {
+  it('returns empty string when no colors are configured', () => {
+    expect(buildTailwindThemeCss({})).toBe('');
+  });
+
+  it('wraps palette string entries in :root', () => {
+    const css = buildTailwindThemeCss({ primary: 'indigo' });
+    expect(css).toMatch(/^:root \{/);
+    expect(css).toContain('--color-primary-600: var(--color-indigo-600);');
+    expect(css).toMatch(/\}$/);
+  });
+
+  it('wraps hex shade entries in :root', () => {
+    const css = buildTailwindThemeCss({ success: { 600: '#abc', 700: '#def' } });
+    expect(css).toContain('--color-success-600: #abc;');
+    expect(css).toContain('--color-success-700: #def;');
+  });
+});
+
+describe('applyTailwindThemeColors', () => {
+  let document: Document;
+
+  beforeEach(() => {
+    document = window.document.implementation.createHTMLDocument('test');
+    const head = document.createElement('head');
+    document.documentElement.insertBefore(head, document.body);
+  });
+
+  it('appends a style element to head with theme variables', () => {
+    applyTailwindThemeColors(document, { primary: { 600: '#3a7d44' } });
+
+    const style = document.getElementById(TAILWIND_THEME_STYLE_ID);
+    expect(style?.parentElement).toBe(document.head);
+    expect(style?.textContent).toContain('--color-primary-600: #3a7d44;');
+    expect(document.documentElement.getAttribute('style') ?? '').not.toContain('--color-primary');
+  });
+
+  it('updates existing style on second apply', () => {
+    applyTailwindThemeColors(document, { primary: { 600: '#111' } });
+    applyTailwindThemeColors(document, { primary: { 600: '#222' } });
+
+    const styles = document.head.querySelectorAll(`#${TAILWIND_THEME_STYLE_ID}`);
+    expect(styles.length).toBe(1);
+    expect(styles[0]?.textContent).toContain('--color-primary-600: #222;');
+  });
+
+  it('removes style element when colors resolve to empty css', () => {
+    applyTailwindThemeColors(document, { primary: { 600: '#111' } });
+    applyTailwindThemeColors(document, {});
+
+    expect(document.getElementById(TAILWIND_THEME_STYLE_ID)).toBeNull();
   });
 });
 

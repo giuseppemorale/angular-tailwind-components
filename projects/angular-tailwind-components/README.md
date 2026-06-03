@@ -179,7 +179,7 @@ You can omit **`COLORS`** if you only need token defaults, or omit token keys if
 
 ## Theme colors (`provideTailwindThemeColors`)
 
-The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Color application is a **no-op during SSR** (browser only).
+The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. At startup, **`provideTailwindThemeColors`** injects a single `<style id="tailwind-theme-colors">` in `document.head` with a `:root { … }` block — variables are **not** written to the `style` attribute on `<html>`. Color application is a **no-op during SSR** (browser only).
 
 | `COLORS` key | CSS variables | Default palette in `tailwind.css` |
 | --- | --- | --- |
@@ -198,7 +198,7 @@ Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. I
 1. **A string — Tailwind palette name**  
    Use the lowercase **family name** only (the segment between the utility prefix and the shade), e.g. `bg-indigo-600` → `'indigo'`, `text-slate-500` → `'slate'`.  
    The full list of built-in names and swatches is in the official **[Tailwind CSS color reference](https://tailwindcss.com/docs/colors)** — pick any name from that page for the string form.  
-   For each configured shade, `provideTailwindConfig` sets `--color-<semantic>-<shade>` to `var(--color-<that-name>-<shade>)`.  
+   For each configured shade, `provideTailwindThemeColors` sets `--color-<semantic>-<shade>` to `var(--color-<that-name>-<shade>)`.  
    **Foreground / contrast:** built-in components that sit on saturated semantic backgrounds (solid buttons, tags, semantic toolbar) use utilities like `text-on-success-600`, backed by **`--color-on-<semantic>-<shade>`** defaults in the library `@theme`. With a **palette string**, you usually do **not** need to set `on` yourself — Tailwind’s scales stay internally consistent.
 
 2. **A partial object — per-shade CSS (legacy flat form)**  

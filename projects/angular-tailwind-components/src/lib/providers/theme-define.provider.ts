@@ -197,9 +197,41 @@ export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeCon
   return entries;
 }
 
-function applyTailwindThemeToElement(element: HTMLElement, colors: TailwindDefineThemeColors): void {
-  for (const [prop, val] of buildTailwindThemeVariableEntries({ COLORS: colors })) {
-    element.style.setProperty(prop, val);
+/** `id` of the injected `<style>` that holds semantic theme variables on `:root`. */
+export const TAILWIND_THEME_STYLE_ID = 'tailwind-theme-colors';
+
+/**
+ * Builds a `:root { … }` stylesheet from semantic `COLORS`. Exported for unit tests.
+ */
+export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string {
+  const entries = buildTailwindThemeVariableEntries({ COLORS: colors });
+  if (entries.length === 0) {
+    return '';
+  }
+  const declarations = entries.map(([prop, val]) => `  ${prop}: ${val};`).join('\n');
+  return `:root {\n${declarations}\n}`;
+}
+
+/**
+ * Injects or updates `#tailwind-theme-colors` in `document.head` (browser only).
+ * Exported for unit tests.
+ */
+export function applyTailwindThemeColors(document: Document, colors: TailwindDefineThemeColors): void {
+  const css = buildTailwindThemeCss(colors);
+  const existing = document.getElementById(TAILWIND_THEME_STYLE_ID);
+
+  if (!css) {
+    existing?.remove();
+    return;
+  }
+
+  const style = existing ?? document.createElement('style');
+  style.id = TAILWIND_THEME_STYLE_ID;
+  style.dataset['tailwindTheme'] = '';
+  style.textContent = css;
+
+  if (!existing) {
+    document.head.appendChild(style);
   }
 }
 
@@ -215,7 +247,7 @@ export function provideTailwindConfig(config: () => TailwindComponentsConfig): E
 }
 
 /**
- * Applies semantic `COLORS` on `document.documentElement` at startup (browser only).
+ * Applies semantic `COLORS` via `<style id="tailwind-theme-colors">` on `:root` at startup (browser only).
  * Register after i18n (or other) initializers if the factory uses `inject()`.
  */
 export function provideTailwindThemeColors(colors: () => TailwindDefineThemeColors): EnvironmentProviders {
@@ -225,7 +257,7 @@ export function provideTailwindThemeColors(colors: () => TailwindDefineThemeColo
       if (!isPlatformBrowser(platformId)) {
         return;
       }
-      applyTailwindThemeToElement(inject(DOCUMENT).documentElement, colors());
+      applyTailwindThemeColors(inject(DOCUMENT), colors());
     })
   ]);
 }

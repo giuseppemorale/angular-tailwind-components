@@ -43,6 +43,6 @@ export class TailwindBadge extends TailwindComponent {
 
     const shape = this.rounded() ? 'rounded-full' : 'rounded-md';
 
-    return [...base, colorMap[this.color()], sizeMap[this.size()], shape].join(' ');
+    return this.mergeClasses(...base, colorMap[this.color()], sizeMap[this.size()], shape);
   });
 }

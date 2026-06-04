@@ -11,9 +11,6 @@ const clampIconSize = (value: number): number => {
 
 @Component({
   selector: 'tailwind-icon',
-  host: {
-    '[class]': 'hostClasses()'
-  },
   templateUrl: './icon.component.html',
   styleUrl: './icon.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -30,14 +27,10 @@ export class TailwindIcon extends TailwindComponent {
 
   readonly pixelSize = computed(() => clampIconSize(this.size()));
 
-  /** Layout-only; custom `class` is applied to the inner glyph (color, spacing, etc.). */
-  readonly hostClasses = computed(() => 'inline-flex shrink-0 items-center justify-center');
-
-  /** Tailwind classes from `class` input, merged with the masked glyph base. */
-  readonly glyphClasses = computed(() => {
-    const custom = this.class();
-    return custom ? `tailwind-icon-glyph ${custom}` : 'tailwind-icon-glyph';
-  });
+  /** Consumer `class` is merged on the glyph surface. */
+  readonly glyphClasses = computed(() =>
+    this.mergeClasses('tailwind-icon-glyph inline-flex shrink-0 items-center justify-center')
+  );
 
   readonly maskImage = computed(() => `url("${this.src()}")`);
 }

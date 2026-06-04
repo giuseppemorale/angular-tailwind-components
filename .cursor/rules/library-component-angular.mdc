@@ -28,6 +28,14 @@ Riferimento: `calendar-panel/`.
 
 Spec dei file in `util/`: `util/<nome>.spec.ts` accanto al sorgente.
 
+## Inoltro `class` (surface)
+
+- `TailwindComponent` espone `class` / `mergeClasses(...bases)` — **non** legare `class()` sull’host.
+- Applicare sempre `mergeClasses(classiStrutturali, …)` sull’**elemento surface** (radice visiva nel template o controllo nativo).
+- Host wrapper: `:host { display: contents; }` quando il surface deve partecipare a grid/flex del genitore.
+- **Vietato:** `:host(.nome-classe-utente)`, `class().includes('…')` o logica su singole utility Tailwind.
+- Layout interno fisso del componente (es. card `flex flex-col`, body `flex-1`) = classi base del surface / figli, non condizionate a `class()` utente.
+
 ## Signals
 
 - API pubblica: `input()`, `output()`, `model()` — non decorator `@Input` / `@Output`.

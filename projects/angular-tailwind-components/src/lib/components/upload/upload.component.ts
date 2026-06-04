@@ -88,25 +88,28 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
     ];
 
     if (this.isDisabled()) {
-      return [...base, 'cursor-not-allowed opacity-50 bg-neutral-50 border-neutral-200 text-neutral-500'].join(' ');
+      return this.mergeClasses(
+        ...base,
+        'cursor-not-allowed opacity-50 bg-neutral-50 border-neutral-200 text-neutral-500'
+      );
     }
     if (this.isDragOver()) {
-      return [
+      return this.mergeClasses(
         ...base,
         'cursor-pointer border-primary-500 bg-primary-50/60 text-neutral-800 focus-visible:outline-primary-500'
-      ].join(' ');
+      );
     }
     if (this.hasError()) {
-      return [
+      return this.mergeClasses(
         ...base,
         'cursor-pointer border-danger-400 bg-danger-50/40 text-danger-900 focus-visible:outline-danger-500 hover:border-danger-500'
-      ].join(' ');
+      );
     }
-    return [
+    return this.mergeClasses(
       ...base,
       'cursor-pointer border-neutral-300 bg-neutral-50/50 text-neutral-800 focus-visible:outline-primary-500',
       'hover:border-primary-400 hover:bg-primary-50/30'
-    ].join(' ');
+    );
   });
 
   writeValue(obj: string | null): void {

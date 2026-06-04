@@ -129,14 +129,14 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   );
 
   readonly wrapperClasses = computed(() => {
-    const base = ['tailwind-editor rounded-md border bg-white overflow-hidden transition-colors duration-150'];
+    const base = 'tailwind-editor rounded-md border bg-white overflow-hidden transition-colors duration-150';
     if (this.isDisabled()) {
-      return [...base, 'opacity-60 cursor-not-allowed border-neutral-200'].join(' ');
+      return this.mergeClasses(base, 'opacity-60 cursor-not-allowed border-neutral-200');
     }
     if (this.hasError()) {
-      return [...base, 'border-danger-400'].join(' ');
+      return this.mergeClasses(base, 'border-danger-400');
     }
-    return [...base, 'border-neutral-300'].join(' ');
+    return this.mergeClasses(base, 'border-neutral-300');
   });
 
   readonly surfaceClasses = computed(() => this.fieldSurfaceClasses('cursor-text'));

@@ -57,7 +57,7 @@ export class TailwindChip extends TailwindComponent {
       transparent: 'bg-transparent text-neutral-700 border border-neutral-200'
     };
 
-    return [...base, colorMap[this.color()], sizeMap[this.size()], 'rounded-md'].join(' ');
+    return this.mergeClasses(...base, colorMap[this.color()], sizeMap[this.size()], 'rounded-md');
   });
 
   readonly labelClasses = computed(() =>

@@ -21,6 +21,9 @@ export class TailwindTag extends TailwindComponent {
       info: 'bg-info-600 text-on-info-600',
       transparent: 'bg-transparent text-neutral-700 border border-neutral-300'
     };
-    return `inline-flex items-center text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded ${colorMap[this.color()]}`;
+    return this.mergeClasses(
+      'inline-flex items-center text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded',
+      colorMap[this.color()]
+    );
   });
 }

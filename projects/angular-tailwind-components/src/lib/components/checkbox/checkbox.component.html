@@ -1,4 +1,4 @@
-<div class="inline-flex items-center gap-2.5 select-none" [class.opacity-50]="isDisabled()">
+<div [class]="mergeClasses('inline-flex items-center gap-2.5 select-none')" [class.opacity-50]="isDisabled()">
   <label
     [class]="labelClasses()"
     [class.cursor-pointer]="!isDisabled()"

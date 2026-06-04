@@ -1,4 +1,4 @@
-<div class="inline-flex items-center gap-3 select-none" [class.opacity-50]="isDisabled()">
+<div [class]="mergeClasses('inline-flex items-center gap-3 select-none')" [class.opacity-50]="isDisabled()">
   <button
     type="button"
     role="switch"

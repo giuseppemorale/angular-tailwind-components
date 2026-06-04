@@ -80,6 +80,54 @@ export const NoFooter: StoryObj<TailwindCard> = {
   }
 };
 
+export const InGrid: StoryObj<TailwindCard> = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+        <tailwind-card class="h-full" [hasFooter]="false">
+          <div tailwind-card-header class="text-center">
+            <span class="inline-flex size-8 items-center justify-center rounded-full bg-primary-700 text-sm font-semibold text-white">1</span>
+            <h3 class="mt-3 font-semibold text-neutral-900">Alpha</h3>
+          </div>
+          <p class="text-sm text-neutral-600 text-center m-0">Short placeholder copy.</p>
+        </tailwind-card>
+        <tailwind-card class="h-full" [hasFooter]="false">
+          <div tailwind-card-header class="text-center">
+            <span class="inline-flex size-8 items-center justify-center rounded-full bg-primary-700 text-sm font-semibold text-white">2</span>
+            <h3 class="mt-3 font-semibold text-neutral-900">Beta</h3>
+          </div>
+          <p class="text-sm text-neutral-600 text-center m-0">
+            Medium length filler text to show how cards stretch when content height differs across columns.
+          </p>
+        </tailwind-card>
+        <tailwind-card class="h-full" [hasFooter]="false">
+          <div tailwind-card-header class="text-center">
+            <span class="inline-flex size-8 items-center justify-center rounded-full bg-primary-700 text-sm font-semibold text-white">3</span>
+            <h3 class="mt-3 font-semibold text-neutral-900">Gamma</h3>
+          </div>
+          <p class="text-sm text-neutral-600 text-center m-0">Another brief block of sample text.</p>
+        </tailwind-card>
+        <tailwind-card class="h-full" [hasFooter]="false">
+          <div tailwind-card-header class="text-center">
+            <span class="inline-flex size-8 items-center justify-center rounded-full bg-primary-700 text-sm font-semibold text-white">4</span>
+            <h3 class="mt-3 font-semibold text-neutral-900">Delta</h3>
+          </div>
+          <p class="text-sm text-neutral-600 text-center m-0">Neutral demo content for layout only.</p>
+        </tailwind-card>
+        <tailwind-card class="h-full" [hasFooter]="false">
+          <div tailwind-card-header class="text-center">
+            <span class="inline-flex size-8 items-center justify-center rounded-full bg-primary-700 text-sm font-semibold text-white">5</span>
+            <h3 class="mt-3 font-semibold text-neutral-900">Epsilon</h3>
+          </div>
+          <p class="text-sm text-neutral-600 text-center m-0">
+            Longer fake paragraph: lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </p>
+        </tailwind-card>
+      </div>`
+  })
+};
+
 export const Elevated: StoryObj<TailwindCard> = {
   parameters: { controls: { exclude: ['elevated'] } },
   render: args => ({

@@ -27,7 +27,10 @@ export class TailwindMessage extends TailwindComponent {
       info: 'bg-info-50 text-info-700 border-info-200',
       transparent: 'bg-transparent text-neutral-700 border-neutral-200'
     };
-    return `flex items-center gap-2 text-sm px-3 py-2 rounded-md border ${colorMap[this.color()]}`;
+    return this.mergeClasses(
+      'flex items-center gap-2 text-sm px-3 py-2 rounded-md border',
+      colorMap[this.color()]
+    );
   });
 
   readonly iconClasses = computed(() => {

@@ -46,7 +46,7 @@ export class TailwindDrawer extends TailwindComponent {
       base.push(this.isVisible() ? 'translate-x-0' : '-translate-x-full');
     }
 
-    return base.join(' ');
+    return this.mergeClasses(...base);
   });
 
   open(): void {

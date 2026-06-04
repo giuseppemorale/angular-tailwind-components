@@ -1,4 +1,4 @@
-<div class="tailwind-input-otp-wrapper flex flex-col gap-1.5">
+<div [class]="mergeClasses('tailwind-input-otp-wrapper flex flex-col gap-1.5')">
   @if (label()) {
     <label [attr.for]="cellId(0)" class="text-sm font-medium text-neutral-700" [class.text-danger-600]="hasError()">
       {{ label() }}

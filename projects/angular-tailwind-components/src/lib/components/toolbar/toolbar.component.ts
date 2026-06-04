@@ -158,7 +158,7 @@ export class TailwindToolbar extends TailwindComponent {
       base.push('flex-col items-stretch gap-3 px-3 py-4 min-h-0');
     }
 
-    return base.filter(Boolean).join(' ');
+    return this.mergeClasses(...base);
   });
 
   hasSubmenu(item: TailwindMenuItem): boolean {

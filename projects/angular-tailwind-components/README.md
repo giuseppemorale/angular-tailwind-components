@@ -242,6 +242,10 @@ import { TailwindSafeHtmlPipe } from 'angular-tailwind-components';
 })
 ```
 
+## Consumer `class` on components
+
+Components extending `TailwindComponent` accept `class` / `[class]` on the host selector. Those classes are merged onto the **internal surface** (the visible root element), not left only on the custom element tag. Use this for layout utilities (`h-full`, `w-full`, `mb-4`), custom styles, or any Tailwind class the component does not expose as an input.
+
 ## Content slots
 
 Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-table`, `tailwind-drawer`, `tailwind-alert`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
@@ -271,7 +275,7 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 
 - **Button** (`tailwind-button`): Primary, secondary, outline, ghost, danger
 - **Badge** (`tailwind-badge`): Status badges with dot indicator
-- **Card** (`tailwind-card`): Content card with header/body/footer
+- **Card** (`tailwind-card`): Content card with header/body/footer; consumer `class` (e.g. `h-full` in CSS grid) is forwarded to the visible surface
 - **Chip** (`tailwind-chip`): Removable compact labels for filters and multi-select
 - **Tag** (`tailwind-tag`): Semantic labels
 - **Avatar** (`tailwind-avatar`): Profile image, initials, or icon fallback with optional status dot (`TailwindColor`)

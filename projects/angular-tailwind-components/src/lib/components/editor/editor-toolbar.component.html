@@ -1,5 +1,5 @@
 <div
-  class="tailwind-editor-toolbar flex flex-wrap items-center gap-1 p-2 border-b border-neutral-200 bg-neutral-50/80"
+  [class]="mergeClasses('tailwind-editor-toolbar flex flex-wrap items-center gap-1 p-2 border-b border-neutral-200 bg-neutral-50/80')"
   role="toolbar">
   @for (group of groups(); track $index; let lastGroup = $last) {
     <div class="flex flex-wrap items-center gap-0.5">

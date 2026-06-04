@@ -1,4 +1,4 @@
-<div class="flex flex-wrap items-center justify-between gap-4 w-full">
+<div [class]="mergeClasses('flex flex-wrap items-center justify-between gap-4 w-full')">
   <div class="flex flex-wrap items-center gap-3 min-w-0">
     @if (summary()) {
       <span class="text-sm text-neutral-700 dark:text-neutral-300">

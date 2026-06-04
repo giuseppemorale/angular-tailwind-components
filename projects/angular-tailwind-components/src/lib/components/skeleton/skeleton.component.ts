@@ -20,6 +20,6 @@ export class TailwindSkeleton extends TailwindComponent {
       rect: 'rounded-none',
       rounded: 'rounded-xl'
     };
-    return `${base} ${variantMap[this.variant()]}`;
+    return this.mergeClasses(base, variantMap[this.variant()]);
   });
 }

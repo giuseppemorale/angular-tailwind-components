@@ -1,59 +1,61 @@
-<!-- Tab Headers -->
+<div [class]="mergeClasses('tailwind-tab-group w-full')">
+  <!-- Tab Headers -->
 
-<div class="border-b border-neutral-200" [class.flex]="scrollable()" [class.items-stretch]="scrollable()">
-  @if (scrollable()) {
-    <tailwind-button
-      kind="ghost"
-      color="transparent"
-      icon="chevron-left"
-      class="tailwind-tab-scroll-btn--start shrink-0 self-stretch rounded-none"
-      [disabled]="!canScrollStart()"
-      ariaLabel="Scroll tabs left"
-      (onClick)="scrollTabs(-1)" />
-  }
-
-  <nav
-    #tabList
-    class="tailwind-tab-list flex -mb-px gap-1"
-    [class.w-full]="stretch() && !scrollable()"
-    [class.flex-1]="scrollable()"
-    [class.min-w-0]="scrollable()"
-    [class.tailwind-tab-list--scrollable]="scrollable()"
-    role="tablist"
-    [attr.aria-label]="ariaLabel() || null"
-    (wheel)="onTabListWheel($event)"
-    (scroll)="onTabListScroll()">
-    @for (tab of tabs(); track $index; let i = $index) {
-      <button
-        type="button"
-        role="tab"
-        [attr.id]="tab.id() ? 'tab-' + tab.id() : null"
-        [attr.aria-selected]="activeIndex() === i"
-        [attr.aria-controls]="tab.id() ? tab.id() : null"
-        [disabled]="tab.disabled()"
-        [class]="tabButtonClass(i, tab.disabled())"
-        (click)="!tab.disabled() && selectTab(i)">
-        {{ tab.label() }}
-
-        <span [class]="tabIndicatorClass(i)"></span>
-      </button>
+  <div class="border-b border-neutral-200" [class.flex]="scrollable()" [class.items-stretch]="scrollable()">
+    @if (scrollable()) {
+      <tailwind-button
+        kind="ghost"
+        color="transparent"
+        icon="chevron-left"
+        class="tailwind-tab-scroll-btn--start shrink-0 self-stretch rounded-none"
+        [disabled]="!canScrollStart()"
+        ariaLabel="Scroll tabs left"
+        (onClick)="scrollTabs(-1)" />
     }
-  </nav>
 
-  @if (scrollable()) {
-    <tailwind-button
-      kind="ghost"
-      color="transparent"
-      icon="chevron-right"
-      class="tailwind-tab-scroll-btn--end shrink-0 self-stretch rounded-none"
-      [disabled]="!canScrollEnd()"
-      ariaLabel="Scroll tabs right"
-      (onClick)="scrollTabs(1)" />
-  }
-</div>
+    <nav
+      #tabList
+      class="tailwind-tab-list flex -mb-px gap-1"
+      [class.w-full]="stretch() && !scrollable()"
+      [class.flex-1]="scrollable()"
+      [class.min-w-0]="scrollable()"
+      [class.tailwind-tab-list--scrollable]="scrollable()"
+      role="tablist"
+      [attr.aria-label]="ariaLabel() || null"
+      (wheel)="onTabListWheel($event)"
+      (scroll)="onTabListScroll()">
+      @for (tab of tabs(); track $index; let i = $index) {
+        <button
+          type="button"
+          role="tab"
+          [attr.id]="tab.id() ? 'tab-' + tab.id() : null"
+          [attr.aria-selected]="activeIndex() === i"
+          [attr.aria-controls]="tab.id() ? tab.id() : null"
+          [disabled]="tab.disabled()"
+          [class]="tabButtonClass(i, tab.disabled())"
+          (click)="!tab.disabled() && selectTab(i)">
+          {{ tab.label() }}
 
-<!-- Tab Content -->
+          <span [class]="tabIndicatorClass(i)"></span>
+        </button>
+      }
+    </nav>
 
-<div class="pt-4">
-  <ng-content />
+    @if (scrollable()) {
+      <tailwind-button
+        kind="ghost"
+        color="transparent"
+        icon="chevron-right"
+        class="tailwind-tab-scroll-btn--end shrink-0 self-stretch rounded-none"
+        [disabled]="!canScrollEnd()"
+        ariaLabel="Scroll tabs right"
+        (onClick)="scrollTabs(1)" />
+    }
+  </div>
+
+  <!-- Tab Content -->
+
+  <div class="pt-4">
+    <ng-content />
+  </div>
 </div>

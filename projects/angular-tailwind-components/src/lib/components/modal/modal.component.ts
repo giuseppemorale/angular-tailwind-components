@@ -53,7 +53,7 @@ export class TailwindModal extends TailwindComponent {
 
     const animation = this.isVisible() ? 'opacity-100 scale-100' : 'opacity-0 scale-95';
 
-    return [...base, sizeMap[this.size()], animation].join(' ');
+    return this.mergeClasses(...base, sizeMap[this.size()], animation);
   });
 
   constructor() {

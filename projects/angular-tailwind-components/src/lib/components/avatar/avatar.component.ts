@@ -69,7 +69,7 @@ export class TailwindAvatar extends TailwindComponent {
       xl: 'size-14'
     };
 
-    return ['relative inline-flex shrink-0 select-none', sizeMap[this.size()]].join(' ');
+    return this.mergeClasses('relative inline-flex shrink-0 select-none', sizeMap[this.size()]);
   });
 
   readonly innerClasses = computed(() => {

@@ -1,31 +1,33 @@
-<!-- Step indicators -->
-<div class="flex items-start mb-6">
-  @for (step of steps(); track step.label(); let i = $index; let last = $last) {
-    <div class="flex min-w-0" [class.flex-1]="!last">
-      <button
-        type="button"
-        (click)="goToStep(i)"
-        class="flex items-start gap-2 cursor-pointer group text-left"
-        [attr.aria-current]="activeIndex() === i ? 'step' : null">
-        <div [class]="stepCircleClass(i)">
-          @if (step.completed()) {
-            <tailwind-icon icon="check" [size]="16" />
-          } @else {
-            {{ i + 1 }}
-          }
-        </div>
-        <div class="hidden sm:block min-w-0">
-          <p [class]="stepLabelClass(i)">{{ step.label() }}</p>
-          @if (step.description()) {
-            <p class="text-xs text-neutral-500 text-left">{{ step.description() }}</p>
-          }
-        </div>
-      </button>
-      @if (!last) {
-        <div [class]="connectorClass(i)"></div>
-      }
-    </div>
-  }
+<div [class]="mergeClasses('tailwind-stepper w-full')">
+  <!-- Step indicators -->
+  <div class="flex items-start mb-6">
+    @for (step of steps(); track step.label(); let i = $index; let last = $last) {
+      <div class="flex min-w-0" [class.flex-1]="!last">
+        <button
+          type="button"
+          (click)="goToStep(i)"
+          class="flex items-start gap-2 cursor-pointer group text-left"
+          [attr.aria-current]="activeIndex() === i ? 'step' : null">
+          <div [class]="stepCircleClass(i)">
+            @if (step.completed()) {
+              <tailwind-icon icon="check" [size]="16" />
+            } @else {
+              {{ i + 1 }}
+            }
+          </div>
+          <div class="hidden sm:block min-w-0">
+            <p [class]="stepLabelClass(i)">{{ step.label() }}</p>
+            @if (step.description()) {
+              <p class="text-xs text-neutral-500 text-left">{{ step.description() }}</p>
+            }
+          </div>
+        </button>
+        @if (!last) {
+          <div [class]="connectorClass(i)"></div>
+        }
+      </div>
+    }
+  </div>
+  <!-- Step content -->
+  <ng-content />
 </div>
-<!-- Step content -->
-<ng-content />

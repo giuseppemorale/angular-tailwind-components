@@ -1,12 +1,5 @@
 <div
-  [class.rounded-xl]="!embedded()"
-  [class.border]="!embedded()"
-  [class.border-neutral-200]="!embedded()"
-  [class.bg-white]="!embedded()"
-  [class.p-4]="!embedded()"
-  [class.shadow-sm]="!embedded()"
-  [class.w-72]="!embedded()"
-  [class.max-w-full]="!embedded()"
+  [class]="surfaceClasses()"
   [class.opacity-50]="!embedded() && isDisabled()"
   [class.pointer-events-none]="!embedded() && isDisabled()">
   <div class="flex items-center justify-between mb-3">

@@ -1,6 +1,5 @@
 <div
   [id]="id()"
-  [ngClass]="class()"
-  class="border border-neutral-200 rounded-md overflow-hidden divide-y divide-neutral-200">
+  [class]="mergeClasses('border border-neutral-200 rounded-md overflow-hidden divide-y divide-neutral-200')">
   <ng-content />
 </div>

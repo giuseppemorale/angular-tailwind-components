@@ -27,7 +27,7 @@ export class TailwindSpinner extends TailwindComponent {
   readonly containerClasses = computed(() => {
     const base = 'inline-flex items-center gap-2';
     const orient = this.orientation() === 'vertical' ? 'flex-col' : '';
-    return `${base} ${orient}`;
+    return this.mergeClasses(base, orient);
   });
 
   readonly iconPixelSize = computed(() => {

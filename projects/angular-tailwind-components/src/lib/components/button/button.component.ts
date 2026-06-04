@@ -166,7 +166,11 @@ export class TailwindButton extends TailwindComponent {
     const size = this.size();
     const sizeClasses = [sizeMap[size], this.icon() ? iconOnlySizeMap[size] : ''].filter(Boolean).join(' ');
 
-    return [...base, styleMap[this.kind()][this.color()] || styleMap['solid']['primary'], sizeClasses].join(' ');
+    return this.mergeClasses(
+      ...base,
+      styleMap[this.kind()][this.color()] || styleMap['solid']['primary'],
+      sizeClasses
+    );
   });
 
   handleClick(event: MouseEvent): void {

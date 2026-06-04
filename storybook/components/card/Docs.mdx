@@ -32,11 +32,29 @@ export class ExampleComponent {}
 
 ---
 
+## Altezza uniforme in grid
+
+In una CSS grid con `align-items: stretch` (default), assegna `class="h-full"` su ogni card: la classe viene inoltrata al surface e tutte le card della stessa riga condividono l’altezza visiva del riquadro bianco.
+
+```html
+<div class="grid gap-6 lg:grid-cols-5">
+  <tailwind-card class="h-full" [hasFooter]="false">
+    <div tailwind-card-header><h3 class="font-semibold">Step 1</h3></div>
+    <p class="text-sm text-neutral-600">Testo breve.</p>
+  </tailwind-card>
+  <!-- altre card con class="h-full" -->
+</div>
+```
+
+Evita `items-start` sulla grid se vuoi l’allineamento in altezza. Non serve un input dedicato: qualsiasi classe Tailwind o custom su `tailwind-card` segue lo stesso meccanismo di inoltro.
+
+---
+
 ## Properties
 
 ### `TailwindCard (tailwind-card)`
 
-Eredita `TailwindComponent` (`id`, `class`).
+Eredita `TailwindComponent` (`id`, `class`). Le classi passate con `class` / `[class]` vengono applicate al riquadro visivo interno (surface), non solo sul tag host.
 
 <table class="w-full">
   <thead>

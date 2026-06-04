@@ -1,5 +1,5 @@
 <fieldset
-  class="flex gap-3"
+  [class]="mergeClasses('flex gap-3')"
   [class.flex-col]="orientation() === 'vertical'"
   [attr.aria-label]="ariaLabel()"
   role="radiogroup">

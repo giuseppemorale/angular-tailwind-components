@@ -1,3 +1,7 @@
+:host {
+  display: contents;
+}
+
 .tailwind-icon-glyph {
   display: block;
   flex-shrink: 0;

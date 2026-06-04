@@ -30,7 +30,7 @@ export class TailwindToast extends TailwindComponent {
       this.vertical() === 'top' ? 'top-8' : 'bottom-8',
       this.horizontal() === 'left' ? 'left-8' : 'right-8'
     ];
-    return classes.join(' ');
+    return this.mergeClasses(...classes);
   });
 
   readonly enterAnimationClass = computed(() => {

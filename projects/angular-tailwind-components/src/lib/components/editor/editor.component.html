@@ -1,4 +1,4 @@
-<div class="tailwind-editor-wrapper flex flex-col gap-1.5">
+<div [class]="mergeClasses('tailwind-editor-wrapper flex flex-col gap-1.5')">
   @if (label()) {
     <label
       [attr.id]="labelId()"

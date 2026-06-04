@@ -42,7 +42,7 @@ export class TailwindAlert extends TailwindComponent {
     };
     const borderClass = this.bordered() ? 'border-l-4' : 'border';
 
-    return `${base} ${colorMap[this.color()]} ${borderClass}`;
+    return this.mergeClasses(base, colorMap[this.color()], borderClass);
   });
 
   dismiss(): void {

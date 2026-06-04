@@ -26,10 +26,7 @@ export class TailwindTitle extends TailwindComponent {
 
   readonly headingClasses = computed(() => {
     const tag = this.titleTag();
-    const layout = 'inline-flex items-center gap-2 min-w-0';
-    const extra = this.class();
-    const base = `${this.titleScale[tag].classes} ${layout}`.trim();
-    return extra ? `${base} ${extra}`.trim() : base;
+    return this.mergeClasses(this.titleScale[tag].classes, 'inline-flex items-center gap-2 min-w-0');
   });
 
   readonly iconSize = computed(() => this.titleScale[this.titleTag()].iconSize);

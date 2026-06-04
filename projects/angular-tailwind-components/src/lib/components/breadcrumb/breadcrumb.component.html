@@ -1,4 +1,4 @@
-<nav [attr.aria-label]="ariaLabel()" class="flex">
+<nav [attr.aria-label]="ariaLabel()" [class]="mergeClasses('flex')">
   <ol class="inline-flex items-center text-sm">
     @for (item of items(); track item.label; let last = $last; let first = $first) {
       <li class="inline-flex items-center">

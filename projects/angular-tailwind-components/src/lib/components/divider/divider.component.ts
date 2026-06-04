@@ -24,10 +24,14 @@ export class TailwindDivider extends TailwindComponent {
     const variant = this.variant() === 'dashed' ? 'border-dashed' : 'border-solid';
 
     if (this.orientation() === 'vertical') {
-      return ['self-stretch shrink-0 w-px min-h-full border-0 border-l', variant, 'border-neutral-200'].join(' ');
+      return this.mergeClasses(
+        'self-stretch shrink-0 w-px min-h-full border-0 border-l',
+        variant,
+        'border-neutral-200'
+      );
     }
 
-    return ['w-full border-0 border-t', variant, 'border-neutral-200', 'my-4', inset].filter(Boolean).join(' ');
+    return this.mergeClasses('w-full border-0 border-t', variant, 'border-neutral-200', 'my-4', inset);
   });
 
   /** Top rule for labeled horizontal layout */
@@ -37,6 +41,6 @@ export class TailwindDivider extends TailwindComponent {
   });
 
   readonly labeledRowClass = computed(() =>
-    ['flex items-center gap-3 w-full my-4', this.inset() ? 'mx-4' : ''].filter(Boolean).join(' ')
+    this.mergeClasses('flex items-center gap-3 w-full my-4', this.inset() ? 'mx-4' : '')
   );
 }

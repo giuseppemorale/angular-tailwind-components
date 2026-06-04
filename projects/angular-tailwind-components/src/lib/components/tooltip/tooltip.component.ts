@@ -46,7 +46,7 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
       'fixed z-[1070] pointer-events-none transition-opacity duration-150',
       this.isVisible() ? 'opacity-100' : 'opacity-0'
     ];
-    return base.join(' ');
+    return this.mergeClasses(...base);
   });
 
   readonly tooltipBodyClasses = computed(

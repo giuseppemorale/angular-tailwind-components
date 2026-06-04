@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-1.5">
+<div [class]="mergeClasses('flex flex-col gap-1.5')">
   @if (label()) {
     <label
       [attr.for]="id() ? id() + '-inner' : null"

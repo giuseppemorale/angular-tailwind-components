@@ -251,17 +251,6 @@ export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string
 /** Angular production build sets global `ngDevMode` to `false`. */
 declare const ngDevMode: boolean | undefined;
 
-/** Tracks custom properties last applied on `<html>` so they can be cleared on update/remove. */
-const APPLIED_VARS_DATASET_KEY = 'appliedVars';
-
-function clearAppliedThemeVariables(document: Document, style: HTMLElement | null): void {
-  const root = document.documentElement;
-  const previous = style?.dataset[APPLIED_VARS_DATASET_KEY]?.split(',').filter(Boolean) ?? [];
-  for (const prop of previous) {
-    root.style.removeProperty(prop);
-  }
-}
-
 function stylesheetHasPrimaryUtility(document: Document): boolean {
   for (const sheet of document.styleSheets) {
     let rules: CSSRuleList;
@@ -298,15 +287,14 @@ function warnIfSemanticUtilitiesMissing(document: Document): void {
  * Injects or updates `#tailwind-theme-colors` in `document.head` (browser only).
  * Exported for unit tests.
  *
- * Variables are written on `<html style="…">` (highest cascade priority for `:root`) and duplicated
- * in `@layer theme` for `:host` (web components / shadow roots).
+ * Sets `data-tailwind-theme` on `<html>` and applies variables via `@layer theme` in the injected
+ * stylesheet (`:root[data-tailwind-theme]` and `:host` for shadow roots). Does not use inline
+ * `style` on `<html>`.
  */
 export function applyTailwindThemeColors(document: Document, colors: TailwindDefineThemeColors): void {
   const entries = buildTailwindThemeVariableEntries({ COLORS: colors });
   const existing = document.getElementById(TAILWIND_THEME_STYLE_ID);
   const root = document.documentElement;
-
-  clearAppliedThemeVariables(document, existing);
 
   if (entries.length === 0) {
     existing?.remove();
@@ -316,20 +304,15 @@ export function applyTailwindThemeColors(document: Document, colors: TailwindDef
 
   root.setAttribute(TAILWIND_THEME_HTML_ATTR, '');
 
-  const appliedKeys: string[] = [];
-  for (const [prop, val] of entries) {
-    root.style.setProperty(prop, val);
-    appliedKeys.push(prop);
-  }
-
   const css = buildTailwindThemeCss(colors);
   const style = existing ?? document.createElement('style');
   style.id = TAILWIND_THEME_STYLE_ID;
   style.dataset['tailwindTheme'] = '';
-  style.dataset[APPLIED_VARS_DATASET_KEY] = appliedKeys.join(',');
   style.textContent = css;
 
-  document.head.appendChild(style);
+  if (!existing) {
+    document.head.appendChild(style);
+  }
   warnIfSemanticUtilitiesMissing(document);
 }
 

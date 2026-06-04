@@ -182,7 +182,7 @@ You can omit **`COLORS`** if you only need token defaults, or omit token keys if
 
 ## Theme colors (`provideTailwindThemeColors`)
 
-The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Requires the library stylesheet in `angular.json` (see [Prerequisites](#prerequisites)) so those utilities exist in the compiled CSS. At startup, **`provideTailwindThemeColors`** sets the variables on `<html>` and injects `<style id="tailwind-theme-colors">` (`@layer theme`, including `:host`). Color application is a **no-op during SSR** (browser only).
+The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Requires the library stylesheet in `angular.json` (see [Prerequisites](#prerequisites)) so those utilities exist in the compiled CSS. At startup, **`provideTailwindThemeColors`** sets `data-tailwind-theme` on `<html>` and injects `<style id="tailwind-theme-colors">` with the variables in `@layer theme` (`:root[data-tailwind-theme]` and `:host`). Color application is a **no-op during SSR** (browser only).
 
 | `COLORS` key | CSS variables | Default palette in `tailwind.css` |
 | --- | --- | --- |

@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   inject,
@@ -18,8 +17,7 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'tailwind-tooltip',
   templateUrl: './tooltip.component.html',
-  styleUrl: './tooltip.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './tooltip.component.css'
 })
 export class TailwindTooltip extends TailwindComponent implements AfterViewInit, OnDestroy {
   /** Tooltip text */

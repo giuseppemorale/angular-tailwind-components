@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   imports: [TranslocoPipe],
   selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './footer.component.html'
 })
 export class FooterComponent {}

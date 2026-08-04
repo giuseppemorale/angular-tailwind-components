@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
   TailwindAlert,
@@ -35,8 +35,7 @@ import { TABLE_DATA } from './data/data';
     TranslocoPipe
   ],
   selector: 'app-page-home',
-  templateUrl: './home.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './home.component.html'
 })
 export class HomeComponent {
   private readonly transloco = inject(TranslocoService);

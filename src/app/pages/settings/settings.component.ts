@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, model } from '@angular/core';
+import { Component, inject, model } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
@@ -33,8 +33,7 @@ import { HeaderComponent } from '../../core/template/header/header.component';
     TranslocoPipe
   ],
   selector: 'app-page-settings',
-  templateUrl: './settings.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './settings.component.html'
 })
 export class SettingsComponent {
   private readonly transloco = inject(TranslocoService);

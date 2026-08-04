@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, model, signal } from '@angular/core';
+import { Component, Input, model, signal } from '@angular/core';
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import {
   TailwindAutocomplete,
@@ -47,7 +47,6 @@ export const StaticCountries: StoryObj<TailwindAutocomplete<string>> = {
 @Component({
   selector: 'autocomplete-async-story',
   imports: [TailwindAutocomplete],
-  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="max-w-lg">
       <tailwind-autocomplete

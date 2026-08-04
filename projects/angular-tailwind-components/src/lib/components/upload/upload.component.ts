@@ -1,15 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  forwardRef,
-  input,
-  model,
-  output,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, computed, ElementRef, forwardRef, input, model, output, signal, viewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
@@ -28,8 +17,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './upload.component.html',
-  styleUrl: './upload.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './upload.component.css'
 })
 export class TailwindUpload extends TailwindComponent implements ControlValueAccessor {
   private static nextId = 0;

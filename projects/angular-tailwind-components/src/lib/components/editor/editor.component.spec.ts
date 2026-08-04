@@ -78,9 +78,7 @@ describe('TailwindEditor', () => {
     const textarea = fixture.nativeElement.querySelector('.tailwind-editor-source') as HTMLTextAreaElement;
     textarea.value = '<p></p>';
     textarea.selectionStart = textarea.selectionEnd = 3;
-    textarea.dispatchEvent(
-      new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true })
-    );
+    textarea.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }));
     fixture.detectChanges();
 
     expect(textarea.value).toBe('<p>  </p>');

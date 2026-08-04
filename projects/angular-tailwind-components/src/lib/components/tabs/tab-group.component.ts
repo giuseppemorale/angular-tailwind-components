@@ -1,6 +1,5 @@
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -22,8 +21,7 @@ import { TailwindComponent } from '../tailwind.component';
   selector: 'tailwind-tab-group',
   imports: [TailwindButton],
   templateUrl: './tab-group.component.html',
-  styleUrl: './tab-group.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './tab-group.component.css'
 })
 export class TailwindTabGroup extends TailwindComponent {
   private readonly destroyRef = inject(DestroyRef);

@@ -74,8 +74,7 @@ export const Colors: StoryObj<TailwindIcon> = {
     controls: { disable: true },
     docs: {
       description: {
-        story:
-          'Il colore si imposta con utility **`text-*`** sull’input **`class`** (maschera CSS sul glifo interno).'
+        story: 'Il colore si imposta con utility **`text-*`** sull’input **`class`** (maschera CSS sul glifo interno).'
       }
     }
   },

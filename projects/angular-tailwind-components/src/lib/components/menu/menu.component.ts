@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostListener,
@@ -19,8 +18,7 @@ const MIN_PANEL_WIDTH_PX = 192;
 @Component({
   selector: 'tailwind-menu',
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './menu.component.css'
 })
 export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit {
   private openScheduleId: ReturnType<typeof setTimeout> | undefined;

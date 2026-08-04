@@ -1,6 +1,5 @@
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -76,8 +75,7 @@ const I18N: Record<
   selector: 'tailwind-date-picker',
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDatePicker), multi: true }],
   templateUrl: './date-picker.component.html',
-  styleUrl: './date-picker.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './date-picker.component.css'
 })
 export class TailwindDatePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

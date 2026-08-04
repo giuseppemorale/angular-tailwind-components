@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  booleanAttribute,
-  computed,
-  input,
-  output
-} from '@angular/core';
+import { Component, booleanAttribute, computed, input, output } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -14,8 +7,7 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon],
   selector: 'tailwind-chip',
   templateUrl: './chip.component.html',
-  styleUrl: './chip.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './chip.component.css'
 })
 export class TailwindChip extends TailwindComponent {
   /** Semantic color */
@@ -60,9 +52,7 @@ export class TailwindChip extends TailwindComponent {
     return this.mergeClasses(...base, colorMap[this.color()], sizeMap[this.size()], 'rounded-md');
   });
 
-  readonly labelClasses = computed(() =>
-    this.truncate() ? 'min-w-0 truncate' : 'whitespace-nowrap'
-  );
+  readonly labelClasses = computed(() => (this.truncate() ? 'min-w-0 truncate' : 'whitespace-nowrap'));
 
   readonly removeIconSize = computed(() => {
     const map: Record<TailwindSize, number> = {

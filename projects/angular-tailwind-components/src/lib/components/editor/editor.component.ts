@@ -1,7 +1,6 @@
 import {
   afterNextRender,
   AfterViewInit,
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -53,8 +52,7 @@ import { filterToolbarGroups, resolveToolbarGroups } from './utils/editor-toolba
     }
   ],
   templateUrl: './editor.component.html',
-  styleUrl: './editor.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './editor.component.css'
 })
 export class TailwindEditor extends TailwindComponent implements ControlValueAccessor, OnDestroy, AfterViewInit {
   private static nextFieldId = 0;
@@ -115,7 +113,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   readonly fileInputId = computed(() => `${this.fieldId()}-file`);
   readonly surfaceAriaLabelledBy = computed(() => (this.label() ? this.labelId() : null));
   readonly surfaceAriaLabel = computed(() =>
-    this.label() ? null : (this.placeholder() || this.labels().surfaceAriaLabel)
+    this.label() ? null : this.placeholder() || this.labels().surfaceAriaLabel
   );
   /** Only when `contenteditable` is false; never set with `contenteditable="true"` (HTML-ARIA). */
   readonly surfaceAriaReadonly = computed(() => (this.readonly() && !this.isDisabled() ? true : null));
@@ -442,7 +440,9 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   }
 
   private isShiftEnter(event: InputEvent): boolean {
-    return 'getModifierState' in event && typeof event.getModifierState === 'function' && event.getModifierState('Shift');
+    return (
+      'getModifierState' in event && typeof event.getModifierState === 'function' && event.getModifierState('Shift')
+    );
   }
 
   onSurfaceBeforeInput(event: InputEvent): void {

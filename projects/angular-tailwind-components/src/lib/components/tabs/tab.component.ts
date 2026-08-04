@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-tab',
   templateUrl: './tab.component.html',
-  styleUrl: './tab.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './tab.component.css'
 })
 export class TailwindTab extends TailwindComponent {
   /** Tab label */

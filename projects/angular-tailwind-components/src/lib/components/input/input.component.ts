@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
@@ -15,8 +15,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './input.component.html',
-  styleUrl: './input.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './input.component.css'
 })
 export class TailwindInput extends TailwindComponent implements ControlValueAccessor {
   /** Label text */

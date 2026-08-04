@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { DEFAULT_TAILWIND_TITLE_SCALE, type TailwindHeroicon, type TailwindTitleTag } from '../../models';
 import { TAILWIND_TITLE_SCALE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
@@ -9,8 +9,7 @@ import { TailwindIcon } from '../icon/icon.component';
   selector: 'tailwind-title',
   imports: [NgTemplateOutlet, TailwindIcon],
   templateUrl: './title.component.html',
-  styleUrl: './title.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './title.component.css'
 })
 export class TailwindTitle extends TailwindComponent {
   private readonly titleScale = inject(TAILWIND_TITLE_SCALE, { optional: true }) ?? DEFAULT_TAILWIND_TITLE_SCALE;

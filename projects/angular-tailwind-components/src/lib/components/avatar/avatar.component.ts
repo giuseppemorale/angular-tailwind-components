@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  signal
-} from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -13,8 +7,7 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon],
   selector: 'tailwind-avatar',
   templateUrl: './avatar.component.html',
-  styleUrl: './avatar.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './avatar.component.css'
 })
 export class TailwindAvatar extends TailwindComponent {
   /** Image URL */
@@ -105,7 +98,9 @@ export class TailwindAvatar extends TailwindComponent {
   });
 
   readonly imageClasses = computed(() => {
-    return this.shape() === 'circle' ? 'h-full w-full object-cover rounded-full' : 'h-full w-full object-cover rounded-md';
+    return this.shape() === 'circle'
+      ? 'h-full w-full object-cover rounded-full'
+      : 'h-full w-full object-cover rounded-md';
   });
 
   readonly iconSize = computed(() => {

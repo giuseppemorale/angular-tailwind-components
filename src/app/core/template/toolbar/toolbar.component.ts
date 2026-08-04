@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { TailwindButton, TailwindMenuItem, TailwindToolbar } from 'angular-tailwind-components';
@@ -6,8 +6,7 @@ import { TailwindButton, TailwindMenuItem, TailwindToolbar } from 'angular-tailw
 @Component({
   imports: [TailwindToolbar, TailwindButton, TranslocoPipe, RouterLink],
   selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './toolbar.component.html'
 })
 export class ToolbarComponent {
   private readonly translocoService = inject(TranslocoService);

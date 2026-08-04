@@ -2,7 +2,6 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -48,8 +47,7 @@ export interface TailwindAutocompleteItemContext<T = unknown> {
     }
   ],
   templateUrl: './autocomplete.component.html',
-  styleUrl: './autocomplete.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './autocomplete.component.css'
 })
 export class TailwindAutocomplete<T = unknown> extends TailwindComponent implements ControlValueAccessor, OnDestroy {
   private static nextId = 0;

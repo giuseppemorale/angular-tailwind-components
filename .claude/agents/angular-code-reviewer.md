@@ -82,8 +82,7 @@ Decorated components must follow this **property order** in `@Component({ ... })
 2. `selector`
 3. `templateUrl` (or `template` if inline — prefer `templateUrl` in this repo)
 4. `styleUrl` (or `styleUrls` if multiple; omit only if there is no stylesheet)
-5. `changeDetection` — for Angular ≤ 21 in this repo: `ChangeDetectionStrategy.OnPush` when not default
-6. `providers` — only if needed (e.g. `NG_VALUE_ACCESSOR`)
+5. `providers` — only if needed (e.g. `NG_VALUE_ACCESSOR`)
 
 **Required shape (example):**
 
@@ -93,7 +92,6 @@ Decorated components must follow this **property order** in `@Component({ ... })
   selector: 'app-example',
   templateUrl: './example.component.html',
   styleUrl: './example.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ExampleComponent), multi: true }]
 })
 ```

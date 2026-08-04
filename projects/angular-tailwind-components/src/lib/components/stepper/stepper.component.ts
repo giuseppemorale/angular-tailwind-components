@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, contentChildren, effect, input, model } from '@angular/core';
+import { Component, computed, contentChildren, effect, input, model } from '@angular/core';
 import { TailwindColor } from '../../models';
 import { TailwindStep } from './step.component';
 import { TailwindIcon } from '../icon/icon.component';
@@ -8,8 +8,7 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon],
   selector: 'tailwind-stepper',
   templateUrl: './stepper.component.html',
-  styleUrl: './stepper.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './stepper.component.css'
 })
 export class TailwindStepper extends TailwindComponent {
   readonly activeIndex = model<number>(0);

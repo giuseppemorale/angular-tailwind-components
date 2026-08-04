@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { TailwindTooltipDirective } from '../../directives/tooltip/tooltip.directive';
 import { TailwindColor, TailwindMenuItem, TailwindPosition } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
@@ -9,8 +9,7 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon, TailwindMenu, TailwindTooltipDirective],
   selector: 'tailwind-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './toolbar.component.css'
 })
 export class TailwindToolbar extends TailwindComponent {
   /** When true, uses rounded corners (`rounded-xl`). */

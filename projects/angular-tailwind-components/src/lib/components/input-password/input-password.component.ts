@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -35,8 +34,7 @@ import { computePasswordStrength, passwordStrengthMeterFill } from './password-s
     }
   ],
   templateUrl: './input-password.component.html',
-  styleUrl: './input-password.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './input-password.component.css'
 })
 export class TailwindInputPassword extends TailwindComponent implements ControlValueAccessor, OnDestroy {
   private readonly overlay = inject(Overlay);

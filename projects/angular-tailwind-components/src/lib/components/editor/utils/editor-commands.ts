@@ -356,9 +356,7 @@ function intersectRangeWithBlock(range: Range, block: HTMLElement): Range {
 function hasMeaningfulContents(fragment: DocumentFragment | null): boolean {
   if (!fragment || !fragment.childNodes.length) return false;
   if (fragment.textContent?.trim()) return true;
-  return [...fragment.childNodes].some(
-    node => node.nodeType !== Node.TEXT_NODE || (node.textContent?.length ?? 0) > 0
-  );
+  return [...fragment.childNodes].some(node => node.nodeType !== Node.TEXT_NODE || (node.textContent?.length ?? 0) > 0);
 }
 
 function replaceBlockTag(block: HTMLElement, tagName: string): void {

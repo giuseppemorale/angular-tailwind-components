@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-card',
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './card.component.css'
 })
 export class TailwindCard extends TailwindComponent {
   private static readonly shellBase =

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { TAILWIND_HEROICON_NAMES } from '../../projects/angular-tailwind-components/src/lib/models/icons';
 import { TailwindIcon } from '../../projects/angular-tailwind-components/src/public-api';
 
@@ -62,8 +62,7 @@ function chunk<T>(items: readonly T[], size: number): T[][] {
         }
       </div>
     }
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class StorybookIconsGalleryComponent {
   readonly iconCount = TAILWIND_HEROICON_NAMES.length;

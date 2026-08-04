@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import type { TailwindHeroicon, TailwindIconSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { TAILWIND_ICON_SIZE } from '../../tokens';
@@ -12,8 +12,7 @@ const clampIconSize = (value: number): number => {
 @Component({
   selector: 'tailwind-icon',
   templateUrl: './icon.component.html',
-  styleUrl: './icon.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './icon.component.css'
 })
 export class TailwindIcon extends TailwindComponent {
   private readonly iconSize = inject(TAILWIND_ICON_SIZE, { optional: true });

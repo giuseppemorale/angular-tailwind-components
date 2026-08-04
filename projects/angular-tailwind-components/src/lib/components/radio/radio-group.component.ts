@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOptionGroup, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
@@ -13,8 +13,7 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './radio-group.component.html',
-  styleUrl: './radio-group.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './radio-group.component.css'
 })
 export class TailwindRadioGroup<T = unknown> extends TailwindComponent implements ControlValueAccessor {
   /** Label for the radio group */

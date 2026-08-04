@@ -1,6 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostListener,
@@ -28,7 +27,6 @@ export type { TailwindTableSortHost };
   imports: [NgTemplateOutlet, TailwindPagination, TailwindIcon, TailwindInput],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-tw-sort-key]': 'sortKey()',
     '[attr.data-tw-sort-dir]': 'sortDir()'

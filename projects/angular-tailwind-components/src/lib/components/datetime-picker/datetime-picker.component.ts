@@ -1,7 +1,6 @@
 import { formatDate } from '@angular/common';
 import {
   afterNextRender,
-  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -77,8 +76,7 @@ const I18N: Record<
   imports: [TailwindIcon, TailwindButton, TailwindCalendarPanel],
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindDateTimePicker), multi: true }],
   templateUrl: './datetime-picker.component.html',
-  styleUrl: './datetime-picker.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './datetime-picker.component.css'
 })
 export class TailwindDateTimePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);

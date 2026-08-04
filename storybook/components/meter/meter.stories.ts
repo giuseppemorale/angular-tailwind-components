@@ -1,8 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import {
-  TailwindMeter,
-  type TailwindMeterSegment
-} from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindMeter, type TailwindMeterSegment } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const sampleSegments: TailwindMeterSegment[] = [
   { label: 'Apps', value: 25, color: 'primary' },

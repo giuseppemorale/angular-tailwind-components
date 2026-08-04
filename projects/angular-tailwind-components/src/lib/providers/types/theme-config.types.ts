@@ -3,17 +3,7 @@ export type TailwindThemeSemantic = 'primary' | 'neutral' | 'success' | 'warning
 
 /** Shade keys aligned with Tailwind default scales and this library’s `@theme` tokens. */
 export type TailwindThemeColorShade =
-  | '50'
-  | '100'
-  | '200'
-  | '300'
-  | '400'
-  | '500'
-  | '600'
-  | '700'
-  | '800'
-  | '900'
-  | '950';
+  '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950';
 
 /** Explicit semantic palette shades only (legacy flat object form for `provideTailwindConfig` colors). */
 export type TailwindThemeSemanticShades = Partial<Record<TailwindThemeColorShade, string>>;

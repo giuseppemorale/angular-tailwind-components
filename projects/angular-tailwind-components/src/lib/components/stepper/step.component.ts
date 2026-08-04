@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-step',
   templateUrl: './step.component.html',
-  styleUrl: './step.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './step.component.css'
 })
 export class TailwindStep extends TailwindComponent {
   readonly label = input.required<string>();

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 import { TailwindColor } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
@@ -8,8 +8,7 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon, TailwindButton],
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
-  styleUrl: './alert.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './alert.component.css'
 })
 export class TailwindAlert extends TailwindComponent {
   /** Semantic color */

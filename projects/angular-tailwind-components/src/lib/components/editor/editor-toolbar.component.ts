@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { TailwindOption, TailwindSize } from '../../models';
 import { TailwindButton } from '../button/button.component';
 import { TailwindDivider } from '../divider/divider.component';
@@ -21,8 +21,7 @@ const HEADING_OPTIONS: TailwindOption<EditorBlockFormat>[] = [
   imports: [TailwindButton, TailwindDivider, TailwindSelect],
   selector: 'tailwind-editor-toolbar',
   templateUrl: './editor-toolbar.component.html',
-  styleUrl: './editor-toolbar.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './editor-toolbar.component.css'
 })
 export class TailwindEditorToolbar extends TailwindComponent {
   readonly groups = input<EditorToolbarGroup[]>([]);

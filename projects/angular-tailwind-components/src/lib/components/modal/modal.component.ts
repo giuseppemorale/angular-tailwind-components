@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  ElementRef,
-  input,
-  output,
-  signal,
-  viewChild
-} from '@angular/core';
+import { Component, computed, effect, ElementRef, input, output, signal, viewChild } from '@angular/core';
 import { TailwindSize } from '../../models';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -17,8 +7,7 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindButton],
   selector: 'tailwind-modal',
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './modal.component.css'
 })
 export class TailwindModal extends TailwindComponent {
   /** Size variant */

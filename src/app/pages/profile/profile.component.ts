@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
@@ -33,8 +33,7 @@ import { HeaderComponent } from '../../core/template/header/header.component';
     TranslocoPipe
   ],
   selector: 'app-page-profile',
-  templateUrl: './profile.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
   private readonly toastService = inject(TailwindToastService);

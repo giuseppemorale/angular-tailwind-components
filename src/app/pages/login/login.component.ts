@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoPipe } from '@jsverse/transloco';
@@ -33,8 +33,7 @@ import { ErrorPipe } from '../../core/pipe/error.pipe';
     ErrorPipe
   ],
   selector: 'app-page-login',
-  templateUrl: './login.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './login.component.html'
 })
 export class LoginComponent {
   private readonly router = inject(Router);

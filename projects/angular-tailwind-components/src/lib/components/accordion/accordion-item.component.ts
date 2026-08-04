@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 import { CommonModule } from '@angular/common';
@@ -7,8 +7,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, TailwindIcon],
   selector: 'tailwind-accordion-item',
   templateUrl: './accordion-item.component.html',
-  styleUrl: './accordion-item.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './accordion-item.component.css'
 })
 export class TailwindAccordionItem extends TailwindComponent {
   readonly title = input.required<string>();

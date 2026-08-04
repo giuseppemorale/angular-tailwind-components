@@ -8,12 +8,12 @@ Libreria di componenti UI Angular basata su Tailwind CSS v4 (signals, standalone
 
 ## Comandi
 
-| Scopo | Comando |
-|-------|---------|
-| Dev playground | `npm start` |
-| Build libreria | `npm run build` |
-| Storybook | `npm run storybook` |
-| Prettier | `npm run prettier:write` |
+| Scopo             | Comando                                                                                                                  |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Dev playground    | `npm start`                                                                                                              |
+| Build libreria    | `npm run build`                                                                                                          |
+| Storybook         | `npm run storybook`                                                                                                      |
+| Prettier          | `npm run prettier:write`                                                                                                 |
 | Test singolo spec | `npx ng test angular-tailwind-components --include='src/lib/components/<folder>/<nome>.component.spec.ts' --watch=false` |
 
 Per i test usa **sempre un comando secco**: mai `ng test --watch`, mai processi in background.
@@ -76,14 +76,9 @@ Mantieni sempre quest'ordine:
   imports: [TailwindIcon],
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
-  styleUrl: './alert.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './alert.component.css'
 })
 ```
-
-## Change detection
-
-Imposta sempre `changeDetection: ChangeDetectionStrategy.OnPush`, coerentemente con tutti i componenti esistenti della libreria.
 
 ## Form (ControlValueAccessor)
 
@@ -114,25 +109,25 @@ Ogni componente deve rispettare **WCAG 2.1 livello AA** e le [WAI-ARIA Authoring
 
 Pattern condiviso (riferimento: `input/`, `select/`, `autocomplete/`):
 
-| Requisito | Implementazione |
-|-----------|-----------------|
-| Etichetta visibile | `<label [attr.for]="id() ? id() + '-inner' : null">` |
-| Controllo | `[attr.id]="id() ? id() + '-inner' : null"` |
-| Errore | `hasError()` + `errorText()`; `[attr.aria-invalid]` solo quando `hasError()` è true |
-| Testo di aiuto / errore | `[attr.id]="id() ? id() + '-helper' : null"` + `[attr.aria-describedby]="…"` sul controllo |
-| Disabilitato | attributo `disabled` / `isDisabled()`; per stati solo lettura usa `readonly` o `aria-readonly` dove serve |
+| Requisito               | Implementazione                                                                                           |
+| ----------------------- | --------------------------------------------------------------------------------------------------------- |
+| Etichetta visibile      | `<label [attr.for]="id() ? id() + '-inner' : null">`                                                      |
+| Controllo               | `[attr.id]="id() ? id() + '-inner' : null"`                                                               |
+| Errore                  | `hasError()` + `errorText()`; `[attr.aria-invalid]` solo quando `hasError()` è true                       |
+| Testo di aiuto / errore | `[attr.id]="id() ? id() + '-helper' : null"` + `[attr.aria-describedby]="…"` sul controllo                |
+| Disabilitato            | attributo `disabled` / `isDisabled()`; per stati solo lettura usa `readonly` o `aria-readonly` dove serve |
 
 ### Widget compositi (ARIA)
 
 Se il componente non è un controllo form "semplice", applica il **ruolo e gli attributi ARIA** del pattern APG corrispondente e collegali tra loro:
 
-| Pattern | Esempi nel repo | Attributi / ruoli tipici |
-|---------|-----------------|---------------------------|
-| Combobox + listbox | `select`, `autocomplete` | `role="combobox"`, `aria-expanded`, `aria-controls`, `aria-activedescendant`, `role="listbox"` / `role="option"`, `aria-selected`, `aria-disabled` su opzioni |
-| Tab | `tab-group` | `role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`, pannelli con `role="tabpanel"` |
-| Dialog | `modal` | `role="dialog"`, `aria-modal="true"`, chiusura con Escape, pulsante chiudi con `ariaLabel` |
-| Gruppi | `input-otp`, `radio-group` | `role="group"` + `aria-label` / etichetta visibile |
-| Editor / superfici custom | `editor` | `role="textbox"`, `aria-multiline`, `aria-labelledby` / `aria-label`, stati `aria-readonly` / `aria-disabled` |
+| Pattern                   | Esempi nel repo            | Attributi / ruoli tipici                                                                                                                                      |
+| ------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Combobox + listbox        | `select`, `autocomplete`   | `role="combobox"`, `aria-expanded`, `aria-controls`, `aria-activedescendant`, `role="listbox"` / `role="option"`, `aria-selected`, `aria-disabled` su opzioni |
+| Tab                       | `tab-group`                | `role="tablist"`, `role="tab"`, `aria-selected`, `aria-controls`, pannelli con `role="tabpanel"`                                                              |
+| Dialog                    | `modal`                    | `role="dialog"`, `aria-modal="true"`, chiusura con Escape, pulsante chiudi con `ariaLabel`                                                                    |
+| Gruppi                    | `input-otp`, `radio-group` | `role="group"` + `aria-label` / etichetta visibile                                                                                                            |
+| Editor / superfici custom | `editor`                   | `role="textbox"`, `aria-multiline`, `aria-labelledby` / `aria-label`, stati `aria-readonly` / `aria-disabled`                                                 |
 
 Esporre `ariaLabel` (e, se serve, label i18n dedicate in `models/` o `util/`) per testi che l'app deve tradurre — vedi `editor-labels.interface.ts`.
 
@@ -165,7 +160,7 @@ npx ng test angular-tailwind-components --include='src/lib/components/<folder>/<
 ## Checklist componente
 
 - [ ] Root cartella: solo `*.component.*` + sottocartelle (`util/`, `interfaces/`, …)
-- [ ] Signals + OnPush
+- [ ] Signals
 - [ ] CVA se form-compatible
 - [ ] Template pulito con componenti DS
 - [ ] **Accessibilità**: semantica nativa, label/id/aria-describedby/aria-invalid sui form, ARIA APG sui widget, tastiera, focus, `ariaLabel` su controlli solo icona, testi i18n per stringhe ARIA esposte
@@ -199,7 +194,11 @@ Quando una story serve solo a **mostrare varianti** (dimensioni, colori, stati, 
 In quel caso aggiungi sempre:
 
 ```typescript
-parameters: { controls: { disable: true } }
+parameters: {
+  controls: {
+    disable: true;
+  }
+}
 ```
 
 sulla singola story (non sul `meta` globale, così la story principale resta interattiva).
@@ -218,7 +217,9 @@ Quando una story è interattiva (`args` legati al canvas) ma **non usa** alcune 
 
 ```typescript
 parameters: {
-  controls: { exclude: ['orientation', 'label'] }
+  controls: {
+    exclude: ['orientation', 'label'];
+  }
 }
 ```
 

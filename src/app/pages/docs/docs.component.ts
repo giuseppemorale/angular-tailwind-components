@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, model, signal } from '@angular/core';
+import { Component, inject, model, signal } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import {
   TailwindAccordion,
@@ -35,8 +35,7 @@ import { ExportDocsModalComponent } from '../settings/components/export-docs-mod
     TranslocoPipe
   ],
   selector: 'app-page-docs',
-  templateUrl: './docs.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './docs.component.html'
 })
 export class DocsComponent {
   private readonly modalService = inject(TailwindModalService);

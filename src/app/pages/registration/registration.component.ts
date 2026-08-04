@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -48,8 +48,7 @@ import { ErrorPipe } from '../../core/pipe/error.pipe';
     DatePipe
   ],
   selector: 'app-page-registration',
-  templateUrl: './registration.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './registration.component.html'
 })
 export class RegistrationComponent implements OnInit {
   private readonly router = inject(Router);

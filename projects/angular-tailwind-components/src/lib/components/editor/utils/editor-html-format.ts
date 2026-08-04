@@ -1,4 +1,18 @@
-const VOID_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+const VOID_TAGS = new Set([
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'link',
+  'meta',
+  'source',
+  'track',
+  'wbr'
+]);
 
 /** Indent HTML for the source (code) view (tags on separate lines, inline content kept compact). */
 export function prettifyEditorHtml(html: string): string {

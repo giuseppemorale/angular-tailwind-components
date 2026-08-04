@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { TailwindColor, TailwindHeroicon, TailwindIconSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -7,8 +7,7 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon],
   selector: 'tailwind-message',
   templateUrl: './message.component.html',
-  styleUrl: './message.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './message.component.css'
 })
 export class TailwindMessage extends TailwindComponent {
   readonly color = input<TailwindColor>('info');
@@ -27,10 +26,7 @@ export class TailwindMessage extends TailwindComponent {
       info: 'bg-info-50 text-info-700 border-info-200',
       transparent: 'bg-transparent text-neutral-700 border-neutral-200'
     };
-    return this.mergeClasses(
-      'flex items-center gap-2 text-sm px-3 py-2 rounded-md border',
-      colorMap[this.color()]
-    );
+    return this.mergeClasses('flex items-center gap-2 text-sm px-3 py-2 rounded-md border', colorMap[this.color()]);
   });
 
   readonly iconClasses = computed(() => {

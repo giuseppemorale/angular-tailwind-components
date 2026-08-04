@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindMeterSegment } from './interfaces/meter-segment.interface';
@@ -6,8 +6,7 @@ import { TailwindMeterSegment } from './interfaces/meter-segment.interface';
 @Component({
   selector: 'tailwind-meter',
   templateUrl: './meter.component.html',
-  styleUrl: './meter.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './meter.component.css'
 })
 export class TailwindMeter extends TailwindComponent {
   /** Segments rendered as proportional blocks in the bar. */

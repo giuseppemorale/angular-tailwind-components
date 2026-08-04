@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { Component, computed, inject, input, output } from '@angular/core';
 import { NgClass } from '@angular/common';
 import type { TailwindHeroicon, TailwindIconPosition } from '../../models';
 import { TailwindSize, TailwindColor, TailwindButtonKind, TailwindButtonRole } from '../../models';
@@ -22,8 +22,7 @@ const transparentColorClasses =
   imports: [NgClass, TailwindIcon],
   selector: 'tailwind-button',
   templateUrl: './button.component.html',
-  styleUrl: './button.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './button.component.css'
 })
 export class TailwindButton extends TailwindComponent {
   private readonly defaultKind = inject(TAILWIND_BUTTON_KIND, { optional: true });
@@ -166,11 +165,7 @@ export class TailwindButton extends TailwindComponent {
     const size = this.size();
     const sizeClasses = [sizeMap[size], this.icon() ? iconOnlySizeMap[size] : ''].filter(Boolean).join(' ');
 
-    return this.mergeClasses(
-      ...base,
-      styleMap[this.kind()][this.color()] || styleMap['solid']['primary'],
-      sizeClasses
-    );
+    return this.mergeClasses(...base, styleMap[this.kind()][this.color()] || styleMap['solid']['primary'], sizeClasses);
   });
 
   handleClick(event: MouseEvent): void {

@@ -1,15 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  forwardRef,
-  inject,
-  input,
-  model,
-  output,
-  signal
-} from '@angular/core';
+import { Component, computed, effect, forwardRef, inject, input, model, output, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindButton } from '../button/button.component';
@@ -30,7 +19,6 @@ import { CalendarView, yearPageStartFor, YEARS_PER_PAGE } from './util/calendar-
   selector: 'tailwind-calendar-panel',
   templateUrl: './calendar-panel.component.html',
   styleUrl: './calendar-panel.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindCalendarPanel), multi: true }]
 })
 export class TailwindCalendarPanel extends TailwindComponent implements ControlValueAccessor {

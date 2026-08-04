@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { TailwindColor, TailwindPosition } from '../../models';
 import { TailwindToastService } from '../../services';
 import { TailwindButton } from '../button/button.component';
@@ -13,8 +13,7 @@ export type { TailwindToastConfig, TailwindToastItem };
   imports: [TailwindButton, TailwindIcon],
   selector: 'tailwind-toast',
   templateUrl: './toast.component.html',
-  styleUrl: './toast.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './toast.component.css'
 })
 export class TailwindToast extends TailwindComponent {
   readonly toastService = inject(TailwindToastService);

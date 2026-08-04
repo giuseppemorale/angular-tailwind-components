@@ -166,7 +166,8 @@ async function determineNewVersion(currentVersion) {
 Cosa vuoi fare?
 1 = avanzare RC (${currentVersion} -> ${nextRc})
 2 = chiudere versione (${currentVersion} -> ${stableVersion})
-Enter a number (1-2): `;
+3 = abbandonare la RC e passare a un'altra versione (custom M.m.p)
+Enter a number (1-3): `;
 
     const answer = (await ask(question)).trim();
 
@@ -178,7 +179,13 @@ Enter a number (1-2): `;
       return stableVersion;
     }
 
-    throw new Error('Opzione non valida. Deve essere 1 o 2.');
+    if (answer === '3') {
+      const customVersionStr = await askCustomVersion(currentVersion);
+      const withRc = isYes(await ask(rcQuestion));
+      return customVersion(customVersionStr, withRc);
+    }
+
+    throw new Error('Opzione non valida. Deve essere 1, 2 o 3.');
   }
 
   const releaseQuestion = `

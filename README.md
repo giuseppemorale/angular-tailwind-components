@@ -25,15 +25,15 @@ The **library major matches the Angular major** in your app (library **21.x** �
 
 | Library | Angular | Tailwind CSS | Notes |
 | :------ | :------ | :----------- | :---- |
-| **21.x** | 21 | 4 | **Current.** Use on Angular 21 apps. |
-| **22.x** | 22 | 4 | Planned — when Angular 22 is supported and tested. |
+| **22.x** | 22 | 4 | **Current.** Use on Angular 22 apps. |
+| **21.x** | 21 | 4 | Previous. Use on Angular 21 apps. |
 | **23+** | same major as Angular | 4 | Each new Angular major gets a matching library major. |
 
 ### Peer dependencies
 
 Your app should use:
 
-- **Angular** 21 — `@angular/core` and related packages `^21`
+- **Angular** 22 — `@angular/core` and related packages `^22`
 - **Tailwind CSS** 4 — `tailwindcss` `^4`
 - **PostCSS** 8 — `postcss` `^8`
 

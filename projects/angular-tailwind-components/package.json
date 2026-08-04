@@ -1,6 +1,6 @@
 {
   "name": "angular-tailwind-components",
-  "version": "21.3.0-RC2",
+  "version": "22.0.0",
   "description": "Angular UI component library built with Tailwind CSS v4 — signals, standalone components, 40+ components.",
   "author": "Giuseppe Morale",
   "license": "LicenseRef-ATC-1.0",
@@ -31,12 +31,12 @@
     }
   },
   "peerDependencies": {
-    "@angular/cdk": "^21.0.0",
-    "@angular/common": "^21.0.0",
-    "@angular/core": "^21.0.0",
-    "@angular/forms": "^21.0.0",
-    "@angular/platform-browser": "^21.2.0",
-    "tailwindcss": "^4.2.0",
+    "@angular/cdk": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/forms": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "tailwindcss": "^4.3.0",
     "postcss": "^8.5.0"
   },
   "dependencies": {

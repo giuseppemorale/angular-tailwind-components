@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TailwindTabGroup } from './tab-group.component';
 import { TailwindTab } from './tab.component';
 
 @Component({
   imports: [TailwindTabGroup, TailwindTab],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-tab-group [stretch]="stretch" [scrollable]="scrollable" [(activeIndex)]="activeIndex">
       <tailwind-tab label="Tab A">Content A</tailwind-tab>

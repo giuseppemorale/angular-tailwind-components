@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { Component, inject, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import {
   TailwindButton,
@@ -11,6 +11,7 @@ import {
 @Component({
   imports: [TailwindButton],
   selector: 'modal-story-confirm',
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <h4 tailwind-modal-title>Confirm action</h4>
     <div tailwind-modal-content>
@@ -29,6 +30,7 @@ class ConfirmModalComponent {
 @Component({
   imports: [TailwindButton],
   selector: 'modal-story-programmatic-wrapper',
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <div class="flex items-center gap-6">
       <tailwind-button (click)="open()">Open confirmation modal</tailwind-button>

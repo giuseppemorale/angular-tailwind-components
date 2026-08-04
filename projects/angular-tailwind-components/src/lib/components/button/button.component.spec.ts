@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TAILWIND_BUTTON_KIND } from '../../tokens';
 import { TailwindButton } from './button.component';
 
 @Component({
   imports: [TailwindButton],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<tailwind-button icon="plus">Add</tailwind-button>`
 })
 class ButtonWithLabelHost {}

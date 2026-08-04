@@ -7,15 +7,17 @@
     "resolveJsonModule": true,
     "types": [],
     "paths": {
-      "angular-tailwind-components": [
-        "../../projects/angular-tailwind-components/src/public-api.ts"
-      ]
+      "angular-tailwind-components": ["../../projects/angular-tailwind-components/src/public-api.ts"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    ".storybook/*.ts",
-    "../../storybook/**/*.ts"
-  ],
-  "exclude": ["**/*.spec.ts"]
+  "include": ["src/**/*.ts", ".storybook/*.ts", "../../storybook/**/*.ts"],
+  "exclude": ["**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

@@ -5,7 +5,7 @@ import {
   TailwindButton,
   TailwindPosition
 } from '../../../projects/angular-tailwind-components/src/public-api';
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 
 /** Template mostrato nel pannello Code (non esportare: CSF tratterebbe la stringa come story). */
 const TOAST_SERVICE_DEMO_TEMPLATE = `<div class="flex flex-wrap gap-3">
@@ -20,6 +20,7 @@ const TOAST_SERVICE_DEMO_TEMPLATE = `<div class="flex flex-wrap gap-3">
 @Component({
   selector: 'tailwind-toast-story',
   imports: [TailwindToast, TailwindButton],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: TOAST_SERVICE_DEMO_TEMPLATE
 })
 class ToastStoryComponent {

@@ -1,10 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TailwindInput } from '../../components/input/input.component';
 import { TailwindTooltipDirective } from './tooltip.directive';
 
 @Component({
   imports: [TailwindInput, TailwindTooltipDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-input label="Test" [tooltip]="tooltipText()" />
     <button type="button" data-outside>Outside</button>

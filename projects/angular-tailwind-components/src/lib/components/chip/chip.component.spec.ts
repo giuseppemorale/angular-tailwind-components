@@ -1,27 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TailwindChip } from './chip.component';
 
 @Component({
   imports: [TailwindChip],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<tailwind-chip>Angular</tailwind-chip>`
 })
 class ChipHost {}
 
 @Component({
   imports: [TailwindChip],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<tailwind-chip [disabled]="true">Angular</tailwind-chip>`
 })
 class DisabledChipHost {}
 
 @Component({
   imports: [TailwindChip],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<tailwind-chip [removable]="false">Angular</tailwind-chip>`
 })
 class StaticChipHost {}
 
 @Component({
   imports: [TailwindChip],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<tailwind-chip color="primary">Angular</tailwind-chip>`
 })
 class PrimaryChipHost {}

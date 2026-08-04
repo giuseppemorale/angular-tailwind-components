@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
 import { TailwindTable } from './table.component';
@@ -11,6 +11,7 @@ const ROWS = [
 
 @Component({
   imports: [TailwindTable, TailwindTableRowDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-table [data]="rows" [searchable]="searchable" [paginated]="false">
       <thead>
@@ -35,6 +36,7 @@ class TableHostComponent {
 
 @Component({
   imports: [TailwindTable, TailwindTableRowDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-table [data]="rows" [searchable]="false" [paginated]="false">
       <thead>
@@ -56,6 +58,7 @@ class TableNoSearchHostComponent {
 
 @Component({
   imports: [TailwindTable, TailwindTableRowDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-table [data]="rows" [paginated]="true">
       <div tailwind-table-tools data-testid="table-tools">

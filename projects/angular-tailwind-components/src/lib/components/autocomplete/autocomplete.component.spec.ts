@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TailwindOption } from '../../models';
@@ -141,6 +141,7 @@ describe('TailwindAutocomplete', () => {
 
 @Component({
   imports: [TailwindAutocomplete],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-autocomplete [options]="options">
       <ng-template let-option #item>
@@ -155,6 +156,7 @@ class AutocompleteWithItemTemplateComponent {
 
 @Component({
   imports: [TailwindAutocomplete],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-autocomplete
       [options]="filteredOptions()"

@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { Component, input, signal } from '@angular/core';
-import type { EditorCommand, EditorToolbarPreset } from '../../../projects/angular-tailwind-components/src/lib/components/editor/models/editor-command.type';
+import { Component, input, signal, ChangeDetectionStrategy } from '@angular/core';
+import type {
+  EditorCommand,
+  EditorToolbarPreset
+} from '../../../projects/angular-tailwind-components/src/lib/components/editor/models/editor-command.type';
 import type { TailwindSize } from '../../../projects/angular-tailwind-components/src/public-api';
 import { TailwindEditor } from '../../../projects/angular-tailwind-components/src/public-api';
 
@@ -34,6 +37,7 @@ export default meta;
 @Component({
   selector: 'sb-editor-story',
   imports: [TailwindEditor],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-editor
       [label]="label()"
@@ -123,6 +127,7 @@ export const WithError: StoryObj<TailwindEditor> = {
 @Component({
   selector: 'sb-html-change-demo',
   imports: [TailwindEditor],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-editor label="Live preview" placeholder="Type here…" [(value)]="html" (htmlChange)="onChange($event)" />
     <p class="mt-3 text-xs text-neutral-600">htmlChange count: {{ changeCount() }}</p>

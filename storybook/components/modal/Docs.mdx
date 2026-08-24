@@ -9,7 +9,7 @@ import * as ModalStories from './modal.stories';
 
 ---
 
-## Utilizzo 
+## Utilizzo
 
 Chiama `TailwindModalService.open()` da qualsiasi componente. La promise si risolve con il valore passato a `close()` oppure `undefined` se la modale viene chiusa senza risultato.
 
@@ -74,8 +74,8 @@ Iniettato automaticamente nel componente modale dal servizio.
 ```typescript
 const ref = inject<TailwindModalRef<boolean>>(TailwindModalRef);
 
-ref.close(true);  // risolve la promise con `true`
-ref.close();      // risolve la promise con `undefined`
+ref.close(true); // risolve la promise con `true`
+ref.close(); // risolve la promise con `undefined`
 ```
 
 ---
@@ -85,14 +85,19 @@ ref.close();      // risolve la promise con `undefined`
 Usa `config.data` per iniettare dati nel componente modale via `TAILWIND_MODAL_DATA`.
 
 ```typescript
-interface DeleteData { itemName: string }
+interface DeleteData {
+  itemName: string;
+}
 
 @Component({
   imports: [TailwindButton],
   template: `
     <h4 tailwind-modal-title>Elimina elemento</h4>
     <div tailwind-modal-content>
-      <p>Stai per eliminare <strong>{{ data.itemName }}</strong>.</p>
+      <p>
+        Stai per eliminare <strong>{{ data.itemName }}</strong
+        >.
+      </p>
     </div>
     <div tailwind-modal-footer class="flex justify-end">
       <tailwind-button color="danger" (click)="ref.close(true)">Elimina</tailwind-button>
@@ -100,13 +105,13 @@ interface DeleteData { itemName: string }
   `
 })
 export class DeleteModalComponent {
-  readonly ref  = inject<TailwindModalRef<boolean>>(TailwindModalRef);
+  readonly ref = inject<TailwindModalRef<boolean>>(TailwindModalRef);
   readonly data = inject<DeleteData>(TAILWIND_MODAL_DATA);
 }
 
 // Chiamante
 const deleted = await this.modalService.open<boolean>(DeleteModalComponent, {
-  data: { itemName: 'Fattura #1042' },
+  data: { itemName: 'Fattura #1042' }
 });
 ```
 
@@ -116,13 +121,28 @@ const deleted = await this.modalService.open<boolean>(DeleteModalComponent, {
 
 ```typescript
 interface TailwindModalConfig<D = unknown> {
-  data?:            D;            // iniettato via TAILWIND_MODAL_DATA
-  size?:            TailwindSize; // 'xs' | 'sm' | 'md' | 'lg' | 'xl'  (default: 'md')
-  showCloseButton?: boolean;      // pulsante × in alto a destra (default: true)
-  closeOnBackdrop?: boolean;      // click fuori per chiudere (default: true)
-  closeOnEscape?:   boolean;      // tasto Escape per chiudere (default: true)
+  data?: D; // iniettato via TAILWIND_MODAL_DATA
+  size?: TailwindSize; // 'xs' | 'sm' | 'md' | 'lg' | 'xl'  (default: 'md')
+  showCloseButton?: boolean; // pulsante × in alto a destra (default: true)
+  closeOnBackdrop?: boolean; // click fuori per chiudere (default: true)
+  closeOnEscape?: boolean; // tasto Escape per chiudere (default: true)
 }
 ```
+
+Sul componente `tailwind-modal` è disponibile anche `closeLabel` per il nome accessibile del pulsante di chiusura (default da `TAILWIND_LABELS.close`).
+
+---
+
+## Accessibilità
+
+Quando è aperto, il modal:
+
+- intrappola il focus nel pannello (`cdkTrapFocus`) e lo riporta all'elemento che l'ha aperto alla chiusura;
+- blocca lo scroll di `<body>`;
+- collega il titolo al dialog con `aria-labelledby`;
+- chiude con Escape (`closeOnEscape`).
+
+Il footer si nasconde da solo quando nello slot `[tailwind-modal-footer]` non viene proiettato nulla.
 
 ---
 

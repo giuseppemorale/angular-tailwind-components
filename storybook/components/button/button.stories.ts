@@ -63,3 +63,27 @@ export const IconRight: StoryObj<TailwindButton> = {
   render: WithIcon.render,
   args: { ...WithIcon.args, role: 'button', iconPosition: 'right' }
 };
+
+export const Loading: StoryObj<TailwindButton> = {
+  parameters: { controls: { exclude: ['icon', 'iconPosition'] } },
+  render: args => ({
+    props: args,
+    template: `
+      <div class="w-full">
+        <tailwind-button ${argsToTemplate(args)}>Saving…</tailwind-button>
+      </div>`
+  }),
+  args: { ...Button.args, role: 'button', loading: true }
+};
+
+export const FullWidth: StoryObj<TailwindButton> = {
+  parameters: { controls: { exclude: ['icon', 'iconPosition'] } },
+  render: args => ({
+    props: args,
+    template: `
+      <div class="w-full max-w-sm">
+        <tailwind-button ${argsToTemplate(args)}>Continue</tailwind-button>
+      </div>`
+  }),
+  args: { ...Button.args, role: 'button', fullWidth: true }
+};

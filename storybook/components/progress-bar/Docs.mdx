@@ -14,17 +14,15 @@ import * as ProgressBarStories from './progress-bar.stories';
 ```typescript
 @Component({
   imports: [TailwindProgressBar],
-  template: `
-    <tailwind-progress-bar
-      [value]="65"
-      label="Upload progress"
-      [showLabel]="true"
-      [showValue]="true"
-      color="primary"
-      size="md"
-      [indeterminate]="false"
-      [striped]="false"
-    />`
+  template: ` <tailwind-progress-bar
+    [value]="65"
+    label="Upload progress"
+    [showLabel]="true"
+    [showValue]="true"
+    color="primary"
+    size="md"
+    [indeterminate]="false"
+    [striped]="false" />`
 })
 export class ExampleComponent {}
 ```
@@ -52,51 +50,99 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>value</code></td>
-      <td><code>number</code></td>
-      <td><code>0</code></td>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>0</code>
+      </td>
       <td>Percentuale 0–100 (clamp interno).</td>
     </tr>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta sopra la barra.</td>
     </tr>
     <tr>
-      <td><code>showLabel</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>showLabel</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Mostra riga etichetta.</td>
     </tr>
     <tr>
-      <td><code>showValue</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>showValue</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Mostra percentuale.</td>
     </tr>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindColor</code></td>
-      <td><code>'primary'</code></td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'primary'</code>
+      </td>
       <td>Colore barra.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
       <td>Altezza track.</td>
     </tr>
     <tr>
-      <td><code>indeterminate</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>indeterminate</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Animazione indeterminata.</td>
     </tr>
     <tr>
-      <td><code>striped</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>striped</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Motivo a strisce.</td>
     </tr>
   </tbody>

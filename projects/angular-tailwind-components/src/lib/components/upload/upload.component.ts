@@ -1,9 +1,22 @@
-import { Component, computed, ElementRef, forwardRef, input, model, output, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  inject,
+  input,
+  model,
+  output,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindButton } from '../button/button.component';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -17,9 +30,12 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './upload.component.html',
-  styleUrl: './upload.component.css'
+  styleUrl: './upload.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindUpload extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   private static nextId = 0;
   private readonly fallbackFileId = `tw-upload-${TailwindUpload.nextId++}`;
 
@@ -42,7 +58,7 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
   /** Max size per file (bytes); if any file exceeds it, selection is rejected */
   readonly maxFileSizeBytes = input<number | undefined>(undefined);
   /** Button / control size */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Show a clear control when there is a value */
   readonly showClear = input<boolean>(true);
   /** Label for the clear action (i18n) */

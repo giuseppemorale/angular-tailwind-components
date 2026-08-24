@@ -1,7 +1,9 @@
 import { InjectionToken } from '@angular/core';
 import {
+  DEFAULT_TAILWIND_LABELS,
   TailwindButtonKind,
   TailwindEditorLabels,
+  TailwindLabels,
   TailwindPasswordLabels,
   TailwindSize,
   type TailwindTitleScale
@@ -9,8 +11,28 @@ import {
 
 export const TAILWIND_MODAL_DATA = new InjectionToken<unknown>('TAILWIND_MODAL_DATA');
 
+/**
+ * App-wide UI strings for the accessible names and built-in text the library renders itself
+ * (close, dismiss, pagination controls, table empty state, …).
+ * Defaults to {@link DEFAULT_TAILWIND_LABELS}; override via {@link provideTailwindConfig} with `Partial` keys only.
+ */
+export const TAILWIND_LABELS = new InjectionToken<TailwindLabels>('TAILWIND_LABELS', {
+  providedIn: 'root',
+  factory: () => DEFAULT_TAILWIND_LABELS
+});
+
 /** Default pixel size for `tailwind-icon` when `size` is omitted (typically 16–64). */
 export const TAILWIND_ICON_SIZE = new InjectionToken<number>('TAILWIND_ICON_SIZE');
+
+/**
+ * Directory the `tailwind-icon` SVG assets are served from, without a trailing slash.
+ * Defaults to `/tailwind-icons`, which assumes the app is served from the domain root — set this
+ * when the app is deployed under a sub-path (`<base href="/my-app/">`) or the assets are copied elsewhere.
+ */
+export const TAILWIND_ICON_BASE_PATH = new InjectionToken<string>('TAILWIND_ICON_BASE_PATH', {
+  providedIn: 'root',
+  factory: () => '/tailwind-icons'
+});
 
 export const TAILWIND_DATETIME_LANGUAGE = new InjectionToken<'it' | 'en'>('TAILWIND_DATETIME_LANGUAGE');
 

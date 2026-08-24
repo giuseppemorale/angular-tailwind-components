@@ -9,7 +9,7 @@
         icon="chevron-left"
         class="tailwind-tab-scroll-btn--start shrink-0 self-stretch rounded-none"
         [disabled]="!canScrollStart()"
-        ariaLabel="Scroll tabs left"
+        [ariaLabel]="scrollLeftLabel()"
         (onClick)="scrollTabs(-1)" />
     }
 
@@ -23,14 +23,16 @@
       role="tablist"
       [attr.aria-label]="ariaLabel() || null"
       (wheel)="onTabListWheel($event)"
+      (keydown)="onTabListKeydown($event)"
       (scroll)="onTabListScroll()">
       @for (tab of tabs(); track $index; let i = $index) {
         <button
           type="button"
           role="tab"
-          [attr.id]="tab.id() ? 'tab-' + tab.id() : null"
+          [attr.id]="tab.tabId()"
           [attr.aria-selected]="activeIndex() === i"
-          [attr.aria-controls]="tab.id() ? tab.id() : null"
+          [attr.aria-controls]="tab.panelId()"
+          [attr.tabindex]="activeIndex() === i ? 0 : -1"
           [disabled]="tab.disabled()"
           [class]="tabButtonClass(i, tab.disabled())"
           (click)="!tab.disabled() && selectTab(i)">
@@ -48,7 +50,7 @@
         icon="chevron-right"
         class="tailwind-tab-scroll-btn--end shrink-0 self-stretch rounded-none"
         [disabled]="!canScrollEnd()"
-        ariaLabel="Scroll tabs right"
+        [ariaLabel]="scrollRightLabel()"
         (onClick)="scrollTabs(1)" />
     }
   </div>

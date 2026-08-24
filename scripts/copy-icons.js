@@ -14,21 +14,11 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const iconsJsonPath = path.join(root, 'node_modules', '@iconify-json', 'heroicons', 'icons.json');
 const publicDir = path.join(root, 'public', 'tailwind-icons');
-const iconsTsPath = path.join(
-  root,
-  'projects',
-  'angular-tailwind-components',
-  'src',
-  'lib',
-  'models',
-  'icons.ts'
-);
+const iconsTsPath = path.join(root, 'projects', 'angular-tailwind-components', 'src', 'lib', 'models', 'icons.ts');
 const destDir = path.join(root, 'dist', 'angular-tailwind-components', 'tailwind-icons');
 
 function isHeroiconsOutlineKey(key) {
-  return (
-    !key.endsWith('-solid') && !key.endsWith('-16-solid') && !key.endsWith('-20-solid')
-  );
+  return !key.endsWith('-solid') && !key.endsWith('-16-solid') && !key.endsWith('-20-solid');
 }
 
 function syncFromIconify() {
@@ -83,7 +73,7 @@ function syncFromIconify() {
   }
 
   entries.sort((a, b) => a.slug.localeCompare(b.slug));
-  const lines = entries.map((e) => `  '${e.slug}'`).join(',\n');
+  const lines = entries.map(e => `  '${e.slug}'`).join(',\n');
 
   const ts =
     `/**\n` +

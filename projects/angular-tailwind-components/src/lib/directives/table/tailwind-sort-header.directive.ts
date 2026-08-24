@@ -13,6 +13,7 @@ import {
   input
 } from '@angular/core';
 import { TailwindIcon } from '../../components/icon/icon.component';
+import { TAILWIND_LABELS } from '../../tokens';
 /** Host attributes on `<tailwind-table>`; kept in sync for sort-header observers. */
 export const TW_TABLE_SORT_KEY_ATTR = 'data-tw-sort-key';
 export const TW_TABLE_SORT_DIR_ATTR = 'data-tw-sort-dir';
@@ -28,6 +29,8 @@ const MAX_TABLE_RESOLVE_ATTEMPTS = 24;
   host: {
     class: 'cursor-pointer whitespace-nowrap text-left select-none hover:text-neutral-900',
     '[attr.tabindex]': '0',
+    // The `th` is operated like a button; without a role, assistive tech announces a plain header.
+    '[attr.role]': '"columnheader"',
     '[attr.data-sort-key]': 'sortKey()'
   }
 })
@@ -41,6 +44,7 @@ export class TailwindSortHeaderDirective {
   private readonly appRef = inject(ApplicationRef);
   private readonly environmentInjector = inject(EnvironmentInjector);
   private readonly injector = inject(Injector);
+  private readonly labels = inject(TAILWIND_LABELS);
 
   private iconRef?: ComponentRef<TailwindIcon>;
   private mo?: MutationObserver;
@@ -94,10 +98,21 @@ export class TailwindSortHeaderDirective {
       this.iconRef.setInput('size', 14);
       this.iconRef.setInput('class', active ? 'shrink-0 text-primary-600' : 'shrink-0 text-neutral-600');
 
+      // `aria-sort` is the attribute assistive tech reads for sortable columns; the label
+      // stays available for the "not sorted yet" case.
+      this.renderer.setAttribute(
+        this.host.nativeElement,
+        'aria-sort',
+        active ? (asc ? 'ascending' : 'descending') : 'none'
+      );
       this.renderer.setAttribute(
         this.host.nativeElement,
         'aria-label',
-        active ? `Sorted ${asc ? 'ascending' : 'descending'}, activate to reverse` : `Sort by ${columnKey}`
+        active
+          ? asc
+            ? this.labels.sortedAscending
+            : this.labels.sortedDescending
+          : this.labels.sortBy.replace('{column}', columnKey)
       );
 
       this.iconRef.changeDetectorRef.detectChanges();

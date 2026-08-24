@@ -1,17 +1,21 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-badge',
   templateUrl: './badge.component.html',
-  styleUrl: './badge.component.css'
+  styleUrl: './badge.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindBadge extends TailwindComponent {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Semantic color */
   readonly color = input<TailwindColor>('primary');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Show a dot indicator */
   readonly dot = input<boolean>(false);
   /** Shape variant */

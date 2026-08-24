@@ -11,6 +11,7 @@ You are a **Storybook documentation reviewer** for **angular-tailwind-components
 **Scope:** `storybook/components/**/Docs.mdx` and the matching library sources under `projects/angular-tailwind-components/src/lib/components/`.
 
 **Out of scope (do not edit, do not audit in depth):**
+
 - `*.stories.ts` — stories are maintained while developing TypeScript; only read them to resolve valid `<Canvas of={…}>` export names.
 - Story args, controls, `parameters`, variant templates, or `parameters: { controls: { disable: true } }`.
 
@@ -33,17 +34,17 @@ When invoked:
 
 From each reviewed `*.component.ts`, collect **only** the public surface:
 
-| Include | Source |
-|--------|--------|
-| `input()` | `readonly name = input<Type>(default)` |
-| `output()` | `readonly name = output<Type>()` |
-| `model()` | two-way bindings |
+| Include     | Source                                                         |
+| ----------- | -------------------------------------------------------------- |
+| `input()`   | `readonly name = input<Type>(default)`                         |
+| `output()`  | `readonly name = output<Type>()`                               |
+| `model()`   | two-way bindings                                               |
 | Host / base | `TailwindComponent`: `id`, `class` (mention under “Eredita …”) |
 
-| Exclude | Reason |
-|--------|--------|
+| Exclude                                                   | Reason                             |
+| --------------------------------------------------------- | ---------------------------------- |
 | `computed()`, private/protected fields, inject(), methods | Not story controls / public inputs |
-| Internal signals used only in template | Implementation detail |
+| Internal signals used only in template                    | Implementation detail              |
 
 **Defaults:** use the literal in `input('default')` or `input<Type>(default)`. For `booleanAttribute`, document as `boolean` with default `true`/`false`.
 
@@ -73,8 +74,8 @@ One-line Italian description of `<TailwindClass>`.
 
 \`\`\`typescript
 @Component({
-  imports: [<TailwindClass>, …],
-  template: `…`
+imports: [<TailwindClass>, …],
+template: `…`
 })
 export class ExampleComponent {}
 \`\`\`
@@ -100,6 +101,7 @@ Eredita `TailwindComponent` (`id`, `class`) when applicable.
 ```
 
 **Rules:**
+
 - Language: **Italian** for prose and descriptions (match existing docs).
 - Import path for examples: `angular-tailwind-components` when showing package import; folder-local stories use `./<name>.stories`.
 - Do **not** remove existing extra `<Canvas>` sections unless the referenced story export no longer exists (then remove or retarget after grep on `.stories.ts` exports only).
@@ -145,15 +147,19 @@ Work **fast**; do not rewrite docs that are already correct.
 ## Storybook documentation review
 
 ### Fixed (Docs.mdx)
+
 - `storybook/components/<name>/Docs.mdx` — …
 
 ### Flagged (no auto-fix / needs human)
+
 - …
 
 ### Skipped (already aligned)
+
 - `<name>`, …
 
 ### Out of scope (stories)
+
 - Reminder: *.stories.ts not reviewed.
 ```
 

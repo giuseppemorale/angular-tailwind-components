@@ -1,7 +1,9 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
+import { FIELD_SIZE } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -15,9 +17,12 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './textarea.component.html',
-  styleUrl: './textarea.component.css'
+  styleUrl: './textarea.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTextarea extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Label text */
   readonly label = input<string>('');
   /** Placeholder text */
@@ -31,7 +36,7 @@ export class TailwindTextarea extends TailwindComponent implements ControlValueA
   /** Resize behavior */
   readonly resize = input<'vertical' | 'none' | 'both' | 'horizontal'>('vertical');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Whether the textarea is readonly */
   readonly readonly = input<boolean>(false);
   /** Helper text shown below field */
@@ -50,19 +55,27 @@ export class TailwindTextarea extends TailwindComponent implements ControlValueA
   /** Computed textarea classes */
   readonly textareaClasses = computed(() => {
     const base = [
-      'block w-full bg-white',
+      'block w-full bg-surface',
       'border transition-colors duration-150',
       'placeholder:text-neutral-400',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
     ];
 
+    /** Only the minimum height differs from the shared field scale. */
+    const minHeightMap: Record<TailwindSize, string> = {
+      xs: 'min-h-[4.5rem]',
+      sm: 'min-h-[5rem]',
+      md: 'min-h-[5.5rem]',
+      lg: 'min-h-[6.5rem]',
+      xl: 'min-h-[7.5rem]'
+    };
     const sizeMap: Record<TailwindSize, string> = {
-      xs: 'text-xs px-2 py-1 rounded-sm min-h-[4.5rem]',
-      sm: 'text-sm px-2.5 py-1.5 rounded-md min-h-[5rem]',
-      md: 'text-sm px-3 py-2 rounded-md min-h-[5.5rem]',
-      lg: 'text-base px-3.5 py-2.5 rounded-lg min-h-[6.5rem]',
-      xl: 'text-base px-4 py-3 rounded-lg min-h-[7.5rem]'
+      xs: `${FIELD_SIZE.xs} ${minHeightMap.xs}`,
+      sm: `${FIELD_SIZE.sm} ${minHeightMap.sm}`,
+      md: `${FIELD_SIZE.md} ${minHeightMap.md}`,
+      lg: `${FIELD_SIZE.lg} ${minHeightMap.lg}`,
+      xl: `${FIELD_SIZE.xl} ${minHeightMap.xl}`
     };
 
     const resizeMap: Record<'vertical' | 'none' | 'both' | 'horizontal', string> = {

@@ -13,7 +13,9 @@ import { TailwindTooltip } from '../../components/tooltip/tooltip.component';
 import { TailwindPosition } from '../../models';
 
 @Directive({
-  selector: '[tooltip]',
+  // `[tooltip]` is the original, unprefixed selector and stays supported; `[tailwindTooltip]` is the
+  // prefixed one new code should use, so the directive cannot collide with another library's.
+  selector: '[tooltip], [tailwindTooltip]',
   standalone: true
 })
 export class TailwindTooltipDirective implements OnDestroy {
@@ -62,6 +64,14 @@ export class TailwindTooltipDirective implements OnDestroy {
   @HostListener('mouseleave')
   hideFromPointer(): void {
     this.hide();
+  }
+
+  /** WCAG 1.4.13: content shown on hover or focus must be dismissible without moving the pointer. */
+  @HostListener('document:keydown.escape')
+  hideFromEscape(): void {
+    if (this.componentRef) {
+      this.hide();
+    }
   }
 
   @HostListener('focusout', ['$event'])
@@ -118,6 +128,8 @@ export class TailwindTooltipDirective implements OnDestroy {
       this.document.body.appendChild(tooltipHost);
     }
     this.updateTooltipComponent();
+    // Without this the tooltip text is invisible to assistive technology.
+    this.host.setAttribute('aria-describedby', this.componentRef.instance.elementId());
 
     setTimeout(() => {
       if (this.componentRef) {
@@ -139,6 +151,7 @@ export class TailwindTooltipDirective implements OnDestroy {
 
   private destroyComponent(): void {
     if (this.componentRef) {
+      this.host.removeAttribute('aria-describedby');
       this.componentRef.destroy();
       this.componentRef = null;
     }

@@ -14,16 +14,10 @@ import * as BreadcrumbStories from './breadcrumb.stories';
 ```typescript
 @Component({
   imports: [TailwindBreadcrumb],
-  template: `
-    <tailwind-breadcrumb
-      ariaLabel="Breadcrumb"
-      separator="/"
-      [items]="[
-        { label: 'Home', link: '#', icon: 'home' },
-        { label: 'Section', href: '#' },
-        { label: 'Current' }
-      ]"
-    />`
+  template: ` <tailwind-breadcrumb
+    ariaLabel="Breadcrumb"
+    separator="/"
+    [items]="[{ label: 'Home', link: '#', icon: 'home' }, { label: 'Section', href: '#' }, { label: 'Current' }]" />`
 })
 export class ExampleComponent {}
 ```
@@ -51,21 +45,42 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>items</code></td>
-      <td><code>TailwindBreadcrumbItem[]</code></td>
-      <td><code>[]</code></td>
-      <td>Elementi con <code>label</code>; <code>link</code> o <code>href</code> per i crumb cliccabili; <code>icon</code> opzionale (<code>TailwindHeroicon</code>).</td>
+      <td>
+        <code>items</code>
+      </td>
+      <td>
+        <code>TailwindBreadcrumbItem[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
+      <td>
+        Elementi con <code>label</code>; <code>link</code> o <code>href</code> per i crumb cliccabili; <code>icon</code>{' '}
+        opzionale (<code>TailwindHeroicon</code>).
+      </td>
     </tr>
     <tr>
-      <td><code>separator</code></td>
-      <td><code>string</code></td>
-      <td><code>'/'</code></td>
+      <td>
+        <code>separator</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'/'</code>
+      </td>
       <td>Separatore per le breadcrumbs.</td>
     </tr>
     <tr>
-      <td><code>ariaLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>'Breadcrumb'</code></td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'Breadcrumb'</code>
+      </td>
       <td>Etichetta per il nav.</td>
     </tr>
   </tbody>

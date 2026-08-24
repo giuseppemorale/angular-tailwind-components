@@ -14,15 +14,14 @@ import * as StepperStories from './stepper.stories';
 ```typescript
 @Component({
   imports: [TailwindStepper, TailwindStep, TailwindInput],
-  template: `
-    <tailwind-stepper>
-      <tailwind-step label="Account" description="Create your account">
-        <tailwind-input label="Email" />
-      </tailwind-step>
-      <tailwind-step label="Done" description="Finish">
-        <p>Complete.</p>
-      </tailwind-step>
-    </tailwind-stepper>`
+  template: ` <tailwind-stepper>
+    <tailwind-step label="Account" description="Create your account">
+      <tailwind-input label="Email" />
+    </tailwind-step>
+    <tailwind-step label="Done" description="Finish">
+      <p>Complete.</p>
+    </tailwind-step>
+  </tailwind-stepper>`
 })
 export class ExampleComponent {}
 ```
@@ -50,23 +49,41 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>activeIndex</code></td>
-      <td><code>ModelSignal&lt;number&gt;</code></td>
-      <td><code>0</code></td>
+      <td>
+        <code>activeIndex</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;number&gt;</code>
+      </td>
+      <td>
+        <code>0</code>
+      </td>
       <td>Indice passo attivo (two-way).</td>
     </tr>
     <tr>
-      <td><code>linear</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Se <code>true</code>, non si saltano passi futuri.</td>
+      <td>
+        <code>linear</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Se <code>true</code>, non si saltano passi futuri.
+      </td>
     </tr>
     <tr>
-      <td><code>color</code></td>
+      <td>
+        <code>color</code>
+      </td>
       <td>
         <code>'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'transparent'</code>
       </td>
-      <td><code>'primary'</code></td>
+      <td>
+        <code>'primary'</code>
+      </td>
       <td>Colore semantico per passi attivi/completati e connettori.</td>
     </tr>
   </tbody>
@@ -87,21 +104,37 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
       <td>—</td>
       <td>Richiesto: titolo passo.</td>
     </tr>
     <tr>
-      <td><code>description</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>description</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Sottotitolo.</td>
     </tr>
     <tr>
-      <td><code>optional</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>optional</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Segna passo come opzionale.</td>
     </tr>
   </tbody>

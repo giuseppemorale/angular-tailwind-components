@@ -14,9 +14,7 @@ import * as AvatarStories from './avatar.stories';
 ```typescript
 @Component({
   imports: [TailwindAvatar],
-  template: `
-    <tailwind-avatar name="John Doe" size="md" status="success" />
-  `
+  template: ` <tailwind-avatar name="John Doe" size="md" status="success" /> `
 })
 export class ExampleComponent {}
 ```
@@ -58,51 +56,99 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>src</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>src</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>URL immagine profilo.</td>
     </tr>
     <tr>
-      <td><code>alt</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>alt</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Testo alternativo dell'immagine.</td>
     </tr>
     <tr>
-      <td><code>name</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>name</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Nome usato per le iniziali e l'etichetta accessibile.</td>
     </tr>
     <tr>
-      <td><code>initials</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>initials</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Iniziali esplicite (sovrascrivono `name`).</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
       <td>Dimensione.</td>
     </tr>
     <tr>
-      <td><code>shape</code></td>
-      <td><code>'circle' | 'rounded'</code></td>
-      <td><code>'circle'</code></td>
+      <td>
+        <code>shape</code>
+      </td>
+      <td>
+        <code>'circle' | 'rounded'</code>
+      </td>
+      <td>
+        <code>'circle'</code>
+      </td>
       <td>Forma dell'avatar.</td>
     </tr>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindColor</code></td>
-      <td><code>'secondary'</code></td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'secondary'</code>
+      </td>
       <td>Colore di sfondo per iniziali o fallback icona.</td>
     </tr>
     <tr>
-      <td><code>status</code></td>
-      <td><code>TailwindColor | undefined</code></td>
-      <td><code>undefined</code></td>
+      <td>
+        <code>status</code>
+      </td>
+      <td>
+        <code>TailwindColor | undefined</code>
+      </td>
+      <td>
+        <code>undefined</code>
+      </td>
       <td>Colore del pallino di status; ometti l'input per nasconderlo.</td>
     </tr>
   </tbody>

@@ -31,7 +31,7 @@ describe('TailwindIcon', () => {
     expect(glyph.style.maskImage).toContain('/tailwind-icons/bell.svg');
   });
 
-  it('should apply custom class to the inner glyph, not only the host', () => {
+  it('should apply custom class to the inner glyph, not the host', () => {
     fixture.componentRef.setInput('class', 'text-danger-600 shrink-0');
     fixture.detectChanges();
 
@@ -40,8 +40,10 @@ describe('TailwindIcon', () => {
 
     expect(glyph.classList.contains('text-danger-600')).toBe(true);
     expect(glyph.classList.contains('shrink-0')).toBe(true);
-    expect(host.classList.contains('inline-flex')).toBe(true);
-    expect(host.classList.contains('items-center')).toBe(true);
+    // The host is `display: contents`; structural classes live on the glyph surface.
+    expect(glyph.classList.contains('inline-flex')).toBe(true);
+    expect(glyph.classList.contains('items-center')).toBe(true);
+    expect(host.classList.contains('inline-flex')).toBe(false);
   });
 
   it('should clamp size below minimum and above maximum', () => {

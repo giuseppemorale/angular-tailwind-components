@@ -1,11 +1,12 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindColor } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-tag',
   templateUrl: './tag.component.html',
-  styleUrl: './tag.component.css'
+  styleUrl: './tag.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTag extends TailwindComponent {
   readonly color = input<TailwindColor>('secondary');

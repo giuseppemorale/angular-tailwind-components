@@ -14,10 +14,9 @@ import * as MessageStories from './message.stories';
 ```typescript
 @Component({
   imports: [TailwindMessage],
-  template: `
-    <tailwind-message color="info" icon="information-circle">
-      This is an informational message.
-    </tailwind-message>`
+  template: ` <tailwind-message color="info" icon="information-circle">
+    This is an informational message.
+  </tailwind-message>`
 })
 export class ExampleComponent {}
 ```
@@ -45,22 +44,40 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindColor</code></td>
-      <td><code>'info'</code></td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'info'</code>
+      </td>
       <td>Colore semantico di sfondo e bordo.</td>
     </tr>
     <tr>
-      <td><code>icon</code></td>
-      <td><code>TailwindHeroicon</code></td>
+      <td>
+        <code>icon</code>
+      </td>
+      <td>
+        <code>TailwindHeroicon</code>
+      </td>
       <td>—</td>
       <td>Nome icona Heroicons (outline); se omesso, nessuna icona a sinistra.</td>
     </tr>
     <tr>
-      <td><code>iconSize</code></td>
-      <td><code>number</code></td>
-      <td><code>20</code></td>
-      <td>Dimensione icona in px quando <code>icon</code> è impostato.</td>
+      <td>
+        <code>iconSize</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>20</code>
+      </td>
+      <td>
+        Dimensione icona in px quando <code>icon</code> è impostato.
+      </td>
     </tr>
   </tbody>
 </table>

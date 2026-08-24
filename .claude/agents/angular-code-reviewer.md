@@ -31,13 +31,13 @@ When invoked:
 
 Every signal-based API on the class must be declared **`readonly`**:
 
-| API | Example (required) |
-|-----|-------------------|
-| `signal()` | `readonly isOpen = signal(false);` |
-| `computed()` | `readonly label = computed(() => ...);` |
-| `input()` | `readonly size = input<TailwindSize>('md');` |
-| `output()` | `readonly closed = output<void>();` |
-| `model()` | `readonly value = model<string>('');` |
+| API          | Example (required)                           |
+| ------------ | -------------------------------------------- |
+| `signal()`   | `readonly isOpen = signal(false);`           |
+| `computed()` | `readonly label = computed(() => ...);`      |
+| `input()`    | `readonly size = input<TailwindSize>('md');` |
+| `output()`   | `readonly closed = output<void>();`          |
+| `model()`    | `readonly value = model<string>('');`        |
 
 **Auto-fix (parent applies, no user prompt):** add `readonly`.
 
@@ -161,11 +161,11 @@ Folders with **multiple components** (e.g. `accordion/`, `tabs/`, `stepper/`, `e
 
 **Subfolders** for everything else, named by **semantics** (lowercase):
 
-| Folder | Contents |
-|--------|----------|
-| `util/` | Pure functions, helpers, coercion, view state, i18n maps |
-| `interfaces/` | Shared types / interfaces for the component |
-| `models/` | Enums / domain models (when not just interfaces) |
+| Folder        | Contents                                                 |
+| ------------- | -------------------------------------------------------- |
+| `util/`       | Pure functions, helpers, coercion, view state, i18n maps |
+| `interfaces/` | Shared types / interfaces for the component              |
+| `models/`     | Enums / domain models (when not just interfaces)         |
 
 Prefer **`util/`** over `utils/`. On touch, suggest renaming legacy `utils/` → `util/`.
 
@@ -208,15 +208,19 @@ Only mention if relevant to the diff:
 ## Angular code review
 
 ### Critical
+
 - `path/file.ts:42` — ...
 
 ### Warnings
+
 - ...
 
 ### Suggestions
+
 - ...
 
 ### Passed
+
 - Signals readonly in ...
 - FormGroup readonly in ...
 - @Component order OK in ...

@@ -1,7 +1,8 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -15,19 +16,36 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './checkbox.component.html',
-  styleUrl: './checkbox.component.css'
+  styleUrl: './checkbox.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindCheckbox extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Label text */
   readonly label = input<string>('');
   /** Description text */
   readonly description = input<string>('');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Unique ID */
 
   /** Two-way bound checked state */
   readonly checked = model<boolean>(false);
+
+  /**
+   * Mixed state for a checkbox that summarises others (a "select all" header box).
+   * Rendered as a dash and exposed as `aria-checked="mixed"`; `checked` is ignored while set.
+   */
+  readonly indeterminate = input<boolean>(false);
+
+  /** `true` when the box paints its filled state (checked or mixed). */
+  readonly isFilled = computed(() => this.indeterminate() || this.checked());
+
+  /** `aria-checked` value, which has three states once `indeterminate` is in play. */
+  readonly ariaChecked = computed<'true' | 'false' | 'mixed'>(() =>
+    this.indeterminate() ? 'mixed' : this.checked() ? 'true' : 'false'
+  );
 
   /** Internal disabled state */
   readonly isDisabled = signal(false);

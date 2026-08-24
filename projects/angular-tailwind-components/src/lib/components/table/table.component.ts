@@ -1,12 +1,13 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
-  Component,
-  ElementRef,
-  HostListener,
   afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
   computed,
   contentChild,
   effect,
+  ElementRef,
+  HostListener,
   inject,
   input,
   output,
@@ -19,7 +20,7 @@ import { TailwindInput } from '../input/input.component';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindTableSortHost } from './interfaces/tailwind-table-sort-host';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
-import { TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
+import { TAILWIND_LABELS, TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
 export type { TailwindTableSortHost };
 
 @Component({
@@ -27,6 +28,7 @@ export type { TailwindTableSortHost };
   imports: [NgTemplateOutlet, TailwindPagination, TailwindIcon, TailwindInput],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.data-tw-sort-key]': 'sortKey()',
     '[attr.data-tw-sort-dir]': 'sortDir()'
@@ -36,14 +38,24 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
 
+  private readonly labels = inject(TAILWIND_LABELS);
+
   readonly data = input<any[]>([]);
   readonly searchable = input<boolean>(true);
-  readonly searchLabel = input<string>('Cerca');
-  readonly searchPlaceholder = input<string>('Cerca...');
+  /** Visible label of the search field; defaults to `TAILWIND_LABELS.search`. */
+  readonly searchLabel = input<string>('');
+  /** Placeholder of the search field; defaults to `TAILWIND_LABELS.searchPlaceholder`. */
+  readonly searchPlaceholder = input<string>('');
   readonly selectable = input<boolean>(false);
   readonly striped = input<boolean>(false);
   readonly loading = input<boolean>(false);
-  readonly emptyMessage = input<string>('No data available');
+  /** Message shown when there are no rows; defaults to `TAILWIND_LABELS.noData`. */
+  readonly emptyMessage = input<string>('');
+
+  protected readonly searchLabelText = computed(() => this.searchLabel() || this.labels.search);
+  protected readonly searchPlaceholderText = computed(() => this.searchPlaceholder() || this.labels.searchPlaceholder);
+  protected readonly emptyMessageText = computed(() => this.emptyMessage() || this.labels.noData);
+  protected readonly loadingText = computed(() => this.labels.loading);
   /** Match your column count so the empty state spans the full table width. */
   readonly emptyColspan = input<number>(1);
 
@@ -56,24 +68,47 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
     () => this.pagination()?.lengthOptions ?? [...DEFAULT_PAGINATION_LENGTH_OPTIONS]
   );
 
-  readonly onSortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
+  /** Emits the indices of the selected rows **within `data()`** (stable across sort, search and paging). */
   readonly onSelectionChange = output<Set<number>>();
+  readonly onSortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
 
   readonly rowTemplate = contentChild.required(TailwindTableRowDirective);
 
-  rowContext(row: Record<string, unknown>, index: number): Record<string, unknown> {
-    return {
-      $implicit: row,
-      index,
-      stripedRow: this.striped() && index % 2 === 1,
-      selected: this.selectedRows().has(index),
-      selectable: this.selectable(),
-      toggleRow: () => {
-        if (!this.selectable()) return;
-        this.toggleSelection(index);
-      }
-    };
-  }
+  /** Row reference → index in `data()`, so selection survives sorting, filtering and paging. */
+  private readonly dataIndexByRow = computed(() => {
+    const map = new Map<unknown, number>();
+    this.data().forEach((row, i) => map.set(row, i));
+    return map;
+  });
+
+  /**
+   * One context object per displayed row, rebuilt only when the rows, the selection or the
+   * relevant inputs change (previously rebuilt on every change detection pass).
+   */
+  readonly rowContexts = computed(() => {
+    const indexByRow = this.dataIndexByRow();
+    const striped = this.striped();
+    const selectable = this.selectable();
+    const selected = this.selectedRows();
+
+    return this.displayedData().map((row, index) => {
+      const dataIndex = indexByRow.get(row) ?? index;
+      return {
+        $implicit: row,
+        /** Position within the current page (display and zebra striping). */
+        index,
+        /** Position within `data()` — the identity used for selection. */
+        dataIndex,
+        stripedRow: striped && index % 2 === 1,
+        selected: selected.has(dataIndex),
+        selectable,
+        toggleRow: () => {
+          if (!this.selectable()) return;
+          this.toggleSelection(dataIndex);
+        }
+      };
+    });
+  });
 
   readonly sortKey = signal<string>('');
   readonly sortDir = signal<'asc' | 'desc'>('asc');
@@ -121,7 +156,7 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
   });
 
   readonly sortedData = computed(() => {
-    let rows = [...this.filteredData()];
+    const rows = [...this.filteredData()];
     const key = this.sortKey();
     if (key) {
       const dir = this.sortDir() === 'asc' ? 1 : -1;
@@ -161,13 +196,63 @@ export class TailwindTable extends TailwindComponent implements TailwindTableSor
     this.onSortChange.emit({ key: this.sortKey(), direction: this.sortDir() });
   }
 
-  toggleSelection(index: number): void {
+  /** Toggles the row at `dataIndex` (index within `data()`, not within the current page). */
+  toggleSelection(dataIndex: number): void {
     this.selectedRows.update(s => {
       const next = new Set(s);
-      if (next.has(index)) next.delete(index);
-      else next.add(index);
+      if (next.has(dataIndex)) next.delete(dataIndex);
+      else next.add(dataIndex);
       return next;
     });
+    this.onSelectionChange.emit(this.selectedRows());
+  }
+
+  /** The selected rows themselves, in `data()` order. */
+  readonly selectedItems = computed(() => {
+    const selected = this.selectedRows();
+    return this.data().filter((_, i) => selected.has(i));
+  });
+
+  /** True when every row matching the current search is selected (`false` for an empty result). */
+  readonly allFilteredSelected = computed(() => {
+    const rows = this.sortedData();
+    if (rows.length === 0) return false;
+    const indexByRow = this.dataIndexByRow();
+    const selected = this.selectedRows();
+    return rows.every(row => selected.has(indexByRow.get(row) ?? -1));
+  });
+
+  /** True when some — but not all — filtered rows are selected (drives a header `indeterminate` box). */
+  readonly someFilteredSelected = computed(() => {
+    const rows = this.sortedData();
+    if (rows.length === 0) return false;
+    const indexByRow = this.dataIndexByRow();
+    const selected = this.selectedRows();
+    const hit = rows.some(row => selected.has(indexByRow.get(row) ?? -1));
+    return hit && !this.allFilteredSelected();
+  });
+
+  /** Selects or clears every row matching the current search (not just the current page). */
+  toggleAllFiltered(): void {
+    if (!this.selectable()) return;
+    const indexByRow = this.dataIndexByRow();
+    const indices = this.sortedData()
+      .map(row => indexByRow.get(row) ?? -1)
+      .filter(i => i >= 0);
+
+    this.selectedRows.update(s => {
+      const next = new Set(s);
+      if (this.allFilteredSelected()) indices.forEach(i => next.delete(i));
+      else indices.forEach(i => next.add(i));
+      return next;
+    });
+    this.onSelectionChange.emit(this.selectedRows());
+  }
+
+  /** Clears the whole selection. */
+  clearSelection(): void {
+    if (this.selectedRows().size === 0) return;
+    this.selectedRows.set(new Set());
     this.onSelectionChange.emit(this.selectedRows());
   }
 

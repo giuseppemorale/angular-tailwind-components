@@ -14,14 +14,13 @@ import * as CardStories from './card.stories';
 ```typescript
 @Component({
   imports: [TailwindCard, TailwindButton],
-  template: `
-    <tailwind-card [elevated]="false" [hoverable]="false" [hasHeader]="true" [hasFooter]="true">
-      <div tailwind-card-header><h3 class="font-semibold">Titolo</h3></div>
-      <p>Contenuto della card.</p>
-      <div tailwind-card-footer>
-        <tailwind-button>OK</tailwind-button>
-      </div>
-    </tailwind-card>`
+  template: ` <tailwind-card [elevated]="false" [hoverable]="false" [hasHeader]="true" [hasFooter]="true">
+    <div tailwind-card-header><h3 class="font-semibold">Titolo</h3></div>
+    <p>Contenuto della card.</p>
+    <div tailwind-card-footer>
+      <tailwind-button>OK</tailwind-button>
+    </div>
+  </tailwind-card>`
 })
 export class ExampleComponent {}
 ```
@@ -67,33 +66,63 @@ Eredita `TailwindComponent` (`id`, `class`). Le classi passate con `class` / `[c
   </thead>
   <tbody>
     <tr>
-      <td><code>elevated</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>elevated</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Ombra più marcata.</td>
     </tr>
     <tr>
-      <td><code>hoverable</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>hoverable</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Effetto hover sull’ombra.</td>
     </tr>
     <tr>
-      <td><code>headerBg</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>headerBg</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Sfondo nell’area header.</td>
     </tr>
     <tr>
-      <td><code>hasHeader</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>hasHeader</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Mostra il blocco header (proiezione).</td>
     </tr>
     <tr>
-      <td><code>hasFooter</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>hasFooter</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Mostra il blocco footer.</td>
     </tr>
   </tbody>

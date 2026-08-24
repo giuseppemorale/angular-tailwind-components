@@ -2,6 +2,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import {
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   computed,
@@ -23,6 +24,8 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent, Subscription } from 'rxjs';
 import { TailwindOption, TailwindSize } from '../../models';
+import { TAILWIND_COMPONENTS_SIZE, TAILWIND_LABELS } from '../../tokens';
+import { FIELD_SIZE } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindIcon } from '../icon/icon.component';
@@ -47,9 +50,17 @@ export interface TailwindAutocompleteItemContext<T = unknown> {
     }
   ],
   templateUrl: './autocomplete.component.html',
-  styleUrl: './autocomplete.component.css'
+  styleUrl: './autocomplete.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindAutocomplete<T = unknown> extends TailwindComponent implements ControlValueAccessor, OnDestroy {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+  private readonly labels = inject(TAILWIND_LABELS);
+
+  /** Empty-state text; defaults to `TAILWIND_LABELS.noResults`. */
+  readonly noResultsLabel = input<string>('');
+  protected readonly noResultsText = computed(() => this.noResultsLabel() || this.labels.noResults);
+
   private static nextId = 0;
 
   private readonly overlay = inject(Overlay);
@@ -89,8 +100,14 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
   readonly placeholder = input<string>('');
   /** Available options */
   readonly options = input<TailwindOption<T>[]>([]);
+  /**
+   * How an option value is matched against the current value. Defaults to identity (`Object.is`),
+   * which does **not** match structurally equal objects coming from different fetches — pass a
+   * comparator when option values are objects, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
+   */
+  readonly compareWith = input<(a: T | null, b: T | null) => boolean>((a, b) => Object.is(a, b));
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Helper text */
   readonly helperText = input<string>('');
   /** Error text */
@@ -139,24 +156,16 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
   });
 
   readonly inputClasses = computed(() => {
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: 'text-xs px-2 py-1 rounded-sm',
-      sm: 'text-sm px-2.5 py-1.5 rounded-md',
-      md: 'text-sm px-3 py-2 rounded-md',
-      lg: 'text-base px-3.5 py-2.5 rounded-lg',
-      xl: 'text-base px-4 py-3 rounded-lg'
-    };
-
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
       : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
     return [
-      'block w-full bg-white border transition-colors duration-150',
+      'block w-full bg-surface border transition-colors duration-150',
       'placeholder:text-neutral-400',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed',
-      sizeMap[this.size()],
+      FIELD_SIZE[this.size()],
       stateClass
     ].join(' ');
   });
@@ -334,7 +343,7 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
   }
 
   private optionValueEquals(a: unknown, b: unknown): boolean {
-    return Object.is(a, b);
+    return this.compareWith()(a as T | null, b as T | null);
   }
 
   private emitSearch(query: string): void {

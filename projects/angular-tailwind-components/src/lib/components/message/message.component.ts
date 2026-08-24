@@ -1,4 +1,4 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindColor, TailwindHeroicon, TailwindIconSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -7,7 +7,8 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon],
   selector: 'tailwind-message',
   templateUrl: './message.component.html',
-  styleUrl: './message.component.css'
+  styleUrl: './message.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindMessage extends TailwindComponent {
   readonly color = input<TailwindColor>('info');

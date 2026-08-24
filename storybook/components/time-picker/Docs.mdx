@@ -47,8 +47,7 @@ export const appConfig: ApplicationConfig = {
 ```typescript
 @Component({
   imports: [TailwindTimePicker],
-  template: `
-    <tailwind-time-picker label="Meeting Time" [(value)]="time" />`
+  template: ` <tailwind-time-picker label="Meeting Time" [(value)]="time" />`
 })
 export class ExampleComponent {
   time = '09:00';
@@ -60,8 +59,7 @@ Con reactive forms:
 ```typescript
 @Component({
   imports: [TailwindTimePicker, ReactiveFormsModule],
-  template: `
-    <tailwind-time-picker formControlName="meetingTime" label="Orario riunione" />`
+  template: ` <tailwind-time-picker formControlName="meetingTime" label="Orario riunione" />`
 })
 export class ExampleComponent {}
 ```
@@ -97,16 +95,30 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta sopra il campo.</td>
     </tr>
     <tr>
-      <td><code>value</code></td>
-      <td><code>ModelSignal&lt;string&gt;</code></td>
-      <td><code>''</code></td>
-      <td>Valore orario two-way nel formato <code>HH:mm</code>. Se vuoto il pannello parte dall&apos;ora corrente.</td>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;string&gt;</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Valore orario two-way nel formato <code>HH:mm</code>. Se vuoto il pannello parte dall&apos;ora corrente.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -123,9 +135,15 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>TAILWIND_DATETIME_LANGUAGE</code></td>
-      <td><code>'it' | 'en'</code></td>
-      <td>Lingua UI del pannello. Da fornire nei <code>providers</code> globali. Default: <code>'it'</code>.</td>
+      <td>
+        <code>TAILWIND_DATETIME_LANGUAGE</code>
+      </td>
+      <td>
+        <code>'it' | 'en'</code>
+      </td>
+      <td>
+        Lingua UI del pannello. Da fornire nei <code>providers</code> globali. Default: <code>'it'</code>.
+      </td>
     </tr>
   </tbody>
 </table>

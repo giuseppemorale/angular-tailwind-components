@@ -14,14 +14,12 @@ import * as RadioStories from './radio.stories';
 ```typescript
 @Component({
   imports: [TailwindRadioGroup],
-  template: `
-    <tailwind-radio-group
-      label="Plan"
-      [options]="options"
-      size="md"
-      orientation="vertical"
-      [(value)]="selected"
-    />`
+  template: ` <tailwind-radio-group
+    label="Plan"
+    [options]="options"
+    size="md"
+    orientation="vertical"
+    [(value)]="selected" />`
 })
 export class ExampleComponent {
   selected = 'free';
@@ -55,45 +53,87 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta gruppo.</td>
     </tr>
     <tr>
-      <td><code>ariaLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Aria-label sul gruppo.</td>
     </tr>
     <tr>
-      <td><code>name</code></td>
-      <td><code>string | undefined</code></td>
+      <td>
+        <code>name</code>
+      </td>
+      <td>
+        <code>string | undefined</code>
+      </td>
       <td>—</td>
       <td>Nome HTML delle radio.</td>
     </tr>
     <tr>
-      <td><code>options</code></td>
-      <td><code>TailwindOptionGroup&lt;T&gt;[]</code></td>
-      <td><code>[]</code></td>
-      <td>Oggetti <code>value</code> / <code>label</code>.</td>
+      <td>
+        <code>options</code>
+      </td>
+      <td>
+        <code>TailwindOptionGroup&lt;T&gt;[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
+      <td>
+        Oggetti <code>value</code> / <code>label</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
       <td>Dimensione radio.</td>
     </tr>
     <tr>
-      <td><code>orientation</code></td>
-      <td><code>'horizontal' | 'vertical'</code></td>
-      <td><code>'vertical'</code></td>
+      <td>
+        <code>orientation</code>
+      </td>
+      <td>
+        <code>'horizontal' | 'vertical'</code>
+      </td>
+      <td>
+        <code>'vertical'</code>
+      </td>
       <td>Disposizione.</td>
     </tr>
     <tr>
-      <td><code>value</code></td>
-      <td><code>ModelSignal&lt;T | null&gt;</code></td>
-      <td><code>null</code></td>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;T | null&gt;</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
       <td>Valore selezionato (two-way).</td>
     </tr>
   </tbody>

@@ -1,7 +1,20 @@
-import { Component, computed, forwardRef, input, model, output, signal, viewChildren, ElementRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  inject,
+  input,
+  model,
+  output,
+  signal,
+  viewChildren
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -15,9 +28,12 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './input-otp.component.html',
-  styleUrl: './input-otp.component.css'
+  styleUrl: './input-otp.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindInputOtp extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Label text */
   readonly label = input<string>('');
   /** Number of character slots */
@@ -27,7 +43,7 @@ export class TailwindInputOtp extends TailwindComponent implements ControlValueA
   /** Mask digits (password bullets) */
   readonly mask = input<boolean>(false);
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Slots are read-only (navigation still allowed) */
   readonly readonly = input<boolean>(false);
   /** Helper text shown below */
@@ -62,7 +78,7 @@ export class TailwindInputOtp extends TailwindComponent implements ControlValueA
 
   readonly cellClasses = computed(() => {
     const base = [
-      'block w-10 text-center font-mono tabular-nums bg-white',
+      'block w-10 text-center font-mono tabular-nums bg-surface',
       'border transition-colors duration-150',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'

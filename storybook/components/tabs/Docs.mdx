@@ -14,11 +14,10 @@ import * as TabsStories from './tabs.stories';
 ```typescript
 @Component({
   imports: [TailwindTabGroup, TailwindTab],
-  template: `
-    <tailwind-tab-group color="primary" ariaLabel="Example" [scrollable]="false" [(activeIndex)]="index">
-      <tailwind-tab label="Overview">Overview content</tailwind-tab>
-      <tailwind-tab label="Details">Details content</tailwind-tab>
-    </tailwind-tab-group>`
+  template: ` <tailwind-tab-group color="primary" ariaLabel="Example" [scrollable]="false" [(activeIndex)]="index">
+    <tailwind-tab label="Overview">Overview content</tailwind-tab>
+    <tailwind-tab label="Details">Details content</tailwind-tab>
+  </tailwind-tab-group>`
 })
 export class ExampleComponent {
   index = 0;
@@ -48,33 +47,69 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>ariaLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta lista tab.</td>
     </tr>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindColor</code></td>
-      <td><code>'primary'</code></td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'primary'</code>
+      </td>
       <td>Colore della tab attiva (testo e indicatore sotto).</td>
     </tr>
     <tr>
-      <td><code>scrollable</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Scroll orizzontale con <code>tailwind-button</code> (<code>kind="ghost"</code>, <code>color="transparent"</code>); rotella/trackpad sulla lista tab.</td>
+      <td>
+        <code>scrollable</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Scroll orizzontale con <code>tailwind-button</code> (<code>kind="ghost"</code>, <code>color="transparent"</code>
+        ); rotella/trackpad sulla lista tab.
+      </td>
     </tr>
     <tr>
-      <td><code>stretch</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Se <code>true</code>, i pulsanti tab occupano equamente tutta la larghezza della lista. Ignorato quando <code>scrollable</code> è <code>true</code>.</td>
+      <td>
+        <code>stretch</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Se <code>true</code>, i pulsanti tab occupano equamente tutta la larghezza della lista. Ignorato quando{' '}
+        <code>scrollable</code> è <code>true</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>activeIndex</code></td>
-      <td><code>ModelSignal&lt;number&gt;</code></td>
-      <td><code>0</code></td>
+      <td>
+        <code>activeIndex</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;number&gt;</code>
+      </td>
+      <td>
+        <code>0</code>
+      </td>
       <td>Indice tab attiva (two-way).</td>
     </tr>
   </tbody>
@@ -95,21 +130,37 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
       <td>—</td>
       <td>Richiesto: testo tab.</td>
     </tr>
     <tr>
-      <td><code>icon</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>icon</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Icona o classe CSS opzionale.</td>
     </tr>
     <tr>
-      <td><code>disabled</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>disabled</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Tab non selezionabile.</td>
     </tr>
   </tbody>

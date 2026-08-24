@@ -1,19 +1,23 @@
 <button
   [ngClass]="computedClasses()"
-  [disabled]="disabled()"
+  [disabled]="isDisabled()"
   [type]="type()"
   [attr.role]="role()"
   [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  [attr.aria-current]="ariaCurrent() ?? null"
   [attr.aria-pressed]="ariaPressed() === undefined ? null : ariaPressed() ? 'true' : 'false'"
   (click)="handleClick($event)">
   <span class="inline-flex min-w-0 items-center justify-center gap-2">
-    @if (icon() && iconPosition() === 'left') {
+    @if (loading()) {
+      <tailwind-icon icon="arrow-path" [size]="iconPixelSize()" class="shrink-0 animate-spin" />
+    } @else if (icon() && iconPosition() === 'left') {
       <tailwind-icon [icon]="icon()!" [size]="iconPixelSize()" class="shrink-0" />
     }
     <span class="tailwind-button-label inline-flex min-w-0 items-center empty:hidden">
       <ng-content />
     </span>
-    @if (icon() && iconPosition() === 'right') {
+    @if (!loading() && icon() && iconPosition() === 'right') {
       <tailwind-icon [icon]="icon()!" [size]="iconPixelSize()" class="shrink-0" />
     }
   </span>

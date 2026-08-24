@@ -9,7 +9,7 @@
     @if (lengthOptions().length > 0) {
       <div class="w-20 shrink-0">
         <tailwind-select
-          ariaLabel="Rows per page"
+          [ariaLabel]="rowsPerPageLabel()"
           [options]="pageSizeSelectOptions()"
           [value]="pageSize()"
           (valueChange)="onPageSizeValueChange($event)" />
@@ -17,25 +17,30 @@
     }
   </div>
 
-  <nav [attr.aria-label]="ariaLabel()" class="flex items-center gap-1">
+  <nav [attr.aria-label]="navAriaLabel()" class="flex items-center gap-1">
     <!-- Previous -->
     <tailwind-button
       kind="ghost"
       color="transparent"
       icon="chevron-left"
       [disabled]="currentPage() <= 1"
-      ariaLabel="Previous page"
+      [ariaLabel]="previousPageLabel()"
       (onClick)="goToPage(currentPage() - 1)" />
 
-    @for (page of visiblePages(); track page) {
-      <tailwind-button
-        [kind]="page === currentPage() ? 'flat' : 'ghost'"
-        [color]="page === currentPage() ? 'primary' : 'secondary'"
-        class="min-w-8"
-        [ariaLabel]="pageButtonAriaLabel(page)"
-        (onClick)="goToPage(page)">
-        {{ page }}
-      </tailwind-button>
+    @for (page of visiblePages(); track $index) {
+      @if (page === null) {
+        <span class="px-1 text-sm text-neutral-500 select-none" aria-hidden="true">…</span>
+      } @else {
+        <tailwind-button
+          [kind]="page === currentPage() ? 'flat' : 'ghost'"
+          [color]="page === currentPage() ? 'primary' : 'secondary'"
+          class="min-w-8"
+          [ariaCurrent]="page === currentPage() ? 'page' : undefined"
+          [ariaLabel]="pageButtonAriaLabel(page)"
+          (onClick)="goToPage(page)">
+          {{ page }}
+        </tailwind-button>
+      }
     }
 
     <!-- Next -->
@@ -44,7 +49,7 @@
       color="transparent"
       icon="chevron-right"
       [disabled]="currentPage() >= totalPages()"
-      ariaLabel="Next page"
+      [ariaLabel]="nextPageLabel()"
       (onClick)="goToPage(currentPage() + 1)" />
   </nav>
 </div>

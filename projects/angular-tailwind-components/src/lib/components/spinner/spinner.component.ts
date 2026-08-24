@@ -1,19 +1,23 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { TailwindColor, TailwindHeroicon, TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   imports: [TailwindIcon],
   selector: 'tailwind-spinner',
   templateUrl: './spinner.component.html',
-  styleUrl: './spinner.component.css'
+  styleUrl: './spinner.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSpinner extends TailwindComponent {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Heroicons outline name for the spinning glyph */
   readonly icon = input<TailwindHeroicon>('arrow-path');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Color uses Tailwind text color class */
   readonly color = input<TailwindColor>('primary');
   /** Optional label text */

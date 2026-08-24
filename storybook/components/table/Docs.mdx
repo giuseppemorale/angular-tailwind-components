@@ -20,7 +20,9 @@ Il componente ripete il template per ogni riga di `displayedData()`. La forma co
     <td>{{ row.email }}</td>
     <td>{{ row.role }}</td>
     <td>
-      <tailwind-tag [color]="row.status === 1 ? 'success' : 'danger'">{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag>
+      <tailwind-tag [color]="row.status === 1 ? 'success' : 'danger'"
+        >{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag
+      >
     </td>
   </tr>
 </tbody>
@@ -61,8 +63,12 @@ Con `searchable` attivo (default), ricerca e azioni custom stanno su una riga **
   <div tailwind-table-tools>
     <tailwind-button icon="arrow-path">Refresh</tailwind-button>
   </div>
-  <thead>...</thead>
-  <tbody *tailwindTableRow="let row">...</tbody>
+  <thead>
+    ...
+  </thead>
+  <tbody *tailwindTableRow="let row">
+    ...
+  </tbody>
 </tailwind-table>
 ```
 
@@ -87,7 +93,9 @@ Per colonne con testo lungo (es. email), usa **`max-w-*`** + **`truncate`** sull
           <td>{{ row.email }}</td>
           <td>{{ row.role }}</td>
           <td>
-            <tailwind-tag [color]="row.status === 1 ? 'success' : 'danger'">{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag>
+            <tailwind-tag [color]="row.status === 1 ? 'success' : 'danger'">{{
+              row.status === 1 ? 'Active' : 'Inactive'
+            }}</tailwind-tag>
           </td>
         </tr>
       </tbody>
@@ -125,70 +133,150 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>data</code></td>
-      <td><code>Record&lt;string, unknown&gt;[]</code></td>
-      <td><code>[]</code></td>
+      <td>
+        <code>data</code>
+      </td>
+      <td>
+        <code>Record&lt;string, unknown&gt;[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
       <td>Righe dati (ricerca, ordinamento e slice paginazione applicati dal componente).</td>
     </tr>
     <tr>
-      <td><code>searchable</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
-      <td>Mostra un <code>tailwind-input</code> in alto a sinistra; filtra le righe in OR su tutti i valori dell’oggetto riga.</td>
+      <td>
+        <code>searchable</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>
+        Mostra un <code>tailwind-input</code> in alto a sinistra; filtra le righe in OR su tutti i valori dell’oggetto
+        riga.
+      </td>
     </tr>
     <tr>
-      <td><code>searchLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>'Cerca'</code></td>
-      <td>Label del campo di ricerca (<code>tailwind-input</code>).</td>
+      <td>
+        <code>searchLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'Cerca'</code>
+      </td>
+      <td>
+        Label del campo di ricerca (<code>tailwind-input</code>).
+      </td>
     </tr>
     <tr>
-      <td><code>searchPlaceholder</code></td>
-      <td><code>string</code></td>
-      <td><code>'Cerca...'</code></td>
+      <td>
+        <code>searchPlaceholder</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'Cerca...'</code>
+      </td>
       <td>Placeholder del campo di ricerca.</td>
     </tr>
     <tr>
-      <td><code>selectable</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Click sulla riga per selezione (evidenziazione); usare <code>toggleRow</code> dal contesto del template riga.</td>
+      <td>
+        <code>selectable</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Click sulla riga per selezione (evidenziazione); usare <code>toggleRow</code> dal contesto del template riga.
+      </td>
     </tr>
     <tr>
-      <td><code>striped</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Righe alternate; usare <code>stripedRow</code> sul <code>&lt;tr&gt;</code>.</td>
+      <td>
+        <code>striped</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Righe alternate; usare <code>stripedRow</code> sul <code>&lt;tr&gt;</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>loading</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>loading</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Stato caricamento.</td>
     </tr>
     <tr>
-      <td><code>emptyMessage</code></td>
-      <td><code>string</code></td>
-      <td><code>'No data available'</code></td>
+      <td>
+        <code>emptyMessage</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'No data available'</code>
+      </td>
       <td>Testo quando non ci sono righe.</td>
     </tr>
     <tr>
-      <td><code>emptyColspan</code></td>
-      <td><code>number</code></td>
-      <td><code>1</code></td>
-      <td><code>colspan</code> della cella vuota (allineare al numero di colonne).</td>
+      <td>
+        <code>emptyColspan</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>1</code>
+      </td>
+      <td>
+        <code>colspan</code> della cella vuota (allineare al numero di colonne).
+      </td>
     </tr>
     <tr>
-      <td><code>paginated</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>paginated</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Paginazione client-side.</td>
     </tr>
     <tr>
-      <td><code>pagination</code></td>
-      <td><code>Pagination</code></td>
-      <td><code>undefined</code></td>
-      <td>Configurazione paginazione (<code>totalItems</code>, <code>pageSize</code>, <code>currentPage</code>, <code>maxVisible</code>, <code>ariaLabel</code>, <code>summary</code>).</td>
+      <td>
+        <code>pagination</code>
+      </td>
+      <td>
+        <code>Pagination</code>
+      </td>
+      <td>
+        <code>undefined</code>
+      </td>
+      <td>
+        Configurazione paginazione (<code>totalItems</code>, <code>pageSize</code>, <code>currentPage</code>,{' '}
+        <code>maxVisible</code>, <code>ariaLabel</code>, <code>summary</code>).
+      </td>
     </tr>
   </tbody>
 </table>
@@ -204,12 +292,22 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>*tailwindTableRow</code> (su <code>tbody</code>)</td>
-      <td>Template di una riga (<code>tbody</code> &gt; <code>tr</code> &gt; celle). Contesto: <code>$implicit</code> (row), <code>index</code>, <code>stripedRow</code>, <code>selected</code>, <code>selectable</code>, <code>toggleRow</code>.</td>
+      <td>
+        <code>*tailwindTableRow</code> (su <code>tbody</code>)
+      </td>
+      <td>
+        Template di una riga (<code>tbody</code> &gt; <code>tr</code> &gt; celle). Contesto: <code>$implicit</code>{' '}
+        (row), <code>index</code>, <code>stripedRow</code>, <code>selected</code>, <code>selectable</code>,{' '}
+        <code>toggleRow</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>ng-template[tailwindTableRow]</code></td>
-      <td>Solo celle (<code>&lt;td&gt;</code>); contesto come sopra.</td>
+      <td>
+        <code>ng-template[tailwindTableRow]</code>
+      </td>
+      <td>
+        Solo celle (<code>&lt;td&gt;</code>); contesto come sopra.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -228,9 +326,17 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>[tailwindSortHeader]</code> su <code>&lt;th&gt;</code></td>
-      <td><code>sortKey</code> (obbl., stringa)</td>
-      <td>Colonna ordinabile; indicatori con <code>TailwindIcon</code> (<code>chevron-up-down</code> / <code>chevron-up</code> / <code>chevron-down</code>), <code>aria-label</code> e sort delegato all’host <code>tailwind-table</code>. Richiede asset <code>/tailwind-icons/*.svg</code> (come il resto delle icone).</td>
+      <td>
+        <code>[tailwindSortHeader]</code> su <code>&lt;th&gt;</code>
+      </td>
+      <td>
+        <code>sortKey</code> (obbl., stringa)
+      </td>
+      <td>
+        Colonna ordinabile; indicatori con <code>TailwindIcon</code> (<code>chevron-up-down</code> /{' '}
+        <code>chevron-up</code> / <code>chevron-down</code>), <code>aria-label</code> e sort delegato all’host{' '}
+        <code>tailwind-table</code>. Richiede asset <code>/tailwind-icons/*.svg</code> (come il resto delle icone).
+      </td>
     </tr>
   </tbody>
 </table>
@@ -247,13 +353,23 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>onSortChange</code></td>
-      <td><code>&#123; key: string; direction: 'asc' | 'desc' &#125;</code></td>
-      <td>Ordinamento applicato (chiave proprietà di <code>data</code>).</td>
+      <td>
+        <code>onSortChange</code>
+      </td>
+      <td>
+        <code>&#123; key: string; direction: 'asc' | 'desc' &#125;</code>
+      </td>
+      <td>
+        Ordinamento applicato (chiave proprietà di <code>data</code>).
+      </td>
     </tr>
     <tr>
-      <td><code>onSelectionChange</code></td>
-      <td><code>Set&lt;number&gt;</code></td>
+      <td>
+        <code>onSelectionChange</code>
+      </td>
+      <td>
+        <code>Set&lt;number&gt;</code>
+      </td>
       <td>Indici delle righe selezionate (rispetto alla pagina visualizzata).</td>
     </tr>
   </tbody>

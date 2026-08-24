@@ -1,6 +1,18 @@
-import { booleanAttribute, Component, computed, ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
+import {
+  booleanAttribute,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  ElementRef,
+  forwardRef,
+  inject,
+  input,
+  signal,
+  viewChild
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindColor, TailwindSize } from '../../models';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 /** Value model: single number or sorted pair when `range` is true */
@@ -16,9 +28,12 @@ export type TailwindSliderValue = number | [number, number];
     }
   ],
   templateUrl: './slider.component.html',
-  styleUrl: './slider.component.css'
+  styleUrl: './slider.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSlider extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Minimum bound */
   readonly min = input<number>(0);
   /** Maximum bound */
@@ -31,8 +46,20 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
   readonly orientation = input<'horizontal' | 'vertical'>('horizontal');
   /** Tick marks at each step */
   readonly showTicks = input<boolean>(false);
+  /**
+   * Accessible name for the thumb. A `role="slider"` with no name is announced as an unlabelled
+   * control, so pass one whenever there is no visible label wired to this component.
+   */
+  readonly ariaLabel = input<string>('');
+  /** Accessible name of the lower thumb in `range` mode; falls back to `ariaLabel`. */
+  readonly minAriaLabel = input<string>('');
+  /** Accessible name of the upper thumb in `range` mode; falls back to `ariaLabel`. */
+  readonly maxAriaLabel = input<string>('');
+
+  protected readonly lowThumbLabel = computed(() => this.minAriaLabel() || this.ariaLabel() || null);
+  protected readonly highThumbLabel = computed(() => this.maxAriaLabel() || this.ariaLabel() || null);
   /** Control size */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Track fill / thumb color */
   readonly color = input<TailwindColor>('primary');
 

@@ -1,9 +1,12 @@
-<div [id]="id()" [class]="mergeClasses('border-b border-neutral-200 last:border-b-0')">
+<div [class]="mergeClasses('border-b border-neutral-200 last:border-b-0')">
   <button
     type="button"
+    [attr.id]="subId('trigger')"
+    [disabled]="disabled()"
     (click)="toggle()"
-    class="flex items-center justify-between w-full px-5 py-4 text-left text-sm font-medium text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer"
-    [attr.aria-expanded]="isExpanded()">
+    class="flex items-center justify-between w-full px-5 py-4 text-left text-sm font-medium text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary-600"
+    [attr.aria-expanded]="isExpanded()"
+    [attr.aria-controls]="subId('panel')">
     <span>{{ title() }}</span>
     <tailwind-icon
       icon="chevron-down"
@@ -12,7 +15,11 @@
       [class.rotate-180]="isExpanded()" />
   </button>
   @if (isExpanded()) {
-    <div class="px-5 py-4 text-sm text-neutral-600">
+    <div
+      role="region"
+      [attr.id]="subId('panel')"
+      [attr.aria-labelledby]="subId('trigger')"
+      class="px-5 py-4 text-sm text-neutral-600">
       <ng-content />
     </div>
   }

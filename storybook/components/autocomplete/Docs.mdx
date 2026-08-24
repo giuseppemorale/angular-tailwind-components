@@ -16,19 +16,17 @@ import * as AutocompleteStories from './autocomplete.stories';
 ```typescript
 @Component({
   imports: [TailwindAutocomplete],
-  template: `
-    <tailwind-autocomplete
-      label="Paese"
-      placeholder="Cerca paese..."
-      [options]="countries"
-      [(value)]="countryCode"
-    />`
+  template: ` <tailwind-autocomplete
+    label="Paese"
+    placeholder="Cerca paese..."
+    [options]="countries"
+    [(value)]="countryCode" />`
 })
 export class ExampleComponent {
   countryCode: string | null = null;
   countries = [
     { value: 'IT', label: 'Italia' },
-    { value: 'FR', label: 'Francia' },
+    { value: 'FR', label: 'Francia' }
   ];
 }
 ```
@@ -91,68 +89,162 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta.</td>
     </tr>
     <tr>
-      <td><code>placeholder</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>placeholder</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Placeholder dell'input e messaggio lista vuota.</td>
     </tr>
     <tr>
-      <td><code>options</code></td>
-      <td><code>TailwindOption&lt;T&gt;[]</code></td>
-      <td><code>[]</code></td>
+      <td>
+        <code>options</code>
+      </td>
+      <td>
+        <code>TailwindOption&lt;T&gt;[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
       <td>Opzioni suggerite.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
-      <td><code>xs | sm | md | lg | xl</code>.</td>
+      <td>
+        <code>compareWith</code>
+      </td>
+      <td>
+        <code>(a, b) =&gt; boolean</code>
+      </td>
+      <td>
+        <code>Object.is</code>
+      </td>
+      <td>Confronto tra valore corrente e valori delle opzioni. Necessario quando i valori sono oggetti.</td>
     </tr>
     <tr>
-      <td><code>helperText</code> / <code>errorText</code> / <code>hasError</code></td>
+      <td>
+        <code>noResultsLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Testo dello stato vuoto; default da <code>TAILWIND_LABELS.noResults</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
+      <td>
+        <code>xs | sm | md | lg | xl</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>helperText</code> / <code>errorText</code> / <code>hasError</code>
+      </td>
       <td>—</td>
       <td>—</td>
       <td>Come gli altri form control.</td>
     </tr>
     <tr>
-      <td><code>filterLocally</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
-      <td>Filtra le opzioni per <code>label</code> mentre si digita.</td>
+      <td>
+        <code>filterLocally</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>
+        Filtra le opzioni per <code>label</code> mentre si digita.
+      </td>
     </tr>
     <tr>
-      <td><code>minSearchLength</code></td>
-      <td><code>number</code></td>
-      <td><code>0</code></td>
-      <td>Lunghezza minima query prima di aprire il pannello e emettere <code>onSearch</code>.</td>
+      <td>
+        <code>minSearchLength</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>0</code>
+      </td>
+      <td>
+        Lunghezza minima query prima di aprire il pannello e emettere <code>onSearch</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>debounceMs</code></td>
-      <td><code>number</code></td>
-      <td><code>0</code></td>
-      <td>Debounce (ms) solo per <code>onSearch</code>.</td>
+      <td>
+        <code>debounceMs</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>0</code>
+      </td>
+      <td>
+        Debounce (ms) solo per <code>onSearch</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>forceSelection</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>forceSelection</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Al blur ripristina il label selezionato o svuota testo non valido.</td>
     </tr>
     <tr>
-      <td><code>value</code></td>
-      <td><code>ModelSignal&lt;T | null&gt;</code></td>
-      <td><code>null</code></td>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;T | null&gt;</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
       <td>Valore form: impostato solo alla selezione.</td>
     </tr>
     <tr>
-      <td><code>onSearch</code></td>
-      <td><code>OutputEmitterRef&lt;string&gt;</code></td>
+      <td>
+        <code>onSearch</code>
+      </td>
+      <td>
+        <code>OutputEmitterRef&lt;string&gt;</code>
+      </td>
       <td>—</td>
       <td>Emesso con la query corrente (dopo debounce / soglia).</td>
     </tr>

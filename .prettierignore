@@ -1,0 +1,6 @@
+dist
+storybook-static
+node_modules
+.angular
+package-lock.json
+projects/angular-tailwind-components/src/lib/models/icons.ts

@@ -1,7 +1,7 @@
 <div [class]="mergeClasses('tailwind-textarea-wrapper flex flex-col gap-1.5')">
   @if (label()) {
     <label
-      [attr.for]="id() ? id() + '-inner' : null"
+      [attr.for]="subId('inner')"
       class="text-sm font-medium text-neutral-700"
       [class.text-danger-600]="hasError()">
       {{ label() }}
@@ -9,7 +9,7 @@
   }
 
   <textarea
-    [attr.id]="id() ? id() + '-inner' : null"
+    [attr.id]="subId('inner')"
     [placeholder]="placeholder()"
     [rows]="rows()"
     [attr.cols]="cols() ?? null"
@@ -17,16 +17,16 @@
     [disabled]="isDisabled()"
     [readonly]="readonly()"
     [attr.aria-invalid]="hasError() || null"
-    [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+    [attr.aria-describedby]="helperText() || errorText() ? subId('helper') : null"
     [value]="value()"
     [class]="textareaClasses()"
     (input)="onInputChange($event)"
     (blur)="onBlur()"></textarea>
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
+    <p [attr.id]="subId('helper')" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
   }
   @if (errorText() && hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>
+    <p [attr.id]="subId('helper')" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>
   }
 </div>

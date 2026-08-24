@@ -101,4 +101,49 @@ describe('TailwindTabGroup', () => {
     expect(host.activeIndex).toBe(1);
     expect(tabButtons()[1]?.getAttribute('aria-selected')).toBe('true');
   });
+
+  it('should expose a roving tabindex so only the active tab is in the tab order', () => {
+    const tabindexes = tabButtons().map(b => b.getAttribute('tabindex'));
+    expect(tabindexes).toEqual(['0', '-1', '-1']);
+  });
+
+  it('should link every tab to its panel with aria-controls / aria-labelledby', () => {
+    const tab = tabButtons()[0];
+    const panel: HTMLElement = fixture.nativeElement.querySelector('[role="tabpanel"]');
+
+    expect(tab.id).toBeTruthy();
+    expect(panel.id).toBeTruthy();
+    expect(tab.getAttribute('aria-controls')).toBe(panel.id);
+    expect(panel.getAttribute('aria-labelledby')).toBe(tab.id);
+  });
+
+  function pressKey(key: string): void {
+    const list: HTMLElement = fixture.nativeElement.querySelector('[role="tablist"]');
+    list.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+    fixture.detectChanges();
+  }
+
+  it('should move to the next tab with ArrowRight and wrap around', () => {
+    pressKey('ArrowRight');
+    expect(host.activeIndex).toBe(1);
+
+    pressKey('ArrowRight');
+    expect(host.activeIndex).toBe(2);
+
+    pressKey('ArrowRight');
+    expect(host.activeIndex).toBe(0);
+  });
+
+  it('should move to the previous tab with ArrowLeft', () => {
+    pressKey('ArrowLeft');
+    expect(host.activeIndex).toBe(2);
+  });
+
+  it('should jump to the first and last tab with Home and End', () => {
+    pressKey('End');
+    expect(host.activeIndex).toBe(2);
+
+    pressKey('Home');
+    expect(host.activeIndex).toBe(0);
+  });
 });

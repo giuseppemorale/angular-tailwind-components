@@ -1,4 +1,4 @@
-import { Component, computed, contentChildren, effect, input, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, contentChildren, effect, input, model } from '@angular/core';
 import { TailwindColor } from '../../models';
 import { TailwindStep } from './step.component';
 import { TailwindIcon } from '../icon/icon.component';
@@ -8,7 +8,8 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon],
   selector: 'tailwind-stepper',
   templateUrl: './stepper.component.html',
-  styleUrl: './stepper.component.css'
+  styleUrl: './stepper.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindStepper extends TailwindComponent {
   readonly activeIndex = model<number>(0);
@@ -26,7 +27,7 @@ export class TailwindStepper extends TailwindComponent {
       warning: 'bg-warning-500 border-warning-500 text-on-warning-500',
       danger: 'bg-danger-600 border-danger-600 text-on-danger-600',
       info: 'bg-info-600 border-info-600 text-on-info-600',
-      transparent: 'bg-white border-neutral-700 text-neutral-800'
+      transparent: 'bg-surface border-neutral-700 text-neutral-800'
     };
     return map[this.color()];
   });

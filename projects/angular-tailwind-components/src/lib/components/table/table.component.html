@@ -3,9 +3,9 @@
     @if (searchable()) {
       <div class="max-w-xs shrink-0">
         <tailwind-input
-          [label]="searchLabel()"
+          [label]="searchLabelText()"
           type="search"
-          [placeholder]="searchPlaceholder()"
+          [placeholder]="searchPlaceholderText()"
           [value]="searchQuery()"
           (valueChange)="onSearchChange($event)" />
       </div>
@@ -18,20 +18,20 @@
     @if (loading()) {
       <div class="flex items-center justify-center py-16 text-neutral-400">
         <tailwind-icon icon="arrow-path" [size]="24" class="animate-spin mr-2 text-neutral-400" />
-        Loading...
+        {{ loadingText() }}
       </div>
     } @else {
       <div class="tw-table-scroll overflow-x-auto">
         <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
         <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-neutral-100">
           <ng-content select="thead" />
-          @for (row of displayedData(); track $index; let i = $index) {
-            <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: rowContext(row, i)" />
+          @for (ctx of rowContexts(); track ctx.dataIndex) {
+            <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: ctx" />
           } @empty {
             <tbody>
               <tr>
                 <td [attr.colspan]="emptyColspan()">
-                  {{ emptyMessage() }}
+                  {{ emptyMessageText() }}
                 </td>
               </tr>
             </tbody>
@@ -40,7 +40,7 @@
       </div>
 
       @if (paginated() && sortedData().length > 0) {
-        <div class="px-4 py-3 border-t border-neutral-200 bg-white">
+        <div class="px-4 py-3 border-t border-neutral-200 bg-surface">
           <tailwind-pagination
             [totalItems]="pagination()?.totalItems ?? sortedData().length"
             [pageSize]="pageSize()"
@@ -48,7 +48,7 @@
             [lengthOptions]="paginationLengthOptions()"
             [currentPage]="currentPage()"
             (onPageChange)="currentPage.set($event)"
-            [ariaLabel]="pagination()?.ariaLabel ?? 'Pagination'"
+            [ariaLabel]="pagination()?.ariaLabel ?? ''"
             [summary]="paginationSummary()">
           </tailwind-pagination>
         </div>

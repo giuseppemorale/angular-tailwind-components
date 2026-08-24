@@ -1,4 +1,5 @@
-import { Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindTooltipDirective } from '../../directives/tooltip/tooltip.directive';
 import { TailwindColor, TailwindMenuItem, TailwindPosition } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
@@ -9,9 +10,16 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon, TailwindMenu, TailwindTooltipDirective],
   selector: 'tailwind-toolbar',
   templateUrl: './toolbar.component.html',
-  styleUrl: './toolbar.component.css'
+  styleUrl: './toolbar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindToolbar extends TailwindComponent {
+  private readonly labels = inject(TAILWIND_LABELS);
+
+  /** Accessible name override; defaults to `TAILWIND_LABELS.openNavigationMenu`. */
+  readonly openMenuAriaLabel = input<string>('');
+  protected readonly openMenuLabel = computed(() => this.openMenuAriaLabel() || this.labels.openNavigationMenu);
+
   /** When true, uses rounded corners (`rounded-xl`). */
   readonly rounded = input<boolean>(true);
   /**
@@ -90,7 +98,7 @@ export class TailwindToolbar extends TailwindComponent {
     if (!contrast) {
       return 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900';
     }
-    return `${contrast} hover:bg-white/12`;
+    return `${contrast} hover:bg-surface/12`;
   });
 
   readonly menuItemButtonClasses = computed(() => {
@@ -113,7 +121,7 @@ export class TailwindToolbar extends TailwindComponent {
   readonly menuDividerLineClasses = computed(() =>
     this.color() === 'default'
       ? 'mx-0.5 h-5 w-px shrink-0 self-center bg-neutral-200'
-      : 'mx-0.5 h-5 w-px shrink-0 self-center bg-white/30'
+      : 'mx-0.5 h-5 w-px shrink-0 self-center bg-surface/30'
   );
 
   readonly menuDividerRuleClasses = computed(() =>
@@ -138,9 +146,9 @@ export class TailwindToolbar extends TailwindComponent {
       warning: 'bg-warning-500 border border-white/20',
       danger: 'bg-danger-600 border border-white/20',
       info: 'bg-info-600 border border-white/20',
-      transparent: 'bg-white border border-neutral-200'
+      transparent: 'bg-surface border border-neutral-200'
     };
-    const surface = variant === 'default' ? 'bg-white border border-neutral-200' : surfaceMap[variant];
+    const surface = variant === 'default' ? 'bg-surface border border-neutral-200' : surfaceMap[variant];
 
     const base = [
       surface,

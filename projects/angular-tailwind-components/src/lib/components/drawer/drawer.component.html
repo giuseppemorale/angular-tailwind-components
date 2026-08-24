@@ -8,19 +8,31 @@
     aria-hidden="true"></div>
 
   <!-- Drawer Panel -->
-  <div [class]="panelClasses()" role="dialog" [attr.aria-modal]="true" [attr.aria-label]="title()">
+  <div
+    #drawerPanel
+    [class]="panelClasses()"
+    role="dialog"
+    tabindex="-1"
+    cdkTrapFocus
+    [cdkTrapFocusAutoCapture]="true"
+    [attr.aria-modal]="true"
+    [attr.aria-labelledby]="title() ? subId('title') : null"
+    [attr.aria-label]="title() ? null : ariaLabel() || null"
+    (keydown.escape)="closeOnEscape() && close()">
     <!-- Header -->
     <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
       @if (title()) {
-        <h2 class="text-lg font-semibold text-neutral-900">{{ title() }}</h2>
+        <h2 [attr.id]="subId('title')" class="text-lg font-semibold text-neutral-900">{{ title() }}</h2>
       }
-      <tailwind-button
-        kind="ghost"
-        color="transparent"
-        icon="x-mark"
-        class="ml-auto shrink-0 -m-1.5"
-        ariaLabel="Close"
-        (onClick)="close()" />
+      @if (showCloseButton()) {
+        <tailwind-button
+          kind="ghost"
+          color="transparent"
+          icon="x-mark"
+          class="ml-auto shrink-0 -m-1.5"
+          [ariaLabel]="resolvedCloseLabel()"
+          (onClick)="close()" />
+      }
     </div>
 
     <!-- Body -->

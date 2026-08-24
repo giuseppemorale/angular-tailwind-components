@@ -14,8 +14,7 @@ Il toggle (es. bottone) resta **sibling** di `tailwind-menu`. Passa il `click` a
 ```typescript
 @Component({
   imports: [TailwindMenu, TailwindButton],
-  template: `
-    <tailwind-button (click)="menu.open($event)">Open menu</tailwind-button>
+  template: ` <tailwind-button (click)="menu.open($event)">Open menu</tailwind-button>
     <tailwind-menu #menu [items]="items" align="left" (onSelect)="onSelect($event)" />`
 })
 export class ExampleComponent {
@@ -52,22 +51,49 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>items</code></td>
-      <td><code>TailwindMenuItem[]</code></td>
-      <td><code>[]</code></td>
-      <td>Voci; supporta <code>divider</code> e <code>disabled</code>. I campi opzionali <code>tooltip</code> e <code>tooltipPosition</code> sono usati dalla <strong>toolbar</strong>, non da questo menu dropdown.</td>
+      <td>
+        <code>items</code>
+      </td>
+      <td>
+        <code>TailwindMenuItem[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
+      <td>
+        Voci; supporta <code>divider</code> e <code>disabled</code>. I campi opzionali <code>tooltip</code> e{' '}
+        <code>tooltipPosition</code> sono usati dalla <strong>toolbar</strong>, non da questo menu dropdown.
+      </td>
     </tr>
     <tr>
-      <td><code>align</code></td>
-      <td><code>'left' | 'right'</code></td>
-      <td><code>'left'</code></td>
-      <td>Bordo sinistro del pannello allineato al bordo sinistro dell’anchor, oppure bordo destro al bordo destro dell’anchor.</td>
+      <td>
+        <code>align</code>
+      </td>
+      <td>
+        <code>'left' | 'right'</code>
+      </td>
+      <td>
+        <code>'left'</code>
+      </td>
+      <td>
+        Bordo sinistro del pannello allineato al bordo sinistro dell’anchor, oppure bordo destro al bordo destro
+        dell’anchor.
+      </td>
     </tr>
     <tr>
-      <td><code>placement</code></td>
-      <td><code>'bottom' | 'right'</code></td>
-      <td><code>'bottom'</code></td>
-      <td><code>bottom</code> sotto l’anchor; <code>right</code> a destra (es. sottomenu nel rail verticale della toolbar).</td>
+      <td>
+        <code>placement</code>
+      </td>
+      <td>
+        <code>'bottom' | 'right'</code>
+      </td>
+      <td>
+        <code>'bottom'</code>
+      </td>
+      <td>
+        <code>bottom</code> sotto l’anchor; <code>right</code> a destra (es. sottomenu nel rail verticale della
+        toolbar).
+      </td>
     </tr>
   </tbody>
 </table>
@@ -83,16 +109,26 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>open(anchor?: Event | HTMLElement)</code></td>
-      <td>Apre sotto l’anchor. Con <code>(click)="menu.open($event)"</code> sull’host del bottone, l’anchor è il toggle.</td>
+      <td>
+        <code>open(anchor?: Event | HTMLElement)</code>
+      </td>
+      <td>
+        Apre sotto l’anchor. Con <code>(click)="menu.open($event)"</code> sull’host del bottone, l’anchor è il toggle.
+      </td>
     </tr>
     <tr>
-      <td><code>close()</code></td>
+      <td>
+        <code>close()</code>
+      </td>
       <td>Chiude il menu.</td>
     </tr>
     <tr>
-      <td><code>toggle(anchor?: Event | HTMLElement)</code></td>
-      <td>Apre o chiude; in apertura richiede anchor come <code>open</code> se non ne hai già impostato uno.</td>
+      <td>
+        <code>toggle(anchor?: Event | HTMLElement)</code>
+      </td>
+      <td>
+        Apre o chiude; in apertura richiede anchor come <code>open</code> se non ne hai già impostato uno.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -109,8 +145,12 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>onSelect</code></td>
-      <td><code>TailwindMenuItem</code></td>
+      <td>
+        <code>onSelect</code>
+      </td>
+      <td>
+        <code>TailwindMenuItem</code>
+      </td>
       <td>Voce selezionata (se non disabilitata).</td>
     </tr>
   </tbody>

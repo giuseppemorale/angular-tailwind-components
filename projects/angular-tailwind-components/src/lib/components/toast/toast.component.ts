@@ -1,6 +1,7 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { TailwindColor, TailwindPosition } from '../../models';
 import { TailwindToastService } from '../../services';
+import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -13,15 +14,21 @@ export type { TailwindToastConfig, TailwindToastItem };
   imports: [TailwindButton, TailwindIcon],
   selector: 'tailwind-toast',
   templateUrl: './toast.component.html',
-  styleUrl: './toast.component.css'
+  styleUrl: './toast.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindToast extends TailwindComponent {
   readonly toastService = inject(TailwindToastService);
+  private readonly labels = inject(TAILWIND_LABELS);
 
   /** Vertical anchor of the toast stack */
   readonly vertical = input<Exclude<TailwindPosition, 'left' | 'right'>>('top');
   /** Horizontal anchor of the toast stack */
   readonly horizontal = input<Exclude<TailwindPosition, 'top' | 'bottom'>>('right');
+  /** Accessible name of the per-toast dismiss button; defaults to `TAILWIND_LABELS.dismiss`. */
+  readonly dismissAriaLabel = input<string>('');
+
+  readonly dismissLabel = computed(() => this.dismissAriaLabel() || this.labels.dismiss);
 
   readonly containerClasses = computed(() => {
     const classes = [
@@ -42,6 +49,14 @@ export class TailwindToast extends TailwindComponent {
     return 'slide-in-from-right-full';
   });
 
+  /**
+   * `alert` interrupts the screen reader immediately, which is right for a failure and wrong for a
+   * confirmation — only the urgent colors get it, everything else is announced politely.
+   */
+  liveRole(color: TailwindColor | undefined): 'alert' | 'status' {
+    return color === 'danger' || color === 'warning' ? 'alert' : 'status';
+  }
+
   surfaceClass(color: TailwindColor | undefined): string {
     const colorMap: Record<TailwindColor, string> = {
       primary: 'bg-primary-50 border-primary-200',
@@ -50,7 +65,7 @@ export class TailwindToast extends TailwindComponent {
       warning: 'bg-warning-50 border-warning-200',
       danger: 'bg-danger-50 border-danger-200',
       info: 'bg-info-50 border-info-200',
-      transparent: 'bg-white border-neutral-200'
+      transparent: 'bg-surface border-neutral-200'
     };
     return colorMap[color ?? 'info'];
   }

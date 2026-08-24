@@ -54,12 +54,10 @@ Così tutti i `tailwind-datetime-picker` dell&apos;app condividono la stessa lin
 ```typescript
 @Component({
   imports: [TailwindDateTimePicker, ReactiveFormsModule],
-  template: `
-    <tailwind-datetime-picker
-      formControlName="appointmentAt"
-      label="Appointment Date & Time"
-      format="dd/MM/yyyy HH:mm"
-    />`
+  template: ` <tailwind-datetime-picker
+    formControlName="appointmentAt"
+    label="Appointment Date & Time"
+    format="dd/MM/yyyy HH:mm" />`
 })
 export class ExampleComponent {}
 ```
@@ -93,27 +91,54 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>minDate</code> / <code>maxDate</code></td>
-      <td><code>Date | null</code></td>
-      <td><em>nessun limite</em></td>
+      <td>
+        <code>minDate</code> / <code>maxDate</code>
+      </td>
+      <td>
+        <code>Date | null</code>
+      </td>
+      <td>
+        <em>nessun limite</em>
+      </td>
       <td>Limiti sulla sola data; l&apos;ora non è vincolata. Giorni fuori range disabilitati nel calendario.</td>
     </tr>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta del gruppo.</td>
     </tr>
     <tr>
-      <td><code>placeholder</code></td>
-      <td><code>string | undefined</code></td>
-      <td><code>undefined</code> (testo predefinito in base a <code>TAILWIND_DATETIME_LANGUAGE</code>)</td>
-      <td>Placeholder dell&apos;input quando non c&apos;è valore. Se omesso o vuoto, viene usato il messaggio tradotto (es. &quot;Select date and time&quot; / &quot;Seleziona data e ora&quot;).</td>
+      <td>
+        <code>placeholder</code>
+      </td>
+      <td>
+        <code>string | undefined</code>
+      </td>
+      <td>
+        <code>undefined</code> (testo predefinito in base a <code>TAILWIND_DATETIME_LANGUAGE</code>)
+      </td>
+      <td>
+        Placeholder dell&apos;input quando non c&apos;è valore. Se omesso o vuoto, viene usato il messaggio tradotto
+        (es. &quot;Select date and time&quot; / &quot;Seleziona data e ora&quot;).
+      </td>
     </tr>
     <tr>
-      <td><code>format</code></td>
-      <td><code>string</code></td>
-      <td><code>'dd/MM/yyyy HH:mm'</code></td>
+      <td>
+        <code>format</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'dd/MM/yyyy HH:mm'</code>
+      </td>
       <td>Formato display (DatePipe). Se non valido, viene usato un fallback sicuro.</td>
     </tr>
   </tbody>
@@ -131,9 +156,15 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>TAILWIND_DATETIME_LANGUAGE</code></td>
-      <td><code>'it' | 'en'</code></td>
-      <td>Lingua UI del picker. Da fornire preferibilmente nei <code>providers</code> globali dell&apos;applicazione.</td>
+      <td>
+        <code>TAILWIND_DATETIME_LANGUAGE</code>
+      </td>
+      <td>
+        <code>'it' | 'en'</code>
+      </td>
+      <td>
+        Lingua UI del picker. Da fornire preferibilmente nei <code>providers</code> globali dell&apos;applicazione.
+      </td>
     </tr>
   </tbody>
 </table>

@@ -1,14 +1,18 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindMeterSegment } from './interfaces/meter-segment.interface';
 
 @Component({
   selector: 'tailwind-meter',
   templateUrl: './meter.component.html',
-  styleUrl: './meter.component.css'
+  styleUrl: './meter.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindMeter extends TailwindComponent {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Segments rendered as proportional blocks in the bar. */
   readonly segments = input<TailwindMeterSegment[]>([]);
   /**
@@ -19,7 +23,7 @@ export class TailwindMeter extends TailwindComponent {
   /** Show a simple legend under the bar */
   readonly showLabels = input<boolean>(true);
   /** Track height */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Decimal places for segment values in legend and tooltips */
   readonly decimals = input<number>(0);
 

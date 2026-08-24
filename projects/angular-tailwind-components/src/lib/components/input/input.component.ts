@@ -1,7 +1,9 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
+import { FIELD_SIZE } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -15,9 +17,12 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './input.component.html',
-  styleUrl: './input.component.css'
+  styleUrl: './input.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindInput extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Label text */
   readonly label = input<string>('');
   /** Placeholder text */
@@ -25,7 +30,7 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
   /** Input type */
   readonly type = input<'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'>('text');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Whether the input is readonly */
   readonly readonly = input<boolean>(false);
   /** Helper text shown below input */
@@ -44,26 +49,18 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
   /** Computed input classes */
   readonly inputClasses = computed(() => {
     const base = [
-      'block w-full bg-white',
+      'block w-full bg-surface',
       'border transition-colors duration-150',
       'placeholder:text-neutral-400',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
     ];
 
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: 'text-xs px-2 py-1 rounded-sm',
-      sm: 'text-sm px-2.5 py-1.5 rounded-md',
-      md: 'text-sm px-3 py-2 rounded-md',
-      lg: 'text-base px-3.5 py-2.5 rounded-lg',
-      xl: 'text-base px-4 py-3 rounded-lg'
-    };
-
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
       : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
-    return [...base, sizeMap[this.size()], stateClass].join(' ');
+    return [...base, FIELD_SIZE[this.size()], stateClass].join(' ');
   });
 
   // CVA

@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { TailwindBreadcrumbItem } from './interfaces/breadcrumb-item.interface';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -10,7 +10,8 @@ export type { TailwindBreadcrumbItem };
   imports: [RouterLink, TailwindIcon],
   selector: 'tailwind-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrl: './breadcrumb.component.css'
+  styleUrl: './breadcrumb.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindBreadcrumb extends TailwindComponent {
   readonly items = input<TailwindBreadcrumbItem[]>([]);

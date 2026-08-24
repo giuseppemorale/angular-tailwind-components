@@ -1,10 +1,11 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-divider',
   templateUrl: './divider.component.html',
-  styleUrl: './divider.component.css'
+  styleUrl: './divider.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindDivider extends TailwindComponent {
   /** Rule direction */

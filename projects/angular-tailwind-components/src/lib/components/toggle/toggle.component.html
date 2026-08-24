@@ -12,6 +12,6 @@
   </button>
 
   @if (label()) {
-    <span [attr.id]="id() ? id() + '-label' : null" class="text-sm font-medium text-neutral-800">{{ label() }}</span>
+    <span [attr.id]="subId('label')" class="text-sm font-medium text-neutral-800">{{ label() }}</span>
   }
 </div>

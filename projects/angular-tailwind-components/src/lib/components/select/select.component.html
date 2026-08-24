@@ -1,7 +1,7 @@
 <div [class]="mergeClasses('flex flex-col gap-1.5')">
   @if (label()) {
     <label
-      [attr.for]="id() ? id() + '-inner' : null"
+      [attr.for]="subId('inner')"
       class="text-sm font-medium text-neutral-700"
       [class.text-danger-600]="hasError()">
       {{ label() }}
@@ -11,13 +11,15 @@
   <!-- Trigger button -->
   <button
     type="button"
-    [attr.id]="id() ? id() + '-inner' : null"
+    [attr.id]="subId('inner')"
     role="combobox"
     aria-haspopup="listbox"
     [attr.aria-label]="comboboxAriaLabel()"
     [attr.aria-expanded]="isOpen()"
+    [attr.aria-controls]="listboxId()"
+    [attr.aria-activedescendant]="activeDescendantId()"
     [attr.aria-invalid]="hasError() || null"
-    [attr.aria-describedby]="(helperText() || errorText()) && id() ? id() + '-helper' : null"
+    [attr.aria-describedby]="helperText() || errorText() ? subId('helper') : null"
     [disabled]="isDisabled()"
     [class]="triggerClasses()"
     (click)="toggleDropdown()"
@@ -59,10 +61,10 @@
   </button>
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
+    <p [attr.id]="subId('helper')" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
   }
   @if (errorText() && hasError()) {
-    <p [attr.id]="id() ? id() + '-helper' : null" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>
+    <p [attr.id]="subId('helper')" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>
   }
 </div>
 
@@ -70,16 +72,22 @@
 <ng-template #panelTemplate>
   <ul
     role="listbox"
+    [attr.id]="listboxId()"
     [attr.aria-multiselectable]="multiple() ? true : null"
-    class="w-full bg-white border border-neutral-200 rounded-md shadow-lg py-1 max-h-60 overflow-auto">
+    class="w-full bg-surface border border-neutral-200 rounded-md shadow-lg py-1 max-h-60 overflow-auto">
     @if (placeholder()) {
-      <li role="option" aria-disabled="true" class="px-3 py-2 text-sm text-neutral-400 cursor-default select-none">
+      <li
+        role="option"
+        aria-disabled="true"
+        aria-selected="false"
+        class="px-3 py-2 text-sm text-neutral-400 cursor-default select-none">
         {{ placeholder() }}
       </li>
     }
     @for (option of options(); track option.value; let i = $index) {
       <li
         role="option"
+        [attr.id]="optionId(i)"
         [attr.aria-selected]="isOptionSelected(option)"
         [attr.aria-disabled]="option.disabled || null"
         [class]="optionClasses(i, option)"

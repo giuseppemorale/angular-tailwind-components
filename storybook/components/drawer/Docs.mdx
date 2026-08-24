@@ -14,14 +14,13 @@ import * as DrawerStories from './drawer.stories';
 ```typescript
 @Component({
   imports: [TailwindDrawer, TailwindButton, TailwindInput],
-  template: `
-    <div>
-      <tailwind-button (click)="drawer.open()">Open drawer</tailwind-button>
-      <tailwind-drawer #drawer title="Drawer Title" position="right" [closeOnBackdrop]="true">
-        <p>Contenuto</p>
-        <tailwind-button (click)="drawer.close()">Close</tailwind-button>
-      </tailwind-drawer>
-    </div>`
+  template: ` <div>
+    <tailwind-button (click)="drawer.open()">Open drawer</tailwind-button>
+    <tailwind-drawer #drawer title="Drawer Title" position="right" [closeOnBackdrop]="true">
+      <p>Contenuto</p>
+      <tailwind-button (click)="drawer.close()">Close</tailwind-button>
+    </tailwind-drawer>
+  </div>`
 })
 export class ExampleComponent {}
 ```
@@ -51,28 +50,104 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>title</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Titolo nel header.</td>
     </tr>
     <tr>
-      <td><code>position</code></td>
-      <td><code>'left' | 'right'</code></td>
-      <td><code>'right'</code></td>
+      <td>
+        <code>position</code>
+      </td>
+      <td>
+        <code>'left' | 'right'</code>
+      </td>
+      <td>
+        <code>'right'</code>
+      </td>
       <td>Lato da cui entra il pannello.</td>
     </tr>
     <tr>
-      <td><code>width</code></td>
-      <td><code>string</code></td>
-      <td><code>'max-w-md'</code></td>
+      <td>
+        <code>width</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'max-w-md'</code>
+      </td>
       <td>Classi larghezza (Tailwind).</td>
     </tr>
     <tr>
-      <td><code>closeOnBackdrop</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>closeOnBackdrop</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Chiusura al click sul backdrop.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>closeOnEscape</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>Chiusura con Escape.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>showCloseButton</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>Mostra il pulsante di chiusura in header.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>closeLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile del pulsante di chiusura; default da <code>TAILWIND_LABELS.close</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile del dialog quando <code>title</code> è omesso.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -89,8 +164,12 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>onClose</code></td>
-      <td><code>void</code></td>
+      <td>
+        <code>onClose</code>
+      </td>
+      <td>
+        <code>void</code>
+      </td>
       <td>Emesso dopo la chiusura animata.</td>
     </tr>
   </tbody>

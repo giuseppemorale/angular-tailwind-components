@@ -1,23 +1,24 @@
 import {
   afterNextRender,
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
-  ElementRef,
-  inject,
-  Injector,
-  OnDestroy,
   computed,
   effect,
+  ElementRef,
   forwardRef,
+  inject,
+  Injector,
   input,
   model,
+  OnDestroy,
   output,
   signal,
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DEFAULT_TAILWIND_EDITOR_LABELS, TailwindEditorLabels, TailwindSize } from '../../models';
-import { TAILWIND_EDITOR_LABELS } from '../../tokens';
+import { TAILWIND_EDITOR_LABELS, TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindButton } from '../button/button.component';
 import { TailwindInput } from '../input/input.component';
@@ -52,9 +53,12 @@ import { filterToolbarGroups, resolveToolbarGroups } from './utils/editor-toolba
     }
   ],
   templateUrl: './editor.component.html',
-  styleUrl: './editor.component.css'
+  styleUrl: './editor.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindEditor extends TailwindComponent implements ControlValueAccessor, OnDestroy, AfterViewInit {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   private static nextFieldId = 0;
   private readonly fallbackFieldId = `tw-editor-${TailwindEditor.nextFieldId++}`;
 
@@ -69,7 +73,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   readonly label = input<string>('');
   readonly placeholder = input<string>('');
   readonly minHeight = input<string>('12rem');
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   readonly readonly = input<boolean>(false);
   readonly helperText = input<string>('');
   readonly errorText = input<string>('');
@@ -127,7 +131,7 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   );
 
   readonly wrapperClasses = computed(() => {
-    const base = 'tailwind-editor rounded-md border bg-white overflow-hidden transition-colors duration-150';
+    const base = 'tailwind-editor rounded-md border bg-surface overflow-hidden transition-colors duration-150';
     if (this.isDisabled()) {
       return this.mergeClasses(base, 'opacity-60 cursor-not-allowed border-neutral-200');
     }
@@ -174,7 +178,8 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
       lg: 'text-base px-3.5 py-3',
       xl: 'text-base px-4 py-3.5'
     };
-    const readonlyClass = this.readonly() || this.isDisabled() ? 'bg-neutral-50 cursor-default' : `bg-white ${cursor}`;
+    const readonlyClass =
+      this.readonly() || this.isDisabled() ? 'bg-neutral-50 cursor-default' : `bg-surface ${cursor}`;
     const focusClass = this.isEditable()
       ? this.hasError()
         ? 'outline-none focus:ring-1 focus:ring-inset focus:ring-danger-400'

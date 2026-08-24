@@ -12,12 +12,13 @@
     role="dialog"
     class="fixed inset-0 z-1050 overflow-y-auto"
     [attr.aria-modal]="true"
+    [attr.aria-labelledby]="subId('title')"
     (keydown.escape)="closeOnEscape() && close()">
     <div class="flex min-h-full items-center justify-center p-4">
-      <div #modalPanel [class]="panelClasses()" tabindex="-1">
+      <div #modalPanel [class]="panelClasses()" tabindex="-1" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
         <!-- Header -->
         <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
-          <h2 class="text-lg font-semibold text-neutral-900 pr-2">
+          <h2 [attr.id]="subId('title')" class="text-lg font-semibold text-neutral-900 pr-2">
             <ng-content />
           </h2>
           @if (showCloseButton()) {
@@ -26,7 +27,7 @@
               color="transparent"
               icon="x-mark"
               class="shrink-0 -m-1.5"
-              ariaLabel="Close"
+              [ariaLabel]="resolvedCloseLabel()"
               (onClick)="close()" />
           }
         </div>
@@ -36,8 +37,8 @@
           <ng-content select="[tailwind-modal-content]" />
         </div>
 
-        <!-- Footer -->
-        <div class="border-t border-neutral-200 px-6 py-4">
+        <!-- Footer: collapses entirely when nothing is projected into the slot -->
+        <div class="border-t border-neutral-200 px-6 py-4 [&:not(:has(*))]:hidden">
           <ng-content select="[tailwind-modal-footer]" />
         </div>
       </div>

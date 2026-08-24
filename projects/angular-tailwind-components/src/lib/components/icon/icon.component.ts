@@ -1,7 +1,7 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import type { TailwindHeroicon, TailwindIconSize } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
-import { TAILWIND_ICON_SIZE } from '../../tokens';
+import { TAILWIND_ICON_BASE_PATH, TAILWIND_ICON_SIZE } from '../../tokens';
 
 const clampIconSize = (value: number): number => {
   if (!Number.isFinite(value)) return 24;
@@ -12,17 +12,19 @@ const clampIconSize = (value: number): number => {
 @Component({
   selector: 'tailwind-icon',
   templateUrl: './icon.component.html',
-  styleUrl: './icon.component.css'
+  styleUrl: './icon.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindIcon extends TailwindComponent {
   private readonly iconSize = inject(TAILWIND_ICON_SIZE, { optional: true });
+  private readonly basePath = inject(TAILWIND_ICON_BASE_PATH);
 
-  /** Heroicons outline icon name; SVG path `/tailwind-icons/<name>.svg` */
+  /** Heroicons outline icon name; SVG path `<TAILWIND_ICON_BASE_PATH>/<name>.svg` */
   readonly icon = input.required<TailwindHeroicon>();
   /** Width and height in px (16–64, clamped); default from `TAILWIND_ICON_SIZE` or **24** */
   readonly size = input<TailwindIconSize>(clampIconSize(this.iconSize ?? 24));
 
-  readonly src = computed(() => `/tailwind-icons/${this.icon()}.svg`);
+  readonly src = computed(() => `${this.basePath.replace(/\/+$/, '')}/${this.icon()}.svg`);
 
   readonly pixelSize = computed(() => clampIconSize(this.size()));
 

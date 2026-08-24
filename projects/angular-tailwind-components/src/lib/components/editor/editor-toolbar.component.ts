@@ -1,8 +1,9 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 import { TailwindOption, TailwindSize } from '../../models';
 import { TailwindButton } from '../button/button.component';
 import { TailwindDivider } from '../divider/divider.component';
 import { TailwindSelect } from '../select/select.component';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 import type { EditorBlockFormat, EditorCommand } from './models/editor-command.type';
 import type { EditorToolbarButtonItem, EditorToolbarGroup } from './models/editor-toolbar-group.interface';
@@ -21,9 +22,12 @@ const HEADING_OPTIONS: TailwindOption<EditorBlockFormat>[] = [
   imports: [TailwindButton, TailwindDivider, TailwindSelect],
   selector: 'tailwind-editor-toolbar',
   templateUrl: './editor-toolbar.component.html',
-  styleUrl: './editor-toolbar.component.css'
+  styleUrl: './editor-toolbar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindEditorToolbar extends TailwindComponent {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   readonly groups = input<EditorToolbarGroup[]>([]);
   readonly disabled = input<boolean>(false);
   readonly isCodeView = input<boolean>(false);
@@ -32,7 +36,7 @@ export class TailwindEditorToolbar extends TailwindComponent {
   readonly textStyleLabel = input<string>('Text style');
   readonly activeCommands = input<Set<EditorCommand>>(new Set());
   readonly blockFormat = input<EditorBlockFormat>('p');
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
 
   readonly commandClick = output<EditorCommand>();
 

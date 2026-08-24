@@ -14,14 +14,12 @@ import * as EditorStories from './editor.stories';
 ```typescript
 @Component({
   imports: [TailwindEditor],
-  template: `
-    <tailwind-editor
-      label="Article body"
-      placeholder="Write your content…"
-      toolbar="full"
-      [(value)]="body"
-      (htmlChange)="onBodyChange($event)"
-    />`
+  template: ` <tailwind-editor
+    label="Article body"
+    placeholder="Write your content…"
+    toolbar="full"
+    [(value)]="body"
+    (htmlChange)="onBodyChange($event)" />`
 })
 export class ExampleComponent {
   body = '<p>Hello <strong>world</strong></p>';
@@ -68,94 +66,195 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta.</td>
     </tr>
     <tr>
-      <td><code>placeholder</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>placeholder</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Testo placeholder (CSS su area vuota).</td>
     </tr>
     <tr>
-      <td><code>minHeight</code></td>
-      <td><code>string</code></td>
-      <td><code>'12rem'</code></td>
+      <td>
+        <code>minHeight</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'12rem'</code>
+      </td>
       <td>Altezza minima dell&apos;area di editing (CSS).</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
       <td>Dimensione del campo e della toolbar.</td>
     </tr>
     <tr>
-      <td><code>helperText</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>helperText</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Testo di aiuto sotto il campo.</td>
     </tr>
     <tr>
-      <td><code>errorText</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
-      <td>Messaggio errore quando <code>hasError</code> è true.</td>
+      <td>
+        <code>errorText</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Messaggio errore quando <code>hasError</code> è true.
+      </td>
     </tr>
     <tr>
-      <td><code>hasError</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>hasError</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Stato errore visivo.</td>
     </tr>
     <tr>
-      <td><code>value</code></td>
-      <td><code>ModelSignal&lt;string&gt;</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;string&gt;</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>HTML sanitizzato (two-way / CVA).</td>
     </tr>
     <tr>
-      <td><code>readonly</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>readonly</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Testo non editabile; toolbar visibile ma disabilitata.</td>
     </tr>
     <tr>
-      <td><code>toolbar</code></td>
-      <td><code>'full' | 'minimal' | EditorCommand[]</code></td>
-      <td><code>'full'</code></td>
-      <td>Comandi in toolbar. Con <code>full</code>, gli heading sono in un menu a tendina (Paragraph, H1-H6); accanto alle liste: allineamento sinistra, centro, destra e giustifica (<code>alignLeft</code>, <code>alignCenter</code>, <code>alignRight</code>, <code>alignJustify</code>).</td>
+      <td>
+        <code>toolbar</code>
+      </td>
+      <td>
+        <code>'full' | 'minimal' | EditorCommand[]</code>
+      </td>
+      <td>
+        <code>'full'</code>
+      </td>
+      <td>
+        Comandi in toolbar. Con <code>full</code>, gli heading sono in un menu a tendina (Paragraph, H1-H6); accanto
+        alle liste: allineamento sinistra, centro, destra e giustifica (<code>alignLeft</code>, <code>alignCenter</code>
+        , <code>alignRight</code>, <code>alignJustify</code>).
+      </td>
     </tr>
     <tr>
-      <td><code>imageUrlEnabled</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>imageUrlEnabled</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Pulsante immagine da URL.</td>
     </tr>
     <tr>
-      <td><code>imageUploadEnabled</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>imageUploadEnabled</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Pulsante upload immagine (data URL).</td>
     </tr>
     <tr>
-      <td><code>accept</code></td>
-      <td><code>string</code></td>
-      <td><code>'image/*'</code></td>
-      <td>Attributo <code>accept</code> dell&apos;input file per l&apos;upload immagine.</td>
+      <td>
+        <code>accept</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'image/*'</code>
+      </td>
+      <td>
+        Attributo <code>accept</code> dell&apos;input file per l&apos;upload immagine.
+      </td>
     </tr>
     <tr>
-      <td><code>maxFileSizeBytes</code></td>
-      <td><code>number | undefined</code></td>
-      <td><code>undefined</code></td>
+      <td>
+        <code>maxFileSizeBytes</code>
+      </td>
+      <td>
+        <code>number | undefined</code>
+      </td>
+      <td>
+        <code>undefined</code>
+      </td>
       <td>Dimensione massima file immagine; oltre soglia la selezione viene rifiutata.</td>
     </tr>
     <tr>
-      <td><code>sanitize</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
-      <td>Sanitizza HTML in uscita (whitelist tag/attributi). Consente <code>style</code> solo con <code>text-align: left|center|right|justify</code>.</td>
+      <td>
+        <code>sanitize</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>
+        Sanitizza HTML in uscita (whitelist tag/attributi). Consente <code>style</code> solo con{' '}
+        <code>text-align: left|center|right|justify</code>.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -172,9 +271,15 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>htmlChange</code></td>
-      <td><code>string</code></td>
-      <td>HTML sanitizzato ad ogni modifica utente (non su <code>writeValue</code> programmatico).</td>
+      <td>
+        <code>htmlChange</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        HTML sanitizzato ad ogni modifica utente (non su <code>writeValue</code> programmatico).
+      </td>
     </tr>
   </tbody>
 </table>

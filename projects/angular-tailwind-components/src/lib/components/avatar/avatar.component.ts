@@ -1,15 +1,19 @@
-import { Component, computed, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   imports: [TailwindIcon],
   selector: 'tailwind-avatar',
   templateUrl: './avatar.component.html',
-  styleUrl: './avatar.component.css'
+  styleUrl: './avatar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindAvatar extends TailwindComponent {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Image URL */
   readonly src = input<string>('');
   /** Image alt text */
@@ -19,7 +23,7 @@ export class TailwindAvatar extends TailwindComponent {
   /** Explicit initials override */
   readonly initials = input<string>('');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Avatar shape */
   readonly shape = input<'circle' | 'rounded'>('circle');
   /** Background color for initials fallback */

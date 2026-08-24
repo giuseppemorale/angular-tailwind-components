@@ -1,6 +1,6 @@
 {
   "name": "angular-tailwind-components",
-  "version": "22.0.1",
+  "version": "22.0.2",
   "description": "Angular UI component library built with Tailwind CSS v4 — signals, standalone components, 40+ components.",
   "author": "Giuseppe Morale",
   "license": "LicenseRef-ATC-1.0",
@@ -29,8 +29,10 @@
     "publish:dist": "npm run build && npm publish --access public --prefix dist/angular-tailwind-components",
     "storybook": "ng run angular-tailwind-components:storybook",
     "build:storybook": "ng run angular-tailwind-components:build-storybook",
-    "prettier:write": "prettier --write projects/**/*.{ts,html,css} src/**/*.{ts,html,css}",
-    "prettier:check": "prettier --check ."
+    "prettier:write": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "lint": "eslint projects/angular-tailwind-components/src src",
+    "lint:fix": "eslint projects/angular-tailwind-components/src src --fix"
   },
   "private": true,
   "packageManager": "npm@11.13.0",
@@ -54,6 +56,7 @@
     "@angular/compiler-cli": "^22.1.0",
     "@angular/platform-browser-dynamic": "^22.1.0",
     "@compodoc/compodoc": "^2.0.0",
+    "@eslint/js": "^10.0.1",
     "@iconify-json/heroicons": "^1.2.3",
     "@jsverse/transloco": "^8.4.0",
     "@storybook/addon-a11y": "^10.5.6",
@@ -61,6 +64,8 @@
     "@storybook/addon-onboarding": "^10.5.6",
     "@storybook/angular": "^10.5.6",
     "@tailwindcss/postcss": "^4.3.3",
+    "angular-eslint": "^22.1.0",
+    "eslint": "^10.9.0",
     "jsdom": "^30.0.1",
     "ng-packagr": "^22.1.1",
     "postcss": "^8.5.25",
@@ -68,6 +73,7 @@
     "storybook": "^10.5.6",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.3",
+    "typescript-eslint": "^8.67.0",
     "vitest": "^4.1.10"
   }
 }

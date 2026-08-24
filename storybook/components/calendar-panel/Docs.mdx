@@ -16,9 +16,7 @@ Usalo quando serve solo la griglia calendario (senza campo input), ad esempio in
 ```typescript
 @Component({
   imports: [TailwindCalendarPanel, ReactiveFormsModule],
-  template: `
-    <tailwind-calendar-panel [formControl]="birthDate" />
-  `
+  template: ` <tailwind-calendar-panel [formControl]="birthDate" /> `
 })
 export class ExampleComponent {
   birthDate = new FormControl<Date | null>(null);
@@ -74,46 +72,90 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>minDate</code> / <code>maxDate</code></td>
-      <td><code>Date | null</code></td>
-      <td><em>nessun limite</em></td>
+      <td>
+        <code>minDate</code> / <code>maxDate</code>
+      </td>
+      <td>
+        <code>Date | null</code>
+      </td>
+      <td>
+        <em>nessun limite</em>
+      </td>
       <td>Limiti inclusivi (solo parte data). Anni, mesi e giorni fuori range sono disabilitati nel calendario.</td>
     </tr>
     <tr>
-      <td><code>value</code></td>
-      <td><code>ModelSignal&lt;Date | null&gt;</code></td>
-      <td><code>null</code></td>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;Date | null&gt;</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
       <td>Data selezionata (two-way). Valore del CVA.</td>
     </tr>
     <tr>
-      <td><code>highlightDate</code></td>
-      <td><code>Date | null</code></td>
-      <td><code>null</code></td>
-      <td>Data evidenziata quando il padre imposta <code>embedded</code> (picker).</td>
+      <td>
+        <code>highlightDate</code>
+      </td>
+      <td>
+        <code>Date | null</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Data evidenziata quando il padre imposta <code>embedded</code> (picker).
+      </td>
     </tr>
     <tr>
-      <td><code>months</code> / <code>weekDays</code></td>
-      <td><code>string[]</code></td>
-      <td><em>da lingua</em></td>
-      <td>Override etichette; altrimenti da <code>TAILWIND_DATETIME_LANGUAGE</code>.</td>
+      <td>
+        <code>months</code> / <code>weekDays</code>
+      </td>
+      <td>
+        <code>string[]</code>
+      </td>
+      <td>
+        <em>da lingua</em>
+      </td>
+      <td>
+        Override etichette; altrimenti da <code>TAILWIND_DATETIME_LANGUAGE</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>calendarView</code></td>
-      <td><code>'days' | 'months' | 'years'</code></td>
-      <td><code>'days'</code></td>
+      <td>
+        <code>calendarView</code>
+      </td>
+      <td>
+        <code>'days' | 'months' | 'years'</code>
+      </td>
+      <td>
+        <code>'days'</code>
+      </td>
       <td>Vista corrente (two-way).</td>
     </tr>
     <tr>
-      <td><code>viewMonth</code> / <code>viewYear</code></td>
-      <td><code>number</code></td>
+      <td>
+        <code>viewMonth</code> / <code>viewYear</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
       <td>mese/anno correnti</td>
       <td>Mese e anno visualizzati (two-way).</td>
     </tr>
     <tr>
-      <td><code>daySelect</code></td>
-      <td><code>Output&lt;number&gt;</code></td>
+      <td>
+        <code>daySelect</code>
+      </td>
+      <td>
+        <code>Output&lt;number&gt;</code>
+      </td>
       <td>—</td>
-      <td>Giorno cliccato (solo quando il padre imposta <code>embedded</code>).</td>
+      <td>
+        Giorno cliccato (solo quando il padre imposta <code>embedded</code>).
+      </td>
     </tr>
   </tbody>
 </table>

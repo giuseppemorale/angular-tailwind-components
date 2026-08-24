@@ -14,8 +14,7 @@ import * as TooltipStories from './tooltip.stories';
 ```typescript
 @Component({
   imports: [TailwindTooltipDirective, TailwindButton],
-  template: `
-    <tailwind-button [tooltip]="'Hello'" [tooltipPosition]="'top'">Hover me</tailwind-button>`
+  template: ` <tailwind-button [tooltip]="'Hello'" [tooltipPosition]="'top'">Hover me</tailwind-button>`
 })
 export class ExampleComponent {}
 ```
@@ -41,15 +40,25 @@ Host ereditano comunque le proprietà del componente ospite; la directive aggiun
   </thead>
   <tbody>
     <tr>
-      <td><code>tooltip</code> (<code>tooltip</code>)</td>
-      <td><code>string</code></td>
+      <td>
+        <code>tooltip</code> (<code>tooltip</code>)
+      </td>
+      <td>
+        <code>string</code>
+      </td>
       <td>—</td>
       <td>Richiesto: testo del tooltip.</td>
     </tr>
     <tr>
-      <td><code>tooltipPosition</code></td>
-      <td><code>TailwindPosition</code></td>
-      <td><code>'top'</code></td>
+      <td>
+        <code>tooltipPosition</code>
+      </td>
+      <td>
+        <code>TailwindPosition</code>
+      </td>
+      <td>
+        <code>'top'</code>
+      </td>
       <td>Posizione rispetto al target.</td>
     </tr>
   </tbody>

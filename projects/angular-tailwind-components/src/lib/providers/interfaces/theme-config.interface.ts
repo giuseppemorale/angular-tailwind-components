@@ -1,6 +1,7 @@
 import {
   TailwindButtonKind,
   TailwindEditorLabels,
+  TailwindLabels,
   TailwindPasswordLabels,
   TailwindSize,
   TailwindTitleTag,
@@ -15,6 +16,8 @@ import { TailwindThemeSeverityColor } from '../types/theme-config.types';
 export interface TailwindComponentsConfig {
   /** Maps to {@link TAILWIND_ICON_SIZE} (default icon pixel size when omitted). */
   ICON_SIZE?: number;
+  /** Maps to {@link TAILWIND_ICON_BASE_PATH} (directory the icon SVGs are served from). */
+  ICON_BASE_PATH?: string;
   /** Maps to {@link TAILWIND_DATETIME_LANGUAGE}. */
   DATETIME_LANGUAGE?: 'it' | 'en';
   /** Maps to {@link TAILWIND_COMPONENTS_SIZE}. */
@@ -35,6 +38,11 @@ export interface TailwindComponentsConfig {
    * Overrides typography classes and icon pixel size per `h1`–`h6`.
    */
   TITLE_SCALE?: Partial<Record<TailwindTitleTag, Partial<TailwindTitleTagScale>>>;
+  /**
+   * Maps to {@link TAILWIND_LABELS} (merged onto {@link DEFAULT_TAILWIND_LABELS}).
+   * Accessible names and built-in text the library renders itself — pass only the keys to translate.
+   */
+  LABELS?: Partial<TailwindLabels>;
 }
 
 export interface TailwindDefineThemeColors {

@@ -40,4 +40,29 @@ describe('TailwindCheckbox', () => {
     const label = fixture.nativeElement.querySelector('.text-neutral-800');
     expect(label?.textContent).toContain('Accept terms');
   });
+  it('should expose the mixed state when indeterminate', () => {
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.detectChanges();
+
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input[type="checkbox"]');
+    expect(input.indeterminate).toBe(true);
+    expect(input.getAttribute('aria-checked')).toBe('mixed');
+  });
+
+  it('should paint the box as filled when indeterminate even if unchecked', () => {
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.detectChanges();
+
+    const box = fixture.nativeElement.querySelector('label > div');
+    expect(box.className).toContain('bg-primary-600');
+  });
+
+  it('should report aria-checked true / false without indeterminate', () => {
+    const input: HTMLInputElement = fixture.nativeElement.querySelector('input[type="checkbox"]');
+    expect(input.getAttribute('aria-checked')).toBe('false');
+
+    fixture.componentRef.setInput('checked', true);
+    fixture.detectChanges();
+    expect(input.getAttribute('aria-checked')).toBe('true');
+  });
 });

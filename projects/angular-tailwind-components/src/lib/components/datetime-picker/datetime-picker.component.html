@@ -1,15 +1,15 @@
 <div [class]="mergeClasses('flex flex-col gap-1.5')">
   @if (label()) {
-    <label [attr.for]="id() ? id() + '-inner' : null" class="text-sm font-medium text-neutral-700">{{ label() }}</label>
+    <label [attr.for]="subId('inner')" class="text-sm font-medium text-neutral-700">{{ label() }}</label>
   }
   <div class="relative">
     <input
-      [attr.id]="id() ? id() + '-inner' : null"
+      [attr.id]="subId('inner')"
       type="text"
       readonly
       [value]="displayValue()"
       [placeholder]="effectivePlaceholder()"
-      class="block w-full bg-white border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
+      class="block w-full bg-surface border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-500 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
       [disabled]="isDisabled()"
       (click)="togglePanel()" />
     <tailwind-icon
@@ -19,7 +19,7 @@
 
     @if (showPanel()) {
       <div
-        class="absolute left-0 top-full z-popover mt-1 w-80 max-w-full rounded-xl border border-neutral-200 bg-white p-4 shadow-xl">
+        class="absolute left-0 top-full z-popover mt-1 w-80 max-w-full rounded-xl border border-neutral-200 bg-surface p-4 shadow-xl">
         <tailwind-calendar-panel
           [calendarView]="calendarView()"
           (calendarViewChange)="calendarView.set($event)"
@@ -34,7 +34,7 @@
         <div class="mt-3 pt-3 border-t border-neutral-100 flex items-center gap-2">
           <span class="text-xs font-medium text-neutral-600 shrink-0">{{ i18n.time }}</span>
           <select
-            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-surface border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled() || !draft()"
             (change)="onHourChange($event)">
             @for (h of hours; track h) {
@@ -45,7 +45,7 @@
           </select>
           <span class="text-neutral-400 text-sm">:</span>
           <select
-            class="flex-1 min-w-0 block bg-white border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-surface border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
             [disabled]="isDisabled() || !draft()"
             (change)="onMinuteChange($event)">
             @for (m of minutes; track m) {

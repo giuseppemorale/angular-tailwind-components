@@ -1,7 +1,10 @@
+import { DOCUMENT } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   HostListener,
+  inject,
   input,
   OnDestroy,
   OnInit,
@@ -18,9 +21,11 @@ const MIN_PANEL_WIDTH_PX = 192;
 @Component({
   selector: 'tailwind-menu',
   templateUrl: './menu.component.html',
-  styleUrl: './menu.component.css'
+  styleUrl: './menu.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit {
+  private readonly document = inject(DOCUMENT);
   private openScheduleId: ReturnType<typeof setTimeout> | undefined;
   private anchorEl: HTMLElement | null = null;
 
@@ -50,11 +55,11 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
   private readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
 
   ngOnInit(): void {
-    document.addEventListener('scroll', this.onScrollReposition, true);
+    this.document.addEventListener('scroll', this.onScrollReposition, true);
   }
 
   ngOnDestroy(): void {
-    document.removeEventListener('scroll', this.onScrollReposition, true);
+    this.document.removeEventListener('scroll', this.onScrollReposition, true);
     if (this.openScheduleId != null) {
       clearTimeout(this.openScheduleId);
     }
@@ -81,8 +86,12 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
   }
 
   close(): void {
+    if (!this.isOpen()) return;
+    // Focus would otherwise land on `<body>` when the panel holding it is removed.
+    const restoreFocus = this.panelRef()?.nativeElement.contains(this.document.activeElement) ?? false;
     this.isOpen.set(false);
     this.panelLayout.set(null);
+    if (restoreFocus) this.anchorEl?.focus();
   }
 
   toggle(anchor?: Event | HTMLElement): void {
@@ -118,7 +127,10 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
       this.openScheduleId = undefined;
       this.isOpen.set(true);
       this.updatePanelPosition();
-      requestAnimationFrame(() => this.updatePanelPosition());
+      requestAnimationFrame(() => {
+        this.updatePanelPosition();
+        this.focusFirstItem();
+      });
     }, 0);
   }
 
@@ -165,7 +177,50 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
     if (!item.disabled) {
       this.onSelect.emit(item);
       this.close();
+      this.anchorEl?.focus();
     }
+  }
+
+  /**
+   * Menu keyboard support per the WAI-ARIA Menu pattern: arrows walk the enabled entries (wrapping),
+   * Home/End jump to the extremes, Tab closes. Without this a `role="menu"` is unusable by keyboard.
+   */
+  onPanelKeydown(event: KeyboardEvent): void {
+    const step: Record<string, number> = { ArrowDown: 1, ArrowUp: -1 };
+    const items = this.focusableItems();
+    if (items.length === 0) return;
+
+    if (event.key === 'Tab') {
+      this.close();
+      return;
+    }
+
+    let target: number;
+    if (event.key === 'Home') {
+      target = 0;
+    } else if (event.key === 'End') {
+      target = items.length - 1;
+    } else if (event.key in step) {
+      const current = items.indexOf(this.document.activeElement as HTMLElement);
+      target = (((current + step[event.key]) % items.length) + items.length) % items.length;
+    } else {
+      return;
+    }
+
+    event.preventDefault();
+    items[target]?.focus();
+  }
+
+  /** Enabled `role="menuitem"` buttons in DOM order. */
+  private focusableItems(): HTMLElement[] {
+    const panel = this.panelRef()?.nativeElement;
+    if (!panel) return [];
+    return Array.from(panel.querySelectorAll<HTMLElement>('[role="menuitem"]:not([disabled])'));
+  }
+
+  /** Moves focus into the menu once it is on screen, as the pattern requires. */
+  private focusFirstItem(): void {
+    this.focusableItems()[0]?.focus();
   }
 
   @HostListener('document:keydown.escape')
@@ -225,6 +280,6 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
         return p;
       }
     }
-    return document.documentElement;
+    return this.document.documentElement;
   }
 }

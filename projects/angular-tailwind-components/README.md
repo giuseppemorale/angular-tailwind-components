@@ -23,11 +23,11 @@ The **library major matches the Angular major** in your app (library **21.x** �
 
 ### Which version should I use?
 
-| Library | Angular | Tailwind CSS | Notes |
-| :------ | :------ | :----------- | :---- |
-| **22.x** | 22 | 4 | **Current.** Use on Angular 22 apps. |
-| **21.x** | 21 | 4 | Previous. Use on Angular 21 apps. |
-| **23+** | same major as Angular | 4 | Each new Angular major gets a matching library major. |
+| Library  | Angular               | Tailwind CSS | Notes                                                 |
+| :------- | :-------------------- | :----------- | :---------------------------------------------------- |
+| **22.x** | 22                    | 4            | **Current.** Use on Angular 22 apps.                  |
+| **21.x** | 21                    | 4            | Previous. Use on Angular 21 apps.                     |
+| **23+**  | same major as Angular | 4            | Each new Angular major gets a matching library major. |
 
 ### Peer dependencies
 
@@ -76,12 +76,12 @@ import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 
   selector: 'app-example',
   imports: [TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle],
   template: `
-  <form [formGroup]="form">
-    <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
-    <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
-    <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
-    <tailwind-button color="primary" (onClick)="submit()">Submit</tailwind-button>
-  </form>
+    <form [formGroup]="form">
+      <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
+      <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
+      <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
+      <tailwind-button color="primary" (onClick)="submit()">Submit</tailwind-button>
+    </form>
   `
 })
 export class ExampleComponent {
@@ -158,41 +158,102 @@ const shared: TailwindComponentsConfig = {
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideTailwindConfig(() => shared),
-    provideTailwindThemeColors(() => ({ primary: 'indigo' }))
-  ]
+  providers: [provideTailwindConfig(() => shared), provideTailwindThemeColors(() => ({ primary: 'indigo' }))]
 };
 ```
 
 You can omit **`COLORS`** if you only need token defaults, or omit token keys if you only need theme colors.
 
-| Config key | Token |
-| --- | --- |
-| `ICON_SIZE` | `TAILWIND_ICON_SIZE` |
-| `DATETIME_LANGUAGE` | `TAILWIND_DATETIME_LANGUAGE` |
-| `COMPONENTS_SIZE` | `TAILWIND_COMPONENTS_SIZE` |
-| `BUTTON_KIND` | `TAILWIND_BUTTON_KIND` |
-| `PAGINATION_SUMMARY` | `TAILWIND_PAGINATION_SUMMARY` |
-| `PASSWORD_LABELS` | `TAILWIND_PASSWORD_LABELS` |
-| `EDITOR_LABELS` | `TAILWIND_EDITOR_LABELS` |
-| `TITLE_SCALE` | `TAILWIND_TITLE_SCALE` |
+| Config key           | Token                         | What it sets                                                           |
+| -------------------- | ----------------------------- | ---------------------------------------------------------------------- |
+| `ICON_SIZE`          | `TAILWIND_ICON_SIZE`          | Default `tailwind-icon` pixel size                                     |
+| `ICON_BASE_PATH`     | `TAILWIND_ICON_BASE_PATH`     | Directory the icon SVGs are served from (see [Icons](#icons))          |
+| `DATETIME_LANGUAGE`  | `TAILWIND_DATETIME_LANGUAGE`  | Calendar and time-picker language                                      |
+| `COMPONENTS_SIZE`    | `TAILWIND_COMPONENTS_SIZE`    | Default `size` for every sized component                               |
+| `BUTTON_KIND`        | `TAILWIND_BUTTON_KIND`        | Default `kind` for `tailwind-button`                                   |
+| `PAGINATION_SUMMARY` | `TAILWIND_PAGINATION_SUMMARY` | Default pagination summary template                                    |
+| `LABELS`             | `TAILWIND_LABELS`             | Accessible names and built-in text (see [Localization](#localization)) |
+| `PASSWORD_LABELS`    | `TAILWIND_PASSWORD_LABELS`    | Password strength labels                                               |
+| `EDITOR_LABELS`      | `TAILWIND_EDITOR_LABELS`      | Editor toolbar and dialog labels                                       |
+| `TITLE_SCALE`        | `TAILWIND_TITLE_SCALE`        | Per-tag typography for `tailwind-title`                                |
+
+> **`COMPONENTS_SIZE`** is honoured by every component with a `size` input except `tailwind-modal`, whose `size` is a dialog width rather than a control size.
 
 **`provideTailwindComponents`** remains exported for backward compatibility (token providers only) but is **deprecated**; prefer **`provideTailwindConfig`**.
+
+## Localization
+
+Components that render text or accessible names on their own read them from **`TAILWIND_LABELS`**. Pass only the keys you want to translate; the rest fall back to the English defaults.
+
+```typescript
+provideTailwindConfig(() => ({
+  LABELS: {
+    close: 'Chiudi',
+    dismiss: 'Ignora',
+    previousPage: 'Pagina precedente',
+    nextPage: 'Pagina successiva',
+    rowsPerPage: 'Righe per pagina',
+    search: 'Cerca',
+    searchPlaceholder: 'Cerca…',
+    noData: 'Nessun dato disponibile',
+    noResults: 'Nessun risultato',
+    page: 'Pagina {page}',
+    currentPage: 'pagina corrente'
+  }
+}));
+```
+
+Because the factory runs through `inject()`, the values can come from a translation library:
+
+```typescript
+provideTailwindConfig(() => {
+  const t = inject(TranslocoService);
+  return { LABELS: { close: t.translate('common.close'), search: t.translate('common.search') } };
+});
+```
+
+Every label also has a matching component input (`closeLabel` on modal and drawer, `searchLabel` on table, …) when a single instance needs a different string.
+
+## Dark mode
+
+Components paint themselves with surface tokens (`bg-surface`, `text-fg`, `border-border`) and the `neutral` ramp, so dark mode is a variable remap rather than a per-component variant. Turn it on by putting a class on `<html>`:
+
+```html
+<html class="dark">
+  <!-- or data-theme="dark" -->
+</html>
+```
+
+To follow the operating system instead, use `class="theme-auto"`. This is opt-in on purpose: upgrading the library never turns an existing app dark on its own.
+
+```typescript
+// Toggling at runtime
+document.documentElement.classList.toggle('dark');
+```
+
+Dark mode composes with `provideTailwindThemeColors`: the dark rules are scoped to `:root.dark`, which outranks the `:root` variables injected for a custom brand palette.
+
+## Icons
+
+Icon SVGs ship in the package under `tailwind-icons/` and are loaded at runtime as CSS masks from `/tailwind-icons/<name>.svg`. Copy them into your served assets, and if the app is **not** served from the domain root, point the library at the right directory:
+
+```typescript
+provideTailwindConfig(() => ({ ICON_BASE_PATH: '/my-app/tailwind-icons' }));
+```
 
 ## Theme colors (`provideTailwindThemeColors`)
 
 The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Requires the library stylesheet in `angular.json` (see [Prerequisites](#prerequisites)) so those utilities exist in the compiled CSS. At startup, **`provideTailwindThemeColors`** sets `data-tailwind-theme` on `<html>` and injects `<style id="tailwind-theme-colors">` with the variables in `@layer theme` (`:root[data-tailwind-theme]` and `:host`). Color application is a **no-op during SSR** (browser only).
 
-| `COLORS` key | CSS variables | Default palette in `tailwind.css` |
-| --- | --- | --- |
-| `primary` | `--color-primary-*`, `--color-on-primary-*` | Tailwind `blue` |
-| `neutral` | `--color-neutral-*`, `--color-on-neutral-*` | Tailwind `slate` |
-| `success` | `--color-success-*`, `--color-on-success-*` | Tailwind `green` |
-| `warning` | `--color-warning-*`, `--color-on-warning-*` | Tailwind `amber` |
-| `danger` | `--color-danger-*`, `--color-on-danger-*` | Tailwind `red` |
-| `error` | Same as `danger` if `danger` is omitted | — |
-| `info` | `--color-info-*`, `--color-on-info-*` | Tailwind `sky` |
+| `COLORS` key | CSS variables                               | Default palette in `tailwind.css` |
+| ------------ | ------------------------------------------- | --------------------------------- |
+| `primary`    | `--color-primary-*`, `--color-on-primary-*` | Tailwind `blue`                   |
+| `neutral`    | `--color-neutral-*`, `--color-on-neutral-*` | Tailwind `slate`                  |
+| `success`    | `--color-success-*`, `--color-on-success-*` | Tailwind `green`                  |
+| `warning`    | `--color-warning-*`, `--color-on-warning-*` | Tailwind `amber`                  |
+| `danger`     | `--color-danger-*`, `--color-on-danger-*`   | Tailwind `red`                    |
+| `error`      | Same as `danger` if `danger` is omitted     | —                                 |
+| `info`       | `--color-info-*`, `--color-on-info-*`       | Tailwind `sky`                    |
 
 ### `TailwindThemeSeverityColor`
 
@@ -208,8 +269,8 @@ Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. I
    Keys are optional shade steps: `'50'`, `'100'`, …, `'950'`. Values are any valid CSS color (`#hex`, `rgb()`, `oklch()`, `var(--color-fuchsia-600)`, etc.). Only the keys you pass are written to `--color-<semantic>-<shade>`.  
    **Optional `on`:** if you override background shades with custom values, set matching foreground tokens by using the structured form below so text stays readable.
 
-3. **A structured object — `{ shades, on? }`**  
-   - **`shades`**: same as the flat object: maps to `--color-<semantic>-<shade>`.  
+3. **A structured object — `{ shades, on? }`**
+   - **`shades`**: same as the flat object: maps to `--color-<semantic>-<shade>`.
    - **`on`**: optional partial map of the same shade keys → CSS colors for **`--color-on-<semantic>-<shade>`** (recommended foreground on that semantic background). Solid `tailwind-button` / `tailwind-tag` / semantic `tailwind-toolbar` read these via `text-on-*` utilities.
 
    Example:

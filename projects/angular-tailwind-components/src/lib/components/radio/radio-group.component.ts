@@ -1,6 +1,7 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOptionGroup, TailwindSize } from '../../models';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -13,9 +14,12 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './radio-group.component.html',
-  styleUrl: './radio-group.component.css'
+  styleUrl: './radio-group.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindRadioGroup<T = unknown> extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Label for the radio group */
   readonly label = input<string>('');
   /** Aria label for accessibility */
@@ -25,7 +29,7 @@ export class TailwindRadioGroup<T = unknown> extends TailwindComponent implement
   /** Available options */
   readonly options = input<TailwindOptionGroup<T>[]>([]);
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Layout orientation */
   readonly orientation = input<'horizontal' | 'vertical'>('vertical');
 

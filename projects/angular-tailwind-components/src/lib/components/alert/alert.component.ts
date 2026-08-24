@@ -1,4 +1,5 @@
-import { Component, computed, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
+import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindColor } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
@@ -8,9 +9,16 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon, TailwindButton],
   selector: 'tailwind-alert',
   templateUrl: './alert.component.html',
-  styleUrl: './alert.component.css'
+  styleUrl: './alert.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindAlert extends TailwindComponent {
+  private readonly labels = inject(TAILWIND_LABELS);
+
+  /** Accessible name override; defaults to `TAILWIND_LABELS.dismiss`. */
+  readonly dismissAriaLabel = input<string>('');
+  protected readonly dismissLabel = computed(() => this.dismissAriaLabel() || this.labels.dismiss);
+
   /** Semantic color */
   readonly color = input<TailwindColor>('info');
   /** Alert title */

@@ -1,13 +1,14 @@
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   input,
-  signal,
-  OnDestroy,
-  AfterViewInit,
   NgZone,
-  ElementRef,
+  OnDestroy,
+  signal,
   viewChild
 } from '@angular/core';
 import { TailwindPosition } from '../../models';
@@ -17,7 +18,8 @@ import { DOCUMENT } from '@angular/common';
 @Component({
   selector: 'tailwind-tooltip',
   templateUrl: './tooltip.component.html',
-  styleUrl: './tooltip.component.css'
+  styleUrl: './tooltip.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTooltip extends TailwindComponent implements AfterViewInit, OnDestroy {
   /** Tooltip text */
@@ -41,16 +43,16 @@ export class TailwindTooltip extends TailwindComponent implements AfterViewInit,
 
   readonly tooltipShellClasses = computed(() => {
     const base = [
-      'fixed z-[1070] pointer-events-none transition-opacity duration-150',
-      this.isVisible() ? 'opacity-100' : 'opacity-0'
+      // WCAG 1.4.13 requires hover-triggered content to stay reachable with the pointer,
+      // so the shell keeps pointer events while hidden stays click-through.
+      'fixed z-[1070] transition-opacity duration-150',
+      this.isVisible() ? 'opacity-100' : 'opacity-0 pointer-events-none'
     ];
     return this.mergeClasses(...base);
   });
 
-  readonly tooltipBodyClasses = computed(
-    () =>
-      'relative z-[1] text-xs font-medium text-white bg-neutral-900 rounded-lg shadow-lg whitespace-nowrap px-3 py-1.5'
-  );
+  readonly tooltipBodyClasses =
+    'relative z-[1] text-xs font-medium text-white bg-neutral-900 rounded-lg shadow-lg whitespace-nowrap px-3 py-1.5';
 
   readonly arrowSpec = computed(() => {
     const specs: Record<

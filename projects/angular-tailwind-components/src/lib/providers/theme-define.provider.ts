@@ -8,14 +8,16 @@ import {
   type EnvironmentProviders,
   type Provider
 } from '@angular/core';
-import { resolveTailwindEditorLabels, resolveTailwindTitleScale } from '../models';
+import { resolveTailwindEditorLabels, resolveTailwindLabels, resolveTailwindTitleScale } from '../models';
 import {
   TAILWIND_BUTTON_KIND,
   TAILWIND_COMPONENTS_SIZE,
   TAILWIND_DATETIME_LANGUAGE,
+  TAILWIND_ICON_BASE_PATH,
   TAILWIND_ICON_SIZE,
   TAILWIND_PAGINATION_SUMMARY,
   TAILWIND_EDITOR_LABELS,
+  TAILWIND_LABELS,
   TAILWIND_PASSWORD_LABELS,
   TAILWIND_TITLE_SCALE
 } from '../tokens';
@@ -50,6 +52,7 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
 
   return [
     fromConfig(TAILWIND_ICON_SIZE, c => c.ICON_SIZE),
+    fromConfig(TAILWIND_ICON_BASE_PATH, c => c.ICON_BASE_PATH),
     fromConfig(TAILWIND_DATETIME_LANGUAGE, c => c.DATETIME_LANGUAGE),
     fromConfig(TAILWIND_COMPONENTS_SIZE, c => c.COMPONENTS_SIZE),
     fromConfig(TAILWIND_BUTTON_KIND, c => c.BUTTON_KIND),
@@ -64,6 +67,11 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
       TAILWIND_TITLE_SCALE,
       c => c.TITLE_SCALE,
       v => resolveTailwindTitleScale(v)
+    ),
+    fromConfig(
+      TAILWIND_LABELS,
+      c => c.LABELS,
+      v => resolveTailwindLabels(v)
     )
   ];
 }

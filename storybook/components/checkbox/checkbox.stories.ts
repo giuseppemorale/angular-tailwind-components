@@ -20,3 +20,18 @@ export const Checkbox: StoryObj<TailwindCheckbox> = {
   }),
   args: { label: 'Accept terms and conditions', size: 'md', checked: false }
 };
+
+export const Indeterminate: StoryObj<TailwindCheckbox> = {
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <div class="flex flex-col gap-3">
+        <tailwind-checkbox label="Seleziona tutto" [indeterminate]="true" />
+        <div class="ml-6 flex flex-col gap-2">
+          <tailwind-checkbox label="Riga 1" [checked]="true" />
+          <tailwind-checkbox label="Riga 2" />
+          <tailwind-checkbox label="Riga 3" />
+        </div>
+      </div>`
+  })
+};

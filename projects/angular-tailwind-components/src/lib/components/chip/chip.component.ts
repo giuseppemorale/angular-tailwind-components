@@ -1,4 +1,4 @@
-import { Component, booleanAttribute, computed, input, output } from '@angular/core';
+import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -7,7 +7,8 @@ import { TailwindComponent } from '../tailwind.component';
   imports: [TailwindIcon],
   selector: 'tailwind-chip',
   templateUrl: './chip.component.html',
-  styleUrl: './chip.component.css'
+  styleUrl: './chip.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindChip extends TailwindComponent {
   /** Semantic color */

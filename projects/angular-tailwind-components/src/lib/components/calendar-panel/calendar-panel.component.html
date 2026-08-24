@@ -8,7 +8,7 @@
         kind="ghost"
         color="transparent"
         icon="chevron-left"
-        ariaLabel="Previous"
+        [ariaLabel]="previousLabel()"
         [disabled]="isDisabled()"
         (onClick)="prev()" />
     } @else {
@@ -30,7 +30,7 @@
         kind="ghost"
         color="transparent"
         icon="chevron-right"
-        ariaLabel="Next"
+        [ariaLabel]="nextLabel()"
         [disabled]="isDisabled()"
         (onClick)="next()" />
     } @else {

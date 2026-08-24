@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -9,8 +10,8 @@ import {
   OnDestroy,
   signal,
   TemplateRef,
-  ViewContainerRef,
-  viewChild
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
@@ -20,6 +21,8 @@ import { TailwindOption, TailwindSize } from '../../models';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindChip } from '../chip/chip.component';
 import { TailwindIcon } from '../icon/icon.component';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
+import { FIELD_SIZE } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -33,9 +36,12 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './select.component.html',
-  styleUrl: './select.component.css'
+  styleUrl: './select.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSelect<T = unknown> extends TailwindComponent implements ControlValueAccessor, OnDestroy {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   private readonly overlay = inject(Overlay);
   private readonly vcr = inject(ViewContainerRef);
   private readonly elRef = inject(ElementRef<HTMLElement>);
@@ -53,7 +59,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   /** Available options */
   readonly options = input<TailwindOption<T>[]>([]);
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Helper text */
   readonly helperText = input<string>('');
   /** Error text */
@@ -64,6 +70,12 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   readonly multiple = input(false);
   /** Disables the control (also set via `setDisabledState` when used as CVA) */
   readonly disabled = input<boolean>(false);
+  /**
+   * How an option value is matched against the current value. Defaults to identity (`Object.is`),
+   * which does **not** match structurally equal objects coming from different fetches — pass a
+   * comparator when option values are objects, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
+   */
+  readonly compareWith = input<(a: T | null, b: T | null) => boolean>((a, b) => Object.is(a, b));
 
   /** Selected value: `T | null` when single, `T[]` when `multiple` */
   readonly value = model<T | T[] | null>(null);
@@ -78,6 +90,24 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
 
   /** Keyboard-highlighted option index (-1 = none) */
   readonly activeIndex = signal(-1);
+
+  /** Id of the popup listbox, referenced by the combobox `aria-controls`. */
+  readonly listboxId = computed(() => this.subId('listbox'));
+
+  /** Id of one option row, referenced by `aria-activedescendant`. */
+  optionId(index: number): string {
+    return `${this.subId('option')}-${index}`;
+  }
+
+  /**
+   * The option the combobox reports as "virtually focused". Focus itself stays on the trigger, which
+   * is what the APG combobox pattern prescribes, so without this the keyboard highlight is invisible
+   * to assistive technology.
+   */
+  readonly activeDescendantId = computed(() => {
+    const index = this.activeIndex();
+    return this.isOpen() && index >= 0 ? this.optionId(index) : null;
+  });
 
   /** The currently selected option object (single mode only) */
   readonly selectedOption = computed(() => {
@@ -122,30 +152,22 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
 
   /** Classes for the trigger button */
   readonly triggerClasses = computed(() => {
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: 'text-xs px-2 py-1 rounded-sm',
-      sm: 'text-sm px-2.5 py-1.5 rounded-md',
-      md: 'text-sm px-3 py-2 rounded-md',
-      lg: 'text-base px-3.5 py-2.5 rounded-lg',
-      xl: 'text-base px-4 py-3 rounded-lg'
-    };
-
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
       : 'border-neutral-300 focus:outline-primary-500';
 
     return [
-      'flex items-center justify-between w-full bg-white border transition-colors duration-150',
+      'flex items-center justify-between w-full bg-surface border transition-colors duration-150',
       'pr-3 cursor-pointer text-left',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed',
-      sizeMap[this.size()],
+      FIELD_SIZE[this.size()],
       stateClass
     ].join(' ');
   });
 
   private optionValueEquals(a: unknown, b: unknown): boolean {
-    return Object.is(a, b);
+    return this.compareWith()(a as T | null, b as T | null);
   }
 
   /** Used in the template to compare option values */
@@ -284,6 +306,13 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     this.activeIndex.set(-1);
   }
 
+  /** Moves the keyboard highlight and keeps it inside the scrollable panel. */
+  private setActiveIndex(index: number): void {
+    this.activeIndex.set(index);
+    const option = this.overlayRef?.overlayElement.querySelector(`#${CSS.escape(this.optionId(index))}`);
+    option?.scrollIntoView({ block: 'nearest' });
+  }
+
   toggleDropdown(): void {
     if (this.isDisabled()) return;
     if (this.isOpen()) {
@@ -338,7 +367,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
         }
         let next = this.activeIndex() + 1;
         while (next < opts.length && opts[next].disabled) next++;
-        if (next < opts.length) this.activeIndex.set(next);
+        if (next < opts.length) this.setActiveIndex(next);
         break;
       }
       case 'ArrowUp': {
@@ -349,7 +378,23 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
         }
         let prev = this.activeIndex() - 1;
         while (prev >= 0 && opts[prev].disabled) prev--;
-        if (prev >= 0) this.activeIndex.set(prev);
+        if (prev >= 0) this.setActiveIndex(prev);
+        break;
+      }
+      case 'Home': {
+        event.preventDefault();
+        const first = opts.findIndex(o => !o.disabled);
+        if (first >= 0) this.setActiveIndex(first);
+        break;
+      }
+      case 'End': {
+        event.preventDefault();
+        for (let i = opts.length - 1; i >= 0; i--) {
+          if (!opts[i].disabled) {
+            this.setActiveIndex(i);
+            break;
+          }
+        }
         break;
       }
       case 'Enter':

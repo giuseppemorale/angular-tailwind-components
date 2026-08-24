@@ -40,6 +40,7 @@
           [attr.aria-valuemin]="min()"
           [attr.aria-valuemax]="max()"
           [attr.aria-valuenow]="rangeLow()"
+          [attr.aria-label]="lowThumbLabel()"
           [attr.aria-disabled]="isEffectivelyDisabled()"
           (pointerdown)="onThumbPointerDown($event, 0)"
           (keydown)="onKeyDown($event, 0)"></button>
@@ -55,6 +56,7 @@
           [attr.aria-valuemin]="min()"
           [attr.aria-valuemax]="max()"
           [attr.aria-valuenow]="rangeHigh()"
+          [attr.aria-label]="highThumbLabel()"
           [attr.aria-disabled]="isEffectivelyDisabled()"
           (pointerdown)="onThumbPointerDown($event, 1)"
           (keydown)="onKeyDown($event, 1)"></button>
@@ -71,6 +73,7 @@
           [attr.aria-valuemin]="min()"
           [attr.aria-valuemax]="max()"
           [attr.aria-valuenow]="singleValue()"
+          [attr.aria-label]="ariaLabel() || null"
           [attr.aria-disabled]="isEffectivelyDisabled()"
           (pointerdown)="onThumbPointerDown($event, 0)"
           (keydown)="onKeyDown($event, 0)"></button>
@@ -117,6 +120,7 @@
           [attr.aria-valuemin]="min()"
           [attr.aria-valuemax]="max()"
           [attr.aria-valuenow]="rangeLow()"
+          [attr.aria-label]="lowThumbLabel()"
           [attr.aria-disabled]="isEffectivelyDisabled()"
           (pointerdown)="onThumbPointerDown($event, 0)"
           (keydown)="onKeyDown($event, 0)"></button>
@@ -132,6 +136,7 @@
           [attr.aria-valuemin]="min()"
           [attr.aria-valuemax]="max()"
           [attr.aria-valuenow]="rangeHigh()"
+          [attr.aria-label]="highThumbLabel()"
           [attr.aria-disabled]="isEffectivelyDisabled()"
           (pointerdown)="onThumbPointerDown($event, 1)"
           (keydown)="onKeyDown($event, 1)"></button>
@@ -148,6 +153,7 @@
           [attr.aria-valuemin]="min()"
           [attr.aria-valuemax]="max()"
           [attr.aria-valuenow]="singleValue()"
+          [attr.aria-label]="ariaLabel() || null"
           [attr.aria-disabled]="isEffectivelyDisabled()"
           (pointerdown)="onThumbPointerDown($event, 0)"
           (keydown)="onKeyDown($event, 0)"></button>

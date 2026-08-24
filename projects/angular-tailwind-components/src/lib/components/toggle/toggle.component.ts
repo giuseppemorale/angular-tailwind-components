@@ -1,6 +1,7 @@
-import { Component, computed, forwardRef, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, input, model, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -13,15 +14,18 @@ import { TailwindComponent } from '../tailwind.component';
     }
   ],
   templateUrl: './toggle.component.html',
-  styleUrl: './toggle.component.css'
+  styleUrl: './toggle.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindToggle extends TailwindComponent implements ControlValueAccessor {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Label text */
   readonly label = input<string>('');
   /** Aria label for accessibility */
   readonly ariaLabel = input<string>('');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
 
   /** Two-way bound checked state */
   readonly checked = model<boolean>(false);
@@ -83,7 +87,7 @@ export class TailwindToggle extends TailwindComponent implements ControlValueAcc
 
     const base = [
       'pointer-events-none inline-block rounded-full',
-      'bg-white shadow-md',
+      'bg-surface shadow-md',
       'transform transition-transform duration-200 ease-in-out'
     ];
 

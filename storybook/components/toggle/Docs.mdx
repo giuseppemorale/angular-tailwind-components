@@ -14,13 +14,11 @@ import * as ToggleStories from './toggle.stories';
 ```typescript
 @Component({
   imports: [TailwindToggle],
-  template: `
-    <tailwind-toggle
-      label="Enable notifications"
-      ariaLabel="Toggle notifications"
-      size="md"
-      [(checked)]="on"
-    />`
+  template: ` <tailwind-toggle
+    label="Enable notifications"
+    ariaLabel="Toggle notifications"
+    size="md"
+    [(checked)]="on" />`
 })
 export class ExampleComponent {
   on = false;
@@ -50,27 +48,51 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta visibile.</td>
     </tr>
     <tr>
-      <td><code>ariaLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta accessibile.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
       <td>Dimensione.</td>
     </tr>
     <tr>
-      <td><code>checked</code></td>
-      <td><code>ModelSignal&lt;boolean&gt;</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>checked</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;boolean&gt;</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Stato acceso/spento (two-way).</td>
     </tr>
   </tbody>

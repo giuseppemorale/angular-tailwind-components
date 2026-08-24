@@ -1,10 +1,11 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-skeleton',
   templateUrl: './skeleton.component.html',
-  styleUrl: './skeleton.component.css'
+  styleUrl: './skeleton.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindSkeleton extends TailwindComponent {
   readonly variant = input<'text' | 'circle' | 'rect' | 'rounded'>('text');

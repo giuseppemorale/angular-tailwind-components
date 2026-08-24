@@ -14,15 +14,13 @@ import * as SpinnerStories from './spinner.stories';
 ```typescript
 @Component({
   imports: [TailwindSpinner],
-  template: `
-    <tailwind-spinner
-      icon="arrow-path"
-      size="md"
-      color="primary"
-      label=""
-      ariaLabel="Loading"
-      orientation="horizontal"
-    />`
+  template: ` <tailwind-spinner
+    icon="arrow-path"
+    size="md"
+    color="primary"
+    label=""
+    ariaLabel="Loading"
+    orientation="horizontal" />`
 })
 export class ExampleComponent {}
 ```
@@ -50,39 +48,75 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>icon</code></td>
-      <td><code>TailwindHeroicon</code></td>
-      <td><code>'arrow-path'</code></td>
+      <td>
+        <code>icon</code>
+      </td>
+      <td>
+        <code>TailwindHeroicon</code>
+      </td>
+      <td>
+        <code>'arrow-path'</code>
+      </td>
       <td>Nome icona Heroicons (outline) animata.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
       <td>Dimensione icona.</td>
     </tr>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindColor</code></td>
-      <td><code>'primary'</code></td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'primary'</code>
+      </td>
       <td>Colore (classi testo).</td>
     </tr>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Testo accanto allo spinner.</td>
     </tr>
     <tr>
-      <td><code>ariaLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>'Loading'</code></td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'Loading'</code>
+      </td>
       <td>Accessibilità.</td>
     </tr>
     <tr>
-      <td><code>orientation</code></td>
-      <td><code>'horizontal' | 'vertical'</code></td>
-      <td><code>'horizontal'</code></td>
+      <td>
+        <code>orientation</code>
+      </td>
+      <td>
+        <code>'horizontal' | 'vertical'</code>
+      </td>
+      <td>
+        <code>'horizontal'</code>
+      </td>
       <td>Disposizione label.</td>
     </tr>
   </tbody>

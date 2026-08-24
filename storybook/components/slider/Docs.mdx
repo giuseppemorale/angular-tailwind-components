@@ -56,57 +56,151 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>min</code></td>
-      <td><code>number</code></td>
-      <td><code>0</code></td>
+      <td>
+        <code>min</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>0</code>
+      </td>
       <td>Estremo inferiore.</td>
     </tr>
     <tr>
-      <td><code>max</code></td>
-      <td><code>number</code></td>
-      <td><code>100</code></td>
+      <td>
+        <code>max</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>100</code>
+      </td>
       <td>Estremo superiore.</td>
     </tr>
     <tr>
-      <td><code>step</code></td>
-      <td><code>number</code></td>
-      <td><code>1</code></td>
+      <td>
+        <code>step</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>1</code>
+      </td>
       <td>Incremento (snap).</td>
     </tr>
     <tr>
-      <td><code>range</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>range</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Due thumb; valore del form come tupla ordinata.</td>
     </tr>
     <tr>
-      <td><code>orientation</code></td>
-      <td><code>'horizontal' | 'vertical'</code></td>
-      <td><code>'horizontal'</code></td>
+      <td>
+        <code>orientation</code>
+      </td>
+      <td>
+        <code>'horizontal' | 'vertical'</code>
+      </td>
+      <td>
+        <code>'horizontal'</code>
+      </td>
       <td>Layout del track.</td>
     </tr>
     <tr>
-      <td><code>showTicks</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>showTicks</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Tacche a ogni step.</td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Nome accessibile del thumb (obbligatorio senza label visibile).</td>
+    </tr>
+    <tr>
+      <td>
+        <code>minAriaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile del thumb inferiore in modalità <code>range</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>maxAriaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile del thumb superiore in modalità <code>range</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
       <td>Dimensione thumb e spessore track.</td>
     </tr>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindColor</code></td>
-      <td><code>'primary'</code></td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'primary'</code>
+      </td>
       <td>Colore del riempimento track e del thumb.</td>
     </tr>
     <tr>
-      <td><code>disabled</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>disabled</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Disabilita interazione (combinato con CVA da form).</td>
     </tr>
   </tbody>
@@ -114,7 +208,7 @@ Eredita `TailwindComponent` (`id`, `class`).
 
 ## Form value
 
-| Modalità | Tipo valore (`ngModel` / <code>writeValue</code>) |
-|----------|---------------------------------------------------|
-| Singolo | <code>number</code> |
-| Range | <code>[number, number]</code> (ordinata internamente) |
+| Modalità | Tipo valore (`ngModel` / <code>writeValue</code>)     |
+| -------- | ----------------------------------------------------- |
+| Singolo  | <code>number</code>                                   |
+| Range    | <code>[number, number]</code> (ordinata internamente) |

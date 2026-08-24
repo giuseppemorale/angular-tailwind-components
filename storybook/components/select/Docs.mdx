@@ -14,20 +14,18 @@ import * as SelectStories from './select.stories';
 ```typescript
 @Component({
   imports: [TailwindSelect],
-  template: `
-    <tailwind-select
-      label="Framework"
-      placeholder="Choose a framework"
-      [options]="options"
-      size="md"
-      [(value)]="value"
-    />`
+  template: ` <tailwind-select
+    label="Framework"
+    placeholder="Choose a framework"
+    [options]="options"
+    size="md"
+    [(value)]="value" />`
 })
 export class ExampleComponent {
   value = '';
   options = [
     { value: 'angular', label: 'Angular' },
-    { value: 'react',   label: 'React', disabled: true },
+    { value: 'react', label: 'React', disabled: true }
   ];
 }
 ```
@@ -51,20 +49,18 @@ Con `[multiple]="true"` il valore è un array `T[]` (vuoto se nulla è seleziona
 ```typescript
 @Component({
   imports: [TailwindSelect],
-  template: `
-    <tailwind-select
-      label="Framework"
-      placeholder="Scegli uno o più framework"
-      [options]="options"
-      [multiple]="true"
-      [(value)]="value"
-    />`
+  template: ` <tailwind-select
+    label="Framework"
+    placeholder="Scegli uno o più framework"
+    [options]="options"
+    [multiple]="true"
+    [(value)]="value" />`
 })
 export class ExampleComponent {
   value: string[] = [];
   options = [
     { value: 'angular', label: 'Angular' },
-    { value: 'react', label: 'React' },
+    { value: 'react', label: 'React' }
   ];
 }
 ```
@@ -94,70 +90,164 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>label</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Etichetta.</td>
     </tr>
     <tr>
-      <td><code>ariaLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
-      <td>Nome accessibile del combobox se <code>label</code> è omessa.</td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile del combobox se <code>label</code> è omessa.
+      </td>
     </tr>
     <tr>
-      <td><code>placeholder</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>placeholder</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Testo mostrato quando nessuna opzione è selezionata.</td>
     </tr>
     <tr>
-      <td><code>options</code></td>
-      <td><code>TailwindOption&lt;T&gt;[]</code></td>
-      <td><code>[]</code></td>
-      <td>Elenco opzioni. Ogni opzione può avere <code>disabled?: boolean</code>.</td>
+      <td>
+        <code>options</code>
+      </td>
+      <td>
+        <code>TailwindOption&lt;T&gt;[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
+      <td>
+        Elenco opzioni. Ogni opzione può avere <code>disabled?: boolean</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>size</code></td>
-      <td><code>TailwindSize</code></td>
-      <td><code>'md'</code></td>
-      <td>Dimensione: <code>xs | sm | md | lg | xl</code>.</td>
+      <td>
+        <code>compareWith</code>
+      </td>
+      <td>
+        <code>(a, b) =&gt; boolean</code>
+      </td>
+      <td>
+        <code>Object.is</code>
+      </td>
+      <td>Confronto tra valore corrente e valori delle opzioni. Necessario quando i valori sono oggetti.</td>
     </tr>
     <tr>
-      <td><code>helperText</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
+      <td>
+        Dimensione: <code>xs | sm | md | lg | xl</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>helperText</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Testo di aiuto (visibile solo se non in errore).</td>
     </tr>
     <tr>
-      <td><code>errorText</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
-      <td>Messaggio di errore (visibile solo con <code>hasError</code>).</td>
+      <td>
+        <code>errorText</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Messaggio di errore (visibile solo con <code>hasError</code>).
+      </td>
     </tr>
     <tr>
-      <td><code>hasError</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>hasError</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Attiva lo stile errore (bordo rosso).</td>
     </tr>
     <tr>
-      <td><code>multiple</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Se <code>true</code>, il valore è <code>T[]</code> e si possono selezionare più opzioni; con <code>ControlValueAccessor</code> il form riceve un array.</td>
+      <td>
+        <code>multiple</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Se <code>true</code>, il valore è <code>T[]</code> e si possono selezionare più opzioni; con{' '}
+        <code>ControlValueAccessor</code> il form riceve un array.
+      </td>
     </tr>
     <tr>
-      <td><code>disabled</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
-      <td>Disabilita il controllo (combinato con <code>setDisabledState</code> da form).</td>
+      <td>
+        <code>disabled</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Disabilita il controllo (combinato con <code>setDisabledState</code> da form).
+      </td>
     </tr>
     <tr>
-      <td><code>value</code></td>
-      <td><code>ModelSignal&lt;T | T[] | null&gt;</code></td>
-      <td><code>null</code></td>
-      <td>In modalità singola: <code>T | null</code>. Con <code>multiple</code>: <code>T[]</code> (nessuna selezione = array vuoto).</td>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;T | T[] | null&gt;</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        In modalità singola: <code>T | null</code>. Con <code>multiple</code>: <code>T[]</code> (nessuna selezione =
+        array vuoto).
+      </td>
     </tr>
   </tbody>
 </table>

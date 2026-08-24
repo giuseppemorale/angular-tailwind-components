@@ -27,7 +27,7 @@ describe('TailwindCard', () => {
     expect(surface).toBeTruthy();
     expect(surface.className).toContain('custom-forwarded');
     expect(surface.className).toContain('h-full');
-    expect(surface.className).toContain('bg-white');
+    expect(surface.className).toContain('bg-surface');
     expect(host.classList.contains('custom-forwarded')).toBe(false);
     expect(host.classList.contains('h-full')).toBe(false);
   });

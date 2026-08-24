@@ -14,14 +14,12 @@ import * as PaginationStories from './pagination.stories';
 ```typescript
 @Component({
   imports: [TailwindPagination],
-  template: `
-    <tailwind-pagination
-      [totalItems]="50"
-      [pageSize]="10"
-      [currentPage]="1"
-      ariaLabel="Pagination"
-      summary="Visualizzati {start}-{end} di {total}"
-    />`
+  template: ` <tailwind-pagination
+    [totalItems]="50"
+    [pageSize]="10"
+    [currentPage]="1"
+    ariaLabel="Pagination"
+    summary="Visualizzati {start}-{end} di {total}" />`
 })
 export class ExampleComponent {}
 ```
@@ -36,9 +34,7 @@ Per non ripetere la stringa su ogni istanza, registra il provider **una volta** 
 import { TAILWIND_PAGINATION_SUMMARY } from 'angular-tailwind-components';
 
 bootstrapApplication(AppComponent, {
-  providers: [
-    { provide: TAILWIND_PAGINATION_SUMMARY, useValue: 'Visualizzati {start}-{end} di {total}' }
-  ]
+  providers: [{ provide: TAILWIND_PAGINATION_SUMMARY, useValue: 'Visualizzati {start}-{end} di {total}' }]
 });
 ```
 
@@ -67,40 +63,94 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>totalItems</code></td>
-      <td><code>number</code></td>
+      <td>
+        <code>totalItems</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
       <td>—</td>
       <td>Richiesto: numero totale elementi.</td>
     </tr>
     <tr>
-      <td><code>pageSize</code></td>
-      <td><code>ModelSignal&lt;number&gt;</code></td>
-      <td><code>10</code></td>
+      <td>
+        <code>pageSize</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;number&gt;</code>
+      </td>
+      <td>
+        <code>10</code>
+      </td>
       <td>Elementi per pagina (two-way). Modificabile dalla select interna.</td>
     </tr>
     <tr>
-      <td><code>lengthOptions</code></td>
-      <td><code>number[]</code></td>
-      <td><code>[5, 10, 25, 50]</code></td>
-      <td>Valori del <code>tailwind-select</code> «record per pagina». Se vuoto, il select non viene mostrato.</td>
+      <td>
+        <code>lengthOptions</code>
+      </td>
+      <td>
+        <code>number[]</code>
+      </td>
+      <td>
+        <code>[5, 10, 25, 50]</code>
+      </td>
+      <td>
+        Valori del <code>tailwind-select</code> «record per pagina». Se vuoto, il select non viene mostrato.
+      </td>
     </tr>
     <tr>
-      <td><code>currentPage</code></td>
-      <td><code>ModelSignal&lt;number&gt;</code></td>
-      <td><code>1</code></td>
+      <td>
+        <code>maxVisiblePages</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>7</code>
+      </td>
+      <td>
+        Numero massimo di pulsanti pagina. Oltre questa soglia la lista viene ridotta a prima pagina, finestra attorno
+        alla corrente e ultima pagina, con puntini di sospensione al posto dei salti.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>currentPage</code>
+      </td>
+      <td>
+        <code>ModelSignal&lt;number&gt;</code>
+      </td>
+      <td>
+        <code>1</code>
+      </td>
       <td>Pagina corrente (two-way).</td>
     </tr>
     <tr>
-      <td><code>ariaLabel</code></td>
-      <td><code>string</code></td>
-      <td><code>'Pagination'</code></td>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'Pagination'</code>
+      </td>
       <td>Accessibilità.</td>
     </tr>
     <tr>
-      <td><code>summary</code></td>
-      <td><code>string</code></td>
-      <td><code>TAILWIND_PAGINATION_SUMMARY</code> se fornito, altrimenti <code>{`'Showing {start}-{end} of {total}'`}</code></td>
-      <td>Placeholder <code>{`{start}`}</code>, <code>{`{end}`}</code>, <code>{`{total}`}</code>.</td>
+      <td>
+        <code>summary</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>TAILWIND_PAGINATION_SUMMARY</code> se fornito, altrimenti{' '}
+        <code>{`'Showing {start}-{end} of {total}'`}</code>
+      </td>
+      <td>
+        Placeholder <code>{`{start}`}</code>, <code>{`{end}`}</code>, <code>{`{total}`}</code>.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -117,9 +167,15 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>TAILWIND_PAGINATION_SUMMARY</code></td>
-      <td><code>InjectionToken&lt;string&gt;</code></td>
-      <td>Default di <code>summary</code> quando l’input non è impostato nel template.</td>
+      <td>
+        <code>TAILWIND_PAGINATION_SUMMARY</code>
+      </td>
+      <td>
+        <code>InjectionToken&lt;string&gt;</code>
+      </td>
+      <td>
+        Default di <code>summary</code> quando l’input non è impostato nel template.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -136,19 +192,35 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>onPageChange</code></td>
-      <td><code>number</code></td>
+      <td>
+        <code>onPageChange</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
       <td>Nuova pagina (1-based).</td>
     </tr>
     <tr>
-      <td><code>onPageSizeChange</code></td>
-      <td><code>number</code></td>
-      <td>Nuovo numero di record per pagina; la pagina corrente torna a <code>1</code>.</td>
+      <td>
+        <code>onPageSizeChange</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        Nuovo numero di record per pagina; la pagina corrente torna a <code>1</code>.
+      </td>
     </tr>
     <tr>
-      <td><code>pageSizeChange</code></td>
-      <td><code>number</code></td>
-      <td>Alias two-way di <code>pageSize</code> (stesso payload di <code>onPageSizeChange</code>).</td>
+      <td>
+        <code>pageSizeChange</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        Alias two-way di <code>pageSize</code> (stesso payload di <code>onPageSizeChange</code>).
+      </td>
     </tr>
   </tbody>
 </table>

@@ -1,5 +1,6 @@
 import {
   afterNextRender,
+  ChangeDetectionStrategy,
   Component,
   computed,
   contentChildren,
@@ -15,15 +16,27 @@ import {
 import { TailwindColor } from '../../models';
 import { TailwindButton } from '../button/button.component';
 import { TailwindTab } from './tab.component';
+import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-tab-group',
   imports: [TailwindButton],
   templateUrl: './tab-group.component.html',
-  styleUrl: './tab-group.component.css'
+  styleUrl: './tab-group.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTabGroup extends TailwindComponent {
+  private readonly labels = inject(TAILWIND_LABELS);
+
+  /** Accessible name override; defaults to `TAILWIND_LABELS.scrollTabsLeft`. */
+  readonly scrollLeftAriaLabel = input<string>('');
+  protected readonly scrollLeftLabel = computed(() => this.scrollLeftAriaLabel() || this.labels.scrollTabsLeft);
+
+  /** Accessible name override; defaults to `TAILWIND_LABELS.scrollTabsRight`. */
+  readonly scrollRightAriaLabel = input<string>('');
+  protected readonly scrollRightLabel = computed(() => this.scrollRightAriaLabel() || this.labels.scrollTabsRight);
+
   private readonly destroyRef = inject(DestroyRef);
 
   /** Accessible label for the tab list */
@@ -89,6 +102,50 @@ export class TailwindTabGroup extends TailwindComponent {
 
   selectTab(index: number): void {
     this.activeIndex.set(index);
+  }
+
+  /**
+   * Tab list keyboard support per the WAI-ARIA Tabs pattern: arrows move between tabs (wrapping and
+   * skipping disabled ones), Home/End jump to the extremes. Activation follows focus, which is the
+   * expected behaviour for tabs whose panels are already rendered.
+   */
+  onTabListKeydown(event: KeyboardEvent): void {
+    const step: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
+    const tabs = this.tabs();
+    if (tabs.length === 0) return;
+
+    let target: number;
+    if (event.key === 'Home') {
+      target = this.nextEnabledIndex(-1, 1);
+    } else if (event.key === 'End') {
+      target = this.nextEnabledIndex(tabs.length, -1);
+    } else if (event.key in step) {
+      target = this.nextEnabledIndex(this.activeIndex(), step[event.key]);
+    } else {
+      return;
+    }
+
+    if (target < 0) return;
+    event.preventDefault();
+    this.selectTab(target);
+    this.focusTabButton(target);
+  }
+
+  /** First enabled tab starting from `from` and walking by `direction`, wrapping around. */
+  private nextEnabledIndex(from: number, direction: 1 | -1 | number): number {
+    const tabs = this.tabs();
+    const count = tabs.length;
+    for (let step = 1; step <= count; step++) {
+      const index = (((from + direction * step) % count) + count) % count;
+      if (!tabs[index].disabled()) return index;
+    }
+    return -1;
+  }
+
+  /** Moves DOM focus onto the tab button, which the roving `tabindex` keeps reachable. */
+  private focusTabButton(index: number): void {
+    const buttons = this.tabList()?.nativeElement.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    buttons?.item(index)?.focus();
   }
 
   onTabListScroll(): void {

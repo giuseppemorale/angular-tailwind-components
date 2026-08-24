@@ -54,7 +54,9 @@
       <p class="text-sm text-neutral-600 m-0 mb-2">{{ 'HOME.CHIP_REMOVABLE_HINT' | transloco }}</p>
       <div class="flex flex-wrap gap-2">
         @for (chip of activeChips(); track chip) {
-          <tailwind-chip [removeAriaLabel]="'HOME.CHIP_REMOVE_ARIA' | transloco: { label: chip }" (removed)="removeChip(chip)">
+          <tailwind-chip
+            [removeAriaLabel]="'HOME.CHIP_REMOVE_ARIA' | transloco: { label: chip }"
+            (removed)="removeChip(chip)">
             {{ chip }}
           </tailwind-chip>
         }

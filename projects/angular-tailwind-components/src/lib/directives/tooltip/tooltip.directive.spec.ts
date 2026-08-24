@@ -49,6 +49,22 @@ describe('TailwindTooltipDirective', () => {
     expect(tooltip?.style.top).not.toBe('0px');
   });
 
+  it('should describe the trigger with the tooltip while it is shown', async () => {
+    const trigger = fixture.nativeElement.querySelector('tailwind-input') as HTMLElement;
+    expect(trigger.getAttribute('aria-describedby')).toBeNull();
+
+    await showTooltip();
+
+    const tooltip = getTooltip();
+    expect(tooltip?.id).toBeTruthy();
+    expect(trigger.getAttribute('aria-describedby')).toBe(tooltip?.id);
+  });
+
+  it('should stay pointer-reachable while visible (WCAG 1.4.13 hoverable)', async () => {
+    await showTooltip();
+    expect(getTooltip()?.className).not.toContain('pointer-events-none');
+  });
+
   it('should hide tooltip when the nested input loses focus', async () => {
     await showTooltip();
     expect(getTooltip()).not.toBeNull();

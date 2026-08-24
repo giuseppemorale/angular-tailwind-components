@@ -1,9 +1,15 @@
-<div [class]="containerClasses()">
+<div
+  [class]="containerClasses()"
+  aria-live="polite"
+  (mouseenter)="toastService.pauseAll()"
+  (mouseleave)="toastService.resumeAll()"
+  (focusin)="toastService.pauseAll()"
+  (focusout)="toastService.resumeAll()">
   @for (toast of toastService.toasts(); track toast.id) {
     <div
       class="pointer-events-auto rounded-xl border shadow-lg p-4 flex gap-3 animate-in duration-300"
       [class]="enterAnimationClass() + ' ' + surfaceClass(toast.color)"
-      role="alert">
+      [attr.role]="liveRole(toast.color)">
       <div class="flex-1 min-w-0">
         @if (toast.title || toast.icon) {
           <div class="flex items-center gap-2 mb-0.5">
@@ -23,7 +29,7 @@
           color="transparent"
           icon="x-mark"
           class="shrink-0 opacity-60 hover:opacity-100"
-          ariaLabel="Dismiss"
+          [ariaLabel]="dismissLabel()"
           (onClick)="toastService.dismiss(toast.id)" />
       }
     </div>

@@ -14,13 +14,9 @@ import * as AlertStories from './alert.stories';
 ```typescript
 @Component({
   imports: [TailwindAlert],
-  template: `
-    <tailwind-alert
-      color="info"
-      title="Information"
-      [dismissible]="true">
-      This is an informational alert.
-    </tailwind-alert>`
+  template: ` <tailwind-alert color="info" title="Information" [dismissible]="true">
+    This is an informational alert.
+  </tailwind-alert>`
 })
 export class ExampleComponent {}
 ```
@@ -48,33 +44,63 @@ Eredita gli input di host da `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>color</code></td>
-      <td><code>TailwindColor</code></td>
-      <td><code>'info'</code></td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'info'</code>
+      </td>
       <td>Variante colore.</td>
     </tr>
     <tr>
-      <td><code>title</code></td>
-      <td><code>string</code></td>
-      <td><code>''</code></td>
+      <td>
+        <code>title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
       <td>Titolo dell’alert.</td>
     </tr>
     <tr>
-      <td><code>dismissible</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>dismissible</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Mostra il pulsante di chiusura.</td>
     </tr>
     <tr>
-      <td><code>bordered</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
+      <td>
+        <code>bordered</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
       <td>Bordo laterale evidenziato.</td>
     </tr>
     <tr>
-      <td><code>showActions</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>showActions</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Mostra lo slot azioni sotto il messaggio.</td>
     </tr>
   </tbody>
@@ -94,8 +120,12 @@ Il corpo del messaggio e le azioni si passano come contenuto proiettato. Per i p
   </thead>
   <tbody>
     <tr>
-      <td><code>onDismiss</code></td>
-      <td><code>void</code></td>
+      <td>
+        <code>onDismiss</code>
+      </td>
+      <td>
+        <code>void</code>
+      </td>
       <td>Emesso quando l’alert viene chiuso.</td>
     </tr>
   </tbody>

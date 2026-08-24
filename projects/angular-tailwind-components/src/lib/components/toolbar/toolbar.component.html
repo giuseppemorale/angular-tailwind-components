@@ -11,7 +11,7 @@
             [class]="mobileMenuToggleClasses()"
             [attr.aria-expanded]="mobileToolbarMenu.isOpen()"
             aria-haspopup="menu"
-            aria-label="Open navigation menu"
+            [attr.aria-label]="openMenuLabel()"
             (click)="mobileToolbarMenu.toggle($event)">
             <tailwind-icon icon="bars-3" [size]="22" [class]="menuItemIconClasses()" />
           </button>

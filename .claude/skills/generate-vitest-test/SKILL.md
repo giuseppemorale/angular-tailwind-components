@@ -25,17 +25,17 @@ Leggi sempre:
 
 ## Convenzioni obbligatorie
 
-| Aspetto | Regola |
-|--------|--------|
-| Runner | Vitest (`vi.fn()`); `types: ["vitest/globals"]` in `tsconfig.spec.json` |
-| Setup | `TestBed.configureTestingModule({ imports: [TailwindXxx] })` |
-| Describe | Nome classe exportata, es. `describe('TailwindButton', ...)` |
-| Inputs | `fixture.componentRef.setInput('prop', value)` + `fixture.detectChanges()` |
-| Outputs | `const spy = vi.fn(); component.onX.subscribe(spy);` poi interazione DOM |
-| DOM | `fixture.nativeElement.querySelector(...)` |
-| CVA | Se implementa `ControlValueAccessor`: test `writeValue`, `setDisabledState` |
-| Token | Se `inject(TOKEN, { optional: true })`: test separato con `TestBed.resetTestingModule()` + `providers` |
-| Dipendenze | Importa solo ciò che serve; mock CDK/overlay solo se il componente li usa e fallisce senza |
+| Aspetto    | Regola                                                                                                 |
+| ---------- | ------------------------------------------------------------------------------------------------------ |
+| Runner     | Vitest (`vi.fn()`); `types: ["vitest/globals"]` in `tsconfig.spec.json`                                |
+| Setup      | `TestBed.configureTestingModule({ imports: [TailwindXxx] })`                                           |
+| Describe   | Nome classe exportata, es. `describe('TailwindButton', ...)`                                           |
+| Inputs     | `fixture.componentRef.setInput('prop', value)` + `fixture.detectChanges()`                             |
+| Outputs    | `const spy = vi.fn(); component.onX.subscribe(spy);` poi interazione DOM                               |
+| DOM        | `fixture.nativeElement.querySelector(...)`                                                             |
+| CVA        | Se implementa `ControlValueAccessor`: test `writeValue`, `setDisabledState`                            |
+| Token      | Se `inject(TOKEN, { optional: true })`: test separato con `TestBed.resetTestingModule()` + `providers` |
+| Dipendenze | Importa solo ciò che serve; mock CDK/overlay solo se il componente li usa e fallisce senza             |
 
 **Non** aggiungere test banali oltre `should create` se non verificano comportamento reale. **Non** testare implementazione interna irrilevante.
 

@@ -1,7 +1,19 @@
-import { Component, computed, effect, forwardRef, inject, input, model, output, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  forwardRef,
+  inject,
+  input,
+  model,
+  output,
+  signal
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
 import { TailwindButton } from '../button/button.component';
+import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 import {
   coerceCalendarDateOrNull,
@@ -19,9 +31,20 @@ import { CalendarView, yearPageStartFor, YEARS_PER_PAGE } from './util/calendar-
   selector: 'tailwind-calendar-panel',
   templateUrl: './calendar-panel.component.html',
   styleUrl: './calendar-panel.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TailwindCalendarPanel), multi: true }]
 })
 export class TailwindCalendarPanel extends TailwindComponent implements ControlValueAccessor {
+  private readonly labels = inject(TAILWIND_LABELS);
+
+  /** Accessible name override; defaults to `TAILWIND_LABELS.previous`. */
+  readonly previousAriaLabel = input<string>('');
+  protected readonly previousLabel = computed(() => this.previousAriaLabel() || this.labels.previous);
+
+  /** Accessible name override; defaults to `TAILWIND_LABELS.next`. */
+  readonly nextAriaLabel = input<string>('');
+  protected readonly nextLabel = computed(() => this.nextAriaLabel() || this.labels.next);
+
   private readonly lang: CalendarLang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
 
   protected readonly i18n = calendarLabelsFor(this.lang);
@@ -52,7 +75,7 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
 
   readonly surfaceClasses = computed(() =>
     this.mergeClasses(
-      this.embedded() ? '' : 'rounded-xl border border-neutral-200 bg-white p-4 shadow-sm w-72 max-w-full'
+      this.embedded() ? '' : 'rounded-xl border border-neutral-200 bg-surface p-4 shadow-sm w-72 max-w-full'
     )
   );
   private readonly coercedValue = computed(() => coerceCalendarDateOrNull(this.value()));

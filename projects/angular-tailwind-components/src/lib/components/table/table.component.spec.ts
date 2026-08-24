@@ -2,6 +2,8 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
 import { TailwindTable } from './table.component';
+import { DEFAULT_TAILWIND_LABELS, resolveTailwindLabels } from '../../models';
+import { TAILWIND_LABELS } from '../../tokens';
 
 const ROWS = [
   { name: 'Alice', email: 'alice@example.com', role: 'Admin' },
@@ -109,8 +111,20 @@ describe('TailwindTable', () => {
     expect(fixture.nativeElement.querySelector('tailwind-input')).toBeTruthy();
   });
 
-  it('should render default search label', () => {
-    expect(fixture.nativeElement.querySelector('label')?.textContent?.trim()).toBe('Cerca');
+  it('should render the default search label from TAILWIND_LABELS', () => {
+    expect(fixture.nativeElement.querySelector('label')?.textContent?.trim()).toBe(DEFAULT_TAILWIND_LABELS.search);
+  });
+
+  it('should use the app-wide TAILWIND_LABELS override for the search label', () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [{ provide: TAILWIND_LABELS, useValue: resolveTailwindLabels({ search: 'Cerca' }) }]
+    });
+
+    const localized = TestBed.createComponent(TableHostComponent);
+    localized.detectChanges();
+
+    expect(localized.nativeElement.querySelector('label')?.textContent?.trim()).toBe('Cerca');
   });
 
   it('should hide search input when searchable is false', () => {

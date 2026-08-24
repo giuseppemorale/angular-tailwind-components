@@ -1,16 +1,5 @@
 import type { EditorBlockFormat, EditorCommand } from '../models/editor-command.type';
 
-const BLOCK_FORMAT_TAGS = new Set<EditorBlockFormat | 'blockquote'>([
-  'p',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'blockquote'
-]);
-
 const BLOCK_TAGS = new Set(['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'BLOCKQUOTE', 'LI', 'PRE']);
 
 const HEADING_TAGS = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
@@ -835,7 +824,7 @@ export function executeEditorCommand(root: HTMLElement, command: EditorCommand):
 export function insertLink(root: HTMLElement, url: string, text?: string): void {
   const label = text?.trim() || url;
   const html = `<a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
-  let range = resolveRange(root);
+  const range = resolveRange(root);
 
   if (!range) {
     focusEditor(root);

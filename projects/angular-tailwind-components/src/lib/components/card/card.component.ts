@@ -1,14 +1,15 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-card',
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css'
+  styleUrl: './card.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindCard extends TailwindComponent {
   private static readonly shellBase =
-    'bg-white rounded-xl border border-neutral-200 overflow-visible transition-shadow duration-200 flex flex-col min-h-0';
+    'bg-surface rounded-xl border border-neutral-200 overflow-visible transition-shadow duration-200 flex flex-col min-h-0';
 
   readonly shellClasses = computed(() => {
     const shadow = this.elevated()

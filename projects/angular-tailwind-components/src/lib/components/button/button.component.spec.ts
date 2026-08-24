@@ -193,4 +193,30 @@ describe('TailwindButton', () => {
     expect(button.className).toContain('px-4');
     expect(button.className).toContain('py-2');
   });
+  it('should show a spinner and block activation while loading', () => {
+    let clicks = 0;
+    fixture.componentInstance.onClick.subscribe(() => clicks++);
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toBe(true);
+    expect(button.getAttribute('aria-busy')).toBe('true');
+    expect(fixture.nativeElement.querySelector('.animate-spin')).toBeTruthy();
+
+    button.click();
+    expect(clicks).toBe(0);
+  });
+
+  it('should not report aria-busy when not loading', () => {
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.getAttribute('aria-busy')).toBeNull();
+  });
+
+  it('should stretch to full width when fullWidth is set', () => {
+    fixture.componentRef.setInput('fullWidth', true);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('button').className).toContain('w-full');
+  });
 });

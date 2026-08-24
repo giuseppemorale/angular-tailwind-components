@@ -1,11 +1,8 @@
 <div [class]="mergeClasses('tailwind-editor-wrapper flex flex-col gap-1.5')">
   @if (label()) {
-    <label
-      [attr.id]="labelId()"
-      class="text-sm font-medium text-neutral-700"
-      [class.text-danger-600]="hasError()">
+    <span [attr.id]="labelId()" class="text-sm font-medium text-neutral-700" [class.text-danger-600]="hasError()">
       {{ label() }}
-    </label>
+    </span>
   }
 
   <div #editorWrapper [class]="wrapperClasses()">
@@ -26,10 +23,7 @@
         class="tailwind-editor-source-panel font-mono resize-y overflow-hidden"
         [class]="sourcePanelClasses()"
         [style.min-height]="minHeight()">
-        <div
-          #sourceLineNumbers
-          class="tailwind-editor-line-numbers"
-          aria-hidden="true">
+        <div #sourceLineNumbers class="tailwind-editor-line-numbers" aria-hidden="true">
           @for (line of sourceLineNumbersList(); track line) {
             <span class="tailwind-editor-line-number">{{ line }}</span>
           }
@@ -45,7 +39,7 @@
           [attr.aria-labelledby]="surfaceAriaLabelledBy()"
           [attr.aria-label]="surfaceAriaLabel()"
           [attr.aria-invalid]="hasError() || null"
-          [attr.aria-describedby]="(helperText() || errorText()) ? helperId() : null"
+          [attr.aria-describedby]="helperText() || errorText() ? helperId() : null"
           (input)="onSourceInput($event)"
           (keydown)="onSourceKeydown($event)"
           (scroll)="onSourceScroll()"
@@ -67,7 +61,7 @@
         [attr.aria-readonly]="surfaceAriaReadonly()"
         [attr.aria-disabled]="surfaceAriaDisabled()"
         [attr.aria-invalid]="hasError() || null"
-        [attr.aria-describedby]="(helperText() || errorText()) ? helperId() : null"
+        [attr.aria-describedby]="helperText() || errorText() ? helperId() : null"
         (input)="onSurfaceInput()"
         (beforeinput)="onSurfaceBeforeInput($event)"
         (blur)="onSurfaceBlur($event)"

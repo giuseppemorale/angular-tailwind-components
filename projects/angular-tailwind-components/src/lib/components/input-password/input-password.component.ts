@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -10,16 +11,17 @@ import {
   OnDestroy,
   signal,
   TemplateRef,
-  ViewContainerRef,
-  viewChild
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DEFAULT_TAILWIND_PASSWORD_LABELS, TailwindSize } from '../../models';
-import { TAILWIND_PASSWORD_LABELS } from '../../tokens';
+import { TAILWIND_PASSWORD_LABELS, TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindIcon } from '../icon/icon.component';
+import { FIELD_SIZE } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 import { computePasswordStrength, passwordStrengthMeterFill } from './password-strength.util';
 
@@ -34,9 +36,12 @@ import { computePasswordStrength, passwordStrengthMeterFill } from './password-s
     }
   ],
   templateUrl: './input-password.component.html',
-  styleUrl: './input-password.component.css'
+  styleUrl: './input-password.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindInputPassword extends TailwindComponent implements ControlValueAccessor, OnDestroy {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   private readonly overlay = inject(Overlay);
   private readonly vcr = inject(ViewContainerRef);
   private readonly elRef = inject(ElementRef<HTMLElement>);
@@ -50,7 +55,7 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
   /** Placeholder text */
   readonly placeholder = input<string>('');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Helper text shown below input */
   readonly helperText = input<string>('');
   /** Error text shown when hasError is true */
@@ -111,26 +116,18 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
 
   readonly inputClasses = computed(() => {
     const base = [
-      'block w-full bg-white',
+      'block w-full bg-surface',
       'border transition-colors duration-150',
       'placeholder:text-neutral-400',
       'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
       'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
     ];
 
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: 'text-xs px-2 py-1 rounded-sm',
-      sm: 'text-sm px-2.5 py-1.5 rounded-md',
-      md: 'text-sm px-3 py-2 rounded-md',
-      lg: 'text-base px-3.5 py-2.5 rounded-lg',
-      xl: 'text-base px-4 py-3 rounded-lg'
-    };
-
     const stateClass = this.hasError()
       ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
       : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
 
-    return [...base, sizeMap[this.size()], stateClass, this.inputPaddingClass()].filter(Boolean).join(' ');
+    return [...base, FIELD_SIZE[this.size()], stateClass, this.inputPaddingClass()].filter(Boolean).join(' ');
   });
 
   readonly meterSegmentClasses = computed(() => {

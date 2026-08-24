@@ -3,25 +3,29 @@
     [class]="labelClasses()"
     [class.cursor-pointer]="!isDisabled()"
     [class.cursor-not-allowed]="isDisabled()"
-    [attr.for]="id() ? id() + '-inner' : null">
+    [attr.for]="subId('inner')">
     <input
-      [attr.id]="id() ? id() + '-inner' : null"
+      [attr.id]="subId('inner')"
       type="checkbox"
       class="peer sr-only"
       [checked]="checked()"
+      [indeterminate]="indeterminate()"
       [disabled]="isDisabled()"
-      [attr.aria-describedby]="description() && id() ? id() + '-desc' : null"
-      [attr.aria-labelledby]="label() && id() ? id() + '-label' : null"
+      [attr.aria-checked]="ariaChecked()"
+      [attr.aria-describedby]="description() ? subId('desc') : null"
+      [attr.aria-labelledby]="label() ? subId('label') : null"
       (change)="onCheckboxChange($event)" />
     <div
       class="size-full border-2 transition-all duration-150 flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
       [class.rounded-sm]="size() === 'xs' || size() === 'sm'"
       [class.rounded-md]="size() !== 'xs' && size() !== 'sm'"
-      [class.border-neutral-300]="!checked()"
-      [class.bg-white]="!checked()"
-      [class.border-primary-600]="checked()"
-      [class.bg-primary-600]="checked()">
-      @if (checked()) {
+      [class.border-neutral-300]="!isFilled()"
+      [class.bg-surface]="!isFilled()"
+      [class.border-primary-600]="isFilled()"
+      [class.bg-primary-600]="isFilled()">
+      @if (indeterminate()) {
+        <tailwind-icon icon="minus" [size]="checkIconSize()" class="text-white shrink-0" />
+      } @else if (checked()) {
         <tailwind-icon icon="check" [size]="checkIconSize()" class="text-white shrink-0" />
       }
     </div>
@@ -29,12 +33,10 @@
 
   <div class="flex flex-col gap-0.5 pt-0.5">
     @if (label()) {
-      <span [attr.id]="id() ? id() + '-label' : null" class="text-sm font-medium text-neutral-800 leading-tight">{{
-        label()
-      }}</span>
+      <span [attr.id]="subId('label')" class="text-sm font-medium text-neutral-800 leading-tight">{{ label() }}</span>
     }
     @if (description()) {
-      <span [attr.id]="id() ? id() + '-desc' : null" class="text-xs text-neutral-500 leading-snug">
+      <span [attr.id]="subId('desc')" class="text-xs text-neutral-500 leading-snug">
         {{ description() }}
       </span>
     }

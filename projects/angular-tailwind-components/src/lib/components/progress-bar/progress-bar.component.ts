@@ -1,13 +1,17 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { TailwindColor, TailwindSize } from '../../models';
+import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
   selector: 'tailwind-progress-bar',
   templateUrl: './progress-bar.component.html',
-  styleUrl: './progress-bar.component.css'
+  styleUrl: './progress-bar.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindProgressBar extends TailwindComponent {
+  private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
+
   /** Current value (0-100) */
   readonly value = input<number>(0);
   /** Label text */
@@ -19,7 +23,7 @@ export class TailwindProgressBar extends TailwindComponent {
   /** Semantic color */
   readonly color = input<TailwindColor>('primary');
   /** Size variant */
-  readonly size = input<TailwindSize>('md');
+  readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Indeterminate mode (animated) */
   readonly indeterminate = input<boolean>(false);
   /** Whether to use striped pattern */

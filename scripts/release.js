@@ -17,15 +17,7 @@ const rootPackageJsonPath = path.join(__dirname, '../package.json');
 const libPackageJsonPath = path.join(__dirname, '../projects/angular-tailwind-components/package.json');
 
 /** npm registry fields copied from root package.json into the published library manifest */
-const NPM_METADATA_KEYS = [
-  'description',
-  'author',
-  'license',
-  'repository',
-  'homepage',
-  'bugs',
-  'keywords'
-];
+const NPM_METADATA_KEYS = ['description', 'author', 'license', 'repository', 'homepage', 'bugs', 'keywords'];
 
 const STABLE_VERSION_PATTERN = /^(\d+)\.(\d+)\.(\d+)$/;
 

@@ -46,10 +46,10 @@ Una voce con **`items`** (sottomenu) apre un **`tailwind-menu`** al click: sotto
 
 Oltre a `label`, `icon`, `value`, `disabled`, `divider` e `items`, ogni voce del menu toolbar può definire:
 
-| Campo | Tipo | Default toolbar | Descrizione |
-|-------|------|-----------------|-------------|
-| `tooltip` | `string` | — | Testo del tooltip al passaggio del mouse. Utile con voci **solo icona** (senza `label` visibile). |
-| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'right'` | Posizione del tooltip rispetto al pulsante. Default `right` per rail a sinistra; usa `left` se la toolbar è a destra. |
+| Campo             | Tipo                                     | Default toolbar | Descrizione                                                                                                           |
+| ----------------- | ---------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `tooltip`         | `string`                                 | —               | Testo del tooltip al passaggio del mouse. Utile con voci **solo icona** (senza `label` visibile).                     |
+| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'right'`       | Posizione del tooltip rispetto al pulsante. Default `right` per rail a sinistra; usa `left` se la toolbar è a destra. |
 
 Esempio rail verticale solo icone:
 
@@ -80,12 +80,16 @@ menu: TailwindMenuItem[] = [
   <tbody>
     <tr>
       <td>Logo</td>
-      <td><code>[tailwind-toolbar-logo]</code></td>
+      <td>
+        <code>[tailwind-toolbar-logo]</code>
+      </td>
       <td>Area brand / titolo (sinistra o in alto).</td>
     </tr>
     <tr>
       <td>Fine</td>
-      <td><code>[tailwind-toolbar-end]</code></td>
+      <td>
+        <code>[tailwind-toolbar-end]</code>
+      </td>
       <td>Azioni secondarie (destra o in basso).</td>
     </tr>
   </tbody>
@@ -110,40 +114,88 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>rounded</code></td>
-      <td><code>boolean</code></td>
-      <td><code>true</code></td>
-      <td>Angoli arrotondati (<code>rounded-xl</code>) o no.</td>
+      <td>
+        <code>rounded</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>
+        Angoli arrotondati (<code>rounded-xl</code>) o no.
+      </td>
     </tr>
     <tr>
-      <td><code>width</code></td>
-      <td><code>'full' | 'container'</code></td>
-      <td><code>'full'</code></td>
-      <td>Orizzontale: larghezza piena vs 95% / 85% / 75% centrata. Verticale: sempre <code>h-full w-full</code> (il valore <code>width</code> non si applica).</td>
+      <td>
+        <code>width</code>
+      </td>
+      <td>
+        <code>'full' | 'container'</code>
+      </td>
+      <td>
+        <code>'full'</code>
+      </td>
+      <td>
+        Orizzontale: larghezza piena vs 95% / 85% / 75% centrata. Verticale: sempre <code>h-full w-full</code> (il
+        valore <code>width</code> non si applica).
+      </td>
     </tr>
     <tr>
-      <td><code>elevated</code></td>
-      <td><code>boolean</code></td>
-      <td><code>false</code></td>
+      <td>
+        <code>elevated</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
       <td>Ombra più marcata.</td>
     </tr>
     <tr>
-      <td><code>color</code></td>
-      <td><code>'default' | TailwindColor</code></td>
-      <td><code>'default'</code></td>
-      <td>Colore di superficie: <code>default</code> = bianco e bordo neutro; le varianti semantiche usano una <strong>barra solida</strong> (stessi livelli dei button solid: <code>success</code>/<code>danger</code>/<code>info</code> a 600, <code>warning</code> a 500). Voci menu, hamburger e slot proiettati usano i token <code>text-on-*</code> (contrasto da tema); le icone menu seguono lo stesso contrasto dove possibile.</td>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>'default' | TailwindColor</code>
+      </td>
+      <td>
+        <code>'default'</code>
+      </td>
+      <td>
+        Colore di superficie: <code>default</code> = bianco e bordo neutro; le varianti semantiche usano una{' '}
+        <strong>barra solida</strong> (stessi livelli dei button solid: <code>success</code>/<code>danger</code>/
+        <code>info</code> a 600, <code>warning</code> a 500). Voci menu, hamburger e slot proiettati usano i token{' '}
+        <code>text-on-*</code> (contrasto da tema); le icone menu seguono lo stesso contrasto dove possibile.
+      </td>
     </tr>
     <tr>
-      <td><code>orientation</code></td>
-      <td><code>'horizontal' | 'vertical'</code></td>
-      <td><code>'horizontal'</code></td>
+      <td>
+        <code>orientation</code>
+      </td>
+      <td>
+        <code>'horizontal' | 'vertical'</code>
+      </td>
+      <td>
+        <code>'horizontal'</code>
+      </td>
       <td>Barra in alto o rail laterale.</td>
     </tr>
     <tr>
-      <td><code>menu</code></td>
-      <td><code>TailwindMenuItem[]</code></td>
-      <td><code>[]</code></td>
-      <td>Voci centrali (<code>TailwindMenuItem</code>, anche con <code>items</code> per sottomenu).</td>
+      <td>
+        <code>menu</code>
+      </td>
+      <td>
+        <code>TailwindMenuItem[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
+      <td>
+        Voci centrali (<code>TailwindMenuItem</code>, anche con <code>items</code> per sottomenu).
+      </td>
     </tr>
   </tbody>
 </table>
@@ -160,9 +212,15 @@ Eredita `TailwindComponent` (`id`, `class`).
   </thead>
   <tbody>
     <tr>
-      <td><code>onMenuSelect</code></td>
-      <td><code>TailwindMenuItem</code></td>
-      <td>Click su voce foglia (non disabilitata, non divider, senza <code>items</code>).</td>
+      <td>
+        <code>onMenuSelect</code>
+      </td>
+      <td>
+        <code>TailwindMenuItem</code>
+      </td>
+      <td>
+        Click su voce foglia (non disabilitata, non divider, senza <code>items</code>).
+      </td>
     </tr>
   </tbody>
 </table>

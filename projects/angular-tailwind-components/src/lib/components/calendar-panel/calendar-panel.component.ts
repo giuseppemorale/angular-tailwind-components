@@ -136,7 +136,8 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
   readonly calendarDays = computed(() => {
     const y = this.viewYear(),
       m = this.viewMonth();
-    const offset = (new Date(y, m, 1).getDay() + 6) % 7;
+    // Leading blanks depend on the locale's first weekday, not on a hard-coded Monday.
+    const offset = (new Date(y, m, 1).getDay() - this.i18n.firstDayOfWeek + 7) % 7;
     const total = new Date(y, m + 1, 0).getDate();
     const days: number[] = Array(offset).fill(0);
     for (let i = 1; i <= total; i++) days.push(i);

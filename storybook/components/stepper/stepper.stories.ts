@@ -71,10 +71,10 @@ export const Linear: StoryObj<TailwindStepper> = {
     template: `
       <tailwind-stepper #stepper [linear]="true" [color]="color">
         <tailwind-step label="Data">
-          <tailwind-button (onClick)="stepper.next()">Go Next</tailwind-button>
+          <tailwind-button (click)="stepper.next()">Go Next</tailwind-button>
         </tailwind-step>
         <tailwind-step label="Profile">
-          <tailwind-button (onClick)="stepper.next()">Go Review</tailwind-button>
+          <tailwind-button (click)="stepper.next()">Go Review</tailwind-button>
         </tailwind-step>
         <tailwind-step label="Review">
           Finished

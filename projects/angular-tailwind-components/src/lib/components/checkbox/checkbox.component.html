@@ -14,6 +14,7 @@
       [attr.aria-checked]="ariaChecked()"
       [attr.aria-describedby]="description() ? subId('desc') : null"
       [attr.aria-labelledby]="label() ? subId('label') : null"
+      [attr.aria-label]="label() ? null : ariaLabel() || null"
       (change)="onCheckboxChange($event)" />
     <div
       class="size-full border-2 transition-all duration-150 flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"

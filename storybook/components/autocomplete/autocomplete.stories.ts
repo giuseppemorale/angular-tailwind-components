@@ -57,7 +57,7 @@ export const StaticCountries: StoryObj<TailwindAutocomplete<string>> = {
         [debounceMs]="debounceMs"
         [size]="size"
         [(value)]="countryCode"
-        (onSearch)="handleSearch($event)" />
+        (searchChange)="handleSearch($event)" />
       <p class="mt-2 text-sm text-neutral-600">Valore form: {{ countryCode() ?? 'null' }}</p>
     </div>
   `

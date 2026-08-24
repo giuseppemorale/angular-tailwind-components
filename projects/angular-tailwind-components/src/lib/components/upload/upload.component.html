@@ -26,11 +26,11 @@
         kind="solid"
         [size]="size()"
         [disabled]="isDisabled()"
-        (onClick)="triggerPicker($event)">
+        (click)="triggerPicker($event)">
         {{ buttonLabel() }}
       </tailwind-button>
       @if (showClear() && value()) {
-        <tailwind-button kind="text" color="primary" [disabled]="isDisabled()" (onClick)="clear($event)">
+        <tailwind-button kind="text" color="primary" [disabled]="isDisabled()" (click)="clear($event)">
           {{ clearText() }}
         </tailwind-button>
       }
@@ -58,7 +58,7 @@
           color="primary"
           class="self-start"
           [disabled]="isDisabled()"
-          (onClick)="clear($event)">
+          (click)="clear($event)">
           {{ clearText() }}
         </tailwind-button>
       }

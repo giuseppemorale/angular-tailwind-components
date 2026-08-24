@@ -24,6 +24,8 @@ export class TailwindCheckbox extends TailwindComponent implements ControlValueA
 
   /** Label text */
   readonly label = input<string>('');
+  /** Accessible name when there is no visible `label` (a bare box in a table header, for instance). */
+  readonly ariaLabel = input<string>('');
   /** Description text */
   readonly description = input<string>('');
   /** Size variant */

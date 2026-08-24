@@ -1,0 +1,219 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NumberInputStories from './number-input.stories';
+
+<Meta of={NumberInputStories} />
+
+# NumberInput
+
+`TailwindNumberInput` è il campo numerico con pulsanti di incremento e decremento.
+
+`tailwind-input type="number"` lascia gli spinner nativi: minuscoli, non stilabili e assenti su mobile. Qui i pulsanti sono reali, il valore è vincolato a `min`/`max` e resta un `number | null` nel form, non una stringa numerica.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindNumberInput, ReactiveFormsModule],
+  template: ` <tailwind-number-input label="Quantità" [min]="0" [max]="99" [formControl]="form.controls.quantity" />`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={NumberInputStories.NumberInput} />
+
+---
+
+## Properties
+
+### `TailwindNumberInput (tailwind-number-input)`
+
+Eredita `TailwindComponent` (`id`, `class`). Implementa `ControlValueAccessor`.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>number | null</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>
+        Valore corrente (two-way); <code>null</code> quando è vuoto.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Etichetta visibile.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile quando <code>label</code> è omessa.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>min</code>
+      </td>
+      <td>
+        <code>number | undefined</code>
+      </td>
+      <td>
+        <code>undefined</code>
+      </td>
+      <td>Limite inferiore.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>max</code>
+      </td>
+      <td>
+        <code>number | undefined</code>
+      </td>
+      <td>
+        <code>undefined</code>
+      </td>
+      <td>Limite superiore.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>step</code>
+      </td>
+      <td>
+        <code>number</code>
+      </td>
+      <td>
+        <code>1</code>
+      </td>
+      <td>Incremento per passo.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
+      <td>
+        Dimensione; default da <code>TAILWIND_COMPONENTS_SIZE</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>required</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>
+        Aggiunge <code>required</code>, <code>aria-required</code> e l&apos;asterisco.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>readonly</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Sola lettura.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>disabled</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Disabilitato.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>helperText</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Testo di aiuto.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>errorText</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Testo di errore, con <code>role="alert"</code> quando <code>hasError</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>hasError</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Stato di errore.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Tastiera
+
+Freccia su e freccia giù nel campo incrementano e decrementano di `step`, senza toccare i pulsanti.

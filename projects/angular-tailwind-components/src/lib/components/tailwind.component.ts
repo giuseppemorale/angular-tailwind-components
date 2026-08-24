@@ -13,8 +13,11 @@ export abstract class TailwindComponent {
   /** Optional ID for the component */
   readonly id = input<string>();
 
-  /** Custom CSS classes applied to the component surface (see library class-forwarding convention). */
-  readonly class = input<string>(undefined, { alias: 'class' });
+  /**
+   * Custom CSS classes applied to the component surface (see library class-forwarding convention).
+   * The property is already named `class`, so no alias is needed for `class="…"` to bind to it.
+   */
+  readonly class = input<string>();
 
   /** Fallback identity, unique per instance, used when `id` is not provided. */
   private readonly autoId = `tw-${++nextUniqueId}`;

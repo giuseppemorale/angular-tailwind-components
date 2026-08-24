@@ -1,0 +1,72 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as KbdStories from './kbd.stories';
+
+<Meta of={KbdStories} />
+
+# Kbd
+
+`TailwindKbd` rappresenta un tasto della tastiera, con l&apos;elemento nativo `<kbd>`.
+
+Passando `keys` rende un&apos;intera combinazione: i separatori sono `aria-hidden`, così lo screen reader annuncia i tasti e non la punteggiatura.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindKbd],
+  template: ` Premi <tailwind-kbd [keys]="['Ctrl', 'K']" /> per cercare. Premi <tailwind-kbd>Esc</tailwind-kbd> per
+    chiudere.`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={KbdStories.Kbd} />
+
+---
+
+## Properties
+
+### `TailwindKbd (tailwind-kbd)`
+
+Eredita `TailwindComponent` (`id`, `class`). Con contenuto proiettato, `keys` viene ignorato.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>keys</code>
+      </td>
+      <td>
+        <code>string[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
+      <td>Tasti della combinazione; ignorato se c&apos;è contenuto proiettato.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>separator</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>'+'</code>
+      </td>
+      <td>Separatore tra i tasti; nascosto agli screen reader.</td>
+    </tr>
+  </tbody>
+</table>

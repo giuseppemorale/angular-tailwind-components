@@ -21,7 +21,7 @@
         {{ loadingText() }}
       </div>
     } @else {
-      <div class="tw-table-scroll overflow-x-auto">
+      <div class="tw-table-scroll overflow-x-auto" [class.tw-table-sticky]="stickyHeader()">
         <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
         <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-neutral-100">
           <ng-content select="thead" />
@@ -39,15 +39,15 @@
         </table>
       </div>
 
-      @if (paginated() && sortedData().length > 0) {
+      @if (paginated() && totalItems() > 0) {
         <div class="px-4 py-3 border-t border-neutral-200 bg-surface">
           <tailwind-pagination
-            [totalItems]="pagination()?.totalItems ?? sortedData().length"
+            [totalItems]="totalItems()"
             [pageSize]="pageSize()"
-            (pageSizeChange)="pageSize.set($event)"
+            (pageSizeChange)="setPageSize($event)"
             [lengthOptions]="paginationLengthOptions()"
             [currentPage]="currentPage()"
-            (onPageChange)="currentPage.set($event)"
+            (pageChange)="goToPage($event)"
             [ariaLabel]="pagination()?.ariaLabel ?? ''"
             [summary]="paginationSummary()">
           </tailwind-pagination>

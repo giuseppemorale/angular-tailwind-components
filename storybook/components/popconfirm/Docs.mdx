@@ -1,0 +1,138 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PopconfirmStories from './popconfirm.stories';
+
+<Meta of={PopconfirmStories} />
+
+# Popconfirm
+
+`TailwindPopconfirm` è la conferma inline ancorata al controllo che l&apos;ha richiesta — "Eliminare questa riga?" con Sì/No, senza il peso di un modal.
+
+Un modal è giusto per una decisione che merita tutto lo schermo; per un cancella-riga è invasivo. Qui il focus resta vicino all&apos;azione, il pulsante sicuro riceve il focus per primo e Escape annulla.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindPopconfirm, TailwindButton],
+  template: ` <tailwind-button color="danger" #btn (click)="ask.toggle(btn)">Elimina</tailwind-button>
+    <tailwind-popconfirm #ask message="Eliminare la riga?" (confirmed)="remove()" />`
+})
+export class ExampleComponent {
+  remove(): void {}
+}
+```
+
+## Anteprima
+
+<Canvas of={PopconfirmStories.Popconfirm} />
+
+---
+
+## Properties
+
+### `TailwindPopconfirm (tailwind-popconfirm)`
+
+Eredita `TailwindComponent` (`id`, `class`). Il pannello è un `alertdialog` descritto dal messaggio.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>message</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Domanda mostrata all&apos;utente.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>position</code>
+      </td>
+      <td>
+        <code>TailwindPosition</code>
+      </td>
+      <td>
+        <code>'top'</code>
+      </td>
+      <td>Lato preferito; ribalta se uscirebbe dal viewport.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>confirmColor</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'danger'</code>
+      </td>
+      <td>Colore del pulsante di conferma.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>confirmLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Testo di conferma; default da <code>TAILWIND_LABELS.confirm</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>cancelLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Testo di annullamento; default da <code>TAILWIND_LABELS.cancel</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>confirmed</code>
+      </td>
+      <td>
+        <code>output&lt;void&gt;</code>
+      </td>
+      <td>
+        <code>—</code>
+      </td>
+      <td>Emesso alla conferma.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>cancelled</code>
+      </td>
+      <td>
+        <code>output&lt;void&gt;</code>
+      </td>
+      <td>
+        <code>—</code>
+      </td>
+      <td>Emesso ad annullamento, click fuori o Escape.</td>
+    </tr>
+  </tbody>
+</table>

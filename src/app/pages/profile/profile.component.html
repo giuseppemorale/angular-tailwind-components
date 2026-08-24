@@ -58,7 +58,7 @@
       } @else {
         <span class="text-xs text-neutral-500">{{ 'PROFILE.LAST_SAVE' | transloco: { date: saveString() } }}</span>
       }
-      <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">
+      <tailwind-button [disabled]="saving()" (click)="simulateSave()">
         {{ 'PROFILE.BTN_SAVE' | transloco }}
       </tailwind-button>
     </div>

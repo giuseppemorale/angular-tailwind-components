@@ -10,7 +10,7 @@
         class="tailwind-tab-scroll-btn--start shrink-0 self-stretch rounded-none"
         [disabled]="!canScrollStart()"
         [ariaLabel]="scrollLeftLabel()"
-        (onClick)="scrollTabs(-1)" />
+        (click)="scrollTabs(-1)" />
     }
 
     <nav
@@ -51,7 +51,7 @@
         class="tailwind-tab-scroll-btn--end shrink-0 self-stretch rounded-none"
         [disabled]="!canScrollEnd()"
         [ariaLabel]="scrollRightLabel()"
-        (onClick)="scrollTabs(1)" />
+        (click)="scrollTabs(1)" />
     }
   </div>
 

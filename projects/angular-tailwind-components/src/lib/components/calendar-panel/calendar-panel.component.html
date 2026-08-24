@@ -10,7 +10,7 @@
         icon="chevron-left"
         [ariaLabel]="previousLabel()"
         [disabled]="isDisabled()"
-        (onClick)="prev()" />
+        (click)="prev()" />
     } @else {
       <span class="w-8" aria-hidden="true"></span>
     }
@@ -32,7 +32,7 @@
         icon="chevron-right"
         [ariaLabel]="nextLabel()"
         [disabled]="isDisabled()"
-        (onClick)="next()" />
+        (click)="next()" />
     } @else {
       <span class="w-8" aria-hidden="true"></span>
     }
@@ -114,7 +114,7 @@
         [color]="isTodaySelectable() ? 'primary' : 'secondary'"
         size="xs"
         [disabled]="isDisabled() || !isTodaySelectable()"
-        (onClick)="goToToday()">
+        (click)="goToToday()">
         {{ i18n.today }}
       </tailwind-button>
     </div>

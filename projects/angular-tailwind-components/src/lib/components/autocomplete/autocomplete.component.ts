@@ -127,7 +127,7 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
   readonly value = model<T | null>(null);
 
   /** Emits the current search query (after debounce / minSearchLength) */
-  readonly onSearch = output<string>();
+  readonly searchChange = output<string>();
 
   /** Custom option row template (`ng-template` with `#item`) */
   readonly itemTemplate = contentChild('item', { read: TemplateRef });
@@ -356,13 +356,13 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
     }
 
     if (debounce <= 0) {
-      this.onSearch.emit(query);
+      this.searchChange.emit(query);
       return;
     }
 
     this.searchDebounceTimer = setTimeout(() => {
       this.ngZone.run(() => {
-        this.onSearch.emit(query);
+        this.searchChange.emit(query);
         this.cdr.markForCheck();
       });
       this.searchDebounceTimer = null;

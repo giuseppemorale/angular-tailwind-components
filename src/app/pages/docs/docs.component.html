@@ -33,7 +33,7 @@
         icon="bold"
         [ariaPressed]="toolbarBoldPressed()"
         [ariaLabel]="'DOCS.BTN_TOOLBAR_BOLD_ARIA' | transloco"
-        (onClick)="toggleToolbarBold()" />
+        (click)="toggleToolbarBold()" />
       <tailwind-button
         kind="ghost"
         color="transparent"
@@ -73,7 +73,7 @@
         [value]="progressDemo()"
         [label]="'DOCS.PROGRESS_LABEL' | transloco"
         [showValue]="true" />
-      <tailwind-button kind="outlined" (onClick)="bumpProgress()">
+      <tailwind-button kind="outlined" (click)="bumpProgress()">
         {{ 'DOCS.BTN_SIMULATE_PROGRESS' | transloco }}
       </tailwind-button>
     </div>
@@ -89,7 +89,7 @@
   <tailwind-card [hasFooter]="false">
     <div tailwind-card-header class="flex flex-wrap items-center justify-between gap-2">
       <tailwind-title titleTag="h3" [text]="'DOCS.SKELETON_SECTION_TITLE' | transloco" icon="rectangle-stack" />
-      <tailwind-button kind="outlined" color="secondary" (onClick)="toggleSkeletonPreview()">
+      <tailwind-button kind="outlined" color="secondary" (click)="toggleSkeletonPreview()">
         {{ (showSkeletonPreview() ? 'DOCS.BTN_HIDE_SKELETON' : 'DOCS.BTN_SHOW_SKELETON') | transloco }}
       </tailwind-button>
     </div>
@@ -138,6 +138,6 @@
       <tailwind-title titleTag="h3" [text]="'DOCS.MODAL_SECTION_TITLE' | transloco" icon="window" />
     </div>
     <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'DOCS.MODAL_HINT' | transloco }}</p>
-    <tailwind-button (onClick)="openExportModal()">{{ 'DOCS.BTN_OPEN_MODAL' | transloco }}</tailwind-button>
+    <tailwind-button (click)="openExportModal()">{{ 'DOCS.BTN_OPEN_MODAL' | transloco }}</tailwind-button>
   </tailwind-card>
 </div>

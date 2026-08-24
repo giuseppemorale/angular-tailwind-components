@@ -1,0 +1,9 @@
+<div
+  role="group"
+  roledescription="slide"
+  [class]="slideClasses()"
+  [attr.aria-label]="ariaLabel() || null"
+  [attr.aria-hidden]="isActive() ? null : 'true'"
+  [attr.inert]="isActive() ? null : ''">
+  <ng-content />
+</div>

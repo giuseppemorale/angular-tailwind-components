@@ -100,3 +100,19 @@
     }
   }
 }
+
+/*
+ * Sticky header. The scroll container needs a bounded height for `position: sticky` to have
+ * anything to stick against, so the modifier sets one as well.
+ */
+.tw-table-sticky {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.tw-table-sticky :is(thead) {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--color-surface);
+}

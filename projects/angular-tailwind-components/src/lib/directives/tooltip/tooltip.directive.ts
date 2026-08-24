@@ -1,16 +1,40 @@
+import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ComponentRef,
+  DestroyRef,
   Directive,
   ElementRef,
   HostListener,
-  OnDestroy,
-  ViewContainerRef,
   inject,
-  input
+  input,
+  ViewContainerRef
 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { TailwindTooltip } from '../../components/tooltip/tooltip.component';
 import { TailwindPosition } from '../../models';
+import { resolveOverlayAnchor } from '../../util/overlay-anchor';
+
+/** Gap between trigger and tooltip, matching the arrow overhang. */
+const OFFSET_PX = 8;
+
+const POSITIONS: Record<TailwindPosition, ConnectedPosition> = {
+  top: { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -OFFSET_PX },
+  bottom: { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: OFFSET_PX },
+  left: { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -OFFSET_PX },
+  right: { originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center', offsetX: OFFSET_PX }
+};
+
+/** Opposite side first, then the perpendicular ones: a tooltip flips before it slides sideways. */
+const FALLBACK_ORDER: Record<TailwindPosition, TailwindPosition[]> = {
+  top: ['top', 'bottom', 'right', 'left'],
+  bottom: ['bottom', 'top', 'right', 'left'],
+  left: ['left', 'right', 'top', 'bottom'],
+  right: ['right', 'left', 'top', 'bottom']
+};
+
+const SHOW_DELAY_MS = 200;
+const HIDE_DELAY_MS = 150;
 
 @Directive({
   // `[tooltip]` is the original, unprefixed selector and stays supported; `[tailwindTooltip]` is the
@@ -18,47 +42,58 @@ import { TailwindPosition } from '../../models';
   selector: '[tooltip], [tailwindTooltip]',
   standalone: true
 })
-export class TailwindTooltipDirective implements OnDestroy {
+export class TailwindTooltipDirective {
   /** Tooltip text */
   readonly tooltip = input.required<string>();
-  /** Position relative to the trigger */
+  /** Preferred position; the overlay flips to the opposite side when it would leave the viewport. */
   readonly tooltipPosition = input<TailwindPosition>('top');
 
+  private readonly overlay = inject(Overlay);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+  private readonly el = inject(ElementRef);
+
+  private overlayRef: OverlayRef | null = null;
+  private componentRef: ComponentRef<TailwindTooltip> | null = null;
+  private positionSub: Subscription | null = null;
   private showTimeout: ReturnType<typeof setTimeout> | null = null;
   private hideTimeout: ReturnType<typeof setTimeout> | null = null;
-  private componentRef: ComponentRef<TailwindTooltip> | null = null;
-
-  private viewContainerRef = inject(ViewContainerRef);
-  private el = inject(ElementRef);
-  private document = inject(DOCUMENT);
 
   private get host(): HTMLElement {
     return this.el.nativeElement;
   }
 
+  /**
+   * The directive usually sits on a component host such as tailwind-button, which forwards its
+   * children and so has no box of its own. Point the overlay at the control inside it, otherwise
+   * the tooltip is measured against an empty rect and lands in the corner of the viewport.
+   */
+  private get anchor(): HTMLElement {
+    return resolveOverlayAnchor(this.host);
+  }
+
+  constructor() {
+    inject(DestroyRef).onDestroy(() => {
+      this.clearTimeouts();
+      this.destroyOverlay();
+    });
+  }
+
   @HostListener('mouseenter')
   @HostListener('focusin')
   show(): void {
-    if (!this.tooltip()?.trim()) {
-      return;
-    }
+    if (!this.tooltip()?.trim()) return;
 
     this.clearHideTimeout();
-
-    if (this.componentRef) {
-      this.updateTooltipComponent();
-      this.componentRef.instance.show();
+    if (this.overlayRef) {
+      this.componentRef?.instance.show();
       return;
     }
-
-    if (this.showTimeout) {
-      return;
-    }
+    if (this.showTimeout) return;
 
     this.showTimeout = setTimeout(() => {
       this.showTimeout = null;
-      this.createComponent();
-    }, 200);
+      this.createOverlay();
+    }, SHOW_DELAY_MS);
   }
 
   @HostListener('mouseleave')
@@ -69,20 +104,19 @@ export class TailwindTooltipDirective implements OnDestroy {
   /** WCAG 1.4.13: content shown on hover or focus must be dismissible without moving the pointer. */
   @HostListener('document:keydown.escape')
   hideFromEscape(): void {
-    if (this.componentRef) {
-      this.hide();
+    if (this.overlayRef) {
+      this.clearTimeouts();
+      this.destroyOverlay();
     }
   }
 
   @HostListener('focusout', ['$event'])
   hideFromFocus(event: FocusEvent): void {
     const related = event.relatedTarget as Node | null;
-    if (related && this.host.contains(related)) {
-      return;
-    }
+    if (related && this.host.contains(related)) return;
 
     queueMicrotask(() => {
-      if (!this.host.contains(document.activeElement)) {
+      if (!this.host.contains(this.host.ownerDocument.activeElement)) {
         this.hide();
       }
     });
@@ -90,17 +124,81 @@ export class TailwindTooltipDirective implements OnDestroy {
 
   private hide(): void {
     this.clearShowTimeout();
+    if (!this.overlayRef) return;
 
-    if (!this.componentRef) {
-      return;
-    }
-
-    this.componentRef.instance.hide();
-
+    this.componentRef?.instance.hide();
     this.hideTimeout = setTimeout(() => {
       this.hideTimeout = null;
-      this.destroyComponent();
-    }, 150);
+      this.destroyOverlay();
+    }, HIDE_DELAY_MS);
+  }
+
+  private createOverlay(): void {
+    const preferred = this.tooltipPosition();
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(this.anchor)
+      .withPositions(FALLBACK_ORDER[preferred].map(side => POSITIONS[side]))
+      .withPush(false);
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      // The pane must not swallow clicks aimed at the page behind the tooltip.
+      hasBackdrop: false,
+      panelClass: 'tailwind-tooltip-pane'
+    });
+
+    this.componentRef = this.overlayRef.attach(new ComponentPortal(TailwindTooltip, this.viewContainerRef));
+    this.componentRef.setInput('text', this.tooltip());
+    this.componentRef.setInput('position', preferred);
+
+    // Keep the arrow pointing at the trigger when the overlay flips to a fallback position.
+    this.positionSub = positionStrategy.positionChanges.subscribe(change => {
+      const side = this.sideOf(change.connectionPair);
+      if (side) this.componentRef?.setInput('position', side);
+    });
+
+    // The tooltip itself must stay hoverable, so pointing at it cancels the pending hide.
+    const pane = this.overlayRef.overlayElement;
+    pane.addEventListener('mouseenter', this.onPaneEnter);
+    pane.addEventListener('mouseleave', this.onPaneLeave);
+
+    // Without this the trigger has no programmatic link to the text it just revealed.
+    this.anchor.setAttribute('aria-describedby', this.componentRef.instance.elementId());
+    this.componentRef.instance.show();
+  }
+
+  private readonly onPaneEnter = (): void => this.clearHideTimeout();
+  private readonly onPaneLeave = (): void => this.hide();
+
+  /** Maps a resolved CDK position back to the side the tooltip ended up on. */
+  private sideOf(pair: ConnectedPosition): TailwindPosition | null {
+    if (pair.overlayY === 'bottom' && pair.originY === 'top') return 'top';
+    if (pair.overlayY === 'top' && pair.originY === 'bottom') return 'bottom';
+    if (pair.overlayX === 'end' && pair.originX === 'start') return 'left';
+    if (pair.overlayX === 'start' && pair.originX === 'end') return 'right';
+    return null;
+  }
+
+  private destroyOverlay(): void {
+    this.anchor.removeAttribute('aria-describedby');
+    this.positionSub?.unsubscribe();
+    this.positionSub = null;
+
+    if (this.overlayRef) {
+      const pane = this.overlayRef.overlayElement;
+      pane.removeEventListener('mouseenter', this.onPaneEnter);
+      pane.removeEventListener('mouseleave', this.onPaneLeave);
+      this.overlayRef.dispose();
+      this.overlayRef = null;
+    }
+    this.componentRef = null;
+  }
+
+  private clearTimeouts(): void {
+    this.clearShowTimeout();
+    this.clearHideTimeout();
   }
 
   private clearShowTimeout(): void {
@@ -115,51 +213,5 @@ export class TailwindTooltipDirective implements OnDestroy {
       clearTimeout(this.hideTimeout);
       this.hideTimeout = null;
     }
-  }
-
-  private createComponent(): void {
-    if (this.componentRef) {
-      this.destroyComponent();
-    }
-
-    this.componentRef = this.viewContainerRef.createComponent(TailwindTooltip);
-    const tooltipHost = this.componentRef.location.nativeElement as HTMLElement;
-    if (tooltipHost.parentNode !== this.document.body) {
-      this.document.body.appendChild(tooltipHost);
-    }
-    this.updateTooltipComponent();
-    // Without this the tooltip text is invisible to assistive technology.
-    this.host.setAttribute('aria-describedby', this.componentRef.instance.elementId());
-
-    setTimeout(() => {
-      if (this.componentRef) {
-        this.componentRef.instance.show();
-      }
-    });
-  }
-
-  private updateTooltipComponent(): void {
-    if (!this.componentRef) {
-      return;
-    }
-
-    this.componentRef.setInput('text', this.tooltip());
-    this.componentRef.setInput('position', this.tooltipPosition());
-    this.componentRef.instance.setTarget(this.host);
-    this.componentRef.changeDetectorRef.detectChanges();
-  }
-
-  private destroyComponent(): void {
-    if (this.componentRef) {
-      this.host.removeAttribute('aria-describedby');
-      this.componentRef.destroy();
-      this.componentRef = null;
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.clearShowTimeout();
-    this.clearHideTimeout();
-    this.destroyComponent();
   }
 }

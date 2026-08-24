@@ -1,0 +1,34 @@
+<div [class]="containerClasses()">
+  @if (icon()) {
+    <tailwind-icon [icon]="icon()!" [size]="40" class="text-neutral-300" />
+  }
+
+  @if (title()) {
+    @switch (headingLevel()) {
+      @case (2) {
+        <h2 class="text-base font-semibold text-neutral-900">{{ title() }}</h2>
+      }
+      @case (4) {
+        <h4 class="text-base font-semibold text-neutral-900">{{ title() }}</h4>
+      }
+      @case (5) {
+        <h5 class="text-base font-semibold text-neutral-900">{{ title() }}</h5>
+      }
+      @case (6) {
+        <h6 class="text-base font-semibold text-neutral-900">{{ title() }}</h6>
+      }
+      @default {
+        <h3 class="text-base font-semibold text-neutral-900">{{ title() }}</h3>
+      }
+    }
+  }
+
+  @if (description()) {
+    <p class="max-w-sm text-sm text-neutral-500">{{ description() }}</p>
+  }
+
+  <!-- Call to action: buttons, links, anything -->
+  <div class="mt-1 flex flex-wrap items-center justify-center gap-2 empty:hidden">
+    <ng-content />
+  </div>
+</div>

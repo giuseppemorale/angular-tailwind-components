@@ -14,12 +14,12 @@ export class TailwindAccordionItem extends TailwindComponent {
   readonly disabled = input<boolean>(false);
   readonly isExpanded = signal(false);
 
-  readonly onToggle = output<void>();
+  readonly toggled = output<void>();
 
   toggle(): void {
     if (!this.disabled()) {
       this.isExpanded.update(v => !v);
-      this.onToggle.emit();
+      this.toggled.emit();
     }
   }
 }

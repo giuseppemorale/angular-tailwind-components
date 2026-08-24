@@ -2,7 +2,9 @@ export interface Pagination {
   readonly totalItems: number;
   readonly pageSize: number;
   readonly currentPage: number;
-  readonly ariaLabel: string;
-  readonly summary: string;
+  /** Optional: falls back to `TAILWIND_LABELS.pagination`. */
+  readonly ariaLabel?: string;
+  /** Optional: falls back to `TAILWIND_PAGINATION_SUMMARY` or the built-in English template. */
+  readonly summary?: string;
   readonly lengthOptions?: readonly number[];
 }

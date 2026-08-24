@@ -31,10 +31,10 @@ export class TailwindAlert extends TailwindComponent {
   readonly showActions = input<boolean>(false);
 
   /** Emitted when the alert is dismissed */
-  readonly onDismiss = output<void>();
+  readonly dismissed = output<void>();
 
   /** Internal dismissed state */
-  readonly dismissed = signal(false);
+  readonly isDismissed = signal(false);
 
   readonly computedClasses = computed(() => {
     const base = 'flex gap-3 p-4 rounded-lg';
@@ -53,7 +53,7 @@ export class TailwindAlert extends TailwindComponent {
   });
 
   dismiss(): void {
-    this.dismissed.set(true);
-    this.onDismiss.emit();
+    this.isDismissed.set(true);
+    this.dismissed.emit();
   }
 }

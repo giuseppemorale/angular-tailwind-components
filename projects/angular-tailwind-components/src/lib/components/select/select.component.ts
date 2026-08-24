@@ -310,7 +310,8 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   private setActiveIndex(index: number): void {
     this.activeIndex.set(index);
     const option = this.overlayRef?.overlayElement.querySelector(`#${CSS.escape(this.optionId(index))}`);
-    option?.scrollIntoView({ block: 'nearest' });
+    // Optional call: jsdom leaves `scrollIntoView` undefined, and scrolling is a nicety anyway.
+    option?.scrollIntoView?.({ block: 'nearest' });
   }
 
   toggleDropdown(): void {

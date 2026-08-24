@@ -31,7 +31,7 @@ describe('TailwindToolbar', () => {
 
   it('should not emit onMenuSelect for parent entries with items', () => {
     const spy = vi.fn();
-    component.onMenuSelect.subscribe(spy);
+    component.menuSelect.subscribe(spy);
 
     component.selectMenuItem({
       label: 'More',
@@ -43,7 +43,7 @@ describe('TailwindToolbar', () => {
 
   it('should emit onMenuSelect for leaf entries', () => {
     const spy = vi.fn();
-    component.onMenuSelect.subscribe(spy);
+    component.menuSelect.subscribe(spy);
     const leaf: TailwindMenuItem = { label: 'Home', value: 'home' };
 
     component.selectMenuItem(leaf);

@@ -34,7 +34,11 @@ export const TAILWIND_ICON_BASE_PATH = new InjectionToken<string>('TAILWIND_ICON
   factory: () => '/tailwind-icons'
 });
 
-export const TAILWIND_DATETIME_LANGUAGE = new InjectionToken<'it' | 'en'>('TAILWIND_DATETIME_LANGUAGE');
+/**
+ * BCP 47 locale for calendars and time pickers (month names, weekday abbreviations, first day of
+ * the week). Defaults to Angular's `LOCALE_ID`; any tag the runtime's `Intl` knows works.
+ */
+export const TAILWIND_DATETIME_LANGUAGE = new InjectionToken<string>('TAILWIND_DATETIME_LANGUAGE');
 
 export const TAILWIND_COMPONENTS_SIZE = new InjectionToken<TailwindSize>('TAILWIND_COMPONENTS_SIZE');
 

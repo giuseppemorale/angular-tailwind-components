@@ -1,0 +1,163 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SegmentedControlStories from './segmented-control.stories';
+
+<Meta of={SegmentedControlStories} />
+
+# SegmentedControl
+
+`TailwindSegmentedControl` mostra affiancate poche scelte mutuamente esclusive. Usalo al posto di una select quando le opzioni sono due-cinque e vederle tutte insieme conta.
+
+È implementato come **radio group** ARIA, non come tablist: la scelta è un valore, non una vista, quindi funziona con `formControl` e `ngModel`.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindSegmentedControl, ReactiveFormsModule],
+  template: ` <tailwind-segmented-control label="Vista" [options]="views" [formControl]="form.controls.view" />`
+})
+export class ExampleComponent {
+  readonly views = [
+    { value: 'list', label: 'Elenco' },
+    { value: 'grid', label: 'Griglia' }
+  ];
+}
+```
+
+## Anteprima
+
+<Canvas of={SegmentedControlStories.SegmentedControl} />
+
+---
+
+## Properties
+
+### `TailwindSegmentedControl (tailwind-segmented-control)`
+
+Eredita `TailwindComponent` (`id`, `class`). Implementa `ControlValueAccessor`.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>options</code>
+      </td>
+      <td>
+        <code>TailwindOption&lt;T&gt;[]</code>
+      </td>
+      <td>
+        <code>[]</code>
+      </td>
+      <td>Scelte disponibili.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>value</code>
+      </td>
+      <td>
+        <code>T | null</code>
+      </td>
+      <td>
+        <code>null</code>
+      </td>
+      <td>Valore selezionato (two-way).</td>
+    </tr>
+    <tr>
+      <td>
+        <code>label</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Etichetta visibile sopra il gruppo.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile quando <code>label</code> è omessa.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>size</code>
+      </td>
+      <td>
+        <code>TailwindSize</code>
+      </td>
+      <td>
+        <code>'md'</code>
+      </td>
+      <td>
+        Dimensione; default da <code>TAILWIND_COMPONENTS_SIZE</code>.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>fullWidth</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>I segmenti si distribuiscono su tutta la larghezza.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>disabled</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Disabilita l&apos;intero gruppo.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>compareWith</code>
+      </td>
+      <td>
+        <code>(a, b) =&gt; boolean</code>
+      </td>
+      <td>
+        <code>Object.is</code>
+      </td>
+      <td>Confronto dei valori; necessario con valori oggetto.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Tastiera
+
+| Tasto      | Effetto                                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------------------ |
+| Frecce     | Sposta la selezione al segmento precedente/successivo, saltando i disabilitati e ciclando agli estremi |
+| Home / End | Primo / ultimo segmento abilitato                                                                      |
+
+Il gruppo espone un solo tab stop: Tab vi entra e ne esce, le frecce si muovono all&apos;interno.

@@ -1,6 +1,15 @@
 @import 'tailwindcss';
 
 /*
+ * Overlay panes (modal, drawer, menu, tooltip, popover, popconfirm, select, autocomplete) are
+ * portalled into `.cdk-overlay-container`, which takes its positioning from this stylesheet alone.
+ * Without it every pane lays out in normal flow at the top of the document instead of next to its
+ * trigger. `a11y-prebuilt` hides the anchors `cdkTrapFocus` injects around a trapped panel.
+ */
+@import '@angular/cdk/overlay-prebuilt.css';
+@import '@angular/cdk/a11y-prebuilt.css';
+
+/*
  * Tailwind v4 @source:
  * - ../fesm2022 — npm package layout (this file is styles/tailwind.css); templates are inlined in FESM bundles.
  * - ../ glob for .html and .ts — Storybook and monorepo when this file lives under src/lib/styles.
@@ -375,4 +384,24 @@
 /* CDK overlays (select, password feedback, …) above page content */
 .cdk-overlay-container {
   z-index: var(--z-popover);
+}
+
+/*
+ * Overlay panes live outside every component's style encapsulation, so the few rules that shape
+ * them have to be global.
+ */
+.tailwind-modal-pane {
+  margin: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+.tailwind-modal-backdrop {
+  background-color: oklch(0 0 0 / 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.tailwind-drawer-backdrop {
+  background-color: oklch(0 0 0 / 0.4);
+  backdrop-filter: blur(4px);
 }

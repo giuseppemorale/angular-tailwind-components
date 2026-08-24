@@ -60,7 +60,7 @@
           </div>
         </form>
         <div class="flex justify-end mt-6">
-          <tailwind-button icon="arrow-right" iconPosition="right" (onClick)="firstStepNext()">
+          <tailwind-button icon="arrow-right" iconPosition="right" (click)="firstStepNext()">
             {{ 'REGISTRATION.BTN_NEXT' | transloco }}
           </tailwind-button>
         </div>
@@ -88,10 +88,10 @@
             [errorText]="'REGISTRATION.ERROR_PASSWORD' | transloco" />
         </form>
         <div class="flex justify-between mt-6">
-          <tailwind-button color="secondary" kind="outlined" icon="arrow-left" (onClick)="stepper.previous()">
+          <tailwind-button color="secondary" kind="outlined" icon="arrow-left" (click)="stepper.previous()">
             {{ 'REGISTRATION.BTN_BACK' | transloco }}
           </tailwind-button>
-          <tailwind-button icon="arrow-right" iconPosition="right" (onClick)="secondStepNext()">
+          <tailwind-button icon="arrow-right" iconPosition="right" (click)="secondStepNext()">
             {{ 'REGISTRATION.BTN_NEXT' | transloco }}
           </tailwind-button>
         </div>
@@ -168,10 +168,10 @@
         </form>
 
         <div class="flex justify-between mt-6">
-          <tailwind-button color="secondary" kind="outlined" icon="arrow-left" (onClick)="stepper.previous()">
+          <tailwind-button color="secondary" kind="outlined" icon="arrow-left" (click)="stepper.previous()">
             {{ 'REGISTRATION.BTN_BACK' | transloco }}
           </tailwind-button>
-          <tailwind-button icon="check" [disabled]="submitting()" (onClick)="submit()">
+          <tailwind-button icon="check" [disabled]="submitting()" (click)="submit()">
             {{ 'REGISTRATION.BTN_SUBMIT' | transloco }}
           </tailwind-button>
         </div>
@@ -181,7 +181,7 @@
     <div class="flex flex-col items-center gap-4 py-8 text-center">
       <p class="text-lg font-semibold text-neutral-900">{{ 'REGISTRATION.SUCCESS_TITLE' | transloco }}</p>
       <p class="text-sm text-neutral-600 max-w-md">{{ 'REGISTRATION.SUCCESS_BODY' | transloco }}</p>
-      <tailwind-button (onClick)="goToLogin()">{{ 'REGISTRATION.BTN_HOME' | transloco }}</tailwind-button>
+      <tailwind-button (click)="goToLogin()">{{ 'REGISTRATION.BTN_HOME' | transloco }}</tailwind-button>
     </div>
   }
 </tailwind-card>

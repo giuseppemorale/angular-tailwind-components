@@ -18,10 +18,6 @@ module.exports = tseslint.config(
         { type: 'attribute', prefix: ['tailwind', 'tw'], style: 'camelCase' }
       ],
       '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'tailwind', style: 'kebab-case' }],
-      // Public API conventions predating this config. Renaming `onClick`/`onSelect` outputs and the
-      // `class` input alias is a breaking change, tracked for the next major rather than silenced ad hoc.
-      '@angular-eslint/no-output-on-prefix': 'off',
-      '@angular-eslint/no-input-rename': 'off',
       // Signals-first: the library must not reintroduce decorator inputs/outputs.
       '@angular-eslint/prefer-signals': 'error',
       // OnPush everywhere is a deliberate library-wide invariant, not a per-component choice.

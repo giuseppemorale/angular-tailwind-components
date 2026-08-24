@@ -1,0 +1,141 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TimelineStories from './timeline.stories';
+
+<Meta of={TimelineStories} />
+
+# Timeline
+
+`TailwindTimeline` mostra una sequenza ordinata di eventi: feed di attività, tracciamento ordini, audit trail.
+
+È reso come `<ol>`: l&apos;ordine porta significato, quindi uno screen reader deve annunciarlo come elenco numerato e non come una pila di div. Linea di collegamento e pallini sono decorativi e nascosti agli screen reader.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindTimeline, TailwindTimelineItem],
+  template: ` <tailwind-timeline ariaLabel="Storico ordine">
+    <tailwind-timeline-item title="Ordine ricevuto" time="09:12" color="success" icon="check">
+      Pagamento autorizzato.
+    </tailwind-timeline-item>
+    <tailwind-timeline-item title="Spedito" time="14:05" [last]="true" />
+  </tailwind-timeline>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={TimelineStories.Timeline} />
+
+---
+
+## Properties
+
+### `TailwindTimeline (tailwind-timeline)`
+
+Eredita `TailwindComponent` (`id`, `class`).
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Nome accessibile della sequenza.</td>
+    </tr>
+  </tbody>
+</table>
+
+### `TailwindTimelineItem (tailwind-timeline-item)`
+
+Eredita `TailwindComponent` (`id`, `class`). Il contenuto proiettato è il corpo dell&apos;evento.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Titolo dell&apos;evento.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>time</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Quando è avvenuto, mostrato attenuato accanto al titolo.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>color</code>
+      </td>
+      <td>
+        <code>TailwindColor</code>
+      </td>
+      <td>
+        <code>'primary'</code>
+      </td>
+      <td>Colore del marcatore.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>icon</code>
+      </td>
+      <td>
+        <code>TailwindHeroicon | undefined</code>
+      </td>
+      <td>
+        <code>undefined</code>
+      </td>
+      <td>Icona nel marcatore; senza, viene disegnato un pallino.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>last</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Nasconde la linea sotto al marcatore: impostalo sull&apos;ultimo elemento.</td>
+    </tr>
+  </tbody>
+</table>

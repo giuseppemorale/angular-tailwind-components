@@ -1,0 +1,29 @@
+<li [class]="mergeClasses('relative flex gap-4 pb-6 last:pb-0')">
+  <!-- Marker column: the connector is decorative, so it is hidden from assistive tech. -->
+  <div class="flex flex-col items-center">
+    <span [class]="dotClasses()">
+      @if (icon()) {
+        <tailwind-icon [icon]="icon()!" [size]="16" />
+      } @else {
+        <span class="size-2 rounded-full bg-current opacity-80" aria-hidden="true"></span>
+      }
+    </span>
+    @if (!last()) {
+      <span class="mt-1 w-px flex-1 bg-neutral-200" aria-hidden="true"></span>
+    }
+  </div>
+
+  <div class="min-w-0 flex-1 pt-0.5">
+    <div class="flex flex-wrap items-baseline gap-x-2">
+      @if (title()) {
+        <p class="text-sm font-medium text-neutral-900">{{ title() }}</p>
+      }
+      @if (time()) {
+        <span class="text-xs text-neutral-500">{{ time() }}</span>
+      }
+    </div>
+    <div class="mt-0.5 text-sm text-neutral-600 empty:hidden">
+      <ng-content />
+    </div>
+  </div>
+</li>

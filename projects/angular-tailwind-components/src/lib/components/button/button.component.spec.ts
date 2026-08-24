@@ -28,9 +28,10 @@ describe('TailwindButton', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit clicked event when clicked', () => {
+  it('should let the native click bubble to the host', () => {
     const spy = vi.fn();
-    component.onClick.subscribe(spy);
+    // There is no `onClick` output any more: consumers bind plain `(click)`.
+    fixture.nativeElement.addEventListener('click', spy);
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     button.click();
@@ -38,12 +39,13 @@ describe('TailwindButton', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should not emit clicked event when disabled', () => {
+  it('should not fire a click event when disabled', () => {
     fixture.componentRef.setInput('disabled', true);
     fixture.detectChanges();
 
     const spy = vi.fn();
-    component.onClick.subscribe(spy);
+    // The native button's own click bubbles to the host; a disabled button emits nothing.
+    fixture.nativeElement.addEventListener('click', spy);
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
     button.click();
@@ -70,9 +72,10 @@ describe('TailwindButton', () => {
     expect(host.getAttribute('aria-pressed')).toBeNull();
   });
 
-  it('should set role to button by default', () => {
+  it('should not write a redundant role on the native button', () => {
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    expect(button.getAttribute('role')).toBe('button');
+    // `<button>` already exposes role "button"; repeating it in an attribute adds nothing.
+    expect(button.getAttribute('role')).toBeNull();
   });
 
   it('should apply custom role when set', () => {
@@ -195,7 +198,7 @@ describe('TailwindButton', () => {
   });
   it('should show a spinner and block activation while loading', () => {
     let clicks = 0;
-    fixture.componentInstance.onClick.subscribe(() => clicks++);
+    fixture.nativeElement.addEventListener('click', () => clicks++);
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
 

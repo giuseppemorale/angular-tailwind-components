@@ -2,12 +2,11 @@
   [ngClass]="computedClasses()"
   [disabled]="isDisabled()"
   [type]="type()"
-  [attr.role]="role()"
+  [attr.role]="role() === 'button' ? null : role()"
   [attr.aria-label]="ariaLabel() || null"
   [attr.aria-busy]="loading() ? 'true' : null"
   [attr.aria-current]="ariaCurrent() ?? null"
-  [attr.aria-pressed]="ariaPressed() === undefined ? null : ariaPressed() ? 'true' : 'false'"
-  (click)="handleClick($event)">
+  [attr.aria-pressed]="ariaPressed() === undefined ? null : ariaPressed() ? 'true' : 'false'">
   <span class="inline-flex min-w-0 items-center justify-center gap-2">
     @if (loading()) {
       <tailwind-icon icon="arrow-path" [size]="iconPixelSize()" class="shrink-0 animate-spin" />

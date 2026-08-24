@@ -27,7 +27,7 @@
             [disabled]="isItemDisabled(item)"
             [ariaLabel]="buttonAriaLabel(item)"
             [ariaPressed]="isActive(item.command)"
-            (onClick)="onCommand(item.command, $event)" />
+            (click)="onCommand(item.command, $event)" />
         }
       }
     </div>

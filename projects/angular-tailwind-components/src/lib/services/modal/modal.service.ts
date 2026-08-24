@@ -82,7 +82,7 @@ export class TailwindModalService {
       // ── Step 4: wire close ────────────────────────────────────────────────
       modalRef._init(() => modalComp.instance.close());
 
-      const sub = modalComp.instance.onClose.subscribe(() => {
+      const sub = modalComp.instance.closed.subscribe(() => {
         sub.unsubscribe();
         resolve(modalRef._getResult());
         modalComp.location.nativeElement.remove();

@@ -1,3 +1,6 @@
+import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -9,17 +12,26 @@ import {
   input,
   output,
   signal,
-  viewChild
+  TemplateRef,
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
-import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { Subscription } from 'rxjs';
 import { TailwindPosition } from '../../models';
 import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
-import { lockBodyScroll, releaseBodyScroll } from '../../util/body-scroll-lock';
 import { TailwindComponent } from '../tailwind.component';
 
 /** Exit animation duration, kept in sync with the panel transition. */
 const EXIT_ANIMATION_MS = 300;
+
+/** Off-screen transform per edge, used for the enter and exit slide. */
+const HIDDEN_TRANSFORM: Record<TailwindPosition, string> = {
+  right: 'translate-x-full',
+  left: '-translate-x-full',
+  top: '-translate-y-full',
+  bottom: 'translate-y-full'
+};
 
 @Component({
   imports: [TailwindButton, CdkTrapFocus],
@@ -29,9 +41,10 @@ const EXIT_ANIMATION_MS = 300;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindDrawer extends TailwindComponent {
-  private readonly destroyRef = inject(DestroyRef);
   private readonly document = inject(DOCUMENT);
   private readonly labels = inject(TAILWIND_LABELS);
+  private readonly overlay = inject(Overlay);
+  private readonly viewContainerRef = inject(ViewContainerRef);
 
   /** Drawer title, rendered in the header and used as the dialog accessible name */
   readonly title = input<string>('');
@@ -56,18 +69,17 @@ export class TailwindDrawer extends TailwindComponent {
   readonly isVisible = signal(false);
 
   /** Emitted when closed */
-  readonly onClose = output<void>();
+  readonly closed = output<void>();
 
+  private readonly panelTemplate = viewChild.required<TemplateRef<unknown>>('panelTemplate');
   private readonly drawerPanel = viewChild<ElementRef<HTMLElement>>('drawerPanel');
+
+  private overlayRef: OverlayRef | null = null;
+  private overlaySub: Subscription | null = null;
   private exitTimeout: ReturnType<typeof setTimeout> | undefined;
   private previouslyFocused: HTMLElement | null = null;
 
   readonly resolvedCloseLabel = computed(() => this.closeLabel() || this.labels.close);
-
-  constructor() {
-    super();
-    this.destroyRef.onDestroy(() => this.freeScrollLock());
-  }
 
   /** `true` when the panel slides along the horizontal axis. */
   private readonly isHorizontal = computed(() => this.position() === 'left' || this.position() === 'right');
@@ -75,30 +87,56 @@ export class TailwindDrawer extends TailwindComponent {
   /** Default extent differs per axis: a side sheet is narrow, a top/bottom sheet is short. */
   private readonly extentClass = computed(() => this.width() || (this.isHorizontal() ? 'max-w-md' : 'max-h-96'));
 
-  readonly panelClasses = computed(() => {
-    const visible = this.isVisible();
-    const base = [
-      'fixed z-1050',
-      'flex flex-col bg-surface shadow-2xl',
-      'transition-transform duration-300 ease-in-out'
-    ];
+  readonly panelClasses = computed(() =>
+    this.mergeClasses(
+      'flex flex-col bg-surface shadow-2xl transition-transform duration-300 ease-in-out',
+      // Fill the perpendicular axis; `extentClass` caps the sliding one.
+      this.isHorizontal() ? 'h-screen w-screen' : 'w-screen h-screen',
+      this.extentClass(),
+      this.isVisible() ? 'translate-x-0 translate-y-0' : HIDDEN_TRANSFORM[this.position()]
+    )
+  );
 
-    const positionMap: Record<TailwindPosition, string[]> = {
-      right: ['top-0 bottom-0 right-0 w-full', visible ? 'translate-x-0' : 'translate-x-full'],
-      left: ['top-0 bottom-0 left-0 w-full', visible ? 'translate-x-0' : '-translate-x-full'],
-      top: ['left-0 right-0 top-0 h-full', visible ? 'translate-y-0' : '-translate-y-full'],
-      bottom: ['left-0 right-0 bottom-0 h-full', visible ? 'translate-y-0' : 'translate-y-full']
-    };
-
-    return this.mergeClasses(...base, ...positionMap[this.position()], this.extentClass());
-  });
+  constructor() {
+    super();
+    inject(DestroyRef).onDestroy(() => {
+      clearTimeout(this.exitTimeout);
+      this.disposeOverlay();
+    });
+  }
 
   open(): void {
     if (this.isOpen()) return;
+
     const active = this.document.activeElement;
     this.previouslyFocused = active instanceof HTMLElement ? active : null;
-    this.acquireScrollLock();
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy: this.edgePositionStrategy(),
+      scrollStrategy: this.overlay.scrollStrategies.block(),
+      hasBackdrop: true,
+      backdropClass: ['tailwind-drawer-backdrop', 'cdk-overlay-dark-backdrop'],
+      panelClass: 'tailwind-drawer-pane'
+    });
+
+    this.overlayRef.attach(new TemplatePortal(this.panelTemplate(), this.viewContainerRef));
     this.isOpen.set(true);
+
+    this.overlaySub = new Subscription();
+    this.overlaySub.add(
+      this.overlayRef.backdropClick().subscribe(() => {
+        if (this.closeOnBackdrop()) this.close();
+      })
+    );
+    this.overlaySub.add(
+      this.overlayRef.keydownEvents().subscribe(event => {
+        if (event.key === 'Escape' && this.closeOnEscape()) {
+          event.preventDefault();
+          this.close();
+        }
+      })
+    );
+
     requestAnimationFrame(() => {
       this.isVisible.set(true);
       this.drawerPanel()?.nativeElement?.focus();
@@ -107,28 +145,41 @@ export class TailwindDrawer extends TailwindComponent {
 
   close(): void {
     if (!this.isOpen()) return;
+
     this.isVisible.set(false);
     clearTimeout(this.exitTimeout);
     this.exitTimeout = setTimeout(() => {
+      this.disposeOverlay();
       this.isOpen.set(false);
-      this.freeScrollLock();
       this.previouslyFocused?.focus();
       this.previouslyFocused = null;
-      this.onClose.emit();
+      this.closed.emit();
     }, EXIT_ANIMATION_MS);
   }
-  /** Guards against double-locking and against leaking the lock if destroyed while open. */
-  private scrollLocked = false;
 
-  private acquireScrollLock(): void {
-    if (this.scrollLocked) return;
-    lockBodyScroll(this.document);
-    this.scrollLocked = true;
+  /**
+   * Pins the pane to one edge. Only the sliding axis is set: the global strategy *aligns* rather
+   * than stretches, so setting both `top` and `bottom` would align to the bottom instead of filling
+   * the height. The panel covers the perpendicular axis itself with `h-screen` / `w-screen`.
+   */
+  private edgePositionStrategy() {
+    const strategy = this.overlay.position().global();
+    switch (this.position()) {
+      case 'left':
+        return strategy.left('0');
+      case 'right':
+        return strategy.right('0');
+      case 'top':
+        return strategy.top('0');
+      case 'bottom':
+        return strategy.bottom('0');
+    }
   }
 
-  private freeScrollLock(): void {
-    if (!this.scrollLocked) return;
-    releaseBodyScroll(this.document);
-    this.scrollLocked = false;
+  private disposeOverlay(): void {
+    this.overlaySub?.unsubscribe();
+    this.overlaySub = null;
+    this.overlayRef?.dispose();
+    this.overlayRef = null;
   }
 }

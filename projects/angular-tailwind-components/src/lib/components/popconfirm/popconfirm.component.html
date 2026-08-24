@@ -1,0 +1,13 @@
+<ng-template #panelTemplate>
+  <div
+    #panel
+    role="alertdialog"
+    [attr.aria-describedby]="subId('message')"
+    [class]="mergeClasses('w-64 rounded-xl border border-neutral-200 bg-surface p-3 shadow-lg')">
+    <p [attr.id]="subId('message')" class="mb-3 text-sm text-neutral-700">{{ message() }}</p>
+    <div class="flex justify-end gap-2">
+      <tailwind-button size="sm" kind="ghost" color="secondary" (click)="cancel()">{{ cancelText() }}</tailwind-button>
+      <tailwind-button size="sm" [color]="confirmColor()" (click)="confirm()">{{ confirmText() }}</tailwind-button>
+    </div>
+  </div>
+</ng-template>

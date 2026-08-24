@@ -73,11 +73,11 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
   readonly rangeHigh = signal(100);
 
   /** Disabled via template (combined with form `setDisabledState`) */
-  readonly hostDisabled = input(false, { alias: 'disabled', transform: booleanAttribute });
+  readonly disabled = input(false, { transform: booleanAttribute });
 
   readonly isDisabled = signal(false);
 
-  readonly isEffectivelyDisabled = computed(() => this.isDisabled() || this.hostDisabled());
+  readonly isEffectivelyDisabled = computed(() => this.isDisabled() || this.disabled());
 
   private onChange: (v: TailwindSliderValue) => void = () => {};
   private onTouched: () => void = () => {};

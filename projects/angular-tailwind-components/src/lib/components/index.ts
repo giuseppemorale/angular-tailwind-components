@@ -54,3 +54,18 @@ export * from './meter/meter.component';
 export * from './slider/slider.component';
 export * from './editor/editor.component';
 export * from './editor/models/editor-command.type';
+
+// Batch 4 — Added in this release
+export * from './segmented-control/segmented-control.component';
+export * from './empty-state/empty-state.component';
+export * from './rating/rating.component';
+export * from './popover/popover.component';
+export * from './number-input/number-input.component';
+export * from './kbd/kbd.component';
+export * from './timeline/timeline.component';
+export * from './timeline/timeline-item.component';
+export * from './popconfirm/popconfirm.component';
+export * from './tree/tree.component';
+export * from './tree/interfaces/tree-node.interface';
+export * from './carousel/carousel.component';
+export * from './carousel/carousel-slide.component';

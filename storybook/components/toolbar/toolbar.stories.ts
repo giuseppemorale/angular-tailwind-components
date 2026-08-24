@@ -71,7 +71,7 @@ export const Horizontal: StoryObj<TailwindToolbar> = {
     props: { ...args, menu: horizontalMenu, lastSelection: '' as string },
     template: `
       <div class="space-y-2">
-        <tailwind-toolbar ${argsToTemplate(args)} [menu]="menu" (onMenuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
+        <tailwind-toolbar ${argsToTemplate(args)} [menu]="menu" (menuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
           <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>
@@ -114,7 +114,7 @@ export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
     props: { ...args, menu: iconOnlyMenu, lastSelection: '' as string },
     template: `
       <div class="flex h-[90vh] gap-4 border border-dashed border-neutral-200 rounded-lg p-2">
-        <tailwind-toolbar class="w-20 shrink-0" ${argsToTemplate(args)} [menu]="menu" (onMenuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
+        <tailwind-toolbar class="w-20 shrink-0" ${argsToTemplate(args)} [menu]="menu" (menuSelect)="lastSelection = $event.label ?? $event.value ?? ''">
           <div tailwind-toolbar-logo class="flex justify-center px-2">
             <img src="/logo.png" alt="Logo" class="h-8 w-8">
           </div>

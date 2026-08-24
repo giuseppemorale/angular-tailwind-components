@@ -41,7 +41,7 @@ export class TailwindToolbar extends TailwindComponent {
   readonly menu = input<TailwindMenuItem[]>([]);
 
   /** Emitted when a non-disabled, non-divider menu entry is activated. */
-  readonly onMenuSelect = output<TailwindMenuItem>();
+  readonly menuSelect = output<TailwindMenuItem>();
 
   /** Flat list for the mobile hamburger (submenu children promoted one level). */
   readonly mobileMenuItems = computed(() => this.flattenMenuItems(this.menu()));
@@ -176,7 +176,7 @@ export class TailwindToolbar extends TailwindComponent {
     if (item.divider || item.disabled || this.hasSubmenu(item)) {
       return;
     }
-    this.onMenuSelect.emit(item);
+    this.menuSelect.emit(item);
   }
 
   private flattenMenuItems(items: TailwindMenuItem[]): TailwindMenuItem[] {

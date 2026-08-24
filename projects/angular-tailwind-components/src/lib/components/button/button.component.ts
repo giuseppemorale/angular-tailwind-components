@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { NgClass } from '@angular/common';
 import type { TailwindHeroicon, TailwindIconPosition } from '../../models';
 import { TailwindSize, TailwindColor, TailwindButtonKind, TailwindButtonRole } from '../../models';
@@ -154,7 +154,11 @@ export class TailwindButton extends TailwindComponent {
   readonly fullWidth = input<boolean>(false);
   /** HTML button type attribute */
   readonly type = input<'button' | 'submit' | 'reset'>('button');
-  /** ARIA role attribute */
+  /**
+   * ARIA role. Left at `button` nothing is written: the native element already has that role and
+   * a redundant attribute only adds noise. Set another value to repurpose the control
+   * (`menuitem`, `tab`, `switch`, …).
+   */
   readonly role = input<TailwindButtonRole>('button');
   /** Optional Heroicons outline icon inside the button */
   readonly icon = input<TailwindHeroicon | undefined>();
@@ -169,9 +173,6 @@ export class TailwindButton extends TailwindComponent {
    * active page in a pagination, the current step in a stepper, the current page in a nav.
    */
   readonly ariaCurrent = input<'page' | 'step' | 'location' | 'date' | 'time' | 'true' | undefined>(undefined);
-
-  /** Emitted when the button is clicked (not disabled). */
-  readonly onClick = output<MouseEvent>();
 
   readonly iconPixelSize = computed(() => iconPixelSizeMap[this.size()]);
 
@@ -191,10 +192,4 @@ export class TailwindButton extends TailwindComponent {
 
     return this.mergeClasses(...base, styleMap[this.kind()][this.color()] || styleMap['solid']['primary'], sizeClasses);
   });
-
-  handleClick(event: MouseEvent): void {
-    if (!this.isDisabled()) {
-      this.onClick.emit(event);
-    }
-  }
 }

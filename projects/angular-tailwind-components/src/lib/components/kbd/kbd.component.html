@@ -1,0 +1,12 @@
+@if (keys().length > 0) {
+  <span class="inline-flex items-center gap-1">
+    @for (key of keys(); track $index; let last = $last) {
+      <kbd [class]="keyClasses()">{{ key }}</kbd>
+      @if (!last) {
+        <span class="text-xs text-neutral-400" aria-hidden="true">{{ separator() }}</span>
+      }
+    }
+  </span>
+} @else {
+  <kbd [class]="keyClasses()"><ng-content /></kbd>
+}

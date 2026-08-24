@@ -61,10 +61,10 @@
             [color]="isTodaySelectable() ? 'primary' : 'secondary'"
             size="xs"
             [disabled]="isDisabled() || !isTodaySelectable()"
-            (onClick)="goToToday()">
+            (click)="goToToday()">
             {{ i18n.today }}
           </tailwind-button>
-          <tailwind-button kind="solid" color="primary" [disabled]="isDisabled() || !draft()" (onClick)="apply()">
+          <tailwind-button kind="solid" color="primary" [disabled]="isDisabled() || !draft()" (click)="apply()">
             {{ i18n.confirm }}
           </tailwind-button>
         </div>

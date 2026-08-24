@@ -25,7 +25,7 @@
       icon="chevron-left"
       [disabled]="currentPage() <= 1"
       [ariaLabel]="previousPageLabel()"
-      (onClick)="goToPage(currentPage() - 1)" />
+      (click)="goToPage(currentPage() - 1)" />
 
     @for (page of visiblePages(); track $index) {
       @if (page === null) {
@@ -37,7 +37,7 @@
           class="min-w-8"
           [ariaCurrent]="page === currentPage() ? 'page' : undefined"
           [ariaLabel]="pageButtonAriaLabel(page)"
-          (onClick)="goToPage(page)">
+          (click)="goToPage(page)">
           {{ page }}
         </tailwind-button>
       }
@@ -50,6 +50,6 @@
       icon="chevron-right"
       [disabled]="currentPage() >= totalPages()"
       [ariaLabel]="nextPageLabel()"
-      (onClick)="goToPage(currentPage() + 1)" />
+      (click)="goToPage(currentPage() + 1)" />
   </nav>
 </div>

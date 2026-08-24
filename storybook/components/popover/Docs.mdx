@@ -1,0 +1,158 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PopoverStories from './popover.stories';
+
+<Meta of={PopoverStories} />
+
+# Popover
+
+`TailwindPopover` è un pannello di contenuto arbitrario ancorato a un trigger: quello che il tooltip è per il testo, questo lo è per il markup — form, elenchi, dettagli.
+
+Posizionamento, ribaltamento sul viewport, chiusura al click esterno ed Escape arrivano dal CDK overlay; il trigger mantiene `aria-expanded` e `aria-controls` puntati al pannello.
+
+---
+
+## Utilizzo
+
+```typescript
+@Component({
+  imports: [TailwindPopover, TailwindButton],
+  template: ` <tailwind-button #trigger (click)="pop.toggle(trigger)">Dettagli</tailwind-button>
+    <tailwind-popover #pop title="Dettagli" [showCloseButton]="true">
+      <p>Qualsiasi contenuto.</p>
+    </tailwind-popover>`
+})
+export class ExampleComponent {}
+```
+
+## Anteprima
+
+<Canvas of={PopoverStories.Popover} />
+
+---
+
+## Properties
+
+### `TailwindPopover (tailwind-popover)`
+
+Eredita `TailwindComponent` (`id`, `class`). Si apre da codice con `open()`, `close()` o `toggle()`, passando il trigger.
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th>Proprietà</th>
+      <th>Tipo</th>
+      <th>Default</th>
+      <th>Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <code>position</code>
+      </td>
+      <td>
+        <code>TailwindPosition</code>
+      </td>
+      <td>
+        <code>'bottom'</code>
+      </td>
+      <td>Lato preferito; ribalta se uscirebbe dal viewport.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>title</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Intestazione, usata anche come nome accessibile del pannello.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>ariaLabel</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Nome accessibile quando <code>title</code> è omesso.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <code>showCloseButton</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>false</code>
+      </td>
+      <td>Mostra il pulsante di chiusura in intestazione.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>closeOnEscape</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>Chiude con Escape.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>closeOnOutsideClick</code>
+      </td>
+      <td>
+        <code>boolean</code>
+      </td>
+      <td>
+        <code>true</code>
+      </td>
+      <td>Chiude al click fuori dal pannello e dal trigger.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>opened</code>
+      </td>
+      <td>
+        <code>output&lt;void&gt;</code>
+      </td>
+      <td>
+        <code>—</code>
+      </td>
+      <td>Emesso all&apos;apertura.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>closed</code>
+      </td>
+      <td>
+        <code>output&lt;void&gt;</code>
+      </td>
+      <td>
+        <code>—</code>
+      </td>
+      <td>Emesso alla chiusura.</td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+## Metodi
+
+| Metodo           | Descrizione                                               |
+| ---------------- | --------------------------------------------------------- |
+| `open(anchor)`   | Apre ancorato all&apos;elemento o all&apos;evento passato |
+| `close()`        | Chiude e riporta il focus al trigger se era nel pannello  |
+| `toggle(anchor)` | Apre o chiude                                             |

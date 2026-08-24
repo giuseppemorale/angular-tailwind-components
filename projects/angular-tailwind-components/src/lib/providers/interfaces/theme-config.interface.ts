@@ -19,7 +19,7 @@ export interface TailwindComponentsConfig {
   /** Maps to {@link TAILWIND_ICON_BASE_PATH} (directory the icon SVGs are served from). */
   ICON_BASE_PATH?: string;
   /** Maps to {@link TAILWIND_DATETIME_LANGUAGE}. */
-  DATETIME_LANGUAGE?: 'it' | 'en';
+  DATETIME_LANGUAGE?: string;
   /** Maps to {@link TAILWIND_COMPONENTS_SIZE}. */
   COMPONENTS_SIZE?: TailwindSize;
   /** Maps to {@link TAILWIND_BUTTON_KIND} (default `kind` on `tailwind-button`). */

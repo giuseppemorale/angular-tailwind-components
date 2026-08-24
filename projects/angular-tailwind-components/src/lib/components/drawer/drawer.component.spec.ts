@@ -22,8 +22,9 @@ describe('TailwindDrawer', () => {
 
   afterEach(() => fixture.destroy());
 
+  // The panel is rendered into the CDK overlay container, outside the fixture's own DOM.
   function dialog(): HTMLElement | null {
-    return fixture.nativeElement.querySelector('[role="dialog"]');
+    return document.querySelector('.cdk-overlay-container [role="dialog"]');
   }
 
   async function settleClose(): Promise<void> {
@@ -74,7 +75,7 @@ describe('TailwindDrawer', () => {
 
     const labelledBy = dialog()?.getAttribute('aria-labelledby');
     expect(labelledBy).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('h2')?.getAttribute('id')).toBe(labelledBy);
+    expect(document.querySelector('.cdk-overlay-container h2')?.getAttribute('id')).toBe(labelledBy);
   });
 
   it('should fall back to ariaLabel when no title is given', () => {
@@ -86,16 +87,29 @@ describe('TailwindDrawer', () => {
     expect(dialog()?.getAttribute('aria-labelledby')).toBeNull();
   });
 
-  it('should slide from the requested edge', () => {
+  /** The global position strategy aligns through the overlay wrapper's flexbox. */
+  function wrapper(): HTMLElement | null {
+    return dialog()?.closest('.cdk-global-overlay-wrapper') as HTMLElement | null;
+  }
+
+  it('should pin the pane to the requested edge', () => {
     fixture.componentRef.setInput('position', 'left');
     component.open();
     fixture.detectChanges();
-    expect(dialog()?.className).toContain('left-0');
 
+    expect(wrapper()?.style.justifyContent).toBe('flex-start');
+    expect(dialog()?.className).toContain('max-w-md');
+    expect(dialog()?.className).toContain('h-screen');
+  });
+
+  it('should pin a bottom sheet to the bottom edge and cap its height', () => {
     fixture.componentRef.setInput('position', 'bottom');
+    component.open();
     fixture.detectChanges();
-    expect(dialog()?.className).toContain('bottom-0');
+
+    expect(wrapper()?.style.alignItems).toBe('flex-end');
     expect(dialog()?.className).toContain('max-h-96');
+    expect(dialog()?.className).toContain('w-screen');
   });
 
   it('should hide the close button when showCloseButton is false', () => {
@@ -103,12 +117,12 @@ describe('TailwindDrawer', () => {
     fixture.componentRef.setInput('showCloseButton', false);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('tailwind-button')).toBeNull();
+    expect(document.querySelector('.cdk-overlay-container tailwind-button')).toBeNull();
   });
 
   it('should emit onClose after the exit animation', async () => {
     const spy = vi.fn();
-    component.onClose.subscribe(spy);
+    component.closed.subscribe(spy);
 
     component.open();
     fixture.detectChanges();
@@ -130,7 +144,7 @@ describe('TailwindDrawer', () => {
     localized.componentInstance.open();
     localized.detectChanges();
 
-    expect(localized.nativeElement.querySelector('button[aria-label="Chiudi"]')).toBeTruthy();
+    expect(document.querySelector('.cdk-overlay-container button[aria-label="Chiudi"]')).toBeTruthy();
     localized.destroy();
   });
 });

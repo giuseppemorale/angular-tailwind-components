@@ -6,7 +6,7 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **43 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
+- 🎨 **53 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
 - 🎯 **Pure Tailwind CSS** — No third-party UI component frameworks
 - ⚡ **Angular** — Signals, standalone components, modern control flow
 - 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
@@ -331,6 +331,9 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **DatePicker** (`tailwind-date-picker`): Calendar date selection
 - **TimePicker** (`tailwind-time-picker`): Time input
 - **DateTimePicker** (`tailwind-datetime-picker`): Combined date + time
+- **Segmented Control** (`tailwind-segmented-control`): Side-by-side exclusive choices, as an ARIA radio group
+- **Number Input** (`tailwind-number-input`): Numeric field with real increment/decrement buttons, clamped to `min`/`max`
+- **Rating** (`tailwind-rating`): Star rating exposed as a slider, editable or read-only
 
 ### Display
 
@@ -341,12 +344,16 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Tag** (`tailwind-tag`): Semantic labels
 - **Avatar** (`tailwind-avatar`): Profile image, initials, or icon fallback with optional status dot (`TailwindColor`)
 - **Title** (`tailwind-title`): Semantic headings (`h1`–`h6`) with required `text` and optional Heroicons outline icon
+- **Kbd** (`tailwind-kbd`): Keyboard keys and chords, rendered as native `<kbd>`
+- **Timeline** (`tailwind-timeline`, `tailwind-timeline-item`): Ordered sequence of events, rendered as an `<ol>`
+- **Carousel** (`tailwind-carousel`, `tailwind-carousel-slide`): Slideshow with opt-in autoplay that pauses on hover and focus
 
 ### Feedback
 
 - **Alert** (`tailwind-alert`): Contextual alerts with icon, title, dismiss, and optional `tailwind-alert-actions` slot
 - **Spinner** (`tailwind-spinner`): Loading indicator
 - **Progress Bar** (`tailwind-progress-bar`): Determinate/indeterminate progress
+- **Empty State** (`tailwind-empty-state`): The "nothing here yet" panel, with icon, headline and room for a call to action
 - **Toast** (`tailwind-toast-container`): Global toast notifications (use `TailwindToastService`)
 - **Message** (`tailwind-message`): Form-level inline message
 - **Skeleton** (`tailwind-skeleton`): Loading placeholder
@@ -358,6 +365,7 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Pagination** (`tailwind-pagination`): Page navigation
 - **Menu** (`tailwind-menu`): Dropdown menu
 - **Stepper** (`tailwind-stepper`): Step-by-step wizard
+- **Tree** (`tailwind-tree`): Hierarchical list following the ARIA tree pattern, with flattened rendering
 
 ### Layout / Overlay
 
@@ -365,8 +373,10 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 - **Drawer** (`tailwind-drawer`): Slide-in panel
 - **Accordion** (`tailwind-accordion`): Expandable sections
 - **Tooltip** (`tailwind-tooltip`): Hover tooltip
+- **Popover** (`tailwind-popover`): Panel of arbitrary content anchored to a trigger, with viewport flipping
+- **Popconfirm** (`tailwind-popconfirm`): Inline confirmation anchored to the control that triggered it
 - **Form** (`tailwind-form`): Form wrapper
-- **Table** (`tailwind-table`): Data table with projected header/rows, client-side sort and pagination
+- **Table** (`tailwind-table`): Generic data table with projected header/rows, per-column comparators, sticky header, select-all, and either client-side or server-side sort/paging
 - **Toolbar** (`tailwind-toolbar`): Semantic action bar with optional slots
 - **Divider** (`tailwind-divider`): Horizontal or vertical separator with optional label
 - **Meter** (`tailwind-meter`): Segmented proportional bar with optional legend
@@ -417,6 +427,64 @@ npm run build:storybook
 - Use `computed()` for derived Tailwind class logic
 - Implement `ControlValueAccessor` for form controls
 - Follow WCAG accessibility guidelines
+
+## Migrating from 22.x
+
+The library is signals-first and its public API was aligned with the Angular style guide. The
+changes below are mechanical; nothing needs restructuring.
+
+### Outputs are no longer prefixed with `on`
+
+An output is an event name, so the binding already reads as one. Rename the bindings:
+
+| Before                                            | After                                                      |
+| :------------------------------------------------ | :--------------------------------------------------------- |
+| `(onClose)` on modal / drawer                     | `(closed)`                                                 |
+| `(onDismiss)` on alert                            | `(dismissed)`                                              |
+| `(onToggle)` on accordion item                    | `(toggled)`                                                |
+| `(onSelect)` on menu                              | `(itemSelect)`                                             |
+| `(onMenuSelect)` on toolbar                       | `(menuSelect)`                                             |
+| `(onSearch)` on autocomplete                      | `(searchChange)`                                           |
+| `(onSortChange)` / `(onSelectionChange)` on table | `(sortChange)` / `(selectionChange)`                       |
+| `(onPageChange)` on pagination and table          | `(pageChange)`                                             |
+| `(onPageSizeChange)` on pagination                | `(pageSizeChange)` — now the `pageSize` model's own output |
+
+### `tailwind-button` has no `onClick` output
+
+The inner `<button>`'s native click already bubbles to the host, and a disabled button emits
+nothing, so bind the native event instead:
+
+```html
+<!-- before -->
+<tailwind-button (onClick)="save()">Save</tailwind-button>
+<!-- after -->
+<tailwind-button (click)="save()">Save</tailwind-button>
+```
+
+The button also no longer writes `role="button"` on the native element, which already has that role.
+Set `role` only to repurpose the control (`menuitem`, `tab`, `switch`, …).
+
+### `hasError` derives itself from the form control
+
+`tailwind-input` now reads the bound `NgControl` and paints the error state once the control is
+invalid **and** touched or dirty. Passing `[hasError]` still forces the state, so existing code keeps
+working — it is simply no longer necessary.
+
+### Dates accept any locale
+
+`DATETIME_LANGUAGE` was `'it' | 'en'` and is now any BCP 47 tag, defaulting to Angular's
+`LOCALE_ID`. Month and weekday names come from `Intl`, and the calendar grid starts on the day the
+locale prescribes rather than always on Monday.
+
+### Overlays render in the CDK overlay container
+
+Modal, drawer, menu, tooltip, popover and popconfirm now portal their panel into
+`.cdk-overlay-container` instead of rendering in place. Tests and styles that reached into the
+component's own DOM for those panels need to query the overlay container instead.
+
+`styles/tailwind.css` pulls in the CDK overlay and a11y stylesheets itself, so nothing has to be
+added to `angular.json`. Overlay panels are positioned by those rules — without them every panel
+would lay out at the top of the page instead of next to its trigger.
 
 ## License
 

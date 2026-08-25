@@ -29,13 +29,14 @@ describe('TailwindTabGroup', () => {
   }
 
   beforeEach(async () => {
+    // jsdom non implementa ResizeObserver: il componente lo istanzia con new, quindi lo stub deve essere una classe.
     vi.stubGlobal(
       'ResizeObserver',
-      vi.fn(() => ({
-        observe: vi.fn(),
-        disconnect: vi.fn(),
-        unobserve: vi.fn()
-      }))
+      class {
+        observe = vi.fn();
+        disconnect = vi.fn();
+        unobserve = vi.fn();
+      }
     );
 
     await TestBed.configureTestingModule({

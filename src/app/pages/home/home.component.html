@@ -7,6 +7,38 @@
     {{ 'HOME.ALERT_WELCOME_BODY' | transloco }}
   </tailwind-alert>
 
+  <tailwind-card [hasFooter]="false">
+    <div tailwind-card-header>
+      <tailwind-title titleTag="h3" [text]="'HOME.CAROUSEL_SECTION_TITLE' | transloco" icon="sparkles" />
+    </div>
+    <tailwind-carousel [ariaLabel]="'HOME.CAROUSEL_ARIA' | transloco" [autoplayInterval]="6000">
+      <tailwind-carousel-slide [ariaLabel]="'HOME.CAROUSEL_SLIDE_1_TITLE' | transloco">
+        <div class="flex h-44 flex-col items-center justify-center gap-2 bg-primary-50 px-8 text-center">
+          <p class="m-0 text-lg font-semibold text-primary-800">
+            {{ 'HOME.CAROUSEL_SLIDE_1_TITLE' | transloco }}
+          </p>
+          <p class="m-0 max-w-md text-sm text-neutral-600">{{ 'HOME.CAROUSEL_SLIDE_1_BODY' | transloco }}</p>
+        </div>
+      </tailwind-carousel-slide>
+      <tailwind-carousel-slide [ariaLabel]="'HOME.CAROUSEL_SLIDE_2_TITLE' | transloco">
+        <div class="flex h-44 flex-col items-center justify-center gap-2 bg-success-50 px-8 text-center">
+          <p class="m-0 text-lg font-semibold text-success-800">
+            {{ 'HOME.CAROUSEL_SLIDE_2_TITLE' | transloco }}
+          </p>
+          <p class="m-0 max-w-md text-sm text-neutral-600">{{ 'HOME.CAROUSEL_SLIDE_2_BODY' | transloco }}</p>
+        </div>
+      </tailwind-carousel-slide>
+      <tailwind-carousel-slide [ariaLabel]="'HOME.CAROUSEL_SLIDE_3_TITLE' | transloco">
+        <div class="flex h-44 flex-col items-center justify-center gap-2 bg-warning-50 px-8 text-center">
+          <p class="m-0 text-lg font-semibold text-warning-800">
+            {{ 'HOME.CAROUSEL_SLIDE_3_TITLE' | transloco }}
+          </p>
+          <p class="m-0 max-w-md text-sm text-neutral-600">{{ 'HOME.CAROUSEL_SLIDE_3_BODY' | transloco }}</p>
+        </div>
+      </tailwind-carousel-slide>
+    </tailwind-carousel>
+  </tailwind-card>
+
   <div class="grid gap-6 md:grid-cols-2">
     <tailwind-card>
       <div tailwind-card-header class="flex flex-wrap items-center gap-2 justify-between">
@@ -70,44 +102,68 @@
   <tailwind-card [elevated]="true" [hasFooter]="false">
     <div tailwind-card-header class="flex flex-wrap items-center gap-2 justify-between">
       <span class="font-semibold text-neutral-900">{{ 'HOME.TABLE_CARD_TITLE' | transloco }}</span>
+      <tailwind-segmented-control
+        size="sm"
+        [ariaLabel]="'HOME.FILTER_LABEL' | transloco"
+        [options]="statusFilterOptions"
+        [(value)]="statusFilter" />
     </div>
     <p class="text-sm text-neutral-600 m-0 mb-4">
       {{ 'HOME.TABLE_CARD_BODY' | transloco }}
     </p>
-    <tailwind-table [data]="tableRows" [emptyMessage]="'HOME.TABLE_EMPTY' | transloco" [emptyColspan]="5">
-      <thead>
-        <tr>
-          <th tailwindSortHeader sortKey="nameKey">
-            {{ 'HOME.TABLE_COL_NAME' | transloco }}
-          </th>
-          <th>{{ 'HOME.TABLE_COL_STATUS' | transloco }}</th>
-          <th tailwindSortHeader sortKey="version">
-            {{ 'HOME.TABLE_COL_VERSION' | transloco }}
-          </th>
-          <th tailwindSortHeader sortKey="eos">
-            {{ 'HOME.TABLE_COL_EOS' | transloco }}
-          </th>
-          <th class="w-60">{{ 'HOME.TABLE_COL_ACTIONS' | transloco }}</th>
-        </tr>
-      </thead>
-      <tbody *tailwindTableRow="let row">
-        <tr>
-          <td>{{ row.nameKey | transloco }}</td>
-          <td>
-            <tailwind-tag [color]="row.variant">{{ row.statusKey | transloco }}</tailwind-tag>
-          </td>
-          <td class="tabular-nums">{{ row.version }}</td>
-          <td class="text-neutral-500">{{ row.eos }}</td>
-          <td class="whitespace-nowrap w-60">
-            <div class="flex flex-wrap items-center gap-2">
-              <tailwind-button>{{ 'HOME.TABLE_BTN_DETAILS' | transloco }}</tailwind-button>
-              <tailwind-button kind="outlined" color="secondary">
-                {{ 'HOME.TABLE_BTN_EDIT' | transloco }}
-              </tailwind-button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </tailwind-table>
+    @if (filteredRows().length === 0) {
+      <tailwind-empty-state
+        icon="magnifying-glass"
+        [title]="'HOME.EMPTY_TITLE' | transloco"
+        [description]="'HOME.EMPTY_BODY' | transloco">
+        <tailwind-button size="sm" kind="outlined" color="secondary" (click)="resetFilter()">
+          {{ 'HOME.BTN_RESET_FILTER' | transloco }}
+        </tailwind-button>
+      </tailwind-empty-state>
+    } @else {
+      <tailwind-table [data]="filteredRows()" [emptyMessage]="'HOME.TABLE_EMPTY' | transloco" [emptyColspan]="5">
+        <thead>
+          <tr>
+            <th tailwindSortHeader sortKey="nameKey">
+              {{ 'HOME.TABLE_COL_NAME' | transloco }}
+            </th>
+            <th>{{ 'HOME.TABLE_COL_STATUS' | transloco }}</th>
+            <th tailwindSortHeader sortKey="version">
+              {{ 'HOME.TABLE_COL_VERSION' | transloco }}
+            </th>
+            <th tailwindSortHeader sortKey="eos">
+              {{ 'HOME.TABLE_COL_EOS' | transloco }}
+            </th>
+            <th class="w-60">{{ 'HOME.TABLE_COL_ACTIONS' | transloco }}</th>
+          </tr>
+        </thead>
+        <tbody *tailwindTableRow="let row">
+          <tr>
+            <td>{{ row.nameKey | transloco }}</td>
+            <td>
+              <tailwind-tag [color]="statusColor(row)">
+                {{ statusLabelKey(row) | transloco }}
+              </tailwind-tag>
+            </td>
+            <td class="tabular-nums">{{ row.version }}</td>
+            <td class="text-neutral-500">{{ row.eos }}</td>
+            <td class="whitespace-nowrap w-60">
+              <div class="flex flex-wrap items-center gap-2">
+                <tailwind-button [tailwindTooltip]="'HOME.TABLE_BTN_DETAILS_TOOLTIP' | transloco">
+                  {{ 'HOME.TABLE_BTN_DETAILS' | transloco }}
+                </tailwind-button>
+                <tailwind-button
+                  kind="outlined"
+                  color="secondary"
+                  tooltipPosition="left"
+                  [tailwindTooltip]="'HOME.TABLE_BTN_EDIT_TOOLTIP' | transloco">
+                  {{ 'HOME.TABLE_BTN_EDIT' | transloco }}
+                </tailwind-button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </tailwind-table>
+    }
   </tailwind-card>
 </div>

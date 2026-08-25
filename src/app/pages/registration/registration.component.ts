@@ -61,8 +61,8 @@ export class RegistrationComponent implements OnInit {
   readonly passwordMismatch = signal(false);
 
   readonly breadcrumb = [
-    { label: 'Home', link: '/', icon: 'home' },
-    { label: 'Registrazione', link: '/registration' }
+    { label: this.translocoService.translate('HOME.BREADCRUMB'), link: '/', icon: 'home' },
+    { label: this.translocoService.translate('REGISTRATION.PAGE_TITLE'), link: '/registration' }
   ];
 
   readonly genders = signal<TailwindOption<RegistrationGender>[]>([]);

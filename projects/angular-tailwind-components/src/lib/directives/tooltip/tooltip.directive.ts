@@ -2,6 +2,7 @@ import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import {
   ComponentRef,
+  computed,
   DestroyRef,
   Directive,
   ElementRef,
@@ -43,10 +44,15 @@ const HIDE_DELAY_MS = 150;
   standalone: true
 })
 export class TailwindTooltipDirective {
-  /** Tooltip text */
-  readonly tooltip = input.required<string>();
+  /** Tooltip text, bound through the unprefixed selector `[tooltip]`. */
+  readonly tooltip = input<string>('');
+  /** Tooltip text, bound through the prefixed selector `[tailwindTooltip]`. */
+  readonly tailwindTooltip = input<string>('');
   /** Preferred position; the overlay flips to the opposite side when it would leave the viewport. */
   readonly tooltipPosition = input<TailwindPosition>('top');
+
+  /** Text actually rendered: either selector may carry it, the prefixed one wins when both are set. */
+  private readonly text = computed(() => this.tailwindTooltip() || this.tooltip());
 
   private readonly overlay = inject(Overlay);
   private readonly viewContainerRef = inject(ViewContainerRef);
@@ -81,7 +87,7 @@ export class TailwindTooltipDirective {
   @HostListener('mouseenter')
   @HostListener('focusin')
   show(): void {
-    if (!this.tooltip()?.trim()) return;
+    if (!this.text().trim()) return;
 
     this.clearHideTimeout();
     if (this.overlayRef) {
@@ -150,7 +156,7 @@ export class TailwindTooltipDirective {
     });
 
     this.componentRef = this.overlayRef.attach(new ComponentPortal(TailwindTooltip, this.viewContainerRef));
-    this.componentRef.setInput('text', this.tooltip());
+    this.componentRef.setInput('text', this.text());
     this.componentRef.setInput('position', preferred);
 
     // Keep the arrow pointing at the trigger when the overlay flips to a fallback position.

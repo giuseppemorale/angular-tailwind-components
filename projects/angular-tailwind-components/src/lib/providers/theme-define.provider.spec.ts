@@ -6,7 +6,13 @@ import {
   provideTailwindConfig,
   TAILWIND_THEME_STYLE_ID
 } from './theme-define.provider';
-import { TAILWIND_BUTTON_KIND } from '../tokens';
+import {
+  DEFAULT_TAILWIND_ICON_BASE_PATH,
+  TAILWIND_BUTTON_KIND,
+  TAILWIND_ICON_BASE_PATH,
+  TAILWIND_LABELS
+} from '../tokens';
+import { DEFAULT_TAILWIND_LABELS } from '../models';
 
 describe('buildTailwindThemeVariableEntries', () => {
   it('maps string palette to var references for each shade', () => {
@@ -162,5 +168,33 @@ describe('provideTailwindConfig', () => {
     });
 
     expect(TestBed.inject(TAILWIND_BUTTON_KIND)).toBe('outlined');
+  });
+
+  // The config providers shadow the tokens' own `providedIn: 'root'` factories, so a config that
+  // omits a key must still hand consumers the default instead of `undefined`.
+  it('keeps the built-in labels when the config omits LABELS', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig(() => ({ BUTTON_KIND: 'flat' }))]
+    });
+
+    expect(TestBed.inject(TAILWIND_LABELS)).toEqual(DEFAULT_TAILWIND_LABELS);
+  });
+
+  it('merges partial LABELS onto the built-in ones', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig(() => ({ LABELS: { close: 'Chiudi' } }))]
+    });
+
+    const labels = TestBed.inject(TAILWIND_LABELS);
+    expect(labels.close).toBe('Chiudi');
+    expect(labels.openNavigationMenu).toBe(DEFAULT_TAILWIND_LABELS.openNavigationMenu);
+  });
+
+  it('keeps the default icon base path when the config omits ICON_BASE_PATH', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig(() => ({ BUTTON_KIND: 'flat' }))]
+    });
+
+    expect(TestBed.inject(TAILWIND_ICON_BASE_PATH)).toBe(DEFAULT_TAILWIND_ICON_BASE_PATH);
   });
 });

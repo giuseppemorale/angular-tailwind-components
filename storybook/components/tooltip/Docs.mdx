@@ -5,7 +5,9 @@ import * as TooltipStories from './tooltip.stories';
 
 # Tooltip
 
-`TailwindTooltipDirective` (`selector: '[tooltip]'`) mostra un overlay al passaggio del mouse o al focus sull’elemento host.
+`TailwindTooltipDirective` (`selector: '[tooltip], [tailwindTooltip]'`) mostra un overlay al passaggio del mouse o al focus sull’elemento host.
+
+Il testo può arrivare da entrambi i selettori: `[tooltip]` è quello storico, `[tailwindTooltip]` è la variante prefissata da preferire nel codice nuovo. Se sono valorizzati entrambi vince quello prefissato.
 
 ---
 
@@ -14,7 +16,7 @@ import * as TooltipStories from './tooltip.stories';
 ```typescript
 @Component({
   imports: [TailwindTooltipDirective, TailwindButton],
-  template: ` <tailwind-button [tooltip]="'Hello'" [tooltipPosition]="'top'">Hover me</tailwind-button>`
+  template: ` <tailwind-button [tailwindTooltip]="'Hello'" [tooltipPosition]="'top'">Hover me</tailwind-button>`
 })
 export class ExampleComponent {}
 ```
@@ -41,13 +43,29 @@ Host ereditano comunque le proprietà del componente ospite; la directive aggiun
   <tbody>
     <tr>
       <td>
-        <code>tooltip</code> (<code>tooltip</code>)
+        <code>tooltip</code>
       </td>
       <td>
         <code>string</code>
       </td>
-      <td>—</td>
-      <td>Richiesto: testo del tooltip.</td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>Testo del tooltip, legato al selettore non prefissato.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>tailwindTooltip</code>
+      </td>
+      <td>
+        <code>string</code>
+      </td>
+      <td>
+        <code>''</code>
+      </td>
+      <td>
+        Testo del tooltip, legato al selettore prefissato. Ha la precedenza su <code>tooltip</code>.
+      </td>
     </tr>
     <tr>
       <td>

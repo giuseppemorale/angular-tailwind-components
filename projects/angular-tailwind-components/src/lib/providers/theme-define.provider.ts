@@ -8,8 +8,14 @@ import {
   type EnvironmentProviders,
   type Provider
 } from '@angular/core';
-import { resolveTailwindEditorLabels, resolveTailwindLabels, resolveTailwindTitleScale } from '../models';
 import {
+  DEFAULT_TAILWIND_LABELS,
+  resolveTailwindEditorLabels,
+  resolveTailwindLabels,
+  resolveTailwindTitleScale
+} from '../models';
+import {
+  DEFAULT_TAILWIND_ICON_BASE_PATH,
   TAILWIND_BUTTON_KIND,
   TAILWIND_COMPONENTS_SIZE,
   TAILWIND_DATETIME_LANGUAGE,
@@ -38,13 +44,17 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
   const fromConfig = <T>(
     token: InjectionToken<T>,
     select: (c: TailwindComponentsConfig) => T | undefined,
-    map?: (value: NonNullable<T>) => T
+    map?: (value: NonNullable<T>) => T,
+    // Tokens that declare their own `providedIn: 'root'` default must repeat it here: this provider
+    // shadows that factory, so returning `undefined` would leave consumers such as
+    // `tailwind-toolbar` (labels) or `tailwind-icon` (base path) without a value at all.
+    fallback?: () => T
   ): Provider => ({
     provide: token,
     useFactory: () => {
       const value = select(config());
       if (value === undefined) {
-        return undefined;
+        return fallback ? fallback() : undefined;
       }
       return map ? map(value as NonNullable<T>) : value;
     }
@@ -52,7 +62,12 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
 
   return [
     fromConfig(TAILWIND_ICON_SIZE, c => c.ICON_SIZE),
-    fromConfig(TAILWIND_ICON_BASE_PATH, c => c.ICON_BASE_PATH),
+    fromConfig(
+      TAILWIND_ICON_BASE_PATH,
+      c => c.ICON_BASE_PATH,
+      undefined,
+      () => DEFAULT_TAILWIND_ICON_BASE_PATH
+    ),
     fromConfig(TAILWIND_DATETIME_LANGUAGE, c => c.DATETIME_LANGUAGE),
     fromConfig(TAILWIND_COMPONENTS_SIZE, c => c.COMPONENTS_SIZE),
     fromConfig(TAILWIND_BUTTON_KIND, c => c.BUTTON_KIND),
@@ -71,7 +86,8 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
     fromConfig(
       TAILWIND_LABELS,
       c => c.LABELS,
-      v => resolveTailwindLabels(v)
+      v => resolveTailwindLabels(v),
+      () => DEFAULT_TAILWIND_LABELS
     )
   ];
 }

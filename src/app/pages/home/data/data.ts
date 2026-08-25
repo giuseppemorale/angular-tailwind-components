@@ -1,212 +1,58 @@
-export const TABLE_DATA = [
-  {
-    nameKey: 'HOME.TABLE_ROW_INPUT',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.2.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_BUTTON',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.1.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TEXTAREA',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_EDITOR',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.9.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_CHECKBOX',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_RADIO',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_SELECT',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.9.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TOGGLE',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_UPLOAD',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.8.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_INPUT_OTP',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.9.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_DATE_PICKER',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TIME_PICKER',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.9.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_BADGE',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.8.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_CHIP',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_CARD',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.1.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TITLE',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TAG',
-    variant: 'danger',
-    statusKey: 'HOME.TABLE_STATUS_DEPRECATED',
-    version: '0.5.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_ALERT',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_SPINNER',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_PROGRESS',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TOAST',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.9.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_NOTIFICATION',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.8.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_MESSAGE',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TABS',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.1.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_PAGINATION',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_MENU',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_MODAL',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TABLE',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.2.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_TOOLBAR',
-    variant: 'success',
-    statusKey: 'HOME.TABLE_STATUS_STABLE',
-    version: '1.0.0',
-    eos: '-'
-  },
-  {
-    nameKey: 'HOME.TABLE_ROW_SLIDER',
-    variant: 'warning',
-    statusKey: 'HOME.TABLE_STATUS_BETA',
-    version: '0.9.0',
-    eos: '-'
-  }
+import { TableRow } from '../interface/table-row.interface';
+
+/** Catalogo dei componenti della libreria mostrato nella tabella della home. */
+export const TABLE_DATA: TableRow[] = [
+  { nameKey: 'HOME.TABLE_ROW_INPUT', status: 'stable', version: '1.2.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_BUTTON', status: 'stable', version: '1.1.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TEXTAREA', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_CHECKBOX', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_RADIO', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TOGGLE', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_SELECT', status: 'stable', version: '1.1.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_AUTOCOMPLETE', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_INPUT_PASSWORD', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_DATE_PICKER', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_CALENDAR_PANEL', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_CARD', status: 'stable', version: '1.1.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TITLE', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_BADGE', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_CHIP', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_AVATAR', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_ALERT', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_MESSAGE', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_SPINNER', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_PROGRESS', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_SKELETON', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TOAST', status: 'stable', version: '1.1.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_MODAL', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_DRAWER', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_MENU', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TOOLTIP', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TABS', status: 'stable', version: '1.1.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_STEPPER', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_ACCORDION', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_BREADCRUMB', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_PAGINATION', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TABLE', status: 'stable', version: '1.2.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TOOLBAR', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_ICON', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_DIVIDER', status: 'stable', version: '1.0.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_EDITOR', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_UPLOAD', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_INPUT_OTP', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TIME_PICKER', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_DATETIME_PICKER', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_SLIDER', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_NUMBER_INPUT', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_RATING', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_SEGMENTED_CONTROL', status: 'beta', version: '0.9.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_METER', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_CAROUSEL', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TREE', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TIMELINE', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_POPOVER', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_POPCONFIRM', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_EMPTY_STATE', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_KBD', status: 'beta', version: '0.8.0', eos: '-' },
+  { nameKey: 'HOME.TABLE_ROW_TAG', status: 'deprecated', version: '0.5.0', eos: '31/12/2026' }
 ];

@@ -21,6 +21,9 @@ export const TAILWIND_LABELS = new InjectionToken<TailwindLabels>('TAILWIND_LABE
   factory: () => DEFAULT_TAILWIND_LABELS
 });
 
+/** Directory the icon SVGs are served from when {@link TAILWIND_ICON_BASE_PATH} is not configured. */
+export const DEFAULT_TAILWIND_ICON_BASE_PATH = '/tailwind-icons';
+
 /** Default pixel size for `tailwind-icon` when `size` is omitted (typically 16–64). */
 export const TAILWIND_ICON_SIZE = new InjectionToken<number>('TAILWIND_ICON_SIZE');
 
@@ -31,7 +34,7 @@ export const TAILWIND_ICON_SIZE = new InjectionToken<number>('TAILWIND_ICON_SIZE
  */
 export const TAILWIND_ICON_BASE_PATH = new InjectionToken<string>('TAILWIND_ICON_BASE_PATH', {
   providedIn: 'root',
-  factory: () => '/tailwind-icons'
+  factory: () => DEFAULT_TAILWIND_ICON_BASE_PATH
 });
 
 /**

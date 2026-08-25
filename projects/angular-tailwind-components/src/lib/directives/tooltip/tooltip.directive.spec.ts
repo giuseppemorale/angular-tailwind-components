@@ -28,6 +28,14 @@ class TooltipHostComponent {
 })
 class PassThroughHostComponent {}
 
+// The prefixed selector new code should use; it carries the text through its own input.
+@Component({
+  imports: [TailwindTooltipDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `<button type="button" data-control tailwindTooltip="Prefixed text">Hover me</button>`
+})
+class PrefixedHostComponent {}
+
 describe('TailwindTooltipDirective', () => {
   let fixture: ComponentFixture<TooltipHostComponent>;
 
@@ -116,6 +124,20 @@ describe('TailwindTooltipDirective', () => {
     expect(wrapper.getAttribute('aria-describedby')).toBeNull();
 
     passThrough.destroy();
+  });
+
+  it('should show the text bound through the prefixed selector', async () => {
+    const prefixed = TestBed.createComponent(PrefixedHostComponent);
+    prefixed.detectChanges();
+
+    const control: HTMLElement = prefixed.nativeElement.querySelector('[data-control]');
+    control.focus();
+    await new Promise(resolve => setTimeout(resolve, 250));
+    prefixed.detectChanges();
+
+    expect(getTooltip()?.textContent).toContain('Prefixed text');
+
+    prefixed.destroy();
   });
 
   it('should hide tooltip on focusout even when the pointer stays over the host', async () => {

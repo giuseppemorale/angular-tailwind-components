@@ -12,6 +12,49 @@
     </tailwind-message>
   </div>
 
+  <div class="grid gap-6 md:grid-cols-2">
+    <tailwind-card [hasFooter]="false">
+      <div tailwind-card-header>
+        <tailwind-title titleTag="h3" [text]="'DOCS.TREE_SECTION_TITLE' | transloco" icon="book-open" />
+      </div>
+      <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'DOCS.TREE_HINT' | transloco }}</p>
+      <div class="rounded-lg border border-neutral-200 p-2">
+        <tailwind-tree
+          [nodes]="docTree"
+          [ariaLabel]="'DOCS.TREE_ARIA' | transloco"
+          [(expandedKeys)]="treeExpandedKeys"
+          (nodeSelect)="onDocSelect($event)" />
+      </div>
+      <p class="text-sm text-neutral-500 m-0 mt-3">{{ selectedDocMessage() }}</p>
+    </tailwind-card>
+
+    <tailwind-card [hasFooter]="false">
+      <div tailwind-card-header class="flex items-center gap-2">
+        <tailwind-icon icon="command-line" [size]="20" />
+        <tailwind-title titleTag="h3" [text]="'DOCS.SHORTCUTS_SECTION_TITLE' | transloco" />
+      </div>
+      <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'DOCS.SHORTCUTS_HINT' | transloco }}</p>
+      <dl class="flex flex-col gap-3 text-sm">
+        <div class="flex items-center justify-between gap-4">
+          <dt class="text-neutral-600">{{ 'DOCS.SHORTCUT_SEARCH' | transloco }}</dt>
+          <dd class="m-0"><tailwind-kbd [keys]="['Ctrl', 'K']" /></dd>
+        </div>
+        <div class="flex items-center justify-between gap-4">
+          <dt class="text-neutral-600">{{ 'DOCS.SHORTCUT_SAVE' | transloco }}</dt>
+          <dd class="m-0"><tailwind-kbd [keys]="['Ctrl', 'S']" /></dd>
+        </div>
+        <div class="flex items-center justify-between gap-4">
+          <dt class="text-neutral-600">{{ 'DOCS.SHORTCUT_CLOSE' | transloco }}</dt>
+          <dd class="m-0"><tailwind-kbd [keys]="['Esc']" /></dd>
+        </div>
+        <div class="flex items-center justify-between gap-4">
+          <dt class="text-neutral-600">{{ 'DOCS.SHORTCUT_NAV' | transloco }}</dt>
+          <dd class="m-0"><tailwind-kbd [keys]="['G', 'N']" separator="poi" /></dd>
+        </div>
+      </dl>
+    </tailwind-card>
+  </div>
+
   <tailwind-card [hasFooter]="false">
     <div tailwind-card-header>
       <tailwind-title titleTag="h3" [text]="'DOCS.BUTTON_SECTION_TITLE' | transloco" icon="cursor-arrow-rays" />
@@ -131,13 +174,68 @@
         {{ 'DOCS.ACCORDION_A3' | transloco }}
       </tailwind-accordion-item>
     </tailwind-accordion>
+    <p class="text-sm text-neutral-600 m-0 mt-4 mb-2">{{ 'DOCS.POPOVER_HINT' | transloco }}</p>
+    <tailwind-button kind="text" color="primary" (click)="glossary.toggle($event)">
+      {{ 'DOCS.BTN_POPOVER_OPEN' | transloco }}
+    </tailwind-button>
+    <tailwind-popover #glossary position="bottom" [title]="'DOCS.POPOVER_TITLE' | transloco" [showCloseButton]="true">
+      <p class="text-sm text-neutral-600 m-0 max-w-xs">{{ 'DOCS.POPOVER_BODY' | transloco }}</p>
+    </tailwind-popover>
   </tailwind-card>
 
   <tailwind-card [hasFooter]="false">
     <div tailwind-card-header>
-      <tailwind-title titleTag="h3" [text]="'DOCS.MODAL_SECTION_TITLE' | transloco" icon="window" />
+      <tailwind-title titleTag="h3" [text]="'DOCS.ACTIONS_SECTION_TITLE' | transloco" icon="window" />
     </div>
-    <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'DOCS.MODAL_HINT' | transloco }}</p>
-    <tailwind-button (click)="openExportModal()">{{ 'DOCS.BTN_OPEN_MODAL' | transloco }}</tailwind-button>
+    <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'DOCS.ACTIONS_HINT' | transloco }}</p>
+    <div class="flex flex-wrap gap-2">
+      <tailwind-button
+        kind="outlined"
+        color="secondary"
+        icon="chevron-down"
+        iconPosition="right"
+        (click)="actionsMenu.open($event)">
+        {{ 'DOCS.BTN_ACTIONS' | transloco }}
+      </tailwind-button>
+      <tailwind-menu #actionsMenu [items]="actionItems" (itemSelect)="onActionSelect($event)" />
+      <tailwind-button (click)="openExportModal()">{{ 'DOCS.BTN_OPEN_MODAL' | transloco }}</tailwind-button>
+    </div>
+  </tailwind-card>
+
+  <tailwind-card [hasFooter]="false">
+    <div tailwind-card-header>
+      <tailwind-title titleTag="h3" [text]="'DOCS.TIMELINE_SECTION_TITLE' | transloco" icon="clock" />
+    </div>
+    <tailwind-timeline [ariaLabel]="'DOCS.TIMELINE_ARIA' | transloco">
+      <tailwind-timeline-item
+        color="primary"
+        icon="sparkles"
+        [title]="'DOCS.TIMELINE_1_TITLE' | transloco"
+        [time]="'DOCS.TIMELINE_1_TIME' | transloco">
+        {{ 'DOCS.TIMELINE_1_BODY' | transloco }}
+      </tailwind-timeline-item>
+      <tailwind-timeline-item
+        color="info"
+        icon="window"
+        [title]="'DOCS.TIMELINE_2_TITLE' | transloco"
+        [time]="'DOCS.TIMELINE_2_TIME' | transloco">
+        {{ 'DOCS.TIMELINE_2_BODY' | transloco }}
+      </tailwind-timeline-item>
+      <tailwind-timeline-item
+        color="success"
+        icon="check-circle"
+        [title]="'DOCS.TIMELINE_3_TITLE' | transloco"
+        [time]="'DOCS.TIMELINE_3_TIME' | transloco">
+        {{ 'DOCS.TIMELINE_3_BODY' | transloco }}
+      </tailwind-timeline-item>
+      <tailwind-timeline-item
+        color="secondary"
+        icon="flag"
+        [last]="true"
+        [title]="'DOCS.TIMELINE_4_TITLE' | transloco"
+        [time]="'DOCS.TIMELINE_4_TIME' | transloco">
+        {{ 'DOCS.TIMELINE_4_BODY' | transloco }}
+      </tailwind-timeline-item>
+    </tailwind-timeline>
   </tailwind-card>
 </div>

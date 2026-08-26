@@ -65,7 +65,7 @@ export class TailwindTooltip extends TailwindComponent {
   );
 
   readonly tooltipBodyClasses =
-    'relative z-[1] text-xs font-medium text-white bg-neutral-900 rounded-lg shadow-lg whitespace-nowrap px-3 py-1.5';
+    'relative z-[1] text-xs font-medium text-white bg-neutral-900 rounded-control shadow-lg whitespace-nowrap px-3 py-1.5';
 
   readonly arrowSpec = computed(() => ARROW_SPECS[this.position()]);
 

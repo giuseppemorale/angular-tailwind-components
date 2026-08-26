@@ -25,6 +25,13 @@ export class ExampleComponent {}
 
 <Canvas of={AlertStories.Alert} />
 
+## Varianti
+
+`kind` sceglie il peso della superficie. In modalità `bordered` il bordo non è un contorno ma una
+banda accento a sinistra, che mantiene il colore semantico anche quando il riempimento è `solid`.
+
+<Canvas of={AlertStories.Kinds} />
+
 ---
 
 ## Properties
@@ -54,6 +61,21 @@ Eredita gli input di host da `TailwindComponent` (`id`, `class`).
         <code>'info'</code>
       </td>
       <td>Variante colore.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>kind</code>
+      </td>
+      <td>
+        <code>TailwindVariantKind</code>
+      </td>
+      <td>
+        <code>'soft'</code>
+      </td>
+      <td>
+        Peso della superficie: <code>solid</code> (pieno), <code>soft</code> (tinta chiara), <code>outlined</code> (solo
+        bordo e testo). Con <code>bordered</code> la banda a sinistra mantiene il colore semantico in tutte le varianti.
+      </td>
     </tr>
     <tr>
       <td>

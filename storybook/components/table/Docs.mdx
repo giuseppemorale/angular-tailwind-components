@@ -114,6 +114,14 @@ export class ExampleComponent {
 
 <Canvas of={TableStories.Table} />
 
+## Caricamento
+
+Con `loading` attivo la tabella disegna righe skeleton della forma dei dati in arrivo invece di uno
+spinner: uno spinner dice _sta succedendo qualcosa_, uno skeleton dice _ecco cosa sta per apparire_,
+e la stessa attesa sembra più breve. Il numero di celle segnaposto segue `emptyColspan`.
+
+<Canvas of={TableStories.Loading} />
+
 ---
 
 ## Properties

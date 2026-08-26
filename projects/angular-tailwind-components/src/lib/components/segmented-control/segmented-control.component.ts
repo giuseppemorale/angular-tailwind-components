@@ -1,17 +1,22 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
+  effect,
   ElementRef,
   forwardRef,
   inject,
   input,
   model,
-  signal
+  signal,
+  viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindOption, TailwindSize } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
+import { FOCUS_RING, PRESS_FEEDBACK, TRANSITION_CONTROL } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 /** Padding and text size per control size. */
@@ -22,6 +27,12 @@ const SEGMENT_SIZE: Record<TailwindSize, string> = {
   lg: 'text-base px-4 py-2',
   xl: 'text-base px-5 py-2.5'
 };
+
+/** Geometry of the sliding thumb, in pixels relative to the track's padding box. */
+interface ThumbGeometry {
+  left: number;
+  width: number;
+}
 
 /**
  * A small set of mutually exclusive choices shown side by side — the "segmented control" or
@@ -69,13 +80,70 @@ export class TailwindSegmentedControl<T = string> extends TailwindComponent impl
   private readonly formDisabled = signal(false);
   readonly isDisabled = computed(() => this.disabled() || this.formDisabled());
 
+  /** The track, which is also the positioning context for the thumb. */
+  private readonly track = viewChild<ElementRef<HTMLElement>>('track');
+
+  /**
+   * Where the sliding thumb currently is. `null` until the first measurement (or when nothing is
+   * selected), which keeps the thumb hidden instead of flashing at the origin.
+   */
+  private readonly thumb = signal<ThumbGeometry | null>(null);
+
+  private readonly destroyRef = inject(DestroyRef);
+  private resizeObserver?: ResizeObserver;
+
+  constructor() {
+    super();
+
+    // Re-measure whenever anything that can move the segments changes.
+    effect(() => {
+      this.value();
+      this.options();
+      this.size();
+      this.fullWidth();
+      // The DOM still holds the previous layout at this point; measure once it has caught up.
+      queueMicrotask(() => this.measureThumb());
+    });
+
+    afterNextRender(() => {
+      const el = this.track()?.nativeElement;
+      if (!el) return;
+
+      // Labels reflow (container resize, font swap, i18n) without any input changing.
+      this.resizeObserver = new ResizeObserver(() => this.measureThumb());
+      this.resizeObserver.observe(el);
+      this.measureThumb();
+
+      this.destroyRef.onDestroy(() => this.resizeObserver?.disconnect());
+    });
+  }
+
   readonly containerClasses = computed(() =>
     this.mergeClasses(
-      'inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-surface-muted p-1',
+      'relative inline-flex items-center gap-1 rounded-control border border-border bg-surface-muted p-1',
       this.fullWidth() ? 'flex w-full' : '',
       this.isDisabled() ? 'opacity-50' : ''
     )
   );
+
+  /**
+   * The moving highlight behind the selected segment.
+   *
+   * It is one element that slides rather than a background that appears on whichever segment is
+   * selected: the movement is what tells the eye *where the selection went*, and it costs a single
+   * transform. `hidden` until the first measurement lands.
+   */
+  readonly thumbClasses = computed(() =>
+    [
+      'pointer-events-none absolute top-1 bottom-1 left-0 rounded-control-inner bg-surface shadow-sm',
+      'transition-[transform,width] duration-200 ease-in-out',
+      this.thumb() ? 'opacity-100' : 'opacity-0'
+    ].join(' ')
+  );
+
+  readonly thumbTransform = computed(() => `translateX(${this.thumb()?.left ?? 0}px)`);
+
+  readonly thumbWidth = computed(() => `${this.thumb()?.width ?? 0}px`);
 
   isSelected(option: TailwindOption<T>): boolean {
     return this.compareWith()(option.value, this.value());
@@ -84,15 +152,38 @@ export class TailwindSegmentedControl<T = string> extends TailwindComponent impl
   segmentClasses(option: TailwindOption<T>): string {
     const selected = this.isSelected(option);
     return [
-      'rounded-md font-medium transition-colors cursor-pointer whitespace-nowrap',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600',
+      // `relative` lifts the label above the thumb, which is painted first in the same stacking context.
+      'relative rounded-control-inner font-medium cursor-pointer whitespace-nowrap',
+      TRANSITION_CONTROL,
+      PRESS_FEEDBACK,
+      FOCUS_RING,
       'disabled:cursor-not-allowed disabled:opacity-50',
       this.fullWidth() ? 'flex-1' : '',
       SEGMENT_SIZE[this.size()],
-      selected ? 'bg-surface text-neutral-900 shadow-sm' : 'text-neutral-600 hover:text-neutral-900'
+      selected ? 'text-fg' : 'text-neutral-600 hover:text-fg'
     ]
       .filter(Boolean)
       .join(' ');
+  }
+
+  /** Reads the selected segment's box and parks the thumb on it. */
+  private measureThumb(): void {
+    const track = this.track()?.nativeElement;
+    if (!track) return;
+
+    const index = this.options().findIndex(o => this.isSelected(o));
+    if (index < 0) {
+      this.thumb.set(null);
+      return;
+    }
+
+    const segment = track.querySelectorAll<HTMLElement>('[role="radio"]').item(index);
+    if (!segment) {
+      this.thumb.set(null);
+      return;
+    }
+
+    this.thumb.set({ left: segment.offsetLeft, width: segment.offsetWidth });
   }
 
   select(option: TailwindOption<T>): void {

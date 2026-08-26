@@ -15,6 +15,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
+import {
+  CONTROL_HEIGHT,
+  CONTROL_SQUARE,
+  DISABLED_FIELD,
+  FIELD_FOCUS_RING,
+  FIELD_STATE,
+  FIELD_STATE_INVALID,
+  TRANSITION_CONTROL
+} from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -77,26 +86,31 @@ export class TailwindInputOtp extends TailwindComponent implements ControlValueA
   readonly otpInputs = viewChildren<ElementRef<HTMLInputElement>>('otpDigit');
 
   readonly cellClasses = computed(() => {
-    const base = [
-      'block w-10 text-center font-mono tabular-nums bg-surface',
-      'border transition-colors duration-150',
-      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
-    ];
-
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: 'text-xs px-1 py-1 rounded-sm min-w-7',
-      sm: 'text-sm px-1.5 py-1.5 rounded-md min-w-8',
-      md: 'text-sm px-2 py-2 rounded-md min-w-10',
-      lg: 'text-base px-2.5 py-2.5 rounded-lg min-w-11',
-      xl: 'text-base px-3 py-3 rounded-lg min-w-12'
+    /**
+     * OTP cells are square by definition: a single centred digit and nothing else to fit, so the
+     * cell takes its footprint from the shared control scale rather than from padding — and cannot
+     * reuse `FIELD_BASE`, whose `w-full` would fight the fixed width.
+     */
+    const textSizeMap: Record<TailwindSize, string> = {
+      xs: 'text-xs',
+      sm: 'text-sm',
+      md: 'text-base',
+      lg: 'text-lg',
+      xl: 'text-xl'
     };
 
-    const stateClass = this.hasError()
-      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
-
-    return [...base, sizeMap[this.size()], stateClass].join(' ');
+    const size = this.size();
+    return [
+      'block text-center font-mono tabular-nums bg-surface border field-depth px-0',
+      TRANSITION_CONTROL,
+      FIELD_FOCUS_RING,
+      DISABLED_FIELD,
+      textSizeMap[size],
+      CONTROL_HEIGHT[size],
+      CONTROL_SQUARE[size],
+      'rounded-control',
+      this.hasError() ? FIELD_STATE_INVALID : FIELD_STATE
+    ].join(' ');
   });
 
   readonly groupAriaLabel = computed(() => this.label() || this.ariaLabel());

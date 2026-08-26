@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { TailwindColor, TailwindSize } from '../../models';
+import { TailwindColor, TailwindSize, TailwindVariantKind } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
+import { semanticSurface } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -14,6 +15,12 @@ export class TailwindBadge extends TailwindComponent {
 
   /** Semantic color */
   readonly color = input<TailwindColor>('primary');
+  /**
+   * How the surface is painted. `soft` (the default) is the badge as it has always looked; `solid`
+   * and `outlined` are the same decision expressed with more or less weight, and keep the badge the
+   * exact same size either way.
+   */
+  readonly kind = input<TailwindVariantKind>('soft');
   /** Size variant */
   readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
   /** Show a dot indicator */
@@ -24,7 +31,7 @@ export class TailwindBadge extends TailwindComponent {
   readonly ariaLabel = input<string>('');
 
   readonly computedClasses = computed(() => {
-    const base = ['inline-flex items-center gap-1 font-medium', 'leading-none'];
+    const base = ['inline-flex items-center gap-1 border font-medium', 'leading-none'];
 
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-[10px] px-1.5 py-0.5',
@@ -34,18 +41,8 @@ export class TailwindBadge extends TailwindComponent {
       xl: 'text-sm px-3.5 py-1.5'
     };
 
-    const colorMap: Record<TailwindColor, string> = {
-      primary: 'bg-primary-100 text-primary-700',
-      secondary: 'bg-neutral-100 text-neutral-700',
-      success: 'bg-success-100 text-success-700',
-      warning: 'bg-warning-100 text-warning-800',
-      danger: 'bg-danger-100 text-danger-700',
-      info: 'bg-info-100 text-info-700',
-      transparent: 'bg-transparent text-neutral-600 border border-neutral-200'
-    };
+    const shape = this.rounded() ? 'rounded-full' : 'rounded-control';
 
-    const shape = this.rounded() ? 'rounded-full' : 'rounded-md';
-
-    return this.mergeClasses(...base, colorMap[this.color()], sizeMap[this.size()], shape);
+    return this.mergeClasses(...base, semanticSurface(this.kind(), this.color()), sizeMap[this.size()], shape);
   });
 }

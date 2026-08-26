@@ -1,5 +1,6 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
-import { TailwindColor, TailwindSize } from '../../models';
+import { TailwindColor, TailwindSize, TailwindVariantKind } from '../../models';
+import { semanticSurface } from '../../util/variants';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 
@@ -13,6 +14,8 @@ import { TailwindComponent } from '../tailwind.component';
 export class TailwindChip extends TailwindComponent {
   /** Semantic color */
   readonly color = input<TailwindColor>('secondary');
+  /** How the surface is painted; `soft` (default) is the chip's long-standing look. */
+  readonly kind = input<TailwindVariantKind>('soft');
   /** Size variant */
   readonly size = input<TailwindSize>('sm');
   /** Show remove button */
@@ -30,7 +33,7 @@ export class TailwindChip extends TailwindComponent {
   readonly removed = output<void>();
 
   readonly computedClasses = computed(() => {
-    const base = ['inline-flex items-center gap-0.5 font-medium max-w-full', 'leading-tight'];
+    const base = ['inline-flex items-center gap-0.5 border font-medium max-w-full', 'leading-tight'];
 
     const sizeMap: Record<TailwindSize, string> = {
       xs: 'text-[10px] px-1.5 py-0.5',
@@ -40,17 +43,12 @@ export class TailwindChip extends TailwindComponent {
       xl: 'text-sm px-3.5 py-1.5'
     };
 
-    const colorMap: Record<TailwindColor, string> = {
-      primary: 'bg-primary-100 text-primary-800',
-      secondary: 'bg-neutral-100 text-neutral-800',
-      success: 'bg-success-100 text-success-800',
-      warning: 'bg-warning-100 text-warning-900',
-      danger: 'bg-danger-100 text-danger-800',
-      info: 'bg-info-100 text-info-800',
-      transparent: 'bg-transparent text-neutral-700 border border-neutral-200'
-    };
-
-    return this.mergeClasses(...base, colorMap[this.color()], sizeMap[this.size()], 'rounded-md');
+    return this.mergeClasses(
+      ...base,
+      semanticSurface(this.kind(), this.color()),
+      sizeMap[this.size()],
+      'rounded-control'
+    );
   });
 
   readonly labelClasses = computed(() => (this.truncate() ? 'min-w-0 truncate' : 'whitespace-nowrap'));
@@ -76,9 +74,9 @@ export class TailwindChip extends TailwindComponent {
     };
 
     return [
-      'inline-flex shrink-0 items-center justify-center rounded-sm',
+      'inline-flex shrink-0 items-center justify-center rounded-control-inner',
       'text-current opacity-70 hover:opacity-100',
-      'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-primary-500',
+      'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring',
       'disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none',
       sizeMap[this.size()]
     ].join(' ');

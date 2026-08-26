@@ -83,7 +83,7 @@ export class TailwindModal extends TailwindComponent {
 
   readonly panelClasses = computed(() =>
     this.mergeClasses(
-      'relative bg-surface rounded-xl shadow-2xl',
+      'relative bg-surface rounded-overlay shadow-2xl animate-overlay-scale',
       'w-full transform transition-all duration-200',
       this.isVisible() ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
     )

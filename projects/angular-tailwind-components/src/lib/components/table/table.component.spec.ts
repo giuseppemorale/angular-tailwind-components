@@ -447,6 +447,14 @@ describe('TailwindTable', () => {
     });
   });
 
+  it('should clip its own corners so the rounded border is not painted over', () => {
+    // The header background and the pagination bar are opaque rectangles: without clipping they
+    // cover the four corners and the border visibly breaks exactly there.
+    const shell: HTMLElement = fixture.nativeElement.querySelector('.rounded-surface');
+    expect(shell).toBeTruthy();
+    expect(shell.className).toContain('overflow-hidden');
+  });
+
   it('should show all rows when search query is empty', () => {
     const input: HTMLInputElement = fixture.nativeElement.querySelector('tailwind-input input');
     input.value = 'zzz';

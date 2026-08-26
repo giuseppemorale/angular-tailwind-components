@@ -78,7 +78,7 @@ export class TailwindRating extends TailwindComponent implements ControlValueAcc
 
   starClasses(star: number): string {
     return [
-      'transition-colors',
+      'transition-colors duration-150 ease-in-out',
       this.isFilled(star) ? 'text-warning-500' : 'text-neutral-300',
       this.isInteractive() ? 'cursor-pointer' : ''
     ]

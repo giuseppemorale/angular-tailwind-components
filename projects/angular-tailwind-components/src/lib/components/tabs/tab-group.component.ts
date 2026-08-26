@@ -17,6 +17,7 @@ import { TailwindColor } from '../../models';
 import { TailwindButton } from '../button/button.component';
 import { TailwindTab } from './tab.component';
 import { TAILWIND_LABELS } from '../../tokens';
+import { FOCUS_RING } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -222,28 +223,16 @@ export class TailwindTabGroup extends TailwindComponent {
     return map[this.color()];
   });
 
-  private readonly focusRingClass = computed(() => {
-    const map: Record<TailwindColor, string> = {
-      primary: 'focus-visible:ring-primary-500/30',
-      secondary: 'focus-visible:ring-neutral-400/40',
-      success: 'focus-visible:ring-success-500/30',
-      warning: 'focus-visible:ring-warning-500/30',
-      danger: 'focus-visible:ring-danger-500/30',
-      info: 'focus-visible:ring-info-500/30',
-      transparent: 'focus-visible:ring-neutral-400/30'
-    };
-    return map[this.color()];
-  });
-
   tabButtonClass(index: number, disabled: boolean): string {
     const active = this.activeIndex() === index;
     const stretched = this.stretch() && !this.scrollable();
     return [
-      'group relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150',
+      'group relative px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-150 ease-in-out',
       stretched ? 'flex-1 min-w-0 text-center' : 'shrink-0',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:rounded-t-lg',
-      this.focusRingClass(),
-      active ? this.activeTextClass() : 'text-neutral-500',
+      // Same ring as every other control in the library: geometry from FOCUS_RING, color from `--color-ring`.
+      // The tab used to be the one place that drew a `ring-*` instead, in a per-color tint.
+      `${FOCUS_RING} focus-visible:rounded-t-control`,
+      active ? this.activeTextClass() : 'text-fg-muted',
       !active && !disabled ? 'hover:text-neutral-700' : '',
       disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
     ]

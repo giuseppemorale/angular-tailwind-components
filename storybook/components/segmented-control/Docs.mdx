@@ -30,6 +30,14 @@ export class ExampleComponent {
 
 <Canvas of={SegmentedControlStories.SegmentedControl} />
 
+## Thumb scorrevole
+
+Il segmento selezionato è indicato da un singolo thumb che scorre fra le posizioni, non da uno sfondo
+che compare e scompare: è il movimento a dire all'occhio dove è andata la selezione. Il thumb è
+`aria-hidden`, la selezione resta annunciata da `aria-checked` sui segmenti.
+
+<Canvas of={SegmentedControlStories.SlidingThumb} />
+
 ---
 
 ## Properties

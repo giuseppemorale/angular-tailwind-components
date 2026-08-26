@@ -86,7 +86,7 @@
   }
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="helperId()" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
+    <p [attr.id]="helperId()" class="text-xs text-fg-muted" [innerHTML]="helperText() | safehtml"></p>
   }
   @if (errorText() && hasError()) {
     <p [attr.id]="helperId()" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>

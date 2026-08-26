@@ -11,7 +11,7 @@ const DOT_COLOR: Record<TailwindColor, string> = {
   warning: 'bg-warning-500 text-on-warning-500',
   danger: 'bg-danger-600 text-on-danger-600',
   info: 'bg-info-600 text-on-info-600',
-  transparent: 'bg-surface text-neutral-600 border border-neutral-300'
+  transparent: 'bg-surface text-neutral-600 border border-border-strong'
 };
 
 /** One event in a `tailwind-timeline`. */

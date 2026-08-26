@@ -21,7 +21,7 @@ import { DEFAULT_TAILWIND_PASSWORD_LABELS, TailwindSize } from '../../models';
 import { TAILWIND_PASSWORD_LABELS, TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindIcon } from '../icon/icon.component';
-import { FIELD_SIZE } from '../../util/variants';
+import { FIELD_BASE, FIELD_SIZE, FIELD_STATE, FIELD_STATE_INVALID } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 import { computePasswordStrength, passwordStrengthMeterFill } from './password-strength.util';
 
@@ -114,21 +114,17 @@ export class TailwindInputPassword extends TailwindComponent implements ControlV
 
   readonly toggleAriaLabel = computed(() => (this.masked() ? 'Mostra password' : 'Nascondi password'));
 
-  readonly inputClasses = computed(() => {
-    const base = [
-      'block w-full bg-surface',
-      'border transition-colors duration-150',
-      'placeholder:text-neutral-400',
-      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
-    ];
-
-    const stateClass = this.hasError()
-      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
-
-    return [...base, FIELD_SIZE[this.size()], stateClass, this.inputPaddingClass()].filter(Boolean).join(' ');
-  });
+  readonly inputClasses = computed(() =>
+    [
+      'block',
+      FIELD_BASE,
+      FIELD_SIZE[this.size()],
+      this.hasError() ? FIELD_STATE_INVALID : FIELD_STATE,
+      this.inputPaddingClass()
+    ]
+      .filter(Boolean)
+      .join(' ')
+  );
 
   readonly meterSegmentClasses = computed(() => {
     const fill = this.meterFill();

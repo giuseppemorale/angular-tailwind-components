@@ -25,6 +25,26 @@ export class ExampleComponent {}
 
 <Canvas of={ButtonStories.Button} />
 
+## Varianti
+
+`solid` porta un highlight interno di 1px sul bordo superiore invece di un’ombra: l’ombra significa
+_elevazione_ e appartiene a card e overlay, non a ogni pulsante della pagina.
+
+<Canvas of={ButtonStories.Kinds} />
+
+`soft` è la variante tinta — abbastanza forte da leggersi come azione, abbastanza discreta da stare
+accanto a un `solid` primario senza competere.
+
+<Canvas of={ButtonStories.Soft} />
+
+## Allineamento con i campi
+
+L’altezza è fissata dalla scala condivisa (`h-6` / `h-8` / `h-9` / `h-11` / `h-13`), non derivata dal
+padding verticale: un pulsante e un campo della stessa `size` sono alti esattamente uguale, anche con
+icone o font diversi. Un pulsante solo-icona resta quadrato sulla stessa altezza.
+
+<Canvas of={ButtonStories.AlignedWithFields} />
+
 ---
 
 ## Properties
@@ -60,15 +80,17 @@ Eredita `TailwindComponent` (`id`, `class`).
         <code>kind</code>
       </td>
       <td>
-        <code>'solid' | 'flat' | 'outlined' | 'ghost' | 'text'</code>
+        <code>'solid' | 'soft' | 'flat' | 'outlined' | 'ghost' | 'text'</code>
       </td>
       <td>
         <code>'solid'</code> (o valore da <code>TAILWIND_BUTTON_KIND</code> /{' '}
         <code>provideTailwindConfig(() =&gt; (&#123; BUTTON_KIND: 'solid' &#125;))</code>)
       </td>
       <td>
-        <code>flat</code>: pieno come <code>solid</code> senza ombra né bordo; <code>ghost</code>: trasparente con tinta
-        al hover; <code>text</code>: solo colore testo (nessun cambio sfondo al hover).
+        <code>solid</code>: pieno, con highlight interno sul bordo superiore al posto dell’ombra; <code>soft</code>:
+        superficie tinta chiara con testo dello stesso colore — la variante più usata per azioni secondarie;{' '}
+        <code>flat</code>: pieno come <code>solid</code> senza highlight né hover; <code>ghost</code>: trasparente con
+        tinta al hover; <code>text</code>: solo colore testo (nessun cambio sfondo al hover).
       </td>
     </tr>
     <tr>

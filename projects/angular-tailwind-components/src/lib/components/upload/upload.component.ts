@@ -87,20 +87,17 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
 
   readonly areaClasses = computed(() => {
     const base = [
-      'flex flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed px-6 py-10 text-center',
-      'transition-colors duration-150 outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+      'flex flex-col items-center justify-center gap-2 rounded-surface border-2 border-dashed px-6 py-10 text-center',
+      'transition-colors duration-150 ease-in-out outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
     ];
 
     if (this.isDisabled()) {
-      return this.mergeClasses(
-        ...base,
-        'cursor-not-allowed opacity-50 bg-neutral-50 border-neutral-200 text-neutral-500'
-      );
+      return this.mergeClasses(...base, 'cursor-not-allowed opacity-50 bg-neutral-50 border-border text-fg-muted');
     }
     if (this.isDragOver()) {
       return this.mergeClasses(
         ...base,
-        'cursor-pointer border-primary-500 bg-primary-50/60 text-neutral-800 focus-visible:outline-primary-500'
+        'cursor-pointer border-primary-500 bg-primary-50/60 text-neutral-800 focus-visible:outline-ring'
       );
     }
     if (this.hasError()) {
@@ -111,7 +108,7 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
     }
     return this.mergeClasses(
       ...base,
-      'cursor-pointer border-neutral-300 bg-neutral-50/50 text-neutral-800 focus-visible:outline-primary-500',
+      'cursor-pointer border-border-strong bg-neutral-50/50 text-neutral-800 focus-visible:outline-ring',
       'hover:border-primary-400 hover:bg-primary-50/30'
     );
   });

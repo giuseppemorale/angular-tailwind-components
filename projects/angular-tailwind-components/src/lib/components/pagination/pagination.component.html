@@ -1,7 +1,7 @@
 <div [class]="mergeClasses('flex flex-wrap items-center justify-between gap-4 w-full')">
   <div class="flex flex-wrap items-center gap-3 min-w-0">
     @if (summary()) {
-      <span class="text-sm text-neutral-700 dark:text-neutral-300">
+      <span class="text-sm text-neutral-700 tabular-nums dark:text-neutral-300">
         {{ summaryText() }}
       </span>
     }
@@ -29,7 +29,7 @@
 
     @for (page of visiblePages(); track $index) {
       @if (page === null) {
-        <span class="px-1 text-sm text-neutral-500 select-none" aria-hidden="true">…</span>
+        <span class="px-1 text-sm text-fg-muted select-none" aria-hidden="true">…</span>
       } @else {
         <tailwind-button
           [kind]="page === currentPage() ? 'flat' : 'ghost'"

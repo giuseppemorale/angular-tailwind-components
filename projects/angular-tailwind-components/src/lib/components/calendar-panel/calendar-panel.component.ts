@@ -75,7 +75,7 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
 
   readonly surfaceClasses = computed(() =>
     this.mergeClasses(
-      this.embedded() ? '' : 'rounded-xl border border-neutral-200 bg-surface p-4 shadow-sm w-72 max-w-full'
+      this.embedded() ? '' : 'rounded-overlay border border-border bg-surface p-4 shadow-sm w-72 max-w-full'
     )
   );
   private readonly coercedValue = computed(() => coerceCalendarDateOrNull(this.value()));

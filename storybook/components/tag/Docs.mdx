@@ -23,6 +23,13 @@ export class ExampleComponent {}
 
 <Canvas of={TagStories.Tags} />
 
+## Varianti
+
+`kind` sceglie il peso della superficie, con metriche identiche fra le tre varianti. La stessa triade
+è disponibile su `tailwind-badge`, `tailwind-chip` e `tailwind-alert`.
+
+<Canvas of={TagStories.Kinds} />
+
 ---
 
 ## Properties
@@ -52,6 +59,21 @@ Eredita `TailwindComponent` (`id`, `class`).
         <code>'secondary'</code>
       </td>
       <td>Colore di sfondo.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>kind</code>
+      </td>
+      <td>
+        <code>TailwindVariantKind</code>
+      </td>
+      <td>
+        <code>'solid'</code>
+      </td>
+      <td>
+        Peso della superficie: <code>solid</code> (pieno), <code>soft</code> (tinta chiara), <code>outlined</code> (solo
+        bordo e testo). Metriche identiche fra le tre.
+      </td>
     </tr>
   </tbody>
 </table>

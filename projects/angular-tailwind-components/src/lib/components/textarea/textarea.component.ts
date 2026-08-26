@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
-import { FIELD_SIZE } from '../../util/variants';
+import { FIELD_BASE, FIELD_PADDING, FIELD_STATE, FIELD_STATE_INVALID } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -54,28 +54,16 @@ export class TailwindTextarea extends TailwindComponent implements ControlValueA
 
   /** Computed textarea classes */
   readonly textareaClasses = computed(() => {
-    const base = [
-      'block w-full bg-surface',
-      'border transition-colors duration-150',
-      'placeholder:text-neutral-400',
-      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed'
-    ];
-
-    /** Only the minimum height differs from the shared field scale. */
+    /**
+     * A textarea grows with its content, so it takes {@link FIELD_PADDING} — the multi-line half of
+     * the field scale, which keeps `py-*` — instead of the fixed `h-*` the single-line fields use.
+     */
     const minHeightMap: Record<TailwindSize, string> = {
       xs: 'min-h-[4.5rem]',
       sm: 'min-h-[5rem]',
       md: 'min-h-[5.5rem]',
       lg: 'min-h-[6.5rem]',
       xl: 'min-h-[7.5rem]'
-    };
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: `${FIELD_SIZE.xs} ${minHeightMap.xs}`,
-      sm: `${FIELD_SIZE.sm} ${minHeightMap.sm}`,
-      md: `${FIELD_SIZE.md} ${minHeightMap.md}`,
-      lg: `${FIELD_SIZE.lg} ${minHeightMap.lg}`,
-      xl: `${FIELD_SIZE.xl} ${minHeightMap.xl}`
     };
 
     const resizeMap: Record<'vertical' | 'none' | 'both' | 'horizontal', string> = {
@@ -85,11 +73,15 @@ export class TailwindTextarea extends TailwindComponent implements ControlValueA
       horizontal: 'resize-x'
     };
 
-    const stateClass = this.hasError()
-      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
-
-    return [...base, sizeMap[this.size()], resizeMap[this.resize()], stateClass].join(' ');
+    const size = this.size();
+    return [
+      'block',
+      FIELD_BASE,
+      FIELD_PADDING[size],
+      minHeightMap[size],
+      resizeMap[this.resize()],
+      this.hasError() ? FIELD_STATE_INVALID : FIELD_STATE
+    ].join(' ');
   });
 
   private onChange: (value: string) => void = () => {};

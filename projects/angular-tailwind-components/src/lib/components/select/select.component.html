@@ -61,7 +61,7 @@
   </button>
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="subId('helper')" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
+    <p [attr.id]="subId('helper')" class="text-xs text-fg-muted" [innerHTML]="helperText() | safehtml"></p>
   }
   @if (errorText() && hasError()) {
     <p [attr.id]="subId('helper')" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>
@@ -74,7 +74,7 @@
     role="listbox"
     [attr.id]="listboxId()"
     [attr.aria-multiselectable]="multiple() ? true : null"
-    class="w-full bg-surface border border-neutral-200 rounded-md shadow-lg py-1 max-h-60 overflow-auto">
+    class="w-full bg-surface border border-border rounded-overlay shadow-lg py-1 max-h-60 overflow-auto animate-overlay-in">
     @if (placeholder()) {
       <li
         role="option"

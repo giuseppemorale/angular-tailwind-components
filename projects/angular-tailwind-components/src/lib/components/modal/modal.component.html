@@ -9,8 +9,8 @@
     cdkTrapFocus
     [cdkTrapFocusAutoCapture]="true">
     <!-- Header -->
-    <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
-      <h2 [attr.id]="subId('title')" class="text-lg font-semibold text-neutral-900 pr-2">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-border">
+      <h2 [attr.id]="subId('title')" class="text-lg font-semibold tracking-tight text-fg pr-2">
         <ng-content />
       </h2>
       @if (showCloseButton()) {
@@ -30,7 +30,7 @@
     </div>
 
     <!-- Footer: collapses entirely when nothing is projected into the slot -->
-    <div class="border-t border-neutral-200 px-6 py-4 [&:not(:has(*))]:hidden">
+    <div class="border-t border-border px-6 py-4 [&:not(:has(*))]:hidden">
       <ng-content select="[tailwind-modal-footer]" />
     </div>
   </div>

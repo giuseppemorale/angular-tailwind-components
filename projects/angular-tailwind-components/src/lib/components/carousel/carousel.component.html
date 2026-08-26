@@ -7,7 +7,7 @@
   (pointerleave)="resume()"
   (focusin)="pause()"
   (focusout)="resume()">
-  <div class="overflow-hidden rounded-xl">
+  <div class="overflow-hidden rounded-surface">
     <ng-content />
   </div>
 
@@ -35,7 +35,7 @@
       @for (slide of slides(); track $index; let i = $index) {
         <button
           type="button"
-          class="size-2 rounded-full transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+          class="size-2 rounded-full transition-colors duration-150 ease-in-out press cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           [class.bg-primary-600]="i === activeIndex()"
           [class.bg-neutral-300]="i !== activeIndex()"
           [attr.aria-label]="indicatorLabel(i)"

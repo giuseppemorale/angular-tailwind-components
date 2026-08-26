@@ -29,6 +29,14 @@ export class ExampleComponent {}
 
 <Canvas of={CardStories.Card} />
 
+## Densità
+
+`density` regola il padding di header, body e footer insieme: `comfortable` (24px) per una pagina con
+poche card, `compact` (16px) per le dashboard, dove lo stesso padding ripetuto su una dozzina di tile
+costa più spazio del contenuto che incornicia.
+
+<Canvas of={CardStories.Density} />
+
 ---
 
 ## Altezza uniforme in grid
@@ -65,6 +73,18 @@ Eredita `TailwindComponent` (`id`, `class`). Le classi passate con `class` / `[c
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td>
+        <code>density</code>
+      </td>
+      <td>
+        <code>'comfortable' | 'compact'</code>
+      </td>
+      <td>
+        <code>'comfortable'</code>
+      </td>
+      <td>Padding di header, body e footer: 24px oppure 16px.</td>
+    </tr>
     <tr>
       <td>
         <code>elevated</code>

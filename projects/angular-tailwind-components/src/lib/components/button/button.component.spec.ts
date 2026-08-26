@@ -115,20 +115,36 @@ describe('TailwindButton', () => {
     tokenFixture.detectChanges();
 
     const button: HTMLButtonElement = tokenFixture.nativeElement.querySelector('button');
-    expect(button.className).toContain('shadow-none');
-    expect(button.className).toContain('border-0');
+    expect(button.className).toContain('border-transparent');
+    expect(button.className).not.toContain('surface-highlight');
   });
 
-  it('should apply flat kind without shadow or border', () => {
+  it('should apply flat kind without the top highlight, border tint or hover state', () => {
     fixture.componentRef.setInput('kind', 'flat');
     fixture.detectChanges();
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    expect(button.className).toContain('shadow-none');
-    expect(button.className).toContain('border-0');
+    expect(button.className).toContain('border-transparent');
+    expect(button.className).not.toContain('surface-highlight');
     expect(button.className).not.toContain('shadow-sm');
     expect(button.className).not.toContain('hover:bg-');
     expect(button.className).not.toContain('active:bg-');
+  });
+
+  it('should tint the surface for the soft kind without filling it', () => {
+    fixture.componentRef.setInput('kind', 'soft');
+    fixture.detectChanges();
+
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.className).toContain('bg-primary-50');
+    expect(button.className).toContain('text-primary-700');
+    expect(button.className).not.toContain('bg-primary-600');
+  });
+
+  it('should give solid buttons a top highlight instead of a drop shadow', () => {
+    const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+    expect(button.className).toContain('surface-highlight');
+    expect(button.className).not.toContain('shadow-sm');
   });
 
   it('should keep transparent color without hover or active background tint', () => {
@@ -178,8 +194,10 @@ describe('TailwindButton', () => {
     fixture.detectChanges();
 
     const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-    expect(button.className).toContain('has-[.tailwind-button-label:empty]:p-2');
-    expect(button.className).toContain('has-[.tailwind-button-label:empty]:px-2');
+    // Square footprint: the height already comes from the size scale, only the width is overridden.
+    expect(button.className).toContain('has-[.tailwind-button-label:empty]:w-9');
+    expect(button.className).toContain('has-[.tailwind-button-label:empty]:px-0');
+    expect(button.className).toContain('h-9');
   });
 
   it('should use text padding when icon and label are present', async () => {
@@ -194,7 +212,10 @@ describe('TailwindButton', () => {
     const button: HTMLButtonElement = hostFixture.nativeElement.querySelector('button');
 
     expect(button.className).toContain('px-4');
-    expect(button.className).toContain('py-2');
+    // The height is pinned rather than derived from vertical padding, so a button and an input of
+    // the same size line up on the same row.
+    expect(button.className).toContain('h-9');
+    expect(button.className).not.toContain('py-2');
   });
   it('should show a spinner and block activation while loading', () => {
     let clicks = 0;

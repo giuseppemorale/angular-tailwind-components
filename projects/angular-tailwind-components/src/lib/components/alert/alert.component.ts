@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { TAILWIND_LABELS } from '../../tokens';
-import { TailwindColor } from '../../models';
+import { TailwindColor, TailwindVariantKind } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
+import { SEMANTIC_BORDER, semanticFill } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -21,6 +22,8 @@ export class TailwindAlert extends TailwindComponent {
 
   /** Semantic color */
   readonly color = input<TailwindColor>('info');
+  /** How the surface is painted; `soft` (default) is the alert's long-standing look. */
+  readonly kind = input<TailwindVariantKind>('soft');
   /** Alert title */
   readonly title = input<string>('');
   /** Whether the alert can be dismissed */
@@ -37,19 +40,17 @@ export class TailwindAlert extends TailwindComponent {
   readonly isDismissed = signal(false);
 
   readonly computedClasses = computed(() => {
-    const base = 'flex gap-3 p-4 rounded-lg';
-    const colorMap: Record<TailwindColor, string> = {
-      primary: 'bg-primary-100 text-primary-800 border-primary-300',
-      secondary: 'bg-neutral-100 text-neutral-800 border-neutral-300',
-      success: 'bg-success-100 text-success-800 border-success-300',
-      warning: 'bg-warning-100 text-warning-800 border-warning-300',
-      danger: 'bg-danger-100 text-danger-800 border-danger-300',
-      info: 'bg-info-100 text-info-800 border-info-300',
-      transparent: 'bg-transparent text-neutral-700 border-neutral-300'
-    };
-    const borderClass = this.bordered() ? 'border-l-4' : 'border';
-
-    return this.mergeClasses(base, colorMap[this.color()], borderClass);
+    const color = this.color();
+    /*
+     * Fill and border are taken separately: in `bordered` mode the border is not an outline at all
+     * but a left accent stripe, and it keeps the semantic color even when the fill is `solid`.
+     */
+    return this.mergeClasses(
+      'flex gap-3 p-4 rounded-surface',
+      semanticFill(this.kind(), color),
+      SEMANTIC_BORDER[color],
+      this.bordered() ? 'border-l-4' : 'border'
+    );
   });
 
   dismiss(): void {

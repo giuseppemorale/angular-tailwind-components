@@ -31,6 +31,15 @@ export class ExampleComponent {}
 
 <Canvas of={ProgressBarStories.ProgressBar} />
 
+## Indeterminate
+
+`indeterminate` significa _non sappiamo a che punto siamo_: `value` non misura più niente, quindi la
+percentuale non viene stampata (anche con `showValue` attivo) e `aria-valuenow` viene rimosso — è
+proprio l'assenza di quell'attributo a far annunciare il progresso come sconosciuto. Se non resta
+nulla da mostrare, la riga etichetta non viene renderizzata affatto, così non lascia il suo margine.
+
+<Canvas of={ProgressBarStories.Indeterminate} />
+
 ---
 
 ## Properties
@@ -95,7 +104,10 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>
         <code>true</code>
       </td>
-      <td>Mostra percentuale.</td>
+      <td>
+        Mostra la percentuale. Ignorato quando <code>indeterminate</code> è attivo: non c’è una percentuale da
+        riportare.
+      </td>
     </tr>
     <tr>
       <td>
@@ -131,7 +143,10 @@ Eredita `TailwindComponent` (`id`, `class`).
       <td>
         <code>false</code>
       </td>
-      <td>Animazione indeterminata.</td>
+      <td>
+        Animazione indeterminata. Nasconde la percentuale e rimuove <code>aria-valuenow</code>, così la tecnologia
+        assistiva annuncia il progresso come sconosciuto.
+      </td>
     </tr>
     <tr>
       <td>

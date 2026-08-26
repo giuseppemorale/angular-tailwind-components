@@ -10,9 +10,9 @@
     [attr.aria-labelledby]="title() ? subId('title') : null"
     [attr.aria-label]="title() ? null : ariaLabel() || null">
     <!-- Header -->
-    <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-border">
       @if (title()) {
-        <h2 [attr.id]="subId('title')" class="text-lg font-semibold text-neutral-900">{{ title() }}</h2>
+        <h2 [attr.id]="subId('title')" class="text-lg font-semibold tracking-tight text-fg">{{ title() }}</h2>
       }
       @if (showCloseButton()) {
         <tailwind-button

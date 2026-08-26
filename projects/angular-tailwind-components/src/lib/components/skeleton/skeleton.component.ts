@@ -15,10 +15,10 @@ export class TailwindSkeleton extends TailwindComponent {
   readonly computedClasses = computed(() => {
     const base = 'tailwind-skeleton-pulse';
     const variantMap: Record<string, string> = {
-      text: 'h-4 rounded',
+      text: 'h-4 rounded-control-inner',
       circle: 'rounded-full',
       rect: 'rounded-none',
-      rounded: 'rounded-xl'
+      rounded: 'rounded-surface'
     };
     return this.mergeClasses(base, variantMap[this.variant()]);
   });

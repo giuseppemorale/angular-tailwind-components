@@ -52,3 +52,28 @@ export const Sizes: StoryObj<TailwindSegmentedControl<string>> = {
       </div>`
   })
 };
+
+/**
+ * The selected segment is marked by a single thumb that slides between positions rather than a
+ * background that blinks on and off — the movement is what tells the eye where the selection went.
+ */
+export const SlidingThumb: StoryObj<TailwindSegmentedControl<string>> = {
+  name: 'Thumb scorrevole',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    props: {
+      options: [
+        { value: 'day', label: 'Day' },
+        { value: 'week', label: 'Week' },
+        { value: 'month', label: 'Month' },
+        { value: 'quarter', label: 'Quarter' }
+      ],
+      value: 'week'
+    },
+    template: `
+      <div class="flex flex-col gap-3">
+        <tailwind-segmented-control [options]="options" [(value)]="value" label="Periodo" />
+        <p class="text-sm text-fg-muted">Valore: <code>{{ value }}</code></p>
+      </div>`
+  })
+};

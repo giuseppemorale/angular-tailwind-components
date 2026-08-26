@@ -60,12 +60,12 @@ export class TailwindToast extends TailwindComponent {
   surfaceClass(color: TailwindColor | undefined): string {
     const colorMap: Record<TailwindColor, string> = {
       primary: 'bg-primary-50 border-primary-200',
-      secondary: 'bg-neutral-50 border-neutral-200',
+      secondary: 'bg-neutral-50 border-border',
       success: 'bg-success-50 border-success-200',
       warning: 'bg-warning-50 border-warning-200',
       danger: 'bg-danger-50 border-danger-200',
       info: 'bg-info-50 border-info-200',
-      transparent: 'bg-surface border-neutral-200'
+      transparent: 'bg-surface border-border'
     };
     return colorMap[color ?? 'info'];
   }
@@ -78,7 +78,7 @@ export class TailwindToast extends TailwindComponent {
       warning: 'text-warning-600',
       danger: 'text-danger-600',
       info: 'text-info-600',
-      transparent: 'text-neutral-500'
+      transparent: 'text-fg-muted'
     };
     return iconMap[color ?? 'info'];
   }

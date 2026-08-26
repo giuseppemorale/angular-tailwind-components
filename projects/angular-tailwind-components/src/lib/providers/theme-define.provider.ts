@@ -33,6 +33,9 @@ import {
   TailwindDefineThemeConfig
 } from './interfaces/theme-config.interface';
 import {
+  TailwindRadiusConfig,
+  TailwindRadiusPreset,
+  TailwindRadiusScale,
   TailwindThemeColorShade,
   TailwindThemeSemantic,
   TailwindThemeSemanticPaletteObject,
@@ -349,6 +352,96 @@ export function applyTailwindThemeColors(document: Document, colors: TailwindDef
  */
 export function provideTailwindConfig(config: () => TailwindComponentsConfig): EnvironmentProviders {
   return makeEnvironmentProviders(providersFromConfigFactory(config));
+}
+
+/** Per-role radius behind each {@link TailwindRadiusPreset}, in the order `control, surface, overlay`. */
+const RADIUS_PRESETS: Readonly<Record<TailwindRadiusPreset, Required<TailwindRadiusScale>>> = {
+  sharp: { control: '0px', surface: '0px', overlay: '0px' },
+  compact: { control: '0.25rem', surface: '0.375rem', overlay: '0.5rem' },
+  default: { control: '0.5rem', surface: '0.75rem', overlay: '0.875rem' },
+  round: { control: '0.75rem', surface: '1rem', overlay: '1.25rem' }
+};
+
+/** `id` of the injected `<style>` that holds the radius scale on `:root`. */
+export const TAILWIND_RADIUS_STYLE_ID = 'tailwind-theme-radius';
+
+/** `data-*` attribute on `<html>` while a runtime radius override is active. */
+export const TAILWIND_RADIUS_HTML_ATTR = 'data-tailwind-radius';
+
+/** Resolves a preset name or a partial scale into explicit per-role lengths. Exported for unit tests. */
+export function resolveTailwindRadiusScale(config: TailwindRadiusConfig): Required<TailwindRadiusScale> {
+  if (typeof config === 'string') {
+    return { ...(RADIUS_PRESETS[config] ?? RADIUS_PRESETS.default) };
+  }
+  return {
+    control: config.control ?? RADIUS_PRESETS.default.control,
+    surface: config.surface ?? RADIUS_PRESETS.default.surface,
+    overlay: config.overlay ?? RADIUS_PRESETS.default.overlay
+  };
+}
+
+/**
+ * Builds the `@layer theme` stylesheet for a radius scale. Exported for unit tests.
+ *
+ * The `*-inner` tokens are written as `calc()` over the role they belong to rather than as fixed
+ * lengths, so a nested element (a segmented-control thumb, a tab inside its track) keeps a
+ * concentric curve at every preset — including `sharp`, where `calc(0px - 2px)` clamps to square.
+ */
+export function buildTailwindRadiusCss(config: TailwindRadiusConfig): string {
+  const { control, surface, overlay } = resolveTailwindRadiusScale(config);
+  return [
+    '@layer theme {',
+    `  :root[${TAILWIND_RADIUS_HTML_ATTR}],`,
+    '  :host {',
+    `    --radius-control: ${control};`,
+    '    --radius-control-inner: max(0px, calc(var(--radius-control) - 0.125rem));',
+    `    --radius-surface: ${surface};`,
+    '    --radius-surface-inner: max(0px, calc(var(--radius-surface) - 0.25rem));',
+    `    --radius-overlay: ${overlay};`,
+    '  }',
+    '}'
+  ].join('\n');
+}
+
+/**
+ * Injects or updates `#tailwind-theme-radius` in `document.head` (browser only). Exported for unit tests.
+ */
+export function applyTailwindRadius(document: Document, config: TailwindRadiusConfig): void {
+  const root = document.documentElement;
+  root.setAttribute(TAILWIND_RADIUS_HTML_ATTR, '');
+
+  const existing = document.getElementById(TAILWIND_RADIUS_STYLE_ID);
+  const style = existing ?? document.createElement('style');
+  style.id = TAILWIND_RADIUS_STYLE_ID;
+  style.textContent = buildTailwindRadiusCss(config);
+
+  if (!existing) {
+    document.head.appendChild(style);
+  }
+}
+
+/**
+ * Re-maps the role-based radius tokens (`--radius-control`, `--radius-surface`, `--radius-overlay`)
+ * app-wide at startup (browser only).
+ *
+ * Every component names those three tokens instead of a literal `rounded-md`, so this one call is
+ * enough to take the whole library from square to fully rounded:
+ *
+ * ```ts
+ * provideTailwindRadius(() => 'round')
+ * provideTailwindRadius(() => ({ control: '0.375rem', overlay: '1rem' }))
+ * ```
+ */
+export function provideTailwindRadius(config: () => TailwindRadiusConfig): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    provideAppInitializer(() => {
+      const platformId = inject(PLATFORM_ID);
+      if (!isPlatformBrowser(platformId)) {
+        return;
+      }
+      applyTailwindRadius(inject(DOCUMENT), config());
+    })
+  ]);
 }
 
 /**

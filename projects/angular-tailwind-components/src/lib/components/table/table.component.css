@@ -41,6 +41,25 @@
     vertical-align: middle;
   }
 
+  /*
+   * Row hover. Scanning a wide table means tracking one row across many columns, and a highlight
+   * that follows the pointer is what keeps the eye on it — the single cheapest readability win a
+   * data table has. `:where()` keeps specificity at 0 so a consumer's own row classes still win.
+   */
+  :host ::ng-deep :where(tbody tr) {
+    transition: background-color var(--transition-duration-normal) var(--transition-timing-default);
+  }
+
+  :host ::ng-deep :where(tbody tr:hover) {
+    background-color: var(--color-surface-muted);
+  }
+
+  /* Numbers line up column-wise only with fixed-width digits. */
+  :host ::ng-deep :where(td, th).tw-table-numeric {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
   :host ::ng-deep :where(tbody td[colspan]) {
     padding: 2rem 1rem;
     text-align: center;
@@ -115,4 +134,11 @@
   top: 0;
   z-index: 1;
   background-color: var(--color-surface);
+  /*
+   * A sticky header that only has a border looks like it is part of the first row once the body
+   * scrolls under it. The short shadow is what separates the two planes.
+   */
+  box-shadow:
+    0 1px 0 0 var(--color-border),
+    0 6px 8px -8px oklch(0.28 0.03 256 / 0.35);
 }

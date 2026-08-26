@@ -103,4 +103,37 @@ describe('TailwindSegmentedControl', () => {
     segments()[0].click();
     expect(spy).toHaveBeenCalledWith('list');
   });
+
+  it('should render a decorative thumb that is hidden from assistive technology', () => {
+    const thumb: HTMLElement = fixture.nativeElement.querySelector('[role="radiogroup"] > span');
+    expect(thumb).toBeTruthy();
+    expect(thumb.getAttribute('aria-hidden')).toBe('true');
+    expect(thumb.className).toContain('bg-surface');
+  });
+
+  it('should keep the thumb transparent while nothing is selected', () => {
+    const thumb: HTMLElement = fixture.nativeElement.querySelector('[role="radiogroup"] > span');
+    expect(thumb.className).toContain('opacity-0');
+  });
+
+  it('should move the thumb onto the selected segment', async () => {
+    component.writeValue('grid');
+    fixture.detectChanges();
+    // The measurement is deferred to a microtask so it reads the settled layout.
+    await Promise.resolve();
+    fixture.detectChanges();
+
+    const thumb: HTMLElement = fixture.nativeElement.querySelector('[role="radiogroup"] > span');
+    expect(thumb.className).toContain('opacity-100');
+    expect(thumb.style.transform.startsWith('translateX(')).toBe(true);
+    expect(thumb.style.width.endsWith('px')).toBe(true);
+  });
+
+  it('should not paint the selected segment with its own background any more', () => {
+    component.writeValue('grid');
+    fixture.detectChanges();
+
+    expect(segments()[1].className).not.toContain('bg-surface');
+    expect(segments()[1].className).toContain('text-fg');
+  });
 });

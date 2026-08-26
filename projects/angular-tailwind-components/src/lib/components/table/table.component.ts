@@ -15,8 +15,8 @@ import {
   untracked
 } from '@angular/core';
 import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
-import { TailwindIcon } from '../icon/icon.component';
 import { TailwindInput } from '../input/input.component';
+import { TailwindSkeleton } from '../skeleton/skeleton.component';
 import { TailwindComponent } from '../tailwind.component';
 import {
   TAILWIND_TABLE_SELECTION_HOST,
@@ -37,7 +37,7 @@ export type { TailwindTableSelectionHost, TailwindTableSortHost };
 
 @Component({
   selector: 'tailwind-table',
-  imports: [NgTemplateOutlet, TailwindPagination, TailwindIcon, TailwindInput],
+  imports: [NgTemplateOutlet, TailwindPagination, TailwindInput, TailwindSkeleton],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -88,6 +88,22 @@ export class TailwindTable<T extends object = TailwindTableRow>
   protected readonly loadingText = computed(() => this.labels.loading);
   /** Match your column count so the empty state spans the full table width. */
   readonly emptyColspan = input<number>(1);
+
+  /** Number of placeholder rows drawn while `loading` is true. */
+  protected readonly skeletonRows = [0, 1, 2, 3, 4];
+
+  /**
+   * Placeholder cell widths for the loading state.
+   *
+   * A spinner tells the user *something is happening*; a skeleton tells them *what is about to
+   * appear*, which makes the same wait feel shorter. The widths cycle through an uneven pattern so
+   * the placeholder reads as text rather than as a progress bar.
+   */
+  protected readonly skeletonCells = computed(() => {
+    const pattern = ['70%', '45%', '85%', '35%', '60%'];
+    const columns = Math.min(Math.max(this.emptyColspan(), 1), 8);
+    return Array.from({ length: columns }, (_, index) => pattern[index % pattern.length]);
+  });
 
   readonly paginated = input<boolean>(true);
   readonly pagination = input<Pagination>();

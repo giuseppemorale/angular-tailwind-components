@@ -28,7 +28,12 @@ import { TAILWIND_LABELS } from '../../tokens';
 @Directive({
   selector: '[tailwindSortHeader]',
   host: {
-    class: 'cursor-pointer whitespace-nowrap text-left select-none hover:text-neutral-900',
+    // The focus ring is drawn *inside* the cell (`-outline-offset-2`): the table clips its own
+    // corners so the rounded border reads as rounded, and an outward ring on the first or last
+    // column would be clipped away with them.
+    class:
+      'cursor-pointer whitespace-nowrap text-left select-none hover:text-fg ' +
+      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
     '[attr.tabindex]': '0',
     // The `th` is operated like a button; without a role, assistive tech announces a plain header.
     '[attr.role]': '"columnheader"',

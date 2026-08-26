@@ -6,8 +6,24 @@ export type TailwindSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 /** Color variants for buttons and interactive elements */
 export type TailwindColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'transparent';
 
-/** Button kinds */
-export type TailwindButtonKind = 'solid' | 'flat' | 'outlined' | 'ghost' | 'text';
+/**
+ * Button kinds.
+ *
+ * `soft` is the tinted variant — a light wash of the semantic color behind text of the same hue.
+ * It is the workhorse of most product UIs: strong enough to read as an action, quiet enough to sit
+ * next to a `solid` primary without competing with it.
+ */
+export type TailwindButtonKind = 'solid' | 'soft' | 'flat' | 'outlined' | 'ghost' | 'text';
+
+/**
+ * The three ways a static, semantic surface can be painted — shared by badge, chip, tag and alert
+ * so "the danger one" looks like the same decision wherever it appears.
+ *
+ * - `solid` — filled with the color, foreground from the matching `on-*` token.
+ * - `soft` — light wash of the color behind text of the same hue.
+ * - `outlined` — transparent, color carried by the border and the text.
+ */
+export type TailwindVariantKind = 'solid' | 'soft' | 'outlined';
 
 /** ARIA role for `TailwindButton` */
 export type TailwindButtonRole = 'button' | 'menuitem' | 'tab' | 'switch' | 'checkbox' | 'radio';

@@ -16,10 +16,10 @@
   <div class="min-w-0 flex-1 pt-0.5">
     <div class="flex flex-wrap items-baseline gap-x-2">
       @if (title()) {
-        <p class="text-sm font-medium text-neutral-900">{{ title() }}</p>
+        <p class="text-sm font-medium text-fg">{{ title() }}</p>
       }
       @if (time()) {
-        <span class="text-xs text-neutral-500">{{ time() }}</span>
+        <span class="text-xs text-fg-muted">{{ time() }}</span>
       }
     </div>
     <div class="mt-0.5 text-sm text-neutral-600 empty:hidden">

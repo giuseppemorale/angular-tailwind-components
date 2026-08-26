@@ -23,6 +23,14 @@ export class ExampleComponent {}
 
 <Canvas of={BadgeStories.Badge} />
 
+## Varianti
+
+`kind` sceglie il peso della superficie. Le tre varianti hanno **metriche identiche** (tutte
+applicano un bordo, trasparente dove non serve), quindi cambiare `kind` non ridimensiona il badge.
+La stessa triade è disponibile su `tailwind-chip`, `tailwind-tag` e `tailwind-alert`.
+
+<Canvas of={BadgeStories.Kinds} />
+
 ---
 
 ## Properties
@@ -52,6 +60,21 @@ Eredita `TailwindComponent` (`id`, `class`).
         <code>'primary'</code>
       </td>
       <td>Colore di sfondo e testo.</td>
+    </tr>
+    <tr>
+      <td>
+        <code>kind</code>
+      </td>
+      <td>
+        <code>TailwindVariantKind</code>
+      </td>
+      <td>
+        <code>'soft'</code>
+      </td>
+      <td>
+        Peso della superficie: <code>solid</code> (pieno), <code>soft</code> (tinta chiara), <code>outlined</code> (solo
+        bordo e testo). Metriche identiche fra le tre.
+      </td>
     </tr>
     <tr>
       <td>

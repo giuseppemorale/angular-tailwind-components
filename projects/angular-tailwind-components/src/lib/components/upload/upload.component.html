@@ -50,7 +50,7 @@
         (drop)="onDrop($event)">
         <tailwind-icon icon="cloud-arrow-up" [size]="40" />
         <span class="text-sm font-medium">{{ areaTitle() }}</span>
-        <span class="text-xs text-neutral-500">{{ areaHint() }}</span>
+        <span class="text-xs text-fg-muted">{{ areaHint() }}</span>
       </div>
       @if (showClear() && value()) {
         <tailwind-button
@@ -72,7 +72,7 @@
   }
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
+    <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-fg-muted" [innerHTML]="helperText() | safehtml"></p>
   }
   @if (errorText() && hasError()) {
     <p [attr.id]="fileInputId() + '-helper'" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>

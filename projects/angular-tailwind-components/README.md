@@ -23,11 +23,10 @@ The **library major matches the Angular major** in your app (library **21.x** �
 
 ### Which version should I use?
 
-| Library  | Angular               | Tailwind CSS | Notes                                                 |
-| :------- | :-------------------- | :----------- | :---------------------------------------------------- |
-| **22.x** | 22                    | 4            | **Current.** Use on Angular 22 apps.                  |
-| **21.x** | 21                    | 4            | Previous. Use on Angular 21 apps.                     |
-| **23+**  | same major as Angular | 4            | Each new Angular major gets a matching library major. |
+| Library  | Angular | Tailwind CSS | Notes                                |
+| :------- | :------ | :----------- | :----------------------------------- |
+| **21.x** | 21      | 4            | Previous. Use on Angular 21 apps.    |
+| **22.x** | 22      | 4            | **Current.** Use on Angular 22 apps. |
 
 ### Peer dependencies
 
@@ -386,11 +385,59 @@ Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolba
 The library uses a comprehensive design system defined via Tailwind CSS v4 `@theme` directive:
 
 - **Colors**: Semantic tokens alias Tailwind default palettes — Primary (`blue`), neutral (`slate`), Success (`green`), Warning (`amber`), Danger (`red`), Info (`sky`)
+- **Surfaces**: `surface`, `surface-muted`, `surface-raised`, `border`, `border-strong`, `fg`, `fg-muted`, `ring`
 - **Typography**: Inter (sans), JetBrains Mono (mono)
 - **Spacing**: Tailwind default scale
-- **Border Radius**: xs through full
-- **Shadows**: xs through 2xl
+- **Border Radius**: `xs` through `full`, plus the **role tokens** `control`, `surface` and `overlay`
+- **Shadows**: xs through 2xl, tinted with the neutral hue rather than pure black
 - **Z-Index**: Defined scale for overlays (dropdown → tooltip → toast)
+
+### Sizing: one scale, explicit heights
+
+Every control takes its height from a shared scale rather than from vertical padding, so a button, an
+input, a select and a date picker of the same `size` are exactly as tall as each other on the same
+row — with or without icons.
+
+| `size` | height        | text        | icon |
+| ------ | ------------- | ----------- | ---- |
+| `xs`   | `h-6` (24px)  | `text-xs`   | 16   |
+| `sm`   | `h-8` (32px)  | `text-sm`   | 16   |
+| `md`   | `h-9` (36px)  | `text-sm`   | 16   |
+| `lg`   | `h-11` (44px) | `text-base` | 20   |
+| `xl`   | `h-13` (52px) | `text-base` | 24   |
+
+### Radius is a role, not a size
+
+Components never name a literal `rounded-md`. They name what they _are_ — `rounded-control` for
+buttons, inputs and chips, `rounded-surface` for cards and tables, `rounded-overlay` for menus,
+popovers and modals — and a nested element inside a padded container of the same family uses
+`rounded-control-inner`, so the two curves stay concentric.
+
+That means the whole library's personality changes with one call:
+
+```ts
+import { provideTailwindRadius } from 'angular-tailwind-components';
+
+providers: [
+  provideTailwindRadius(() => 'round') // 'sharp' | 'compact' | 'default' | 'round'
+];
+```
+
+Or with explicit values per role:
+
+```ts
+provideTailwindRadius(() => ({ control: '0.375rem', overlay: '1rem' }));
+```
+
+### Focus, motion and reduced motion
+
+- **One focus color.** Every ring in the library is drawn in `--color-ring` (default `primary-500`)
+  with the same geometry, so an app retheming its brand has exactly one variable to set.
+- **Three durations.** 150ms for colors and borders, 200ms for transforms and shadows, and the
+  panel entrance animations (`animate-overlay-in`, `animate-overlay-scale`, `animate-toast-in`).
+- **`prefers-reduced-motion` is respected out of the box**: transitions collapse and entrance
+  animations are dropped, while loading spinners deliberately keep turning — they are the only
+  signal that the app is still working.
 
 ### Customization
 
@@ -402,6 +449,12 @@ You can still override any token in your own CSS, for example:
 @theme {
   --color-primary-500: var(--color-violet-500);
   --color-primary-600: var(--color-violet-600);
+
+  --color-ring: var(--color-primary-500); /* focus ring for every control */
+
+  --radius-control: 0.5rem; /* buttons, inputs, chips */
+  --radius-surface: 0.75rem; /* cards, tables, alerts */
+  --radius-overlay: 0.875rem; /* menus, popovers, modals */
 }
 ```
 

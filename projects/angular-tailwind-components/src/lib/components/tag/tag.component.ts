@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { TailwindColor } from '../../models';
+import { TailwindColor, TailwindVariantKind } from '../../models';
+import { semanticSurface } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -10,20 +11,13 @@ import { TailwindComponent } from '../tailwind.component';
 })
 export class TailwindTag extends TailwindComponent {
   readonly color = input<TailwindColor>('secondary');
+  /** How the surface is painted; `solid` (default) is the tag's long-standing look. */
+  readonly kind = input<TailwindVariantKind>('solid');
 
-  readonly computedClasses = computed(() => {
-    const colorMap: Record<TailwindColor, string> = {
-      primary: 'bg-primary-600 text-on-primary-600',
-      secondary: 'bg-neutral-600 text-on-neutral-600',
-      success: 'bg-success-700 text-on-success-700',
-      warning: 'bg-warning-500 text-on-warning-500',
-      danger: 'bg-danger-700 text-on-danger-700',
-      info: 'bg-info-600 text-on-info-600',
-      transparent: 'bg-transparent text-neutral-700 border border-neutral-300'
-    };
-    return this.mergeClasses(
-      'inline-flex items-center text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded',
-      colorMap[this.color()]
-    );
-  });
+  readonly computedClasses = computed(() =>
+    this.mergeClasses(
+      'inline-flex items-center border text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-control-inner',
+      semanticSurface(this.kind(), this.color())
+    )
+  );
 }

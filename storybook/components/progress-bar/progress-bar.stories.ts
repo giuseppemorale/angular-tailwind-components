@@ -44,6 +44,10 @@ export const AllVariants: StoryObj<TailwindProgressBar> = {
   })
 };
 
+/**
+ * `showValue` is left on to show that the component suppresses the percentage itself: an
+ * indeterminate bar has no progress to report, so `value` and `showValue` have no effect here.
+ */
 export const Indeterminate: StoryObj<TailwindProgressBar> = {
   parameters: { controls: { exclude: ['value', 'showValue', 'striped'] } },
   args: {
@@ -51,7 +55,7 @@ export const Indeterminate: StoryObj<TailwindProgressBar> = {
     size: 'md',
     indeterminate: true,
     label: 'Loading...',
-    showValue: false,
+    showValue: true,
     showLabel: true,
     striped: false
   }

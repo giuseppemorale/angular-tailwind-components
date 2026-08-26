@@ -24,7 +24,7 @@ describe('TailwindMeter', () => {
   });
 
   it('should format legend values with default zero decimals', () => {
-    const legendValues = [...fixture.nativeElement.querySelectorAll('.text-neutral-500')].map((el: Element) =>
+    const legendValues = [...fixture.nativeElement.querySelectorAll('.text-fg-muted')].map((el: Element) =>
       el.textContent?.trim()
     );
     expect(legendValues).toContain('(51)');
@@ -35,7 +35,7 @@ describe('TailwindMeter', () => {
     fixture.componentRef.setInput('decimals', 2);
     fixture.detectChanges();
 
-    const legendValues = [...fixture.nativeElement.querySelectorAll('.text-neutral-500')].map((el: Element) =>
+    const legendValues = [...fixture.nativeElement.querySelectorAll('.text-fg-muted')].map((el: Element) =>
       el.textContent?.trim()
     );
     expect(legendValues).toContain('(51.28)');

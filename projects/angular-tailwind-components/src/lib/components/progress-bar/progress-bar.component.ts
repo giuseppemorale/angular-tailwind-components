@@ -18,7 +18,7 @@ export class TailwindProgressBar extends TailwindComponent {
   readonly label = input<string>('');
   /** Show the label row */
   readonly showLabel = input<boolean>(true);
-  /** Show percentage value */
+  /** Show percentage value. Ignored while `indeterminate` — there is no percentage to report. */
   readonly showValue = input<boolean>(true);
   /** Semantic color */
   readonly color = input<TailwindColor>('primary');
@@ -30,6 +30,26 @@ export class TailwindProgressBar extends TailwindComponent {
   readonly striped = input<boolean>(false);
 
   readonly clampedValue = computed(() => Math.max(0, Math.min(100, this.value())));
+
+  /**
+   * `true` when there is a percentage worth showing.
+   *
+   * An indeterminate bar means *we do not know how far along this is*, so `value` is not a
+   * measurement of anything — printing `0%` next to a sweeping bar is at best noise and at worst a
+   * claim that no progress has been made.
+   */
+  protected readonly showValueText = computed(() => this.showValue() && !this.indeterminate());
+
+  /** The label row is only rendered when it has something to hold. */
+  protected readonly hasLabelRow = computed(() => this.showLabel() && (!!this.label() || this.showValueText()));
+
+  /**
+   * `aria-valuenow` for the track, or `null` while indeterminate.
+   *
+   * Omitting it is what tells assistive technology the progress is unknown — the ARIA counterpart
+   * of hiding the percentage, and the reason it cannot simply be pinned to `0`.
+   */
+  protected readonly ariaValueNow = computed(() => (this.indeterminate() ? null : this.clampedValue()));
 
   readonly trackClasses = computed(() => {
     const sizeMap: Record<TailwindSize, string> = {

@@ -3,122 +3,135 @@ import { NgClass } from '@angular/common';
 import type { TailwindHeroicon, TailwindIconPosition } from '../../models';
 import { TailwindSize, TailwindColor, TailwindButtonKind, TailwindButtonRole } from '../../models';
 import { TAILWIND_BUTTON_KIND, TAILWIND_COMPONENTS_SIZE } from '../../tokens';
+import {
+  CONTROL_SIZE,
+  CONTROL_SQUARE,
+  DISABLED_PRESSABLE,
+  FOCUS_RING,
+  ICON_PIXEL_SIZE,
+  PRESS_FEEDBACK,
+  TRANSITION_CONTROL
+} from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 
-const iconPixelSizeMap: Record<TailwindSize, number> = {
-  xs: 14,
-  sm: 16,
-  md: 18,
-  lg: 20,
-  xl: 22
-};
-
 /** Always transparent background; no tint on hover, focus, or active. */
 const transparentColorClasses =
-  'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent border-transparent shadow-none text-neutral-600 focus-visible:outline-neutral-400';
+  'bg-transparent hover:bg-transparent active:bg-transparent focus:bg-transparent border-transparent text-neutral-600';
 
 const base = [
   'inline-flex items-center justify-center',
   'font-medium',
-  'transition-all duration-150 ease-in-out',
-  'focus-visible:outline-2 focus-visible:outline-offset-2',
-  'disabled:cursor-not-allowed disabled:opacity-50',
+  TRANSITION_CONTROL,
+  PRESS_FEEDBACK,
+  FOCUS_RING,
+  DISABLED_PRESSABLE,
   'cursor-pointer',
   'border'
 ];
 
+/**
+ * Filled surfaces.
+ *
+ * There is deliberately no `shadow-*` here any more. A drop shadow means *this element floats above
+ * the page*, which is true of a card or a menu and false of every button on a toolbar — when every
+ * button carried one the page read as cluttered. What replaces it is `surface-highlight`: a 1px
+ * inset white line along the top edge that catches the light and gives the fill a body, the way a
+ * physical key does, without lifting it off the surface.
+ */
 const solidMap: Record<TailwindColor, string> = {
   primary:
-    'bg-primary-600 text-on-primary-600 hover:bg-primary-700 hover:text-on-primary-700 active:bg-primary-800 active:text-on-primary-800 border-transparent focus-visible:outline-primary-600 shadow-sm',
-  secondary:
-    'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 border-neutral-300 focus-visible:outline-neutral-500 shadow-sm',
+    'bg-primary-600 text-on-primary-600 hover:bg-primary-700 hover:text-on-primary-700 active:bg-primary-800 active:text-on-primary-800 border-transparent surface-highlight',
+  secondary: 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200 active:bg-neutral-300 border-border-strong',
   danger:
-    'bg-danger-600 text-on-danger-600 hover:bg-danger-700 hover:text-on-danger-700 active:bg-danger-800 active:text-on-danger-800 border-transparent focus-visible:outline-danger-700 shadow-sm',
+    'bg-danger-600 text-on-danger-600 hover:bg-danger-700 hover:text-on-danger-700 active:bg-danger-800 active:text-on-danger-800 border-transparent surface-highlight',
   success:
-    'bg-success-700 text-on-success-700 hover:bg-success-800 hover:text-on-success-800 active:bg-success-900 active:text-on-success-900 border-transparent focus-visible:outline-success-600 shadow-sm',
+    'bg-success-700 text-on-success-700 hover:bg-success-800 hover:text-on-success-800 active:bg-success-900 active:text-on-success-900 border-transparent surface-highlight',
   warning:
-    'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-transparent focus-visible:outline-warning-600 shadow-sm',
-  info: 'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-transparent focus-visible:outline-info-600 shadow-sm',
+    'bg-warning-500 text-on-warning-500 hover:bg-warning-600 hover:text-on-warning-600 active:bg-warning-700 active:text-on-warning-700 border-transparent surface-highlight',
+  info: 'bg-info-600 text-on-info-600 hover:bg-info-700 hover:text-on-info-700 active:bg-info-800 active:text-on-info-800 border-transparent surface-highlight',
   transparent: transparentColorClasses
 };
 
-/** Filled surface like `solid`, without box shadow, border, or hover/active tint. */
+/**
+ * Tinted surface: a light wash of the color behind text of the same hue.
+ *
+ * The variant most product UIs reach for by default — it carries the semantic color without the
+ * weight of a filled button, so a row of actions can share a color without any of them shouting.
+ */
+const softMap: Record<TailwindColor, string> = {
+  primary: 'bg-primary-50 text-primary-700 border-transparent hover:bg-primary-100 active:bg-primary-200',
+  secondary: 'bg-neutral-100 text-neutral-700 border-transparent hover:bg-neutral-200 active:bg-neutral-300',
+  danger: 'bg-danger-50 text-danger-700 border-transparent hover:bg-danger-100 active:bg-danger-200',
+  success: 'bg-success-50 text-success-800 border-transparent hover:bg-success-100 active:bg-success-200',
+  warning: 'bg-warning-50 text-warning-800 border-transparent hover:bg-warning-100 active:bg-warning-200',
+  info: 'bg-info-50 text-info-800 border-transparent hover:bg-info-100 active:bg-info-200',
+  transparent: transparentColorClasses
+};
+
+/** Filled surface like `solid`, without the top highlight, border, or hover/active tint. */
 const flatMap: Record<TailwindColor, string> = {
-  primary: 'bg-primary-600 text-on-primary-600 border-0 shadow-none focus-visible:outline-primary-600',
-  secondary: 'bg-neutral-100 text-neutral-800 border-0 shadow-none focus-visible:outline-neutral-500',
-  danger: 'bg-danger-600 text-on-danger-600 border-0 shadow-none focus-visible:outline-danger-600',
-  success: 'bg-success-700 text-on-success-700 border-0 shadow-none focus-visible:outline-success-600',
-  warning: 'bg-warning-500 text-on-warning-500 border-0 shadow-none focus-visible:outline-warning-600',
-  info: 'bg-info-600 text-on-info-600 border-0 shadow-none focus-visible:outline-info-600',
+  primary: 'bg-primary-600 text-on-primary-600 border-transparent',
+  secondary: 'bg-neutral-100 text-neutral-800 border-transparent',
+  danger: 'bg-danger-600 text-on-danger-600 border-transparent',
+  success: 'bg-success-700 text-on-success-700 border-transparent',
+  warning: 'bg-warning-500 text-on-warning-500 border-transparent',
+  info: 'bg-info-600 text-on-info-600 border-transparent',
   transparent: transparentColorClasses
 };
 
 const outlinedMap: Record<TailwindColor, string> = {
-  primary:
-    'bg-transparent text-primary-600 border-primary-600 hover:bg-primary-50 active:bg-primary-100 focus-visible:outline-primary-600',
-  secondary:
-    'bg-transparent text-neutral-700 border-neutral-300 hover:bg-neutral-50 active:bg-neutral-100 focus-visible:outline-neutral-500',
-  danger:
-    'bg-transparent text-danger-800 border-danger-700 hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
-  success:
-    'bg-transparent text-success-800 border-success-700 hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
-  warning:
-    'bg-transparent text-warning-800 border-warning-700 hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-700',
-  info: 'bg-transparent text-info-800 border-info-700 hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
+  primary: 'bg-transparent text-primary-600 border-primary-600 hover:bg-primary-50 active:bg-primary-100',
+  secondary: 'bg-transparent text-neutral-700 border-border-strong hover:bg-neutral-50 active:bg-neutral-100',
+  danger: 'bg-transparent text-danger-800 border-danger-700 hover:bg-danger-50 active:bg-danger-100',
+  success: 'bg-transparent text-success-800 border-success-700 hover:bg-success-50 active:bg-success-100',
+  warning: 'bg-transparent text-warning-800 border-warning-700 hover:bg-warning-50 active:bg-warning-100',
+  info: 'bg-transparent text-info-800 border-info-700 hover:bg-info-50 active:bg-info-100',
   transparent: transparentColorClasses
 };
 
 /** Transparent + hover/active background tint (former `text` look). */
 const ghostMap: Record<TailwindColor, string> = {
-  primary:
-    'bg-transparent text-primary-600 border-transparent hover:bg-primary-50 active:bg-primary-100 focus-visible:outline-primary-600',
-  secondary:
-    'bg-transparent text-neutral-700 border-transparent hover:bg-neutral-100 active:bg-neutral-200 focus-visible:outline-neutral-500',
-  danger:
-    'bg-transparent text-danger-800 border-transparent hover:bg-danger-50 active:bg-danger-100 focus-visible:outline-danger-600',
-  success:
-    'bg-transparent text-success-800 border-transparent hover:bg-success-50 active:bg-success-100 focus-visible:outline-success-600',
-  warning:
-    'bg-transparent text-warning-800 border-transparent hover:bg-warning-50 active:bg-warning-100 focus-visible:outline-warning-700',
-  info: 'bg-transparent text-info-800 border-transparent hover:bg-info-50 active:bg-info-100 focus-visible:outline-info-600',
+  primary: 'bg-transparent text-primary-600 border-transparent hover:bg-primary-50 active:bg-primary-100',
+  secondary: 'bg-transparent text-neutral-700 border-transparent hover:bg-neutral-100 active:bg-neutral-200',
+  danger: 'bg-transparent text-danger-800 border-transparent hover:bg-danger-50 active:bg-danger-100',
+  success: 'bg-transparent text-success-800 border-transparent hover:bg-success-50 active:bg-success-100',
+  warning: 'bg-transparent text-warning-800 border-transparent hover:bg-warning-50 active:bg-warning-100',
+  info: 'bg-transparent text-info-800 border-transparent hover:bg-info-50 active:bg-info-100',
   transparent: transparentColorClasses
 };
 
 /** Text color from semantic color only; background stays transparent on hover/active. */
 const textMap: Record<TailwindColor, string> = {
-  primary: 'bg-transparent text-primary-600 border-transparent focus-visible:outline-primary-600',
-  secondary: 'bg-transparent text-neutral-700 border-transparent focus-visible:outline-neutral-500',
-  danger: 'bg-transparent text-danger-800 border-transparent focus-visible:outline-danger-600',
-  success: 'bg-transparent text-success-800 border-transparent focus-visible:outline-success-600',
-  warning: 'bg-transparent text-warning-800 border-transparent focus-visible:outline-warning-700',
-  info: 'bg-transparent text-info-800 border-transparent focus-visible:outline-info-600',
+  primary: 'bg-transparent text-primary-600 border-transparent',
+  secondary: 'bg-transparent text-neutral-700 border-transparent',
+  danger: 'bg-transparent text-danger-800 border-transparent',
+  success: 'bg-transparent text-success-800 border-transparent',
+  warning: 'bg-transparent text-warning-800 border-transparent',
+  info: 'bg-transparent text-info-800 border-transparent',
   transparent: transparentColorClasses
 };
 
-const styleMap = {
+const styleMap: Record<TailwindButtonKind, Record<TailwindColor, string>> = {
   solid: solidMap,
+  soft: softMap,
   flat: flatMap,
   outlined: outlinedMap,
   ghost: ghostMap,
   text: textMap
 };
 
-const sizeMap: Record<TailwindSize, string> = {
-  xs: 'text-xs px-2 py-1 rounded-sm',
-  sm: 'text-sm px-3 py-1.5 rounded-md',
-  md: 'text-sm px-4 py-2 rounded-md',
-  lg: 'text-base px-5 py-2.5 rounded-lg',
-  xl: 'text-base px-6 py-3 rounded-lg'
-};
-
-/** Square padding when `icon` is set and projected label is empty (icon-only). */
+/**
+ * Square footprint when `icon` is set and the projected label is empty (icon-only).
+ * The height already comes from {@link CONTROL_SIZE}; only the width and the now-wrong horizontal
+ * padding need correcting, which keeps an icon-only button exactly as tall as its labelled sibling.
+ */
 const iconOnlySizeMap: Record<TailwindSize, string> = {
-  xs: 'has-[.tailwind-button-label:empty]:p-1 has-[.tailwind-button-label:empty]:px-1',
-  sm: 'has-[.tailwind-button-label:empty]:p-1.5 has-[.tailwind-button-label:empty]:px-1.5',
-  md: 'has-[.tailwind-button-label:empty]:p-2 has-[.tailwind-button-label:empty]:px-2',
-  lg: 'has-[.tailwind-button-label:empty]:p-2.5 has-[.tailwind-button-label:empty]:px-2.5',
-  xl: 'has-[.tailwind-button-label:empty]:p-3 has-[.tailwind-button-label:empty]:px-3'
+  xs: `has-[.tailwind-button-label:empty]:px-0 has-[.tailwind-button-label:empty]:${CONTROL_SQUARE.xs}`,
+  sm: `has-[.tailwind-button-label:empty]:px-0 has-[.tailwind-button-label:empty]:${CONTROL_SQUARE.sm}`,
+  md: `has-[.tailwind-button-label:empty]:px-0 has-[.tailwind-button-label:empty]:${CONTROL_SQUARE.md}`,
+  lg: `has-[.tailwind-button-label:empty]:px-0 has-[.tailwind-button-label:empty]:${CONTROL_SQUARE.lg}`,
+  xl: `has-[.tailwind-button-label:empty]:px-0 has-[.tailwind-button-label:empty]:${CONTROL_SQUARE.xl}`
 };
 
 @Component({
@@ -174,7 +187,7 @@ export class TailwindButton extends TailwindComponent {
    */
   readonly ariaCurrent = input<'page' | 'step' | 'location' | 'date' | 'time' | 'true' | undefined>(undefined);
 
-  readonly iconPixelSize = computed(() => iconPixelSizeMap[this.size()]);
+  readonly iconPixelSize = computed(() => ICON_PIXEL_SIZE[this.size()]);
 
   /** A loading button is not activatable, so it is disabled at the DOM level too. */
   readonly isDisabled = computed(() => this.disabled() || this.loading());
@@ -183,8 +196,9 @@ export class TailwindButton extends TailwindComponent {
   readonly computedClasses = computed(() => {
     const size = this.size();
     const sizeClasses = [
-      sizeMap[size],
-      this.icon() || this.loading() ? iconOnlySizeMap[size] : '',
+      CONTROL_SIZE[size],
+      // A full-width button is never icon-only, so the square override would only fight `w-full`.
+      (this.icon() || this.loading()) && !this.fullWidth() ? iconOnlySizeMap[size] : '',
       this.fullWidth() ? 'w-full' : ''
     ]
       .filter(Boolean)

@@ -2,7 +2,18 @@ import { ChangeDetectionStrategy, Component, computed, forwardRef, inject, input
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindSize } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE, TAILWIND_LABELS } from '../../tokens';
-import { FIELD_SIZE } from '../../util/variants';
+import {
+  CONTROL_HEIGHT,
+  CONTROL_SQUARE,
+  DISABLED_PRESSABLE,
+  FIELD_BASE,
+  FIELD_SIZE,
+  FIELD_STATE,
+  FIELD_STATE_INVALID,
+  FOCUS_RING,
+  PRESS_FEEDBACK,
+  TRANSITION_CONTROL
+} from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 
@@ -71,26 +82,29 @@ export class TailwindNumberInput extends TailwindComponent implements ControlVal
     return max === undefined || (this.value() ?? max) < max;
   });
 
-  readonly inputClasses = computed(() => {
-    const stateClass = this.hasError()
-      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
-
-    return [
-      'block w-full bg-surface text-center tabular-nums',
-      'border transition-colors duration-150',
-      'placeholder:text-neutral-400',
-      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed',
+  readonly inputClasses = computed(() =>
+    [
+      'block',
+      FIELD_BASE,
+      'text-center tabular-nums',
       FIELD_SIZE[this.size()],
-      stateClass
-    ].join(' ');
-  });
+      this.hasError() ? FIELD_STATE_INVALID : FIELD_STATE
+    ].join(' ')
+  );
 
-  readonly stepperClasses =
-    'flex shrink-0 items-center justify-center rounded-md border border-neutral-300 bg-surface p-1.5 text-neutral-600 ' +
-    'hover:bg-neutral-50 hover:text-neutral-900 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer ' +
-    'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600';
+  /** The steppers match the field height so the three controls read as one object. */
+  readonly stepperClasses = computed(() =>
+    [
+      'flex shrink-0 items-center justify-center rounded-control border border-border-strong bg-surface text-neutral-600',
+      'hover:bg-surface-muted hover:text-fg cursor-pointer',
+      CONTROL_HEIGHT[this.size()],
+      CONTROL_SQUARE[this.size()],
+      TRANSITION_CONTROL,
+      PRESS_FEEDBACK,
+      FOCUS_RING,
+      DISABLED_PRESSABLE
+    ].join(' ')
+  );
 
   increment(): void {
     this.stepBy(this.step());

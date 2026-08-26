@@ -22,7 +22,7 @@ export class TailwindKbd extends TailwindComponent {
 
   readonly keyClasses = computed(() =>
     this.mergeClasses(
-      'inline-flex min-w-6 items-center justify-center rounded-md border border-neutral-300',
+      'inline-flex min-w-6 items-center justify-center rounded-control-inner border border-border-strong',
       'border-b-2 bg-surface px-1.5 py-0.5 font-mono text-xs font-medium text-neutral-700 shadow-xs'
     )
   );

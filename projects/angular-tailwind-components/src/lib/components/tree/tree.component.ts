@@ -86,8 +86,8 @@ export class TailwindTree extends TailwindComponent {
 
   rowClasses(flat: FlatNode): string {
     return [
-      'flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-sm transition-colors',
-      'focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary-600',
+      'flex w-full items-center gap-1.5 rounded-control px-2 py-1.5 text-left text-sm transition-colors duration-150 ease-in-out',
+      'focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring',
       flat.node.disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
       flat.selected ? 'bg-primary-50 font-medium text-primary-700' : 'text-neutral-700 hover:bg-neutral-50'
     ]

@@ -9,6 +9,7 @@ const meta: Meta<TailwindChip> = {
       control: 'select',
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent']
     },
+    kind: { control: 'select', options: ['solid', 'soft', 'outlined'] },
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     removable: { control: 'boolean' },
     disabled: { control: 'boolean' }
@@ -46,5 +47,19 @@ export const NotRemovable: StoryObj<TailwindChip> = {
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `<tailwind-chip [removable]="false">Read only</tailwind-chip>`
+  })
+};
+
+/** `soft` (default), `solid` and `outlined` — identical metrics, three levels of weight. */
+export const Kinds: StoryObj<TailwindChip> = {
+  name: 'Varianti',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <div class="flex flex-wrap items-center gap-2">
+        <tailwind-chip kind="solid" color="primary">Solid</tailwind-chip>
+        <tailwind-chip kind="soft" color="primary">Soft</tailwind-chip>
+        <tailwind-chip kind="outlined" color="primary">Outlined</tailwind-chip>
+      </div>`
   })
 };

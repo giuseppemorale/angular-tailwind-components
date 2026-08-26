@@ -80,4 +80,34 @@ describe('TailwindProgressBar', () => {
 
     expect(bar().style.width).toBe('100%');
   });
+
+  it('should not print a percentage while indeterminate', () => {
+    fixture.componentRef.setInput('value', 10);
+    fixture.componentRef.setInput('showValue', true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('10%');
+
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).not.toContain('%');
+  });
+
+  it('should drop aria-valuenow while indeterminate so the progress is announced as unknown', () => {
+    fixture.componentRef.setInput('value', 10);
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.detectChanges();
+
+    expect(track().hasAttribute('aria-valuenow')).toBe(false);
+    expect(track().getAttribute('aria-valuemax')).toBe('100');
+  });
+
+  it('should skip the label row entirely when it would be empty', () => {
+    fixture.componentRef.setInput('indeterminate', true);
+    fixture.componentRef.setInput('showLabel', true);
+    fixture.componentRef.setInput('label', '');
+    fixture.detectChanges();
+
+    // Only the track is left: no stray row keeping its bottom margin.
+    expect(fixture.nativeElement.querySelector('.mb-1\\.5')).toBeNull();
+  });
 });

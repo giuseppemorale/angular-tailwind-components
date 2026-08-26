@@ -10,6 +10,7 @@ const meta: Meta<TailwindAlert> = {
       control: 'select',
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent']
     },
+    kind: { control: 'select', options: ['solid', 'soft', 'outlined'] },
     title: { control: 'text' },
     dismissible: { control: 'boolean' },
     bordered: { control: 'boolean' },
@@ -64,6 +65,20 @@ export const WithActions: StoryObj<TailwindAlert> = {
             </div>
           </div>
         </tailwind-alert>
+      </div>`
+  })
+};
+
+/** In `bordered` mode the left stripe keeps the semantic color whatever the `kind`. */
+export const Kinds: StoryObj<TailwindAlert> = {
+  name: 'Variants',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <div class="flex flex-col gap-3">
+        <tailwind-alert kind="soft" color="warning" title="Soft">The default tinted surface.</tailwind-alert>
+        <tailwind-alert kind="solid" color="warning" title="Solid">A filled surface for the loudest messages.</tailwind-alert>
+        <tailwind-alert kind="outlined" color="warning" title="Outlined">Quietest of the three.</tailwind-alert>
       </div>`
   })
 };

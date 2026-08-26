@@ -1,11 +1,8 @@
 /**
- * App-wide UI strings used by components that render text or accessible names on their own
- * (close buttons, pagination controls, table empty state, …).
+ * App-wide UI strings for components that render text or accessible names on their own.
  *
- * Override any subset through `provideTailwindConfig(() => ({ LABELS: { close: 'Chiudi' } }))`;
- * omitted keys fall back to {@link DEFAULT_TAILWIND_LABELS}.
- *
- * Component inputs (e.g. `closeLabel` on `tailwind-modal`) still win over these defaults.
+ * Override any subset with `provideTailwindConfig({ LABELS: { close: 'Chiudi' } })`; omitted keys
+ * fall back to {@link DEFAULT_TAILWIND_LABELS}, and component inputs still win over both.
  */
 export interface TailwindLabels {
   // ── Overlays ───────────────────────────────────────────────────────────────
@@ -63,6 +60,34 @@ export interface TailwindLabels {
   clear: string;
   /** Label of the "today" shortcut in date pickers. */
   today: string;
+  /** Label of the "now" shortcut in time pickers. */
+  now: string;
+  /** Label of the confirm button in date and time pickers. */
+  apply: string;
+  /** Section heading for the time part of a datetime picker. */
+  time: string;
+  /** Placeholder of an empty date picker. */
+  selectDate: string;
+  /** Placeholder of an empty time picker. */
+  selectTime: string;
+  /** Placeholder of an empty datetime picker. */
+  selectDateTime: string;
+  /** Accessible name of a carousel region. */
+  carousel: string;
+  /** Accessible name of a carousel indicator; `{index}` and `{total}` are replaced. */
+  slide: string;
+  /** Confirm button text in a popconfirm. */
+  confirm: string;
+  /** Cancel button text in a popconfirm. */
+  cancel: string;
+  /** Accessible name of the decrement button in a number input. */
+  decrement: string;
+  /** Accessible name of the increment button in a number input. */
+  increment: string;
+  /** Accessible name of a star rating. */
+  rating: string;
+  /** Value text of a star rating; `{value}` and `{max}` are replaced. */
+  ratingValue: string;
 }
 
 export const DEFAULT_TAILWIND_LABELS: TailwindLabels = {
@@ -92,7 +117,21 @@ export const DEFAULT_TAILWIND_LABELS: TailwindLabels = {
 
   noResults: 'No results',
   clear: 'Clear',
-  today: 'Today'
+  today: 'Today',
+  now: 'Now',
+  apply: 'Apply',
+  time: 'Time',
+  selectDate: 'Select date',
+  selectTime: 'Select time',
+  selectDateTime: 'Select date and time',
+  carousel: 'Carousel',
+  slide: 'Slide {index} of {total}',
+  confirm: 'Confirm',
+  cancel: 'Cancel',
+  decrement: 'Decrease',
+  increment: 'Increase',
+  rating: 'Rating',
+  ratingValue: '{value} of {max}'
 };
 
 /** Merges consumer overrides onto {@link DEFAULT_TAILWIND_LABELS}. */

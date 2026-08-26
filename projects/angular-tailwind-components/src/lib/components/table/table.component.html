@@ -14,14 +14,28 @@
       <ng-content select="[tailwind-table-tools]" />
     </div>
   </div>
-  <div class="w-full rounded-lg border border-neutral-200">
+  <!--
+    `overflow-hidden` is what makes the rounded border actually read as rounded: the header's
+    background and the pagination bar are opaque rectangles, so without clipping they paint straight
+    over the four corners and the border looks broken exactly there. Overlays raised from inside a
+    cell (menu, tooltip, popconfirm) are portalled into the CDK container, so nothing that needs to
+    escape the table is clipped by this.
+  -->
+  <div class="w-full overflow-hidden rounded-surface border border-border">
     @if (loading()) {
-      <div class="flex items-center justify-center py-16 text-neutral-400">
-        <tailwind-icon icon="arrow-path" [size]="24" class="animate-spin mr-2 text-neutral-400" />
-        {{ loadingText() }}
+      <div class="px-4 py-2" role="status" [attr.aria-label]="loadingText()">
+        @for (row of skeletonRows; track row) {
+          <div class="flex items-center gap-4 py-3" [class.border-t]="!$first" [class.border-border]="!$first">
+            @for (cell of skeletonCells(); track $index) {
+              <div class="min-w-0 flex-1">
+                <tailwind-skeleton variant="text" [width]="cell" />
+              </div>
+            }
+          </div>
+        }
       </div>
     } @else {
-      <div class="tw-table-scroll overflow-x-auto">
+      <div class="tw-table-scroll overflow-x-auto" [class.tw-table-sticky]="stickyHeader()">
         <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
         <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-neutral-100">
           <ng-content select="thead" />
@@ -39,15 +53,15 @@
         </table>
       </div>
 
-      @if (paginated() && sortedData().length > 0) {
-        <div class="px-4 py-3 border-t border-neutral-200 bg-surface">
+      @if (paginated() && totalItems() > 0) {
+        <div class="px-4 py-3 border-t border-border bg-surface">
           <tailwind-pagination
-            [totalItems]="pagination()?.totalItems ?? sortedData().length"
+            [totalItems]="totalItems()"
             [pageSize]="pageSize()"
-            (pageSizeChange)="pageSize.set($event)"
+            (pageSizeChange)="setPageSize($event)"
             [lengthOptions]="paginationLengthOptions()"
             [currentPage]="currentPage()"
-            (onPageChange)="currentPage.set($event)"
+            (pageChange)="goToPage($event)"
             [ariaLabel]="pagination()?.ariaLabel ?? ''"
             [summary]="paginationSummary()">
           </tailwind-pagination>

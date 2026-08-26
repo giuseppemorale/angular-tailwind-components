@@ -78,7 +78,7 @@ export const WithMinMax: StoryObj<TailwindCalendarPanel> = {
   args: dateAroundToday(-5, 5)
 };
 
-/** Oggi fuori dal range: il pulsante «Oggi» è visibile ma disabilitato. */
+/** Today outside the allowed range: the Today button stays visible but disabled. */
 export const WithMinMaxTodayDisabled: StoryObj<TailwindCalendarPanel> = {
   parameters: { controls: { exclude: ['highlightDate'] } },
   args: previousMonthRange()

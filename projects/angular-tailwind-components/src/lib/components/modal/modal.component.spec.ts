@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { resolveTailwindLabels } from '../../models';
 import { TAILWIND_LABELS } from '../../tokens';
@@ -6,13 +7,28 @@ import { TailwindModal } from './modal.component';
 /** The exit animation is driven by a timer; advance past it to reach the closed state. */
 const EXIT_ANIMATION_MS = 200;
 
+@Component({
+  imports: [TailwindModal],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <tailwind-modal>
+      Dialog title
+      <div tailwind-modal-content>Projected body</div>
+      <div tailwind-modal-footer><button type="button">OK</button></div>
+    </tailwind-modal>
+  `
+})
+class ModalHostComponent {
+  readonly modal = viewChild.required(TailwindModal);
+}
+
 describe('TailwindModal', () => {
   let fixture: ComponentFixture<TailwindModal>;
   let component: TailwindModal;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TailwindModal]
+      imports: [TailwindModal, ModalHostComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TailwindModal);
@@ -20,12 +36,17 @@ describe('TailwindModal', () => {
     fixture.detectChanges();
   });
 
-  // Destroying releases the shared scroll lock, so a test that opens without closing
-  // cannot leak `overflow: hidden` into the next one.
+  // Destroying disposes the overlay, so a dialog left open cannot leak into the next test.
   afterEach(() => fixture.destroy());
 
+  /** The panel now renders into the CDK overlay container, outside the fixture's DOM. */
   function dialog(): HTMLElement | null {
-    return fixture.nativeElement.querySelector('[role="dialog"]');
+    return document.querySelector('.cdk-overlay-container [role="dialog"]');
+  }
+
+  async function settleClose(): Promise<void> {
+    await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
+    fixture.detectChanges();
   }
 
   it('should create', () => {
@@ -40,9 +61,7 @@ describe('TailwindModal', () => {
     component.open();
     fixture.detectChanges();
 
-    const el = dialog();
-    expect(el).not.toBeNull();
-    expect(el?.getAttribute('aria-modal')).toBe('true');
+    expect(dialog()?.getAttribute('aria-modal')).toBe('true');
   });
 
   it('should name the dialog with its own title element', () => {
@@ -50,39 +69,31 @@ describe('TailwindModal', () => {
     fixture.detectChanges();
 
     const labelledBy = dialog()?.getAttribute('aria-labelledby');
-    const title = fixture.nativeElement.querySelector('h2');
+    const title = document.querySelector('.cdk-overlay-container h2');
     expect(labelledBy).toBeTruthy();
     expect(title?.getAttribute('id')).toBe(labelledBy);
   });
 
-  it('should lock body scroll while open and release it on close', async () => {
-    component.open();
-    fixture.detectChanges();
-    expect(document.body.style.overflow).toBe('hidden');
-
-    component.close();
-    await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
-    fixture.detectChanges();
-
-    expect(document.body.style.overflow).toBe('');
-  });
-
-  it('should keep the page locked until the last stacked overlay closes', async () => {
+  // Page scroll blocking is delegated to the CDK block strategy, which no-ops on a document that
+  // cannot scroll — so jsdom cannot observe it. What is verifiable here is that stacked dialogs
+  // own independent overlays and tear down one at a time.
+  it('should let stacked dialogs close independently', async () => {
     const second = TestBed.createComponent(TailwindModal);
 
     component.open();
     second.componentInstance.open();
     fixture.detectChanges();
     second.detectChanges();
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.querySelectorAll('.cdk-overlay-container [role="dialog"]').length).toBe(2);
 
     second.componentInstance.close();
     await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
-    expect(document.body.style.overflow).toBe('hidden');
+    expect(document.querySelectorAll('.cdk-overlay-container [role="dialog"]').length).toBe(1);
 
     component.close();
-    await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
-    expect(document.body.style.overflow).toBe('');
+    await settleClose();
+    expect(document.querySelectorAll('.cdk-overlay-container [role="dialog"]').length).toBe(0);
+    second.destroy();
   });
 
   it('should return focus to the element that opened it', async () => {
@@ -94,8 +105,7 @@ describe('TailwindModal', () => {
     fixture.detectChanges();
 
     component.close();
-    await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
-    fixture.detectChanges();
+    await settleClose();
 
     expect(document.activeElement).toBe(trigger);
     trigger.remove();
@@ -103,37 +113,66 @@ describe('TailwindModal', () => {
 
   it('should emit onClose after the exit animation', async () => {
     const spy = vi.fn();
-    component.onClose.subscribe(spy);
+    component.closed.subscribe(spy);
 
     component.open();
     fixture.detectChanges();
     component.close();
-
     expect(spy).not.toHaveBeenCalled();
 
-    await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
+    await settleClose();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('should close on backdrop click only when closeOnBackdrop is true', async () => {
+  it('should close on Escape when closeOnEscape is true', async () => {
     component.open();
-    fixture.componentRef.setInput('closeOnBackdrop', false);
     fixture.detectChanges();
 
-    const backdrop: HTMLElement = fixture.nativeElement.querySelector('[aria-hidden="true"]');
-    backdrop.click();
-    await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
+    dialog()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await settleClose();
+
+    expect(dialog()).toBeNull();
+  });
+
+  it('should ignore Escape when closeOnEscape is false', async () => {
+    fixture.componentRef.setInput('closeOnEscape', false);
+    component.open();
     fixture.detectChanges();
+
+    dialog()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    await settleClose();
+
+    expect(dialog()).not.toBeNull();
+  });
+
+  it('should close on backdrop click only when closeOnBackdrop is true', async () => {
+    fixture.componentRef.setInput('closeOnBackdrop', false);
+    component.open();
+    fixture.detectChanges();
+
+    const backdrop: HTMLElement | null = document.querySelector('.tailwind-modal-backdrop');
+    expect(backdrop).not.toBeNull();
+    backdrop?.click();
+    await settleClose();
 
     expect(dialog()).not.toBeNull();
   });
 
   it('should hide the close button when showCloseButton is false', () => {
-    component.open();
     fixture.componentRef.setInput('showCloseButton', false);
+    component.open();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('tailwind-button')).toBeNull();
+    expect(document.querySelector('.cdk-overlay-container tailwind-button')).toBeNull();
+  });
+
+  it('should size the overlay pane from the size input', () => {
+    fixture.componentRef.setInput('size', 'xl');
+    component.open();
+    fixture.detectChanges();
+
+    const pane = dialog()?.closest('.cdk-overlay-pane') as HTMLElement | null;
+    expect(pane?.style.maxWidth).toBe('56rem');
   });
 
   it('should label the close button from TAILWIND_LABELS', async () => {
@@ -147,22 +186,58 @@ describe('TailwindModal', () => {
     localized.componentInstance.open();
     localized.detectChanges();
 
-    expect(localized.nativeElement.querySelector('button[aria-label="Chiudi"]')).toBeTruthy();
+    expect(document.querySelector('.cdk-overlay-container button[aria-label="Chiudi"]')).toBeTruthy();
+    localized.destroy();
   });
 
   it('should prefer the closeLabel input over the token default', () => {
-    component.open();
     fixture.componentRef.setInput('closeLabel', 'Dismiss dialog');
+    component.open();
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('button[aria-label="Dismiss dialog"]')).toBeTruthy();
+    expect(document.querySelector('.cdk-overlay-container button[aria-label="Dismiss dialog"]')).toBeTruthy();
   });
 
-  it('should apply the size variant to the panel', () => {
-    component.open();
-    fixture.componentRef.setInput('size', 'xl');
-    fixture.detectChanges();
+  describe('content projection', () => {
+    let host: ComponentFixture<ModalHostComponent>;
 
-    expect(fixture.nativeElement.querySelector('[tabindex="-1"]')?.className).toContain('max-w-4xl');
+    beforeEach(() => {
+      host = TestBed.createComponent(ModalHostComponent);
+      host.detectChanges();
+    });
+
+    afterEach(() => host.destroy());
+
+    function panelText(): string {
+      return document.querySelector('.cdk-overlay-container [role="dialog"]')?.textContent ?? '';
+    }
+
+    it('should project all three slots into the overlay', () => {
+      host.componentInstance.modal().open();
+      host.detectChanges();
+
+      expect(panelText()).toContain('Dialog title');
+      expect(panelText()).toContain('Projected body');
+      expect(panelText()).toContain('OK');
+    });
+
+    it('should keep the projected content across close and reopen', async () => {
+      const modal = host.componentInstance.modal();
+
+      modal.open();
+      host.detectChanges();
+      expect(panelText()).toContain('Projected body');
+
+      modal.close();
+      await new Promise(resolve => setTimeout(resolve, EXIT_ANIMATION_MS + 20));
+      host.detectChanges();
+      expect(document.querySelector('.cdk-overlay-container [role="dialog"]')).toBeNull();
+
+      modal.open();
+      host.detectChanges();
+      expect(panelText()).toContain('Dialog title');
+      expect(panelText()).toContain('Projected body');
+      expect(panelText()).toContain('OK');
+    });
   });
 });

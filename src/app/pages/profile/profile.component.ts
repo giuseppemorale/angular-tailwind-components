@@ -1,7 +1,9 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
+  TailwindAvatar,
   TailwindButton,
   TailwindCard,
   TailwindDivider,
@@ -10,9 +12,9 @@ import {
   TailwindSpinner,
   TailwindTextarea,
   TailwindTitle,
+  TailwindToastService,
   TailwindToggle,
-  TailwindUpload,
-  TailwindToastService
+  TailwindUpload
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
 
@@ -22,6 +24,7 @@ import { HeaderComponent } from '../../core/template/header/header.component';
     HeaderComponent,
     TailwindCard,
     TailwindTitle,
+    TailwindAvatar,
     TailwindDivider,
     TailwindInput,
     TailwindTextarea,
@@ -37,10 +40,11 @@ import { HeaderComponent } from '../../core/template/header/header.component';
 })
 export class ProfileComponent {
   private readonly toastService = inject(TailwindToastService);
+  private readonly transloco = inject(TranslocoService);
 
   readonly breadcrumb = [
-    { label: 'Home', link: '/', icon: 'home' },
-    { label: 'Profilo', link: '/profile' }
+    { label: this.transloco.translate('HOME.BREADCRUMB'), link: '/', icon: 'home' },
+    { label: this.transloco.translate('PROFILE.PAGE_TITLE'), link: '/profile' }
   ];
 
   readonly saving = signal(false);
@@ -58,12 +62,25 @@ export class ProfileComponent {
     notify: new FormControl<boolean>(false, { nonNullable: true })
   });
 
+  /** Nome digitato nel form: alimenta le iniziali di `tailwind-avatar`. */
+  private readonly nameValue = toSignal(this.form.controls.name.valueChanges, {
+    initialValue: this.form.controls.name.value
+  });
+
+  readonly avatarName = computed(
+    () => this.nameValue().trim() || this.transloco.translate('PROFILE.AVATAR_FALLBACK_NAME')
+  );
+
   simulateSave(): void {
     this.saving.set(true);
     setTimeout(() => {
       this.saving.set(false);
       this.lastSave.set(new Date());
-      this.toastService.success('Salvataggio', 'Salvataggio effettuato con successo', 'check-circle');
+      this.toastService.success(
+        this.transloco.translate('PROFILE.TOAST_SAVE_TITLE'),
+        this.transloco.translate('PROFILE.TOAST_SAVE_BODY'),
+        'check-circle'
+      );
     }, 1200);
   }
 }

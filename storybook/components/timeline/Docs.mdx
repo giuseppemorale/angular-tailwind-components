@@ -1,0 +1,48 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TimelineStories from './timeline.stories';
+import { TailwindTimelineItem } from '../../../projects/angular-tailwind-components/src/public-api';
+
+<Meta of={TimelineStories} />
+
+# Timeline
+
+`TailwindTimeline` renders an ordered sequence of events: activity feeds, order tracking, audit trails.
+
+It renders as an `<ol>`: the order carries meaning, so a screen reader must announce it as an ordered list rather than a stack of divs. The connecting line and the dots are decorative and hidden from assistive technology.
+
+---
+
+## Import
+
+```typescript
+import { TailwindTimeline, TailwindTimelineItem } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindTimeline (tailwind-timeline)`
+
+<ArgTypes of={TimelineStories} />
+
+### `TailwindTimelineItem (tailwind-timeline-item)`
+
+<ArgTypes of={TailwindTimelineItem} />
+
+---
+
+## Example
+
+<Canvas of={TimelineStories.Timeline} />
+
+```typescript
+@Component({
+  imports: [TailwindTimeline, TailwindTimelineItem],
+  template: ` <tailwind-timeline ariaLabel="Storico ordine">
+    <tailwind-timeline-item title="Ordine ricevuto" time="09:12" color="success" icon="check">
+      Pagamento autorizzato.
+    </tailwind-timeline-item>
+    <tailwind-timeline-item title="Spedito" time="14:05" [last]="true" />
+  </tailwind-timeline>`
+})
+export class ExampleComponent {}
+```

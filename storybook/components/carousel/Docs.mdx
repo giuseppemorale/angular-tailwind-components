@@ -1,0 +1,52 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as CarouselStories from './carousel.stories';
+import { TailwindCarouselSlide } from '../../../projects/angular-tailwind-components/src/public-api';
+
+<Meta of={CarouselStories} />
+
+# Carousel
+
+`TailwindCarousel` presents projected slides one at a time.
+
+Autoplay is optional and **always** pauses on hover and on focus: a carousel that advances on its own and cannot be stopped fails WCAG 2.2.2 (Pause, Stop, Hide). Inactive slides stay in the DOM but carry `hidden` and `inert`, so neither Tab nor screen readers reach them.
+
+---
+
+## Import
+
+```typescript
+import { TailwindCarousel, TailwindCarouselSlide } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindCarousel (tailwind-carousel)`
+
+<ArgTypes of={CarouselStories} />
+
+### `TailwindCarouselSlide (tailwind-carousel-slide)`
+
+<ArgTypes of={TailwindCarouselSlide} />
+
+---
+
+---
+
+## Example
+
+<Canvas of={CarouselStories.Carousel} />
+
+```typescript
+@Component({
+  imports: [TailwindCarousel, TailwindCarouselSlide],
+  template: ` <tailwind-carousel ariaLabel="In evidenza" [autoplayInterval]="5000">
+    <tailwind-carousel-slide ariaLabel="Prima">…</tailwind-carousel-slide>
+    <tailwind-carousel-slide ariaLabel="Seconda">…</tailwind-carousel-slide>
+  </tailwind-carousel>`
+})
+export class ExampleComponent {}
+```
+
+## Keyboard
+
+With focus inside the carousel, Left and Right arrows move to the previous and next slide.

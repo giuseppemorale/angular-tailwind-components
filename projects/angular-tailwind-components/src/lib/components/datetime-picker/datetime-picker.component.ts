@@ -10,67 +10,19 @@ import {
   inject,
   Injector,
   input,
+  LOCALE_ID,
   signal,
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
+import { TAILWIND_DATETIME_LANGUAGE, TAILWIND_LABELS } from '../../tokens/tokens';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
 import { isTodayInRange, resolveRangeBounds } from '../calendar-panel/util/calendar-date-range';
 import { TailwindCalendarPanel } from '../calendar-panel/calendar-panel.component';
 import { CalendarView } from '../calendar-panel/util/calendar-view';
+import { calendarLabelsFor } from '../calendar-panel/util/calendar-i18n';
 import { TailwindComponent } from '../tailwind.component';
-
-type Lang = 'it' | 'en';
-
-const I18N: Record<
-  Lang,
-  { months: string[]; weekDays: string[]; time: string; today: string; confirm: string; placeholder: string }
-> = {
-  it: {
-    months: [
-      'Gennaio',
-      'Febbraio',
-      'Marzo',
-      'Aprile',
-      'Maggio',
-      'Giugno',
-      'Luglio',
-      'Agosto',
-      'Settembre',
-      'Ottobre',
-      'Novembre',
-      'Dicembre'
-    ],
-    weekDays: ['Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa', 'Do'],
-    time: 'Ora',
-    today: 'Oggi',
-    confirm: 'Applica',
-    placeholder: 'Seleziona data e ora'
-  },
-  en: {
-    months: [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ],
-    weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-    time: 'Time',
-    today: 'Today',
-    confirm: 'Apply',
-    placeholder: 'Select date and time'
-  }
-};
 
 @Component({
   selector: 'tailwind-datetime-picker',
@@ -84,17 +36,33 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
   private readonly calendarPanel = viewChild(TailwindCalendarPanel);
-  private readonly lang: Lang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
+  private readonly locale = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? inject(LOCALE_ID);
+  private readonly labels = inject(TAILWIND_LABELS);
 
-  protected readonly i18n = I18N[this.lang];
+  /** Month and weekday names for the active locale, plus its first day of the week. */
+  protected readonly calendar = calendarLabelsFor(this.locale);
+  protected readonly i18n = {
+    months: this.calendar.months,
+    weekDays: this.calendar.weekDays,
+    today: this.labels.today,
+    now: this.labels.now,
+    apply: this.labels.apply,
+    confirm: this.labels.apply,
+    time: this.labels.time,
+    placeholder: this.labels.selectDateTime
+  };
   protected readonly hours = Array.from({ length: 24 }, (_, i) => i);
   protected readonly minutes = Array.from({ length: 60 }, (_, i) => i);
 
+  /** Visible label of the field group. */
   readonly label = input<string>('');
+  /** Placeholder text; falls back to the localized default when empty. */
   readonly placeholder = input<string | undefined>(undefined);
   /** Angular [DatePipe](https://angular.dev/api/common/DatePipe) format string. */
   readonly format = input<string>('dd/MM/yyyy HH:mm');
+  /** Earliest selectable date. */
   readonly minDate = input<Date | null | undefined>(undefined);
+  /** Latest selectable date. */
   readonly maxDate = input<Date | null | undefined>(undefined);
 
   readonly selected = signal<Date | null>(null);
@@ -120,7 +88,7 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
     // Per i formati numerici (default dd/MM/yyyy HH:mm) il risultato è identico in ogni locale.
     const fmt = this.format();
     try {
-      return formatDate(d, fmt, this.lang === 'it' ? 'it-IT' : 'en-US');
+      return formatDate(d, fmt, this.locale);
     } catch {
       return formatDate(d, fmt, 'en-US');
     }

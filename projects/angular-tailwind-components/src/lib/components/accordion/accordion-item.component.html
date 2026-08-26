@@ -1,10 +1,10 @@
-<div [class]="mergeClasses('border-b border-neutral-200 last:border-b-0')">
+<div [class]="mergeClasses('border-b border-border last:border-b-0')">
   <button
     type="button"
     [attr.id]="subId('trigger')"
     [disabled]="disabled()"
     (click)="toggle()"
-    class="flex items-center justify-between w-full px-5 py-4 text-left text-sm font-medium text-neutral-800 hover:bg-neutral-50 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-primary-600"
+    class="flex items-center justify-between w-full px-5 py-4 text-left text-sm font-medium text-neutral-800 hover:bg-neutral-50 transition-colors duration-150 ease-in-out cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
     [attr.aria-expanded]="isExpanded()"
     [attr.aria-controls]="subId('panel')">
     <span>{{ title() }}</span>

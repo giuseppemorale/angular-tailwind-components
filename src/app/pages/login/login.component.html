@@ -4,7 +4,7 @@
   <tailwind-card class="w-full max-w-md" [hasFooter]="false">
     <div tailwind-card-header class="flex flex-wrap items-center justify-between gap-2">
       <tailwind-title titleTag="h4" [text]="'LOGIN.TITLE' | transloco" icon="arrow-right-on-rectangle" />
-      <tailwind-button kind="text" color="secondary" (onClick)="helpDrawer.open()">
+      <tailwind-button kind="text" color="secondary" (click)="helpDrawer.open()">
         {{ 'LOGIN.BTN_HELP' | transloco }}
       </tailwind-button>
     </div>
@@ -44,7 +44,7 @@
           id="login-remember"
           [formControl]="form.controls.remember"
           [label]="'LOGIN.FIELD_REMEMBER' | transloco" />
-        <tailwind-button type="button" kind="text" color="secondary" (onClick)="toggleOtpMode()">
+        <tailwind-button type="button" kind="text" color="secondary" (click)="toggleOtpMode()">
           {{ (useOtp() ? 'LOGIN.LINK_PASSWORD_MODE' : 'LOGIN.LINK_OTP_MODE') | transloco }}
         </tailwind-button>
       </div>
@@ -66,6 +66,6 @@
 <tailwind-drawer #helpDrawer [title]="'LOGIN.DRAWER_TITLE' | transloco" position="right">
   <p class="text-sm text-neutral-600 m-0">{{ 'LOGIN.DRAWER_BODY' | transloco }}</p>
   <div class="mt-4">
-    <tailwind-button (onClick)="helpDrawer.close()">{{ 'LOGIN.DRAWER_BTN_CLOSE' | transloco }}</tailwind-button>
+    <tailwind-button (click)="helpDrawer.close()">{{ 'LOGIN.DRAWER_BTN_CLOSE' | transloco }}</tailwind-button>
   </div>
 </tailwind-drawer>

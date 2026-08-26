@@ -24,20 +24,16 @@ export class TailwindDivider extends TailwindComponent {
     const variant = this.variant() === 'dashed' ? 'border-dashed' : 'border-solid';
 
     if (this.orientation() === 'vertical') {
-      return this.mergeClasses(
-        'self-stretch shrink-0 w-px min-h-full border-0 border-l',
-        variant,
-        'border-neutral-200'
-      );
+      return this.mergeClasses('self-stretch shrink-0 w-px min-h-full border-0 border-l', variant, 'border-border');
     }
 
-    return this.mergeClasses('w-full border-0 border-t', variant, 'border-neutral-200', 'my-4', inset);
+    return this.mergeClasses('w-full border-0 border-t', variant, 'border-border', 'my-4', inset);
   });
 
   /** Top rule for labeled horizontal layout */
   readonly ruleLineClass = computed(() => {
     const variant = this.variant() === 'dashed' ? 'border-dashed' : 'border-solid';
-    return ['border-neutral-200', variant].join(' ');
+    return ['border-border', variant].join(' ');
   });
 
   readonly labeledRowClass = computed(() =>

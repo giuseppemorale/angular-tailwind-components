@@ -19,7 +19,7 @@
             #mobileToolbarMenu
             [items]="mobileMenuItems()"
             align="left"
-            (onSelect)="selectMenuItem($event)" />
+            (itemSelect)="selectMenuItem($event)" />
         </div>
       }
       <div class="hidden min-w-0 flex-1 flex-row flex-wrap items-center gap-1 md:flex">
@@ -53,7 +53,7 @@
                 [items]="item.items!"
                 [placement]="submenuPlacement()"
                 align="left"
-                (onSelect)="selectMenuItem($event)" />
+                (itemSelect)="selectMenuItem($event)" />
             </div>
           } @else {
             <button
@@ -112,7 +112,7 @@
               [items]="item.items!"
               [placement]="submenuPlacement()"
               align="left"
-              (onSelect)="selectMenuItem($event)" />
+              (itemSelect)="selectMenuItem($event)" />
           </div>
         } @else {
           <button

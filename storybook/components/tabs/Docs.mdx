@@ -1,15 +1,36 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TabsStories from './tabs.stories';
+import { TailwindTab } from '../../../projects/angular-tailwind-components/src/public-api';
 
 <Meta of={TabsStories} />
 
 # Tabs
 
-`TailwindTabGroup` e `TailwindTab` definiscono schede con contenuto proiettato e indice attivo (model).
+`TailwindTabGroup` and `TailwindTab` define tabs with projected content and a two-way active index.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindTab, TailwindTabGroup } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindTabGroup (tailwind-tab-group)`
+
+<ArgTypes of={TabsStories} />
+
+### `TailwindTab (tailwind-tab)`
+
+<ArgTypes of={TailwindTab} />
+
+---
+
+## Example
+
+<Canvas of={TabsStories.Tabs} />
 
 ```typescript
 @Component({
@@ -23,145 +44,3 @@ export class ExampleComponent {
   index = 0;
 }
 ```
-
-## Anteprima
-
-<Canvas of={TabsStories.Tabs} />
-
----
-
-## Properties
-
-### `TailwindTabGroup (tailwind-tab-group)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta lista tab.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>TailwindColor</code>
-      </td>
-      <td>
-        <code>'primary'</code>
-      </td>
-      <td>Colore della tab attiva (testo e indicatore sotto).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>scrollable</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Scroll orizzontale con <code>tailwind-button</code> (<code>kind="ghost"</code>, <code>color="transparent"</code>
-        ); rotella/trackpad sulla lista tab.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>stretch</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Se <code>true</code>, i pulsanti tab occupano equamente tutta la larghezza della lista. Ignorato quando{' '}
-        <code>scrollable</code> è <code>true</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>activeIndex</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;number&gt;</code>
-      </td>
-      <td>
-        <code>0</code>
-      </td>
-      <td>Indice tab attiva (two-way).</td>
-    </tr>
-  </tbody>
-</table>
-
-### `TailwindTab (tailwind-tab)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>—</td>
-      <td>Richiesto: testo tab.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>icon</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Icona o classe CSS opzionale.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>disabled</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Tab non selezionabile.</td>
-    </tr>
-  </tbody>
-</table>

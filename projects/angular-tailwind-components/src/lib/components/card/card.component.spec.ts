@@ -37,4 +37,35 @@ describe('TailwindCard', () => {
     expect(surface.className).toContain('flex');
     expect(surface.className).toContain('flex-col');
   });
+
+  it('should pad every slot generously at the default comfortable density', () => {
+    const surface = host.firstElementChild as HTMLElement;
+    const [header, body, footer] = Array.from(surface.children) as HTMLElement[];
+
+    expect(header.className).toContain('px-6');
+    expect(body.className).toContain('p-6');
+    expect(footer.className).toContain('px-6');
+  });
+
+  it('should tighten every slot at compact density', () => {
+    fixture.componentRef.setInput('density', 'compact');
+    fixture.detectChanges();
+
+    const surface = host.firstElementChild as HTMLElement;
+    const [header, body, footer] = Array.from(surface.children) as HTMLElement[];
+
+    expect(header.className).toContain('px-4');
+    expect(body.className).toContain('p-4');
+    expect(footer.className).toContain('px-4');
+    expect(body.className).not.toContain('p-6');
+  });
+
+  it('should tint the header only when headerBg is set', () => {
+    const header = () => host.firstElementChild!.firstElementChild as HTMLElement;
+    expect(header().className).not.toContain('bg-surface-muted');
+
+    fixture.componentRef.setInput('headerBg', true);
+    fixture.detectChanges();
+    expect(header().className).toContain('bg-surface-muted');
+  });
 });

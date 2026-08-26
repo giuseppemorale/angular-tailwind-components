@@ -25,19 +25,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent, Subscription } from 'rxjs';
 import { TailwindOption, TailwindSize } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE, TAILWIND_LABELS } from '../../tokens';
-import { FIELD_SIZE } from '../../util/variants';
+import { FIELD_BASE, FIELD_SIZE, FIELD_STATE, FIELD_STATE_INVALID } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindIcon } from '../icon/icon.component';
-
-/** Context passed to the `#item` ng-template. */
-export interface TailwindAutocompleteItemContext<T = unknown> {
-  $implicit: TailwindOption<T>;
-  option: TailwindOption<T>;
-  index: number;
-  selected: boolean;
-  active: boolean;
-}
+import type { TailwindAutocompleteItemContext } from './interfaces/autocomplete-item-context.interface';
 
 @Component({
   imports: [NgTemplateOutlet, TailwindIcon, TailwindSafeHtmlPipe],
@@ -101,9 +93,8 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
   /** Available options */
   readonly options = input<TailwindOption<T>[]>([]);
   /**
-   * How an option value is matched against the current value. Defaults to identity (`Object.is`),
-   * which does **not** match structurally equal objects coming from different fetches — pass a
-   * comparator when option values are objects, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
+   * How an option value is matched against the current value; defaults to `Object.is`.
+   * Pass a comparator for object values, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
    */
   readonly compareWith = input<(a: T | null, b: T | null) => boolean>((a, b) => Object.is(a, b));
   /** Size variant */
@@ -127,7 +118,7 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
   readonly value = model<T | null>(null);
 
   /** Emits the current search query (after debounce / minSearchLength) */
-  readonly onSearch = output<string>();
+  readonly searchChange = output<string>();
 
   /** Custom option row template (`ng-template` with `#item`) */
   readonly itemTemplate = contentChild('item', { read: TemplateRef });
@@ -155,20 +146,9 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
     return opts.filter(o => o.label.toLowerCase().includes(q));
   });
 
-  readonly inputClasses = computed(() => {
-    const stateClass = this.hasError()
-      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-neutral-300 focus:outline-primary-500 text-neutral-900';
-
-    return [
-      'block w-full bg-surface border transition-colors duration-150',
-      'placeholder:text-neutral-400',
-      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed',
-      FIELD_SIZE[this.size()],
-      stateClass
-    ].join(' ');
-  });
+  readonly inputClasses = computed(() =>
+    ['block', FIELD_BASE, FIELD_SIZE[this.size()], this.hasError() ? FIELD_STATE_INVALID : FIELD_STATE].join(' ')
+  );
 
   private onChange: (value: T | null) => void = () => {};
   private onTouched: () => void = () => {};
@@ -216,7 +196,7 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
         : isSelected
           ? 'bg-primary-50 text-primary-700 font-medium'
           : isActive
-            ? 'bg-neutral-100 text-neutral-900'
+            ? 'bg-neutral-100 text-fg'
             : 'text-neutral-800 hover:bg-neutral-50'
     ].join(' ');
   }
@@ -356,13 +336,13 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
     }
 
     if (debounce <= 0) {
-      this.onSearch.emit(query);
+      this.searchChange.emit(query);
       return;
     }
 
     this.searchDebounceTimer = setTimeout(() => {
       this.ngZone.run(() => {
-        this.onSearch.emit(query);
+        this.searchChange.emit(query);
         this.cdr.markForCheck();
       });
       this.searchDebounceTimer = null;

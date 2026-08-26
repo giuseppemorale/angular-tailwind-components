@@ -46,8 +46,8 @@ export class TailwindToggle extends TailwindComponent implements ControlValueAcc
     const base = [
       'relative inline-flex shrink-0 rounded-full',
       'border-2 border-transparent',
-      'transition-colors duration-200 ease-in-out',
-      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600',
+      'transition-colors duration-150 ease-in-out',
+      'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
       'cursor-pointer disabled:cursor-not-allowed'
     ];
 

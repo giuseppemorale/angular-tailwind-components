@@ -1,13 +1,4 @@
-@if (isOpen()) {
-  <!-- Backdrop -->
-  <div
-    class="fixed inset-0 bg-black/40 backdrop-blur-sm z-1040 transition-opacity duration-300"
-    [class.opacity-100]="isVisible()"
-    [class.opacity-0]="!isVisible()"
-    (click)="closeOnBackdrop() && close()"
-    aria-hidden="true"></div>
-
-  <!-- Drawer Panel -->
+<ng-template #panelTemplate>
   <div
     #drawerPanel
     [class]="panelClasses()"
@@ -17,12 +8,11 @@
     [cdkTrapFocusAutoCapture]="true"
     [attr.aria-modal]="true"
     [attr.aria-labelledby]="title() ? subId('title') : null"
-    [attr.aria-label]="title() ? null : ariaLabel() || null"
-    (keydown.escape)="closeOnEscape() && close()">
+    [attr.aria-label]="title() ? null : ariaLabel() || null">
     <!-- Header -->
-    <div class="flex items-center justify-between px-6 py-4 border-b border-neutral-200">
+    <div class="flex items-center justify-between px-6 py-4 border-b border-border">
       @if (title()) {
-        <h2 [attr.id]="subId('title')" class="text-lg font-semibold text-neutral-900">{{ title() }}</h2>
+        <h2 [attr.id]="subId('title')" class="text-lg font-semibold tracking-tight text-fg">{{ title() }}</h2>
       }
       @if (showCloseButton()) {
         <tailwind-button
@@ -31,7 +21,7 @@
           icon="x-mark"
           class="ml-auto shrink-0 -m-1.5"
           [ariaLabel]="resolvedCloseLabel()"
-          (onClick)="close()" />
+          (click)="close()" />
       }
     </div>
 
@@ -43,4 +33,4 @@
     <!-- Footer -->
     <ng-content select="[tailwind-drawer-footer]" />
   </div>
-}
+</ng-template>

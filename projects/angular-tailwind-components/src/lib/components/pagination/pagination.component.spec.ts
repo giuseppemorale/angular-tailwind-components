@@ -75,7 +75,7 @@ describe('TailwindPagination', () => {
 
   it('should emit onPageChange when a page is picked', () => {
     const spy = vi.fn();
-    component.onPageChange.subscribe(spy);
+    component.pageChange.subscribe(spy);
 
     pageButtons()[1].click();
     fixture.detectChanges();
@@ -86,7 +86,7 @@ describe('TailwindPagination', () => {
 
   it('should ignore out-of-range pages', () => {
     const spy = vi.fn();
-    component.onPageChange.subscribe(spy);
+    component.pageChange.subscribe(spy);
 
     component.goToPage(0);
     component.goToPage(99);
@@ -116,7 +116,8 @@ describe('TailwindPagination', () => {
   it('should reset to the first page when the page size changes', () => {
     component.goToPage(3);
     const spy = vi.fn();
-    component.onPageSizeChange.subscribe(spy);
+    // `pageSize` is a model, so its own change output is what reports a new page size.
+    component.pageSize.subscribe(spy);
 
     component.setPageSize(25);
     fixture.detectChanges();

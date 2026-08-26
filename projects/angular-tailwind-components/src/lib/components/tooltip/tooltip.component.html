@@ -1,10 +1,4 @@
-<div
-  #tooltipEl
-  role="tooltip"
-  [attr.id]="elementId()"
-  [class]="tooltipShellClasses()"
-  [style.top.px]="topPos()"
-  [style.left.px]="leftPos()">
+<div role="tooltip" [attr.id]="elementId()" [class]="tooltipShellClasses()">
   <div [class]="tooltipBodyClasses">{{ text() }}</div>
   <svg
     [class]="arrowSpec().className"

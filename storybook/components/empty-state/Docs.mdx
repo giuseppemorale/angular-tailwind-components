@@ -1,0 +1,41 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as EmptyStateStories from './empty-state.stories';
+
+<Meta of={EmptyStateStories} />
+
+# EmptyState
+
+`TailwindEmptyState` is the "nothing here yet" panel: icon, title, explanation and room for a call to action.
+
+Spacing, muted colors and heading level stay consistent across every empty list, and the icon is correctly hidden from screen readers.
+
+---
+
+## Import
+
+```typescript
+import { TailwindButton, TailwindEmptyState } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={EmptyStateStories} />
+
+---
+
+## Example
+
+<Canvas of={EmptyStateStories.EmptyState} />
+
+```typescript
+@Component({
+  imports: [TailwindEmptyState, TailwindButton],
+  template: ` <tailwind-empty-state
+    title="Nessuna fattura"
+    description="Le fatture create appariranno qui."
+    icon="document-text">
+    <tailwind-button size="sm">Crea fattura</tailwind-button>
+  </tailwind-empty-state>`
+})
+export class ExampleComponent {}
+```

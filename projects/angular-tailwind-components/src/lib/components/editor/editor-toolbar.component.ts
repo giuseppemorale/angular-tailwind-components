@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
-import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindSize } from '../../models';
 import { TailwindButton } from '../button/button.component';
 import { TailwindDivider } from '../divider/divider.component';
 import { TailwindSelect } from '../select/select.component';
@@ -7,16 +7,7 @@ import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 import type { EditorBlockFormat, EditorCommand } from './models/editor-command.type';
 import type { EditorToolbarButtonItem, EditorToolbarGroup } from './models/editor-toolbar-group.interface';
-
-const HEADING_OPTIONS: TailwindOption<EditorBlockFormat>[] = [
-  { value: 'p', label: 'Paragraph' },
-  { value: 'h1', label: 'Heading 1' },
-  { value: 'h2', label: 'Heading 2' },
-  { value: 'h3', label: 'Heading 3' },
-  { value: 'h4', label: 'Heading 4' },
-  { value: 'h5', label: 'Heading 5' },
-  { value: 'h6', label: 'Heading 6' }
-];
+import { HEADING_OPTIONS } from './properties/constant';
 
 @Component({
   imports: [TailwindButton, TailwindDivider, TailwindSelect],
@@ -28,16 +19,26 @@ const HEADING_OPTIONS: TailwindOption<EditorBlockFormat>[] = [
 export class TailwindEditorToolbar extends TailwindComponent {
   private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
 
+  /** Command groups to render, in order; each group is separated by a divider. */
   readonly groups = input<EditorToolbarGroup[]>([]);
+  /** Disables every button, keeping the toolbar visible. */
   readonly disabled = input<boolean>(false);
+  /** Toggles the toolbar into HTML source mode. */
   readonly isCodeView = input<boolean>(false);
+  /** Label of the button that switches to HTML source mode. */
   readonly codeViewLabel = input<string>('Edit HTML');
+  /** Label of the button that returns to the visual editor. */
   readonly codeViewExitLabel = input<string>('Visual editor');
+  /** Accessible name of the block-format dropdown. */
   readonly textStyleLabel = input<string>('Text style');
+  /** Commands to render as pressed, from the current selection. */
   readonly activeCommands = input<Set<EditorCommand>>(new Set());
+  /** Block format of the current selection, shown in the dropdown. */
   readonly blockFormat = input<EditorBlockFormat>('p');
+  /** Size of the toolbar controls. */
   readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
 
+  /** Command requested by the user. */
   readonly commandClick = output<EditorCommand>();
 
   readonly headingOptions = HEADING_OPTIONS;

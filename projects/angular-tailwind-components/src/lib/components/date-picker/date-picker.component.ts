@@ -9,67 +9,21 @@ import {
   inject,
   Injector,
   input,
+  LOCALE_ID,
   model,
   signal,
   viewChild
 } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
+import { TAILWIND_DATETIME_LANGUAGE, TAILWIND_LABELS } from '../../tokens/tokens';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
 import { isTodayInRange, resolveRangeBounds } from '../calendar-panel/util/calendar-date-range';
 import { TailwindCalendarPanel } from '../calendar-panel/calendar-panel.component';
 import { CalendarView } from '../calendar-panel/util/calendar-view';
+import { calendarLabelsFor } from '../calendar-panel/util/calendar-i18n';
 import { TailwindComponent } from '../tailwind.component';
-
-type Lang = 'it' | 'en';
-
-const I18N: Record<
-  Lang,
-  { months: string[]; weekDays: string[]; today: string; confirm: string; placeholder: string }
-> = {
-  it: {
-    months: [
-      'Gennaio',
-      'Febbraio',
-      'Marzo',
-      'Aprile',
-      'Maggio',
-      'Giugno',
-      'Luglio',
-      'Agosto',
-      'Settembre',
-      'Ottobre',
-      'Novembre',
-      'Dicembre'
-    ],
-    weekDays: ['Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa', 'Do'],
-    today: 'Oggi',
-    confirm: 'Applica',
-    placeholder: 'Seleziona data'
-  },
-  en: {
-    months: [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ],
-    weekDays: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
-    today: 'Today',
-    confirm: 'Apply',
-    placeholder: 'Select date'
-  }
-};
 
 @Component({
   imports: [TailwindIcon, TailwindButton, TailwindCalendarPanel],
@@ -83,16 +37,34 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
   private readonly calendarPanel = viewChild(TailwindCalendarPanel);
-  private readonly lang: Lang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
+  private readonly locale = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? inject(LOCALE_ID);
+  private readonly labels = inject(TAILWIND_LABELS);
 
-  protected readonly i18n = I18N[this.lang];
+  /** Month and weekday names for the active locale, plus its first day of the week. */
+  protected readonly calendar = calendarLabelsFor(this.locale);
+  protected readonly i18n = {
+    months: this.calendar.months,
+    weekDays: this.calendar.weekDays,
+    today: this.labels.today,
+    now: this.labels.now,
+    apply: this.labels.apply,
+    confirm: this.labels.apply,
+    time: this.labels.time,
+    placeholder: this.labels.selectDate
+  };
 
+  /** Visible field label. */
   readonly label = input<string>('');
+  /** Placeholder text; falls back to the localized default when undefined. */
   readonly placeholder = input<string | undefined>(undefined);
+  /** Display format of the date in the field, e.g. `dd/MM/yyyy` or `yyyy-MM-dd`. */
   readonly format = input<string>('dd/MM/yyyy');
+  /** Earliest selectable date. */
   readonly minDate = input<Date | null | undefined>(undefined);
+  /** Latest selectable date. */
   readonly maxDate = input<Date | null | undefined>(undefined);
 
+  /** Selected date (two-way); emitted as a `Date` on confirmation. */
   readonly value = model<Date | null>(null);
   /** Working selection while the panel is open; committed on Apply. */
   readonly draft = signal<Date | null>(null);
@@ -115,7 +87,7 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     if (!d) return '';
     const fmt = this.format();
     try {
-      return formatDate(d, fmt, this.lang === 'it' ? 'it-IT' : 'en-US');
+      return formatDate(d, fmt, this.locale);
     } catch {
       return formatDate(d, fmt, 'en-US');
     }

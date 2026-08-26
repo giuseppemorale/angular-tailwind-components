@@ -2,8 +2,15 @@
 
 <div class="flex flex-col gap-8">
   <tailwind-card [elevated]="true">
-    <div tailwind-card-header>
+    <div tailwind-card-header class="flex flex-wrap items-center justify-between gap-3">
       <tailwind-title titleTag="h3" [text]="'PROFILE.SECTION_IDENTITY' | transloco" icon="identification" />
+      <div class="flex items-center gap-3">
+        <tailwind-avatar size="lg" color="primary" status="success" [name]="avatarName()" [alt]="avatarName()" />
+        <div class="flex flex-col">
+          <span class="text-sm font-medium text-neutral-900">{{ avatarName() }}</span>
+          <span class="text-xs text-neutral-500">{{ 'PROFILE.AVATAR_STATUS_ONLINE' | transloco }}</span>
+        </div>
+      </div>
     </div>
 
     <div class="flex flex-col gap-4">
@@ -58,7 +65,7 @@
       } @else {
         <span class="text-xs text-neutral-500">{{ 'PROFILE.LAST_SAVE' | transloco: { date: saveString() } }}</span>
       }
-      <tailwind-button [disabled]="saving()" (onClick)="simulateSave()">
+      <tailwind-button [disabled]="saving()" (click)="simulateSave()">
         {{ 'PROFILE.BTN_SAVE' | transloco }}
       </tailwind-button>
     </div>

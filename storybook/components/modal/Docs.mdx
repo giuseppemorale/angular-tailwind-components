@@ -1,34 +1,55 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ModalStories from './modal.stories';
 
 <Meta of={ModalStories} />
 
 # Modal
 
-`TailwindModal` è un overlay dialog
+`TailwindModal` is an overlay dialog opened through `TailwindModalService`. `open()` returns a promise that resolves with whatever was passed to `close()`, or `undefined` when the dialog is dismissed without a result.
 
 ---
 
-## Utilizzo
+## Import
 
-Chiama `TailwindModalService.open()` da qualsiasi componente. La promise si risolve con il valore passato a `close()` oppure `undefined` se la modale viene chiusa senza risultato.
+```typescript
+import {
+  TAILWIND_MODAL_DATA,
+  TailwindModalContent,
+  TailwindModalFooter,
+  TailwindModalRef,
+  TailwindModalService,
+  TailwindModalTitle
+} from 'angular-tailwind-components';
+```
 
-### 1 — Crea il componente modale
+## Properties
 
-Il componente struttura il proprio contenuto con tre slot (selettori attributo): `[tailwind-modal-title]`, `[tailwind-modal-content]`, `[tailwind-modal-footer]`. Inietta `TailwindModalRef<R>` per chiudere la modale con un risultato tipizzato.
+<ArgTypes of={ModalStories} />
+
+Most applications never bind these directly: they come from the `TailwindModalConfig` passed to `open()`.
+
+---
+
+## Example
+
+<Canvas of={ModalStories.SimpleModal} />
+
+### 1 — Write the dialog component
+
+The component fills three slots, addressed by attribute selectors: `tailwind-modal-title`, `tailwind-modal-content`, `tailwind-modal-footer`. Inject `TailwindModalRef<R>` to close the dialog with a typed result.
 
 ```typescript
 @Component({
   imports: [TailwindButton],
   template: `
-    <h4 tailwind-modal-title>Conferma azione</h4>
+    <h4 tailwind-modal-title>Confirm action</h4>
     <div tailwind-modal-content>
-      <p>L'operazione non può essere annullata. Vuoi procedere?</p>
+      <p>This cannot be undone. Do you want to continue?</p>
     </div>
     <div tailwind-modal-footer>
       <div class="flex justify-end gap-3">
-        <tailwind-button kind="outlined" (click)="ref.close()">Annulla</tailwind-button>
-        <tailwind-button color="primary" (click)="ref.close(true)">Conferma</tailwind-button>
+        <tailwind-button kind="outlined" (click)="ref.close()">Cancel</tailwind-button>
+        <tailwind-button color="primary" (click)="ref.close(true)">Confirm</tailwind-button>
       </div>
     </div>
   `
@@ -38,7 +59,7 @@ export class ConfirmModalComponent {
 }
 ```
 
-### 2 — Apri la modale
+### 2 — Open it
 
 ```typescript
 async deleteItem(): Promise<void> {
@@ -48,41 +69,35 @@ async deleteItem(): Promise<void> {
   });
 
   if (confirmed) {
-    // procedi con l'eliminazione
+    // proceed with the deletion
   }
 }
 ```
 
----
-
 ## Slot components
 
-Il servizio distribuisce automaticamente i figli diretti del componente (con attributi `tailwind-modal-*`) nei tre slot di `TailwindModal`.
+The service distributes the direct children carrying a `tailwind-modal-*` attribute into the three slots of `TailwindModal`.
 
-- `TailwindModalTitle` - `[tailwind-modal-title]` - Header — all'interno dell'`<h2>` (es. `<span tailwind-modal-title>…</span>`)
-- `TailwindModalContent` - `[tailwind-modal-content]` - Body — `px-6 py-5` (es. `<div tailwind-modal-content>…</div>`)
-- `TailwindModalFooter` - `[tailwind-modal-footer]` - Footer — `px-6 py-4 border-t` (es. `<div tailwind-modal-footer>…</div>`)
+- `TailwindModalTitle` — `[tailwind-modal-title]` — header, rendered inside the `<h2>`, e.g. `<span tailwind-modal-title>…</span>`
+- `TailwindModalContent` — `[tailwind-modal-content]` — body, `px-6 py-5`, e.g. `<div tailwind-modal-content>…</div>`
+- `TailwindModalFooter` — `[tailwind-modal-footer]` — footer, `px-6 py-4 border-t`, e.g. `<div tailwind-modal-footer>…</div>`
 
-> Tutti e tre vanno importati nel componente modale che li usa; oppure usa elementi nativi con lo stesso attributo senza i componenti helper.
+> Import all three in the dialog component that uses them, or use plain elements with the same attribute and skip the helper components.
 
----
+## `TailwindModalRef<R>`
 
-## TailwindModalRef\<R\>
-
-Iniettato automaticamente nel componente modale dal servizio.
+Injected into the dialog component by the service.
 
 ```typescript
 const ref = inject<TailwindModalRef<boolean>>(TailwindModalRef);
 
-ref.close(true); // risolve la promise con `true`
-ref.close(); // risolve la promise con `undefined`
+ref.close(true); // resolves the promise with `true`
+ref.close(); // resolves the promise with `undefined`
 ```
 
----
+## Passing data to the dialog
 
-## Passare dati alla modale
-
-Usa `config.data` per iniettare dati nel componente modale via `TAILWIND_MODAL_DATA`.
+`config.data` is injected into the dialog component through `TAILWIND_MODAL_DATA`.
 
 ```typescript
 interface DeleteData {
@@ -92,15 +107,15 @@ interface DeleteData {
 @Component({
   imports: [TailwindButton],
   template: `
-    <h4 tailwind-modal-title>Elimina elemento</h4>
+    <h4 tailwind-modal-title>Delete item</h4>
     <div tailwind-modal-content>
       <p>
-        Stai per eliminare <strong>{{ data.itemName }}</strong
+        You are about to delete <strong>{{ data.itemName }}</strong
         >.
       </p>
     </div>
     <div tailwind-modal-footer class="flex justify-end">
-      <tailwind-button color="danger" (click)="ref.close(true)">Elimina</tailwind-button>
+      <tailwind-button color="danger" (click)="ref.close(true)">Delete</tailwind-button>
     </div>
   `
 })
@@ -109,44 +124,37 @@ export class DeleteModalComponent {
   readonly data = inject<DeleteData>(TAILWIND_MODAL_DATA);
 }
 
-// Chiamante
+// Caller
 const deleted = await this.modalService.open<boolean>(DeleteModalComponent, {
-  data: { itemName: 'Fattura #1042' }
+  data: { itemName: 'Invoice #1042' }
 });
 ```
 
----
-
-## Configurazione
+## Configuration
 
 ```typescript
 interface TailwindModalConfig<D = unknown> {
-  data?: D; // iniettato via TAILWIND_MODAL_DATA
+  data?: D; // injected through TAILWIND_MODAL_DATA
   size?: TailwindSize; // 'xs' | 'sm' | 'md' | 'lg' | 'xl'  (default: 'md')
-  showCloseButton?: boolean; // pulsante × in alto a destra (default: true)
-  closeOnBackdrop?: boolean; // click fuori per chiudere (default: true)
-  closeOnEscape?: boolean; // tasto Escape per chiudere (default: true)
+  showCloseButton?: boolean; // × button in the top right corner (default: true)
+  closeOnBackdrop?: boolean; // click outside to close (default: true)
+  closeOnEscape?: boolean; // Escape to close (default: true)
 }
 ```
 
-Sul componente `tailwind-modal` è disponibile anche `closeLabel` per il nome accessibile del pulsante di chiusura (default da `TAILWIND_LABELS.close`).
+The `tailwind-modal` component also exposes `closeLabel`, the accessible name of the close button, defaulting to `TAILWIND_LABELS.close`.
 
----
+## Accessibility
 
-## Accessibilità
+While open, the dialog:
 
-Quando è aperto, il modal:
+- traps focus inside the panel (`cdkTrapFocus`) and returns it to the opener on close;
+- locks scrolling on `<body>`;
+- links the title to the dialog through `aria-labelledby`;
+- closes on Escape (`closeOnEscape`).
 
-- intrappola il focus nel pannello (`cdkTrapFocus`) e lo riporta all'elemento che l'ha aperto alla chiusura;
-- blocca lo scroll di `<body>`;
-- collega il titolo al dialog con `aria-labelledby`;
-- chiude con Escape (`closeOnEscape`).
+The footer hides itself when nothing is projected into the `tailwind-modal-footer` slot.
 
-Il footer si nasconde da solo quando nello slot `[tailwind-modal-footer]` non viene proiettato nulla.
+## Multiple open dialogs
 
----
-
-## Aperture multiple
-
-Ogni chiamata a `open()` crea un injector isolato con la propria istanza di `TailwindModalRef`.
-È possibile aprire più modali simultaneamente — ogni componente riceverà il suo ref specifico, senza conflitti.
+Every `open()` call creates an isolated injector with its own `TailwindModalRef` instance, so several dialogs can be open at once, each component receiving its own ref without conflicts.

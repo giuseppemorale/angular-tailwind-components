@@ -6,8 +6,14 @@ export type TailwindSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 /** Color variants for buttons and interactive elements */
 export type TailwindColor = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'info' | 'transparent';
 
-/** Button kinds */
-export type TailwindButtonKind = 'solid' | 'flat' | 'outlined' | 'ghost' | 'text';
+/** Button kinds; `soft` is the tinted variant, a light wash of the color behind matching text. */
+export type TailwindButtonKind = 'solid' | 'soft' | 'flat' | 'outlined' | 'ghost' | 'text';
+
+/**
+ * How a static semantic surface is painted, shared by badge, chip, tag and alert:
+ * `solid` filled with the color, `soft` a light wash, `outlined` transparent with a colored edge.
+ */
+export type TailwindVariantKind = 'solid' | 'soft' | 'outlined';
 
 /** ARIA role for `TailwindButton` */
 export type TailwindButtonRole = 'button' | 'menuitem' | 'tab' | 'switch' | 'checkbox' | 'radio';
@@ -24,9 +30,7 @@ export type TailwindShape = 'rounded' | 'pill' | 'square';
 /** Semantic heading level for `TailwindTitle` */
 export type TailwindTitleTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-/**
- * Pixel width and height for `TailwindIcon`. Intended range **16–64**; values outside it are clamped at runtime.
- */
+/** Pixel width and height for `TailwindIcon`; clamped to 16–64 at runtime. */
 export type TailwindIconSize = number;
 
 /** Option interface for select/radio/checkbox groups */

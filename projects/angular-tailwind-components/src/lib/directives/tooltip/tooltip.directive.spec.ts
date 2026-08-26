@@ -15,6 +15,27 @@ class TooltipHostComponent {
   readonly tooltipText = signal('Tooltip text');
 }
 
+// A component host that only forwards its children — the shape every `display: contents` component
+// in the library has, and the one that used to leave the overlay measuring an empty rect.
+@Component({
+  imports: [TailwindTooltipDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <span style="display: contents" tooltip="Passed through">
+      <button type="button" data-control>Hover me</button>
+    </span>
+  `
+})
+class PassThroughHostComponent {}
+
+// The prefixed selector new code should use; it carries the text through its own input.
+@Component({
+  imports: [TailwindTooltipDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `<button type="button" data-control tailwindTooltip="Prefixed text">Hover me</button>`
+})
+class PrefixedHostComponent {}
+
 describe('TailwindTooltipDirective', () => {
   let fixture: ComponentFixture<TooltipHostComponent>;
 
@@ -41,12 +62,22 @@ describe('TailwindTooltipDirective', () => {
     fixture.detectChanges();
   }
 
-  it('should render tooltip text and position near the trigger', async () => {
+  it('should render tooltip text inside a positioned CDK overlay', async () => {
     await showTooltip();
     const tooltip = getTooltip();
     expect(tooltip).not.toBeNull();
     expect(tooltip?.textContent).toContain('Tooltip text');
-    expect(tooltip?.style.top).not.toBe('0px');
+
+    // Placement now lives on the overlay pane, not on the tooltip element itself.
+    const pane = tooltip?.closest('.cdk-overlay-pane') as HTMLElement | null;
+    expect(pane).not.toBeNull();
+    expect(pane?.classList.contains('tailwind-tooltip-pane')).toBe(true);
+  });
+
+  it('should point the arrow at the side the overlay resolved to', async () => {
+    await showTooltip();
+    // Default preference is `top`, so the arrow hangs below the bubble.
+    expect(document.body.querySelector('.tooltip-arrow-down')).toBeTruthy();
   });
 
   it('should describe the trigger with the tooltip while it is shown', async () => {
@@ -75,6 +106,38 @@ describe('TailwindTooltipDirective', () => {
     fixture.detectChanges();
 
     expect(getTooltip()).toBeNull();
+  });
+
+  it('should anchor to the control inside a pass-through host, not the host itself', async () => {
+    const passThrough = TestBed.createComponent(PassThroughHostComponent);
+    passThrough.detectChanges();
+
+    const wrapper: HTMLElement = passThrough.nativeElement.querySelector('span');
+    const control: HTMLElement = passThrough.nativeElement.querySelector('[data-control]');
+    control.focus();
+    await new Promise(resolve => setTimeout(resolve, 250));
+    passThrough.detectChanges();
+
+    // A host with no box reports a 0x0 rect at the document origin, which parks the overlay in the
+    // top-left corner and puts the ARIA link on an element assistive technology never reaches.
+    expect(control.getAttribute('aria-describedby')).toBe(getTooltip()?.id);
+    expect(wrapper.getAttribute('aria-describedby')).toBeNull();
+
+    passThrough.destroy();
+  });
+
+  it('should show the text bound through the prefixed selector', async () => {
+    const prefixed = TestBed.createComponent(PrefixedHostComponent);
+    prefixed.detectChanges();
+
+    const control: HTMLElement = prefixed.nativeElement.querySelector('[data-control]');
+    control.focus();
+    await new Promise(resolve => setTimeout(resolve, 250));
+    prefixed.detectChanges();
+
+    expect(getTooltip()?.textContent).toContain('Prefixed text');
+
+    prefixed.destroy();
   });
 
   it('should hide tooltip on focusout even when the pointer stays over the host', async () => {

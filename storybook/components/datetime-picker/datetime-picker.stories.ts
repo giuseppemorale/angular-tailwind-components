@@ -6,7 +6,7 @@ import { TailwindDateTimePicker } from '../../../projects/angular-tailwind-compo
 const meta: Meta<TailwindDateTimePicker> = {
   title: 'Form Controls/DateTimePicker',
   component: TailwindDateTimePicker,
-  /** Altezza generosa: il pannello calendario è alto e altrimenti viene tagliato da overflow nei contenitori Storybook. */
+  /** Generous height: the calendar panel is tall and would otherwise be clipped by the Storybook container overflow. */
   parameters: { docs: { story: { height: '720px' } } },
   argTypes: {
     label: { control: 'text' },

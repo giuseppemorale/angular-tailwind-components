@@ -13,11 +13,11 @@ export type TailwindTitleScale = Record<TailwindTitleTag, TailwindTitleTagScale>
 
 /** Default heading scale (library as-shipped typography). */
 export const DEFAULT_TAILWIND_TITLE_SCALE: TailwindTitleScale = {
-  h1: { classes: 'text-3xl font-bold tracking-tight text-neutral-900', iconSize: 32 },
-  h2: { classes: 'text-2xl font-semibold tracking-tight text-neutral-900', iconSize: 24 },
-  h3: { classes: 'text-xl font-semibold tracking-tight text-neutral-900', iconSize: 20 },
-  h4: { classes: 'text-lg font-normal text-neutral-900', iconSize: 18 },
-  h5: { classes: 'text-base font-normal text-neutral-900', iconSize: 16 },
+  h1: { classes: 'text-3xl font-bold tracking-tight text-fg', iconSize: 32 },
+  h2: { classes: 'text-2xl font-semibold tracking-tight text-fg', iconSize: 24 },
+  h3: { classes: 'text-xl font-semibold tracking-tight text-fg', iconSize: 20 },
+  h4: { classes: 'text-lg font-medium tracking-tight text-fg', iconSize: 18 },
+  h5: { classes: 'text-base font-medium text-fg', iconSize: 16 },
   h6: { classes: 'text-sm font-normal text-neutral-800 uppercase tracking-wide', iconSize: 14 }
 };
 

@@ -1,8 +1,6 @@
 import { computed, Directive, input } from '@angular/core';
 import { mergeClasses as mergeClassesFn } from '../util/merge-classes';
-
-/** Monotonic counter backing {@link TailwindComponent.elementId} when the consumer omits `id`. */
-let nextUniqueId = 0;
+import { nextUniqueId } from '../util/unique-id';
 
 @Directive({
   host: {
@@ -13,16 +11,18 @@ export abstract class TailwindComponent {
   /** Optional ID for the component */
   readonly id = input<string>();
 
-  /** Custom CSS classes applied to the component surface (see library class-forwarding convention). */
-  readonly class = input<string>(undefined, { alias: 'class' });
+  /**
+   * Custom CSS classes applied to the component surface (see library class-forwarding convention).
+   * The property is already named `class`, so no alias is needed for `class="…"` to bind to it.
+   */
+  readonly class = input<string>();
 
   /** Fallback identity, unique per instance, used when `id` is not provided. */
-  private readonly autoId = `tw-${++nextUniqueId}`;
+  private readonly autoId = nextUniqueId();
 
   /**
    * Identity used to wire internal ARIA relationships (`for`, `aria-describedby`, `aria-controls`, …).
-   * Consumer `id` wins; otherwise a generated one keeps label/description associations working
-   * even when the consumer does not pass an `id`.
+   * Consumer `id` wins, so label and description associations work either way.
    */
   readonly elementId = computed(() => this.id() ?? this.autoId);
 

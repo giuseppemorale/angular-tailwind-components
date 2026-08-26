@@ -1,11 +1,11 @@
 <div [class]="mergeClasses('w-full')">
-  @if (showLabel()) {
+  @if (hasLabelRow()) {
     <div class="flex justify-between items-center mb-1.5">
       @if (label()) {
         <span class="text-sm font-medium text-neutral-700">{{ label() }}</span>
       }
-      @if (showValue()) {
-        <span class="text-sm font-medium text-neutral-600">{{ clampedValue() }}%</span>
+      @if (showValueText()) {
+        <span class="text-sm font-medium text-neutral-600 tabular-nums">{{ clampedValue() }}%</span>
       }
     </div>
   }
@@ -13,7 +13,7 @@
   <div
     [class]="trackClasses()"
     role="progressbar"
-    [attr.aria-valuenow]="clampedValue()"
+    [attr.aria-valuenow]="ariaValueNow()"
     [attr.aria-valuemin]="0"
     [attr.aria-valuemax]="100"
     [attr.aria-label]="label() || 'Progress'">

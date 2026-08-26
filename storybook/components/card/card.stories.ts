@@ -9,6 +9,12 @@ import {
 const meta: Meta<TailwindCard> = {
   title: 'Display/Card',
   component: TailwindCard,
+  argTypes: {
+    density: { control: 'select', options: ['comfortable', 'compact'] },
+    elevated: { control: 'boolean' },
+    hoverable: { control: 'boolean' },
+    headerBg: { control: 'boolean' }
+  },
   decorators: [
     moduleMetadata({
       imports: [TailwindCard, TailwindTitle, TailwindButton]
@@ -31,6 +37,7 @@ export const Card: StoryObj<TailwindCard> = {
       </tailwind-card>`
   }),
   args: {
+    density: 'comfortable',
     elevated: false,
     hoverable: false,
     headerBg: false,
@@ -149,4 +156,29 @@ export const Elevated: StoryObj<TailwindCard> = {
     hasHeader: true,
     hasFooter: true
   }
+};
+
+/** `comfortable` frames a page-level card; `compact` is for dashboards, where padding repeats. */
+export const Density: StoryObj<TailwindCard> = {
+  name: 'Density',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <div class="flex flex-wrap items-start gap-4">
+        <tailwind-card density="comfortable" style="max-width:280px">
+          <tailwind-title tailwind-card-header titleTag="h3" text="Comfortable" />
+          <p class="text-neutral-600 text-sm">24px of padding — the default.</p>
+          <div tailwind-card-footer class="flex justify-end">
+            <tailwind-button size="sm">Open</tailwind-button>
+          </div>
+        </tailwind-card>
+        <tailwind-card density="compact" style="max-width:280px">
+          <tailwind-title tailwind-card-header titleTag="h3" text="Compact" />
+          <p class="text-neutral-600 text-sm">16px of padding — for tile grids.</p>
+          <div tailwind-card-footer class="flex justify-end">
+            <tailwind-button size="sm">Open</tailwind-button>
+          </div>
+        </tailwind-card>
+      </div>`
+  })
 };

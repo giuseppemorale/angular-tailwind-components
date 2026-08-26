@@ -14,12 +14,11 @@
       [attr.aria-checked]="ariaChecked()"
       [attr.aria-describedby]="description() ? subId('desc') : null"
       [attr.aria-labelledby]="label() ? subId('label') : null"
+      [attr.aria-label]="label() ? null : ariaLabel() || null"
       (change)="onCheckboxChange($event)" />
     <div
-      class="size-full border-2 transition-all duration-150 flex items-center justify-center peer-focus-visible:ring-2 peer-focus-visible:ring-primary-500/30 peer-focus-visible:ring-offset-1"
-      [class.rounded-sm]="size() === 'xs' || size() === 'sm'"
-      [class.rounded-md]="size() !== 'xs' && size() !== 'sm'"
-      [class.border-neutral-300]="!isFilled()"
+      class="size-full rounded-control-inner border-2 flex items-center justify-center transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring"
+      [class.border-border-strong]="!isFilled()"
       [class.bg-surface]="!isFilled()"
       [class.border-primary-600]="isFilled()"
       [class.bg-primary-600]="isFilled()">
@@ -36,7 +35,7 @@
       <span [attr.id]="subId('label')" class="text-sm font-medium text-neutral-800 leading-tight">{{ label() }}</span>
     }
     @if (description()) {
-      <span [attr.id]="subId('desc')" class="text-xs text-neutral-500 leading-snug">
+      <span [attr.id]="subId('desc')" class="text-xs text-fg-muted leading-snug">
         {{ description() }}
       </span>
     }

@@ -2,15 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { TailwindToastItem } from '../../components/toast/interfaces/toast-item.interface';
 import { TailwindToastConfig } from '../../components/toast/interfaces/toast-config.interface';
 import type { TailwindHeroicon } from '../../models';
-
-/** Bookkeeping for one auto-dismiss countdown, so it can be paused and resumed. */
-interface ToastTimer {
-  handle: ReturnType<typeof setTimeout> | null;
-  /** Milliseconds still to run when the timer is paused. */
-  remaining: number;
-  /** Timestamp of the last (re)start, used to compute what is left on pause. */
-  startedAt: number;
-}
+import type { ToastTimer } from './interfaces/toast-timer.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TailwindToastService {

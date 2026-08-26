@@ -1,7 +1,7 @@
 <div [class]="mergeClasses('tailwind-tab-group w-full')">
   <!-- Tab Headers -->
 
-  <div class="border-b border-neutral-200" [class.flex]="scrollable()" [class.items-stretch]="scrollable()">
+  <div class="border-b border-border" [class.flex]="scrollable()" [class.items-stretch]="scrollable()">
     @if (scrollable()) {
       <tailwind-button
         kind="ghost"
@@ -10,7 +10,7 @@
         class="tailwind-tab-scroll-btn--start shrink-0 self-stretch rounded-none"
         [disabled]="!canScrollStart()"
         [ariaLabel]="scrollLeftLabel()"
-        (onClick)="scrollTabs(-1)" />
+        (click)="scrollTabs(-1)" />
     }
 
     <nav
@@ -51,7 +51,7 @@
         class="tailwind-tab-scroll-btn--end shrink-0 self-stretch rounded-none"
         [disabled]="!canScrollEnd()"
         [ariaLabel]="scrollRightLabel()"
-        (onClick)="scrollTabs(1)" />
+        (click)="scrollTabs(1)" />
     }
   </div>
 

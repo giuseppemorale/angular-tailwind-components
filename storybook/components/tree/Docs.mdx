@@ -1,0 +1,70 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as TreeStories from './tree.stories';
+
+<Meta of={TreeStories} />
+
+# Tree
+
+`TailwindTree` is the hierarchical list: file trees, category pickers, nested navigation.
+
+It follows the ARIA **tree** pattern: a single tab stop for the whole widget with a roving `tabindex`, arrows to walk and open branches, Home/End to jump. Rendering is flattened, so only visible rows exist in the DOM and a deep tree stays light.
+
+---
+
+## Import
+
+```typescript
+import { TailwindTree, TailwindTreeNode } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindTree (tailwind-tree)`
+
+<ArgTypes of={TreeStories} />
+
+### `TailwindTreeNode`
+
+The shape of a node.
+
+```typescript
+interface TailwindTreeNode {
+  key: string;
+  label: string;
+  icon?: TailwindHeroicon;
+  children?: TailwindTreeNode[];
+  disabled?: boolean;
+  data?: unknown;
+}
+```
+
+---
+
+---
+
+## Example
+
+<Canvas of={TreeStories.Tree} />
+
+```typescript
+@Component({
+  imports: [TailwindTree],
+  template: `<tailwind-tree [nodes]="nodes" ariaLabel="File" (nodeSelect)="open($event)" />`
+})
+export class ExampleComponent {
+  readonly nodes: TailwindTreeNode[] = [
+    { key: 'src', label: 'src', icon: 'folder', children: [{ key: 'main.ts', label: 'main.ts' }] }
+  ];
+  open(node: TailwindTreeNode): void {}
+}
+```
+
+## Keyboard
+
+| Key             | Effect                                                  |
+| --------------- | ------------------------------------------------------- |
+| Arrow Down / Up | Next / previous visible row                             |
+| Arrow Right     | Opens a closed branch, then steps into it               |
+| Arrow Left      | Closes an open branch, otherwise moves up to the parent |
+| Home / End      | First / last visible row                                |
+| Enter / Space   | Selects the row                                         |

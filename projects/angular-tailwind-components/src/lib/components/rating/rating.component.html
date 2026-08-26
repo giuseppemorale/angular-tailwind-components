@@ -1,0 +1,23 @@
+<div
+  [class]="mergeClasses('inline-flex items-center gap-0.5')"
+  [class.opacity-50]="isDisabled()"
+  [attr.role]="isInteractive() ? 'slider' : 'img'"
+  [attr.tabindex]="isInteractive() ? 0 : null"
+  [attr.aria-label]="resolvedAriaLabel()"
+  [attr.aria-valuemin]="isInteractive() ? 0 : null"
+  [attr.aria-valuemax]="isInteractive() ? max() : null"
+  [attr.aria-valuenow]="isInteractive() ? value() : null"
+  [attr.aria-valuetext]="valueText()"
+  [attr.aria-readonly]="readonly() || null"
+  [attr.aria-disabled]="isDisabled() || null"
+  (keydown)="onKeydown($event)"
+  (pointerleave)="onPointerLeave()">
+  @for (star of stars(); track star) {
+    <tailwind-icon
+      icon="star"
+      [size]="starPixelSize()"
+      [class]="starClasses(star)"
+      (pointerenter)="onStarEnter(star)"
+      (click)="pick(star)" />
+  }
+</div>

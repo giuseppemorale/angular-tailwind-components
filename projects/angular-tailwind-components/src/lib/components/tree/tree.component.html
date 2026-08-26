@@ -1,0 +1,42 @@
+<ul
+  role="tree"
+  [attr.aria-label]="ariaLabel() || null"
+  [class]="mergeClasses('flex flex-col')"
+  (keydown)="onKeydown($event)">
+  @for (flat of visibleNodes(); track flat.key; let i = $index) {
+    <li role="none">
+      <div
+        role="treeitem"
+        [attr.aria-level]="flat.level + 1"
+        [attr.aria-selected]="flat.selected"
+        [attr.aria-expanded]="flat.expandable ? flat.expanded : null"
+        [attr.aria-disabled]="flat.node.disabled || null"
+        [attr.tabindex]="isFocused(i) ? 0 : -1"
+        [style.padding-left]="indentFor(flat)"
+        [class]="rowClasses(flat)"
+        (click)="select(flat, i)">
+        @if (flat.expandable) {
+          <button
+            type="button"
+            class="-m-0.5 shrink-0 rounded-control-inner p-0.5 text-neutral-400 hover:text-neutral-700 cursor-pointer"
+            tabindex="-1"
+            aria-hidden="true"
+            (click)="toggle(flat); $event.stopPropagation()">
+            <tailwind-icon
+              icon="chevron-right"
+              [size]="14"
+              class="transition-transform"
+              [class.rotate-90]="flat.expanded" />
+          </button>
+        } @else {
+          <span class="w-[15px] shrink-0" aria-hidden="true"></span>
+        }
+
+        @if (flat.node.icon) {
+          <tailwind-icon [icon]="flat.node.icon" [size]="16" class="shrink-0 text-neutral-400" />
+        }
+        <span class="min-w-0 truncate">{{ flat.node.label }}</span>
+      </div>
+    </li>
+  }
+</ul>

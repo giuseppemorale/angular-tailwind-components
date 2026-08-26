@@ -86,7 +86,7 @@
   }
 
   @if (helperText() && !hasError()) {
-    <p [attr.id]="helperId()" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
+    <p [attr.id]="helperId()" class="text-xs text-fg-muted" [innerHTML]="helperText() | safehtml"></p>
   }
   @if (errorText() && hasError()) {
     <p [attr.id]="helperId()" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>
@@ -103,10 +103,10 @@
       [(value)]="linkText" />
   </div>
   <div tailwind-modal-footer class="flex justify-end gap-2">
-    <tailwind-button kind="ghost" color="secondary" (onClick)="linkModal.close()">
+    <tailwind-button kind="ghost" color="secondary" (click)="linkModal.close()">
       {{ labels().cancel }}
     </tailwind-button>
-    <tailwind-button color="primary" (onClick)="confirmLink()">{{ labels().insert }}</tailwind-button>
+    <tailwind-button color="primary" (click)="confirmLink()">{{ labels().insert }}</tailwind-button>
   </div>
 </tailwind-modal>
 
@@ -123,9 +123,9 @@
       [(value)]="imageAlt" />
   </div>
   <div tailwind-modal-footer class="flex justify-end gap-2">
-    <tailwind-button kind="ghost" color="secondary" (onClick)="imageUrlModal.close()">
+    <tailwind-button kind="ghost" color="secondary" (click)="imageUrlModal.close()">
       {{ labels().cancel }}
     </tailwind-button>
-    <tailwind-button color="primary" (onClick)="confirmImageUrl()">{{ labels().insert }}</tailwind-button>
+    <tailwind-button color="primary" (click)="confirmImageUrl()">{{ labels().insert }}</tailwind-button>
   </div>
 </tailwind-modal>

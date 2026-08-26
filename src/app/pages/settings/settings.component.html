@@ -36,12 +36,69 @@
       </tailwind-card>
     </tailwind-tab>
 
+    <tailwind-tab [label]="'SETTINGS.TAB_NOTIFICATIONS' | transloco">
+      <tailwind-card [hasFooter]="false" class="mt-2">
+        <div tailwind-card-header>
+          <tailwind-title titleTag="h3" [text]="'SETTINGS.TAB_NOTIFICATIONS' | transloco" icon="bell" />
+        </div>
+        <p class="text-sm text-neutral-600 m-0 mb-4">{{ 'SETTINGS.NOTIFICATIONS_INTRO' | transloco }}</p>
+        <div class="grid gap-6 md:grid-cols-2">
+          <div class="flex flex-col gap-4">
+            <tailwind-number-input
+              id="settings-max-notifications"
+              [min]="1"
+              [max]="20"
+              [step]="1"
+              [label]="'SETTINGS.FIELD_MAX_NOTIFICATIONS_LABEL' | transloco"
+              [helperText]="'SETTINGS.FIELD_MAX_NOTIFICATIONS_HELPER' | transloco"
+              [(value)]="maxNotifications" />
+
+            <div class="flex flex-col gap-2">
+              <span class="text-sm font-medium text-neutral-800">{{ 'SETTINGS.FEEDBACK_LABEL' | transloco }}</span>
+              <tailwind-rating [ariaLabel]="'SETTINGS.FEEDBACK_ARIA' | transloco" [(value)]="feedback" />
+              <span class="text-sm text-neutral-500">{{ feedbackMessage() }}</span>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <span class="text-sm font-medium text-neutral-800">
+              {{ 'SETTINGS.FIELD_QUIET_START_LABEL' | transloco }}
+            </span>
+            <tailwind-calendar-panel
+              class="rounded-lg border border-neutral-200 p-2"
+              [previousAriaLabel]="'SETTINGS.CALENDAR_PREV_ARIA' | transloco"
+              [nextAriaLabel]="'SETTINGS.CALENDAR_NEXT_ARIA' | transloco"
+              [(value)]="quietStart" />
+            <span class="text-sm text-neutral-500">
+              @if (quietStart(); as start) {
+                {{ 'SETTINGS.QUIET_START_SELECTED' | transloco: { date: (start | date: 'dd/MM/yyyy') } }}
+              } @else {
+                {{ 'SETTINGS.QUIET_START_NONE' | transloco }}
+              }
+            </span>
+          </div>
+        </div>
+      </tailwind-card>
+    </tailwind-tab>
+
     <tailwind-tab [label]="'SETTINGS.TAB_ADVANCED' | transloco">
       <tailwind-card [hasHeader]="false" [hasFooter]="false" class="mt-2">
         <p class="text-sm text-neutral-600 m-0 mb-4">
           {{ 'SETTINGS.ADVANCED_PANEL_INTRO' | transloco }}
         </p>
         <tailwind-toggle id="settings-telemetry" [label]="'SETTINGS.TOGGLE_TELEMETRY' | transloco" />
+        <div class="mt-6">
+          <tailwind-button color="danger" kind="outlined" icon="arrow-path" (click)="resetConfirm.toggle($event)">
+            {{ 'SETTINGS.BTN_RESET' | transloco }}
+          </tailwind-button>
+          <tailwind-popconfirm
+            #resetConfirm
+            position="top"
+            [message]="'SETTINGS.RESET_CONFIRM_MESSAGE' | transloco"
+            [confirmLabel]="'SETTINGS.RESET_CONFIRM_YES' | transloco"
+            [cancelLabel]="'SETTINGS.RESET_CONFIRM_NO' | transloco"
+            (confirmed)="resetSettings()" />
+        </div>
       </tailwind-card>
     </tailwind-tab>
   </tailwind-tab-group>

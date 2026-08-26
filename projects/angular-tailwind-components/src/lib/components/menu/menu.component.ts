@@ -1,22 +1,24 @@
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   ElementRef,
-  HostListener,
   inject,
   input,
-  OnDestroy,
-  OnInit,
   output,
   signal,
-  viewChild
+  TemplateRef,
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
-import { TailwindComponent } from '../tailwind.component';
+import { Subscription } from 'rxjs';
 import { TailwindMenuItem, TailwindPosition } from '../../models';
-
-/** Matches previous `min-w-48` floor when the anchor is narrower. */
-const MIN_PANEL_WIDTH_PX = 192;
+import { resolveOverlayAnchor } from '../../util/overlay-anchor';
+import { TailwindComponent } from '../tailwind.component';
+import { BELOW, BESIDE, MIN_PANEL_WIDTH_PX } from './properties/constant';
 
 @Component({
   selector: 'tailwind-menu',
@@ -24,73 +26,51 @@ const MIN_PANEL_WIDTH_PX = 192;
   styleUrl: './menu.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit {
+export class TailwindMenu extends TailwindComponent {
   private readonly document = inject(DOCUMENT);
-  private openScheduleId: ReturnType<typeof setTimeout> | undefined;
+  private readonly overlay = inject(Overlay);
+  private readonly viewContainerRef = inject(ViewContainerRef);
+
   private anchorEl: HTMLElement | null = null;
+  private overlayRef: OverlayRef | null = null;
+  private closeSub: Subscription | null = null;
 
-  private readonly onScrollReposition = (): void => {
-    if (this.isOpen()) {
-      this.updatePanelPosition();
-    }
-  };
-
+  /** Menu entries; supports `divider` and `disabled`. `tooltip` / `tooltipPosition` are read by `tailwind-toolbar`, not here. */
   readonly items = input<TailwindMenuItem[]>([]);
+  /** Which edge of the anchor the panel aligns to when it opens below it. */
   readonly align = input<Exclude<TailwindPosition, 'top' | 'bottom'>>('left');
   /** `bottom` opens under the anchor; `right` opens beside it (e.g. vertical toolbar rail). */
   readonly placement = input<Extract<TailwindPosition, 'bottom' | 'right'>>('bottom');
 
-  readonly onSelect = output<TailwindMenuItem>();
+  /** Entry chosen by the user. */
+  readonly itemSelect = output<TailwindMenuItem>();
 
   readonly isOpen = signal(false);
 
-  /** Popover box in coordinates relative to the `position: fixed` containing block (often viewport, not under transformed Docs wrappers). */
-  readonly panelLayout = signal<{
-    top: number;
-    left?: number;
-    right?: number;
-    minWidth: number;
-  } | null>(null);
-
+  private readonly panelTemplate = viewChild.required<TemplateRef<unknown>>('panelTemplate');
   private readonly panelRef = viewChild<ElementRef<HTMLElement>>('panel');
 
-  ngOnInit(): void {
-    this.document.addEventListener('scroll', this.onScrollReposition, true);
-  }
-
-  ngOnDestroy(): void {
-    this.document.removeEventListener('scroll', this.onScrollReposition, true);
-    if (this.openScheduleId != null) {
-      clearTimeout(this.openScheduleId);
-    }
+  constructor() {
+    super();
+    inject(DestroyRef).onDestroy(() => this.disposeOverlay());
   }
 
   /**
-   * Opens the menu under `anchor` (toggle element).
-   * Pass the click event from the button, e.g. `(click)="menu.open($event)"`, or an `HTMLElement`.
-   * After the first open with an anchor, `open()` without arguments reuses the last anchor.
-   *
-   * Opening is deferred one macrotask so the same `click` is not closed immediately by `document:click`.
+   * Opens anchored to `anchor`: the click event (`(click)="menu.open($event)"`) or an element.
+   * Called without arguments, it reuses the last anchor.
    */
   open(anchor?: Event | HTMLElement): void {
-    if (anchor !== undefined) {
-      this.storeAnchor(anchor);
-    }
-    if (!this.anchorEl) {
-      return;
-    }
-    if (this.isOpen()) {
-      return;
-    }
-    this.scheduleOpen();
+    if (anchor !== undefined) this.storeAnchor(anchor);
+    if (!this.anchorEl || this.isOpen()) return;
+    this.attachOverlay();
   }
 
   close(): void {
     if (!this.isOpen()) return;
     // Focus would otherwise land on `<body>` when the panel holding it is removed.
     const restoreFocus = this.panelRef()?.nativeElement.contains(this.document.activeElement) ?? false;
+    this.disposeOverlay();
     this.isOpen.set(false);
-    this.panelLayout.set(null);
     if (restoreFocus) this.anchorEl?.focus();
   }
 
@@ -99,86 +79,75 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
       this.close();
       return;
     }
-    if (anchor !== undefined) {
-      this.storeAnchor(anchor);
-    }
-    if (!this.anchorEl) {
-      return;
-    }
-    this.scheduleOpen();
+    this.open(anchor);
   }
 
   private storeAnchor(anchor: Event | HTMLElement): void {
+    // The consumer binds the trigger on a component host, so `currentTarget` is often an element
+    // with no box, no role and no focus. Measure, describe and restore focus to the control inside.
     if (anchor instanceof HTMLElement) {
-      this.anchorEl = anchor;
+      this.anchorEl = resolveOverlayAnchor(anchor);
       return;
     }
     const target = anchor.currentTarget;
-    if (target instanceof HTMLElement) {
-      this.anchorEl = target;
-    }
+    if (target instanceof HTMLElement) this.anchorEl = resolveOverlayAnchor(target);
   }
 
-  private scheduleOpen(): void {
-    if (this.openScheduleId != null) {
-      clearTimeout(this.openScheduleId);
-    }
-    this.openScheduleId = setTimeout(() => {
-      this.openScheduleId = undefined;
-      this.isOpen.set(true);
-      this.updatePanelPosition();
-      requestAnimationFrame(() => {
-        this.updatePanelPosition();
-        this.focusFirstItem();
-      });
-    }, 0);
-  }
-
-  private updatePanelPosition(): void {
+  private attachOverlay(): void {
     const anchor = this.anchorEl;
-    if (!anchor) {
-      this.panelLayout.set(null);
-      return;
-    }
-    const panelEl = this.panelRef()?.nativeElement;
-    const cbRoot = panelEl
-      ? this.getFixedPositioningContainingBlock(panelEl)
-      : this.getFixedPositioningContainingBlock(anchor);
-    const cbRect = cbRoot.getBoundingClientRect();
-    const rect = anchor.getBoundingClientRect();
-    const minWidth = Math.max(rect.width, MIN_PANEL_WIDTH_PX);
+    if (!anchor || this.overlayRef) return;
 
-    if (this.placement() === 'right') {
-      this.panelLayout.set({
-        top: rect.top - cbRect.top,
-        left: rect.right - cbRect.left,
-        minWidth
-      });
-      return;
-    }
+    const positions = this.placement() === 'right' ? BESIDE : BELOW[this.align()];
+    const positionStrategy = this.overlay
+      .position()
+      .flexibleConnectedTo(anchor)
+      .withPositions(positions)
+      .withPush(true);
 
-    const top = rect.bottom - cbRect.top;
-    if (this.align() === 'right') {
-      this.panelLayout.set({
-        top,
-        right: cbRect.right - rect.right,
-        minWidth
-      });
-    } else {
-      this.panelLayout.set({
-        top,
-        left: rect.left - cbRect.left,
-        minWidth
-      });
-    }
+    this.overlayRef = this.overlay.create({
+      positionStrategy,
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      minWidth: Math.max(anchor.offsetWidth, MIN_PANEL_WIDTH_PX)
+    });
+
+    this.overlayRef.attach(new TemplatePortal(this.panelTemplate(), this.viewContainerRef));
+    this.isOpen.set(true);
+
+    this.closeSub = new Subscription();
+    // `outsidePointerEvents` fires for the anchor's own click too, which would close the menu the
+    // instant it opened; excluding the anchor keeps the toggle working.
+    this.closeSub.add(
+      this.overlayRef.outsidePointerEvents().subscribe(event => {
+        const target = event.target as Node | null;
+        if (target && anchor.contains(target)) return;
+        this.close();
+      })
+    );
+    this.closeSub.add(
+      this.overlayRef.keydownEvents().subscribe(event => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          this.close();
+        }
+      })
+    );
+    // The pattern requires focus to move into the menu once it is on screen.
+    requestAnimationFrame(() => this.focusFirstItem());
+  }
+
+  private disposeOverlay(): void {
+    this.closeSub?.unsubscribe();
+    this.closeSub = null;
+    this.overlayRef?.dispose();
+    this.overlayRef = null;
   }
 
   selectItem(item: TailwindMenuItem): void {
-    if (!item.disabled) {
-      this.onSelect.emit(item);
-      this.close();
-      this.anchorEl?.focus();
-    }
+    if (item.disabled) return;
+    const anchor = this.anchorEl;
+    this.itemSelect.emit(item);
+    this.close();
+    anchor?.focus();
   }
 
   /**
@@ -218,68 +187,7 @@ export class TailwindMenu extends TailwindComponent implements OnDestroy, OnInit
     return Array.from(panel.querySelectorAll<HTMLElement>('[role="menuitem"]:not([disabled])'));
   }
 
-  /** Moves focus into the menu once it is on screen, as the pattern requires. */
   private focusFirstItem(): void {
     this.focusableItems()[0]?.focus();
-  }
-
-  @HostListener('document:keydown.escape')
-  onDocumentEscape(): void {
-    if (!this.isOpen()) {
-      return;
-    }
-    this.close();
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: Event): void {
-    if (!this.isOpen()) {
-      return;
-    }
-    const target = event.target as Node | null;
-    if (!target) {
-      return;
-    }
-    const panelEl = this.panelRef()?.nativeElement;
-    const inPanel = panelEl?.contains(target) ?? false;
-    const inAnchor = this.anchorEl?.contains(target) ?? false;
-    if (!inPanel && !inAnchor) {
-      this.close();
-    }
-  }
-
-  @HostListener('window:resize')
-  onWindowResize(): void {
-    if (this.isOpen()) {
-      this.updatePanelPosition();
-    }
-  }
-
-  /** Ancestor that becomes the containing block for `position: fixed` (e.g. Storybook Docs wrappers with `transform`). */
-  private createsFixedContainingBlock(el: HTMLElement): boolean {
-    const s = getComputedStyle(el);
-    if (s.transform && s.transform !== 'none') {
-      return true;
-    }
-    if (s.perspective && s.perspective !== 'none') {
-      return true;
-    }
-    if (s.filter && s.filter !== 'none') {
-      return true;
-    }
-    const contain = s.contain;
-    if (contain && contain !== 'none' && contain.split(/\s+/).includes('paint')) {
-      return true;
-    }
-    return false;
-  }
-
-  private getFixedPositioningContainingBlock(from: HTMLElement): HTMLElement {
-    for (let p = from.parentElement; p; p = p.parentElement) {
-      if (this.createsFixedContainingBlock(p)) {
-        return p;
-      }
-    }
-    return this.document.documentElement;
   }
 }

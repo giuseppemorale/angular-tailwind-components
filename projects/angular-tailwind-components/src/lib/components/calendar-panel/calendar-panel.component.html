@@ -10,14 +10,14 @@
         icon="chevron-left"
         [ariaLabel]="previousLabel()"
         [disabled]="isDisabled()"
-        (onClick)="prev()" />
+        (click)="prev()" />
     } @else {
       <span class="w-8" aria-hidden="true"></span>
     }
     @if (headerClickable()) {
       <button
         type="button"
-        class="text-sm font-semibold text-neutral-800 rounded-md px-2 py-1 hover:bg-neutral-100 transition-colors cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+        class="text-sm font-semibold text-neutral-800 rounded-control px-2 py-1 hover:bg-neutral-100 transition-colors duration-150 ease-in-out press cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
         [disabled]="isDisabled()"
         (click)="onHeaderClick()">
         {{ headerLabel() }}
@@ -32,7 +32,7 @@
         icon="chevron-right"
         [ariaLabel]="nextLabel()"
         [disabled]="isDisabled()"
-        (onClick)="next()" />
+        (click)="next()" />
     } @else {
       <span class="w-8" aria-hidden="true"></span>
     }
@@ -46,7 +46,7 @@
             type="button"
             [disabled]="isDisabled() || isYearDisabled(year)"
             (click)="selectYear(year)"
-            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
+            class="h-10 w-full rounded-control text-sm transition-colors duration-150 ease-in-out press cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
             [class.bg-primary-600]="isSelectedYear(year)"
             [class.text-white]="isSelectedYear(year)"
             [class.hover:bg-primary-700]="isSelectedYear(year)"
@@ -65,7 +65,7 @@
             type="button"
             [disabled]="isDisabled() || isMonthDisabled($index)"
             (click)="selectMonth($index)"
-            class="h-10 w-full rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
+            class="h-10 w-full rounded-control text-sm transition-colors duration-150 ease-in-out press cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
             [class.bg-primary-600]="isSelectedMonth($index)"
             [class.text-white]="isSelectedMonth($index)"
             [class.hover:bg-primary-700]="isSelectedMonth($index)"
@@ -92,7 +92,7 @@
               type="button"
               [disabled]="isDisabled() || isDayDisabled(day)"
               (click)="selectDay(day)"
-              class="h-8 w-8 mx-auto rounded-lg text-sm transition-colors cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
+              class="h-8 w-8 mx-auto rounded-control text-sm transition-colors duration-150 ease-in-out press cursor-pointer hover:bg-neutral-100 disabled:cursor-not-allowed disabled:text-neutral-400 disabled:hover:bg-transparent"
               [class.bg-primary-600]="isSelectedDay(day)"
               [class.text-white]="isSelectedDay(day)"
               [class.hover:bg-primary-700]="isSelectedDay(day)"
@@ -114,7 +114,7 @@
         [color]="isTodaySelectable() ? 'primary' : 'secondary'"
         size="xs"
         [disabled]="isDisabled() || !isTodaySelectable()"
-        (onClick)="goToToday()">
+        (click)="goToToday()">
         {{ i18n.today }}
       </tailwind-button>
     </div>

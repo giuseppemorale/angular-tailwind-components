@@ -10,16 +10,19 @@ import { TailwindIcon } from '../icon/icon.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindAccordionItem extends TailwindComponent {
+  /** Panel heading. */
   readonly title = input.required<string>();
+  /** When true the panel never expands and ignores toggle attempts. */
   readonly disabled = input<boolean>(false);
   readonly isExpanded = signal(false);
 
-  readonly onToggle = output<void>();
+  /** Emitted whenever the panel is expanded or collapsed. */
+  readonly toggled = output<void>();
 
   toggle(): void {
     if (!this.disabled()) {
       this.isExpanded.update(v => !v);
-      this.onToggle.emit();
+      this.toggled.emit();
     }
   }
 }

@@ -5,9 +5,7 @@ import { TailwindSelect } from '../select/select.component';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 import { Pagination } from './interfaces/pagination.interface';
-export type { Pagination };
-
-export const DEFAULT_PAGINATION_LENGTH_OPTIONS = [5, 10, 25, 50] as const;
+import { DEFAULT_PAGINATION_LENGTH_OPTIONS } from './properties/constant';
 
 @Component({
   selector: 'tailwind-pagination',
@@ -33,17 +31,22 @@ export class TailwindPagination extends TailwindComponent {
 
   private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
 
+  /** Total number of items across all pages. */
   readonly totalItems = input.required<Pagination['totalItems']>();
+  /** Items per page (two-way); also driven by the internal select. */
   readonly pageSize = model<Pagination['pageSize']>(10);
+  /** Values offered by the rows-per-page select; an empty array hides the select. */
   readonly lengthOptions = input<readonly number[]>([...DEFAULT_PAGINATION_LENGTH_OPTIONS]);
+  /** Current page (two-way), one-based. */
   readonly currentPage = model<Pagination['currentPage']>(1);
+  /** Accessible name of the pagination `nav`. */
   readonly ariaLabel = input<Pagination['ariaLabel']>('');
   protected readonly navAriaLabel = computed(() => this.ariaLabel() || this.labels.pagination);
   /** Placeholders `{start}`, `{end}`, `{total}`; default from `TAILWIND_PAGINATION_SUMMARY` or English copy. */
   readonly summary = input<Pagination['summary']>(this.tailwindPaginationSummary ?? 'Showing {start}-{end} of {total}');
 
-  readonly onPageChange = output<number>();
-  readonly onPageSizeChange = output<number>();
+  /** Emitted when the user picks a different page. `pageSizeChange` comes from the `pageSize` model. */
+  readonly pageChange = output<number>();
 
   readonly pageSizeOptions = computed(() => {
     const options = [...this.lengthOptions()];
@@ -94,11 +97,12 @@ export class TailwindPagination extends TailwindComponent {
   });
 
   readonly summaryText = computed(() => {
+    const template = this.summary() ?? '';
     const total = this.totalItems();
-    if (total === 0) return this.summary().replace('{start}', '0').replace('{end}', '0').replace('{total}', '0');
+    if (total === 0) return template.replace('{start}', '0').replace('{end}', '0').replace('{total}', '0');
     const start = (this.currentPage() - 1) * this.pageSize() + 1;
     const end = Math.min(this.currentPage() * this.pageSize(), total);
-    return this.summary()
+    return template
       .replace('{start}', start.toString())
       .replace('{end}', end.toString())
       .replace('{total}', total.toString());
@@ -107,7 +111,7 @@ export class TailwindPagination extends TailwindComponent {
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
-      this.onPageChange.emit(page);
+      this.pageChange.emit(page);
     }
   }
 
@@ -124,10 +128,9 @@ export class TailwindPagination extends TailwindComponent {
   setPageSize(size: number): void {
     if (!Number.isFinite(size) || size <= 0 || size === this.pageSize()) return;
     this.pageSize.set(size);
-    this.onPageSizeChange.emit(size);
     if (this.currentPage() !== 1) {
       this.currentPage.set(1);
-      this.onPageChange.emit(1);
+      this.pageChange.emit(1);
     }
   }
 }

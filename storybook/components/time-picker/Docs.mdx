@@ -1,30 +1,80 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TimePickerStories from './time-picker.stories';
 
 <Meta of={TimePickerStories} />
 
 # Time picker
 
-`TailwindTimePicker` è un selettore di orario (`ControlValueAccessor`) con valore stringa nel formato **`HH:mm`** (es. `"14:30"`).
+`TailwindTimePicker` picks a time. It is a `ControlValueAccessor` whose value is a string in **`HH:mm`** format, e.g. `"14:30"`.
 
-Mostra un unico campo readonly con un'icona orologio; al click si apre un pannello con **due `<select>`** (ore 00–23, minuti 00–59) e due pulsanti:
+It shows a single read-only field with a clock icon; clicking it opens a panel with **two `<select>`** controls (hours 00–23, minutes 00–59) and two buttons:
 
-- **Adesso / Now** — imposta la bozza all'ora corrente
-- **Applica / Apply** — conferma la selezione, aggiorna il valore e chiude il pannello
+- **Now** — sets the draft to the current time
+- **Apply** — commits the selection, updates the value and closes the panel
 
-Chiudere il pannello con un secondo click sull'input annulla le modifiche alla bozza.
+Closing the panel with a second click on the field discards the draft.
 
 ---
 
-## Lingua dell&apos;interfaccia
+## Import
 
-Placeholder, etichette dei pulsanti (**Adesso / Now**, **Applica / Apply**) dipendono dal token **`TAILWIND_DATETIME_LANGUAGE`**.
+```typescript
+import { TailwindTimePicker } from 'angular-tailwind-components';
+```
 
-Valori supportati: **`'it'`** o **`'en'`**. Se il token non è fornito il componente assume **`'it'`**.
+## Properties
 
-### Configurazione consigliata: provider globale
+<ArgTypes of={TimePickerStories} />
 
-**Applicazione standalone** (`app.config.ts`):
+### Injection token
+
+| Token                        | Type                       | Values          | Default |
+| ---------------------------- | -------------------------- | --------------- | ------- |
+| `TAILWIND_DATETIME_LANGUAGE` | `TailwindDatetimeLanguage` | `'it'` · `'en'` | `'it'`  |
+
+The CVA value is a **`string`** in `HH:mm` format. `writeValue` accepts a valid string, an empty string or `undefined`, which resets to `''`.
+
+---
+
+## Example
+
+<Canvas of={TimePickerStories.TimePicker} />
+
+<Canvas of={TimePickerStories.WithReactiveForm} />
+
+<Canvas of={TimePickerStories.EnglishLanguage} />
+
+<Canvas of={TimePickerStories.Disabled} />
+
+```typescript
+@Component({
+  imports: [TailwindTimePicker],
+  template: ` <tailwind-time-picker label="Meeting Time" [(value)]="time" />`
+})
+export class ExampleComponent {
+  time = '09:00';
+}
+```
+
+With reactive forms:
+
+```typescript
+@Component({
+  imports: [TailwindTimePicker, ReactiveFormsModule],
+  template: ` <tailwind-time-picker formControlName="meetingTime" label="Orario riunione" />`
+})
+export class ExampleComponent {}
+```
+
+## Interface language
+
+The placeholder and the button labels (**Now**, **Apply**) follow the **`TAILWIND_DATETIME_LANGUAGE`** token.
+
+Supported values: **`'it'`** or **`'en'`**. Without the token the component falls back to **`'it'`**.
+
+### Recommended setup: global provider
+
+**Standalone application** (`app.config.ts`):
 
 ```typescript
 import { ApplicationConfig } from '@angular/core';
@@ -38,114 +88,4 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-**Bootstrap diretto** (`main.ts`) o **modulo radice** (`AppModule`): stesso oggetto `{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'it' }` nell&apos;array `providers`.
-
----
-
-## Utilizzo
-
-```typescript
-@Component({
-  imports: [TailwindTimePicker],
-  template: ` <tailwind-time-picker label="Meeting Time" [(value)]="time" />`
-})
-export class ExampleComponent {
-  time = '09:00';
-}
-```
-
-Con reactive forms:
-
-```typescript
-@Component({
-  imports: [TailwindTimePicker, ReactiveFormsModule],
-  template: ` <tailwind-time-picker formControlName="meetingTime" label="Orario riunione" />`
-})
-export class ExampleComponent {}
-```
-
----
-
-## Anteprima
-
-<Canvas of={TimePickerStories.TimePicker} />
-
-<Canvas of={TimePickerStories.WithReactiveForm} />
-
-<Canvas of={TimePickerStories.EnglishLanguage} />
-
-<Canvas of={TimePickerStories.Disabled} />
-
----
-
-## Properties
-
-### `TailwindTimePicker (tailwind-time-picker)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table className="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta sopra il campo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>value</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;string&gt;</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Valore orario two-way nel formato <code>HH:mm</code>. Se vuoto il pannello parte dall&apos;ora corrente.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### Injection token
-
-<table className="w-full">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Tipo</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>TAILWIND_DATETIME_LANGUAGE</code>
-      </td>
-      <td>
-        <code>'it' | 'en'</code>
-      </td>
-      <td>
-        Lingua UI del pannello. Da fornire nei <code>providers</code> globali. Default: <code>'it'</code>.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-Il valore del controllo (CVA) è **`string`** nel formato `HH:mm`. `writeValue` accetta una stringa valida, una stringa vuota o `undefined` (reset a `''`).
+**Direct bootstrap** (`main.ts`) or **root module** (`AppModule`): the same `{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'it' }` object in the `providers` array.

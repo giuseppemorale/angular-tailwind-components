@@ -1,0 +1,47 @@
+<section
+  [class]="mergeClasses('relative')"
+  [attr.aria-label]="carouselLabel()"
+  aria-roledescription="carousel"
+  (keydown)="onKeydown($event)"
+  (pointerenter)="pause()"
+  (pointerleave)="resume()"
+  (focusin)="pause()"
+  (focusout)="resume()">
+  <div class="overflow-hidden rounded-surface">
+    <ng-content />
+  </div>
+
+  @if (showArrows() && count() > 1) {
+    <tailwind-button
+      kind="flat"
+      color="secondary"
+      icon="chevron-left"
+      class="absolute left-2 top-1/2 -translate-y-1/2"
+      [disabled]="!canGoPrevious()"
+      [ariaLabel]="previousLabel()"
+      (click)="previous()" />
+    <tailwind-button
+      kind="flat"
+      color="secondary"
+      icon="chevron-right"
+      class="absolute right-2 top-1/2 -translate-y-1/2"
+      [disabled]="!canGoNext()"
+      [ariaLabel]="nextLabel()"
+      (click)="next()" />
+  }
+
+  @if (showIndicators() && count() > 1) {
+    <div class="mt-3 flex items-center justify-center gap-2">
+      @for (slide of slides(); track $index; let i = $index) {
+        <button
+          type="button"
+          class="size-2 rounded-full transition-colors duration-150 ease-in-out press cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          [class.bg-primary-600]="i === activeIndex()"
+          [class.bg-neutral-300]="i !== activeIndex()"
+          [attr.aria-label]="indicatorLabel(i)"
+          [attr.aria-current]="i === activeIndex() ? 'true' : null"
+          (click)="goTo(i)"></button>
+      }
+    </div>
+  }
+</section>

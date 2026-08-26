@@ -4,6 +4,7 @@ import { TailwindTooltipDirective } from '../../directives/tooltip/tooltip.direc
 import { TailwindColor, TailwindMenuItem, TailwindPosition } from '../../models';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindMenu } from '../menu/menu.component';
+import { TRANSITION_CONTROL } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -20,7 +21,7 @@ export class TailwindToolbar extends TailwindComponent {
   readonly openMenuAriaLabel = input<string>('');
   protected readonly openMenuLabel = computed(() => this.openMenuAriaLabel() || this.labels.openNavigationMenu);
 
-  /** When true, uses rounded corners (`rounded-xl`). */
+  /** When true, uses rounded corners (`rounded-surface`). */
   readonly rounded = input<boolean>(true);
   /**
    * Orizzontale: `full` = `w-full`; `container` = larghezza responsiva (95% / 85% / 75%) centrata.
@@ -41,7 +42,7 @@ export class TailwindToolbar extends TailwindComponent {
   readonly menu = input<TailwindMenuItem[]>([]);
 
   /** Emitted when a non-disabled, non-divider menu entry is activated. */
-  readonly onMenuSelect = output<TailwindMenuItem>();
+  readonly menuSelect = output<TailwindMenuItem>();
 
   /** Flat list for the mobile hamburger (submenu children promoted one level). */
   readonly mobileMenuItems = computed(() => this.flattenMenuItems(this.menu()));
@@ -96,7 +97,7 @@ export class TailwindToolbar extends TailwindComponent {
   readonly menuItemToneClasses = computed(() => {
     const contrast = this.variantContrastTextClass();
     if (!contrast) {
-      return 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900';
+      return 'text-neutral-700 hover:bg-neutral-100 hover:text-fg';
     }
     return `${contrast} hover:bg-surface/12`;
   });
@@ -104,16 +105,17 @@ export class TailwindToolbar extends TailwindComponent {
   readonly menuItemButtonClasses = computed(() => {
     const horizontal = this.orientation() === 'horizontal';
     const layout = horizontal
-      ? 'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium'
-      : 'inline-flex w-full items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-medium';
+      ? 'inline-flex shrink-0 items-center justify-center gap-1.5 rounded-control px-3 py-1.5 text-sm font-medium'
+      : 'inline-flex w-full items-center gap-2 rounded-control px-3 py-3 text-left text-sm font-medium';
     const rest =
-      'disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer border-0 bg-transparent';
+      'disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 ease-in-out cursor-pointer border-0 bg-transparent';
     return [layout, this.menuItemToneClasses(), rest].join(' ');
   });
 
   readonly mobileMenuToggleClasses = computed(() =>
     [
-      'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-md border-0 bg-transparent p-2 transition-colors',
+      'inline-flex shrink-0 cursor-pointer items-center justify-center rounded-control border-0 bg-transparent p-2 press',
+      TRANSITION_CONTROL,
       this.menuItemToneClasses()
     ].join(' ')
   );
@@ -146,16 +148,16 @@ export class TailwindToolbar extends TailwindComponent {
       warning: 'bg-warning-500 border border-white/20',
       danger: 'bg-danger-600 border border-white/20',
       info: 'bg-info-600 border border-white/20',
-      transparent: 'bg-surface border border-neutral-200'
+      transparent: 'bg-surface border border-border'
     };
-    const surface = variant === 'default' ? 'bg-surface border border-neutral-200' : surfaceMap[variant];
+    const surface = variant === 'default' ? 'bg-surface border border-border' : surfaceMap[variant];
 
     const base = [
       surface,
       this.variantContrastTextClass() ?? '',
       'flex',
       sizeClasses,
-      this.rounded() ? 'rounded-xl' : 'rounded-none',
+      this.rounded() ? 'rounded-surface' : 'rounded-none',
       this.elevated() ? 'shadow-lg' : 'shadow-sm'
     ];
 
@@ -176,7 +178,7 @@ export class TailwindToolbar extends TailwindComponent {
     if (item.divider || item.disabled || this.hasSubmenu(item)) {
       return;
     }
-    this.onMenuSelect.emit(item);
+    this.menuSelect.emit(item);
   }
 
   private flattenMenuItems(items: TailwindMenuItem[]): TailwindMenuItem[] {

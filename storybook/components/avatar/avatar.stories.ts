@@ -45,7 +45,7 @@ export const Avatar: StoryObj<TailwindAvatar> = {
 };
 
 export const WithImage: StoryObj<TailwindAvatar> = {
-  name: 'Con immagine',
+  name: 'With an image',
   parameters: { controls: { exclude: ['name', 'color', 'initials'] } },
   args: {
     src: 'https://i.pravatar.cc/150?u=angular-tailwind',
@@ -56,7 +56,7 @@ export const WithImage: StoryObj<TailwindAvatar> = {
 };
 
 export const Sizes: StoryObj<TailwindAvatar> = {
-  name: 'Dimensioni',
+  name: 'Sizes',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `

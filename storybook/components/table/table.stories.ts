@@ -133,3 +133,31 @@ export const WithTableTools: StoryObj<TailwindTable> = {
     `
   })
 };
+
+/**
+ * While `loading` is true the table draws skeleton rows shaped like the data that is coming,
+ * instead of a spinner. `emptyColspan` drives how many placeholder cells are laid out.
+ */
+export const Loading: StoryObj<TailwindTable> = {
+  name: 'Loading',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <tailwind-table [data]="[]" [loading]="true" [searchable]="false" [paginated]="false" [emptyColspan]="4">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody *tailwindTableRow="let row">
+          <tr>
+            <td>{{ row.name }}</td>
+          </tr>
+        </tbody>
+      </tailwind-table>
+    `
+  })
+};

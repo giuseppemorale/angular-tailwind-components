@@ -1,65 +1,38 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TooltipStories from './tooltip.stories';
 
 <Meta of={TooltipStories} />
 
 # Tooltip
 
-`TailwindTooltipDirective` (`selector: '[tooltip]'`) mostra un overlay al passaggio del mouse o al focus sull’elemento host.
+`TailwindTooltipDirective` (`selector: '[tooltip], [tailwindTooltip]'`) shows an overlay on hover or focus of the host element.
+
+The text can come from either selector: `[tooltip]` is the original one, `[tailwindTooltip]` the prefixed variant to prefer in new code. When both are set, the prefixed one wins.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindButton, TailwindTooltipDirective } from 'angular-tailwind-components';
+```
+
+## Properties
+
+The host keeps its own properties; the directive adds:
+
+<ArgTypes of={TooltipStories} />
+
+---
+
+## Example
+
+<Canvas of={TooltipStories.ButtonTooltip} />
 
 ```typescript
 @Component({
   imports: [TailwindTooltipDirective, TailwindButton],
-  template: ` <tailwind-button [tooltip]="'Hello'" [tooltipPosition]="'top'">Hover me</tailwind-button>`
+  template: ` <tailwind-button [tailwindTooltip]="'Hello'" [tooltipPosition]="'top'">Hover me</tailwind-button>`
 })
 export class ExampleComponent {}
 ```
-
-## Anteprima
-
-<Canvas of={TooltipStories.ButtonTooltip} />
-
----
-
-## Properties (directive)
-
-Host ereditano comunque le proprietà del componente ospite; la directive aggiunge:
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Input</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tooltip</code> (<code>tooltip</code>)
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>—</td>
-      <td>Richiesto: testo del tooltip.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tooltipPosition</code>
-      </td>
-      <td>
-        <code>TailwindPosition</code>
-      </td>
-      <td>
-        <code>'top'</code>
-      </td>
-      <td>Posizione rispetto al target.</td>
-    </tr>
-  </tbody>
-</table>

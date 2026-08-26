@@ -1,0 +1,39 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as PopconfirmStories from './popconfirm.stories';
+
+<Meta of={PopconfirmStories} />
+
+# Popconfirm
+
+`TailwindPopconfirm` is an inline confirmation anchored to the control that asked for it — "Delete this row?" with yes/no, without the weight of a dialog.
+
+A dialog is right for a decision that deserves the whole screen; for a row delete it is intrusive. Here focus stays next to the action, the safe button is focused first, and Escape cancels.
+
+---
+
+## Import
+
+```typescript
+import { TailwindButton, TailwindPopconfirm } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={PopconfirmStories} />
+
+---
+
+## Example
+
+<Canvas of={PopconfirmStories.Popconfirm} />
+
+```typescript
+@Component({
+  imports: [TailwindPopconfirm, TailwindButton],
+  template: ` <tailwind-button color="danger" #btn (click)="ask.toggle(btn)">Delete</tailwind-button>
+    <tailwind-popconfirm #ask message="Delete this row?" (confirmed)="remove()" />`
+})
+export class ExampleComponent {
+  remove(): void {}
+}
+```

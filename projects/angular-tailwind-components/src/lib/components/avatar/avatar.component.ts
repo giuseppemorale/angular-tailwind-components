@@ -78,7 +78,7 @@ export class TailwindAvatar extends TailwindComponent {
       xl: 'text-lg'
     };
 
-    const shape = this.shape() === 'circle' ? 'rounded-full' : 'rounded-md';
+    const shape = this.shape() === 'circle' ? 'rounded-full' : 'rounded-control';
 
     return [
       'flex h-full w-full items-center justify-center overflow-hidden font-semibold',
@@ -95,7 +95,7 @@ export class TailwindAvatar extends TailwindComponent {
       warning: 'bg-warning-100 text-warning-900',
       danger: 'bg-danger-100 text-danger-800',
       info: 'bg-info-100 text-info-800',
-      transparent: 'bg-neutral-100 text-neutral-600 border border-neutral-200'
+      transparent: 'bg-neutral-100 text-neutral-600 border border-border'
     };
 
     return ['flex h-full w-full items-center justify-center', colorMap[this.color()]].join(' ');
@@ -104,7 +104,7 @@ export class TailwindAvatar extends TailwindComponent {
   readonly imageClasses = computed(() => {
     return this.shape() === 'circle'
       ? 'h-full w-full object-cover rounded-full'
-      : 'h-full w-full object-cover rounded-md';
+      : 'h-full w-full object-cover rounded-control';
   });
 
   readonly iconSize = computed(() => {
@@ -138,12 +138,12 @@ export class TailwindAvatar extends TailwindComponent {
   readonly fallbackClasses = computed(() => {
     const colorMap: Record<TailwindColor, string> = {
       primary: 'bg-primary-100 text-primary-600',
-      secondary: 'bg-neutral-200 text-neutral-500',
+      secondary: 'bg-neutral-200 text-fg-muted',
       success: 'bg-success-100 text-success-700',
       warning: 'bg-warning-100 text-warning-700',
       danger: 'bg-danger-100 text-danger-700',
       info: 'bg-info-100 text-info-700',
-      transparent: 'bg-neutral-100 text-neutral-500 border border-neutral-200'
+      transparent: 'bg-neutral-100 text-fg-muted border border-border'
     };
 
     return ['flex h-full w-full items-center justify-center', colorMap[this.color()]].join(' ');

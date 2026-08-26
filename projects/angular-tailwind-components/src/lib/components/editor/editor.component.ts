@@ -70,22 +70,38 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   readonly imageUrlModal = viewChild<TailwindModal>('imageUrlModal');
   readonly imageFileInput = viewChild<ElementRef<HTMLInputElement>>('imageFileInput');
 
+  /** Visible field label. */
   readonly label = input<string>('');
+  /** Placeholder drawn over the empty editing area. */
   readonly placeholder = input<string>('');
+  /** Minimum height of the editing area, as a CSS length. */
   readonly minHeight = input<string>('12rem');
+  /** Size of the field and of its toolbar. */
   readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
+  /** Content cannot be edited; the toolbar stays visible but disabled. */
   readonly readonly = input<boolean>(false);
+  /** Help text under the editing area. */
   readonly helperText = input<string>('');
+  /** Error message, shown instead of the help text while `hasError` is set. */
   readonly errorText = input<string>('');
+  /** Applies the error styling. */
   readonly hasError = input<boolean>(false);
+  /** Toolbar commands, or a preset. With `full`, headings collapse into a dropdown. */
   readonly toolbar = input<EditorToolbarPreset | EditorCommand[]>('full');
+  /** Enables the image-from-URL button. */
   readonly imageUrlEnabled = input<boolean>(true);
+  /** Enables the image upload button, which inlines the file as a data URL. */
   readonly imageUploadEnabled = input<boolean>(true);
+  /** `accept` attribute of the hidden file input used for image upload. */
   readonly accept = input<string>('image/*');
+  /** Rejects picked images above this size. */
   readonly maxFileSizeBytes = input<number | undefined>(undefined);
+  /** Sanitizes outgoing HTML against a tag/attribute allowlist; `style` survives only for `text-align`. */
   readonly sanitize = input<boolean>(true);
 
+  /** Sanitized HTML (two-way / CVA value). */
   readonly value = model<string>('');
+  /** Sanitized HTML on every user edit; not emitted for programmatic `writeValue`. */
   readonly htmlChange = output<string>();
 
   readonly isDisabled = signal(false);
@@ -102,9 +118,13 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
     ...this.themeLabels
   }));
 
+  /** URL bound to the link dialog while it is open. */
   readonly linkUrl = model('');
+  /** Text bound to the link dialog while it is open. */
   readonly linkText = model('');
+  /** URL bound to the image dialog while it is open. */
   readonly imageUrl = model('');
+  /** Alternative text bound to the image dialog while it is open. */
   readonly imageAlt = model('');
   readonly imageValidationError = signal('');
 
@@ -131,14 +151,15 @@ export class TailwindEditor extends TailwindComponent implements ControlValueAcc
   );
 
   readonly wrapperClasses = computed(() => {
-    const base = 'tailwind-editor rounded-md border bg-surface overflow-hidden transition-colors duration-150';
+    const base =
+      'tailwind-editor rounded-surface border bg-surface overflow-hidden transition-colors duration-150 ease-in-out';
     if (this.isDisabled()) {
-      return this.mergeClasses(base, 'opacity-60 cursor-not-allowed border-neutral-200');
+      return this.mergeClasses(base, 'opacity-60 cursor-not-allowed border-border');
     }
     if (this.hasError()) {
       return this.mergeClasses(base, 'border-danger-400');
     }
-    return this.mergeClasses(base, 'border-neutral-300');
+    return this.mergeClasses(base, 'border-border-strong');
   });
 
   readonly surfaceClasses = computed(() => this.fieldSurfaceClasses('cursor-text'));

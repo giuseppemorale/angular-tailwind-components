@@ -12,7 +12,9 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindStepper extends TailwindComponent {
+  /** Index of the active step (two-way). */
   readonly activeIndex = model<number>(0);
+  /** When true, steps ahead of the active one cannot be reached by clicking. */
   readonly linear = input<boolean>(false);
   /** Accent color for active and completed steps */
   readonly color = input<TailwindColor>('primary');
@@ -88,8 +90,8 @@ export class TailwindStepper extends TailwindComponent {
   stepCircleClass(index: number): string {
     const active = index <= this.activeIndex();
     const base =
-      'w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-sm font-semibold border-2 transition-all duration-200';
-    return active ? `${base} ${this.stepCircleActiveClass()}` : `${base} border-neutral-300 text-neutral-600`;
+      'w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-sm font-semibold tabular-nums border-2 transition-all duration-200 ease-in-out';
+    return active ? `${base} ${this.stepCircleActiveClass()}` : `${base} border-border-strong text-neutral-600`;
   }
 
   stepLabelClass(index: number): string {
@@ -100,7 +102,7 @@ export class TailwindStepper extends TailwindComponent {
   connectorClass(index: number): string {
     const completed = index < this.activeIndex();
     return [
-      'flex-1 h-0.5 mx-3 mt-4 shrink-0 rounded-full transition-colors duration-200',
+      'flex-1 h-0.5 mx-3 mt-4 shrink-0 rounded-full transition-colors duration-150 ease-in-out',
       completed ? this.connectorActiveClass() : 'bg-neutral-200'
     ].join(' ');
   }

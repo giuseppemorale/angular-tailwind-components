@@ -8,15 +8,26 @@ Libreria di componenti UI Angular basata su Tailwind CSS v4 (signals, standalone
 
 ## Comandi
 
-| Scopo             | Comando                                                                                                                  |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Dev playground    | `npm start`                                                                                                              |
-| Build libreria    | `npm run build`                                                                                                          |
-| Storybook         | `npm run storybook`                                                                                                      |
-| Prettier          | `npm run prettier:write`                                                                                                 |
-| Test singolo spec | `npx ng test angular-tailwind-components --include='src/lib/components/<folder>/<nome>.component.spec.ts' --watch=false` |
+| Scopo             | Comando                                                                                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dev playground    | `npm start`                                                                                                                                                   |
+| Build libreria    | `npm run build`                                                                                                                                               |
+| Storybook         | `npm run storybook`                                                                                                                                           |
+| Prettier          | `npm run prettier:write`                                                                                                                                      |
+| Test singolo spec | `npx ng test angular-tailwind-components --include='projects/angular-tailwind-components/src/lib/components/<folder>/<nome>.component.spec.ts' --watch=false` |
+
+Il percorso di `--include` è **relativo alla radice del workspace**, non a `sourceRoot`.
 
 Per i test usa **sempre un comando secco**: mai `ng test --watch`, mai processi in background.
+
+---
+
+# Commenti
+
+- **Sintetici.** Un JSDoc su API pubblica = **una riga**; due o tre solo se serve un esempio o una regola non ovvia.
+- Niente paragrafi di motivazione storica ("prima era così…", "esiste perché…") né racconti di design.
+- Non ripetere il codice: `/** Whether the button is disabled */` su `disabled` è rumore.
+- Commenta solo ciò che il codice non dice: vincoli, workaround, requisiti WCAG/APG, effetti collaterali.
 
 ---
 
@@ -35,13 +46,16 @@ Riferimento: `calendar-panel/`.
 - `*.component.ts`, `*.component.html`, `*.component.css` (o `.scss`), `*.component.spec.ts`
 - Più componenti nella stessa cartella (es. `accordion/`, `tabs/`): stesso pattern per ogni componente
 
-**Non** lasciare in root: util, tipi, i18n, spec di moduli non-component.
+Il `.component.ts` contiene **solo la classe del componente** e il suo `@Component`: niente `const`, `type`, `interface` o funzioni a livello di modulo. Stessa regola per `*.service.ts`, `*.directive.ts`, `*.pipe.ts` e per i provider.
 
 **Sottocartelle semantiche** per il resto:
 
+- `properties/constant.ts` — **tutte le costanti** del componente (mappe di classi Tailwind, durate, posizioni CDK, …), esportate. Riferimento: `button/properties/constant.ts`
+- `interfaces/` — tipi e interfacce, anche quelli usati solo internamente (es. `segmented-control/interfaces/thumb-geometry.interface.ts`)
 - `util/` — funzioni pure, helper, i18n, logica di vista (es. `calendar-date-range.ts`)
-- `interfaces/` — tipi condivisi
 - `models/` — enum / modelli di dominio
+
+Se un tipo o una costante spostata era parte dell'API pubblica, aggiungi il re-export in `components/index.ts` (o `providers/index.ts`) per non rompere `public-api`.
 
 Spec dei file in `util/`: `util/<nome>.spec.ts` accanto al sorgente.
 
@@ -159,7 +173,9 @@ npx ng test angular-tailwind-components --include='src/lib/components/<folder>/<
 
 ## Checklist componente
 
-- [ ] Root cartella: solo `*.component.*` + sottocartelle (`util/`, `interfaces/`, …)
+- [ ] Root cartella: solo `*.component.*` + sottocartelle (`properties/`, `interfaces/`, `util/`, …)
+- [ ] Nessuna `const` / `type` / funzione a livello di modulo nel `.component.ts`
+- [ ] Commenti sintetici (JSDoc di una riga)
 - [ ] Signals
 - [ ] CVA se form-compatible
 - [ ] Template pulito con componenti DS
@@ -176,14 +192,32 @@ Ambito: ogni aggiunta o modifica in `projects/angular-tailwind-components/src/li
 ## Nuovi componenti
 
 1. **Storybook**: crea `storybook/components/<name>/<name>.stories.ts` con almeno una story principale e controlli sugli input rilevanti.
-2. **Documentazione**: crea `storybook/components/<name>/Docs.mdx` con Meta, utilizzo, Canvas di anteprima e tabella proprietà (stesso stile degli altri componenti, es. Badge).
+2. **Documentazione**: crea `storybook/components/<name>/Docs.mdx` seguendo la struttura descritta sotto (riferimento: `badge`, `select`, `card`).
 3. Registra il componente in `projects/angular-tailwind-components/.storybook/preview.ts` (`ALL_COMPONENTS`) se non è già importabile globalmente nelle stories.
 4. Aggiorna `storybook/Introduction.mdx` e i **README** alla radice del repo e in `projects/angular-tailwind-components/` (conteggio componenti e voce in elenco) quando introduci un componente esposto pubblicamente.
+
+## Struttura di `Docs.mdx`
+
+Le pagine di documentazione sono **in inglese** e seguono sempre quest'ordine: identità → import → API → esempi.
+
+| Sezione         | Contenuto                                                                      |
+| --------------- | ------------------------------------------------------------------------------ |
+| `# <Nome>`      | Titolo e una riga di descrizione della classe                                  |
+| `## Import`     | Import dal package: `import { TailwindX } from 'angular-tailwind-components';` |
+| `## Properties` | `<ArgTypes of={XStories} />` — **generato**, mai una tabella a mano            |
+| `## Example`    | `<Canvas of={XStories.<PrimaryStory>} />` più lo snippet `@Component`          |
+| Altre sezioni   | Varianti, stati, note: solo dove servono davvero                               |
+
+`<ArgTypes>` legge `documentation.json`, generato da compodoc: input, output, `model()`, tipi, default, flag required e JSDoc di ogni proprietà, inclusi `id` / `class` ereditati da `TailwindComponent`. Di conseguenza:
+
+- La **fonte di verità della documentazione API è il JSDoc** nel `.component.ts`: una riga, in inglese, su ogni `input()` / `output()` / `model()`. Senza JSDoc la colonna Description resta vuota nella pagina pubblica.
+- `documentation.json` è rigenerato dai target Storybook (`compodoc: true` in `angular.json`) oppure a mano con `npm run docs:json`. È in `.gitignore`.
+- I default risolti via token DI (`input(this.defaultSize ?? 'md')`) sono normalizzati in `.storybook/compodoc.ts`: si estende quello, non si scrive il valore nella pagina.
 
 ## Modifica componenti
 
 1. **Storybook**: cerca `storybook/components/<name>/<name>.stories.ts` e aggiorna proprietà, valori o qualsiasi cosa sia stata modificata.
-2. **Documentazione**: aggiorna `storybook/components/<name>/Docs.mdx` con le modifiche effettuate al componente.
+2. **Documentazione**: aggiorna `storybook/components/<name>/Docs.mdx` con le modifiche effettuate al componente. La tabella delle proprietà non si tocca: è generata dal JSDoc del componente.
 
 Dopo modifiche rilevanti, controlla il pannello **Accessibility** (`@storybook/addon-a11y`) sulla story principale e correggi le violazioni automatiche o manuali.
 

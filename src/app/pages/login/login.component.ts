@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
   TailwindButton,
   TailwindCard,
@@ -38,10 +38,11 @@ import { ErrorPipe } from '../../core/pipe/error.pipe';
 export class LoginComponent {
   private readonly router = inject(Router);
   private readonly toastService = inject(TailwindToastService);
+  private readonly transloco = inject(TranslocoService);
 
   readonly breadcrumb = [
-    { label: 'Home', link: '/', icon: 'home' },
-    { label: 'Accedi', link: '/login' }
+    { label: this.transloco.translate('HOME.BREADCRUMB'), link: '/', icon: 'home' },
+    { label: this.transloco.translate('LOGIN.PAGE_TITLE'), link: '/login' }
   ];
 
   readonly submitting = signal(false);
@@ -84,7 +85,11 @@ export class LoginComponent {
 
     setTimeout(() => {
       this.submitting.set(false);
-      this.toastService.success('Accesso effettuato', 'Benvenuto! Reindirizzamento alla home…', 'check-circle');
+      this.toastService.success(
+        this.transloco.translate('LOGIN.TOAST_LOGIN_TITLE'),
+        this.transloco.translate('LOGIN.TOAST_LOGIN_BODY'),
+        'check-circle'
+      );
       void this.router.navigateByUrl('/home');
     }, 800);
   }

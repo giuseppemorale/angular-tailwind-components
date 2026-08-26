@@ -1,0 +1,36 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as KbdStories from './kbd.stories';
+
+<Meta of={KbdStories} />
+
+# Kbd
+
+`TailwindKbd` represents a keyboard key, using the native `<kbd>` element.
+
+Passing `keys` renders a whole chord: the separators are `aria-hidden`, so a screen reader announces the keys and not the punctuation.
+
+---
+
+## Import
+
+```typescript
+import { TailwindKbd } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={KbdStories} />
+
+---
+
+## Example
+
+<Canvas of={KbdStories.Kbd} />
+
+```typescript
+@Component({
+  imports: [TailwindKbd],
+  template: ` Press <tailwind-kbd [keys]="['Ctrl', 'K']" /> to search. Press <tailwind-kbd>Esc</tailwind-kbd> to close.`
+})
+export class ExampleComponent {}
+```

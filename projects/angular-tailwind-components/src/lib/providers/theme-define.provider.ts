@@ -8,8 +8,14 @@ import {
   type EnvironmentProviders,
   type Provider
 } from '@angular/core';
-import { resolveTailwindEditorLabels, resolveTailwindLabels, resolveTailwindTitleScale } from '../models';
 import {
+  DEFAULT_TAILWIND_LABELS,
+  resolveTailwindEditorLabels,
+  resolveTailwindLabels,
+  resolveTailwindTitleScale
+} from '../models';
+import {
+  DEFAULT_TAILWIND_ICON_BASE_PATH,
   TAILWIND_BUTTON_KIND,
   TAILWIND_COMPONENTS_SIZE,
   TAILWIND_DATETIME_LANGUAGE,
@@ -21,30 +27,31 @@ import {
   TAILWIND_PASSWORD_LABELS,
   TAILWIND_TITLE_SCALE
 } from '../tokens';
-import {
-  TailwindComponentsConfig,
-  TailwindDefineThemeColors,
-  TailwindDefineThemeConfig
-} from './interfaces/theme-config.interface';
-import {
-  TailwindThemeColorShade,
-  TailwindThemeSemantic,
-  TailwindThemeSemanticPaletteObject,
-  TailwindThemeSemanticShades,
-  TailwindThemeSeverityColor
-} from './types/theme-config.types';
+import type { TailwindComponentsConfig, TailwindDefineThemeColors } from './interfaces/theme-config.interface';
+import { TAILWIND_RESOLVED_CONFIG } from './properties/constant';
+import type { TailwindConfigInput, TailwindRadiusConfig } from './types/theme-config.types';
+import { applyTailwindThemeColors } from './util/theme-colors';
+import { applyTailwindRadius } from './util/theme-radius';
 
-function providersFromConfigFactory(config: () => TailwindComponentsConfig): Provider[] {
+/** Unwraps a value that may be given directly or through a factory. */
+function resolveConfigInput<T>(input: TailwindConfigInput<T>): T {
+  return typeof input === 'function' ? (input as () => T)() : input;
+}
+
+function tokenProviders(): Provider[] {
   const fromConfig = <T>(
     token: InjectionToken<T>,
     select: (c: TailwindComponentsConfig) => T | undefined,
-    map?: (value: NonNullable<T>) => T
+    map?: (value: NonNullable<T>) => T,
+    // These providers shadow the tokens' own `providedIn: 'root'` factory, so a config that omits
+    // the key must repeat the default instead of handing consumers `undefined`.
+    fallback?: () => T
   ): Provider => ({
     provide: token,
     useFactory: () => {
-      const value = select(config());
+      const value = select(inject(TAILWIND_RESOLVED_CONFIG));
       if (value === undefined) {
-        return undefined;
+        return fallback ? fallback() : undefined;
       }
       return map ? map(value as NonNullable<T>) : value;
     }
@@ -52,7 +59,12 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
 
   return [
     fromConfig(TAILWIND_ICON_SIZE, c => c.ICON_SIZE),
-    fromConfig(TAILWIND_ICON_BASE_PATH, c => c.ICON_BASE_PATH),
+    fromConfig(
+      TAILWIND_ICON_BASE_PATH,
+      c => c.ICON_BASE_PATH,
+      undefined,
+      () => DEFAULT_TAILWIND_ICON_BASE_PATH
+    ),
     fromConfig(TAILWIND_DATETIME_LANGUAGE, c => c.DATETIME_LANGUAGE),
     fromConfig(TAILWIND_COMPONENTS_SIZE, c => c.COMPONENTS_SIZE),
     fromConfig(TAILWIND_BUTTON_KIND, c => c.BUTTON_KIND),
@@ -71,287 +83,111 @@ function providersFromConfigFactory(config: () => TailwindComponentsConfig): Pro
     fromConfig(
       TAILWIND_LABELS,
       c => c.LABELS,
-      v => resolveTailwindLabels(v)
+      v => resolveTailwindLabels(v),
+      () => DEFAULT_TAILWIND_LABELS
     )
   ];
 }
 
-/**
- * @deprecated Use {@link provideTailwindConfig}(() => config) instead.
- */
-export function provideTailwindComponents(config: TailwindComponentsConfig): EnvironmentProviders {
-  return provideTailwindConfig(() => config);
-}
-
-const SHADES_WITH_950 = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
-const SHADES_TO_900 = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const;
-
-function shadesForSemantic(semantic: TailwindThemeSemantic): readonly number[] {
-  switch (semantic) {
-    case 'success':
-    case 'warning':
-    case 'danger':
-    case 'info':
-      return SHADES_TO_900;
-    default:
-      return SHADES_WITH_950;
-  }
-}
-
-function isValidShadeKey(key: string): key is TailwindThemeColorShade {
-  return (
-    key === '50' ||
-    key === '100' ||
-    key === '200' ||
-    key === '300' ||
-    key === '400' ||
-    key === '500' ||
-    key === '600' ||
-    key === '700' ||
-    key === '800' ||
-    key === '900' ||
-    key === '950'
-  );
-}
-
-function isSemanticPaletteObject(value: object): value is TailwindThemeSemanticPaletteObject {
-  return (
-    'shades' in value &&
-    typeof (value as TailwindThemeSemanticPaletteObject).shades === 'object' &&
-    (value as TailwindThemeSemanticPaletteObject).shades !== null
-  );
-}
-
-function normalizeSemanticColorObject(value: Exclude<TailwindThemeSeverityColor, string>): {
-  shades: TailwindThemeSemanticShades;
-  on?: TailwindThemeSemanticShades;
-} {
-  if (isSemanticPaletteObject(value)) {
-    return { shades: value.shades, on: value.on };
-  }
-  return { shades: value as TailwindThemeSemanticShades };
-}
-
-/** Default `--color-on-<semantic>-<shade>` values aligned with `tailwind.css` `@theme`. */
-function defaultOnColorForShade(semantic: TailwindThemeSemantic, shade: TailwindThemeColorShade): string {
-  const shadeNum = Number(shade);
-  switch (semantic) {
-    case 'warning':
-      return shadeNum >= 700 ? '#ffffff' : 'var(--color-neutral-900)';
-    case 'neutral':
-      return shadeNum >= 600 ? '#ffffff' : 'var(--color-neutral-900)';
-    default:
-      return shadeNum >= 500 ? '#ffffff' : 'var(--color-neutral-900)';
-  }
-}
-
-function resolveOnShadesForCustomPalette(
-  semantic: TailwindThemeSemantic,
-  shades: TailwindThemeSemanticShades,
-  on: TailwindThemeSemanticShades | undefined
-): TailwindThemeSemanticShades {
-  const resolved: TailwindThemeSemanticShades = { ...on };
-  for (const shade of Object.keys(shades)) {
-    if (!isValidShadeKey(shade) || shades[shade] === undefined || shades[shade] === '') {
-      continue;
-    }
-    if (resolved[shade] === undefined || resolved[shade] === '') {
-      resolved[shade] = defaultOnColorForShade(semantic, shade);
-    }
-  }
-  return resolved;
-}
-
-function pushShadeVariables(
-  semantic: TailwindThemeSemantic,
-  shades: TailwindThemeSemanticShades,
-  entries: Array<[string, string]>
-): void {
-  for (const [shade, color] of Object.entries(shades)) {
-    if (!isValidShadeKey(shade) || color === undefined || color === '') {
-      continue;
-    }
-    entries.push([`--color-${semantic}-${shade}`, color]);
-  }
-}
-
-function pushOnShadeVariables(
-  semantic: TailwindThemeSemantic,
-  on: TailwindThemeSemanticShades | undefined,
-  entries: Array<[string, string]>
-): void {
-  if (!on) {
-    return;
-  }
-  for (const [shade, color] of Object.entries(on)) {
-    if (!isValidShadeKey(shade) || color === undefined || color === '') {
-      continue;
-    }
-    entries.push([`--color-on-${semantic}-${shade}`, color]);
-  }
+/** Writes `COLORS` into `<style id="tailwind-theme-colors">`, then again once late CSS has loaded. */
+function applyColors(document: Document, colors: TailwindDefineThemeColors): void {
+  const apply = (): void => applyTailwindThemeColors(document, colors);
+  apply();
+  // Re-apply after async stylesheets load (Angular may defer bundled CSS behind JS).
+  globalThis.addEventListener?.('load', apply, { once: true });
 }
 
 /**
- * Builds `[CSS custom property name, value]` pairs for semantic `COLORS`.
- * Exported for unit tests.
- */
-export function buildTailwindThemeVariableEntries(config: TailwindDefineThemeConfig): Array<[string, string]> {
-  const colors = config.COLORS;
-  if (!colors) {
-    return [];
-  }
-
-  const entries: Array<[string, string]> = [];
-  const dangerOrError = colors.danger ?? colors.error;
-
-  const pairs: Array<[TailwindThemeSemantic, TailwindThemeSeverityColor | undefined]> = [
-    ['primary', colors.primary],
-    ['neutral', colors.neutral],
-    ['success', colors.success],
-    ['warning', colors.warning],
-    ['danger', dangerOrError],
-    ['info', colors.info]
-  ];
-
-  for (const [semantic, value] of pairs) {
-    if (value === undefined) {
-      continue;
-    }
-    if (typeof value === 'string') {
-      const palette = value.trim();
-      if (!palette) {
-        continue;
-      }
-      for (const shade of shadesForSemantic(semantic)) {
-        entries.push([`--color-${semantic}-${shade}`, `var(--color-${palette}-${shade})`]);
-      }
-    } else {
-      const { shades, on } = normalizeSemanticColorObject(value);
-      pushShadeVariables(semantic, shades, entries);
-      pushOnShadeVariables(semantic, resolveOnShadesForCustomPalette(semantic, shades, on), entries);
-    }
-  }
-
-  return entries;
-}
-
-/** `id` of the injected `<style>` that holds semantic theme variables on `:root`. */
-export const TAILWIND_THEME_STYLE_ID = 'tailwind-theme-colors';
-
-/** `data-*` attribute on `<html>` while a runtime theme override is active. */
-export const TAILWIND_THEME_HTML_ATTR = 'data-tailwind-theme';
-
-/**
- * Builds an `@layer theme` stylesheet from semantic `COLORS`. Exported for unit tests.
+ * Applies the startup half of a config — the parts that write CSS instead of feeding a token.
  *
- * Tailwind v4 registers semantic tokens in `@layer theme` on `:root`/`:host`; overrides must
- * live in the same layer (and beat defaults via attribute selector + source order).
+ * The config is resolved here rather than read from {@link TAILWIND_RESOLVED_CONFIG} on purpose:
+ * app initializers run before their async siblings settle, so injecting the cached value would
+ * freeze a translated `LABELS` factory to its pre-load result.
  */
-export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string {
-  const entries = buildTailwindThemeVariableEntries({ COLORS: colors });
-  if (entries.length === 0) {
-    return '';
-  }
-  const declarations = entries.map(([prop, val]) => `  ${prop}: ${val};`).join('\n');
-  return `@layer theme {\n  :root[${TAILWIND_THEME_HTML_ATTR}],\n  :host {\n${declarations}\n  }\n}`;
-}
-
-/** Angular production build sets global `ngDevMode` to `false`. */
-declare const ngDevMode: boolean | undefined;
-
-function stylesheetHasPrimaryUtility(document: Document): boolean {
-  for (const sheet of document.styleSheets) {
-    let rules: CSSRuleList;
-    try {
-      rules = sheet.cssRules;
-    } catch {
-      continue;
-    }
-    for (let i = 0; i < rules.length; i++) {
-      const text = rules[i]?.cssText ?? '';
-      if (text.includes('.bg-primary-600') || text.includes('.bg-primary-600:')) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-function warnIfSemanticUtilitiesMissing(document: Document): void {
-  if (typeof ngDevMode !== 'undefined' && ngDevMode === false) {
-    return;
-  }
-  if (stylesheetHasPrimaryUtility(document)) {
-    return;
-  }
-  console.warn(
-    '[angular-tailwind-components] Semantic utilities such as `.bg-primary-600` were not found in the compiled CSS. ' +
-      'Add `angular-tailwind-components/styles/tailwind.css` to your global styles (it already includes `@import "tailwindcss"`). ' +
-      'Using only `@import "tailwindcss"` in your app does not register `primary` / `on-primary` tokens — buttons may look gray.'
-  );
-}
-
-/**
- * Injects or updates `#tailwind-theme-colors` in `document.head` (browser only).
- * Exported for unit tests.
- *
- * Sets `data-tailwind-theme` on `<html>` and applies variables via `@layer theme` in the injected
- * stylesheet (`:root[data-tailwind-theme]` and `:host` for shadow roots). Does not use inline
- * `style` on `<html>`.
- */
-export function applyTailwindThemeColors(document: Document, colors: TailwindDefineThemeColors): void {
-  const entries = buildTailwindThemeVariableEntries({ COLORS: colors });
-  const existing = document.getElementById(TAILWIND_THEME_STYLE_ID);
-  const root = document.documentElement;
-
-  if (entries.length === 0) {
-    existing?.remove();
-    root.removeAttribute(TAILWIND_THEME_HTML_ATTR);
-    return;
-  }
-
-  root.setAttribute(TAILWIND_THEME_HTML_ATTR, '');
-
-  const css = buildTailwindThemeCss(colors);
-  const style = existing ?? document.createElement('style');
-  style.id = TAILWIND_THEME_STYLE_ID;
-  style.dataset['tailwindTheme'] = '';
-  style.textContent = css;
-
-  if (!existing) {
-    document.head.appendChild(style);
-  }
-  warnIfSemanticUtilitiesMissing(document);
-}
-
-/**
- * Overrides library injection tokens (`ICON_SIZE`, `DATETIME_LANGUAGE`, `EDITOR_LABELS`, …).
- * Pass a factory so you can use `inject()` (e.g. for translated labels).
- *
- * Token values are resolved on first injection (after your app initializers run).
- * For runtime semantic **`COLORS`**, use {@link provideTailwindThemeColors} separately.
- */
-export function provideTailwindConfig(config: () => TailwindComponentsConfig): EnvironmentProviders {
-  return makeEnvironmentProviders(providersFromConfigFactory(config));
-}
-
-/**
- * Applies semantic `COLORS` via `<style id="tailwind-theme-colors">` in `@layer theme` at startup (browser only).
- * Register after i18n (or other) initializers if the factory uses `inject()`.
- */
-export function provideTailwindThemeColors(colors: () => TailwindDefineThemeColors): EnvironmentProviders {
+function themeInitializer(input: TailwindConfigInput<TailwindComponentsConfig>): EnvironmentProviders {
   return makeEnvironmentProviders([
     provideAppInitializer(() => {
-      const platformId = inject(PLATFORM_ID);
-      if (!isPlatformBrowser(platformId)) {
+      if (!isPlatformBrowser(inject(PLATFORM_ID))) {
         return;
       }
       const document = inject(DOCUMENT);
-      const resolved = colors();
-      const apply = (): void => applyTailwindThemeColors(document, resolved);
-      apply();
-      // Re-apply after async stylesheets load (Angular may defer bundled CSS behind JS).
-      globalThis.addEventListener?.('load', apply, { once: true });
+      const { RADIUS, COLORS } = resolveConfigInput(input);
+      if (RADIUS !== undefined) {
+        applyTailwindRadius(document, RADIUS);
+      }
+      if (COLORS !== undefined) {
+        applyColors(document, COLORS);
+      }
+    })
+  ]);
+}
+
+/** Whether a config can carry `RADIUS` / `COLORS`; a factory has to be assumed to. */
+function mayCarryTheme(input: TailwindConfigInput<TailwindComponentsConfig>): boolean {
+  return typeof input === 'function' || input.RADIUS !== undefined || input.COLORS !== undefined;
+}
+
+/**
+ * Configures the library app-wide: injection token defaults (`ICON_SIZE`, `DATETIME_LANGUAGE`,
+ * `LABELS`, …) plus the `RADIUS` and `COLORS` themes, which are written to the document at startup
+ * and are a no-op during SSR.
+ *
+ * Pass the config object directly; pass a factory only when the values need `inject()`.
+ *
+ * ```ts
+ * provideTailwindConfig({ BUTTON_KIND: 'flat', RADIUS: 'round', COLORS: { primary: 'indigo' } })
+ * provideTailwindConfig(() => ({ LABELS: inject(TranslocoService).translateObject('ui') }))
+ * ```
+ *
+ * Token values resolve on first injection, after the app initializers; `RADIUS` and `COLORS` are
+ * read during them, so a factory that computes those from async state should set them statically.
+ */
+export function provideTailwindConfig(config: TailwindConfigInput<TailwindComponentsConfig>): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    { provide: TAILWIND_RESOLVED_CONFIG, useFactory: () => resolveConfigInput(config) },
+    ...tokenProviders(),
+    ...(mayCarryTheme(config) ? [themeInitializer(config)] : [])
+  ]);
+}
+
+/**
+ * @deprecated Use {@link provideTailwindConfig} — it now accepts the config object directly.
+ */
+export function provideTailwindComponents(config: TailwindComponentsConfig): EnvironmentProviders {
+  return provideTailwindConfig(config);
+}
+
+/**
+ * Re-maps the role-based radius tokens (`--radius-control`, `--radius-surface`, `--radius-overlay`)
+ * app-wide at startup (browser only).
+ *
+ * @deprecated Use `provideTailwindConfig({ RADIUS: … })`.
+ */
+export function provideTailwindRadius(config: TailwindConfigInput<TailwindRadiusConfig>): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    provideAppInitializer(() => {
+      if (!isPlatformBrowser(inject(PLATFORM_ID))) {
+        return;
+      }
+      applyTailwindRadius(inject(DOCUMENT), resolveConfigInput(config));
+    })
+  ]);
+}
+
+/**
+ * Applies semantic `COLORS` through `<style id="tailwind-theme-colors">` at startup (browser only).
+ *
+ * @deprecated Use `provideTailwindConfig({ COLORS: … })`.
+ */
+export function provideTailwindThemeColors(
+  colors: TailwindConfigInput<TailwindDefineThemeColors>
+): EnvironmentProviders {
+  return makeEnvironmentProviders([
+    provideAppInitializer(() => {
+      if (!isPlatformBrowser(inject(PLATFORM_ID))) {
+        return;
+      }
+      applyColors(inject(DOCUMENT), resolveConfigInput(colors));
     })
   ]);
 }

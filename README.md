@@ -6,38 +6,23 @@ A comprehensive Angular component library built entirely with **Tailwind CSS v4*
 
 ## Features
 
-- 🎨 **43 components** — Buttons, Inputs, Modals, Tables, DatePickers, and more
-- 🎯 **Pure Tailwind CSS** — No third-party UI component frameworks
-- ⚡ **Angular** — Signals, standalone components, modern control flow
-- 📝 **ControlValueAccessor** — Full reactive forms integration for all form components
-- ♿ **Accessible** — WCAG-compliant with proper ARIA roles and keyboard support
-- 🧪 **Tested** — Unit tests with Vitest
-- 📖 **Storybook** — [Visual documentation](https://angular-tailwind-components.vercel.app/) for all components
-- 🎭 **Customizable** — **`provideTailwindConfig()`** for injection-token defaults and runtime semantic colors; optional CSS overrides via `@theme`
+- 🎨 **53 components** — signals, standalone, modern control flow
+- 🎯 **Pure Tailwind CSS v4** — no third-party UI framework
+- 📝 **ControlValueAccessor** on every form component
+- ♿ **Accessible** — WCAG 2.1 AA, ARIA APG patterns, full keyboard support
+- 🎭 **Themeable** — semantic color tokens, radius roles, dark mode
+- 🧪 **Tested** with Vitest, documented in Storybook
 
 ## Compatibility
 
-### Versioning rule
+The **library major matches the Angular major**: library `22.x` → Angular 22, `23.x` → Angular 23, and so on.
 
-The **library major matches the Angular major** in your app (library **21.x** → **Angular 21**, **22.x** → **Angular 22**, and so on).
+| Library  | Angular | Tailwind CSS | Notes        |
+| :------- | :------ | :----------- | :----------- |
+| **21.x** | 21      | 4            | Previous.    |
+| **22.x** | 22      | 4            | **Current.** |
 
-### Which version should I use?
-
-| Library  | Angular               | Tailwind CSS | Notes                                                 |
-| :------- | :-------------------- | :----------- | :---------------------------------------------------- |
-| **22.x** | 22                    | 4            | **Current.** Use on Angular 22 apps.                  |
-| **21.x** | 21                    | 4            | Previous. Use on Angular 21 apps.                     |
-| **23+**  | same major as Angular | 4            | Each new Angular major gets a matching library major. |
-
-### Peer dependencies
-
-Your app should use:
-
-- **Angular** 22 — `@angular/core` and related packages `^22`
-- **Tailwind CSS** 4 — `tailwindcss` `^4`
-- **PostCSS** 8 — `postcss` `^8`
-
-Exact ranges for the version you install are listed under [peerDependencies on npm](https://www.npmjs.com/package/angular-tailwind-components?activeTab=dependencies).
+Peer dependencies: `@angular/core` `^22`, `tailwindcss` `^4`, `postcss` `^8`.
 
 ## Installation
 
@@ -45,11 +30,7 @@ Exact ranges for the version you install are listed under [peerDependencies on n
 npm install angular-tailwind-components
 ```
 
-### Prerequisites
-
-Install peer dependencies **Tailwind CSS v4** (`tailwindcss`, `postcss`) in your app.
-
-Register the library stylesheet in **`angular.json`** under your application target (`architect.build.options.styles`). This is required so semantic tokens and utilities (`bg-primary-600`, `text-on-primary-*`, …) are emitted in the compiled CSS:
+Register the library stylesheet in **`angular.json`** (`architect.build.options.styles`) — it is what emits the semantic tokens and utilities (`bg-primary-600`, `text-on-primary-*`, …):
 
 ```json
 "styles": [
@@ -58,50 +39,36 @@ Register the library stylesheet in **`angular.json`** under your application tar
 ]
 ```
 
-That file already includes `@import "tailwindcss"`, the library `@theme` block (`primary`, `neutral`, `success`, …), and `@source` paths for classes used inside library components.
-
-Do **not** use only `@import "tailwindcss"` in `src/styles.css` — it does not register semantic `primary` / `on-primary` tokens; primary buttons may look gray even when `provideTailwindThemeColors` is configured.
-
-Keep `src/styles.css` for app-specific global rules (fonts, layout, etc.) only. You do **not** need a separate `@source` to `node_modules/.../fesm2022` in the consumer.
-
-An `@import 'angular-tailwind-components/styles/tailwind.css'` inside a CSS file may fail to resolve library `@source` paths in some Angular builds; prefer the `node_modules/...` entry in `angular.json` above.
+That file already includes `@import "tailwindcss"`, the library `@theme` block and the `@source` paths for classes used inside components. Using only `@import "tailwindcss"` in `src/styles.css` is **not** enough: without the library stylesheet the semantic tokens are missing and primary buttons render gray. Keep `src/styles.css` for app-specific rules only.
 
 ## Quick Start
 
 ```typescript
 import { Component } from '@angular/core';
-import { TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle } from 'angular-tailwind-components';
+import { TailwindButton, TailwindInput, TailwindToggle } from 'angular-tailwind-components';
 
 @Component({
   selector: 'app-example',
-  imports: [TailwindButton, TailwindInput, TailwindTextarea, TailwindToggle],
+  imports: [TailwindButton, TailwindInput, TailwindToggle],
   template: `
     <form [formGroup]="form">
-      <tailwind-input label="Email" placeholder="you@example.com" [formControl]="form.controls.email" />
-      <tailwind-textarea label="Notes" placeholder="Optional notes" [formControl]="form.controls.notes" />
+      <tailwind-input label="Email" [formControl]="form.controls.email" />
       <tailwind-toggle label="Notifications" [formControl]="form.controls.notifications" />
-      <tailwind-button color="primary" (onClick)="submit()">Submit</tailwind-button>
+      <tailwind-button color="primary" (click)="submit()">Submit</tailwind-button>
     </form>
   `
 })
 export class ExampleComponent {
   form = new FormGroup({
     email: new FormControl(''),
-    notes: new FormControl(''),
     notifications: new FormControl(false)
   });
-
-  submit() {
-    console.log(this.form.value);
-  }
 }
 ```
 
-## Application configuration (`provideTailwindConfig`)
+## Configuration
 
-Use **`provideTailwindConfig`** to override library **injection tokens**. Pass a **factory** so you can use `inject()` (e.g. Transloco). For runtime semantic **`COLORS`**, add **`provideTailwindThemeColors`** separately.
-
-### Example (tokens + colors)
+**`provideTailwindConfig`** is the single entry point. It configures the injection tokens — `ICON_SIZE`, `ICON_BASE_PATH`, `DATETIME_LANGUAGE`, `COMPONENTS_SIZE`, `BUTTON_KIND`, `PAGINATION_SUMMARY`, `PASSWORD_LABELS`, `EDITOR_LABELS`, `TITLE_SCALE`, `LABELS` — and the two themes, `RADIUS` and `COLORS`.
 
 ```typescript
 import { ApplicationConfig } from '@angular/core';
@@ -109,301 +76,153 @@ import { provideTailwindConfig } from 'angular-tailwind-components';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideTailwindConfig(() => ({
-      ICON_SIZE: 20,
-      DATETIME_LANGUAGE: 'it',
+    provideTailwindConfig({
       COMPONENTS_SIZE: 'md',
-      BUTTON_KIND: 'flat',
-      PAGINATION_SUMMARY: 'Visualizzati {start}-{end} di {total}'
-    })),
-    provideTailwindThemeColors(() => ({
-      primary: 'violet',
-      danger: 'rose',
-      neutral: 'zinc'
-    }))
+      BUTTON_KIND: 'solid',
+      DATETIME_LANGUAGE: 'it',
+      LABELS: { close: 'Chiudi', search: 'Cerca' },
+      RADIUS: 'round',
+      COLORS: { primary: 'indigo', neutral: 'zinc' }
+    })
   ]
 };
 ```
 
-### Example: tokens only
+Token values resolve on **first injection**, after your app initializers. `RADIUS` and `COLORS` write CSS to the document **at startup** and are a no-op during SSR.
 
-```typescript
-providers: [
-  provideTailwindConfig(() => ({
-    ICON_SIZE: 20,
-    DATETIME_LANGUAGE: 'it',
-    COMPONENTS_SIZE: 'md',
-    PAGINATION_SUMMARY: 'Items {start}-{end} of {total}'
-  }))
-];
-```
-
-### Example: colors only
-
-```typescript
-providers: [provideTailwindThemeColors(() => ({ primary: 'indigo', neutral: 'zinc' }))];
-```
-
-### Example: spread a shared config object
-
-```typescript
-import { ApplicationConfig } from '@angular/core';
-import { provideTailwindConfig, type TailwindComponentsConfig } from 'angular-tailwind-components';
-
-const shared: TailwindComponentsConfig = {
-  COMPONENTS_SIZE: 'md',
-  DATETIME_LANGUAGE: 'it'
-};
-
-export const appConfig: ApplicationConfig = {
-  providers: [provideTailwindConfig(() => shared), provideTailwindThemeColors(() => ({ primary: 'indigo' }))]
-};
-```
-
-You can omit **`COLORS`** if you only need token defaults, or omit token keys if you only need theme colors.
-
-| Config key           | Token                         | What it sets                                                           |
-| -------------------- | ----------------------------- | ---------------------------------------------------------------------- |
-| `ICON_SIZE`          | `TAILWIND_ICON_SIZE`          | Default `tailwind-icon` pixel size                                     |
-| `ICON_BASE_PATH`     | `TAILWIND_ICON_BASE_PATH`     | Directory the icon SVGs are served from (see [Icons](#icons))          |
-| `DATETIME_LANGUAGE`  | `TAILWIND_DATETIME_LANGUAGE`  | Calendar and time-picker language                                      |
-| `COMPONENTS_SIZE`    | `TAILWIND_COMPONENTS_SIZE`    | Default `size` for every sized component                               |
-| `BUTTON_KIND`        | `TAILWIND_BUTTON_KIND`        | Default `kind` for `tailwind-button`                                   |
-| `PAGINATION_SUMMARY` | `TAILWIND_PAGINATION_SUMMARY` | Default pagination summary template                                    |
-| `LABELS`             | `TAILWIND_LABELS`             | Accessible names and built-in text (see [Localization](#localization)) |
-| `PASSWORD_LABELS`    | `TAILWIND_PASSWORD_LABELS`    | Password strength labels                                               |
-| `EDITOR_LABELS`      | `TAILWIND_EDITOR_LABELS`      | Editor toolbar and dialog labels                                       |
-| `TITLE_SCALE`        | `TAILWIND_TITLE_SCALE`        | Per-tag typography for `tailwind-title`                                |
-
-> **`COMPONENTS_SIZE`** is honoured by every component with a `size` input except `tailwind-modal`, whose `size` is a dialog width rather than a control size.
-
-**`provideTailwindComponents`** remains exported for backward compatibility (token providers only) but is **deprecated**; prefer **`provideTailwindConfig`**.
-
-## Localization
-
-Components that render text or accessible names on their own read them from **`TAILWIND_LABELS`**. Pass only the keys you want to translate; the rest fall back to the English defaults.
-
-```typescript
-provideTailwindConfig(() => ({
-  LABELS: {
-    close: 'Chiudi',
-    dismiss: 'Ignora',
-    previousPage: 'Pagina precedente',
-    nextPage: 'Pagina successiva',
-    rowsPerPage: 'Righe per pagina',
-    search: 'Cerca',
-    searchPlaceholder: 'Cerca…',
-    noData: 'Nessun dato disponibile',
-    noResults: 'Nessun risultato',
-    page: 'Pagina {page}',
-    currentPage: 'pagina corrente'
-  }
-}));
-```
-
-Because the factory runs through `inject()`, the values can come from a translation library:
+A **factory** is also accepted — use it only when the values need `inject()`:
 
 ```typescript
 provideTailwindConfig(() => {
   const t = inject(TranslocoService);
-  return { LABELS: { close: t.translate('common.close'), search: t.translate('common.search') } };
+  return { LABELS: { close: t.translate('common.close') } };
 });
 ```
 
-Every label also has a matching component input (`closeLabel` on modal and drawer, `searchLabel` on table, …) when a single instance needs a different string.
+A factory is read once for the tokens and once, during the initializers, for `RADIUS` / `COLORS` — so keep those two keys static rather than derived from async state.
 
-## Dark mode
+Icons are loaded at runtime from `/tailwind-icons/<name>.svg`; when the app is not served from the domain root, point the library at the right directory with `provideTailwindConfig({ ICON_BASE_PATH: '/my-app/tailwind-icons' })`.
 
-Components paint themselves with surface tokens (`bg-surface`, `text-fg`, `border-border`) and the `neutral` ramp, so dark mode is a variable remap rather than a per-component variant. Turn it on by putting a class on `<html>`:
+Every label in `LABELS` also has a matching component input (`closeLabel`, `searchLabel`, …) when a single instance needs a different string.
 
-```html
-<html class="dark">
-  <!-- or data-theme="dark" -->
-</html>
-```
+`provideTailwindThemeColors` and `provideTailwindRadius` still exist as standalone providers but are **deprecated** in favour of the `COLORS` and `RADIUS` keys.
 
-To follow the operating system instead, use `class="theme-auto"`. This is opt-in on purpose: upgrading the library never turns an existing app dark on its own.
+## Theming
+
+### Semantic colors
+
+**`COLORS`** remaps `primary`, `neutral`, `success`, `warning`, `danger` (alias `error`) and `info` at runtime by injecting `<style id="tailwind-theme-colors">` in `@layer theme`. Each key accepts:
+
+| Form                  | Example                                            | Effect                                                            |
+| :-------------------- | :------------------------------------------------- | :---------------------------------------------------------------- |
+| Tailwind palette name | `primary: 'indigo'`                                | Maps every shade to `var(--color-indigo-<shade>)`                 |
+| Per-shade colors      | `success: { 600: '#14532d' }`                      | Writes `--color-success-600`                                      |
+| `{ shades, on }`      | `success: { shades: {…}, on: { 600: '#ecfdf5' } }` | Also writes `--color-on-success-*`, the foreground on that ground |
+
+`primary` and `neutral` cover shades `50`–`950`; the severity colors stop at `900`. With a palette string the `on-*` defaults stay consistent on their own. A custom family name that Tailwind does not emit needs `@source inline("bg-<name>-{50,{100..900..100},950}")` in your stylesheet.
+
+### Radius is a role, not a size
+
+Components name what they are — `rounded-control` (buttons, inputs, chips), `rounded-surface` (cards, tables), `rounded-overlay` (menus, popovers, modals) — so one key restyles the library:
 
 ```typescript
-// Toggling at runtime
-document.documentElement.classList.toggle('dark');
+provideTailwindConfig({ RADIUS: 'round' }); // 'sharp' | 'compact' | 'default' | 'round'
+provideTailwindConfig({ RADIUS: { control: '0.375rem', overlay: '1rem' } });
 ```
 
-Dark mode composes with `provideTailwindThemeColors`: the dark rules are scoped to `:root.dark`, which outranks the `:root` variables injected for a custom brand palette.
+### Dark mode
 
-## Icons
+Components paint themselves with surface tokens (`bg-surface`, `text-fg`, `border-border`), so dark mode is a variable remap. It is opt-in: put `class="dark"` on `<html>`, or `class="theme-auto"` to follow the OS. Dark rules are scoped to `:root.dark` and outrank a custom brand palette.
 
-Icon SVGs ship in the package under `tailwind-icons/` and are loaded at runtime as CSS masks from `/tailwind-icons/<name>.svg`. Copy them into your served assets, and if the app is **not** served from the domain root, point the library at the right directory:
+### CSS override
 
-```typescript
-provideTailwindConfig(() => ({ ICON_BASE_PATH: '/my-app/tailwind-icons' }));
-```
-
-## Theme colors (`provideTailwindThemeColors`)
-
-The optional **`COLORS`** object remaps semantic design tokens (`primary`, `neutral`, `success`, `warning`, `danger`, `info`) at **runtime** using the same `--color-*` names as the library `@theme` block (for example `--color-primary-500`), so classes like `bg-primary-600` update without changing templates. Requires the library stylesheet in `angular.json` (see [Prerequisites](#prerequisites)) so those utilities exist in the compiled CSS. At startup, **`provideTailwindThemeColors`** sets `data-tailwind-theme` on `<html>` and injects `<style id="tailwind-theme-colors">` with the variables in `@layer theme` (`:root[data-tailwind-theme]` and `:host`). Color application is a **no-op during SSR** (browser only).
-
-| `COLORS` key | CSS variables                               | Default palette in `tailwind.css` |
-| ------------ | ------------------------------------------- | --------------------------------- |
-| `primary`    | `--color-primary-*`, `--color-on-primary-*` | Tailwind `blue`                   |
-| `neutral`    | `--color-neutral-*`, `--color-on-neutral-*` | Tailwind `slate`                  |
-| `success`    | `--color-success-*`, `--color-on-success-*` | Tailwind `green`                  |
-| `warning`    | `--color-warning-*`, `--color-on-warning-*` | Tailwind `amber`                  |
-| `danger`     | `--color-danger-*`, `--color-on-danger-*`   | Tailwind `red`                    |
-| `error`      | Same as `danger` if `danger` is omitted     | —                                 |
-| `info`       | `--color-info-*`, `--color-on-info-*`       | Tailwind `sky`                    |
-
-### `TailwindThemeSeverityColor`
-
-Each `colors.*` field uses the exported type **`TailwindThemeSeverityColor`**. It can be any of the following:
-
-1. **A string — Tailwind palette name**  
-   Use the lowercase **family name** only (the segment between the utility prefix and the shade), e.g. `bg-indigo-600` → `'indigo'`, `text-slate-500` → `'slate'`.  
-   The full list of built-in names and swatches is in the official **[Tailwind CSS color reference](https://tailwindcss.com/docs/colors)** — pick any name from that page for the string form.  
-   For each configured shade, `provideTailwindThemeColors` sets `--color-<semantic>-<shade>` to `var(--color-<that-name>-<shade>)`.  
-   **Foreground / contrast:** built-in components that sit on saturated semantic backgrounds (solid buttons, tags, semantic toolbar) use utilities like `text-on-success-600`, backed by **`--color-on-<semantic>-<shade>`** defaults in the library `@theme`. With a **palette string**, you usually do **not** need to set `on` yourself — Tailwind’s scales stay internally consistent.
-
-2. **A partial object — per-shade CSS (legacy flat form)**  
-   Keys are optional shade steps: `'50'`, `'100'`, …, `'950'`. Values are any valid CSS color (`#hex`, `rgb()`, `oklch()`, `var(--color-fuchsia-600)`, etc.). Only the keys you pass are written to `--color-<semantic>-<shade>`.  
-   **Optional `on`:** if you override background shades with custom values, set matching foreground tokens by using the structured form below so text stays readable.
-
-3. **A structured object — `{ shades, on? }`**
-   - **`shades`**: same as the flat object: maps to `--color-<semantic>-<shade>`.
-   - **`on`**: optional partial map of the same shade keys → CSS colors for **`--color-on-<semantic>-<shade>`** (recommended foreground on that semantic background). Solid `tailwind-button` / `tailwind-tag` / semantic `tailwind-toolbar` read these via `text-on-*` utilities.
-
-   Example:
-
-   ```typescript
-   provideTailwindThemeColors(() => ({
-     success: {
-       shades: { 600: '#14532d', 700: '#0f3d21' },
-       on: { 600: '#ecfdf5', 700: '#ecfdf5' }
-     }
-   }));
-   ```
-
-   When you use a **string**, shade coverage matches the library tokens: `primary` and `neutral` include `950`; `success`, `warning`, `danger`, and `info` stop at `900`.
-
-When you pass a **palette string** (e.g. `primary: 'indigo'`), the target variables `--color-indigo-*` must exist in the compiled CSS. Tailwind v4 only emits palette variables that are referenced at build time, so the library’s `tailwind.css` **safelists** the default Tailwind families (`slate`, `gray`, `indigo`, …) with `@source inline(...)`. For a custom family name not covered there, use the object form with explicit colors, or add your own `@source inline("bg-<name>-{50,{100..900..100},950}")` in your app stylesheet.
-
-`provideTailwindThemeColors` is a no-op during **SSR** (browser only).
-
-## Content slots
-
-Some components (for example `tailwind-card`, `tailwind-modal`, `tailwind-toolbar`, `tailwind-drawer`, `tailwind-alert`) support **named slots** via **attribute selectors** on native elements, matching `ng-content select="[…]"` in the library. Example: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`. Optional helper components for modal (`TailwindModalTitle`, and so on) use the same attribute on the host.
-
-## Components
-
-### Form Controls (with ControlValueAccessor)
-
-- **Input** (`tailwind-input`): Text, email, password, number, search
-- **Input Password** (`tailwind-input-password`): Password field with optional strength meter and show/hide toggle
-- **Textarea** (`tailwind-textarea`): Multi-line text with resize modes and rows/cols
-- **Editor** (`tailwind-editor`): WYSIWYG rich text; sanitized HTML value, toolbar, link/image insertion
-- **Upload** (`tailwind-upload`): File picker as button or drop zone; value as base64 data URL for forms, `filesSelected` for raw files
-- **Input OTP** (`tailwind-input-otp`): Multi-digit OTP / PIN with paste and keyboard navigation
-- **Checkbox** (`tailwind-checkbox`): Single checkbox with label
-- **Radio Group** (`tailwind-radio-group`): Radio button group with options
-- **Select** (`tailwind-select`): Custom combobox with CDK overlay, keyboard navigation, and optional multi-select with removable chips
-- **Autocomplete** (`tailwind-autocomplete`): Typeahead with optional async search and custom option template (`#item`)
-- **Toggle** (`tailwind-toggle`): Switch on/off
-- **Slider** (`tailwind-slider`): Single or range slider with optional ticks (`ControlValueAccessor`)
-- **CalendarPanel** (`tailwind-calendar-panel`): Inline calendar for date selection
-- **DatePicker** (`tailwind-date-picker`): Calendar date selection
-- **TimePicker** (`tailwind-time-picker`): Time input
-- **DateTimePicker** (`tailwind-datetime-picker`): Combined date + time
-
-### Display
-
-- **Button** (`tailwind-button`): Primary, secondary, outline, ghost, danger
-- **Badge** (`tailwind-badge`): Status badges with dot indicator
-- **Card** (`tailwind-card`): Content card with header/body/footer
-- **Chip** (`tailwind-chip`): Removable compact labels for filters and multi-select
-- **Tag** (`tailwind-tag`): Semantic labels
-- **Avatar** (`tailwind-avatar`): Profile image, initials, or icon fallback with optional status dot (`TailwindColor`)
-- **Title** (`tailwind-title`): Semantic headings (`h1`–`h6`) with required `text` and optional Heroicons outline icon
-
-### Feedback
-
-- **Alert** (`tailwind-alert`): Contextual alerts with icon, title, dismiss, and optional `tailwind-alert-actions` slot
-- **Spinner** (`tailwind-spinner`): Loading indicator
-- **Progress Bar** (`tailwind-progress-bar`): Determinate/indeterminate progress
-- **Toast** (`tailwind-toast-container`): Global toast notifications (use `TailwindToastService`)
-- **Message** (`tailwind-message`): Form-level inline message
-- **Skeleton** (`tailwind-skeleton`): Loading placeholder
-
-### Navigation
-
-- **Tab Group** (`tailwind-tab-group`): Tabbed content
-- **Breadcrumb** (`tailwind-breadcrumb`): Navigation breadcrumbs
-- **Pagination** (`tailwind-pagination`): Page navigation
-- **Menu** (`tailwind-menu`): Dropdown menu
-- **Stepper** (`tailwind-stepper`): Step-by-step wizard
-
-### Layout / Overlay
-
-- **Modal** (`tailwind-modal`): Dialog overlay
-- **Drawer** (`tailwind-drawer`): Slide-in panel
-- **Accordion** (`tailwind-accordion`): Expandable sections
-- **Tooltip** (`tailwind-tooltip`): Hover tooltip
-- **Form** (`tailwind-form`): Form wrapper
-- **Table** (`tailwind-table`): Data table with projected header/rows, client-side sort and pagination
-- **Toolbar** (`tailwind-toolbar`): Semantic action bar with optional slots
-- **Divider** (`tailwind-divider`): Horizontal or vertical separator with optional label
-- **Meter** (`tailwind-meter`): Segmented proportional bar with optional legend
-
-## Design System
-
-The library uses a comprehensive design system defined via Tailwind CSS v4 `@theme` directive:
-
-- **Colors**: Semantic tokens alias Tailwind default palettes — Primary (`blue`), neutral (`slate`), Success (`green`), Warning (`amber`), Danger (`red`), Info (`sky`)
-- **Typography**: Inter (sans), JetBrains Mono (mono)
-- **Spacing**: Tailwind default scale
-- **Border Radius**: xs through full
-- **Shadows**: xs through 2xl
-- **Z-Index**: Defined scale for overlays (dropdown → tooltip → toast)
-
-### Customization
-
-Prefer **`provideTailwindConfig(() => ({ … }))`** in `ApplicationConfig.providers` for tokens and semantic colors (see [Application configuration](#application-configuration-providetailwindconfig)).
-
-You can still override any token in your own CSS, for example:
+Any token can still be overridden in your own stylesheet:
 
 ```css
 @theme {
-  --color-primary-500: var(--color-violet-500);
   --color-primary-600: var(--color-violet-600);
+  --color-ring: var(--color-primary-500); /* focus ring for every control */
+  --radius-control: 0.5rem;
 }
 ```
 
-## Development
+### Sizing
 
-Browse components in the hosted Storybook: [angular-tailwind-components.vercel.app](https://angular-tailwind-components.vercel.app/)
+Every control takes its height from one shared scale, so a button, an input and a date picker of the same `size` line up exactly.
 
-```bash
-# Build the library
-ng build angular-tailwind-components
+| `size` | height        | text        | icon |
+| ------ | ------------- | ----------- | ---- |
+| `xs`   | `h-6` (24px)  | `text-xs`   | 16   |
+| `sm`   | `h-8` (32px)  | `text-sm`   | 16   |
+| `md`   | `h-9` (36px)  | `text-sm`   | 16   |
+| `lg`   | `h-11` (44px) | `text-base` | 20   |
+| `xl`   | `h-13` (52px) | `text-base` | 24   |
 
-# Start Storybook locally
-npm run storybook
+## Conventions
 
-# Build static Storybook (output: storybook-static/)
-npm run build:storybook
-```
+- **Consumer `class`** — every component accepts `class` / `[class]` and merges it onto the internal surface (the visible root element), so layout utilities such as `h-full` or `mb-4` land where they should.
+- **Content slots** — named slots use attribute selectors on native elements: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`.
+- **Pipes** — `TailwindSafeHtmlPipe` (`safehtml`) sanitizes HTML for `[innerHTML]`; used internally for `errorText` and `helperText`.
+- **Focus and motion** — one focus color (`--color-ring`), three durations, and `prefers-reduced-motion` respected out of the box.
 
-### Component Conventions
+## Components
 
-- Use `input()` and `output()` signal functions (not decorators)
-- Use `model()` for two-way binding
-- Use `computed()` for derived Tailwind class logic
-- Implement `ControlValueAccessor` for form controls
-- Follow WCAG accessibility guidelines
+### Form controls (with ControlValueAccessor)
+
+- **Input** (`tailwind-input`) — text, email, password, number, search
+- **Input Password** (`tailwind-input-password`) — strength meter and show/hide toggle
+- **Textarea** (`tailwind-textarea`) — resize modes, rows/cols
+- **Editor** (`tailwind-editor`) — WYSIWYG rich text, sanitized HTML value, link/image insertion
+- **Upload** (`tailwind-upload`) — button or drop zone; base64 value for forms, `filesSelected` for raw files
+- **Input OTP** (`tailwind-input-otp`) — multi-digit PIN with paste and keyboard navigation
+- **Checkbox** (`tailwind-checkbox`) / **Radio Group** (`tailwind-radio-group`) / **Toggle** (`tailwind-toggle`)
+- **Select** (`tailwind-select`) — combobox on the CDK overlay, optional multi-select with removable chips
+- **Autocomplete** (`tailwind-autocomplete`) — typeahead with async search and `#item` template
+- **Slider** (`tailwind-slider`) — single or range, optional ticks
+- **Calendar Panel** / **Date Picker** / **Time Picker** / **DateTime Picker**
+- **Segmented Control** (`tailwind-segmented-control`) — exclusive choices as an ARIA radio group
+- **Number Input** (`tailwind-number-input`) — real increment/decrement buttons, clamped to `min`/`max`
+- **Rating** (`tailwind-rating`) — star rating exposed as a slider
+
+### Display
+
+- **Button** (`tailwind-button`) — six kinds × seven colors, icon-only, loading
+- **Badge**, **Chip**, **Tag** — semantic labels, removable chips for filters
+- **Card** (`tailwind-card`) — header/body/footer with `comfortable` or `compact` density
+- **Avatar** (`tailwind-avatar`) — image, initials or icon fallback with status dot
+- **Title** (`tailwind-title`) — semantic `h1`–`h6` with optional icon
+- **Kbd** (`tailwind-kbd`) — keys and chords as native `<kbd>`
+- **Timeline** (`tailwind-timeline`, `tailwind-timeline-item`) — ordered events as an `<ol>`
+- **Carousel** (`tailwind-carousel`, `tailwind-carousel-slide`) — autoplay pauses on hover and focus
+
+### Feedback
+
+- **Alert** (`tailwind-alert`) — icon, title, dismiss, actions slot
+- **Spinner**, **Progress Bar**, **Skeleton** — loading indicators
+- **Empty State** (`tailwind-empty-state`) — icon, headline and call to action
+- **Toast** (`tailwind-toast-container`) — global notifications through `TailwindToastService`
+- **Message** (`tailwind-message`) — form-level inline message
+
+### Navigation
+
+- **Tab Group** (`tailwind-tab-group`) — WAI-ARIA tabs with arrow-key support
+- **Breadcrumb**, **Pagination**, **Menu**, **Stepper**
+- **Tree** (`tailwind-tree`) — ARIA tree pattern with flattened rendering
+
+### Layout / overlay
+
+- **Modal** (`tailwind-modal`) — dialog, also openable through `TailwindModalService`
+- **Drawer** (`tailwind-drawer`) — slide-in panel from any edge
+- **Accordion** (`tailwind-accordion`) — expandable sections
+- **Tooltip**, **Popover**, **Popconfirm** — anchored overlays with viewport flipping
+- **Table** (`tailwind-table`) — projected header/rows, per-column comparators, sticky header, select-all, client- or server-side sort and paging
+- **Toolbar**, **Divider**, **Meter**
 
 ## License
 
-This project is licensed under the **Angular Tailwind Components License 1.0 (ATC-1.0)**. See the [LICENSE](https://github.com/giuseppemorale/angular-tailwind-components/blob/master/LICENSE) file for the full text.
+Licensed under the **Angular Tailwind Components License 1.0 (ATC-1.0)** — see [LICENSE](https://github.com/giuseppemorale/angular-tailwind-components/blob/master/LICENSE).
 
-- You may use the library in applications and **sell those applications** (including commercial and enterprise use).
-- You may **not** sell or distribute the library itself (or a substantial repackaging of it) as a standalone UI/component library product.
+- You may use the library in applications and **sell those applications**.
+- You may **not** sell or redistribute the library itself as a standalone UI library product.
 
-**Third-party assets** bundled with this project keep their original licenses and are not covered by ATC-1.0. In particular, the bundled **[Heroicons](https://heroicons.com/)** outline SVG icons are © [Tailwind Labs](https://tailwindcss.com/), licensed under the [MIT License](https://github.com/tailwindlabs/heroicons/blob/master/LICENSE).
+Bundled third-party assets keep their own licenses: the **[Heroicons](https://heroicons.com/)** outline icons are © [Tailwind Labs](https://tailwindcss.com/), MIT.

@@ -34,12 +34,13 @@ describe('TailwindMenu', () => {
     anchor.remove();
   });
 
+  // The panel is rendered into the CDK overlay container, outside the fixture's own DOM.
   function panel(): HTMLElement | null {
-    return fixture.nativeElement.querySelector('[role="menu"]');
+    return document.querySelector('.cdk-overlay-container [role="menu"]');
   }
 
   function menuItems(): HTMLButtonElement[] {
-    return Array.from(fixture.nativeElement.querySelectorAll('[role="menuitem"]'));
+    return Array.from(document.querySelectorAll('.cdk-overlay-container [role="menuitem"]'));
   }
 
   /** Opening is deferred one macrotask so the triggering click cannot close it again. */
@@ -63,7 +64,7 @@ describe('TailwindMenu', () => {
 
     expect(panel()).not.toBeNull();
     expect(menuItems().map(b => b.textContent?.trim())).toEqual(['Edit', 'Duplicate', 'Delete', 'Archive']);
-    expect(fixture.nativeElement.querySelectorAll('hr').length).toBe(1);
+    expect(document.querySelectorAll('.cdk-overlay-container hr').length).toBe(1);
   });
 
   it('should move focus into the menu on open', async () => {
@@ -104,7 +105,7 @@ describe('TailwindMenu', () => {
 
   it('should emit onSelect and close when an entry is activated', async () => {
     const spy = vi.fn();
-    component.onSelect.subscribe(spy);
+    component.itemSelect.subscribe(spy);
     await openMenu();
 
     menuItems()[0].click();
@@ -117,7 +118,7 @@ describe('TailwindMenu', () => {
 
   it('should not emit for a disabled entry', async () => {
     const spy = vi.fn();
-    component.onSelect.subscribe(spy);
+    component.itemSelect.subscribe(spy);
     await openMenu();
 
     menuItems()[2].click();
@@ -137,7 +138,8 @@ describe('TailwindMenu', () => {
   it('should close on Escape', async () => {
     await openMenu();
 
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    // The CDK keyboard dispatcher listens on `body`, so the event has to bubble up from the panel.
+    panel()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     fixture.detectChanges();
 
     expect(panel()).toBeNull();

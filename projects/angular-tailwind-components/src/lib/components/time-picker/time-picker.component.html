@@ -10,7 +10,7 @@
       [value]="displayValue()"
       [placeholder]="i18n.placeholder"
       [disabled]="isDisabled()"
-      class="block w-full bg-surface border border-neutral-300 rounded-md px-3 py-2 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 cursor-pointer disabled:bg-neutral-50 disabled:cursor-not-allowed pr-10"
+      class="block w-full bg-surface border border-border-strong field-depth rounded-control h-9 px-3 text-sm text-fg placeholder:text-neutral-400 transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-ring focus:border-ring cursor-pointer disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-fg-muted pr-10"
       (click)="togglePanel()" />
     <tailwind-icon
       icon="clock"
@@ -19,10 +19,10 @@
 
     @if (showPanel()) {
       <div
-        class="absolute left-0 top-full z-popover mt-1 w-52 rounded-xl border border-neutral-200 bg-surface p-4 shadow-xl">
+        class="absolute left-0 top-full z-popover mt-1 w-52 rounded-overlay border border-border bg-surface p-4 shadow-xl animate-overlay-in">
         <div class="flex items-center gap-2">
           <select
-            class="flex-1 min-w-0 block bg-surface border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-surface border border-border-strong field-depth rounded-control h-9 px-2 text-sm text-fg tabular-nums transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-ring focus:border-ring disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-fg-muted"
             [disabled]="isDisabled()"
             (change)="onHourChange($event)">
             @for (h of hours; track h) {
@@ -33,7 +33,7 @@
           </select>
           <span class="text-neutral-400 text-sm shrink-0">:</span>
           <select
-            class="flex-1 min-w-0 block bg-surface border border-neutral-300 rounded-md px-2 py-1.5 text-sm text-neutral-900 outline-none focus:outline focus:outline-primary-500 focus:outline-offset-2 disabled:bg-neutral-50 disabled:cursor-not-allowed"
+            class="flex-1 min-w-0 block bg-surface border border-border-strong field-depth rounded-control h-9 px-2 text-sm text-fg tabular-nums transition-[color,background-color,border-color,box-shadow] duration-150 ease-in-out outline-none focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-ring focus:border-ring disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-fg-muted"
             [disabled]="isDisabled()"
             (change)="onMinuteChange($event)">
             @for (m of minutes; track m) {
@@ -44,10 +44,10 @@
           </select>
         </div>
         <div class="mt-2 pt-2 border-t border-neutral-100 flex items-center justify-between gap-2">
-          <tailwind-button kind="text" color="primary" size="xs" [disabled]="isDisabled()" (onClick)="goToNow()">
+          <tailwind-button kind="text" color="primary" size="xs" [disabled]="isDisabled()" (click)="goToNow()">
             {{ i18n.now }}
           </tailwind-button>
-          <tailwind-button kind="solid" color="primary" [disabled]="isDisabled()" (onClick)="apply()">
+          <tailwind-button kind="solid" color="primary" [disabled]="isDisabled()" (click)="apply()">
             {{ i18n.apply }}
           </tailwind-button>
         </div>

@@ -45,3 +45,6 @@ Thumbs.db
 
 *storybook.log
 storybook-static
+
+# Compodoc (generato dai target Storybook, alimenta <ArgTypes>)
+/documentation.json

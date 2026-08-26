@@ -7,22 +7,17 @@ import {
   HostListener,
   inject,
   input,
+  LOCALE_ID,
   model,
   signal
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { TAILWIND_DATETIME_LANGUAGE } from '../../tokens/tokens';
+import { TAILWIND_DATETIME_LANGUAGE, TAILWIND_LABELS } from '../../tokens/tokens';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
+import { calendarLabelsFor } from '../calendar-panel/util/calendar-i18n';
 import { TailwindComponent } from '../tailwind.component';
-
-type Lang = 'it' | 'en';
-type TimeDraft = { h: number; m: number };
-
-const I18N: Record<Lang, { placeholder: string; now: string; apply: string }> = {
-  it: { placeholder: 'Seleziona ora', now: 'Adesso', apply: 'Applica' },
-  en: { placeholder: 'Select time', now: 'Now', apply: 'Apply' }
-};
+import type { TimeDraft } from './interfaces/time-draft.interface';
 
 @Component({
   selector: 'tailwind-time-picker',
@@ -34,13 +29,27 @@ const I18N: Record<Lang, { placeholder: string; now: string; apply: string }> = 
 })
 export class TailwindTimePicker extends TailwindComponent implements ControlValueAccessor {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
-  private readonly lang: Lang = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? 'it';
+  private readonly locale = inject(TAILWIND_DATETIME_LANGUAGE, { optional: true }) ?? inject(LOCALE_ID);
+  private readonly labels = inject(TAILWIND_LABELS);
 
-  protected readonly i18n = I18N[this.lang];
+  /** Month and weekday names for the active locale, plus its first day of the week. */
+  protected readonly calendar = calendarLabelsFor(this.locale);
+  protected readonly i18n = {
+    months: this.calendar.months,
+    weekDays: this.calendar.weekDays,
+    today: this.labels.today,
+    now: this.labels.now,
+    apply: this.labels.apply,
+    confirm: this.labels.apply,
+    time: this.labels.time,
+    placeholder: this.labels.selectTime
+  };
   protected readonly hours = Array.from({ length: 24 }, (_, i) => i);
   protected readonly minutes = Array.from({ length: 60 }, (_, i) => i);
 
+  /** Visible field label. */
   readonly label = input<string>('');
+  /** Time as `HH:mm` (two-way); when empty the panel opens on the current time. */
   readonly value = model<string>('');
   readonly isDisabled = signal(false);
   readonly showPanel = signal(false);

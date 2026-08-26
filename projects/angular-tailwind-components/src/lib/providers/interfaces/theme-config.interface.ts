@@ -7,7 +7,7 @@ import {
   TailwindTitleTag,
   TailwindTitleTagScale
 } from '../../models';
-import { TailwindThemeSeverityColor } from '../types/theme-config.types';
+import { TailwindRadiusConfig, TailwindThemeSeverityColor } from '../types/theme-config.types';
 
 /**
  * Optional app-wide values for library `InjectionToken`s.
@@ -19,7 +19,7 @@ export interface TailwindComponentsConfig {
   /** Maps to {@link TAILWIND_ICON_BASE_PATH} (directory the icon SVGs are served from). */
   ICON_BASE_PATH?: string;
   /** Maps to {@link TAILWIND_DATETIME_LANGUAGE}. */
-  DATETIME_LANGUAGE?: 'it' | 'en';
+  DATETIME_LANGUAGE?: string;
   /** Maps to {@link TAILWIND_COMPONENTS_SIZE}. */
   COMPONENTS_SIZE?: TailwindSize;
   /** Maps to {@link TAILWIND_BUTTON_KIND} (default `kind` on `tailwind-button`). */
@@ -43,6 +43,10 @@ export interface TailwindComponentsConfig {
    * Accessible names and built-in text the library renders itself — pass only the keys to translate.
    */
   LABELS?: Partial<TailwindLabels>;
+  /** Re-maps `--radius-control` / `--radius-surface` / `--radius-overlay` at startup (browser only). */
+  RADIUS?: TailwindRadiusConfig;
+  /** Re-maps the semantic color tokens on `:root` at startup (browser only). */
+  COLORS?: TailwindDefineThemeColors;
 }
 
 export interface TailwindDefineThemeColors {
@@ -59,7 +63,5 @@ export interface TailwindDefineThemeColors {
   info?: TailwindThemeSeverityColor;
 }
 
-export interface TailwindDefineThemeConfig extends TailwindComponentsConfig {
-  /** Overrides semantic colors on `:root` at startup (browser only). */
-  COLORS?: TailwindDefineThemeColors;
-}
+/** @deprecated `COLORS` now lives on {@link TailwindComponentsConfig}; use that instead. */
+export type TailwindDefineThemeConfig = TailwindComponentsConfig;

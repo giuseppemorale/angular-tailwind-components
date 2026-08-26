@@ -61,7 +61,7 @@ describe('TailwindAutocomplete', () => {
 
   it('should emit onSearch when typing', () => {
     const searchSpy = vi.fn();
-    component.onSearch.subscribe(searchSpy);
+    component.searchChange.subscribe(searchSpy);
 
     const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
     input.value = 'fra';
@@ -162,7 +162,7 @@ class AutocompleteWithItemTemplateComponent {
       [options]="filteredOptions()"
       [filterLocally]="false"
       [debounceMs]="200"
-      (onSearch)="handleSearch($event)" />
+      (searchChange)="handleSearch($event)" />
   `
 })
 class AsyncHostComponent {

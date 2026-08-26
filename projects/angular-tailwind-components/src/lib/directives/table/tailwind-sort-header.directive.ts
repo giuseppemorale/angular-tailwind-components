@@ -1,37 +1,43 @@
 import {
   ApplicationRef,
-  afterNextRender,
+  computed,
   ComponentRef,
+  createComponent,
   DestroyRef,
   Directive,
+  effect,
   ElementRef,
   EnvironmentInjector,
-  Injector,
-  Renderer2,
-  createComponent,
   inject,
-  input
+  Injector,
+  input,
+  Renderer2
 } from '@angular/core';
 import { TailwindIcon } from '../../components/icon/icon.component';
+import { TAILWIND_TABLE_SORT_HOST } from '../../components/table/interfaces/tailwind-table-sort-host';
 import { TAILWIND_LABELS } from '../../tokens';
-/** Host attributes on `<tailwind-table>`; kept in sync for sort-header observers. */
-export const TW_TABLE_SORT_KEY_ATTR = 'data-tw-sort-key';
-export const TW_TABLE_SORT_DIR_ATTR = 'data-tw-sort-dir';
-
-const MAX_TABLE_RESOLVE_ATTEMPTS = 24;
 
 /**
- * Sortable column header: put on `<th>` (plain header text + directive). Not sortable columns omit this directive.
- * Sorting is handled by the nearest `tailwind-table` host (event delegation); do not pass a table reference.
+ * Sortable column header: put on `<th>`; non-sortable columns omit it.
+ * The owning `tailwind-table` is resolved through DI and its sorting signals are read directly.
  */
 @Directive({
   selector: '[tailwindSortHeader]',
   host: {
-    class: 'cursor-pointer whitespace-nowrap text-left select-none hover:text-neutral-900',
+    // The focus ring is drawn *inside* the cell (`-outline-offset-2`): the table clips its own
+    // corners so the rounded border reads as rounded, and an outward ring on the first or last
+    // column would be clipped away with them.
+    class:
+      'cursor-pointer whitespace-nowrap text-left select-none hover:text-fg ' +
+      'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
     '[attr.tabindex]': '0',
     // The `th` is operated like a button; without a role, assistive tech announces a plain header.
     '[attr.role]': '"columnheader"',
-    '[attr.data-sort-key]': 'sortKey()'
+    '[attr.data-sort-key]': 'sortKey()',
+    '[attr.aria-sort]': 'ariaSort()',
+    '[attr.aria-label]': 'ariaLabel()',
+    '(click)': 'activate()',
+    '(keydown)': 'onKeydown($event)'
   }
 })
 export class TailwindSortHeaderDirective {
@@ -40,101 +46,76 @@ export class TailwindSortHeaderDirective {
 
   private readonly host = inject(ElementRef<HTMLElement>);
   private readonly renderer = inject(Renderer2);
-  private labelWrapper?: HTMLElement;
   private readonly appRef = inject(ApplicationRef);
   private readonly environmentInjector = inject(EnvironmentInjector);
   private readonly injector = inject(Injector);
   private readonly labels = inject(TAILWIND_LABELS);
+  private readonly table = inject(TAILWIND_TABLE_SORT_HOST, { optional: true });
 
+  private labelWrapper?: HTMLElement;
   private iconRef?: ComponentRef<TailwindIcon>;
-  private mo?: MutationObserver;
-  private destroyed = false;
+
+  /** `true` when this column is the one the table is currently sorted by. */
+  private readonly isActive = computed(() => !!this.table && this.table.sortKey() === this.sortKey());
+  private readonly isAscending = computed(() => this.table?.sortDir() !== 'desc');
+
+  protected readonly ariaSort = computed(() =>
+    this.isActive() ? (this.isAscending() ? 'ascending' : 'descending') : 'none'
+  );
+
+  protected readonly ariaLabel = computed(() =>
+    this.isActive()
+      ? this.isAscending()
+        ? this.labels.sortedAscending
+        : this.labels.sortedDescending
+      : this.labels.sortBy.replace('{column}', this.sortKey())
+  );
+
+  private readonly indicatorIcon = computed(() => {
+    if (!this.isActive()) return 'chevron-up-down' as const;
+    return this.isAscending() ? ('chevron-up' as const) : ('chevron-down' as const);
+  });
 
   constructor() {
     inject(DestroyRef).onDestroy(() => {
-      this.destroyed = true;
-      this.mo?.disconnect();
-      this.mo = undefined;
       this.iconRef?.destroy();
       this.iconRef = undefined;
     });
 
-    afterNextRender(
-      () => {
-        if (!this.destroyed) {
-          this.resolveTableAndAttach(0);
-        }
-      },
-      { injector: this.injector }
-    );
+    // One reactive sync, replacing a MutationObserver on the table's host attributes plus a
+    // requestAnimationFrame retry loop that waited for the projected `<th>` to land in the DOM.
+    effect(() => {
+      const icon = this.indicatorIcon();
+      const active = this.isActive();
+      const ref = this.ensureIcon();
+      ref.setInput('icon', icon);
+      ref.setInput('size', 14);
+      ref.setInput('class', active ? 'shrink-0 text-primary-600' : 'shrink-0 text-neutral-600');
+      ref.changeDetectorRef.detectChanges();
+    });
   }
 
-  /**
-   * After first render the projected `<th>` may still not be under `<tailwind-table>` in the DOM
-   * for one frame; retry with `requestAnimationFrame` until `closest` succeeds.
-   */
-  private resolveTableAndAttach(attempt: number): void {
-    if (this.destroyed || this.mo) return;
+  protected activate(): void {
+    this.table?.sort(this.sortKey());
+  }
 
-    const tableEl = this.host.nativeElement.closest('tailwind-table');
-    if (!tableEl) {
-      if (attempt < MAX_TABLE_RESOLVE_ATTEMPTS) {
-        requestAnimationFrame(() => this.resolveTableAndAttach(attempt + 1));
-      }
-      return;
-    }
+  protected onKeydown(event: KeyboardEvent): void {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    this.activate();
+  }
 
-    const sync = (): void => {
-      if (this.destroyed || !this.iconRef) return;
+  private ensureIcon(): ComponentRef<TailwindIcon> {
+    if (this.iconRef) return this.iconRef;
 
-      const columnKey = this.sortKey();
-      const activeKey = tableEl.getAttribute(TW_TABLE_SORT_KEY_ATTR) ?? '';
-      const dirRaw = tableEl.getAttribute(TW_TABLE_SORT_DIR_ATTR) ?? 'asc';
-      const asc = dirRaw === 'asc';
-      const active = activeKey === columnKey;
-
-      const icon = active ? (asc ? 'chevron-up' : 'chevron-down') : 'chevron-up-down';
-      this.iconRef.setInput('icon', icon);
-      this.iconRef.setInput('size', 14);
-      this.iconRef.setInput('class', active ? 'shrink-0 text-primary-600' : 'shrink-0 text-neutral-600');
-
-      // `aria-sort` is the attribute assistive tech reads for sortable columns; the label
-      // stays available for the "not sorted yet" case.
-      this.renderer.setAttribute(
-        this.host.nativeElement,
-        'aria-sort',
-        active ? (asc ? 'ascending' : 'descending') : 'none'
-      );
-      this.renderer.setAttribute(
-        this.host.nativeElement,
-        'aria-label',
-        active
-          ? asc
-            ? this.labels.sortedAscending
-            : this.labels.sortedDescending
-          : this.labels.sortBy.replace('{column}', columnKey)
-      );
-
-      this.iconRef.changeDetectorRef.detectChanges();
-    };
-
-    if (!this.iconRef) {
-      const labelHost = this.ensureLabelWrapper();
-      this.iconRef = createComponent(TailwindIcon, {
-        environmentInjector: this.environmentInjector,
-        elementInjector: this.injector
-      });
-      this.renderer.appendChild(labelHost, this.iconRef.location.nativeElement);
-      this.appRef.attachView(this.iconRef.hostView);
-    }
-
-    sync();
-
-    this.mo = new MutationObserver(() => sync());
-    this.mo.observe(tableEl, {
-      attributes: true,
-      attributeFilter: [TW_TABLE_SORT_KEY_ATTR, TW_TABLE_SORT_DIR_ATTR]
+    const labelHost = this.ensureLabelWrapper();
+    this.iconRef = createComponent(TailwindIcon, {
+      environmentInjector: this.environmentInjector,
+      elementInjector: this.injector
     });
+    this.renderer.appendChild(labelHost, this.iconRef.location.nativeElement);
+    this.appRef.attachView(this.iconRef.hostView);
+    return this.iconRef;
   }
 
   /** Keep `th` as `display: table-cell`; flex only on an inner wrapper (label + icon). */
@@ -150,10 +131,9 @@ export class TailwindSortHeaderDirective {
 
     const wrapper = this.renderer.createElement('span');
     this.renderer.setAttribute(wrapper, 'data-tw-sort-header-label', '');
-    this.renderer.addClass(wrapper, 'inline-flex');
-    this.renderer.addClass(wrapper, 'items-center');
-    this.renderer.addClass(wrapper, 'gap-1.5');
-    this.renderer.addClass(wrapper, 'justify-start');
+    for (const cls of ['inline-flex', 'items-center', 'gap-1.5', 'justify-start']) {
+      this.renderer.addClass(wrapper, cls);
+    }
 
     for (const child of Array.from(th.childNodes)) {
       this.renderer.appendChild(wrapper, child);

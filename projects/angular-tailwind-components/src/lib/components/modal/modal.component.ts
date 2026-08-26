@@ -1,26 +1,27 @@
+import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
-  effect,
   ElementRef,
   inject,
   input,
   output,
   signal,
-  viewChild
+  TemplateRef,
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
-import { CdkTrapFocus } from '@angular/cdk/a11y';
+import { Subscription } from 'rxjs';
 import { TailwindSize } from '../../models';
 import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
-import { lockBodyScroll, releaseBodyScroll } from '../../util/body-scroll-lock';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Exit animation duration, kept in sync with the panel transition in the template. */
-const EXIT_ANIMATION_MS = 200;
+import { EXIT_ANIMATION_MS, SIZE_MAX_WIDTH } from './properties/constant';
 
 @Component({
   imports: [TailwindButton, CdkTrapFocus],
@@ -30,9 +31,10 @@ const EXIT_ANIMATION_MS = 200;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindModal extends TailwindComponent {
-  private readonly destroyRef = inject(DestroyRef);
   private readonly document = inject(DOCUMENT);
   private readonly labels = inject(TAILWIND_LABELS);
+  private readonly overlay = inject(Overlay);
+  private readonly viewContainerRef = inject(ViewContainerRef);
 
   /** Size variant */
   readonly size = input<TailwindSize>('md');
@@ -51,78 +53,97 @@ export class TailwindModal extends TailwindComponent {
   readonly isVisible = signal(false);
 
   /** Emitted when the modal is fully closed (after exit animation) */
-  readonly onClose = output<void>();
+  readonly closed = output<void>();
 
+  private readonly panelTemplate = viewChild.required<TemplateRef<unknown>>('panelTemplate');
   private readonly modalPanel = viewChild<ElementRef<HTMLElement>>('modalPanel');
+
+  private overlayRef: OverlayRef | null = null;
+  private overlaySub: Subscription | null = null;
   private exitTimeout: ReturnType<typeof setTimeout> | undefined;
   /** Element focused before opening, refocused on close so keyboard users keep their place. */
   private previouslyFocused: HTMLElement | null = null;
 
   readonly resolvedCloseLabel = computed(() => this.closeLabel() || this.labels.close);
 
-  readonly panelClasses = computed(() => {
-    const base = ['relative bg-surface rounded-xl shadow-2xl', 'w-full transform transition-all duration-200'];
-
-    const sizeMap: Record<TailwindSize, string> = {
-      xs: 'max-w-sm',
-      sm: 'max-w-md',
-      md: 'max-w-lg',
-      lg: 'max-w-2xl',
-      xl: 'max-w-4xl'
-    };
-
-    const animation = this.isVisible() ? 'opacity-100 scale-100' : 'opacity-0 scale-95';
-
-    return this.mergeClasses(...base, sizeMap[this.size()], animation);
-  });
+  readonly panelClasses = computed(() =>
+    this.mergeClasses(
+      'relative bg-surface rounded-overlay shadow-2xl animate-overlay-scale',
+      'w-full transform transition-all duration-200',
+      this.isVisible() ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+    )
+  );
 
   constructor() {
     super();
-    this.destroyRef.onDestroy(() => this.freeScrollLock());
-    effect(() => {
-      if (this.isOpen()) {
-        requestAnimationFrame(() => {
-          this.isVisible.set(true);
-          this.modalPanel()?.nativeElement?.focus();
-        });
-      }
+    inject(DestroyRef).onDestroy(() => {
+      clearTimeout(this.exitTimeout);
+      this.disposeOverlay();
     });
   }
 
   /** Open the modal */
   open(): void {
     if (this.isOpen()) return;
+
     const active = this.document.activeElement;
     this.previouslyFocused = active instanceof HTMLElement ? active : null;
-    this.acquireScrollLock();
+
+    this.overlayRef = this.overlay.create({
+      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically(),
+      // CDK's block strategy already no-ops when another overlay has the page blocked,
+      // so stacked dialogs restore scrolling exactly once.
+      scrollStrategy: this.overlay.scrollStrategies.block(),
+      hasBackdrop: true,
+      backdropClass: ['tailwind-modal-backdrop', 'cdk-overlay-dark-backdrop'],
+      panelClass: 'tailwind-modal-pane',
+      width: '100%',
+      maxWidth: SIZE_MAX_WIDTH[this.size()]
+    });
+
+    this.overlayRef.attach(new TemplatePortal(this.panelTemplate(), this.viewContainerRef));
     this.isOpen.set(true);
+
+    this.overlaySub = new Subscription();
+    this.overlaySub.add(
+      this.overlayRef.backdropClick().subscribe(() => {
+        if (this.closeOnBackdrop()) this.close();
+      })
+    );
+    this.overlaySub.add(
+      this.overlayRef.keydownEvents().subscribe(event => {
+        if (event.key === 'Escape' && this.closeOnEscape()) {
+          event.preventDefault();
+          this.close();
+        }
+      })
+    );
+
+    requestAnimationFrame(() => {
+      this.isVisible.set(true);
+      this.modalPanel()?.nativeElement?.focus();
+    });
   }
 
   /** Close the modal (plays exit animation then emits onClose) */
   close(): void {
     if (!this.isOpen()) return;
+
     this.isVisible.set(false);
     clearTimeout(this.exitTimeout);
     this.exitTimeout = setTimeout(() => {
+      this.disposeOverlay();
       this.isOpen.set(false);
-      this.freeScrollLock();
       this.previouslyFocused?.focus();
       this.previouslyFocused = null;
-      this.onClose.emit();
+      this.closed.emit();
     }, EXIT_ANIMATION_MS);
   }
-  /** Guards against double-locking and against leaking the lock if destroyed while open. */
-  private scrollLocked = false;
 
-  private acquireScrollLock(): void {
-    if (this.scrollLocked) return;
-    lockBodyScroll(this.document);
-    this.scrollLocked = true;
-  }
-
-  private freeScrollLock(): void {
-    if (!this.scrollLocked) return;
-    releaseBodyScroll(this.document);
-    this.scrollLocked = false;
+  private disposeOverlay(): void {
+    this.overlaySub?.unsubscribe();
+    this.overlaySub = null;
+    this.overlayRef?.dispose();
+    this.overlayRef = null;
   }
 }

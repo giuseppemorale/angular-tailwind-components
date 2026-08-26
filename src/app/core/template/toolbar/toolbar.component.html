@@ -5,9 +5,14 @@
   [elevated]="true"
   [menu]="menu"
   [orientation]="'horizontal'"
-  (onMenuSelect)="onMenuSelect($event)">
+  (menuSelect)="onMenuSelect($event)">
   <div tailwind-toolbar-logo class="text-lg font-semibold text-primary-600">
-    <img src="/logo.png" [attr.alt]="'TOOLBAR.LOGO_ALT' | transloco" class="h-8 w-8" />
+    <a
+      routerLink="/home"
+      class="inline-flex rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+      [attr.aria-label]="'TOOLBAR.LOGO_LINK_ARIA' | transloco">
+      <img src="/logo.png" [attr.alt]="'TOOLBAR.LOGO_ALT' | transloco" class="h-8 w-8" />
+    </a>
   </div>
   <div tailwind-toolbar-end class="flex gap-2">
     <tailwind-button color="secondary" kind="outlined" routerLink="/login">

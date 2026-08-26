@@ -1,0 +1,60 @@
+<div [class]="mergeClasses('tailwind-number-input flex flex-col gap-1.5')">
+  @if (label()) {
+    <label
+      [attr.for]="subId('inner')"
+      class="text-sm font-medium text-neutral-700"
+      [class.text-danger-600]="hasError()">
+      {{ label() }}
+      @if (required()) {
+        <span class="text-danger-600" aria-hidden="true">*</span>
+      }
+    </label>
+  }
+
+  <div class="flex items-stretch gap-1.5">
+    <button
+      type="button"
+      [class]="stepperClasses()"
+      [disabled]="!canDecrement()"
+      [attr.aria-label]="decrementLabel()"
+      (click)="decrement()">
+      <tailwind-icon icon="minus" [size]="16" />
+    </button>
+
+    <input
+      type="number"
+      [attr.id]="subId('inner')"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [readonly]="readonly()"
+      [attr.required]="required() || null"
+      [attr.aria-required]="required() || null"
+      [attr.aria-invalid]="hasError() || null"
+      [attr.aria-label]="label() ? null : ariaLabel() || null"
+      [attr.aria-describedby]="helperText() || errorText() ? subId('helper') : null"
+      [attr.min]="min() ?? null"
+      [attr.max]="max() ?? null"
+      [attr.step]="step()"
+      [value]="value()"
+      [class]="inputClasses()"
+      (input)="onInputChange($event)"
+      (keydown)="onKeydown($event)"
+      (blur)="onBlur()" />
+
+    <button
+      type="button"
+      [class]="stepperClasses()"
+      [disabled]="!canIncrement()"
+      [attr.aria-label]="incrementLabel()"
+      (click)="increment()">
+      <tailwind-icon icon="plus" [size]="16" />
+    </button>
+  </div>
+
+  @if (helperText() && !hasError()) {
+    <p [attr.id]="subId('helper')" class="text-xs text-fg-muted">{{ helperText() }}</p>
+  }
+  @if (errorText() && hasError()) {
+    <p [attr.id]="subId('helper')" role="alert" class="text-xs text-danger-600">{{ errorText() }}</p>
+  }
+</div>

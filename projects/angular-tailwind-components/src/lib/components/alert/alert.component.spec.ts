@@ -32,12 +32,13 @@ describe('TailwindAlert', () => {
     fixture.detectChanges();
 
     const spy = vi.fn();
-    component.onDismiss.subscribe(spy);
+    component.dismissed.subscribe(spy);
 
     const button = fixture.nativeElement.querySelector('button');
     button?.click();
 
-    expect(component.dismissed()).toBe(true);
+    // `dismissed` is now the output; the internal flag is `isDismissed`.
+    expect(component.isDismissed()).toBe(true);
     expect(spy).toHaveBeenCalled();
   });
 

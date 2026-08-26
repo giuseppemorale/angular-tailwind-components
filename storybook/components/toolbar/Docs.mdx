@@ -1,15 +1,29 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ToolbarStories from './toolbar.stories';
 
 <Meta of={ToolbarStories} />
 
 # Toolbar
 
-`TailwindToolbar` è una barra applicativa orizzontale o un rail laterale verticale. Il **menu** centrale è un array `TailwindMenuItem[]`; logo e azioni finali restano **content projection** con attributi `[tailwind-toolbar-logo]` e `[tailwind-toolbar-end]` su elementi nativi (es. `<div tailwind-toolbar-logo>`).
+`TailwindToolbar` is a horizontal application bar or a vertical side rail. The central **menu** is a `TailwindMenuItem[]` array; logo and trailing actions stay **content projection**, through the `tailwind-toolbar-logo` and `tailwind-toolbar-end` attributes on plain elements such as `<div tailwind-toolbar-logo>`.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindButton, TailwindToolbar } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={ToolbarStories} />
+
+---
+
+## Example
+
+<Canvas meta={ToolbarStories} of={ToolbarStories.Horizontal} />
 
 ```typescript
 import { Component } from '@angular/core';
@@ -38,20 +52,20 @@ export class ExampleComponent {
 }
 ```
 
-Con **orientation** `vertical`, le voci del menu sono in colonna; con `divider: true` su un elemento si ottiene un separatore orizzontale. In orizzontale il divider è una linea verticale tra le voci.
+With **orientation** `vertical` the menu entries stack in a column and `divider: true` produces a horizontal separator. In the horizontal bar the divider is a vertical line between entries.
 
-Una voce con **`items`** (sottomenu) apre un **`tailwind-menu`** al click: sotto la voce in toolbar orizzontale, a destra nel rail verticale. **`onMenuSelect`** viene emesso solo per le voci foglia (senza `items`).
+An entry carrying **`items`** opens a **`tailwind-menu`** on click: below the entry in the horizontal bar, to its right in the vertical rail. **`onMenuSelect`** fires only for leaf entries, those without `items`.
 
-### Voci menu (`TailwindMenuItem`)
+### Menu entries (`TailwindMenuItem`)
 
-Oltre a `label`, `icon`, `value`, `disabled`, `divider` e `items`, ogni voce del menu toolbar può definire:
+On top of `label`, `icon`, `value`, `disabled`, `divider` and `items`, every toolbar menu entry can define:
 
-| Campo             | Tipo                                     | Default toolbar | Descrizione                                                                                                           |
-| ----------------- | ---------------------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `tooltip`         | `string`                                 | —               | Testo del tooltip al passaggio del mouse. Utile con voci **solo icona** (senza `label` visibile).                     |
-| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'right'`       | Posizione del tooltip rispetto al pulsante. Default `right` per rail a sinistra; usa `left` se la toolbar è a destra. |
+| Field             | Type                                     | Toolbar default | Description                                                                                                        |
+| ----------------- | ---------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `tooltip`         | `string`                                 | —               | Tooltip text on hover. Useful on **icon-only** entries, where no `label` is visible.                               |
+| `tooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'right'`       | Tooltip position relative to the button. `right` suits a left rail; use `left` when the toolbar sits on the right. |
 
-Esempio rail verticale solo icone:
+Icon-only vertical rail:
 
 ```typescript
 menu: TailwindMenuItem[] = [
@@ -61,166 +75,9 @@ menu: TailwindMenuItem[] = [
 ];
 ```
 
-## Anteprima
-
-<Canvas meta={ToolbarStories} of={ToolbarStories.Horizontal} />
-
----
-
 ## Content projection
 
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Slot</th>
-      <th>Attributo</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Logo</td>
-      <td>
-        <code>[tailwind-toolbar-logo]</code>
-      </td>
-      <td>Area brand / titolo (sinistra o in alto).</td>
-    </tr>
-    <tr>
-      <td>Fine</td>
-      <td>
-        <code>[tailwind-toolbar-end]</code>
-      </td>
-      <td>Azioni secondarie (destra o in basso).</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## Properties
-
-### `TailwindToolbar (tailwind-toolbar)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>rounded</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>
-        Angoli arrotondati (<code>rounded-xl</code>) o no.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>width</code>
-      </td>
-      <td>
-        <code>'full' | 'container'</code>
-      </td>
-      <td>
-        <code>'full'</code>
-      </td>
-      <td>
-        Orizzontale: larghezza piena vs 95% / 85% / 75% centrata. Verticale: sempre <code>h-full w-full</code> (il
-        valore <code>width</code> non si applica).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>elevated</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Ombra più marcata.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>'default' | TailwindColor</code>
-      </td>
-      <td>
-        <code>'default'</code>
-      </td>
-      <td>
-        Colore di superficie: <code>default</code> = bianco e bordo neutro; le varianti semantiche usano una{' '}
-        <strong>barra solida</strong> (stessi livelli dei button solid: <code>success</code>/<code>danger</code>/
-        <code>info</code> a 600, <code>warning</code> a 500). Voci menu, hamburger e slot proiettati usano i token{' '}
-        <code>text-on-*</code> (contrasto da tema); le icone menu seguono lo stesso contrasto dove possibile.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>orientation</code>
-      </td>
-      <td>
-        <code>'horizontal' | 'vertical'</code>
-      </td>
-      <td>
-        <code>'horizontal'</code>
-      </td>
-      <td>Barra in alto o rail laterale.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>menu</code>
-      </td>
-      <td>
-        <code>TailwindMenuItem[]</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>
-        Voci centrali (<code>TailwindMenuItem</code>, anche con <code>items</code> per sottomenu).
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-## Events
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Evento</th>
-      <th>Payload</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>onMenuSelect</code>
-      </td>
-      <td>
-        <code>TailwindMenuItem</code>
-      </td>
-      <td>
-        Click su voce foglia (non disabilitata, non divider, senza <code>items</code>).
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Slot | Attribute               | Description                                       |
+| ---- | ----------------------- | ------------------------------------------------- |
+| Logo | `tailwind-toolbar-logo` | Brand / title area, on the left or at the top.    |
+| End  | `tailwind-toolbar-end`  | Secondary actions, on the right or at the bottom. |

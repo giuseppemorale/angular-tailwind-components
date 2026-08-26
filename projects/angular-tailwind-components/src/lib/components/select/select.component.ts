@@ -22,7 +22,7 @@ import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindChip } from '../chip/chip.component';
 import { TailwindIcon } from '../icon/icon.component';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
-import { FIELD_SIZE } from '../../util/variants';
+import { FIELD_BASE, FIELD_SIZE, FIELD_STATE, FIELD_STATE_INVALID } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
 
 @Component({
@@ -71,9 +71,8 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   /** Disables the control (also set via `setDisabledState` when used as CVA) */
   readonly disabled = input<boolean>(false);
   /**
-   * How an option value is matched against the current value. Defaults to identity (`Object.is`),
-   * which does **not** match structurally equal objects coming from different fetches — pass a
-   * comparator when option values are objects, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
+   * How an option value is matched against the current value; defaults to `Object.is`.
+   * Pass a comparator for object values, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
    */
   readonly compareWith = input<(a: T | null, b: T | null) => boolean>((a, b) => Object.is(a, b));
 
@@ -99,11 +98,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     return `${this.subId('option')}-${index}`;
   }
 
-  /**
-   * The option the combobox reports as "virtually focused". Focus itself stays on the trigger, which
-   * is what the APG combobox pattern prescribes, so without this the keyboard highlight is invisible
-   * to assistive technology.
-   */
+  /** The option reported as "virtually focused"; real focus stays on the trigger, per the APG. */
   readonly activeDescendantId = computed(() => {
     const index = this.activeIndex();
     return this.isOpen() && index >= 0 ? this.optionId(index) : null;
@@ -151,20 +146,15 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   });
 
   /** Classes for the trigger button */
-  readonly triggerClasses = computed(() => {
-    const stateClass = this.hasError()
-      ? 'border-danger-400 focus:outline-danger-500 text-danger-900'
-      : 'border-neutral-300 focus:outline-primary-500';
-
-    return [
-      'flex items-center justify-between w-full bg-surface border transition-colors duration-150',
-      'pr-3 cursor-pointer text-left',
-      'outline-none focus:outline focus:outline-2 focus:outline-offset-2',
-      'disabled:bg-neutral-50 disabled:text-neutral-400 disabled:cursor-not-allowed',
+  readonly triggerClasses = computed(() =>
+    [
+      // `flex` rather than the `block` a native input gets: the trigger centres its own content.
+      FIELD_BASE,
+      'flex items-center justify-between pr-3 cursor-pointer text-left',
       FIELD_SIZE[this.size()],
-      stateClass
-    ].join(' ');
-  });
+      this.hasError() ? FIELD_STATE_INVALID : FIELD_STATE
+    ].join(' ')
+  );
 
   private optionValueEquals(a: unknown, b: unknown): boolean {
     return this.compareWith()(a as T | null, b as T | null);
@@ -195,7 +185,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
         : isSelected
           ? 'bg-primary-50 text-primary-700 font-medium'
           : isActive
-            ? 'bg-neutral-100 text-neutral-900'
+            ? 'bg-neutral-100 text-fg'
             : 'text-neutral-800 hover:bg-neutral-50'
     ].join(' ');
   }
@@ -310,7 +300,8 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   private setActiveIndex(index: number): void {
     this.activeIndex.set(index);
     const option = this.overlayRef?.overlayElement.querySelector(`#${CSS.escape(this.optionId(index))}`);
-    option?.scrollIntoView({ block: 'nearest' });
+    // Optional call: jsdom leaves `scrollIntoView` undefined, and scrolling is a nicety anyway.
+    option?.scrollIntoView?.({ block: 'nearest' });
   }
 
   toggleDropdown(): void {

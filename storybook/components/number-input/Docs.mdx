@@ -1,0 +1,42 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as NumberInputStories from './number-input.stories';
+
+<Meta of={NumberInputStories} />
+
+# NumberInput
+
+`TailwindNumberInput` is the numeric field with increment and decrement buttons.
+
+`tailwind-input type="number"` leaves the native spinners in place: tiny, unstylable and missing on mobile. Here the buttons are real elements, the value is clamped to `min`/`max`, and the form holds a `number | null` rather than a numeric string.
+
+---
+
+## Import
+
+```typescript
+import { ReactiveFormsModule, TailwindNumberInput } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={NumberInputStories} />
+
+---
+
+---
+
+## Example
+
+<Canvas of={NumberInputStories.NumberInput} />
+
+```typescript
+@Component({
+  imports: [TailwindNumberInput, ReactiveFormsModule],
+  template: ` <tailwind-number-input label="Quantità" [min]="0" [max]="99" [formControl]="form.controls.quantity" />`
+})
+export class ExampleComponent {}
+```
+
+## Keyboard
+
+Arrow Up and Arrow Down inside the field step the value by `step`, without touching the buttons.

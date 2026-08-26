@@ -1,166 +1,133 @@
+import { ApplicationInitStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { provideTailwindConfig } from './theme-define.provider';
 import {
-  applyTailwindThemeColors,
-  buildTailwindThemeCss,
-  buildTailwindThemeVariableEntries,
-  provideTailwindConfig,
+  DEFAULT_TAILWIND_ICON_BASE_PATH,
+  TAILWIND_BUTTON_KIND,
+  TAILWIND_ICON_BASE_PATH,
+  TAILWIND_LABELS
+} from '../tokens';
+import { DEFAULT_TAILWIND_LABELS } from '../models';
+import {
+  TAILWIND_RADIUS_HTML_ATTR,
+  TAILWIND_RADIUS_STYLE_ID,
+  TAILWIND_THEME_HTML_ATTR,
   TAILWIND_THEME_STYLE_ID
-} from './theme-define.provider';
-import { TAILWIND_BUTTON_KIND } from '../tokens';
-
-describe('buildTailwindThemeVariableEntries', () => {
-  it('maps string palette to var references for each shade', () => {
-    const entries = buildTailwindThemeVariableEntries({
-      COLORS: { primary: 'indigo' }
-    });
-    expect(entries).toContainEqual(['--color-primary-600', 'var(--color-indigo-600)']);
-    expect(entries.find(([k]) => k === '--color-on-primary-600')).toBeUndefined();
-  });
-
-  it('writes flat shade object as CSS colors (legacy)', () => {
-    const entries = buildTailwindThemeVariableEntries({
-      COLORS: { success: { 600: '#abc', 700: '#def' } }
-    });
-    expect(entries).toContainEqual(['--color-success-600', '#abc']);
-    expect(entries).toContainEqual(['--color-success-700', '#def']);
-  });
-
-  it('writes on-* variables from structured palette', () => {
-    const entries = buildTailwindThemeVariableEntries({
-      COLORS: {
-        danger: {
-          shades: { 600: '#900', 700: '#800' },
-          on: { 600: '#fff', 700: '#f0f0f0' }
-        }
-      }
-    });
-    expect(entries).toContainEqual(['--color-danger-600', '#900']);
-    expect(entries).toContainEqual(['--color-on-danger-600', '#fff']);
-    expect(entries).toContainEqual(['--color-on-danger-700', '#f0f0f0']);
-  });
-
-  it('fills default on-* tokens for custom shade objects when on is omitted', () => {
-    const entries = buildTailwindThemeVariableEntries({
-      COLORS: {
-        primary: {
-          shades: { 600: '#3a7d44', 100: '#e3efe5' },
-          on: { 600: '#ffffff' }
-        }
-      }
-    });
-    expect(entries).toContainEqual(['--color-primary-600', '#3a7d44']);
-    expect(entries).toContainEqual(['--color-on-primary-600', '#ffffff']);
-    expect(entries).toContainEqual(['--color-on-primary-100', 'var(--color-neutral-900)']);
-  });
-
-  it('emits full custom primary palette from structured object form', () => {
-    const entries = buildTailwindThemeVariableEntries({
-      COLORS: {
-        primary: {
-          shades: {
-            50: '#f3f8f4',
-            600: '#3a7d44',
-            950: '#0f2114'
-          },
-          on: { 600: '#ffffff' }
-        }
-      }
-    });
-    expect(entries).toContainEqual(['--color-primary-50', '#f3f8f4']);
-    expect(entries).toContainEqual(['--color-primary-600', '#3a7d44']);
-    expect(entries).toContainEqual(['--color-on-primary-600', '#ffffff']);
-    expect(entries).toContainEqual(['--color-on-primary-50', 'var(--color-neutral-900)']);
-    expect(entries).toContainEqual(['--color-on-primary-950', '#ffffff']);
-  });
-
-  it('maps error alias to danger semantic keys', () => {
-    const entries = buildTailwindThemeVariableEntries({
-      COLORS: { error: { 500: '#e00' } }
-    });
-    expect(entries).toContainEqual(['--color-danger-500', '#e00']);
-  });
-
-  it('does not emit button kind (handled by TAILWIND_BUTTON_KIND provider, not CSS vars)', () => {
-    const entries = buildTailwindThemeVariableEntries({ BUTTON_KIND: 'flat' });
-    expect(entries).toEqual([]);
-  });
-
-  it('ignores invalid shade keys on flat objects', () => {
-    const entries = buildTailwindThemeVariableEntries({
-      COLORS: { info: { 600: '#00f', foo: 'x' } as Record<string, string> }
-    });
-    expect(entries).toContainEqual(['--color-info-600', '#00f']);
-    expect(entries.some(([k]) => k.includes('foo'))).toBe(false);
-  });
-});
-
-describe('buildTailwindThemeCss', () => {
-  it('returns empty string when no colors are configured', () => {
-    expect(buildTailwindThemeCss({})).toBe('');
-  });
-
-  it('wraps palette string entries in @layer theme', () => {
-    const css = buildTailwindThemeCss({ primary: 'indigo' });
-    expect(css).toMatch(/^@layer theme \{/);
-    expect(css).toContain(':root[data-tailwind-theme],');
-    expect(css).toContain('--color-primary-600: var(--color-indigo-600);');
-    expect(css).toMatch(/\}\s*\}$/);
-  });
-
-  it('wraps hex shade entries in @layer theme', () => {
-    const css = buildTailwindThemeCss({ success: { 600: '#abc', 700: '#def' } });
-    expect(css).toContain('@layer theme');
-    expect(css).toContain('--color-success-600: #abc;');
-    expect(css).toContain('--color-success-700: #def;');
-    expect(css).toContain('--color-on-success-600: #ffffff;');
-  });
-});
-
-describe('applyTailwindThemeColors', () => {
-  let document: Document;
-
-  beforeEach(() => {
-    document = window.document.implementation.createHTMLDocument('test');
-    const head = document.createElement('head');
-    document.documentElement.insertBefore(head, document.body);
-  });
-
-  it('appends a style element to head with theme variables and marks html', () => {
-    applyTailwindThemeColors(document, { primary: { 600: '#3a7d44' } });
-
-    const style = document.getElementById(TAILWIND_THEME_STYLE_ID);
-    expect(style?.parentElement).toBe(document.head);
-    expect(style?.textContent).toContain('@layer theme');
-    expect(style?.textContent).toContain('--color-primary-600: #3a7d44;');
-    expect(document.documentElement.getAttribute('data-tailwind-theme')).toBe('');
-    expect(document.documentElement.getAttribute('style')).toBeNull();
-  });
-
-  it('updates existing style on second apply without duplicating the element', () => {
-    applyTailwindThemeColors(document, { primary: { 600: '#111' } });
-    applyTailwindThemeColors(document, { primary: { 600: '#222' } });
-
-    const styles = document.head.querySelectorAll(`#${TAILWIND_THEME_STYLE_ID}`);
-    expect(styles.length).toBe(1);
-    expect(styles[0]?.textContent).toContain('--color-primary-600: #222;');
-    expect(document.documentElement.getAttribute('style')).toBeNull();
-  });
-
-  it('removes style element and html marker when colors resolve to empty css', () => {
-    applyTailwindThemeColors(document, { primary: { 600: '#111' } });
-    applyTailwindThemeColors(document, {});
-
-    expect(document.getElementById(TAILWIND_THEME_STYLE_ID)).toBeNull();
-    expect(document.documentElement.hasAttribute('data-tailwind-theme')).toBe(false);
-  });
-});
+} from './properties/constant';
 
 describe('provideTailwindConfig', () => {
-  it('registers token values from a factory (inject-safe context)', () => {
+  it('registers token values from a plain config object', () => {
     TestBed.configureTestingModule({
-      providers: [provideTailwindConfig(() => ({ BUTTON_KIND: 'outlined' }))]
+      providers: [provideTailwindConfig({ BUTTON_KIND: 'outlined' })]
     });
 
     expect(TestBed.inject(TAILWIND_BUTTON_KIND)).toBe('outlined');
+  });
+
+  it('still accepts a factory for configs that need inject()', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig(() => ({ BUTTON_KIND: 'ghost' }))]
+    });
+
+    expect(TestBed.inject(TAILWIND_BUTTON_KIND)).toBe('ghost');
+  });
+
+  // The factory used to run once per token provider, so a config built from a translation service
+  // paid for the whole object ten times over. It is now cached, and the only extra call is the
+  // startup read of RADIUS / COLORS, which deliberately does not share that cache.
+  it('resolves a config factory once for every token', () => {
+    let calls = 0;
+    TestBed.configureTestingModule({
+      providers: [
+        provideTailwindConfig(() => {
+          calls++;
+          return { BUTTON_KIND: 'flat' as const, COMPONENTS_SIZE: 'lg' as const };
+        })
+      ]
+    });
+
+    TestBed.inject(TAILWIND_BUTTON_KIND);
+    TestBed.inject(TAILWIND_LABELS);
+    TestBed.inject(TAILWIND_ICON_BASE_PATH);
+
+    expect(calls).toBeLessThanOrEqual(2);
+  });
+
+  // The config providers shadow the tokens' own `providedIn: 'root'` factories, so a config that
+  // omits a key must still hand consumers the default instead of `undefined`.
+  it('keeps the built-in labels when the config omits LABELS', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig({ BUTTON_KIND: 'flat' })]
+    });
+
+    expect(TestBed.inject(TAILWIND_LABELS)).toEqual(DEFAULT_TAILWIND_LABELS);
+  });
+
+  it('merges partial LABELS onto the built-in ones', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig({ LABELS: { close: 'Chiudi' } })]
+    });
+
+    const labels = TestBed.inject(TAILWIND_LABELS);
+    expect(labels.close).toBe('Chiudi');
+    expect(labels.openNavigationMenu).toBe(DEFAULT_TAILWIND_LABELS.openNavigationMenu);
+  });
+
+  it('keeps the default icon base path when the config omits ICON_BASE_PATH', () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig({ BUTTON_KIND: 'flat' })]
+    });
+
+    expect(TestBed.inject(TAILWIND_ICON_BASE_PATH)).toBe(DEFAULT_TAILWIND_ICON_BASE_PATH);
+  });
+});
+
+describe('provideTailwindConfig theme keys', () => {
+  afterEach(() => {
+    document.getElementById(TAILWIND_RADIUS_STYLE_ID)?.remove();
+    document.getElementById(TAILWIND_THEME_STYLE_ID)?.remove();
+    document.documentElement.removeAttribute(TAILWIND_RADIUS_HTML_ATTR);
+    document.documentElement.removeAttribute(TAILWIND_THEME_HTML_ATTR);
+  });
+
+  it('applies RADIUS at startup', async () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig({ RADIUS: 'round' })]
+    });
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+
+    expect(document.getElementById(TAILWIND_RADIUS_STYLE_ID)?.textContent).toContain('--radius-control: 0.75rem;');
+  });
+
+  it('applies COLORS at startup', async () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig({ COLORS: { primary: { 600: '#3a7d44' } } })]
+    });
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+
+    expect(document.getElementById(TAILWIND_THEME_STYLE_ID)?.textContent).toContain('--color-primary-600: #3a7d44;');
+  });
+
+  it('applies both alongside the token overrides', async () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig({ BUTTON_KIND: 'soft', RADIUS: 'sharp', COLORS: { primary: 'indigo' } })]
+    });
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+
+    expect(TestBed.inject(TAILWIND_BUTTON_KIND)).toBe('soft');
+    expect(document.getElementById(TAILWIND_RADIUS_STYLE_ID)?.textContent).toContain('--radius-control: 0px;');
+    expect(document.getElementById(TAILWIND_THEME_STYLE_ID)?.textContent).toContain(
+      '--color-primary-600: var(--color-indigo-600);'
+    );
+  });
+
+  it('writes nothing when the config carries neither key', async () => {
+    TestBed.configureTestingModule({
+      providers: [provideTailwindConfig({ BUTTON_KIND: 'flat' })]
+    });
+    await TestBed.inject(ApplicationInitStatus).donePromise;
+
+    expect(document.getElementById(TAILWIND_RADIUS_STYLE_ID)).toBeNull();
+    expect(document.getElementById(TAILWIND_THEME_STYLE_ID)).toBeNull();
   });
 });

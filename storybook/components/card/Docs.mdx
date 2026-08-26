@@ -1,22 +1,47 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as CardStories from './card.stories';
 
 <Meta of={CardStories} />
 
 # Card
 
-`TailwindCard` è un contenitore con slot opzionali per header, corpo, immagine e footer.
+`TailwindCard` is a container with optional slots for header, body, image and footer.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindCard } from 'angular-tailwind-components';
+```
+
+## Properties
+
+Classes passed through `class` / `[class]` land on the inner visual surface, not just on the host tag.
+
+<ArgTypes of={CardStories} />
+
+### Content projection
+
+| Slot                     | How to project it                   | Description                            |
+| ------------------------ | ----------------------------------- | -------------------------------------- |
+| `[tailwind-card-header]` | `<div tailwind-card-header>…</div>` | Rendered only when `hasHeader` is true |
+| `[tailwind-card-image]`  | `<div tailwind-card-image>…</div>`  | Full-bleed image, above the body       |
+| _(default)_              | Direct children of the tag          | Card body                              |
+| `[tailwind-card-footer]` | `<div tailwind-card-footer>…</div>` | Rendered only when `hasFooter` is true |
+
+---
+
+## Example
+
+<Canvas of={CardStories.Card} />
 
 ```typescript
 @Component({
   imports: [TailwindCard, TailwindButton],
   template: ` <tailwind-card [elevated]="false" [hoverable]="false" [hasHeader]="true" [hasFooter]="true">
-    <div tailwind-card-header><h3 class="font-semibold">Titolo</h3></div>
-    <p>Contenuto della card.</p>
+    <div tailwind-card-header><h3 class="font-semibold">Title</h3></div>
+    <p>Card content.</p>
     <div tailwind-card-footer>
       <tailwind-button>OK</tailwind-button>
     </div>
@@ -25,105 +50,26 @@ import * as CardStories from './card.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Density
 
-<Canvas of={CardStories.Card} />
+`density` drives the padding of header, body and footer together: `comfortable` (24px) for a page
+with few cards, `compact` (16px) for dashboards, where the same padding repeated across a dozen tiles
+costs more space than the content it frames.
 
----
+<Canvas of={CardStories.Density} />
 
-## Altezza uniforme in grid
+## Equal height in a grid
 
-In una CSS grid con `align-items: stretch` (default), assegna `class="h-full"` su ogni card: la classe viene inoltrata al surface e tutte le card della stessa riga condividono l’altezza visiva del riquadro bianco.
+In a CSS grid with `align-items: stretch` (the default), add `class="h-full"` to every card: the class is forwarded to the surface and all cards in the same row share the visual height of the white box.
 
 ```html
 <div class="grid gap-6 lg:grid-cols-5">
   <tailwind-card class="h-full" [hasFooter]="false">
     <div tailwind-card-header><h3 class="font-semibold">Step 1</h3></div>
-    <p class="text-sm text-neutral-600">Testo breve.</p>
+    <p class="text-sm text-neutral-600">Short text.</p>
   </tailwind-card>
-  <!-- altre card con class="h-full" -->
+  <!-- other cards with class="h-full" -->
 </div>
 ```
 
-Evita `items-start` sulla grid se vuoi l’allineamento in altezza. Non serve un input dedicato: qualsiasi classe Tailwind o custom su `tailwind-card` segue lo stesso meccanismo di inoltro.
-
----
-
-## Properties
-
-### `TailwindCard (tailwind-card)`
-
-Eredita `TailwindComponent` (`id`, `class`). Le classi passate con `class` / `[class]` vengono applicate al riquadro visivo interno (surface), non solo sul tag host.
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>elevated</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Ombra più marcata.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>hoverable</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Effetto hover sull’ombra.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>headerBg</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Sfondo nell’area header.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>hasHeader</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Mostra il blocco header (proiezione).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>hasFooter</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Mostra il blocco footer.</td>
-    </tr>
-  </tbody>
-</table>
+Avoid `items-start` on the grid if you want the heights to match. No dedicated input is needed: any Tailwind or custom class on `tailwind-card` goes through the same forwarding mechanism.

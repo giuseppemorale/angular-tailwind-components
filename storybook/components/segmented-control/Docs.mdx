@@ -1,0 +1,60 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as SegmentedControlStories from './segmented-control.stories';
+
+<Meta of={SegmentedControlStories} />
+
+# SegmentedControl
+
+`TailwindSegmentedControl` lays a handful of mutually exclusive choices side by side. Prefer it over a select when there are two to five options and seeing them all at once matters.
+
+It implements the ARIA **radio group** pattern rather than a tablist: the choice is a value, not a view, so it works with `formControl` and `ngModel`.
+
+---
+
+## Import
+
+```typescript
+import { ReactiveFormsModule, TailwindSegmentedControl } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={SegmentedControlStories} />
+
+---
+
+---
+
+## Example
+
+<Canvas of={SegmentedControlStories.SegmentedControl} />
+
+```typescript
+@Component({
+  imports: [TailwindSegmentedControl, ReactiveFormsModule],
+  template: ` <tailwind-segmented-control label="Vista" [options]="views" [formControl]="form.controls.view" />`
+})
+export class ExampleComponent {
+  readonly views = [
+    { value: 'list', label: 'Elenco' },
+    { value: 'grid', label: 'Griglia' }
+  ];
+}
+```
+
+## Sliding thumb
+
+The selected segment is marked by a single thumb sliding between positions rather than a background
+that appears and disappears: the movement is what tells the eye where the selection went. The thumb is
+`aria-hidden`; the selection is still announced through `aria-checked` on the segments.
+
+<Canvas of={SegmentedControlStories.SlidingThumb} />
+
+## Keyboard
+
+| Key        | Effect                                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------------ |
+| Arrows     | Move the selection to the previous/next segment, skipping disabled ones and wrapping at the ends |
+| Home / End | First / last enabled segment                                                                     |
+
+The group exposes a single tab stop: Tab moves in and out of it, the arrows move within it.

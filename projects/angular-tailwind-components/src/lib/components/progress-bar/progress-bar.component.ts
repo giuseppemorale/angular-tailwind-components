@@ -18,7 +18,7 @@ export class TailwindProgressBar extends TailwindComponent {
   readonly label = input<string>('');
   /** Show the label row */
   readonly showLabel = input<boolean>(true);
-  /** Show percentage value */
+  /** Show percentage value. Ignored while `indeterminate` — there is no percentage to report. */
   readonly showValue = input<boolean>(true);
   /** Semantic color */
   readonly color = input<TailwindColor>('primary');
@@ -30,6 +30,15 @@ export class TailwindProgressBar extends TailwindComponent {
   readonly striped = input<boolean>(false);
 
   readonly clampedValue = computed(() => Math.max(0, Math.min(100, this.value())));
+
+  /** `true` when there is a percentage worth showing; an indeterminate bar measures nothing. */
+  protected readonly showValueText = computed(() => this.showValue() && !this.indeterminate());
+
+  /** The label row is only rendered when it has something to hold. */
+  protected readonly hasLabelRow = computed(() => this.showLabel() && (!!this.label() || this.showValueText()));
+
+  /** `aria-valuenow`, or `null` while indeterminate — omitting it is what signals "unknown". */
+  protected readonly ariaValueNow = computed(() => (this.indeterminate() ? null : this.clampedValue()));
 
   readonly trackClasses = computed(() => {
     const sizeMap: Record<TailwindSize, string> = {

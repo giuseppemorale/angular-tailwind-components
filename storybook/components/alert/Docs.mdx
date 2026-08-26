@@ -1,15 +1,31 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as AlertStories from './alert.stories';
 
 <Meta of={AlertStories} />
 
 # Alert
 
-`TailwindAlert` mostra un messaggio con colore semantico, icona, titolo opzionale, chiusura e area azioni proiettate.
+`TailwindAlert` shows a message with a semantic color, an icon, an optional title, a dismiss button and a projected actions area.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindAlert } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={AlertStories} />
+
+Body and actions are projected content. Put the buttons on an element carrying the `tailwind-alert-actions` attribute — the same pattern as `tailwind-card-header`.
+
+---
+
+## Example
+
+<Canvas of={AlertStories.Alert} />
 
 ```typescript
 @Component({
@@ -21,112 +37,9 @@ import * as AlertStories from './alert.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Variants
 
-<Canvas of={AlertStories.Alert} />
+`kind` picks the weight of the surface. In `bordered` the border is not an outline but an accent band
+on the left, which keeps the semantic color readable even when the fill is `solid`.
 
----
-
-## Properties
-
-### `TailwindAlert (tailwind-alert)`
-
-Eredita gli input di host da `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>TailwindColor</code>
-      </td>
-      <td>
-        <code>'info'</code>
-      </td>
-      <td>Variante colore.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Titolo dell’alert.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>dismissible</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Mostra il pulsante di chiusura.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>bordered</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Bordo laterale evidenziato.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>showActions</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Mostra lo slot azioni sotto il messaggio.</td>
-    </tr>
-  </tbody>
-</table>
-
-Il corpo del messaggio e le azioni si passano come contenuto proiettato. Per i pulsanti usa un elemento con attributo <code>tailwind-alert-actions</code> (stesso pattern di <code>tailwind-card-header</code>).
-
-## Events
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Evento</th>
-      <th>Output</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>onDismiss</code>
-      </td>
-      <td>
-        <code>void</code>
-      </td>
-      <td>Emesso quando l’alert viene chiuso.</td>
-    </tr>
-  </tbody>
-</table>
+<Canvas of={AlertStories.Kinds} />

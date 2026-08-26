@@ -8,7 +8,8 @@ const meta: Meta<TailwindTag> = {
     color: {
       control: 'select',
       options: ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'transparent']
-    }
+    },
+    kind: { control: 'select', options: ['solid', 'soft', 'outlined'] }
   }
 };
 export default meta;
@@ -21,4 +22,18 @@ export const Tags: StoryObj<TailwindTag> = {
   args: {
     color: 'secondary'
   }
+};
+
+/** `solid` (default), `soft` and `outlined` — the same triad shared with badge, chip and alert. */
+export const Kinds: StoryObj<TailwindTag> = {
+  name: 'Variants',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <div class="flex flex-wrap items-center gap-2">
+        <tailwind-tag kind="solid" color="danger">Solid</tailwind-tag>
+        <tailwind-tag kind="soft" color="danger">Soft</tailwind-tag>
+        <tailwind-tag kind="outlined" color="danger">Outlined</tailwind-tag>
+      </div>`
+  })
 };

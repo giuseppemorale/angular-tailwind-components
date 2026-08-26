@@ -3,28 +3,77 @@
     <label
       [attr.for]="subId('inner')"
       class="text-sm font-medium text-neutral-700"
-      [class.text-danger-600]="hasError()">
+      [class.text-danger-600]="isInvalid()">
       {{ label() }}
+      @if (required()) {
+        <span class="text-danger-600" aria-hidden="true">*</span>
+      }
     </label>
   }
 
-  <input
-    [attr.id]="subId('inner')"
-    [type]="type()"
-    [placeholder]="placeholder()"
-    [disabled]="isDisabled()"
-    [readonly]="readonly()"
-    [attr.aria-invalid]="hasError() || null"
-    [attr.aria-describedby]="helperText() || errorText() ? subId('helper') : null"
-    [value]="value()"
-    [class]="inputClasses()"
-    (input)="onInputChange($event)"
-    (blur)="onBlur()" />
+  <div class="relative">
+    @if (prefixIcon()) {
+      <tailwind-icon
+        [icon]="prefixIcon()!"
+        [size]="18"
+        class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+    }
 
-  @if (helperText() && !hasError()) {
-    <p [attr.id]="subId('helper')" class="text-xs text-neutral-500" [innerHTML]="helperText() | safehtml"></p>
-  }
-  @if (errorText() && hasError()) {
-    <p [attr.id]="subId('helper')" class="text-xs text-danger-600" [innerHTML]="errorText() | safehtml"></p>
-  }
+    <input
+      [attr.id]="subId('inner')"
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [disabled]="isDisabled()"
+      [readonly]="readonly()"
+      [attr.required]="required() || null"
+      [attr.aria-required]="required() || null"
+      [attr.aria-invalid]="isInvalid() || null"
+      [attr.aria-describedby]="describedBy()"
+      [attr.autocomplete]="autocomplete() ?? null"
+      [attr.name]="name() ?? null"
+      [attr.inputmode]="inputmode() ?? null"
+      [attr.maxlength]="maxlength() ?? null"
+      [attr.minlength]="minlength() ?? null"
+      [attr.min]="min() ?? null"
+      [attr.max]="max() ?? null"
+      [attr.step]="step() ?? null"
+      [attr.pattern]="pattern() ?? null"
+      [value]="value()"
+      [class]="inputClasses()"
+      (input)="onInputChange($event)"
+      (blur)="onBlur()" />
+
+    @if (showClear()) {
+      <button
+        type="button"
+        class="absolute right-2 top-1/2 -translate-y-1/2 rounded-control-inner p-0.5 text-neutral-400 hover:text-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring cursor-pointer"
+        [attr.aria-label]="clearLabel()"
+        (click)="clear()">
+        <tailwind-icon icon="x-mark" [size]="16" />
+      </button>
+    } @else if (suffixIcon()) {
+      <tailwind-icon
+        [icon]="suffixIcon()!"
+        [size]="18"
+        class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-400" />
+    }
+  </div>
+
+  <div class="flex items-start justify-between gap-2">
+    <div class="min-w-0 flex-1">
+      @if (helperText() && !isInvalid()) {
+        <p [attr.id]="subId('helper')" class="text-xs text-fg-muted" [innerHTML]="helperText() | safehtml"></p>
+      }
+      @if (errorText() && isInvalid()) {
+        <p
+          [attr.id]="subId('error')"
+          role="alert"
+          class="text-xs text-danger-600"
+          [innerHTML]="errorText() | safehtml"></p>
+      }
+    </div>
+    @if (hasCounter()) {
+      <p [attr.id]="subId('counter')" class="shrink-0 text-xs tabular-nums text-fg-muted">{{ counterText() }}</p>
+    }
+  </div>
 </div>

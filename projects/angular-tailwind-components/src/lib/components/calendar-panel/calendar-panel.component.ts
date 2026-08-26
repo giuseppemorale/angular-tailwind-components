@@ -49,10 +49,15 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
 
   protected readonly i18n = calendarLabelsFor(this.lang);
 
+  /** Month names in calendar order; falls back to the configured locale when undefined. */
   readonly months = input<string[] | undefined>(undefined);
+  /** Weekday headers starting from Monday; falls back to the configured locale when undefined. */
   readonly weekDays = input<string[] | undefined>(undefined);
+  /** Date drawn as highlighted, used by the pickers that embed this panel. */
   readonly highlightDate = input<Date | null>(null);
+  /** Earliest selectable date; earlier days render disabled. */
   readonly minDate = input<Date | null | undefined>(undefined);
+  /** Latest selectable date; later days render disabled. */
   readonly maxDate = input<Date | null | undefined>(undefined);
 
   /**
@@ -61,11 +66,16 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
    */
   readonly embedded = signal(false);
 
+  /** Visible view (two-way): day grid, month list or year list. */
   readonly calendarView = model<CalendarView>('days');
+  /** Month the grid is showing (two-way), zero-based. */
   readonly viewMonth = model(new Date().getMonth());
+  /** Year the grid is showing (two-way). */
   readonly viewYear = model(new Date().getFullYear());
+  /** Selected date (two-way); this is also the `ControlValueAccessor` value. */
   readonly value = model<Date | null>(null);
 
+  /** Day number clicked, emitted only when the panel is embedded in a picker. */
   readonly daySelect = output<number>();
 
   readonly isDisabled = signal(false);
@@ -75,7 +85,7 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
 
   readonly surfaceClasses = computed(() =>
     this.mergeClasses(
-      this.embedded() ? '' : 'rounded-xl border border-neutral-200 bg-surface p-4 shadow-sm w-72 max-w-full'
+      this.embedded() ? '' : 'rounded-overlay border border-border bg-surface p-4 shadow-sm w-72 max-w-full'
     )
   );
   private readonly coercedValue = computed(() => coerceCalendarDateOrNull(this.value()));
@@ -136,7 +146,8 @@ export class TailwindCalendarPanel extends TailwindComponent implements ControlV
   readonly calendarDays = computed(() => {
     const y = this.viewYear(),
       m = this.viewMonth();
-    const offset = (new Date(y, m, 1).getDay() + 6) % 7;
+    // Leading blanks depend on the locale's first weekday, not on a hard-coded Monday.
+    const offset = (new Date(y, m, 1).getDay() - this.i18n.firstDayOfWeek + 7) % 7;
     const total = new Date(y, m + 1, 0).getDate();
     const days: number[] = Array(offset).fill(0);
     for (let i = 1; i <= total; i++) days.push(i);

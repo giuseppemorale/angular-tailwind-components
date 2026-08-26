@@ -14,9 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Value model: single number or sorted pair when `range` is true */
-export type TailwindSliderValue = number | [number, number];
+import type { TailwindSliderValue } from './interfaces/slider-value.type';
 
 @Component({
   selector: 'tailwind-slider',
@@ -73,11 +71,11 @@ export class TailwindSlider extends TailwindComponent implements ControlValueAcc
   readonly rangeHigh = signal(100);
 
   /** Disabled via template (combined with form `setDisabledState`) */
-  readonly hostDisabled = input(false, { alias: 'disabled', transform: booleanAttribute });
+  readonly disabled = input(false, { transform: booleanAttribute });
 
   readonly isDisabled = signal(false);
 
-  readonly isEffectivelyDisabled = computed(() => this.isDisabled() || this.hostDisabled());
+  readonly isEffectivelyDisabled = computed(() => this.isDisabled() || this.disabled());
 
   private onChange: (v: TailwindSliderValue) => void = () => {};
   private onTouched: () => void = () => {};

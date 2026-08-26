@@ -1,15 +1,29 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ProgressBarStories from './progress-bar.stories';
 
 <Meta of={ProgressBarStories} />
 
 # Progress bar
 
-`TailwindProgressBar` visualizza avanzamento percentuale, modo indeterminato e opzioni estetiche.
+`TailwindProgressBar` shows percentage progress, an indeterminate mode and the usual styling options.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindProgressBar } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={ProgressBarStories} />
+
+---
+
+## Example
+
+<Canvas of={ProgressBarStories.ProgressBar} />
 
 ```typescript
 @Component({
@@ -27,123 +41,11 @@ import * as ProgressBarStories from './progress-bar.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Indeterminate
 
-<Canvas of={ProgressBarStories.ProgressBar} />
+`indeterminate` means _we do not know how far along we are_: `value` no longer measures anything, so
+the percentage is not printed even with `showValue` on, and `aria-valuenow` is removed — it is exactly
+the absence of that attribute that makes assistive technology announce the progress as unknown. When
+nothing is left to show, the label row is not rendered at all, so it leaves no margin behind.
 
----
-
-## Properties
-
-### `TailwindProgressBar (tailwind-progress-bar)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>value</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        <code>0</code>
-      </td>
-      <td>Percentuale 0–100 (clamp interno).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta sopra la barra.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>showLabel</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Mostra riga etichetta.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>showValue</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Mostra percentuale.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>TailwindColor</code>
-      </td>
-      <td>
-        <code>'primary'</code>
-      </td>
-      <td>Colore barra.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>size</code>
-      </td>
-      <td>
-        <code>TailwindSize</code>
-      </td>
-      <td>
-        <code>'md'</code>
-      </td>
-      <td>Altezza track.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>indeterminate</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Animazione indeterminata.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>striped</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Motivo a strisce.</td>
-    </tr>
-  </tbody>
-</table>
+<Canvas of={ProgressBarStories.Indeterminate} />

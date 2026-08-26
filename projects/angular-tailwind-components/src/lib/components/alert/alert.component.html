@@ -1,4 +1,4 @@
-@if (!dismissed()) {
+@if (!isDismissed()) {
   <div [class]="computedClasses()" role="alert" [attr.aria-live]="color() === 'danger' ? 'assertive' : 'polite'">
     <!-- Icon -->
     <div class="shrink-0 mt-0.5">
@@ -50,7 +50,7 @@
         icon="x-mark"
         class="shrink-0 -m-1 opacity-70 hover:opacity-100"
         [ariaLabel]="dismissLabel()"
-        (onClick)="dismiss()" />
+        (click)="dismiss()" />
     }
   </div>
 }

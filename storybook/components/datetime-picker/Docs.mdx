@@ -1,31 +1,70 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as DateTimePickerStories from './datetime-picker.stories';
 
 <Meta of={DateTimePickerStories} />
 
 # Date time picker
 
-`TailwindDateTimePicker` mostra **un solo** campo (readonly) e un pannello con calendario, ora e minuti. Il valore del controllo è un **`Date | null`** (ControlValueAccessor).
+`TailwindDateTimePicker` shows **one** read-only field and a panel with calendar, hours and minutes. The control value is a **`Date | null`** (`ControlValueAccessor`).
 
-Le modifiche nel pannello restano in bozza finché non premi il pulsante di conferma (etichetta tradotta in base alla lingua), che aggiorna il valore del form e chiude il pannello. Chiudere il pannello senza applicare (secondo click sull&apos;input) annulla le modifiche.
+Changes in the panel stay in draft until the confirm button is pressed — its label follows the configured language — which writes the form value and closes the panel. Closing without applying (a second click on the field) discards them.
 
-Nel calendario, clic sull&apos;intestazione mese/anno → griglia **anni** (12 per pagina) → griglia **mesi** → giorni; le frecce cambiano mese (vista giorni) o intervallo di anni (vista anni).
+In the calendar, clicking the month/year header opens the **year** grid (12 per page) → the **month** grid → days; the arrows change month in the day view, or year range in the year view.
 
-Il testo nel campo segue la stringa **`format`** in sintassi [Angular DatePipe](https://angular.dev/api/common/DatePipe) (default `dd/MM/yyyy HH:mm`: `MM` = mese, `mm` = minuti, `HH` = ore 0–23).
+The field text follows the **`format`** string in [Angular DatePipe](https://angular.dev/api/common/DatePipe) syntax (default `dd/MM/yyyy HH:mm`: `MM` = month, `mm` = minutes, `HH` = hours 0–23).
 
 ---
 
-## Lingua dell&apos;interfaccia
+## Import
 
-Etichette del pannello (giorni della settimana, mesi, ora, oggi, conferma) e placeholder predefinito dipendono dal token **`TAILWIND_DATETIME_LANGUAGE`**. Con il formato predefinito **`dd/MM/yyyy HH:mm`**, il valore nel campo usa **`Intl.DateTimeFormat`** con **`it-IT`** o **`en-US`** in base al token (nessun `registerLocaleData` né import da `@angular/common/locales`). Per un **`format`** personalizzato si usa **`formatDate`** di Angular con **`en-US`** (token testuali tipo `MMMM` restano in inglese salvo estensioni future).
+```typescript
+import { ReactiveFormsModule, TailwindDateTimePicker } from 'angular-tailwind-components';
+```
 
-Valori supportati: **`'it'`** o **`'en'`**. Se il token **non** è fornito, il componente assume **`'it'`** (come nel codice attuale del picker).
+## Properties
 
-### Configurazione consigliata: provider globale
+<ArgTypes of={DateTimePickerStories} />
 
-Per non ripetere il provider su ogni componente che usa il picker, registra **`TAILWIND_DATETIME_LANGUAGE` una sola volta** nell&apos;array `providers` dell&apos;applicazione (stesso livello in cui configuri router, HTTP client, ecc.).
+### Injection token
 
-**Applicazione standalone** (`app.config.ts`):
+| Token                        | Type                       | Values          | Default |
+| ---------------------------- | -------------------------- | --------------- | ------- |
+| `TAILWIND_DATETIME_LANGUAGE` | `TailwindDatetimeLanguage` | `'it'` · `'en'` | `'it'`  |
+
+The CVA value is **`Date | null`**. `writeValue` accepts a `Date`, `null` or `undefined` (reset).
+
+---
+
+## Example
+
+<Canvas of={DateTimePickerStories.DateTimepicker} />
+
+<Canvas of={DateTimePickerStories.WithReactiveForm} />
+
+```typescript
+@Component({
+  imports: [TailwindDateTimePicker, ReactiveFormsModule],
+  template: ` <tailwind-datetime-picker
+    formControlName="appointmentAt"
+    label="Appointment Date & Time"
+    format="dd/MM/yyyy HH:mm" />`
+})
+export class ExampleComponent {}
+```
+
+Make sure **`TAILWIND_DATETIME_LANGUAGE`** is provided at application level as shown above; the component needs no extra providers of its own.
+
+## Interface language
+
+Panel labels (weekdays, months, hour, today, confirm) and the default placeholder follow the **`TAILWIND_DATETIME_LANGUAGE`** token. With the default **`dd/MM/yyyy HH:mm`** format the field value goes through **`Intl.DateTimeFormat`** with **`it-IT`** or **`en-US`** depending on the token — no `registerLocaleData`, no import from `@angular/common/locales`. A custom **`format`** goes through Angular **`formatDate`** with **`en-US`**, so textual tokens such as `MMMM` stay in English.
+
+Supported values: **`'it'`** or **`'en'`**. When the token is **not** provided the component falls back to **`'it'`**.
+
+### Recommended setup: global provider
+
+To avoid repeating the provider on every component that uses the picker, register **`TAILWIND_DATETIME_LANGUAGE` once** in the application `providers` array — the same place where you configure the router, the HTTP client and so on.
+
+**Standalone application** (`app.config.ts`):
 
 ```typescript
 import { ApplicationConfig } from '@angular/core';
@@ -41,132 +80,8 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-**Bootstrap diretto** (`main.ts`): aggiungi lo stesso oggetto `{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'it' }` all&apos;array `providers` passato a `bootstrapApplication`.
+**Direct bootstrap** (`main.ts`): add the same `{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'it' }` object to the `providers` array passed to `bootstrapApplication`.
 
-**Modulo radice** (`AppModule`): stesso `provide` nell&apos;array `providers` di `@NgModule`.
+**Root module** (`AppModule`): the same `provide` entry in the `@NgModule` `providers` array.
 
-Così tutti i `tailwind-datetime-picker` dell&apos;app condividono la stessa lingua. Un override per singolo componente è possibile solo aggiungendo un `providers` più specifico sul `@Component` o su un contenitore intermedio (Angular risolve dal basso verso l&apos;alto nella gerarchia degli injector); in genere il caso d&apos;uso è solo quello globale.
-
----
-
-## Utilizzo
-
-```typescript
-@Component({
-  imports: [TailwindDateTimePicker, ReactiveFormsModule],
-  template: ` <tailwind-datetime-picker
-    formControlName="appointmentAt"
-    label="Appointment Date & Time"
-    format="dd/MM/yyyy HH:mm" />`
-})
-export class ExampleComponent {}
-```
-
-Assicurati che **`TAILWIND_DATETIME_LANGUAGE`** sia registrato a livello applicativo come sopra; il componente non richiede provider aggiuntivi nel proprio `@Component`.
-
----
-
-## Anteprima
-
-<Canvas of={DateTimePickerStories.DateTimepicker} />
-
-<Canvas of={DateTimePickerStories.WithReactiveForm} />
-
----
-
-## Properties
-
-### `TailwindDateTimePicker (tailwind-datetime-picker)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>minDate</code> / <code>maxDate</code>
-      </td>
-      <td>
-        <code>Date | null</code>
-      </td>
-      <td>
-        <em>nessun limite</em>
-      </td>
-      <td>Limiti sulla sola data; l&apos;ora non è vincolata. Giorni fuori range disabilitati nel calendario.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta del gruppo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>placeholder</code>
-      </td>
-      <td>
-        <code>string | undefined</code>
-      </td>
-      <td>
-        <code>undefined</code> (testo predefinito in base a <code>TAILWIND_DATETIME_LANGUAGE</code>)
-      </td>
-      <td>
-        Placeholder dell&apos;input quando non c&apos;è valore. Se omesso o vuoto, viene usato il messaggio tradotto
-        (es. &quot;Select date and time&quot; / &quot;Seleziona data e ora&quot;).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>format</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'dd/MM/yyyy HH:mm'</code>
-      </td>
-      <td>Formato display (DatePipe). Se non valido, viene usato un fallback sicuro.</td>
-    </tr>
-  </tbody>
-</table>
-
-### Injection token
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Tipo</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>TAILWIND_DATETIME_LANGUAGE</code>
-      </td>
-      <td>
-        <code>'it' | 'en'</code>
-      </td>
-      <td>
-        Lingua UI del picker. Da fornire preferibilmente nei <code>providers</code> globali dell&apos;applicazione.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-Il valore del controllo (CVA) è **`Date | null`**. `writeValue` accetta `Date`, `null` o `undefined` (reset).
+Every `tailwind-datetime-picker` in the app then shares the same language. A per-component override is still possible by adding a more specific `providers` entry on the `@Component` or on an intermediate container — Angular resolves upwards through the injector hierarchy — but the global case is the usual one.

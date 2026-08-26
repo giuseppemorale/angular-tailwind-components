@@ -1,17 +1,33 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TooltipStories from './tooltip.stories';
 
 <Meta of={TooltipStories} />
 
 # Tooltip
 
-`TailwindTooltipDirective` (`selector: '[tooltip], [tailwindTooltip]'`) mostra un overlay al passaggio del mouse o al focus sull’elemento host.
+`TailwindTooltipDirective` (`selector: '[tooltip], [tailwindTooltip]'`) shows an overlay on hover or focus of the host element.
 
-Il testo può arrivare da entrambi i selettori: `[tooltip]` è quello storico, `[tailwindTooltip]` è la variante prefissata da preferire nel codice nuovo. Se sono valorizzati entrambi vince quello prefissato.
+The text can come from either selector: `[tooltip]` is the original one, `[tailwindTooltip]` the prefixed variant to prefer in new code. When both are set, the prefixed one wins.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindButton, TailwindTooltipDirective } from 'angular-tailwind-components';
+```
+
+## Properties
+
+The host keeps its own properties; the directive adds:
+
+<ArgTypes of={TooltipStories} />
+
+---
+
+## Example
+
+<Canvas of={TooltipStories.ButtonTooltip} />
 
 ```typescript
 @Component({
@@ -20,64 +36,3 @@ Il testo può arrivare da entrambi i selettori: `[tooltip]` è quello storico, `
 })
 export class ExampleComponent {}
 ```
-
-## Anteprima
-
-<Canvas of={TooltipStories.ButtonTooltip} />
-
----
-
-## Properties (directive)
-
-Host ereditano comunque le proprietà del componente ospite; la directive aggiunge:
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Input</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>tooltip</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Testo del tooltip, legato al selettore non prefissato.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>tailwindTooltip</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Testo del tooltip, legato al selettore prefissato. Ha la precedenza su <code>tooltip</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>tooltipPosition</code>
-      </td>
-      <td>
-        <code>TailwindPosition</code>
-      </td>
-      <td>
-        <code>'top'</code>
-      </td>
-      <td>Posizione rispetto al target.</td>
-    </tr>
-  </tbody>
-</table>

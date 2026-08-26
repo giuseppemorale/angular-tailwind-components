@@ -26,7 +26,7 @@ export const Tags: StoryObj<TailwindTag> = {
 
 /** `solid` (default), `soft` and `outlined` — the same triad shared with badge, chip and alert. */
 export const Kinds: StoryObj<TailwindTag> = {
-  name: 'Varianti',
+  name: 'Variants',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `

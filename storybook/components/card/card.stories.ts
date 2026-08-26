@@ -160,7 +160,7 @@ export const Elevated: StoryObj<TailwindCard> = {
 
 /** `comfortable` frames a page-level card; `compact` is for dashboards, where padding repeats. */
 export const Density: StoryObj<TailwindCard> = {
-  name: 'Densità',
+  name: 'Density',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `

@@ -1,15 +1,29 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as DrawerStories from './drawer.stories';
 
 <Meta of={DrawerStories} />
 
 # Drawer
 
-`TailwindDrawer` è un pannello laterale con animazione, titolo e metodi `open()` / `close()`.
+`TailwindDrawer` is an animated side panel with a title and `open()` / `close()` methods.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindButton, TailwindDrawer, TailwindInput } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={DrawerStories} />
+
+---
+
+## Example
+
+<Canvas of={DrawerStories.Drawer} />
 
 ```typescript
 @Component({
@@ -25,152 +39,4 @@ import * as DrawerStories from './drawer.stories';
 export class ExampleComponent {}
 ```
 
-Il footer opzionale si proietta con l’attributo `[tailwind-drawer-footer]` su un elemento figlio diretto (es. `<div tailwind-drawer-footer>`).
-
-## Anteprima
-
-<Canvas of={DrawerStories.Drawer} />
-
----
-
-## Properties
-
-### `TailwindDrawer (tailwind-drawer)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Titolo nel header.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>position</code>
-      </td>
-      <td>
-        <code>'left' | 'right'</code>
-      </td>
-      <td>
-        <code>'right'</code>
-      </td>
-      <td>Lato da cui entra il pannello.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'max-w-md'</code>
-      </td>
-      <td>Classi larghezza (Tailwind).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>closeOnBackdrop</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Chiusura al click sul backdrop.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>closeOnEscape</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Chiusura con Escape.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>showCloseButton</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Mostra il pulsante di chiusura in header.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>closeLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Nome accessibile del pulsante di chiusura; default da <code>TAILWIND_LABELS.close</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Nome accessibile del dialog quando <code>title</code> è omesso.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-## Events
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Evento</th>
-      <th>Output</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>onClose</code>
-      </td>
-      <td>
-        <code>void</code>
-      </td>
-      <td>Emesso dopo la chiusura animata.</td>
-    </tr>
-  </tbody>
-</table>
+The optional footer is projected through the `tailwind-drawer-footer` attribute on a direct child, e.g. `<div tailwind-drawer-footer>`.

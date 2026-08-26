@@ -1,15 +1,29 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as ButtonStories from './button.stories';
 
 <Meta of={ButtonStories} />
 
 # Button
 
-`TailwindButton` è il pulsante principale della libreria con colori, varianti solid/flat/outlined/ghost/text e dimensioni.
+`TailwindButton` is the main button of the library, with semantic colors, the solid/flat/outlined/ghost/text variants and the shared size scale.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindButton } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={ButtonStories} />
+
+---
+
+## Example
+
+<Canvas of={ButtonStories.Button} />
 
 ```typescript
 @Component({
@@ -21,215 +35,22 @@ import * as ButtonStories from './button.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Variants
 
-<Canvas of={ButtonStories.Button} />
-
-## Varianti
-
-`solid` porta un highlight interno di 1px sul bordo superiore invece di un’ombra: l’ombra significa
-_elevazione_ e appartiene a card e overlay, non a ogni pulsante della pagina.
+`solid` carries a 1px inner highlight on its top edge instead of a shadow: a shadow means
+_elevation_ and belongs to cards and overlays, not to every button on the page.
 
 <Canvas of={ButtonStories.Kinds} />
 
-`soft` è la variante tinta — abbastanza forte da leggersi come azione, abbastanza discreta da stare
-accanto a un `solid` primario senza competere.
+`soft` is the tinted variant — strong enough to read as an action, quiet enough to sit next to a
+primary `solid` without competing with it.
 
 <Canvas of={ButtonStories.Soft} />
 
-## Allineamento con i campi
+## Aligning with form fields
 
-L’altezza è fissata dalla scala condivisa (`h-6` / `h-8` / `h-9` / `h-11` / `h-13`), non derivata dal
-padding verticale: un pulsante e un campo della stessa `size` sono alti esattamente uguale, anche con
-icone o font diversi. Un pulsante solo-icona resta quadrato sulla stessa altezza.
+Height comes from the shared scale (`h-6` / `h-8` / `h-9` / `h-11` / `h-13`), not from vertical
+padding: a button and a field of the same `size` are exactly as tall, whatever their icons or fonts.
+An icon-only button stays square at that same height.
 
 <Canvas of={ButtonStories.AlignedWithFields} />
-
----
-
-## Properties
-
-### `TailwindButton (tailwind-button)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>TailwindColor</code>
-      </td>
-      <td>
-        <code>'primary'</code>
-      </td>
-      <td>Palette colore.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>kind</code>
-      </td>
-      <td>
-        <code>'solid' | 'soft' | 'flat' | 'outlined' | 'ghost' | 'text'</code>
-      </td>
-      <td>
-        <code>'solid'</code> (o valore da <code>TAILWIND_BUTTON_KIND</code> /{' '}
-        <code>provideTailwindConfig(&#123; BUTTON_KIND: 'solid' &#125;)</code>)
-      </td>
-      <td>
-        <code>solid</code>: pieno, con highlight interno sul bordo superiore al posto dell’ombra; <code>soft</code>:
-        superficie tinta chiara con testo dello stesso colore — la variante più usata per azioni secondarie;{' '}
-        <code>flat</code>: pieno come <code>solid</code> senza highlight né hover; <code>ghost</code>: trasparente con
-        tinta al hover; <code>text</code>: solo colore testo (nessun cambio sfondo al hover).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>size</code>
-      </td>
-      <td>
-        <code>TailwindSize</code>
-      </td>
-      <td>
-        <code>'md'</code>
-      </td>
-      <td>Dimensione.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>disabled</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Stato disabilitato.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>loading</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Mostra uno spinner al posto dell&apos;icona, imposta <code>aria-busy</code> e blocca l&apos;attivazione.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>fullWidth</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Occupa tutta la larghezza del contenitore.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>type</code>
-      </td>
-      <td>
-        <code>'button' | 'submit' | 'reset'</code>
-      </td>
-      <td>
-        <code>'button'</code>
-      </td>
-      <td>
-        Attributo <code>type</code> nativo.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>role</code>
-      </td>
-      <td>
-        <code>TailwindButtonRole</code>
-      </td>
-      <td>
-        <code>'button'</code>
-      </td>
-      <td>
-        Attributo ARIA <code>role</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>icon</code>
-      </td>
-      <td>
-        <code>TailwindHeroicon | undefined</code>
-      </td>
-      <td>—</td>
-      <td>
-        Icona Heroicons outline nel pulsante. Con il testo proiettato: icona + etichetta; senza contenuto: solo icona
-        (padding quadrato).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>iconPosition</code>
-      </td>
-      <td>
-        <code>'left' | 'right'</code>
-      </td>
-      <td>
-        <code>'left'</code>
-      </td>
-      <td>Posizione dell&apos;icona rispetto all&apos;etichetta.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta accessibile (utile per pulsanti solo icona).</td>
-    </tr>
-  </tbody>
-</table>
-
-## Events
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Evento</th>
-      <th>Output</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>onClick</code>
-      </td>
-      <td>
-        <code>MouseEvent</code>
-      </td>
-      <td>Click se non disabilitato.</td>
-    </tr>
-  </tbody>
-</table>

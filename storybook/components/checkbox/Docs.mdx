@@ -1,15 +1,29 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as CheckboxStories from './checkbox.stories';
 
 <Meta of={CheckboxStories} />
 
 # Checkbox
 
-`TailwindCheckbox` è un controllo checkbox integrato con i form reattivi (`ControlValueAccessor`).
+`TailwindCheckbox` is a checkbox control wired into reactive forms through `ControlValueAccessor`.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindCheckbox } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={CheckboxStories} />
+
+---
+
+## Example
+
+<Canvas of={CheckboxStories.Checkbox} />
 
 ```typescript
 @Component({
@@ -18,92 +32,3 @@ import * as CheckboxStories from './checkbox.stories';
 })
 export class ExampleComponent {}
 ```
-
-## Anteprima
-
-<Canvas of={CheckboxStories.Checkbox} />
-
----
-
-## Properties
-
-### `TailwindCheckbox (tailwind-checkbox)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>description</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Testo descrittivo sotto l’etichetta.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>indeterminate</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Stato misto (trattino) per una checkbox riepilogativa; espone <code>aria-checked="mixed"</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>size</code>
-      </td>
-      <td>
-        <code>TailwindSize</code>
-      </td>
-      <td>
-        <code>'md'</code>
-      </td>
-      <td>Scalatura box e label.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>checked</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;boolean&gt;</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Stato selezionato (two-way con <code>[(checked)]</code>).
-      </td>
-    </tr>
-  </tbody>
-</table>

@@ -1,15 +1,38 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as StepperStories from './stepper.stories';
+import { TailwindStep } from '../../../projects/angular-tailwind-components/src/public-api';
 
 <Meta of={StepperStories} />
 
 # Stepper
 
-`TailwindStepper` organizza contenuti in passi; ogni passo è un `tailwind-step` con etichetta e descrizione.
+`TailwindStepper` organises content into steps; each step is a `tailwind-step` with a label and a description.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindInput, TailwindStep, TailwindStepper } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindStepper (tailwind-stepper)`
+
+<ArgTypes of={StepperStories} />
+
+### `TailwindStep (tailwind-step)`
+
+<ArgTypes of={TailwindStep} />
+
+The `completed` and `isActive` states are managed internally by the stepper.
+
+---
+
+## Example
+
+<Canvas of={StepperStories.Stepper} />
 
 ```typescript
 @Component({
@@ -25,119 +48,3 @@ import * as StepperStories from './stepper.stories';
 })
 export class ExampleComponent {}
 ```
-
-## Anteprima
-
-<Canvas of={StepperStories.Stepper} />
-
----
-
-## Properties
-
-### `TailwindStepper (tailwind-stepper)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>activeIndex</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;number&gt;</code>
-      </td>
-      <td>
-        <code>0</code>
-      </td>
-      <td>Indice passo attivo (two-way).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>linear</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Se <code>true</code>, non si saltano passi futuri.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'transparent'</code>
-      </td>
-      <td>
-        <code>'primary'</code>
-      </td>
-      <td>Colore semantico per passi attivi/completati e connettori.</td>
-    </tr>
-  </tbody>
-</table>
-
-### `TailwindStep (tailwind-step)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>—</td>
-      <td>Richiesto: titolo passo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>description</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Sottotitolo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>optional</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Segna passo come opzionale.</td>
-    </tr>
-  </tbody>
-</table>
-
-Gli stati <code>completed</code> e <code>isActive</code> sono gestiti internamente dallo stepper.

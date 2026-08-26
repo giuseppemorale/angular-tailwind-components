@@ -19,16 +19,26 @@ import { HEADING_OPTIONS } from './properties/constant';
 export class TailwindEditorToolbar extends TailwindComponent {
   private readonly defaultSize = inject(TAILWIND_COMPONENTS_SIZE, { optional: true });
 
+  /** Command groups to render, in order; each group is separated by a divider. */
   readonly groups = input<EditorToolbarGroup[]>([]);
+  /** Disables every button, keeping the toolbar visible. */
   readonly disabled = input<boolean>(false);
+  /** Toggles the toolbar into HTML source mode. */
   readonly isCodeView = input<boolean>(false);
+  /** Label of the button that switches to HTML source mode. */
   readonly codeViewLabel = input<string>('Edit HTML');
+  /** Label of the button that returns to the visual editor. */
   readonly codeViewExitLabel = input<string>('Visual editor');
+  /** Accessible name of the block-format dropdown. */
   readonly textStyleLabel = input<string>('Text style');
+  /** Commands to render as pressed, from the current selection. */
   readonly activeCommands = input<Set<EditorCommand>>(new Set());
+  /** Block format of the current selection, shown in the dropdown. */
   readonly blockFormat = input<EditorBlockFormat>('p');
+  /** Size of the toolbar controls. */
   readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
 
+  /** Command requested by the user. */
   readonly commandClick = output<EditorCommand>();
 
   readonly headingOptions = HEADING_OPTIONS;

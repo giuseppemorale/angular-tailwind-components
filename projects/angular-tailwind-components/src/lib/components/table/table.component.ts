@@ -51,6 +51,7 @@ export class TailwindTable<T extends object = TailwindTableRow>
 
   private readonly labels = inject(TAILWIND_LABELS);
 
+  /** Row data; search, sorting and pagination slicing are applied by the component. */
   readonly data = input<readonly T[]>([]);
   /**
    * Server-side mode: renders `data()` as given and only emits `onSortChange` / `onPageChange`.
@@ -64,13 +65,17 @@ export class TailwindTable<T extends object = TailwindTableRow>
   readonly sortComparators = input<Partial<Record<string, (a: T, b: T) => number>>>({});
   /** Keeps the header row visible while the body scrolls. */
   readonly stickyHeader = input<boolean>(false);
+  /** Shows the search field and filters rows across every value of the row object. */
   readonly searchable = input<boolean>(true);
   /** Visible label of the search field; defaults to `TAILWIND_LABELS.search`. */
   readonly searchLabel = input<string>('');
   /** Placeholder of the search field; defaults to `TAILWIND_LABELS.searchPlaceholder`. */
   readonly searchPlaceholder = input<string>('');
+  /** Makes rows clickable for selection; pair with `toggleRow` from the row template context. */
   readonly selectable = input<boolean>(false);
+  /** Alternates row background; apply `stripedRow` on the `tr`. */
   readonly striped = input<boolean>(false);
+  /** Replaces the body with the loading state. */
   readonly loading = input<boolean>(false);
   /** Message shown when there are no rows; defaults to `TAILWIND_LABELS.noData`. */
   readonly emptyMessage = input<string>('');
@@ -92,7 +97,9 @@ export class TailwindTable<T extends object = TailwindTableRow>
     return Array.from({ length: columns }, (_, index) => pattern[index % pattern.length]);
   });
 
+  /** Enables client-side pagination. */
   readonly paginated = input<boolean>(true);
+  /** Pagination configuration: `totalItems`, `pageSize`, `currentPage`, `maxVisible`, `ariaLabel`, `summary`. */
   readonly pagination = input<Pagination>();
   readonly paginationSummary = computed(
     () => this.pagination()?.summary ?? this.tailwindPaginationSummary ?? 'Showing {start}-{end} of {total}'
@@ -103,6 +110,7 @@ export class TailwindTable<T extends object = TailwindTableRow>
 
   /** Emits the indices of the selected rows **within `data()`** (stable across sort, search and paging). */
   readonly selectionChange = output<Set<number>>();
+  /** Column and direction requested through a sortable header. */
   readonly sortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
   /** Emitted whenever the page or page size changes; drives fetching in `serverSide` mode. */
   readonly pageChange = output<{ page: number; pageSize: number }>();

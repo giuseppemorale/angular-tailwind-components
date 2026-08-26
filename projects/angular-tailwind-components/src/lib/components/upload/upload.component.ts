@@ -63,8 +63,11 @@ export class TailwindUpload extends TailwindComponent implements ControlValueAcc
   readonly showClear = input<boolean>(true);
   /** Label for the clear action (i18n) */
   readonly clearText = input<string>('clear');
+  /** Help text under the drop area. */
   readonly helperText = input<string>('');
+  /** Error message, shown instead of the help text while `hasError` is set. */
   readonly errorText = input<string>('');
+  /** Applies the error styling. */
   readonly hasError = input<boolean>(false);
 
   /** Data URL (`data:<mime>;base64,...`) — forms / `[(value)]`; with `multiple`, only the first file is stored here */

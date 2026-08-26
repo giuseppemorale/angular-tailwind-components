@@ -12,7 +12,9 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindStepper extends TailwindComponent {
+  /** Index of the active step (two-way). */
   readonly activeIndex = model<number>(0);
+  /** When true, steps ahead of the active one cannot be reached by clicking. */
   readonly linear = input<boolean>(false);
   /** Accent color for active and completed steps */
   readonly color = input<TailwindColor>('primary');

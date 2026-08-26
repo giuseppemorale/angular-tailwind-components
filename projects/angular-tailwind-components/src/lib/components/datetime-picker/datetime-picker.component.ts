@@ -54,11 +54,15 @@ export class TailwindDateTimePicker extends TailwindComponent implements Control
   protected readonly hours = Array.from({ length: 24 }, (_, i) => i);
   protected readonly minutes = Array.from({ length: 60 }, (_, i) => i);
 
+  /** Visible label of the field group. */
   readonly label = input<string>('');
+  /** Placeholder text; falls back to the localized default when empty. */
   readonly placeholder = input<string | undefined>(undefined);
   /** Angular [DatePipe](https://angular.dev/api/common/DatePipe) format string. */
   readonly format = input<string>('dd/MM/yyyy HH:mm');
+  /** Earliest selectable date. */
   readonly minDate = input<Date | null | undefined>(undefined);
+  /** Latest selectable date. */
   readonly maxDate = input<Date | null | undefined>(undefined);
 
   readonly selected = signal<Date | null>(null);

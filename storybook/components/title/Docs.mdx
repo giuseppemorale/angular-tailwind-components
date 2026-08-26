@@ -1,15 +1,41 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TitleStories from './title.stories';
 
 <Meta of={TitleStories} />
 
 # Title
 
-`TailwindTitle` rende un titolo semantico (`h1`–`h6`) con testo obbligatorio e, opzionalmente, un’icona Heroicons outline **prima** del testo.
+`TailwindTitle` renders a semantic heading (`h1`–`h6`) with required text and, optionally, a Heroicons outline icon **before** the text.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindTitle } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={TitleStories} />
+
+`:host { display: contents }` keeps the real heading element as the one that counts for layout.
+
+---
+
+---
+
+## Example
+
+<Canvas of={TitleStories.Title} />
+
+### With an icon
+
+<Canvas of={TitleStories.WithIcon} />
+
+### All levels
+
+<Canvas of={TitleStories.HeadingLevels} />
 
 ```typescript
 @Component({
@@ -22,84 +48,9 @@ import * as TitleStories from './title.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Title scale with `provideTailwindConfig`
 
-<Canvas of={TitleStories.Title} />
-
-### Con icona
-
-<Canvas of={TitleStories.WithIcon} />
-
-### Tutti i livelli
-
-<Canvas of={TitleStories.HeadingLevels} />
-
----
-
-## Properties
-
-### `TailwindTitle (tailwind-title)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>text</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>—</td>
-      <td>Testo del titolo (obbligatorio).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>icon</code>
-      </td>
-      <td>
-        <code>TailwindHeroicon | undefined</code>
-      </td>
-      <td>
-        <code>undefined</code>
-      </td>
-      <td>
-        Nome icona (Heroicons outline); se presente, viene mostrata prima di <code>text</code> (16×16 px).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>titleTag</code>
-      </td>
-      <td>
-        <code>TailwindTitleTag</code>
-      </td>
-      <td>
-        <code>'h2'</code>
-      </td>
-      <td>
-        Tag HTML del titolo: <code>h1</code> … <code>h6</code>.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-`:host { display: contents }` fa sì che nel layout conti soprattutto l’elemento heading reale.
-
----
-
-## Scala titoli con provideTailwindConfig
-
-Tipografia e dimensione icona per ogni `titleTag` sono configurabili a livello app con **`provideTailwindConfig({ TITLE_SCALE: … })`** (token `TAILWIND_TITLE_SCALE`). I valori non specificati restano quelli di default della libreria (`DEFAULT_TAILWIND_TITLE_SCALE`).
+Typography and icon size per `titleTag` are configurable at application level with **`provideTailwindConfig({ TITLE_SCALE: … })`** (the `TAILWIND_TITLE_SCALE` token). Anything left unspecified keeps the library default, `DEFAULT_TAILWIND_TITLE_SCALE`.
 
 ```typescript
 import { provideTailwindConfig } from 'angular-tailwind-components';
@@ -112,4 +63,4 @@ provideTailwindConfig({
 });
 ```
 
-Puoi anche fornire il token direttamente nei `providers` del componente o del modulo.
+The token can also be provided directly in the `providers` of a component or module.

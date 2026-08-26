@@ -192,14 +192,32 @@ Ambito: ogni aggiunta o modifica in `projects/angular-tailwind-components/src/li
 ## Nuovi componenti
 
 1. **Storybook**: crea `storybook/components/<name>/<name>.stories.ts` con almeno una story principale e controlli sugli input rilevanti.
-2. **Documentazione**: crea `storybook/components/<name>/Docs.mdx` con Meta, utilizzo, Canvas di anteprima e tabella proprietà (stesso stile degli altri componenti, es. Badge).
+2. **Documentazione**: crea `storybook/components/<name>/Docs.mdx` seguendo la struttura descritta sotto (riferimento: `badge`, `select`, `card`).
 3. Registra il componente in `projects/angular-tailwind-components/.storybook/preview.ts` (`ALL_COMPONENTS`) se non è già importabile globalmente nelle stories.
 4. Aggiorna `storybook/Introduction.mdx` e i **README** alla radice del repo e in `projects/angular-tailwind-components/` (conteggio componenti e voce in elenco) quando introduci un componente esposto pubblicamente.
+
+## Struttura di `Docs.mdx`
+
+Le pagine di documentazione sono **in inglese** e seguono sempre quest'ordine: identità → import → API → esempi.
+
+| Sezione         | Contenuto                                                                      |
+| --------------- | ------------------------------------------------------------------------------ |
+| `# <Nome>`      | Titolo e una riga di descrizione della classe                                  |
+| `## Import`     | Import dal package: `import { TailwindX } from 'angular-tailwind-components';` |
+| `## Properties` | `<ArgTypes of={XStories} />` — **generato**, mai una tabella a mano            |
+| `## Example`    | `<Canvas of={XStories.<PrimaryStory>} />` più lo snippet `@Component`          |
+| Altre sezioni   | Varianti, stati, note: solo dove servono davvero                               |
+
+`<ArgTypes>` legge `documentation.json`, generato da compodoc: input, output, `model()`, tipi, default, flag required e JSDoc di ogni proprietà, inclusi `id` / `class` ereditati da `TailwindComponent`. Di conseguenza:
+
+- La **fonte di verità della documentazione API è il JSDoc** nel `.component.ts`: una riga, in inglese, su ogni `input()` / `output()` / `model()`. Senza JSDoc la colonna Description resta vuota nella pagina pubblica.
+- `documentation.json` è rigenerato dai target Storybook (`compodoc: true` in `angular.json`) oppure a mano con `npm run docs:json`. È in `.gitignore`.
+- I default risolti via token DI (`input(this.defaultSize ?? 'md')`) sono normalizzati in `.storybook/compodoc.ts`: si estende quello, non si scrive il valore nella pagina.
 
 ## Modifica componenti
 
 1. **Storybook**: cerca `storybook/components/<name>/<name>.stories.ts` e aggiorna proprietà, valori o qualsiasi cosa sia stata modificata.
-2. **Documentazione**: aggiorna `storybook/components/<name>/Docs.mdx` con le modifiche effettuate al componente.
+2. **Documentazione**: aggiorna `storybook/components/<name>/Docs.mdx` con le modifiche effettuate al componente. La tabella delle proprietà non si tocca: è generata dal JSDoc del componente.
 
 Dopo modifiche rilevanti, controlla il pannello **Accessibility** (`@storybook/addon-a11y`) sulla story principale e correggi le violazioni automatiche o manuali.
 

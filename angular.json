@@ -37,7 +37,8 @@
             "browserTarget": "angular-tailwind-components:build-storybook-app",
             "tsConfig": "projects/angular-tailwind-components/tsconfig.storybook.json",
             "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
-            "compodoc": false,
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-p", "projects/angular-tailwind-components/tsconfig.lib.json"],
             "port": 6006,
             "ci": true
           }
@@ -49,7 +50,8 @@
             "browserTarget": "angular-tailwind-components:build-storybook-app",
             "tsConfig": "projects/angular-tailwind-components/tsconfig.storybook.json",
             "styles": ["projects/angular-tailwind-components/src/lib/styles/tailwind.css"],
-            "compodoc": false,
+            "compodoc": true,
+            "compodocArgs": ["-e", "json", "-p", "projects/angular-tailwind-components/tsconfig.lib.json"],
             "outputDir": "storybook-static"
           }
         },

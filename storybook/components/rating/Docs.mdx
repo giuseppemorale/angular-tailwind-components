@@ -1,17 +1,33 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as RatingStories from './rating.stories';
 
 <Meta of={RatingStories} />
 
 # Rating
 
-`TailwindRating` è la valutazione a stelle, modificabile o in sola lettura.
+`TailwindRating` is a star rating, editable or read-only.
 
-È esposto come `slider` invece che come fila di bottoni: è il pattern ARIA per scegliere un valore in un intervallo ordinato e dà gratis frecce e Home/End, invece di costringere a passare in Tab su ogni stella.
+It is exposed as a `slider` rather than a row of buttons: that is the ARIA pattern for choosing a value in an ordered range, and it gives arrows plus Home/End for free instead of forcing a Tab stop on every star.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { ReactiveFormsModule, TailwindRating } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={RatingStories} />
+
+---
+
+---
+
+## Example
+
+<Canvas of={RatingStories.Rating} />
 
 ```typescript
 @Component({
@@ -21,128 +37,11 @@ import * as RatingStories from './rating.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Keyboard
 
-<Canvas of={RatingStories.Rating} />
-
----
-
-## Properties
-
-### `TailwindRating (tailwind-rating)`
-
-Eredita `TailwindComponent` (`id`, `class`). Implementa `ControlValueAccessor`.
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>value</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        <code>0</code>
-      </td>
-      <td>
-        Valutazione corrente (two-way); <code>0</code> = non valutato.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>max</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        <code>5</code>
-      </td>
-      <td>Numero di stelle.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>size</code>
-      </td>
-      <td>
-        <code>TailwindSize</code>
-      </td>
-      <td>
-        <code>'md'</code>
-      </td>
-      <td>
-        Dimensione; default da <code>TAILWIND_COMPONENTS_SIZE</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>readonly</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Sola visualizzazione: nessuna interazione né semantica di slider.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>disabled</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Disabilita l&apos;interazione.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>clearable</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Ricliccando il valore corrente si azzera.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Nome accessibile; default da <code>TAILWIND_LABELS.rating</code>.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## Tastiera
-
-| Tasto                  | Effetto                             |
-| ---------------------- | ----------------------------------- |
-| Freccia destra / su    | +1 stella                           |
-| Freccia sinistra / giù | −1 stella                           |
-| Home                   | Azzera (o 1 se `clearable` è false) |
-| End                    | Massimo                             |
+| Key               | Effect                                 |
+| ----------------- | -------------------------------------- |
+| Arrow Right / Up  | +1 star                                |
+| Arrow Left / Down | −1 star                                |
+| Home              | Clears, or 1 when `clearable` is false |
+| End               | Maximum                                |

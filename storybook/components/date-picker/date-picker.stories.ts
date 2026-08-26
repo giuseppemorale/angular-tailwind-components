@@ -39,7 +39,7 @@ export const WithMinMax: StoryObj<TailwindDatePicker> = {
   }
 };
 
-/** Oggi fuori dal range: apri il calendario e verifica che "Oggi" sia visibile ma disabilitato. */
+/** Today outside the allowed range: open the calendar and check that Today is visible but disabled. */
 export const WithMinMaxTodayDisabled: StoryObj<TailwindDatePicker> = {
   parameters: { controls: { exclude: ['placeholder', 'format', 'minDate', 'maxDate'] } },
   render: args => ({

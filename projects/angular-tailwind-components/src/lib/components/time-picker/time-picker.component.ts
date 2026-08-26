@@ -47,7 +47,9 @@ export class TailwindTimePicker extends TailwindComponent implements ControlValu
   protected readonly hours = Array.from({ length: 24 }, (_, i) => i);
   protected readonly minutes = Array.from({ length: 60 }, (_, i) => i);
 
+  /** Visible field label. */
   readonly label = input<string>('');
+  /** Time as `HH:mm` (two-way); when empty the panel opens on the current time. */
   readonly value = model<string>('');
   readonly isDisabled = signal(false);
   readonly showPanel = signal(false);

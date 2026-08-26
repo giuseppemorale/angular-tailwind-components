@@ -45,17 +45,25 @@ export class TailwindNumberInput extends TailwindComponent implements ControlVal
   readonly ariaLabel = input<string>('');
   /** Placeholder shown while empty. */
   readonly placeholder = input<string>('');
+  /** Lower bound; the decrement button stops here. */
   readonly min = input<number | undefined>(undefined);
+  /** Upper bound; the increment button stops here. */
   readonly max = input<number | undefined>(undefined);
   /** Amount added or removed per step. */
   readonly step = input<number>(1);
   /** Size variant. */
   readonly size = input<TailwindSize>(this.defaultSize ?? 'md');
+  /** Disables the field and both steppers. */
   readonly disabled = input<boolean>(false);
+  /** Value cannot be typed or stepped, but stays selectable. */
   readonly readonly = input<boolean>(false);
+  /** Adds `required`, `aria-required` and the asterisk on the label. */
   readonly required = input<boolean>(false);
+  /** Help text under the field. */
   readonly helperText = input<string>('');
+  /** Error message, announced with `role="alert"` while `hasError` is set. */
   readonly errorText = input<string>('');
+  /** Applies the error styling. */
   readonly hasError = input<boolean>(false);
 
   /** Current value; `null` when the field is empty. */

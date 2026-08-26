@@ -10,6 +10,7 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindTag extends TailwindComponent {
+  /** Semantic background color. */
   readonly color = input<TailwindColor>('secondary');
   /** How the surface is painted; `solid` (default) is the tag's long-standing look. */
   readonly kind = input<TailwindVariantKind>('solid');

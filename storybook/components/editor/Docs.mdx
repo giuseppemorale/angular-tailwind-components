@@ -1,4 +1,4 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as EditorStories from './editor.stories';
 
 <Meta of={EditorStories} />
@@ -9,7 +9,31 @@ import * as EditorStories from './editor.stories';
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindEditor } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={EditorStories} />
+
+### Toolbar — text alignment
+
+With the `full` preset, the four buttons after the list commands apply `text-align` to the current block (left, centre, right, justify). The form value then carries `style="text-align: …"` on the block tags; the sanitizer strips every other CSS property from `style`.
+
+### Toolbar — the `code` command
+
+The **code** button (`icon: code-bracket`) switches between the visual editor and a **textarea** for editing the HTML by hand. The rest of the toolbar is disabled while code mode is on.
+
+---
+
+---
+
+## Example
+
+<Canvas of={EditorStories.Editor} />
 
 ```typescript
 @Component({
@@ -30,286 +54,33 @@ export class ExampleComponent {
 }
 ```
 
-### `provideTailwindConfig` — etichette modali e code view
+### `provideTailwindConfig` — dialog and code-view labels
 
 ```typescript
 provideTailwindConfig({
   EDITOR_LABELS: {
-    linkModalTitle: 'Inserisci link',
-    cancel: 'Annulla',
-    insert: 'Inserisci'
+    linkModalTitle: 'Insert link',
+    cancel: 'Cancel',
+    insert: 'Insert'
     // Altre chiavi: default della libreria (DEFAULT_TAILWIND_EDITOR_LABELS)
   }
 });
 ```
 
-## Anteprima
-
-<Canvas of={EditorStories.Editor} />
-
----
-
-## Properties
-
-### `TailwindEditor (tailwind-editor)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>placeholder</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Testo placeholder (CSS su area vuota).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>minHeight</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'12rem'</code>
-      </td>
-      <td>Altezza minima dell&apos;area di editing (CSS).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>size</code>
-      </td>
-      <td>
-        <code>TailwindSize</code>
-      </td>
-      <td>
-        <code>'md'</code>
-      </td>
-      <td>Dimensione del campo e della toolbar.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>helperText</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Testo di aiuto sotto il campo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>errorText</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Messaggio errore quando <code>hasError</code> è true.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>hasError</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Stato errore visivo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>value</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;string&gt;</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>HTML sanitizzato (two-way / CVA).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>readonly</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Testo non editabile; toolbar visibile ma disabilitata.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>toolbar</code>
-      </td>
-      <td>
-        <code>'full' | 'minimal' | EditorCommand[]</code>
-      </td>
-      <td>
-        <code>'full'</code>
-      </td>
-      <td>
-        Comandi in toolbar. Con <code>full</code>, gli heading sono in un menu a tendina (Paragraph, H1-H6); accanto
-        alle liste: allineamento sinistra, centro, destra e giustifica (<code>alignLeft</code>, <code>alignCenter</code>
-        , <code>alignRight</code>, <code>alignJustify</code>).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>imageUrlEnabled</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Pulsante immagine da URL.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>imageUploadEnabled</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Pulsante upload immagine (data URL).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>accept</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'image/*'</code>
-      </td>
-      <td>
-        Attributo <code>accept</code> dell&apos;input file per l&apos;upload immagine.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>maxFileSizeBytes</code>
-      </td>
-      <td>
-        <code>number | undefined</code>
-      </td>
-      <td>
-        <code>undefined</code>
-      </td>
-      <td>Dimensione massima file immagine; oltre soglia la selezione viene rifiutata.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>sanitize</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>
-        Sanitizza HTML in uscita (whitelist tag/attributi). Consente <code>style</code> solo con{' '}
-        <code>text-align: left|center|right|justify</code>.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### Output
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Output</th>
-      <th>Tipo</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>htmlChange</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        HTML sanitizzato ad ogni modifica utente (non su <code>writeValue</code> programmatico).
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### Toolbar — allineamento testo
-
-Con preset <code>full</code>, i quattro pulsanti dopo elenco puntato/numerato applicano <code>text-align</code> sul blocco corrente (sinistra, centro, destra, giustifica). Il valore form include <code>style="text-align: …"</code> sui tag di blocco; il sanitizer rimuove le altre proprietà CSS da <code>style</code>.
-
-### Toolbar — comando `code`
-
-Il pulsante **code** (`icon: code-bracket`) alterna l’editor visuale e una **textarea** per modificare l’HTML a mano. In modalità codice gli altri comandi della toolbar sono disabilitati.
-
----
-
 ## `TAILWIND_EDITOR_LABELS`
 
-Token opzionale (anche via `provideTailwindConfig({ EDITOR_LABELS })`) per titoli modali link/immagine, pulsanti, placeholder della sorgente HTML, nomi accessibili (`surfaceAriaLabel`, `imageFileInputAriaLabel`) e messaggi di validazione. Default: `DEFAULT_TAILWIND_EDITOR_LABELS`.
+Optional token — also reachable through `provideTailwindConfig({ EDITOR_LABELS })` — for the link/image dialog titles, buttons, HTML source placeholder, accessible names (`surfaceAriaLabel`, `imageFileInputAriaLabel`) and validation messages. Defaults to `DEFAULT_TAILWIND_EDITOR_LABELS`.
 
----
-
-## Readonly
+## Read-only
 
 <Canvas of={EditorStories.Readonly} />
 
-## Sicurezza
+## Security
 
-L'HTML viene filtrato con una whitelist di tag e attributi. Script, handler `on*`, e URL `javascript:` sono rimossi. Per contenuti da utenti non fidati, validare anche lato server.
+The HTML is filtered against a tag and attribute allowlist: scripts, `on*` handlers and `javascript:` URLs are removed. For untrusted authors, validate on the server as well.
 
-## Limiti
+## Limitations
 
-- Formattazione via Selection API e manipolazione DOM; undo/redo con stack HTML interno (non `document.execCommand`).
-- Tabelle e editing collaborativo non sono inclusi nella v1.
-- Immagini base64 possono aumentare molto la dimensione del valore form.
+- Formatting goes through the Selection API and DOM manipulation; undo/redo uses an internal HTML stack, not `document.execCommand`.
+- Tables and collaborative editing are out of scope for v1.
+- Base64 images can grow the form value considerably.

@@ -1,17 +1,33 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as SegmentedControlStories from './segmented-control.stories';
 
 <Meta of={SegmentedControlStories} />
 
 # SegmentedControl
 
-`TailwindSegmentedControl` mostra affiancate poche scelte mutuamente esclusive. Usalo al posto di una select quando le opzioni sono due-cinque e vederle tutte insieme conta.
+`TailwindSegmentedControl` lays a handful of mutually exclusive choices side by side. Prefer it over a select when there are two to five options and seeing them all at once matters.
 
-È implementato come **radio group** ARIA, non come tablist: la scelta è un valore, non una vista, quindi funziona con `formControl` e `ngModel`.
+It implements the ARIA **radio group** pattern rather than a tablist: the choice is a value, not a view, so it works with `formControl` and `ngModel`.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { ReactiveFormsModule, TailwindSegmentedControl } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={SegmentedControlStories} />
+
+---
+
+---
+
+## Example
+
+<Canvas of={SegmentedControlStories.SegmentedControl} />
 
 ```typescript
 @Component({
@@ -26,146 +42,19 @@ export class ExampleComponent {
 }
 ```
 
-## Anteprima
+## Sliding thumb
 
-<Canvas of={SegmentedControlStories.SegmentedControl} />
-
-## Thumb scorrevole
-
-Il segmento selezionato è indicato da un singolo thumb che scorre fra le posizioni, non da uno sfondo
-che compare e scompare: è il movimento a dire all'occhio dove è andata la selezione. Il thumb è
-`aria-hidden`, la selezione resta annunciata da `aria-checked` sui segmenti.
+The selected segment is marked by a single thumb sliding between positions rather than a background
+that appears and disappears: the movement is what tells the eye where the selection went. The thumb is
+`aria-hidden`; the selection is still announced through `aria-checked` on the segments.
 
 <Canvas of={SegmentedControlStories.SlidingThumb} />
 
----
+## Keyboard
 
-## Properties
+| Key        | Effect                                                                                           |
+| ---------- | ------------------------------------------------------------------------------------------------ |
+| Arrows     | Move the selection to the previous/next segment, skipping disabled ones and wrapping at the ends |
+| Home / End | First / last enabled segment                                                                     |
 
-### `TailwindSegmentedControl (tailwind-segmented-control)`
-
-Eredita `TailwindComponent` (`id`, `class`). Implementa `ControlValueAccessor`.
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>options</code>
-      </td>
-      <td>
-        <code>TailwindOption&lt;T&gt;[]</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>Scelte disponibili.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>value</code>
-      </td>
-      <td>
-        <code>T | null</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Valore selezionato (two-way).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta visibile sopra il gruppo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Nome accessibile quando <code>label</code> è omessa.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>size</code>
-      </td>
-      <td>
-        <code>TailwindSize</code>
-      </td>
-      <td>
-        <code>'md'</code>
-      </td>
-      <td>
-        Dimensione; default da <code>TAILWIND_COMPONENTS_SIZE</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>fullWidth</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>I segmenti si distribuiscono su tutta la larghezza.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>disabled</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Disabilita l&apos;intero gruppo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>compareWith</code>
-      </td>
-      <td>
-        <code>(a, b) =&gt; boolean</code>
-      </td>
-      <td>
-        <code>Object.is</code>
-      </td>
-      <td>Confronto dei valori; necessario con valori oggetto.</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## Tastiera
-
-| Tasto      | Effetto                                                                                                |
-| ---------- | ------------------------------------------------------------------------------------------------------ |
-| Frecce     | Sposta la selezione al segmento precedente/successivo, saltando i disabilitati e ciclando agli estremi |
-| Home / End | Primo / ultimo segmento abilitato                                                                      |
-
-Il gruppo espone un solo tab stop: Tab vi entra e ne esce, le frecce si muovono all&apos;interno.
+The group exposes a single tab stop: Tab moves in and out of it, the arrows move within it.

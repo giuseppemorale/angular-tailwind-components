@@ -27,7 +27,7 @@ export const Badge: StoryObj<TailwindBadge> = {
 
 /** The same semantic decision expressed with three levels of weight, at identical metrics. */
 export const Kinds: StoryObj<TailwindBadge> = {
-  name: 'Varianti',
+  name: 'Variants',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `

@@ -1,17 +1,50 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TreeStories from './tree.stories';
 
 <Meta of={TreeStories} />
 
 # Tree
 
-`TailwindTree` è l&apos;elenco gerarchico: alberi di file, selettori di categorie, navigazioni annidate.
+`TailwindTree` is the hierarchical list: file trees, category pickers, nested navigation.
 
-Segue il pattern ARIA **tree**: un solo tab stop per l&apos;intero widget con `tabindex` mobile, frecce per percorrere e aprire i rami, Home/End per saltare. Il rendering è appiattito, così nel DOM esistono solo le righe visibili e un albero profondo resta leggero.
+It follows the ARIA **tree** pattern: a single tab stop for the whole widget with a roving `tabindex`, arrows to walk and open branches, Home/End to jump. Rendering is flattened, so only visible rows exist in the DOM and a deep tree stays light.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindTree, TailwindTreeNode } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindTree (tailwind-tree)`
+
+<ArgTypes of={TreeStories} />
+
+### `TailwindTreeNode`
+
+The shape of a node.
+
+```typescript
+interface TailwindTreeNode {
+  key: string;
+  label: string;
+  icon?: TailwindHeroicon;
+  children?: TailwindTreeNode[];
+  disabled?: boolean;
+  data?: unknown;
+}
+```
+
+---
+
+---
+
+## Example
+
+<Canvas of={TreeStories.Tree} />
 
 ```typescript
 @Component({
@@ -26,202 +59,12 @@ export class ExampleComponent {
 }
 ```
 
-## Anteprima
+## Keyboard
 
-<Canvas of={TreeStories.Tree} />
-
----
-
-## Properties
-
-### `TailwindTree (tailwind-tree)`
-
-Eredita `TailwindComponent` (`id`, `class`). Le chiavi di espansione e selezione sono percorsi completi (`src/app/main.ts`), così etichette duplicate in rami diversi restano distinte.
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>nodes</code>
-      </td>
-      <td>
-        <code>TailwindTreeNode[]</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>Nodi radice.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Nome accessibile dell&apos;albero.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>expandedKeys</code>
-      </td>
-      <td>
-        <code>Set&lt;string&gt;</code>
-      </td>
-      <td>
-        <code>new Set()</code>
-      </td>
-      <td>Chiavi dei rami aperti (two-way).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>selectedKey</code>
-      </td>
-      <td>
-        <code>string | null</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>Chiave del nodo selezionato (two-way).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>nodeSelect</code>
-      </td>
-      <td>
-        <code>output&lt;TailwindTreeNode&gt;</code>
-      </td>
-      <td>
-        <code>—</code>
-      </td>
-      <td>Emesso alla selezione di un nodo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>nodeToggle</code>
-      </td>
-      <td>
-        <code>{`output<{ node, expanded }>`}</code>
-      </td>
-      <td>
-        <code>—</code>
-      </td>
-      <td>Emesso all&apos;apertura o chiusura di un ramo.</td>
-    </tr>
-  </tbody>
-</table>
-
-### `TailwindTreeNode`
-
-Forma di un nodo.
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>key</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>—</code>
-      </td>
-      <td>Identità tra i fratelli; l&apos;albero la unisce a quelle degli antenati.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>—</code>
-      </td>
-      <td>Testo della riga.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>icon</code>
-      </td>
-      <td>
-        <code>TailwindHeroicon</code>
-      </td>
-      <td>
-        <code>—</code>
-      </td>
-      <td>Icona opzionale prima dell&apos;etichetta.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>children</code>
-      </td>
-      <td>
-        <code>TailwindTreeNode[]</code>
-      </td>
-      <td>
-        <code>—</code>
-      </td>
-      <td>Nodi figli; un nodo con figli è espandibile.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>disabled</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Blocca selezione ed espansione.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>data</code>
-      </td>
-      <td>
-        <code>unknown</code>
-      </td>
-      <td>
-        <code>—</code>
-      </td>
-      <td>
-        Dato libero, restituito in <code>nodeSelect</code>.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## Tastiera
-
-| Tasto            | Effetto                                              |
-| ---------------- | ---------------------------------------------------- |
-| Freccia giù / su | Riga successiva / precedente tra quelle visibili     |
-| Freccia destra   | Apre il ramo chiuso, poi vi entra                    |
-| Freccia sinistra | Chiude il ramo aperto, altrimenti risale al genitore |
-| Home / End       | Prima / ultima riga visibile                         |
-| Invio / Spazio   | Seleziona la riga                                    |
+| Key             | Effect                                                  |
+| --------------- | ------------------------------------------------------- |
+| Arrow Down / Up | Next / previous visible row                             |
+| Arrow Right     | Opens a closed branch, then steps into it               |
+| Arrow Left      | Closes an open branch, otherwise moves up to the parent |
+| Home / End      | First / last visible row                                |
+| Enter / Space   | Selects the row                                         |

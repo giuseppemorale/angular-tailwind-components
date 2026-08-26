@@ -77,10 +77,13 @@ export class TailwindInput extends TailwindComponent implements ControlValueAcce
   readonly inputmode = input<string | undefined>(undefined);
   /** `maxlength` attribute; also drives the character counter when `showCounter` is set. */
   readonly maxlength = input<number | undefined>(undefined);
+  /** `minlength` attribute; native validation only. */
   readonly minlength = input<number | undefined>(undefined);
   /** `min` / `max` / `step` for `type="number"`. */
   readonly min = input<number | string | undefined>(undefined);
+  /** Upper bound for `type="number"`. */
   readonly max = input<number | string | undefined>(undefined);
+  /** Step increment for `type="number"`. */
   readonly step = input<number | string | undefined>(undefined);
   /** `pattern` attribute for native validation. */
   readonly pattern = input<string | undefined>(undefined);

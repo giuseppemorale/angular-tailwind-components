@@ -65,6 +65,12 @@ import {
   TailwindTree,
   TailwindUpload
 } from '../src/public-api';
+import docJson from '../../../documentation.json';
+import { registerCompodocJson } from './compodoc';
+
+// Alimenta <ArgTypes> con input/output estratti dai sorgenti: `documentation.json` è rigenerato
+// dai target Storybook (compodoc: true) o a mano con `npm run docs:json`.
+registerCompodocJson(docJson);
 
 const ALL_COMPONENTS = [
   TailwindAccordion,

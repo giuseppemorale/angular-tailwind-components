@@ -1,15 +1,31 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as DatePickerStories from './date-picker.stories';
 
 <Meta of={DatePickerStories} />
 
 # Date Picker
 
-`TailwindDatePicker` permette di selezionare una data tramite calendario; espone un valore stringa (es. `yyyy-MM-dd`) ed è un `ControlValueAccessor`.
+`TailwindDatePicker` picks a date through a calendar popover. The control value is a `Date`, and the field is a `ControlValueAccessor`.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindDatePicker } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={DatePickerStories} />
+
+---
+
+---
+
+## Example
+
+<Canvas of={DatePickerStories.Datepicker} />
 
 ```typescript
 @Component({
@@ -21,121 +37,24 @@ export class ExampleComponent {
 }
 ```
 
-## Anteprima
+## Behaviour
 
-<Canvas of={DatePickerStories.Datepicker} />
+The component follows a **draft/apply** pattern:
 
----
+1. The user opens the calendar by clicking the field.
+2. They move between months with the arrows or, by clicking the month/year header, step into the **year grid** (12 years per page, arrows to change range), then the **month grid**, and finally pick a day — the selection is held as a _draft_ and does not touch the form value yet.
+3. **Today** jumps to the current month and preselects today in the draft.
+4. **Apply** commits the draft, updates the value and closes the panel.
 
-## Properties
+The form therefore only changes on an explicit user decision.
 
-### `TailwindDatePicker (tailwind-date-picker)`
+## Language
 
-Eredita `TailwindComponent` (`id`, `class`).
+The component ships Italian (`it`) and English (`en`), selected through the `TAILWIND_DATETIME_LANGUAGE` token.
 
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>label</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta del campo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>placeholder</code>
-      </td>
-      <td>
-        <code>string | undefined</code>
-      </td>
-      <td>
-        <em>dalla lingua</em>
-      </td>
-      <td>
-        Testo placeholder. Se non fornito usa il default della lingua selezionata (<code>'Seleziona data'</code> /{' '}
-        <code>'Select date'</code>).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>minDate</code> / <code>maxDate</code>
-      </td>
-      <td>
-        <code>Date | null</code>
-      </td>
-      <td>
-        <em>nessun limite</em>
-      </td>
-      <td>Date minima e massima selezionabili (inclusive). Giorni fuori range disabilitati nel calendario.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>format</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'dd/MM/yyyy'</code>
-      </td>
-      <td>
-        Formato di visualizzazione della data nel campo input (es. <code>'dd/MM/yyyy'</code>, <code>'yyyy-MM-dd'</code>
-        ).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>value</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;Date | null&gt;</code>
-      </td>
-      <td>
-        <code>null</code>
-      </td>
-      <td>
-        Valore data (two-way binding). Emette un oggetto <code>Date</code> alla conferma.
-      </td>
-    </tr>
-  </tbody>
-</table>
+### Global configuration (recommended)
 
----
-
-## Comportamento
-
-Il componente segue un pattern **draft/apply**:
-
-1. L'utente apre il calendario cliccando sul campo.
-2. Naviga tra mesi (frecce) o, cliccando sull'intestazione mese/anno, passa alla **griglia anni** (12 anni per pagina, frecce per cambiare intervallo), poi alla **griglia mesi**, infine seleziona un giorno — la selezione viene mantenuta in uno stato _draft_ senza ancora modificare il valore del form.
-3. **Oggi** porta il calendario al mese corrente e preseleziona la data odierna nel draft.
-4. **Applica** (o `Apply`) conferma il draft, aggiorna il valore e chiude il pannello.
-
-Questo garantisce che il form venga aggiornato solo all'intenzione esplicita dell'utente.
-
----
-
-## Lingua
-
-Il componente supporta italiano (`it`) e inglese (`en`) tramite il token `TAILWIND_DATETIME_LANGUAGE`.
-
-### Configurazione globale (consigliata)
-
-Imposta il token una sola volta a livello di `ApplicationConfig`:
+Provide the token once, at `ApplicationConfig` level:
 
 ```typescript
 // app.config.ts
@@ -147,7 +66,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-### Configurazione locale (per singolo componente)
+### Local configuration (per component)
 
 ```typescript
 @Component({
@@ -156,77 +75,23 @@ export const appConfig: ApplicationConfig = {
 export class MyComponent {}
 ```
 
-### Token di iniezione
+### Injection tokens
 
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Tipo</th>
-      <th>Valori</th>
-      <th>Default</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>TAILWIND_DATETIME_LANGUAGE</code>
-      </td>
-      <td>
-        <code>TailwindDatetimeLanguage</code>
-      </td>
-      <td>
-        <code>'it'</code> · <code>'en'</code>
-      </td>
-      <td>
-        <code>'it'</code>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Token                        | Type                       | Values          | Default |
+| ---------------------------- | -------------------------- | --------------- | ------- |
+| `TAILWIND_DATETIME_LANGUAGE` | `TailwindDatetimeLanguage` | `'it'` · `'en'` | `'it'`  |
 
-### Stringhe localizzate
+### Localized strings
 
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Chiave</th>
-      <th>Italiano</th>
-      <th>Inglese</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Placeholder</td>
-      <td>Seleziona data</td>
-      <td>Select date</td>
-    </tr>
-    <tr>
-      <td>Tasto oggi</td>
-      <td>Oggi</td>
-      <td>Today</td>
-    </tr>
-    <tr>
-      <td>Tasto applica</td>
-      <td>Applica</td>
-      <td>Apply</td>
-    </tr>
-    <tr>
-      <td>Nomi mesi</td>
-      <td>Gennaio … Dicembre</td>
-      <td>January … December</td>
-    </tr>
-    <tr>
-      <td>Giorni settimana</td>
-      <td>Lu Ma Me Gi Ve Sa Do</td>
-      <td>Mo Tu We Th Fr Sa Su</td>
-    </tr>
-  </tbody>
-</table>
+| Key             | Italian              | English              |
+| --------------- | -------------------- | -------------------- |
+| Placeholder     | Seleziona data       | Select date          |
+| Today button    | Oggi                 | Today                |
+| Apply button    | Applica              | Apply                |
+| Month names     | Gennaio … Dicembre   | January … December   |
+| Weekday headers | Lu Ma Me Gi Ve Sa Do | Mo Tu We Th Fr Sa Su |
 
----
+## Date formatting
 
-## Formattazione della data
-
-Il valore emesso è un oggetto `Date` (orario locale a mezzanotte, es. `new Date(2026, 4, 8)`).
-La visualizzazione nel campo input usa il parametro `format` (default `dd/MM/yyyy`) tramite `formatDate` di Angular.
+The emitted value is a `Date` at local midnight, e.g. `new Date(2026, 4, 8)`.
+What the field displays comes from `format` (default `dd/MM/yyyy`), rendered through Angular `formatDate`.

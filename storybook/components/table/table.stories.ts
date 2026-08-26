@@ -139,7 +139,7 @@ export const WithTableTools: StoryObj<TailwindTable> = {
  * instead of a spinner. `emptyColspan` drives how many placeholder cells are laid out.
  */
 export const Loading: StoryObj<TailwindTable> = {
-  name: 'Caricamento',
+  name: 'Loading',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `

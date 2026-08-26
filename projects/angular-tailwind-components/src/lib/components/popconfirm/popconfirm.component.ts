@@ -48,7 +48,9 @@ export class TailwindPopconfirm extends TailwindComponent {
   /** Cancel button text; defaults to `TAILWIND_LABELS.cancel`. */
   readonly cancelLabel = input<string>('');
 
+  /** Emitted when the user confirms. */
   readonly confirmed = output<void>();
+  /** Emitted on cancel, outside click or Escape. */
   readonly cancelled = output<void>();
 
   readonly isOpen = signal(false);

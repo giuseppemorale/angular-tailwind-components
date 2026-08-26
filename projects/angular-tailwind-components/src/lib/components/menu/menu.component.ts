@@ -35,12 +35,14 @@ export class TailwindMenu extends TailwindComponent {
   private overlayRef: OverlayRef | null = null;
   private closeSub: Subscription | null = null;
 
+  /** Menu entries; supports `divider` and `disabled`. `tooltip` / `tooltipPosition` are read by `tailwind-toolbar`, not here. */
   readonly items = input<TailwindMenuItem[]>([]);
   /** Which edge of the anchor the panel aligns to when it opens below it. */
   readonly align = input<Exclude<TailwindPosition, 'top' | 'bottom'>>('left');
   /** `bottom` opens under the anchor; `right` opens beside it (e.g. vertical toolbar rail). */
   readonly placement = input<Extract<TailwindPosition, 'bottom' | 'right'>>('bottom');
 
+  /** Entry chosen by the user. */
   readonly itemSelect = output<TailwindMenuItem>();
 
   readonly isOpen = signal(false);

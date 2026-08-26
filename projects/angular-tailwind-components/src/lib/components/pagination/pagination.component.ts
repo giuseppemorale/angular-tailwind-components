@@ -31,10 +31,15 @@ export class TailwindPagination extends TailwindComponent {
 
   private readonly tailwindPaginationSummary = inject(TAILWIND_PAGINATION_SUMMARY, { optional: true });
 
+  /** Total number of items across all pages. */
   readonly totalItems = input.required<Pagination['totalItems']>();
+  /** Items per page (two-way); also driven by the internal select. */
   readonly pageSize = model<Pagination['pageSize']>(10);
+  /** Values offered by the rows-per-page select; an empty array hides the select. */
   readonly lengthOptions = input<readonly number[]>([...DEFAULT_PAGINATION_LENGTH_OPTIONS]);
+  /** Current page (two-way), one-based. */
   readonly currentPage = model<Pagination['currentPage']>(1);
+  /** Accessible name of the pagination `nav`. */
   readonly ariaLabel = input<Pagination['ariaLabel']>('');
   protected readonly navAriaLabel = computed(() => this.ariaLabel() || this.labels.pagination);
   /** Placeholders `{start}`, `{end}`, `{total}`; default from `TAILWIND_PAGINATION_SUMMARY` or English copy. */

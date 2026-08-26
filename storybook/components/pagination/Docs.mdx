@@ -1,15 +1,35 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as PaginationStories from './pagination.stories';
 
 <Meta of={PaginationStories} />
 
 # Pagination
 
-`TailwindPagination` gestisce la navigazione tra pagine con riepilogo testuale configurabile.
+`TailwindPagination` handles page navigation, with a configurable textual summary.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindPagination } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={PaginationStories} />
+
+### Injection tokens
+
+| Token                         | Type                     | Description                                                     |
+| ----------------------------- | ------------------------ | --------------------------------------------------------------- |
+| `TAILWIND_PAGINATION_SUMMARY` | `InjectionToken<string>` | Default of `summary` when the input is not set in the template. |
+
+---
+
+## Example
+
+<Canvas of={PaginationStories.Pagination} />
 
 ```typescript
 @Component({
@@ -24,11 +44,11 @@ import * as PaginationStories from './pagination.stories';
 export class ExampleComponent {}
 ```
 
-### Default globale: `TAILWIND_PAGINATION_SUMMARY`
+### Global default: `TAILWIND_PAGINATION_SUMMARY`
 
-Il token **`TAILWIND_PAGINATION_SUMMARY`** (`InjectionToken<string>`) imposta il **testo predefinito** dell’input **`summary`** su tutte le **`tailwind-pagination`** dell’albero che ricevono quel provider, quando **`summary` non è passato** dal template. Se il token **non** è fornito, il default è **`'Showing {start}-{end} of {total}'`**. I placeholder **`{start}`**, **`{end}`**, **`{total}`** hanno lo stesso significato dell’input **`summary`**.
+The **`TAILWIND_PAGINATION_SUMMARY`** token (`InjectionToken<string>`) sets the **default text** of the **`summary`** input for every **`tailwind-pagination`** under that provider, whenever the template does not pass **`summary`** itself. Without the token the default is **`'Showing {start}-{end} of {total}'`**. The **`{start}`**, **`{end}`** and **`{total}`** placeholders mean the same as in the **`summary`** input.
 
-Per non ripetere la stringa su ogni istanza, registra il provider **una volta** a livello applicazione (stesso livello di router, HTTP client, ecc.).
+To avoid repeating the string on every instance, register the provider **once** at application level, next to the router, the HTTP client and so on.
 
 ```typescript
 import { TAILWIND_PAGINATION_SUMMARY } from 'angular-tailwind-components';
@@ -38,189 +58,4 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-Se su una singola istanza imposti **`[summary]="..."`**, quel valore **prevale** sul default del token.
-
-## Anteprima
-
-<Canvas of={PaginationStories.Pagination} />
-
----
-
-## Properties
-
-### `TailwindPagination (tailwind-pagination)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>totalItems</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>—</td>
-      <td>Richiesto: numero totale elementi.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>pageSize</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;number&gt;</code>
-      </td>
-      <td>
-        <code>10</code>
-      </td>
-      <td>Elementi per pagina (two-way). Modificabile dalla select interna.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>lengthOptions</code>
-      </td>
-      <td>
-        <code>number[]</code>
-      </td>
-      <td>
-        <code>[5, 10, 25, 50]</code>
-      </td>
-      <td>
-        Valori del <code>tailwind-select</code> «record per pagina». Se vuoto, il select non viene mostrato.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>maxVisiblePages</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        <code>7</code>
-      </td>
-      <td>
-        Numero massimo di pulsanti pagina. Oltre questa soglia la lista viene ridotta a prima pagina, finestra attorno
-        alla corrente e ultima pagina, con puntini di sospensione al posto dei salti.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>currentPage</code>
-      </td>
-      <td>
-        <code>ModelSignal&lt;number&gt;</code>
-      </td>
-      <td>
-        <code>1</code>
-      </td>
-      <td>Pagina corrente (two-way).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'Pagination'</code>
-      </td>
-      <td>Accessibilità.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>summary</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>TAILWIND_PAGINATION_SUMMARY</code> se fornito, altrimenti{' '}
-        <code>{`'Showing {start}-{end} of {total}'`}</code>
-      </td>
-      <td>
-        Placeholder <code>{`{start}`}</code>, <code>{`{end}`}</code>, <code>{`{total}`}</code>.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### Injection tokens
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Token</th>
-      <th>Tipo</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>TAILWIND_PAGINATION_SUMMARY</code>
-      </td>
-      <td>
-        <code>InjectionToken&lt;string&gt;</code>
-      </td>
-      <td>
-        Default di <code>summary</code> quando l’input non è impostato nel template.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-## Events
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Evento</th>
-      <th>Output</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>onPageChange</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>Nuova pagina (1-based).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>onPageSizeChange</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        Nuovo numero di record per pagina; la pagina corrente torna a <code>1</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>pageSizeChange</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        Alias two-way di <code>pageSize</code> (stesso payload di <code>onPageSizeChange</code>).
-      </td>
-    </tr>
-  </tbody>
-</table>
+Setting **`[summary]="…"`** on a single instance **wins** over the token default.

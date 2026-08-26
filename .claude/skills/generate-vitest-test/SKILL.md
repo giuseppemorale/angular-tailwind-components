@@ -1,5 +1,5 @@
 ---
-name: generate-component-vitest-test
+name: generate-vitest-test
 description: Generates or extends Vitest unit tests for angular-tailwind-components library components using TestBed and vi.fn(). Use when the user asks for component tests, vitest specs, *.component.spec.ts, or test coverage for a component under projects/angular-tailwind-components/src/lib/components/.
 ---
 

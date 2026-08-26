@@ -1,15 +1,29 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as BadgeStories from './badge.stories';
 
 <Meta of={BadgeStories} />
 
 # Badge
 
-`TailwindBadge` è un’etichetta compatta con varianti di colore, dimensione e opzione “dot”.
+`TailwindBadge` is a compact label with color, size and dot variants.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindBadge } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={BadgeStories} />
+
+---
+
+## Example
+
+<Canvas of={BadgeStories.Badge} />
 
 ```typescript
 @Component({
@@ -19,112 +33,10 @@ import * as BadgeStories from './badge.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Variants
 
-<Canvas of={BadgeStories.Badge} />
-
-## Varianti
-
-`kind` sceglie il peso della superficie. Le tre varianti hanno **metriche identiche** (tutte
-applicano un bordo, trasparente dove non serve), quindi cambiare `kind` non ridimensiona il badge.
-La stessa triade è disponibile su `tailwind-chip`, `tailwind-tag` e `tailwind-alert`.
+`kind` picks the weight of the surface. All three variants share **identical metrics** (each one
+applies a border, transparent where it is not needed), so switching `kind` never resizes the badge.
+The same triad is available on `tailwind-chip`, `tailwind-tag` and `tailwind-alert`.
 
 <Canvas of={BadgeStories.Kinds} />
-
----
-
-## Properties
-
-### `TailwindBadge (tailwind-badge)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>TailwindColor</code>
-      </td>
-      <td>
-        <code>'primary'</code>
-      </td>
-      <td>Colore di sfondo e testo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>kind</code>
-      </td>
-      <td>
-        <code>TailwindVariantKind</code>
-      </td>
-      <td>
-        <code>'soft'</code>
-      </td>
-      <td>
-        Peso della superficie: <code>solid</code> (pieno), <code>soft</code> (tinta chiara), <code>outlined</code> (solo
-        bordo e testo). Metriche identiche fra le tre.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>size</code>
-      </td>
-      <td>
-        <code>TailwindSize</code>
-      </td>
-      <td>
-        <code>'md'</code>
-      </td>
-      <td>Dimensione.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>dot</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Indicatore punto.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>rounded</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Se <code>true</code>, forma pill.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Etichetta accessibile.</td>
-    </tr>
-  </tbody>
-</table>

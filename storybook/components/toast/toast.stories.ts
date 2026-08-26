@@ -7,7 +7,7 @@ import {
 } from '../../../projects/angular-tailwind-components/src/public-api';
 import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 
-/** Template mostrato nel pannello Code (non esportare: CSF tratterebbe la stringa come story). */
+/** Template shown in the Code panel. Do not export it: CSF would treat the string as a story. */
 const TOAST_SERVICE_DEMO_TEMPLATE = `<div class="flex flex-wrap gap-3">
   <tailwind-toast [vertical]="vertical()" [horizontal]="horizontal()" />
   <tailwind-button color="success" (click)="toastService.success('Success', 'Saved successfully!', 'check-circle')">Success</tailwind-button>

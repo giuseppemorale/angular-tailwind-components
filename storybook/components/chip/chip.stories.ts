@@ -26,7 +26,7 @@ export const Chip: StoryObj<TailwindChip> = {
 };
 
 export const Colors: StoryObj<TailwindChip> = {
-  name: 'Colori',
+  name: 'Colors',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `
@@ -43,7 +43,7 @@ export const Colors: StoryObj<TailwindChip> = {
 };
 
 export const NotRemovable: StoryObj<TailwindChip> = {
-  name: 'Non rimovibile',
+  name: 'Not removable',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `<tailwind-chip [removable]="false">Read only</tailwind-chip>`
@@ -52,7 +52,7 @@ export const NotRemovable: StoryObj<TailwindChip> = {
 
 /** `soft` (default), `solid` and `outlined` — identical metrics, three levels of weight. */
 export const Kinds: StoryObj<TailwindChip> = {
-  name: 'Varianti',
+  name: 'Variants',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `

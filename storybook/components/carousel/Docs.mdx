@@ -1,17 +1,40 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as CarouselStories from './carousel.stories';
+import { TailwindCarouselSlide } from '../../../projects/angular-tailwind-components/src/public-api';
 
 <Meta of={CarouselStories} />
 
 # Carousel
 
-`TailwindCarousel` è la presentazione a slide proiettate.
+`TailwindCarousel` presents projected slides one at a time.
 
-L&apos;autoplay è opzionale e si mette **sempre** in pausa su hover e su focus: un carosello che avanza da solo e non si può fermare viola la WCAG 2.2.2 (Pause, Stop, Hide). Le slide non attive restano nel DOM ma con `hidden` e `inert`, così non sono raggiungibili né dal Tab né dagli screen reader.
+Autoplay is optional and **always** pauses on hover and on focus: a carousel that advances on its own and cannot be stopped fails WCAG 2.2.2 (Pause, Stop, Hide). Inactive slides stay in the DOM but carry `hidden` and `inert`, so neither Tab nor screen readers reach them.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindCarousel, TailwindCarouselSlide } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindCarousel (tailwind-carousel)`
+
+<ArgTypes of={CarouselStories} />
+
+### `TailwindCarouselSlide (tailwind-carousel-slide)`
+
+<ArgTypes of={TailwindCarouselSlide} />
+
+---
+
+---
+
+## Example
+
+<Canvas of={CarouselStories.Carousel} />
 
 ```typescript
 @Component({
@@ -24,138 +47,6 @@ L&apos;autoplay è opzionale e si mette **sempre** in pausa su hover e su focus:
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Keyboard
 
-<Canvas of={CarouselStories.Carousel} />
-
----
-
-## Properties
-
-### `TailwindCarousel (tailwind-carousel)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>
-        Nome accessibile della region; default da <code>TAILWIND_LABELS.carousel</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>activeIndex</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        <code>0</code>
-      </td>
-      <td>Indice della slide visibile (two-way).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>showArrows</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Mostra le frecce avanti/indietro.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>showIndicators</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Mostra i pallini indicatori.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>loop</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Cicla agli estremi.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>autoplayInterval</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        <code>0</code>
-      </td>
-      <td>
-        Millisecondi tra gli avanzamenti automatici; <code>0</code> disattiva.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### `TailwindCarouselSlide (tailwind-carousel-slide)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>ariaLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Nome accessibile della slide, ad esempio il suo titolo.</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-## Tastiera
-
-Freccia sinistra e destra, con il focus dentro il carosello, tornano alla slide precedente e avanzano alla successiva.
+With focus inside the carousel, Left and Right arrows move to the previous and next slide.

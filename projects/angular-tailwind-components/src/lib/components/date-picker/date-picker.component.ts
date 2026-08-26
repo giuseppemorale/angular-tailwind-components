@@ -53,12 +53,18 @@ export class TailwindDatePicker extends TailwindComponent implements ControlValu
     placeholder: this.labels.selectDate
   };
 
+  /** Visible field label. */
   readonly label = input<string>('');
+  /** Placeholder text; falls back to the localized default when undefined. */
   readonly placeholder = input<string | undefined>(undefined);
+  /** Display format of the date in the field, e.g. `dd/MM/yyyy` or `yyyy-MM-dd`. */
   readonly format = input<string>('dd/MM/yyyy');
+  /** Earliest selectable date. */
   readonly minDate = input<Date | null | undefined>(undefined);
+  /** Latest selectable date. */
   readonly maxDate = input<Date | null | undefined>(undefined);
 
+  /** Selected date (two-way); emitted as a `Date` on confirmation. */
   readonly value = model<Date | null>(null);
   /** Working selection while the panel is open; committed on Apply. */
   readonly draft = signal<Date | null>(null);

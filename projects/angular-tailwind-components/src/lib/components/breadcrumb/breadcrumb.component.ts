@@ -12,7 +12,10 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindBreadcrumb extends TailwindComponent {
+  /** Trail entries; `link` or `href` turns a crumb into a link, `icon` prepends a Heroicon. */
   readonly items = input<TailwindBreadcrumbItem[]>([]);
+  /** Character drawn between crumbs; hidden from screen readers. */
   readonly separator = input<string>('>');
+  /** Accessible name of the `nav` landmark wrapping the trail. */
   readonly ariaLabel = input<string>('Breadcrumb');
 }

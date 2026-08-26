@@ -1,17 +1,31 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as EmptyStateStories from './empty-state.stories';
 
 <Meta of={EmptyStateStories} />
 
 # EmptyState
 
-`TailwindEmptyState` è il pannello "non c&apos;è ancora nulla": icona, titolo, spiegazione e spazio per una call to action.
+`TailwindEmptyState` is the "nothing here yet" panel: icon, title, explanation and room for a call to action.
 
-Esiste perché ogni lista vuota non debba reinventare il proprio div centrato: spaziature, colori attenuati e livello di heading restano coerenti, e l&apos;icona è correttamente nascosta agli screen reader.
+Spacing, muted colors and heading level stay consistent across every empty list, and the icon is correctly hidden from screen readers.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindButton, TailwindEmptyState } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={EmptyStateStories} />
+
+---
+
+## Example
+
+<Canvas of={EmptyStateStories.EmptyState} />
 
 ```typescript
 @Component({
@@ -25,90 +39,3 @@ Esiste perché ogni lista vuota non debba reinventare il proprio div centrato: s
 })
 export class ExampleComponent {}
 ```
-
-## Anteprima
-
-<Canvas of={EmptyStateStories.EmptyState} />
-
----
-
-## Properties
-
-### `TailwindEmptyState (tailwind-empty-state)`
-
-Eredita `TailwindComponent` (`id`, `class`). Il contenuto proiettato finisce sotto la descrizione.
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>title</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Titolo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>description</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Frase di supporto sotto il titolo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>icon</code>
-      </td>
-      <td>
-        <code>TailwindHeroicon | undefined</code>
-      </td>
-      <td>
-        <code>'inbox'</code>
-      </td>
-      <td>
-        Icona decorativa; passa <code>undefined</code> per non mostrarla.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>headingLevel</code>
-      </td>
-      <td>
-        <code>2 | 3 | 4 | 5 | 6</code>
-      </td>
-      <td>
-        <code>3</code>
-      </td>
-      <td>Livello del titolo, per inserirsi nella gerarchia della pagina.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>compact</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Riduce il padding verticale (dentro card o tabelle).</td>
-    </tr>
-  </tbody>
-</table>

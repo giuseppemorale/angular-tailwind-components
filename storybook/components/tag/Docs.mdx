@@ -1,15 +1,31 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TagStories from './tag.stories';
 
 <Meta of={TagStories} />
 
 # Tag
 
-`TailwindTag` è un’etichetta stile “pill” uppercase per stati e categorie.
+`TailwindTag` is an uppercase pill label for statuses and categories.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindTag } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={TagStories} />
+
+The tag content is projected into the body of the component.
+
+---
+
+## Example
+
+<Canvas of={TagStories.Tags} />
 
 ```typescript
 @Component({
@@ -19,63 +35,9 @@ import * as TagStories from './tag.stories';
 export class ExampleComponent {}
 ```
 
-## Anteprima
+## Variants
 
-<Canvas of={TagStories.Tags} />
-
-## Varianti
-
-`kind` sceglie il peso della superficie, con metriche identiche fra le tre varianti. La stessa triade
-è disponibile su `tailwind-badge`, `tailwind-chip` e `tailwind-alert`.
+`kind` picks the weight of the surface, with identical metrics across the three variants. The same
+triad is available on `tailwind-badge`, `tailwind-chip` and `tailwind-alert`.
 
 <Canvas of={TagStories.Kinds} />
-
----
-
-## Properties
-
-### `TailwindTag (tailwind-tag)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>color</code>
-      </td>
-      <td>
-        <code>TailwindColor</code>
-      </td>
-      <td>
-        <code>'secondary'</code>
-      </td>
-      <td>Colore di sfondo.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>kind</code>
-      </td>
-      <td>
-        <code>TailwindVariantKind</code>
-      </td>
-      <td>
-        <code>'solid'</code>
-      </td>
-      <td>
-        Peso della superficie: <code>solid</code> (pieno), <code>soft</code> (tinta chiara), <code>outlined</code> (solo
-        bordo e testo). Metriche identiche fra le tre.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-Il contenuto del tag è proiettato nel corpo del componente.

@@ -1,62 +1,53 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as TableStories from './table.stories';
+import { TailwindSortHeaderDirective } from '../../../projects/angular-tailwind-components/src/public-api';
 
 <Meta of={TableStories} />
 
 # Table
 
-`TailwindTable` gestisce contenitore, ricerca client-side (OR su tutti i campi di ogni riga), ordinamento e paginazione su `data`. L’header è proiettato (`<thead>`). Il corpo si definisce con **`tailwindTableRow`** sulla riga template (vedi sotto).
+`TailwindTable` owns the shell, client-side search (an OR across every field of a row), sorting and pagination over `data`. The header is projected as a `<thead>`. The body is defined with **`tailwindTableRow`** on the row template, described below.
 
 ---
 
-## Righe (`tailwindTableRow`)
+## Import
 
-Il componente ripete il template per ogni riga di `displayedData()`. La forma consigliata è **direttiva strutturale su `<tbody>`** (la `*` è necessaria affinché Angular espanda il template con `let row`):
-
-```html
-<tbody *tailwindTableRow="let row">
-  <tr>
-    <td>{{ row.name }}</td>
-    <td>{{ row.email }}</td>
-    <td>{{ row.role }}</td>
-    <td>
-      <tailwind-tag [color]="row.status === 1 ? 'success' : 'danger'"
-        >{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag
-      >
-    </td>
-  </tr>
-</tbody>
+```typescript
+import { TailwindSortHeaderDirective, TailwindTable, TailwindTableRowDirective } from 'angular-tailwind-components';
 ```
 
-Ogni iterazione produce un `<tbody>` separato (consentito in HTML5). Per righe zebrate, selezione e click, il contesto del template espone anche `stripedRow`, `selected`, `selectable`, `toggleRow` (vedi story).
+## Properties
 
-**Alternativa legacy:** solo celle, senza `<tbody>/<tr>` nel template:
+### `TailwindTable (tailwind-table)`
 
-```html
-<ng-template tailwindTableRow let-row>
-  <td>...</td>
-</ng-template>
-```
+<ArgTypes of={TableStories} />
+
+### `TailwindTableRowDirective`
+
+| Selector                        | Description                                                                                                                             |
+| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `*tailwindTableRow` on `tbody`  | Template of one row (`tbody` > `tr` > cells). Context: `$implicit` (row), `index`, `stripedRow`, `selected`, `selectable`, `toggleRow`. |
+| `ng-template[tailwindTableRow]` | Cells only (`<td>`); same context.                                                                                                      |
+
+`TailwindTableRowTemplateDirective` is a deprecated alias of the same symbol.
+
+### `TailwindSortHeaderDirective`
+
+<ArgTypes of={TailwindSortHeaderDirective} />
 
 ---
 
-## Intestazioni ordinabili (`tailwindSortHeader`)
+## Example
 
-Solo le colonne che devono ordinare usano la direttiva su **`<th>`** (testo dell’intestazione come contenuto dell’elemento, senza `button`). **`tailwind-table`** intercetta click e tastiera (delegation) e applica l’ordinamento; non servono riferimenti (`#tbl`) né input sulla tabella.
+<Canvas of={TableStories.Table} />
 
-Su ogni **`<th>`** dentro **`<thead>`** proiettato, `tailwind-table` imposta automaticamente **`scope="col"`** (non serve dichiararlo nel template). Se serve un altro valore (es. `scope="row"`), impostalo esplicitamente: non viene sovrascritto.
+The default look of **`<thead>`**, **`<th>`** and **`<td>`** — header background, borders, padding, typography — lives in **`table.component.css`** behind **`:where(…)`** selectors inside `@layer components`, so any **Tailwind class** you put on cells and headers (`min-w-*`, `max-w-*`, `w-*`, `truncate`, `p-*`, …) wins over the defaults.
 
----
-
-## Utilizzo
-
-Aspetto predefinito di **`<thead>`**, **`<th>`** e **`<td>`** (sfondo header, bordi, padding, tipografia) è definito in **`table.component.css`** con selettori **`:where(...)`** e `@layer components`, così le **classi Tailwind** che metti su celle e intestazioni (`min-w-*`, `max-w-*`, `w-*`, `truncate`, `p-*`, ecc.) hanno la precedenza sui default.
-
-La `<table>` interna usa **`table-layout: auto`**: le colonne si adattano al contenuto. Ogni **`th`** / **`td`** ha **`min-width: 7.5rem` (120px)** di default (variabile CSS **`--tw-table-col-min-width`** sul host `tailwind-table`). Solo la **tabella** è in un wrapper con **`overflow-x-auto`**; la **paginazione** resta fissa sotto il bordo e non scorre orizzontalmente con le colonne.
+The inner `<table>` uses **`table-layout: auto`**, so columns follow their content. Every **`th`** / **`td`** carries a default **`min-width: 7.5rem` (120px)**, from the **`--tw-table-col-min-width`** CSS variable on the `tailwind-table` host. Only the **table** sits in an **`overflow-x-auto`** wrapper; the **pagination** stays pinned below the border and never scrolls sideways with the columns.
 
 ### Toolbar (`tailwind-table-tools`)
 
-Con `searchable` attivo (default), ricerca e azioni custom stanno su una riga **`flex justify-between`**. Proietta contenuto a destra con l’attributo **`tailwind-table-tools`**:
+With `searchable` on (the default), search and custom actions share a **`flex justify-between`** row. Project content on the right through the **`tailwind-table-tools`** attribute:
 
 ```html
 <tailwind-table [data]="rows">
@@ -72,9 +63,9 @@ Con `searchable` attivo (default), ricerca e azioni custom stanno su una riga **
 </tailwind-table>
 ```
 
-La toolbar compare anche con `searchable="false"` se proietti `[tailwind-table-tools]`.
+The toolbar also shows with `searchable="false"`, as soon as something is projected into `tailwind-table-tools`.
 
-Per colonne con testo lungo (es. email), usa **`max-w-*`** + **`truncate`** sulle celle; per azioni con pulsanti, **`whitespace-nowrap`** sulla colonna.
+For columns with long text such as e-mail addresses, use **`max-w-*`** plus **`truncate`** on the cells; for action columns with buttons, **`whitespace-nowrap`**.
 
 ```typescript
 @Component({
@@ -83,7 +74,7 @@ Per colonne con testo lungo (es. email), usa **`max-w-*`** + **`truncate`** sull
     <tailwind-table [data]="rows" [paginated]="true" [pagination]="pagination" [emptyColspan]="2">
       <thead>
         <tr>
-          <th tailwindSortHeader sortKey="name">Nome</th>
+          <th tailwindSortHeader sortKey="name">Name</th>
           <th>Email</th>
         </tr>
       </thead>
@@ -108,281 +99,49 @@ export class ExampleComponent {
 }
 ```
 
----
+## Rows (`tailwindTableRow`)
 
-## Anteprima
+The component repeats the template for every row of `displayedData()`. The recommended form is a **structural directive on `<tbody>`** — the `*` is what makes Angular expand the template with `let row`:
 
-<Canvas of={TableStories.Table} />
+```html
+<tbody *tailwindTableRow="let row">
+  <tr>
+    <td>{{ row.name }}</td>
+    <td>{{ row.email }}</td>
+    <td>{{ row.role }}</td>
+    <td>
+      <tailwind-tag [color]="row.status === 1 ? 'success' : 'danger'"
+        >{{ row.status === 1 ? 'Active' : 'Inactive' }}</tailwind-tag
+      >
+    </td>
+  </tr>
+</tbody>
+```
 
-## Caricamento
+Each iteration produces its own `<tbody>`, which HTML5 allows. For zebra striping, selection and clicks the template context also exposes `stripedRow`, `selected`, `selectable` and `toggleRow` — see the stories.
 
-Con `loading` attivo la tabella disegna righe skeleton della forma dei dati in arrivo invece di uno
-spinner: uno spinner dice _sta succedendo qualcosa_, uno skeleton dice _ecco cosa sta per apparire_,
-e la stessa attesa sembra più breve. Il numero di celle segnaposto segue `emptyColspan`.
+**Legacy alternative:** cells only, with no `<tbody>` / `<tr>` in the template:
+
+```html
+<ng-template tailwindTableRow let-row>
+  <td>...</td>
+</ng-template>
+```
+
+## Sortable headers (`tailwindSortHeader`)
+
+Only the columns that should sort carry the directive on their **`<th>`**, with the header text as element content and no inner `button`. **`tailwind-table`** intercepts clicks and keystrokes by delegation and applies the sort; no template reference (`#tbl`) and no extra input on the table are needed.
+
+On every **`<th>`** inside the projected **`<thead>`**, `tailwind-table` sets **`scope="col"`** automatically, so the template need not declare it. An explicit value such as `scope="row"` is never overwritten.
+
+## Loading state
+
+With `loading` on, the table draws skeleton rows shaped like the data that is coming instead of a
+spinner: a spinner says _something is happening_, a skeleton says _here is what is about to appear_,
+and the same wait feels shorter. The number of placeholder cells follows `emptyColspan`.
 
 <Canvas of={TableStories.Loading} />
 
----
+## The `sort(key)` method
 
-## Properties
-
-### `TailwindTable (tailwind-table)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>data</code>
-      </td>
-      <td>
-        <code>Record&lt;string, unknown&gt;[]</code>
-      </td>
-      <td>
-        <code>[]</code>
-      </td>
-      <td>Righe dati (ricerca, ordinamento e slice paginazione applicati dal componente).</td>
-    </tr>
-    <tr>
-      <td>
-        <code>searchable</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>
-        Mostra un <code>tailwind-input</code> in alto a sinistra; filtra le righe in OR su tutti i valori dell’oggetto
-        riga.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>searchLabel</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'Cerca'</code>
-      </td>
-      <td>
-        Label del campo di ricerca (<code>tailwind-input</code>).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>searchPlaceholder</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'Cerca...'</code>
-      </td>
-      <td>Placeholder del campo di ricerca.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>selectable</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Click sulla riga per selezione (evidenziazione); usare <code>toggleRow</code> dal contesto del template riga.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>striped</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>
-        Righe alternate; usare <code>stripedRow</code> sul <code>&lt;tr&gt;</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>loading</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>false</code>
-      </td>
-      <td>Stato caricamento.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>emptyMessage</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'No data available'</code>
-      </td>
-      <td>Testo quando non ci sono righe.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>emptyColspan</code>
-      </td>
-      <td>
-        <code>number</code>
-      </td>
-      <td>
-        <code>1</code>
-      </td>
-      <td>
-        <code>colspan</code> della cella vuota (allineare al numero di colonne).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>paginated</code>
-      </td>
-      <td>
-        <code>boolean</code>
-      </td>
-      <td>
-        <code>true</code>
-      </td>
-      <td>Paginazione client-side.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>pagination</code>
-      </td>
-      <td>
-        <code>Pagination</code>
-      </td>
-      <td>
-        <code>undefined</code>
-      </td>
-      <td>
-        Configurazione paginazione (<code>totalItems</code>, <code>pageSize</code>, <code>currentPage</code>,{' '}
-        <code>maxVisible</code>, <code>ariaLabel</code>, <code>summary</code>).
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### `TailwindTableRowDirective`
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Selector</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>*tailwindTableRow</code> (su <code>tbody</code>)
-      </td>
-      <td>
-        Template di una riga (<code>tbody</code> &gt; <code>tr</code> &gt; celle). Contesto: <code>$implicit</code>{' '}
-        (row), <code>index</code>, <code>stripedRow</code>, <code>selected</code>, <code>selectable</code>,{' '}
-        <code>toggleRow</code>.
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>ng-template[tailwindTableRow]</code>
-      </td>
-      <td>
-        Solo celle (<code>&lt;td&gt;</code>); contesto come sopra.
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-`TailwindTableRowTemplateDirective` è un alias deprecato dello stesso simbolo.
-
-### `TailwindSortHeaderDirective`
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Selector</th>
-      <th>Input</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>[tailwindSortHeader]</code> su <code>&lt;th&gt;</code>
-      </td>
-      <td>
-        <code>sortKey</code> (obbl., stringa)
-      </td>
-      <td>
-        Colonna ordinabile; indicatori con <code>TailwindIcon</code> (<code>chevron-up-down</code> /{' '}
-        <code>chevron-up</code> / <code>chevron-down</code>), <code>aria-label</code> e sort delegato all’host{' '}
-        <code>tailwind-table</code>. Richiede asset <code>/tailwind-icons/*.svg</code> (come il resto delle icone).
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-## Events
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Evento</th>
-      <th>Output</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>onSortChange</code>
-      </td>
-      <td>
-        <code>&#123; key: string; direction: 'asc' | 'desc' &#125;</code>
-      </td>
-      <td>
-        Ordinamento applicato (chiave proprietà di <code>data</code>).
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <code>onSelectionChange</code>
-      </td>
-      <td>
-        <code>Set&lt;number&gt;</code>
-      </td>
-      <td>Indici delle righe selezionate (rispetto alla pagina visualizzata).</td>
-    </tr>
-  </tbody>
-</table>
-
-## Metodo `sort(key)`
-
-Disponibile su `TailwindTable` per ordinare da codice; nelle intestazioni usare `tailwindSortHeader`.
+Available on `TailwindTable` for sorting from code; in headers, use `tailwindSortHeader` instead.

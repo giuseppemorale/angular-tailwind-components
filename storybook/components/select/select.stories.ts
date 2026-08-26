@@ -33,7 +33,7 @@ export const Select: StoryObj<TailwindSelect> = {
 };
 
 export const WithDisabledOptions: StoryObj<TailwindSelect> = {
-  name: 'Con opzioni disabilitate',
+  name: 'Disabled options',
   parameters: { controls: { exclude: ['multiple', 'hasError', 'errorText'] } },
   render: args => ({
     props: args,
@@ -56,7 +56,7 @@ export const WithDisabledOptions: StoryObj<TailwindSelect> = {
 };
 
 export const WithError: StoryObj<TailwindSelect> = {
-  name: 'Stato errore',
+  name: 'Error state',
   parameters: { controls: { exclude: ['multiple'] } },
   render: args => ({
     props: args,
@@ -76,7 +76,7 @@ export const WithError: StoryObj<TailwindSelect> = {
 };
 
 export const Multiple: StoryObj<TailwindSelect<string>> = {
-  name: 'Selezione multipla',
+  name: 'Multiple selection',
   parameters: { controls: { exclude: ['hasError', 'errorText'] } },
   args: {
     label: 'Framework',
@@ -88,7 +88,7 @@ export const Multiple: StoryObj<TailwindSelect<string>> = {
 };
 
 export const Sizes: StoryObj<TailwindSelect> = {
-  name: 'Dimensioni',
+  name: 'Sizes',
   parameters: { controls: { disable: true } },
   render: () => ({
     props: { options: FRAMEWORKS },

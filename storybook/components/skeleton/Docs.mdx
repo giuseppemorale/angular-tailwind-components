@@ -1,15 +1,29 @@
-import { Canvas, Meta } from '@storybook/addon-docs/blocks';
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
 import * as SkeletonStories from './skeleton.stories';
 
 <Meta of={SkeletonStories} />
 
 # Skeleton
 
-`TailwindSkeleton` mostra placeholder animati per testo, cerchio, rettangolo o bordi arrotondati.
+`TailwindSkeleton` renders animated placeholders shaped as text, circle, rectangle or rounded block.
 
 ---
 
-## Utilizzo
+## Import
+
+```typescript
+import { TailwindSkeleton } from 'angular-tailwind-components';
+```
+
+## Properties
+
+<ArgTypes of={SkeletonStories} />
+
+---
+
+## Example
+
+<Canvas of={SkeletonStories.Skeleton} />
 
 ```typescript
 @Component({
@@ -18,64 +32,3 @@ import * as SkeletonStories from './skeleton.stories';
 })
 export class ExampleComponent {}
 ```
-
-## Anteprima
-
-<Canvas of={SkeletonStories.Skeleton} />
-
----
-
-## Properties
-
-### `TailwindSkeleton (tailwind-skeleton)`
-
-Eredita `TailwindComponent` (`id`, `class`).
-
-<table class="w-full">
-  <thead>
-    <tr>
-      <th>Proprietà</th>
-      <th>Tipo</th>
-      <th>Default</th>
-      <th>Descrizione</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <code>variant</code>
-      </td>
-      <td>
-        <code>'text' | 'circle' | 'rect' | 'rounded'</code>
-      </td>
-      <td>
-        <code>'text'</code>
-      </td>
-      <td>Forma del placeholder.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>width</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>'100%'</code>
-      </td>
-      <td>Larghezza CSS.</td>
-    </tr>
-    <tr>
-      <td>
-        <code>height</code>
-      </td>
-      <td>
-        <code>string</code>
-      </td>
-      <td>
-        <code>''</code>
-      </td>
-      <td>Altezza CSS (opzionale).</td>
-    </tr>
-  </tbody>
-</table>

@@ -25,7 +25,7 @@ const meta: Meta<TailwindAutocomplete<string>> = {
 export default meta;
 
 export const StaticCountries: StoryObj<TailwindAutocomplete<string>> = {
-  name: 'Nazioni (filtro locale)',
+  name: 'Countries (local filtering)',
   parameters: { controls: { exclude: ['debounceMs', 'minSearchLength'] } },
   render: args => ({
     props: { ...args, countryCode: null as string | null },
@@ -77,7 +77,7 @@ class AutocompleteAsyncStoryComponent {
 }
 
 export const AsyncSearch: StoryObj<TailwindAutocomplete<string>> = {
-  name: 'Ricerca async',
+  name: 'Async search',
   parameters: {
     controls: {
       exclude: [
@@ -115,7 +115,7 @@ export const AsyncSearch: StoryObj<TailwindAutocomplete<string>> = {
 };
 
 export const CustomItemTemplate: StoryObj<TailwindAutocomplete<string>> = {
-  name: 'Template opzione (#item)',
+  name: 'Option template (#item)',
   parameters: { controls: { exclude: ['debounceMs', 'minSearchLength', 'hasError', 'errorText', 'helperText'] } },
   render: args => ({
     props: { ...args, countryCode: null as string | null },
@@ -141,7 +141,7 @@ export const CustomItemTemplate: StoryObj<TailwindAutocomplete<string>> = {
 };
 
 export const WithError: StoryObj<TailwindAutocomplete<string>> = {
-  name: 'Stato errore',
+  name: 'Error state',
   parameters: { controls: { exclude: ['debounceMs', 'minSearchLength', 'filterLocally'] } },
   render: args => ({
     props: args,

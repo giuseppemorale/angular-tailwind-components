@@ -54,7 +54,9 @@ export class TailwindPopover extends TailwindComponent {
   /** Accessible name when there is no `title`. */
   readonly ariaLabel = input<string>('');
 
+  /** Emitted when the panel opens. */
   readonly opened = output<void>();
+  /** Emitted when the panel closes. */
   readonly closed = output<void>();
 
   readonly isOpen = signal(false);

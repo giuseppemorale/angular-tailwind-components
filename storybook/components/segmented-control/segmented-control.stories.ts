@@ -58,7 +58,7 @@ export const Sizes: StoryObj<TailwindSegmentedControl<string>> = {
  * background that blinks on and off — the movement is what tells the eye where the selection went.
  */
 export const SlidingThumb: StoryObj<TailwindSegmentedControl<string>> = {
-  name: 'Thumb scorrevole',
+  name: 'Sliding thumb',
   parameters: { controls: { disable: true } },
   render: () => ({
     props: {

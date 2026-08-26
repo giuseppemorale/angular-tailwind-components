@@ -92,7 +92,7 @@ export const ContainerWidth: StoryObj<TailwindToolbar> = {
   render: Horizontal.render
 };
 
-/** Rail verticale con voci solo icona (`label` vuoto / assente, `aria-label` da `value`, tooltip da `tooltip`). */
+/** Vertical rail with icon-only entries: empty or missing `label`, `aria-label` from `value`, tooltip from `tooltip`. */
 export const VerticalIconMenu: StoryObj<TailwindToolbar> = {
   parameters: {
     controls: { exclude: ['width'] },

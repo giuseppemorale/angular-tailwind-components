@@ -11,6 +11,7 @@ import { TailwindComponent } from '../tailwind.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindMessage extends TailwindComponent {
+  /** Semantic color of background and border. */
   readonly color = input<TailwindColor>('info');
   /** Heroicons outline name; omit to hide the leading icon. */
   readonly icon = input<TailwindHeroicon | undefined>();

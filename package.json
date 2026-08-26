@@ -28,6 +28,7 @@
     "release": "node scripts/release.js",
     "publish:dist": "npm run build && npm publish --access public --prefix dist/angular-tailwind-components",
     "storybook": "ng run angular-tailwind-components:storybook",
+    "docs:json": "compodoc -p projects/angular-tailwind-components/tsconfig.lib.json -e json -d .",
     "build:storybook": "ng run angular-tailwind-components:build-storybook",
     "prettier:write": "prettier --write .",
     "prettier:check": "prettier --check .",

@@ -71,7 +71,7 @@ export const WithActions: StoryObj<TailwindAlert> = {
 
 /** In `bordered` mode the left stripe keeps the semantic color whatever the `kind`. */
 export const Kinds: StoryObj<TailwindAlert> = {
-  name: 'Varianti',
+  name: 'Variants',
   parameters: { controls: { disable: true } },
   render: () => ({
     template: `

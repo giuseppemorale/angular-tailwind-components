@@ -23,7 +23,7 @@ export const Icon: StoryObj<TailwindIcon> = {
 };
 
 export const Sizes: StoryObj<TailwindIcon> = {
-  name: 'Dimensioni',
+  name: 'Sizes',
   parameters: {
     controls: { disable: true },
     docs: {
@@ -69,7 +69,7 @@ export const Sizes: StoryObj<TailwindIcon> = {
 };
 
 export const Colors: StoryObj<TailwindIcon> = {
-  name: 'Colori',
+  name: 'Colors',
   parameters: {
     controls: { disable: true },
     docs: {

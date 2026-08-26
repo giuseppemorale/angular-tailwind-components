@@ -38,7 +38,9 @@ export class TailwindTree extends TailwindComponent {
   /** Key of the selected node, or `null`. */
   readonly selectedKey = model<string | null>(null);
 
+  /** Node selected by the user. */
   readonly nodeSelect = output<TailwindTreeNode>();
+  /** Branch expanded or collapsed, with its new state. */
   readonly nodeToggle = output<{ node: TailwindTreeNode; expanded: boolean }>();
 
   /** Row currently holding the widget's single tab stop. */

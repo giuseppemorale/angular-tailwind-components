@@ -1,46 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, input, signal } from '@angular/core';
 import { TailwindPosition } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
+import { ARROW_SPECS } from './properties/constant';
 
-/** Arrow geometry per side the tooltip sits on, relative to its trigger. */
-const ARROW_SPECS: Record<
-  TailwindPosition,
-  { className: string; viewBox: string; width: number; height: number; path: string }
-> = {
-  top: {
-    className: 'tooltip-arrow tooltip-arrow-down',
-    viewBox: '0 0 12 7',
-    width: 12,
-    height: 7,
-    path: 'M0 0 H12 L6 7 Z'
-  },
-  bottom: {
-    className: 'tooltip-arrow tooltip-arrow-up',
-    viewBox: '0 0 12 7',
-    width: 12,
-    height: 7,
-    path: 'M0 7 H12 L6 0 Z'
-  },
-  left: {
-    className: 'tooltip-arrow tooltip-arrow-right',
-    viewBox: '0 0 7 12',
-    width: 7,
-    height: 12,
-    path: 'M0 0 V12 L7 6 Z'
-  },
-  right: {
-    className: 'tooltip-arrow tooltip-arrow-left',
-    viewBox: '0 0 7 12',
-    width: 7,
-    height: 12,
-    path: 'M7 0 V12 L0 6 Z'
-  }
-};
-
-/**
- * Tooltip surface. Purely presentational: `TailwindTooltipDirective` owns placement through the CDK
- * overlay, and tells this component which side it ended up on so the arrow points the right way.
- */
+/** Tooltip surface; `TailwindTooltipDirective` owns placement and reports the resolved side. */
 @Component({
   selector: 'tailwind-tooltip',
   templateUrl: './tooltip.component.html',

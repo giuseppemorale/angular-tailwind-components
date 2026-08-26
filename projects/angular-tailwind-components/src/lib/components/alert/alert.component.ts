@@ -41,10 +41,8 @@ export class TailwindAlert extends TailwindComponent {
 
   readonly computedClasses = computed(() => {
     const color = this.color();
-    /*
-     * Fill and border are taken separately: in `bordered` mode the border is not an outline at all
-     * but a left accent stripe, and it keeps the semantic color even when the fill is `solid`.
-     */
+    // Fill and border are taken separately: in `bordered` mode the border is a left accent stripe
+    // that keeps the semantic color even when the fill is `solid`.
     return this.mergeClasses(
       'flex gap-3 p-4 rounded-surface',
       semanticFill(this.kind(), color),

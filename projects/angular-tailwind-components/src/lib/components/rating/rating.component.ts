@@ -4,22 +4,9 @@ import { TailwindSize } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE, TAILWIND_LABELS } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
+import { STAR_PIXEL_SIZE } from './properties/constant';
 
-const STAR_PIXEL_SIZE: Record<TailwindSize, number> = {
-  xs: 16,
-  sm: 18,
-  md: 22,
-  lg: 26,
-  xl: 32
-};
-
-/**
- * Star rating, editable or read-only.
- *
- * Exposed as a `slider` rather than a row of buttons: that is the ARIA pattern for picking a value
- * from an ordered range, and it gives keyboard users arrow keys and Home/End for free instead of
- * making them tab through every star.
- */
+/** Star rating, editable or read-only. Exposed as a `slider` for arrow-key support. */
 @Component({
   imports: [TailwindIcon],
   selector: 'tailwind-rating',

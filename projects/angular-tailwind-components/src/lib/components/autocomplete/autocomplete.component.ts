@@ -29,15 +29,7 @@ import { FIELD_BASE, FIELD_SIZE, FIELD_STATE, FIELD_STATE_INVALID } from '../../
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindSafeHtmlPipe } from '../../pipes/safehtml/safehtml.pipe';
 import { TailwindIcon } from '../icon/icon.component';
-
-/** Context passed to the `#item` ng-template. */
-export interface TailwindAutocompleteItemContext<T = unknown> {
-  $implicit: TailwindOption<T>;
-  option: TailwindOption<T>;
-  index: number;
-  selected: boolean;
-  active: boolean;
-}
+import type { TailwindAutocompleteItemContext } from './interfaces/autocomplete-item-context.interface';
 
 @Component({
   imports: [NgTemplateOutlet, TailwindIcon, TailwindSafeHtmlPipe],
@@ -101,9 +93,8 @@ export class TailwindAutocomplete<T = unknown> extends TailwindComponent impleme
   /** Available options */
   readonly options = input<TailwindOption<T>[]>([]);
   /**
-   * How an option value is matched against the current value. Defaults to identity (`Object.is`),
-   * which does **not** match structurally equal objects coming from different fetches — pass a
-   * comparator when option values are objects, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
+   * How an option value is matched against the current value; defaults to `Object.is`.
+   * Pass a comparator for object values, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
    */
   readonly compareWith = input<(a: T | null, b: T | null) => boolean>((a, b) => Object.is(a, b));
   /** Size variant */

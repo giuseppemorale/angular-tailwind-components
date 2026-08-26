@@ -4,8 +4,6 @@ import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
 import { RouterLink } from '@angular/router';
 
-export type { TailwindBreadcrumbItem };
-
 @Component({
   imports: [RouterLink, TailwindIcon],
   selector: 'tailwind-breadcrumb',

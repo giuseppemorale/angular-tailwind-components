@@ -18,11 +18,8 @@ import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 
 /**
- * Numeric field with increment and decrement controls — the "spinner" or "stepper" input.
- *
- * `tailwind-input type="number"` leaves the browser's native spinners, which are tiny, unstyleable
- * and absent on mobile. This renders real buttons, clamps to `min`/`max`, and keeps the value a
- * `number | null` in the form rather than a numeric string.
+ * Numeric field with real increment and decrement buttons instead of the native spinners.
+ * Clamps to `min`/`max` and keeps the form value a `number | null`, never a numeric string.
  */
 @Component({
   imports: [TailwindIcon],

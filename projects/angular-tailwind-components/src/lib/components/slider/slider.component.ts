@@ -14,9 +14,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TailwindColor, TailwindSize } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Value model: single number or sorted pair when `range` is true */
-export type TailwindSliderValue = number | [number, number];
+import type { TailwindSliderValue } from './interfaces/slider-value.type';
 
 @Component({
   selector: 'tailwind-slider',

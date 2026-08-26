@@ -17,8 +17,7 @@ import { TailwindIcon } from '../icon/icon.component';
 import { TailwindButton } from '../button/button.component';
 import { calendarLabelsFor } from '../calendar-panel/util/calendar-i18n';
 import { TailwindComponent } from '../tailwind.component';
-
-type TimeDraft = { h: number; m: number };
+import type { TimeDraft } from './interfaces/time-draft.interface';
 
 @Component({
   selector: 'tailwind-time-picker',

@@ -106,9 +106,8 @@ export class TailwindTabGroup extends TailwindComponent {
   }
 
   /**
-   * Tab list keyboard support per the WAI-ARIA Tabs pattern: arrows move between tabs (wrapping and
-   * skipping disabled ones), Home/End jump to the extremes. Activation follows focus, which is the
-   * expected behaviour for tabs whose panels are already rendered.
+   * WAI-ARIA Tabs keyboard support: arrows wrap and skip disabled tabs, Home/End jump to the
+   * extremes, and activation follows focus.
    */
   onTabListKeydown(event: KeyboardEvent): void {
     const step: Record<string, number> = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };

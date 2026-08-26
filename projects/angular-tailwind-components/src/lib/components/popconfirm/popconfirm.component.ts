@@ -1,4 +1,4 @@
-import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import {
@@ -21,23 +21,9 @@ import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
 import { resolveOverlayAnchor } from '../../util/overlay-anchor';
 import { TailwindComponent } from '../tailwind.component';
+import { POSITIONS } from './properties/constant';
 
-const OFFSET_PX = 8;
-
-const POSITIONS: Record<TailwindPosition, ConnectedPosition> = {
-  top: { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -OFFSET_PX },
-  bottom: { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: OFFSET_PX },
-  left: { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -OFFSET_PX },
-  right: { originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center', offsetX: OFFSET_PX }
-};
-
-/**
- * Inline confirmation anchored to the control that triggered it — "Delete this row?" with Yes/No,
- * without the weight of a full modal.
- *
- * A modal is the right tool for a decision that deserves the whole screen; for a per-row delete it
- * is disruptive. This keeps focus near the action, traps nothing, and closes on Escape.
- */
+/** Inline confirmation anchored to the control that triggered it, closing on Escape. */
 @Component({
   imports: [TailwindButton],
   selector: 'tailwind-popconfirm',

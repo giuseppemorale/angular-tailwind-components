@@ -2,11 +2,8 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { TailwindComponent } from '../tailwind.component';
 
 /**
- * A keyboard key, rendered as the native `<kbd>` element.
- *
- * Documentation and empty states routinely need to name a shortcut; without this, every app styles
- * its own `<span class="border rounded px-1">`. Passing `keys` renders a whole chord with separators
- * that are hidden from screen readers, so "Ctrl + K" is announced as the keys, not as punctuation.
+ * A keyboard key, rendered as the native `<kbd>` element. `keys` renders a whole chord with
+ * separators hidden from screen readers, so "Ctrl + K" is announced as the keys alone.
  */
 @Component({
   selector: 'tailwind-kbd',

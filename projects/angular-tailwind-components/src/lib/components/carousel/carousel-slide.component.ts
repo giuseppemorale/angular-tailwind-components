@@ -15,9 +15,6 @@ export class TailwindCarouselSlide extends TailwindComponent {
   /** Set by the parent carousel. */
   readonly isActive = signal(false);
 
-  /**
-   * Inactive slides stay in the DOM but are hidden from everyone — `hidden` keeps them out of the
-   * accessibility tree and out of the tab order, which `opacity: 0` alone would not do.
-   */
+  /** Inactive slides use `hidden`, which drops them from the a11y tree and tab order. */
   readonly slideClasses = computed(() => this.mergeClasses('w-full', this.isActive() ? 'block' : 'hidden'));
 }

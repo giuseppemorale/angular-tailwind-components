@@ -14,7 +14,9 @@ import {
   signal,
   untracked
 } from '@angular/core';
-import { DEFAULT_PAGINATION_LENGTH_OPTIONS, Pagination, TailwindPagination } from '../pagination/pagination.component';
+import { TailwindPagination } from '../pagination/pagination.component';
+import type { Pagination } from '../pagination/interfaces/pagination.interface';
+import { DEFAULT_PAGINATION_LENGTH_OPTIONS } from '../pagination/properties/constant';
 import { TailwindInput } from '../input/input.component';
 import { TailwindSkeleton } from '../skeleton/skeleton.component';
 import { TailwindComponent } from '../tailwind.component';
@@ -24,16 +26,9 @@ import {
   TailwindTableSelectionHost,
   TailwindTableSortHost
 } from './interfaces/tailwind-table-sort-host';
+import type { TailwindTableRow } from './interfaces/table-row.type';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
 import { TAILWIND_LABELS, TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
-export { TAILWIND_TABLE_SELECTION_HOST, TAILWIND_TABLE_SORT_HOST };
-
-/**
- * Default row type. `TailwindTable`'s generic is constrained to `object` rather than to this type,
- * so a plain interface — which has no index signature — can be passed without a cast.
- */
-export type TailwindTableRow = Record<string, unknown>;
-export type { TailwindTableSelectionHost, TailwindTableSortHost };
 
 @Component({
   selector: 'tailwind-table',
@@ -58,15 +53,13 @@ export class TailwindTable<T extends object = TailwindTableRow>
 
   readonly data = input<readonly T[]>([]);
   /**
-   * Server-side mode: the table stops filtering, sorting and slicing `data()` and renders it as
-   * given, emitting `onSortChange` / `onPageChange` for the caller to act on. Provide
-   * `pagination.totalItems` so the pager knows the full result size.
+   * Server-side mode: renders `data()` as given and only emits `onSortChange` / `onPageChange`.
+   * Provide `pagination.totalItems` so the pager knows the full result size.
    */
   readonly serverSide = input<boolean>(false);
   /**
-   * Per-column comparator, used instead of the default string comparison. Return a negative,
-   * zero or positive number like `Array.prototype.sort`. Without this, dates and mixed types are
-   * compared as strings — `'10/01/2024'` sorts before `'02/02/2024'`.
+   * Per-column comparator replacing the default string comparison; returns a number like
+   * `Array.prototype.sort`. Needed for dates and mixed types, which sort wrong as strings.
    */
   readonly sortComparators = input<Partial<Record<string, (a: T, b: T) => number>>>({});
   /** Keeps the header row visible while the body scrolls. */
@@ -92,13 +85,7 @@ export class TailwindTable<T extends object = TailwindTableRow>
   /** Number of placeholder rows drawn while `loading` is true. */
   protected readonly skeletonRows = [0, 1, 2, 3, 4];
 
-  /**
-   * Placeholder cell widths for the loading state.
-   *
-   * A spinner tells the user *something is happening*; a skeleton tells them *what is about to
-   * appear*, which makes the same wait feel shorter. The widths cycle through an uneven pattern so
-   * the placeholder reads as text rather than as a progress bar.
-   */
+  /** Placeholder cell widths for the loading state; uneven so the skeleton reads as text. */
   protected readonly skeletonCells = computed(() => {
     const pattern = ['70%', '45%', '85%', '35%', '60%'];
     const columns = Math.min(Math.max(this.emptyColspan(), 1), 8);

@@ -15,11 +15,7 @@ export class TailwindBadge extends TailwindComponent {
 
   /** Semantic color */
   readonly color = input<TailwindColor>('primary');
-  /**
-   * How the surface is painted. `soft` (the default) is the badge as it has always looked; `solid`
-   * and `outlined` are the same decision expressed with more or less weight, and keep the badge the
-   * exact same size either way.
-   */
+  /** How the surface is painted; all three kinds keep the badge exactly the same size. */
   readonly kind = input<TailwindVariantKind>('soft');
   /** Size variant */
   readonly size = input<TailwindSize>(this.defaultSize ?? 'md');

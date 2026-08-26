@@ -8,11 +8,8 @@ export interface TailwindTableSortHost {
 }
 
 /**
- * Lets `[tailwindSortHeader]` reach its owning table through DI.
- *
- * The `<thead>` is written in the consumer's template but declared inside `<tailwind-table>`, and
- * the element injector follows the declaration tree — so a `<th>` inside the projected header
- * resolves the table that projects it, with no DOM traversal or observers involved.
+ * Lets `[tailwindSortHeader]` reach its owning table through DI: the element injector follows the
+ * declaration tree, so a projected `<th>` resolves the table that projects it.
  */
 export const TAILWIND_TABLE_SORT_HOST = new InjectionToken<TailwindTableSortHost>('TAILWIND_TABLE_SORT_HOST');
 

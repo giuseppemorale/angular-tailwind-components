@@ -12,24 +12,11 @@ import {
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 import type { TailwindTreeNode } from './interfaces/tree-node.interface';
-
-/** One node flattened for rendering, carrying the depth and state a row needs. */
-interface FlatNode {
-  node: TailwindTreeNode;
-  /** Stable path from the root, used as identity and as the expansion key. */
-  key: string;
-  level: number;
-  expandable: boolean;
-  expanded: boolean;
-  selected: boolean;
-}
+import type { FlatNode } from './interfaces/flat-node.interface';
 
 /**
- * Hierarchical list — file trees, category pickers, nested navigation.
- *
- * Follows the WAI-ARIA **tree** pattern: one tab stop for the whole widget with a roving
- * `tabindex`, arrows to walk and open branches, Home/End to jump. Rendering is flattened so only
- * visible rows exist in the DOM, which keeps a deep tree cheap.
+ * Hierarchical list following the WAI-ARIA tree pattern: one tab stop with a roving `tabindex`,
+ * arrows to walk and open branches, Home/End to jump. Only visible rows are rendered.
  */
 @Component({
   imports: [TailwindIcon],

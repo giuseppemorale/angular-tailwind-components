@@ -1,16 +1,9 @@
 /**
- * Calendar month and weekday names.
- *
- * These used to be two hand-written tables (`it` and `en`), which capped the library at two
- * languages and hard-coded a Monday-first week. `Intl.DateTimeFormat` produces the same strings for
- * any locale the runtime knows, and `Intl.Locale.getWeekInfo` gives the locale's real first weekday
- * (Sunday in en-US, Monday in most of Europe, Saturday in much of the Middle East).
+ * Calendar month and weekday names, derived from `Intl.DateTimeFormat` for any locale the runtime
+ * knows; `Intl.Locale.getWeekInfo` supplies the locale's real first weekday.
  */
 
-/**
- * Any BCP 47 locale tag. `'it'` and `'en'` remain valid, so existing
- * `provideTailwindConfig({ DATETIME_LANGUAGE: 'it' })` keeps working.
- */
+/** Any BCP 47 locale tag; `'it'` and `'en'` remain valid. */
 export type CalendarLang = string;
 
 export type CalendarLabels = {

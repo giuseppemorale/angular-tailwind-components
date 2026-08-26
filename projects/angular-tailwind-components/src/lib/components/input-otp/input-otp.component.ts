@@ -86,11 +86,8 @@ export class TailwindInputOtp extends TailwindComponent implements ControlValueA
   readonly otpInputs = viewChildren<ElementRef<HTMLInputElement>>('otpDigit');
 
   readonly cellClasses = computed(() => {
-    /**
-     * OTP cells are square by definition: a single centred digit and nothing else to fit, so the
-     * cell takes its footprint from the shared control scale rather than from padding — and cannot
-     * reuse `FIELD_BASE`, whose `w-full` would fight the fixed width.
-     */
+    // Square cells: the footprint comes from the shared control scale, not from padding, so
+    // `FIELD_BASE` cannot be reused — its `w-full` would fight the fixed width.
     const textSizeMap: Record<TailwindSize, string> = {
       xs: 'text-xs',
       sm: 'text-sm',

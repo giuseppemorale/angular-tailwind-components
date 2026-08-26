@@ -18,29 +18,12 @@ import { TailwindOption, TailwindSize } from '../../models';
 import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { FOCUS_RING, PRESS_FEEDBACK, TRANSITION_CONTROL } from '../../util/variants';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Padding and text size per control size. */
-const SEGMENT_SIZE: Record<TailwindSize, string> = {
-  xs: 'text-xs px-2 py-1',
-  sm: 'text-sm px-2.5 py-1',
-  md: 'text-sm px-3 py-1.5',
-  lg: 'text-base px-4 py-2',
-  xl: 'text-base px-5 py-2.5'
-};
-
-/** Geometry of the sliding thumb, in pixels relative to the track's padding box. */
-interface ThumbGeometry {
-  left: number;
-  width: number;
-}
+import type { ThumbGeometry } from './interfaces/thumb-geometry.interface';
+import { SEGMENT_SIZE } from './properties/constant';
 
 /**
- * A small set of mutually exclusive choices shown side by side — the "segmented control" or
- * "toggle group" pattern. Use it instead of a select when there are two to five short options and
- * seeing them all at once matters.
- *
- * Implemented as the WAI-ARIA **radio group** pattern rather than a tablist: the choice is a value,
- * not a view, so it belongs in forms and works with `formControl`.
+ * Two to five mutually exclusive choices shown side by side, built on the WAI-ARIA radio group
+ * pattern so the value works with `formControl`.
  */
 @Component({
   selector: 'tailwind-segmented-control',
@@ -126,13 +109,7 @@ export class TailwindSegmentedControl<T = string> extends TailwindComponent impl
     )
   );
 
-  /**
-   * The moving highlight behind the selected segment.
-   *
-   * It is one element that slides rather than a background that appears on whichever segment is
-   * selected: the movement is what tells the eye *where the selection went*, and it costs a single
-   * transform. `hidden` until the first measurement lands.
-   */
+  /** The single highlight element that slides behind the selection; `hidden` until measured. */
   readonly thumbClasses = computed(() =>
     [
       'pointer-events-none absolute top-1 bottom-1 left-0 rounded-control-inner bg-surface shadow-sm',

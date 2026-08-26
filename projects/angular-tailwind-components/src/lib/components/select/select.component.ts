@@ -71,9 +71,8 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
   /** Disables the control (also set via `setDisabledState` when used as CVA) */
   readonly disabled = input<boolean>(false);
   /**
-   * How an option value is matched against the current value. Defaults to identity (`Object.is`),
-   * which does **not** match structurally equal objects coming from different fetches — pass a
-   * comparator when option values are objects, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
+   * How an option value is matched against the current value; defaults to `Object.is`.
+   * Pass a comparator for object values, e.g. `[compareWith]="(a, b) => a?.id === b?.id"`.
    */
   readonly compareWith = input<(a: T | null, b: T | null) => boolean>((a, b) => Object.is(a, b));
 
@@ -99,11 +98,7 @@ export class TailwindSelect<T = unknown> extends TailwindComponent implements Co
     return `${this.subId('option')}-${index}`;
   }
 
-  /**
-   * The option the combobox reports as "virtually focused". Focus itself stays on the trigger, which
-   * is what the APG combobox pattern prescribes, so without this the keyboard highlight is invisible
-   * to assistive technology.
-   */
+  /** The option reported as "virtually focused"; real focus stays on the trigger, per the APG. */
   readonly activeDescendantId = computed(() => {
     const index = this.activeIndex();
     return this.isOpen() && index >= 0 ? this.optionId(index) : null;

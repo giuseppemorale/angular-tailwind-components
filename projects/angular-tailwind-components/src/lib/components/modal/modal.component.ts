@@ -21,22 +21,7 @@ import { TailwindSize } from '../../models';
 import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Exit animation duration, kept in sync with the panel transition in the template. */
-const EXIT_ANIMATION_MS = 200;
-
-/**
- * Panel width per size, matching the Tailwind `max-w-*` scale the modal used before.
- * Applied to the overlay pane rather than the panel, because the pane is what the global position
- * strategy sizes and centres.
- */
-const SIZE_MAX_WIDTH: Record<TailwindSize, string> = {
-  xs: '24rem',
-  sm: '28rem',
-  md: '32rem',
-  lg: '42rem',
-  xl: '56rem'
-};
+import { EXIT_ANIMATION_MS, SIZE_MAX_WIDTH } from './properties/constant';
 
 @Component({
   imports: [TailwindButton, CdkTrapFocus],

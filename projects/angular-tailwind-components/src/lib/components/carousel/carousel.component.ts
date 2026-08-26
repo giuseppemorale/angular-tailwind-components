@@ -16,11 +16,8 @@ import { TailwindComponent } from '../tailwind.component';
 import { TailwindCarouselSlide } from './carousel-slide.component';
 
 /**
- * Slideshow of projected slides.
- *
- * Built as the WAI-ARIA **carousel** pattern with slides in a tablist-like relationship to the
- * indicator dots. Autoplay is opt-in and always pauses on hover and on focus — an auto-advancing
- * carousel that cannot be stopped fails WCAG 2.2.2 (Pause, Stop, Hide).
+ * Slideshow of projected slides, following the WAI-ARIA carousel pattern.
+ * Autoplay is opt-in and pauses on hover and focus, as WCAG 2.2.2 requires.
  */
 @Component({
   imports: [TailwindButton],

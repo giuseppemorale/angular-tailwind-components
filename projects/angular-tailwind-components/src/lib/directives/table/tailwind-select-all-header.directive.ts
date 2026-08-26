@@ -17,15 +17,10 @@ import { TAILWIND_TABLE_SELECTION_HOST } from '../../components/table/interfaces
 import { TAILWIND_LABELS } from '../../tokens';
 
 /**
- * Renders the "select all rows" checkbox into a header cell:
- * `<th tailwindSelectAllHeader></th>`.
+ * Renders the "select all rows" checkbox into a header cell: `<th tailwindSelectAllHeader></th>`.
  *
- * It is a directive on the consumer's own `<th>` rather than a cell the table injects, because the
- * `<thead>` is written in the consumer's template — the table cannot add a column to it without
- * producing invalid markup. The owning table is resolved through DI, exactly like the sort header.
- *
- * The box reflects the whole filtered result, not just the visible page: selecting it selects every
- * row matching the current search, and it shows the mixed state while only some are selected.
+ * The owning table is resolved through DI, like the sort header. The box covers the whole filtered
+ * result rather than the visible page, and shows the mixed state while only some rows are selected.
  */
 @Directive({
   selector: '[tailwindSelectAllHeader]',

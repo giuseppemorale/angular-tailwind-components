@@ -5,10 +5,6 @@ import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
 import { TailwindIcon } from '../icon/icon.component';
 import { TailwindComponent } from '../tailwind.component';
-import { TailwindToastConfig } from './interfaces/toast-config.interface';
-import { TailwindToastItem } from './interfaces/toast-item.interface';
-
-export type { TailwindToastConfig, TailwindToastItem };
 
 @Component({
   imports: [TailwindButton, TailwindIcon],

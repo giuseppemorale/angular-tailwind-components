@@ -5,9 +5,7 @@ import { TailwindSelect } from '../select/select.component';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
 import { Pagination } from './interfaces/pagination.interface';
-export type { Pagination };
-
-export const DEFAULT_PAGINATION_LENGTH_OPTIONS = [5, 10, 25, 50] as const;
+import { DEFAULT_PAGINATION_LENGTH_OPTIONS } from './properties/constant';
 
 @Component({
   selector: 'tailwind-pagination',

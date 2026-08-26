@@ -15,27 +15,7 @@ import { Subscription } from 'rxjs';
 import { TailwindTooltip } from '../../components/tooltip/tooltip.component';
 import { TailwindPosition } from '../../models';
 import { resolveOverlayAnchor } from '../../util/overlay-anchor';
-
-/** Gap between trigger and tooltip, matching the arrow overhang. */
-const OFFSET_PX = 8;
-
-const POSITIONS: Record<TailwindPosition, ConnectedPosition> = {
-  top: { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -OFFSET_PX },
-  bottom: { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: OFFSET_PX },
-  left: { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -OFFSET_PX },
-  right: { originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center', offsetX: OFFSET_PX }
-};
-
-/** Opposite side first, then the perpendicular ones: a tooltip flips before it slides sideways. */
-const FALLBACK_ORDER: Record<TailwindPosition, TailwindPosition[]> = {
-  top: ['top', 'bottom', 'right', 'left'],
-  bottom: ['bottom', 'top', 'right', 'left'],
-  left: ['left', 'right', 'top', 'bottom'],
-  right: ['right', 'left', 'top', 'bottom']
-};
-
-const SHOW_DELAY_MS = 200;
-const HIDE_DELAY_MS = 150;
+import { FALLBACK_ORDER, HIDE_DELAY_MS, POSITIONS, SHOW_DELAY_MS } from './properties/constant';
 
 @Directive({
   // `[tooltip]` is the original, unprefixed selector and stays supported; `[tailwindTooltip]` is the
@@ -69,9 +49,8 @@ export class TailwindTooltipDirective {
   }
 
   /**
-   * The directive usually sits on a component host such as tailwind-button, which forwards its
-   * children and so has no box of its own. Point the overlay at the control inside it, otherwise
-   * the tooltip is measured against an empty rect and lands in the corner of the viewport.
+   * Component hosts such as `tailwind-button` forward their children and have no box, so the
+   * overlay is anchored to the control inside instead of an empty rect.
    */
   private get anchor(): HTMLElement {
     return resolveOverlayAnchor(this.host);

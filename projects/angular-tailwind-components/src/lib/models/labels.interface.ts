@@ -1,11 +1,8 @@
 /**
- * App-wide UI strings used by components that render text or accessible names on their own
- * (close buttons, pagination controls, table empty state, …).
+ * App-wide UI strings for components that render text or accessible names on their own.
  *
- * Override any subset through `provideTailwindConfig(() => ({ LABELS: { close: 'Chiudi' } }))`;
- * omitted keys fall back to {@link DEFAULT_TAILWIND_LABELS}.
- *
- * Component inputs (e.g. `closeLabel` on `tailwind-modal`) still win over these defaults.
+ * Override any subset with `provideTailwindConfig({ LABELS: { close: 'Chiudi' } })`; omitted keys
+ * fall back to {@link DEFAULT_TAILWIND_LABELS}, and component inputs still win over both.
  */
 export interface TailwindLabels {
   // ── Overlays ───────────────────────────────────────────────────────────────

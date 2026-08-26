@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
-import { TailwindOption, TailwindSize } from '../../models';
+import { TailwindSize } from '../../models';
 import { TailwindButton } from '../button/button.component';
 import { TailwindDivider } from '../divider/divider.component';
 import { TailwindSelect } from '../select/select.component';
@@ -7,16 +7,7 @@ import { TAILWIND_COMPONENTS_SIZE } from '../../tokens';
 import { TailwindComponent } from '../tailwind.component';
 import type { EditorBlockFormat, EditorCommand } from './models/editor-command.type';
 import type { EditorToolbarButtonItem, EditorToolbarGroup } from './models/editor-toolbar-group.interface';
-
-const HEADING_OPTIONS: TailwindOption<EditorBlockFormat>[] = [
-  { value: 'p', label: 'Paragraph' },
-  { value: 'h1', label: 'Heading 1' },
-  { value: 'h2', label: 'Heading 2' },
-  { value: 'h3', label: 'Heading 3' },
-  { value: 'h4', label: 'Heading 4' },
-  { value: 'h5', label: 'Heading 5' },
-  { value: 'h6', label: 'Heading 6' }
-];
+import { HEADING_OPTIONS } from './properties/constant';
 
 @Component({
   imports: [TailwindButton, TailwindDivider, TailwindSelect],

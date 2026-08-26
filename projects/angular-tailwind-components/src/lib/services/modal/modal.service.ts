@@ -12,26 +12,19 @@ import { TailwindModalConfig } from '../../components/modal/interfaces/modal-con
 import { TailwindModalRef } from '../../ref/modal/modal.ref';
 import { TAILWIND_MODAL_DATA } from '../../tokens/tokens';
 
-export type { TailwindModalConfig };
-
 @Injectable({ providedIn: 'root' })
 export class TailwindModalService {
   private readonly appRef = inject(ApplicationRef);
   private readonly environmentInjector = inject(EnvironmentInjector);
 
   /**
-   * Open a modal programmatically.
+   * Opens a modal programmatically, projecting the component's `[tailwind-modal-title]`,
+   * `[tailwind-modal-content]` and `[tailwind-modal-footer]` children into the matching slots.
    *
-   * The `component` is instantiated and its slot elements are projected into
-   * TailwindModal's ng-content slots (attribute selectors on direct children):
-   *  - `[tailwind-modal-title]`   → header title area
-   *  - `[tailwind-modal-content]` → body area
-   *  - `[tailwind-modal-footer]`  → footer area
+   * The component can inject `TailwindModalRef<R>` to close with a typed result and
+   * `TAILWIND_MODAL_DATA` to read `config.data`.
    *
-   * The component can inject `TailwindModalRef<R>` to close with a typed result
-   * and `TAILWIND_MODAL_DATA` to receive the `config.data` payload.
-   *
-   * @returns Promise that resolves with `R` on `close(result)` or `undefined` on dismiss.
+   * @returns `R` on `close(result)`, `undefined` on dismiss.
    */
   open<R = any, D = any>(component: Type<unknown>, config: TailwindModalConfig<D> = {}): Promise<R | undefined> {
     return new Promise<R | undefined>(resolve => {

@@ -21,17 +21,7 @@ import { TailwindPosition } from '../../models';
 import { TAILWIND_LABELS } from '../../tokens';
 import { TailwindButton } from '../button/button.component';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Exit animation duration, kept in sync with the panel transition. */
-const EXIT_ANIMATION_MS = 300;
-
-/** Off-screen transform per edge, used for the enter and exit slide. */
-const HIDDEN_TRANSFORM: Record<TailwindPosition, string> = {
-  right: 'translate-x-full',
-  left: '-translate-x-full',
-  top: '-translate-y-full',
-  bottom: 'translate-y-full'
-};
+import { EXIT_ANIMATION_MS, HIDDEN_TRANSFORM } from './properties/constant';
 
 @Component({
   imports: [TailwindButton, CdkTrapFocus],
@@ -158,9 +148,8 @@ export class TailwindDrawer extends TailwindComponent {
   }
 
   /**
-   * Pins the pane to one edge. Only the sliding axis is set: the global strategy *aligns* rather
-   * than stretches, so setting both `top` and `bottom` would align to the bottom instead of filling
-   * the height. The panel covers the perpendicular axis itself with `h-screen` / `w-screen`.
+   * Pins the pane to one edge. Only the sliding axis is set — the global strategy aligns rather
+   * than stretches — and the panel covers the other axis itself with `h-screen` / `w-screen`.
    */
   private edgePositionStrategy() {
     const strategy = this.overlay.position().global();

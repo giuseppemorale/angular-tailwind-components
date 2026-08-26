@@ -11,11 +11,7 @@ import {
 
 export const TAILWIND_MODAL_DATA = new InjectionToken<unknown>('TAILWIND_MODAL_DATA');
 
-/**
- * App-wide UI strings for the accessible names and built-in text the library renders itself
- * (close, dismiss, pagination controls, table empty state, …).
- * Defaults to {@link DEFAULT_TAILWIND_LABELS}; override via {@link provideTailwindConfig} with `Partial` keys only.
- */
+/** App-wide UI strings; defaults to {@link DEFAULT_TAILWIND_LABELS}, overridable with `Partial` keys. */
 export const TAILWIND_LABELS = new InjectionToken<TailwindLabels>('TAILWIND_LABELS', {
   providedIn: 'root',
   factory: () => DEFAULT_TAILWIND_LABELS
@@ -28,19 +24,15 @@ export const DEFAULT_TAILWIND_ICON_BASE_PATH = '/tailwind-icons';
 export const TAILWIND_ICON_SIZE = new InjectionToken<number>('TAILWIND_ICON_SIZE');
 
 /**
- * Directory the `tailwind-icon` SVG assets are served from, without a trailing slash.
- * Defaults to `/tailwind-icons`, which assumes the app is served from the domain root — set this
- * when the app is deployed under a sub-path (`<base href="/my-app/">`) or the assets are copied elsewhere.
+ * Directory the `tailwind-icon` SVGs are served from, without a trailing slash.
+ * Set it when the app is deployed under a sub-path or the assets are copied elsewhere.
  */
 export const TAILWIND_ICON_BASE_PATH = new InjectionToken<string>('TAILWIND_ICON_BASE_PATH', {
   providedIn: 'root',
   factory: () => DEFAULT_TAILWIND_ICON_BASE_PATH
 });
 
-/**
- * BCP 47 locale for calendars and time pickers (month names, weekday abbreviations, first day of
- * the week). Defaults to Angular's `LOCALE_ID`; any tag the runtime's `Intl` knows works.
- */
+/** BCP 47 locale for calendars and time pickers; defaults to Angular's `LOCALE_ID`. */
 export const TAILWIND_DATETIME_LANGUAGE = new InjectionToken<string>('TAILWIND_DATETIME_LANGUAGE');
 
 export const TAILWIND_COMPONENTS_SIZE = new InjectionToken<TailwindSize>('TAILWIND_COMPONENTS_SIZE');
@@ -48,25 +40,14 @@ export const TAILWIND_COMPONENTS_SIZE = new InjectionToken<TailwindSize>('TAILWI
 /** Default `kind` for `tailwind-button` when the `kind` input is omitted. */
 export const TAILWIND_BUTTON_KIND = new InjectionToken<TailwindButtonKind>('TAILWIND_BUTTON_KIND');
 
-/**
- * Default template for `tailwind-pagination` **summary** when the `summary` input is omitted.
- * Use placeholders `{start}`, `{end}`, `{total}` (same rules as the `summary` input).
- */
+/** Default `tailwind-pagination` summary template; placeholders `{start}`, `{end}`, `{total}`. */
 export const TAILWIND_PAGINATION_SUMMARY = new InjectionToken<string>('TAILWIND_PAGINATION_SUMMARY');
 
-/**
- * Default labels for `tailwind-input-password` strength feedback when component inputs are omitted.
- */
+/** Default labels for `tailwind-input-password` strength feedback. */
 export const TAILWIND_PASSWORD_LABELS = new InjectionToken<TailwindPasswordLabels>('TAILWIND_PASSWORD_LABELS');
 
-/**
- * Labels for `tailwind-editor` (modals, code view, toolbar).
- * Defaults to {@link DEFAULT_TAILWIND_EDITOR_LABELS}; override via {@link provideTailwindConfig} with `Partial` keys only.
- */
+/** Labels for `tailwind-editor`; defaults to {@link DEFAULT_TAILWIND_EDITOR_LABELS}. */
 export const TAILWIND_EDITOR_LABELS = new InjectionToken<TailwindEditorLabels>('TAILWIND_EDITOR_LABELS');
 
-/**
- * Per-tag typography and icon size for `tailwind-title` when `titleTag` is set.
- * Defaults to {@link DEFAULT_TAILWIND_TITLE_SCALE}; override via {@link provideTailwindConfig} or a `Provider`.
- */
+/** Per-tag typography and icon size for `tailwind-title`; defaults to {@link DEFAULT_TAILWIND_TITLE_SCALE}. */
 export const TAILWIND_TITLE_SCALE = new InjectionToken<TailwindTitleScale>('TAILWIND_TITLE_SCALE');

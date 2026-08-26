@@ -18,12 +18,8 @@ import { TAILWIND_TABLE_SORT_HOST } from '../../components/table/interfaces/tail
 import { TAILWIND_LABELS } from '../../tokens';
 
 /**
- * Sortable column header: put on `<th>` (plain header text + directive). Non-sortable columns omit it.
- *
- * The owning `tailwind-table` is resolved through DI — the `<th>` is written in the consumer's
- * template but declared inside `<tailwind-table>`, and the element injector follows the declaration
- * tree, so the projected header still finds its table. Sorting state is read straight off the
- * table's signals.
+ * Sortable column header: put on `<th>`; non-sortable columns omit it.
+ * The owning `tailwind-table` is resolved through DI and its sorting signals are read directly.
  */
 @Directive({
   selector: '[tailwindSortHeader]',

@@ -1,4 +1,4 @@
-import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import {
@@ -19,31 +19,10 @@ import { TailwindPosition } from '../../models';
 import { TAILWIND_LABELS } from '../../tokens';
 import { resolveOverlayAnchor } from '../../util/overlay-anchor';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Gap between trigger and panel. */
-const OFFSET_PX = 8;
-
-const POSITIONS: Record<TailwindPosition, ConnectedPosition> = {
-  top: { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -OFFSET_PX },
-  bottom: { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: OFFSET_PX },
-  left: { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -OFFSET_PX },
-  right: { originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center', offsetX: OFFSET_PX }
-};
-
-const FALLBACK_ORDER: Record<TailwindPosition, TailwindPosition[]> = {
-  top: ['top', 'bottom', 'right', 'left'],
-  bottom: ['bottom', 'top', 'right', 'left'],
-  left: ['left', 'right', 'bottom', 'top'],
-  right: ['right', 'left', 'bottom', 'top']
-};
+import { FALLBACK_ORDER, POSITIONS } from './properties/constant';
 
 /**
- * A panel of arbitrary content anchored to a trigger — what a tooltip is to text, this is to
- * markup: forms, lists, details, anything.
- *
- * The library had no such primitive, so anything richer than a tooltip and less modal than a dialog
- * had to be hand-built by the consumer. Positioning, viewport flipping, click-outside and Escape
- * come from the CDK overlay; the trigger keeps `aria-expanded`/`aria-controls` pointing at the panel.
+ * A panel of arbitrary content anchored to a trigger, positioned by the CDK overlay.
  *
  * ```html
  * <button type="button" #trigger (click)="popover.toggle(trigger)">Details</button>

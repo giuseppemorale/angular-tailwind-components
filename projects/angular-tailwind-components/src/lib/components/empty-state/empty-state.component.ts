@@ -3,13 +3,7 @@ import type { TailwindHeroicon } from '../../models';
 import { TailwindComponent } from '../tailwind.component';
 import { TailwindIcon } from '../icon/icon.component';
 
-/**
- * The "nothing here yet" panel: an icon, a headline, an explanation and room for a call to action.
- *
- * It exists so every empty list in an app does not reinvent its own centred `<div>` — the spacing,
- * the muted colours and the heading level stay consistent, and the icon is correctly hidden from
- * assistive technology instead of being read out as decoration.
- */
+/** The "nothing here yet" panel: icon, headline, explanation and room for a call to action. */
 @Component({
   imports: [TailwindIcon],
   selector: 'tailwind-empty-state',

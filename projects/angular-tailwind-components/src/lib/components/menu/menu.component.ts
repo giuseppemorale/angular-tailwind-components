@@ -1,4 +1,4 @@
-import { ConnectedPosition, Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import {
@@ -18,30 +18,7 @@ import { Subscription } from 'rxjs';
 import { TailwindMenuItem, TailwindPosition } from '../../models';
 import { resolveOverlayAnchor } from '../../util/overlay-anchor';
 import { TailwindComponent } from '../tailwind.component';
-
-/** Matches the previous `min-w-48` floor when the anchor is narrower. */
-const MIN_PANEL_WIDTH_PX = 192;
-
-/** Below the anchor, aligned to its start or end edge. */
-const BELOW: Record<'left' | 'right', ConnectedPosition[]> = {
-  left: [
-    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
-    { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
-    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' }
-  ],
-  right: [
-    { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
-    { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
-    { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' }
-  ]
-};
-
-/** Beside the anchor, for vertical rails such as the toolbar. */
-const BESIDE: ConnectedPosition[] = [
-  { originX: 'end', originY: 'top', overlayX: 'start', overlayY: 'top' },
-  { originX: 'start', originY: 'top', overlayX: 'end', overlayY: 'top' },
-  { originX: 'end', originY: 'bottom', overlayX: 'start', overlayY: 'bottom' }
-];
+import { BELOW, BESIDE, MIN_PANEL_WIDTH_PX } from './properties/constant';
 
 @Component({
   selector: 'tailwind-menu',
@@ -77,9 +54,8 @@ export class TailwindMenu extends TailwindComponent {
   }
 
   /**
-   * Opens the menu anchored to `anchor` (the toggle element).
-   * Pass the click event from the button, e.g. `(click)="menu.open($event)"`, or an `HTMLElement`.
-   * After the first open with an anchor, `open()` without arguments reuses the last one.
+   * Opens anchored to `anchor`: the click event (`(click)="menu.open($event)"`) or an element.
+   * Called without arguments, it reuses the last anchor.
    */
   open(anchor?: Event | HTMLElement): void {
     if (anchor !== undefined) this.storeAnchor(anchor);

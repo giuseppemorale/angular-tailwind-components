@@ -80,3 +80,6 @@ export * from './tree/tree.component';
 export * from './tree/interfaces/tree-node.interface';
 export * from './carousel/carousel.component';
 export * from './carousel/carousel-slide.component';
+export * from './order-list/interfaces/order-list-controls-position.type';
+export * from './order-list/interfaces/order-list-item-context.interface';
+export * from './order-list/order-list.component';

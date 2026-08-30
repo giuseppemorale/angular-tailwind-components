@@ -1,0 +1,97 @@
+<div [class]="shellClasses()">
+  <div role="group" [attr.aria-label]="reorderLabel()" class="flex shrink-0 flex-col justify-center gap-2">
+    <tailwind-button
+      kind="outlined"
+      color="secondary"
+      icon="chevron-up"
+      [size]="size()"
+      [ariaLabel]="moveUpLabel()"
+      [disabled]="!canMoveUp()"
+      (click)="moveSelectionUp()" />
+    <tailwind-button
+      kind="outlined"
+      color="secondary"
+      icon="chevron-double-up"
+      [size]="size()"
+      [ariaLabel]="moveTopLabel()"
+      [disabled]="!canMoveUp()"
+      (click)="moveSelectionTop()" />
+    <tailwind-button
+      kind="outlined"
+      color="secondary"
+      icon="chevron-down"
+      [size]="size()"
+      [ariaLabel]="moveDownLabel()"
+      [disabled]="!canMoveDown()"
+      (click)="moveSelectionDown()" />
+    <tailwind-button
+      kind="outlined"
+      color="secondary"
+      icon="chevron-double-down"
+      [size]="size()"
+      [ariaLabel]="moveBottomLabel()"
+      [disabled]="!canMoveDown()"
+      (click)="moveSelectionBottom()" />
+  </div>
+
+  <div [class]="panelClasses">
+    @if (header()) {
+      <div class="shrink-0 border-b border-border bg-surface-muted px-3 py-2 text-sm font-medium text-fg">
+        {{ header() }}
+      </div>
+    }
+
+    @if (filterable()) {
+      <div class="shrink-0 border-b border-border p-2">
+        <tailwind-input
+          type="search"
+          [size]="size()"
+          [label]="filterLabelText()"
+          [placeholder]="filterPlaceholderText()"
+          [readonly]="disabled()"
+          (valueChange)="onFilterChange($event)" />
+      </div>
+    }
+
+    <div class="min-h-0 flex-1 overflow-y-auto" [style.max-height]="scrollHeight()">
+      <ul
+        role="listbox"
+        aria-multiselectable="true"
+        [attr.aria-label]="listAriaLabel()"
+        [attr.aria-activedescendant]="activeDescendant()"
+        [attr.aria-disabled]="disabled() || null"
+        [attr.tabindex]="disabled() ? -1 : 0"
+        class="focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+        (keydown)="onKeydown($event)">
+        @for (item of displayedItems(); track $index) {
+          <li
+            role="option"
+            [id]="optionId($index)"
+            [attr.aria-selected]="isSelected(item)"
+            [class]="optionClasses(item, $index)"
+            [attr.draggable]="dragdrop() && !disabled() ? 'true' : null"
+            (click)="onOptionClick($index, $event)"
+            (dragstart)="onDragStart($index, $event)"
+            (dragover)="onDragOver($index, $event)"
+            (drop)="onDrop($index, $event)"
+            (dragend)="onDragEnd()">
+            @if (dragdrop() && !disabled()) {
+              <tailwind-icon icon="bars-3" [size]="14" class="shrink-0 text-fg-muted" aria-hidden="true" />
+            }
+            @if (itemTemplate(); as template) {
+              <ng-container *ngTemplateOutlet="template; context: contextFor(item, $index)" />
+            } @else {
+              <span class="min-w-0 flex-1 truncate">{{ labelOf(item) }}</span>
+            }
+          </li>
+        }
+      </ul>
+
+      @if (displayedItems().length === 0) {
+        <p class="px-3 py-6 text-center text-sm text-fg-muted">{{ emptyMessageText() }}</p>
+      }
+    </div>
+  </div>
+</div>
+
+<span aria-live="polite" class="sr-only">{{ announcement() }}</span>

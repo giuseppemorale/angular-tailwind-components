@@ -88,6 +88,22 @@ export interface TailwindLabels {
   rating: string;
   /** Value text of a star rating; `{value}` and `{max}` are replaced. */
   ratingValue: string;
+
+  // ── Order list ──────────────────────────────────────────────────────────────────────
+  /** Accessible name of an order list when no `ariaLabel` is given. */
+  orderList: string;
+  /** Accessible name of the reorder button group. */
+  reorder: string;
+  /** Accessible name of the "move selection up one place" button. */
+  moveUp: string;
+  /** Accessible name of the "move selection to the top" button. */
+  moveTop: string;
+  /** Accessible name of the "move selection down one place" button. */
+  moveDown: string;
+  /** Accessible name of the "move selection to the bottom" button. */
+  moveBottom: string;
+  /** Live-region text after a reorder; `{item}`, `{position}` and `{total}` are replaced. */
+  itemMoved: string;
 }
 
 export const DEFAULT_TAILWIND_LABELS: TailwindLabels = {
@@ -131,7 +147,15 @@ export const DEFAULT_TAILWIND_LABELS: TailwindLabels = {
   decrement: 'Decrease',
   increment: 'Increase',
   rating: 'Rating',
-  ratingValue: '{value} of {max}'
+  ratingValue: '{value} of {max}',
+
+  orderList: 'Order list',
+  reorder: 'Reorder',
+  moveUp: 'Move up',
+  moveTop: 'Move to top',
+  moveDown: 'Move down',
+  moveBottom: 'Move to bottom',
+  itemMoved: '{item} moved to position {position} of {total}'
 };
 
 /** Merges consumer overrides onto {@link DEFAULT_TAILWIND_LABELS}. */

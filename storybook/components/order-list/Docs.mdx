@@ -1,0 +1,134 @@
+import { ArgTypes, Canvas, Meta } from '@storybook/addon-docs/blocks';
+import * as OrderListStories from './order-list.stories';
+
+<Meta of={OrderListStories} />
+
+# Order List
+
+`TailwindOrderList` is the reorderable list: playlists, workflow steps, column order, priority queues.
+
+Pick one or more rows, then move them with the side buttons, with `Alt` + arrows, or by dragging. It follows the ARIA **multi-select listbox** pattern: one tab stop for the whole widget, `aria-activedescendant` for the active row, and a polite live region that announces where the selection landed.
+
+---
+
+## Import
+
+```typescript
+import { TailwindOrderList } from 'angular-tailwind-components';
+```
+
+## Properties
+
+### `TailwindOrderList (tailwind-order-list)`
+
+<ArgTypes of={OrderListStories} />
+
+Both `items` and `selection` are `model()` signals, so `[(items)]` and `[(selection)]` write back to the host component. `reorder` emits the new array after every move, for consumers that only care about the result.
+
+---
+
+## Example
+
+<Canvas of={OrderListStories.OrderList} />
+
+```typescript
+@Component({
+  imports: [TailwindOrderList],
+  template: `
+    <tailwind-order-list
+      [(items)]="tracks"
+      optionLabel="title"
+      dataKey="id"
+      header="Playlist"
+      (reorder)="save($event)" />
+  `
+})
+export class ExampleComponent {
+  readonly tracks = signal<Track[]>([
+    { id: 1, title: 'Midnight City' },
+    { id: 2, title: 'Time' }
+  ]);
+  save(order: Track[]): void {}
+}
+```
+
+## Labelling the rows
+
+`optionLabel` names the property to display. Without it the item is rendered with `String()`, which is what you want for a list of plain strings.
+
+`dataKey` makes identity explicit: with it, selection survives items being recreated (a new fetch, an immutable update). Without it the component falls back to reference equality.
+
+<Canvas of={OrderListStories.PlainStrings} />
+
+## Custom row template
+
+An `#item` template replaces the default label. It receives the item as `$implicit`, plus `item`, `index` and `selected`.
+
+<Canvas of={OrderListStories.CustomTemplate} />
+
+```html
+<tailwind-order-list [(items)]="tracks" optionLabel="title" dataKey="id">
+  <ng-template #item let-track let-selected="selected">
+    <span class="min-w-0 flex-1 truncate">{{ track.title }}</span>
+    <span class="shrink-0 text-xs" [class.text-primary-600]="selected">{{ track.artist }}</span>
+  </ng-template>
+</tailwind-order-list>
+```
+
+## Filter
+
+`filterable` adds a search field above the list. It narrows what is **rendered**; the underlying `items()` order is untouched, and the reorder buttons keep operating on the real positions.
+
+<Canvas of={OrderListStories.WithFilter} />
+
+## Controls position
+
+<Canvas of={OrderListStories.ControlsOnTheRight} />
+
+## Disabled
+
+`disabled` removes the tab stop, blocks selection, dragging and every reorder button.
+
+<Canvas of={OrderListStories.Disabled} />
+
+## Selection
+
+| Gesture                 | Effect                                     |
+| ----------------------- | ------------------------------------------ |
+| Click                   | Selects that row alone                     |
+| Ctrl / Cmd + click      | Adds or removes the row from the selection |
+| Shift + click           | Extends the selection from the active row  |
+| Drag a row onto another | Moves it to that position                  |
+
+## Keyboard
+
+| Key                   | Effect                                              |
+| --------------------- | --------------------------------------------------- |
+| Arrow Down / Up       | Moves the active row and selects it                 |
+| Ctrl / Cmd + Arrow    | Moves the active row without changing the selection |
+| Shift + Arrow         | Extends the selection                               |
+| Home / End            | First / last row                                    |
+| Space                 | Toggles the active row                              |
+| Enter                 | Selects the active row alone                        |
+| Ctrl / Cmd + A        | Selects every rendered row                          |
+| Alt + Arrow Down / Up | Moves the selection one place, like a drag          |
+
+## Labels
+
+Button names and the live-region text come from `TAILWIND_LABELS`, so they translate with the rest of the library:
+
+```typescript
+provideTailwindConfig({
+  LABELS: {
+    orderList: 'Elenco ordinabile',
+    reorder: 'Riordina',
+    moveUp: 'Sposta su',
+    moveTop: 'Sposta in cima',
+    moveDown: 'Sposta giù',
+    moveBottom: 'Sposta in fondo',
+    itemMoved: '{item} spostato in posizione {position} di {total}'
+  }
+});
+```
+
+The filter field reuses `search` / `searchPlaceholder`, and the empty state reuses `noData`; `filterLabel`, `filterPlaceholder` and `emptyMessage` override them per instance.

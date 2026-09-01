@@ -57,7 +57,7 @@
  * these lines, only default Tailwind palettes (e.g. `bg-neutral-100`) exist → primary buttons look gray.
  */
 /* Surface tokens: same reason as the semantic ones — needed for npm consumers whose build does not scan the FESM bundles. */
-@source inline("{hover:,focus:,}bg-{surface,surface-muted,surface-raised}");
+@source inline("{hover:,focus:,}bg-{surface,surface-muted,surface-subtle,surface-raised}");
 @source inline("{hover:,group-hover:,}text-{fg,fg-muted}");
 @source inline("border-{border,border-strong}");
 @source inline("{focus:,focus-visible:,peer-focus-visible:,}{outline,border,ring}-ring");
@@ -279,6 +279,13 @@
   --color-surface: #ffffff;
   --color-surface-muted: var(--color-neutral-50);
   --color-surface-raised: #ffffff;
+  /*
+   * Chrome fill for header / footer / toolbar zones. Kept apart from `surface-muted`, which is an
+   * *interaction* color (row hover, disabled field): a zone tint soft enough to read as modern is
+   * too soft to signal hover, and the reverse. Derived from `fg` instead of a fixed ramp shade so it
+   * follows dark mode and any brand palette without a second declaration.
+   */
+  --color-surface-subtle: color-mix(in oklab, var(--color-fg) 3%, var(--color-surface));
   --color-border: var(--color-neutral-200);
   --color-border-strong: var(--color-neutral-300);
   --color-fg: var(--color-neutral-900);
@@ -321,14 +328,19 @@
    * only ones components should name, and `provideTailwindRadius()` rewrites them at runtime, so an
    * app can go from square to fully rounded without touching a single template.
    *
-   * `*-inner` is the radius for an element nested inside a padded container of the same family
-   * (segmented-control thumb, tab inside a track): the visually correct inner radius is the outer
-   * radius minus the padding, otherwise the two curves do not stay concentric.
+   * `*-inner` is one step tighter than its role, for the two cases where the full radius is wrong:
+   * an element nested inside a padded container of the same family (segmented-control thumb, tab
+   * inside a track), where the concentric radius is the outer one minus the padding; and a surface
+   * whose content runs edge to edge (table), where the full arc cuts into the content itself
+   * instead of sitting in the padding around it.
+   *
+   * `max(0px, …)` mirrors what `provideTailwindRadius()` emits, so overriding `--radius-surface`
+   * in plain CSS below 0.25rem cannot produce a negative radius.
    */
   --radius-control: 0.5rem;
   --radius-control-inner: calc(var(--radius-control) - 0.125rem);
   --radius-surface: 0.75rem;
-  --radius-surface-inner: calc(var(--radius-surface) - 0.25rem);
+  --radius-surface-inner: max(0px, calc(var(--radius-surface) - 0.25rem));
   --radius-overlay: 0.875rem;
 
   /*

@@ -26,8 +26,10 @@ export class TailwindCard extends TailwindComponent {
   readonly elevated = input<boolean>(false);
   /** Whether to show hover shadow effect. */
   readonly hoverable = input<boolean>(false);
-  /** Whether to show header background. */
+  /** Whether to tint the header with the chrome fill instead of separating it with a rule. */
   readonly headerBg = input<boolean>(false);
+  /** Whether to tint the footer with the chrome fill instead of separating it with a rule. */
+  readonly footerBg = input<boolean>(false);
   /** Whether the card has a header. */
   readonly hasHeader = input<boolean>(true);
   /** Whether the card has a footer. */
@@ -35,19 +37,25 @@ export class TailwindCard extends TailwindComponent {
   /** How much room the card gives its content. */
   readonly density = input<TailwindCardDensity>('comfortable');
 
+  /*
+   * A tinted zone and a rule say the same thing twice; carrying both is what made the chrome read
+   * heavy. Exactly one is applied.
+   */
   protected readonly headerClasses = computed(() =>
     [
-      'shrink-0 border-b border-border',
+      'shrink-0',
       DENSITY_PADDING[this.density()].header,
-      this.headerBg() ? 'bg-surface-muted' : ''
-    ]
-      .filter(Boolean)
-      .join(' ')
+      this.headerBg() ? 'bg-surface-subtle' : 'border-b border-border'
+    ].join(' ')
   );
 
   protected readonly bodyClasses = computed(() => `flex-1 min-h-0 ${DENSITY_PADDING[this.density()].body}`);
 
-  protected readonly footerClasses = computed(
-    () => `shrink-0 border-t border-border bg-surface-muted ${DENSITY_PADDING[this.density()].footer}`
+  protected readonly footerClasses = computed(() =>
+    [
+      'shrink-0',
+      DENSITY_PADDING[this.density()].footer,
+      this.footerBg() ? 'bg-surface-subtle' : 'border-t border-border'
+    ].join(' ')
   );
 }

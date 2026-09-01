@@ -19,24 +19,26 @@
    * la specificità contributiva è 0, così le utility Tailwind su `th` / `td` proiettate
    * (`w-*`, `min-w-*`, `max-w-*`, `p-*`, ecc.) vincono sempre in caso di conflitto.
    */
-  :host ::ng-deep :where(thead) {
-    background-color: var(--color-neutral-50);
-    border-bottom: 1px solid var(--color-neutral-200);
-  }
-
+  /* Not `fg-muted`: slate-500 on the surface is 4.6:1, barely over AA for text this small. */
   :host ::ng-deep :where(thead th) {
     min-width: var(--tw-table-col-min-width);
     padding: 0.75rem 1rem;
-    font-weight: 600;
-    color: var(--color-neutral-700);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    color: var(--color-neutral-600);
     text-align: left;
     white-space: nowrap;
     vertical-align: middle;
   }
 
+  /* The rule belongs to the cell, not to the `tr`: a row is a row group and only paints a border
+     under `border-collapse: collapse`, which the preflight happens to set but which a consumer
+     could switch off. */
   :host ::ng-deep :where(tbody td) {
     min-width: var(--tw-table-col-min-width);
     padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--color-border);
     color: var(--color-neutral-700);
     vertical-align: middle;
   }
@@ -133,6 +135,7 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  /* Opaque, and the same color as the shell: without a fill the rows would scroll through it. */
   background-color: var(--color-surface);
   /*
    * A sticky header that only has a border looks like it is part of the first row once the body

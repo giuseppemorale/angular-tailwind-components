@@ -30,6 +30,14 @@ Classes passed through `class` / `[class]` land on the inner visual surface, not
 | _(default)_              | Direct children of the tag          | Card body                              |
 | `[tailwind-card-footer]` | `<div tailwind-card-footer>…</div>` | Rendered only when `hasFooter` is true |
 
+### Header and footer zones
+
+A zone is set apart by a hairline rule **or** by the chrome fill (`surface-subtle`, a 3% tint of the
+foreground) — never both, which is what made stacked headers read heavy. `headerBg` and `footerBg`
+swap the rule for the fill on their zone; both default to `false`.
+
+<Canvas of={CardStories.ChromeZones} />
+
 ---
 
 ## Example

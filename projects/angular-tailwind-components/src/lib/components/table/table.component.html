@@ -15,13 +15,11 @@
     </div>
   </div>
   <!--
-    `overflow-hidden` is what makes the rounded border actually read as rounded: the header's
-    background and the pagination bar are opaque rectangles, so without clipping they paint straight
-    over the four corners and the border looks broken exactly there. Overlays raised from inside a
-    cell (menu, tooltip, popconfirm) are portalled into the CDK container, so nothing that needs to
-    escape the table is clipped by this.
+    No frame around the table: the rules live between the rows, not around them. `bg-surface` stays
+    so the sticky header has an opaque plane to paint on, and so the table reads as a surface on a
+    tinted page.
   -->
-  <div class="w-full overflow-hidden rounded-surface border border-border">
+  <div class="tw-table-shell w-full bg-surface">
     @if (loading()) {
       <div class="px-4 py-2" role="status" [attr.aria-label]="loadingText()">
         @for (row of skeletonRows; track row) {
@@ -37,7 +35,7 @@
     } @else {
       <div class="tw-table-scroll overflow-x-auto" [class.tw-table-sticky]="stickyHeader()">
         <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
-        <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-neutral-100">
+        <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-border">
           <ng-content select="thead" />
           @for (ctx of rowContexts(); track ctx.dataIndex) {
             <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: ctx" />
@@ -54,7 +52,7 @@
       </div>
 
       @if (paginated() && totalItems() > 0) {
-        <div class="px-4 py-3 border-t border-border bg-surface">
+        <div class="px-4 py-3">
           <tailwind-pagination
             [totalItems]="totalItems()"
             [pageSize]="pageSize()"

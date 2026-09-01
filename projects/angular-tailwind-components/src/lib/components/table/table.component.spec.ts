@@ -447,12 +447,13 @@ describe('TailwindTable', () => {
     });
   });
 
-  it('should clip its own corners so the rounded border is not painted over', () => {
-    // The header background and the pagination bar are opaque rectangles: without clipping they
-    // cover the four corners and the border visibly breaks exactly there.
-    const shell: HTMLElement = fixture.nativeElement.querySelector('.rounded-surface');
+  it('should not frame itself like a card', () => {
+    // The separation is carried by the rules between rows, so an outer border and a radius would
+    // only add a second, competing frame around them.
+    const shell: HTMLElement = fixture.nativeElement.querySelector('.tw-table-shell');
     expect(shell).toBeTruthy();
-    expect(shell.className).toContain('overflow-hidden');
+    expect(shell.className).not.toMatch(/border(-border)?/);
+    expect(shell.className).not.toMatch(/rounded-/);
   });
 
   it('should show all rows when search query is empty', () => {

@@ -292,10 +292,28 @@ Every control takes its height from one shared scale, so a button, an input and 
 
 ## Conventions
 
-- **Consumer `class`** — every component accepts `class` / `[class]` and merges it onto the internal surface (the visible root element), so layout utilities such as `h-full` or `mb-4` land where they should.
+- **Consumer `class`** — every component accepts `class` / `[class]` and merges it onto the internal surface (the visible root element). See [Restyling a component](#restyling-a-component).
 - **Content slots** — named slots use attribute selectors on native elements: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`.
 - **Pipes** — `TailwindSafeHtmlPipe` (`safehtml`) sanitizes HTML for `[innerHTML]`; used internally for `errorText` and `helperText`.
 - **Focus and motion** — one focus color (`--color-ring`), three durations, and `prefers-reduced-motion` respected out of the box.
+
+### Restyling a component
+
+The merge is conflict-aware, so a class you pass **replaces** the base class of the same group
+instead of sitting beside it:
+
+```html
+<tailwind-card class="bg-red-50 border-red-200">…</tailwind-card>
+<tailwind-card class="rounded-none shadow-none">…</tailwind-card>
+<tailwind-table class="text-base">…</tailwind-table>
+```
+
+This matters because both classes are plain single-class selectors with the same specificity, so
+without conflict resolution the winner is whichever one Tailwind happens to emit last — alphabetical
+by value. `bg-red-500` lost to `bg-surface` while `bg-teal-500` won, and `rounded-full` lost to
+`rounded-surface` while `rounded-xl` won. Order in the `class` attribute never mattered.
+
+Utilities that collide with nothing (`h-full`, `mb-4`, `col-span-2`) are simply appended, as before.
 
 ## Components
 

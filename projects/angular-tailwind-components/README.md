@@ -130,6 +130,22 @@ provideTailwindConfig({ RADIUS: 'round' }); // 'sharp' | 'compact' | 'default' |
 provideTailwindConfig({ RADIUS: { control: '0.375rem', overlay: '1rem' } });
 ```
 
+### Surface tokens
+
+Four fills, each with one job:
+
+| Token            | Used for                                                         |
+| ---------------- | ---------------------------------------------------------------- |
+| `surface`        | The panel itself — card, table, menu, modal                      |
+| `surface-subtle` | Chrome zones — card header/footer, table `thead`, editor toolbar |
+| `surface-muted`  | Interaction — row hover, disabled field, segmented-control track |
+| `surface-raised` | Anything floating above the panel                                |
+
+`surface-subtle` is derived (`color-mix(in oklab, var(--color-fg) 3%, var(--color-surface))`), so it
+tracks light, dark and any brand palette on its own. Header and footer zones carry a fill **or** a
+rule, never both — a card's header is separated by a hairline until `headerBg` / `footerBg` swaps it
+for the tint.
+
 ### Dark mode
 
 Components paint themselves with surface tokens (`bg-surface`, `text-fg`, `border-border`), so dark mode is a variable remap. It is opt-in: put `class="dark"` on `<html>`, or `class="theme-auto"` to follow the OS. Dark rules are scoped to `:root.dark` and outrank a custom brand palette.
@@ -160,7 +176,7 @@ Every control takes its height from one shared scale, so a button, an input and 
 
 ## Conventions
 
-- **Consumer `class`** — every component accepts `class` / `[class]` and merges it onto the internal surface (the visible root element), so layout utilities such as `h-full` or `mb-4` land where they should.
+- **Consumer `class`** — every component accepts `class` / `[class]` and merges it onto the internal surface (the visible root element). The merge is **conflict-aware**: a class you pass replaces the base class of the same group instead of sitting beside it, so `bg-red-50` repaints a card, `rounded-none` reshapes it and `shadow-none` clears its elevation. Both are single-class selectors of equal specificity, so without this the winner would be whichever Tailwind emits last — alphabetical by value, which is why `bg-red-500` used to lose to `bg-surface` while `bg-teal-500` won. Utilities that collide with nothing (`h-full`, `mb-4`) are appended as before.
 - **Content slots** — named slots use attribute selectors on native elements: `<div tailwind-card-header>…</div>`, `<div tailwind-modal-content>…</div>`.
 - **Pipes** — `TailwindSafeHtmlPipe` (`safehtml`) sanitizes HTML for `[innerHTML]`; used internally for `errorText` and `helperText`.
 - **Focus and motion** — one focus color (`--color-ring`), three durations, and `prefers-reduced-motion` respected out of the box.

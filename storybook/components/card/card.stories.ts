@@ -13,7 +13,8 @@ const meta: Meta<TailwindCard> = {
     density: { control: 'select', options: ['comfortable', 'compact'] },
     elevated: { control: 'boolean' },
     hoverable: { control: 'boolean' },
-    headerBg: { control: 'boolean' }
+    headerBg: { control: 'boolean' },
+    footerBg: { control: 'boolean' }
   },
   decorators: [
     moduleMetadata({
@@ -41,9 +42,37 @@ export const Card: StoryObj<TailwindCard> = {
     elevated: false,
     hoverable: false,
     headerBg: false,
+    footerBg: false,
     hasHeader: true,
-    hasFooter: true
+    hasFooter: true,
+    class: 'bg-red-500',
+    id: ''
   }
+};
+
+/** A zone is set apart by a rule *or* by the chrome fill — never both. */
+export const ChromeZones: StoryObj<TailwindCard> = {
+  name: 'Header & footer zones',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <div class="flex flex-wrap items-start gap-4">
+        <tailwind-card style="max-width:280px">
+          <tailwind-title tailwind-card-header titleTag="h3" text="Rules" />
+          <p class="text-neutral-600 text-sm">The default: hairline above and below, no fill.</p>
+          <div tailwind-card-footer class="flex justify-end gap-2">
+            <tailwind-button size="sm">Confirm</tailwind-button>
+          </div>
+        </tailwind-card>
+        <tailwind-card style="max-width:280px" [headerBg]="true" [footerBg]="true">
+          <tailwind-title tailwind-card-header titleTag="h3" text="Fills" />
+          <p class="text-neutral-600 text-sm">Both zones tinted; the rules step aside.</p>
+          <div tailwind-card-footer class="flex justify-end gap-2">
+            <tailwind-button size="sm">Confirm</tailwind-button>
+          </div>
+        </tailwind-card>
+      </div>`
+  })
 };
 
 export const NoHeader: StoryObj<TailwindCard> = {
@@ -69,7 +98,7 @@ export const NoHeader: StoryObj<TailwindCard> = {
 };
 
 export const NoFooter: StoryObj<TailwindCard> = {
-  parameters: { controls: { exclude: ['hasFooter', 'headerBg'] } },
+  parameters: { controls: { exclude: ['hasFooter', 'footerBg'] } },
   render: args => ({
     props: args,
     template: `

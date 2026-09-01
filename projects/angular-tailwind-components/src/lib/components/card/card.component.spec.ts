@@ -60,12 +60,25 @@ describe('TailwindCard', () => {
     expect(body.className).not.toContain('p-6');
   });
 
-  it('should tint the header only when headerBg is set', () => {
+  it('should tint the header only when headerBg is set, swapping the rule for the fill', () => {
     const header = () => host.firstElementChild!.firstElementChild as HTMLElement;
-    expect(header().className).not.toContain('bg-surface-muted');
+    expect(header().className).not.toContain('bg-surface-subtle');
+    expect(header().className).toContain('border-b');
 
     fixture.componentRef.setInput('headerBg', true);
     fixture.detectChanges();
-    expect(header().className).toContain('bg-surface-muted');
+    expect(header().className).toContain('bg-surface-subtle');
+    expect(header().className).not.toContain('border-b');
+  });
+
+  it('should tint the footer only when footerBg is set, swapping the rule for the fill', () => {
+    const footer = () => host.firstElementChild!.lastElementChild as HTMLElement;
+    expect(footer().className).not.toContain('bg-surface-subtle');
+    expect(footer().className).toContain('border-t');
+
+    fixture.componentRef.setInput('footerBg', true);
+    fixture.detectChanges();
+    expect(footer().className).toContain('bg-surface-subtle');
+    expect(footer().className).not.toContain('border-t');
   });
 });

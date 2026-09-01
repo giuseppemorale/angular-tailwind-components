@@ -35,7 +35,7 @@ export const Tree: StoryObj<TailwindTree> = {
   render: () => ({
     props: { nodes: NODES },
     template: `
-      <div class="max-w-xs rounded-lg border border-neutral-200 p-2">
+      <div class="max-w-xs">
         <tailwind-tree [nodes]="nodes" ariaLabel="Project files" />
       </div>`
   })
@@ -46,7 +46,7 @@ export const PreExpanded: StoryObj<TailwindTree> = {
   render: () => ({
     props: { nodes: NODES, expanded: new Set(['src', 'src/app']) },
     template: `
-      <div class="max-w-xs rounded-lg border border-neutral-200 p-2">
+      <div class="max-w-xs">
         <tailwind-tree [nodes]="nodes" [expandedKeys]="expanded" ariaLabel="Project files" />
       </div>`
   })

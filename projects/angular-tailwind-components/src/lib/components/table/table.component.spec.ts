@@ -452,8 +452,10 @@ describe('TailwindTable', () => {
     // only add a second, competing frame around them.
     const shell: HTMLElement = fixture.nativeElement.querySelector('.tw-table-shell');
     expect(shell).toBeTruthy();
-    expect(shell.className).not.toMatch(/border(-border)?/);
-    expect(shell.className).not.toMatch(/rounded-/);
+    const classes = shell.className.split(/\s+/);
+    expect(classes).not.toContain('border');
+    expect(classes).not.toContain('border-border');
+    expect(classes.some(c => c.startsWith('rounded-'))).toBe(false);
   });
 
   it('should show all rows when search query is empty', () => {

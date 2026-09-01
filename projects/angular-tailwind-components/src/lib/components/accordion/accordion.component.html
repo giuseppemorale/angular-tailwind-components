@@ -1,3 +1,5 @@
-<div [class]="mergeClasses('border border-border rounded-surface overflow-hidden divide-y divide-neutral-200')">
+<!-- No frame: the rule under each item is the whole separation. The container carried a
+     `divide-y` on top of that item border, which stacked two 1px lines between every pair. -->
+<div [class]="mergeClasses()">
   <ng-content />
 </div>

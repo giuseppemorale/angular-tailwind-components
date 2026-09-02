@@ -4,19 +4,19 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
-  TailwindButton,
-  TailwindCard,
-  TailwindCheckbox,
-  TailwindDatePicker,
-  TailwindDateTimePicker,
-  TailwindInput,
-  TailwindInputPassword,
+  TailwindButtonModule,
+  TailwindCardModule,
+  TailwindCheckboxModule,
+  TailwindDatePickerModule,
+  TailwindDateTimePickerModule,
+  TailwindInputModule,
+  TailwindInputPasswordModule,
   TailwindOption,
-  TailwindSelect,
-  TailwindStep,
+  TailwindSelectModule,
   TailwindStepper,
-  TailwindTimePicker,
-  TailwindTitle
+  TailwindStepperModule,
+  TailwindTimePickerModule,
+  TailwindTitleModule
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
 import {
@@ -31,18 +31,17 @@ import { ErrorPipe } from '../../core/pipe/error.pipe';
   imports: [
     ReactiveFormsModule,
     HeaderComponent,
-    TailwindCard,
-    TailwindTitle,
-    TailwindStepper,
-    TailwindStep,
-    TailwindInput,
-    TailwindInputPassword,
-    TailwindSelect,
-    TailwindDatePicker,
-    TailwindTimePicker,
-    TailwindDateTimePicker,
-    TailwindCheckbox,
-    TailwindButton,
+    TailwindCardModule,
+    TailwindTitleModule,
+    TailwindStepperModule,
+    TailwindInputModule,
+    TailwindInputPasswordModule,
+    TailwindSelectModule,
+    TailwindDatePickerModule,
+    TailwindTimePickerModule,
+    TailwindDateTimePickerModule,
+    TailwindCheckboxModule,
+    TailwindButtonModule,
     TranslocoPipe,
     ErrorPipe,
     DatePipe

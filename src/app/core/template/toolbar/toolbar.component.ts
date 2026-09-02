@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
-import { TailwindButton, TailwindMenuItem, TailwindToolbar } from 'angular-tailwind-components';
+import { TailwindButtonModule, TailwindMenuItem, TailwindToolbarModule } from 'angular-tailwind-components';
 
 @Component({
-  imports: [TailwindToolbar, TailwindButton, TranslocoPipe, RouterLink],
+  imports: [TailwindToolbarModule, TailwindButtonModule, TranslocoPipe, RouterLink],
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html'
 })

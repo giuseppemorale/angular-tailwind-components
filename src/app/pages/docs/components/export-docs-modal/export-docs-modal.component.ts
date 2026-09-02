@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
-import { TailwindButton, TailwindModalRef } from 'angular-tailwind-components';
+import { TailwindButtonModule, TailwindModalRef } from 'angular-tailwind-components';
 
 @Component({
   selector: 'app-export-docs-modal',
-  imports: [TailwindButton, TranslocoPipe],
+  imports: [TailwindButtonModule, TranslocoPipe],
   templateUrl: './export-docs-modal.component.html'
 })
 export class ExportDocsModalComponent {

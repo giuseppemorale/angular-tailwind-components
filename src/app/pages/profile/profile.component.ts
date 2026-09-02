@@ -3,18 +3,18 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { toSignal } from '@angular/core/rxjs-interop';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
-  TailwindAvatar,
-  TailwindButton,
-  TailwindCard,
-  TailwindDivider,
-  TailwindEditor,
-  TailwindInput,
-  TailwindSpinner,
-  TailwindTextarea,
-  TailwindTitle,
+  TailwindAvatarModule,
+  TailwindButtonModule,
+  TailwindCardModule,
+  TailwindDividerModule,
+  TailwindEditorModule,
+  TailwindInputModule,
+  TailwindSpinnerModule,
+  TailwindTextareaModule,
+  TailwindTitleModule,
   TailwindToastService,
-  TailwindToggle,
-  TailwindUpload
+  TailwindToggleModule,
+  TailwindUploadModule
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
 
@@ -22,17 +22,17 @@ import { HeaderComponent } from '../../core/template/header/header.component';
   imports: [
     ReactiveFormsModule,
     HeaderComponent,
-    TailwindCard,
-    TailwindTitle,
-    TailwindAvatar,
-    TailwindDivider,
-    TailwindInput,
-    TailwindTextarea,
-    TailwindEditor,
-    TailwindUpload,
-    TailwindToggle,
-    TailwindButton,
-    TailwindSpinner,
+    TailwindCardModule,
+    TailwindTitleModule,
+    TailwindAvatarModule,
+    TailwindDividerModule,
+    TailwindInputModule,
+    TailwindTextareaModule,
+    TailwindEditorModule,
+    TailwindUploadModule,
+    TailwindToggleModule,
+    TailwindButtonModule,
+    TailwindSpinnerModule,
     TranslocoPipe
   ],
   selector: 'app-page-profile',

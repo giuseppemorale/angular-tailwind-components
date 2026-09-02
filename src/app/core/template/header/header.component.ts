@@ -1,14 +1,14 @@
 import { NgClass } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import {
-  TailwindBreadcrumb,
   TailwindBreadcrumbItem,
-  TailwindTitle,
+  TailwindBreadcrumbModule,
+  TailwindTitleModule,
   TailwindTitleTag
 } from 'angular-tailwind-components';
 
 @Component({
-  imports: [NgClass, TailwindBreadcrumb, TailwindTitle],
+  imports: [NgClass, TailwindBreadcrumbModule, TailwindTitleModule],
   selector: 'app-header',
   templateUrl: './header.component.html'
 })

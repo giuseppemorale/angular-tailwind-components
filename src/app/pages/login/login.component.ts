@@ -3,14 +3,14 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import {
-  TailwindButton,
-  TailwindCard,
-  TailwindCheckbox,
-  TailwindDrawer,
-  TailwindInput,
-  TailwindInputOtp,
-  TailwindInputPassword,
-  TailwindTitle,
+  TailwindButtonModule,
+  TailwindCardModule,
+  TailwindCheckboxModule,
+  TailwindDrawerModule,
+  TailwindInputModule,
+  TailwindInputOtpModule,
+  TailwindInputPasswordModule,
+  TailwindTitleModule,
   TailwindToastService
 } from 'angular-tailwind-components';
 import { HeaderComponent } from '../../core/template/header/header.component';
@@ -21,14 +21,14 @@ import { ErrorPipe } from '../../core/pipe/error.pipe';
     ReactiveFormsModule,
     RouterLink,
     HeaderComponent,
-    TailwindCard,
-    TailwindTitle,
-    TailwindInput,
-    TailwindInputPassword,
-    TailwindInputOtp,
-    TailwindCheckbox,
-    TailwindButton,
-    TailwindDrawer,
+    TailwindCardModule,
+    TailwindTitleModule,
+    TailwindInputModule,
+    TailwindInputPasswordModule,
+    TailwindInputOtpModule,
+    TailwindCheckboxModule,
+    TailwindButtonModule,
+    TailwindDrawerModule,
     TranslocoPipe,
     ErrorPipe
   ],

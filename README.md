@@ -45,11 +45,11 @@ That file already includes `@import "tailwindcss"`, the library `@theme` block a
 
 ```typescript
 import { Component } from '@angular/core';
-import { TailwindButton, TailwindInput, TailwindToggle } from 'angular-tailwind-components';
+import { TailwindButtonModule, TailwindInputModule, TailwindToggleModule } from 'angular-tailwind-components';
 
 @Component({
   selector: 'app-example',
-  imports: [TailwindButton, TailwindInput, TailwindToggle],
+  imports: [TailwindButtonModule, TailwindInputModule, TailwindToggleModule],
   template: `
     <form [formGroup]="form">
       <tailwind-input label="Email" [formControl]="form.controls.email" />
@@ -65,6 +65,8 @@ export class ExampleComponent {
   });
 }
 ```
+
+Every component ships an NgModule named after it: importing `TailwindTableModule` brings the table together with its row template and header directives, `TailwindAccordionModule` brings the accordion and its items. The individual classes stay exported, so `imports: [TailwindButton]` keeps working when you want a narrower import.
 
 ## Configuration
 

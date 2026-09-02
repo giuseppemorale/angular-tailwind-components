@@ -44,6 +44,7 @@ Riferimento: `calendar-panel/`.
 **Root del componente** — solo artefatti Angular:
 
 - `*.component.ts`, `*.component.html`, `*.component.css` (o `.scss`), `*.component.spec.ts`
+- `<capofamiglia>.module.ts` (+ `.module.spec.ts` se la famiglia ha più di un declarable)
 - Più componenti nella stessa cartella (es. `accordion/`, `tabs/`): stesso pattern per ogni componente
 
 Il `.component.ts` contiene **solo la classe del componente** e il suo `@Component`: niente `const`, `type`, `interface` o funzioni a livello di modulo. Stessa regola per `*.service.ts`, `*.directive.ts`, `*.pipe.ts` e per i provider.
@@ -58,6 +59,15 @@ Il `.component.ts` contiene **solo la classe del componente** e il suo `@Compone
 Se un tipo o una costante spostata era parte dell'API pubblica, aggiungi il re-export in `components/index.ts` (o `providers/index.ts`) per non rompere `public-api`.
 
 Spec dei file in `util/`: `util/<nome>.spec.ts` accanto al sorgente.
+
+### NgModule del componente
+
+Ogni cartella espone `Tailwind<Capofamiglia>Module`, che importa **ed esporta** tutti i declarable pubblici della famiglia: `TailwindAccordionModule` porta accordion e item, `TailwindTableModule` porta la tabella con le sue tre direttive. È la forma d'uso documentata; le singole classi restano esportate per import più stretti.
+
+- File `<capofamiglia>.module.ts` nella root della cartella, con la sola classe `@NgModule`: liste inline nel decoratore, niente `const` a livello di modulo.
+- `imports` ed `exports` con la stessa lista; nessun provider e nessun `forRoot()`: i servizi restano `providedIn: 'root'` e la configurazione passa da `provideTailwindConfig`.
+- Aggiungi `export * from './<cartella>/<capofamiglia>.module';` nella sezione Modules di `components/index.ts`.
+- Dentro la libreria i componenti continuano a importarsi fra loro **per classe**, mai per modulo.
 
 ## Inoltro `class` (surface)
 
@@ -173,7 +183,8 @@ npx ng test angular-tailwind-components --include='src/lib/components/<folder>/<
 
 ## Checklist componente
 
-- [ ] Root cartella: solo `*.component.*` + sottocartelle (`properties/`, `interfaces/`, `util/`, …)
+- [ ] Root cartella: solo `*.component.*` / `*.module.ts` + sottocartelle (`properties/`, `interfaces/`, `util/`, …)
+- [ ] `Tailwind<Nome>Module` aggiornato con il nuovo declarable ed esportato da `components/index.ts`
 - [ ] Nessuna `const` / `type` / funzione a livello di modulo nel `.component.ts`
 - [ ] Commenti sintetici (JSDoc di una riga)
 - [ ] Signals

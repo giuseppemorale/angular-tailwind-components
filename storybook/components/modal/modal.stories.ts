@@ -1,7 +1,7 @@
 import { Component, inject, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import {
-  TailwindButton,
+  TailwindButtonModule,
   TailwindModal,
   TailwindModalRef,
   TailwindModalService,
@@ -9,7 +9,7 @@ import {
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 @Component({
-  imports: [TailwindButton],
+  imports: [TailwindButtonModule],
   selector: 'modal-story-confirm',
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
@@ -28,7 +28,7 @@ class ConfirmModalComponent {
 }
 
 @Component({
-  imports: [TailwindButton],
+  imports: [TailwindButtonModule],
   selector: 'modal-story-programmatic-wrapper',
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `

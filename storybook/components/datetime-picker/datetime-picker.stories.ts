@@ -1,7 +1,10 @@
 import { JsonPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
-import { TailwindDateTimePicker } from '../../../projects/angular-tailwind-components/src/public-api';
+import {
+  TailwindDateTimePicker,
+  TailwindDateTimePickerModule
+} from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindDateTimePicker> = {
   title: 'Form Controls/DateTimePicker',
@@ -53,7 +56,7 @@ export const WithReactiveForm: StoryObj<TailwindDateTimePicker> = {
   parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
-      imports: [ReactiveFormsModule, TailwindDateTimePicker, JsonPipe]
+      imports: [ReactiveFormsModule, TailwindDateTimePickerModule, JsonPipe]
     })
   ],
   render: () => ({

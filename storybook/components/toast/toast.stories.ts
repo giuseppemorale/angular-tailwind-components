@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import {
-  TailwindToastService,
-  TailwindToast,
-  TailwindButton,
-  TailwindPosition
+  TailwindButtonModule,
+  TailwindPosition,
+  TailwindToastModule,
+  TailwindToastService
 } from '../../../projects/angular-tailwind-components/src/public-api';
 import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 
@@ -19,7 +19,7 @@ const TOAST_SERVICE_DEMO_TEMPLATE = `<div class="flex flex-wrap gap-3">
 
 @Component({
   selector: 'tailwind-toast-story',
-  imports: [TailwindToast, TailwindButton],
+  imports: [TailwindToastModule, TailwindButtonModule],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: TOAST_SERVICE_DEMO_TEMPLATE
 })

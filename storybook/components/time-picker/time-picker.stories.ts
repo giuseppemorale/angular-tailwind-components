@@ -3,7 +3,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import {
   TAILWIND_DATETIME_LANGUAGE,
-  TailwindTimePicker
+  TailwindTimePicker,
+  TailwindTimePickerModule
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTimePicker> = {
@@ -24,7 +25,7 @@ export const WithReactiveForm: StoryObj<TailwindTimePicker> = {
   parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
-      imports: [ReactiveFormsModule, TailwindTimePicker, JsonPipe]
+      imports: [ReactiveFormsModule, TailwindTimePickerModule, JsonPipe]
     })
   ],
   render: () => ({
@@ -46,7 +47,7 @@ export const EnglishLanguage: StoryObj<TailwindTimePicker> = {
   decorators: [
     moduleMetadata({
       providers: [{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'en' }],
-      imports: [TailwindTimePicker]
+      imports: [TailwindTimePickerModule]
     })
   ],
   render: () => ({
@@ -62,7 +63,7 @@ export const Disabled: StoryObj<TailwindTimePicker> = {
   parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
-      imports: [ReactiveFormsModule, TailwindTimePicker]
+      imports: [ReactiveFormsModule, TailwindTimePickerModule]
     })
   ],
   render: () => ({

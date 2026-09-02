@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import {
-  TailwindButton,
-  TailwindInput,
-  TailwindTooltipDirective
+  TailwindButtonModule,
+  TailwindInputModule,
+  TailwindTooltipDirective,
+  TailwindTooltipModule
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindTooltipDirective> = {
@@ -19,7 +20,7 @@ export const ButtonTooltip: StoryObj<TailwindTooltipDirective> = {
   render: args => ({
     props: args,
     moduleMetadata: {
-      imports: [TailwindTooltipDirective, TailwindButton]
+      imports: [TailwindTooltipModule, TailwindButtonModule]
     },
     template: `
       <div class="flex justify-center" style="padding: 60px;">
@@ -33,7 +34,7 @@ export const InputTooltip: StoryObj<TailwindTooltipDirective> = {
   render: args => ({
     props: args,
     moduleMetadata: {
-      imports: [TailwindTooltipDirective, TailwindInput]
+      imports: [TailwindTooltipModule, TailwindInputModule]
     },
     template: `
       <div class="flex justify-center" style="padding: 60px;">

@@ -1,12 +1,12 @@
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
-import { TailwindMessage } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindMessage, TailwindMessageModule } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindMessage> = {
   title: 'Feedback/Message',
   component: TailwindMessage,
   decorators: [
     moduleMetadata({
-      imports: [TailwindMessage]
+      imports: [TailwindMessageModule]
     })
   ],
   argTypes: {

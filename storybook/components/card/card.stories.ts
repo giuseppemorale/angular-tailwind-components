@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { argsToTemplate, moduleMetadata } from '@storybook/angular';
 import {
-  TailwindButton,
+  TailwindButtonModule,
   TailwindCard,
-  TailwindTitle
+  TailwindCardModule,
+  TailwindTitleModule
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindCard> = {
@@ -18,7 +19,7 @@ const meta: Meta<TailwindCard> = {
   },
   decorators: [
     moduleMetadata({
-      imports: [TailwindCard, TailwindTitle, TailwindButton]
+      imports: [TailwindCardModule, TailwindTitleModule, TailwindButtonModule]
     })
   ]
 };

@@ -2,6 +2,7 @@ import { Component, Input, model, signal } from '@angular/core';
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
 import {
   TailwindAutocomplete,
+  TailwindAutocompleteModule,
   TailwindOption,
   TailwindSize
 } from '../../../projects/angular-tailwind-components/src/public-api';
@@ -46,7 +47,7 @@ export const StaticCountries: StoryObj<TailwindAutocomplete<string>> = {
 
 @Component({
   selector: 'autocomplete-async-story',
-  imports: [TailwindAutocomplete],
+  imports: [TailwindAutocompleteModule],
   template: `
     <div class="max-w-lg">
       <tailwind-autocomplete

@@ -5,7 +5,7 @@ import type {
   EditorToolbarPreset
 } from '../../../projects/angular-tailwind-components/src/lib/components/editor/models/editor-command.type';
 import type { TailwindSize } from '../../../projects/angular-tailwind-components/src/public-api';
-import { TailwindEditor } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindEditor, TailwindEditorModule } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindEditor> = {
   title: 'Form Controls/Editor',
@@ -36,7 +36,7 @@ export default meta;
 
 @Component({
   selector: 'sb-editor-story',
-  imports: [TailwindEditor],
+  imports: [TailwindEditorModule],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-editor
@@ -126,7 +126,7 @@ export const WithError: StoryObj<TailwindEditor> = {
 
 @Component({
   selector: 'sb-html-change-demo',
-  imports: [TailwindEditor],
+  imports: [TailwindEditorModule],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <tailwind-editor label="Live preview" placeholder="Type here…" [(value)]="html" (htmlChange)="onChange($event)" />

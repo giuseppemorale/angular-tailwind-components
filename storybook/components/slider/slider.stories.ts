@@ -1,13 +1,13 @@
 import { FormsModule } from '@angular/forms';
 import { argsToTemplate, moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
-import { TailwindSlider } from '../../../projects/angular-tailwind-components/src/public-api';
+import { TailwindSlider, TailwindSliderModule } from '../../../projects/angular-tailwind-components/src/public-api';
 
 const meta: Meta<TailwindSlider> = {
   title: 'Form Controls/Slider',
   component: TailwindSlider,
   decorators: [
     moduleMetadata({
-      imports: [FormsModule, TailwindSlider]
+      imports: [FormsModule, TailwindSliderModule]
     })
   ],
   parameters: {

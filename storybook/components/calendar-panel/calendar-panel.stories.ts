@@ -9,7 +9,8 @@ import {
 } from '@storybook/angular';
 import {
   TAILWIND_DATETIME_LANGUAGE,
-  TailwindCalendarPanel
+  TailwindCalendarPanel,
+  TailwindCalendarPanelModule
 } from '../../../projects/angular-tailwind-components/src/public-api';
 
 function dateAroundToday(offsetMin: number, offsetMax: number) {
@@ -88,7 +89,7 @@ export const WithReactiveForm: StoryObj<TailwindCalendarPanel> = {
   parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
-      imports: [ReactiveFormsModule, TailwindCalendarPanel, JsonPipe]
+      imports: [ReactiveFormsModule, TailwindCalendarPanelModule, JsonPipe]
     })
   ],
   render: () => ({
@@ -110,7 +111,7 @@ export const EnglishLanguage: StoryObj<TailwindCalendarPanel> = {
   decorators: [
     moduleMetadata({
       providers: [{ provide: TAILWIND_DATETIME_LANGUAGE, useValue: 'en' }],
-      imports: [TailwindCalendarPanel]
+      imports: [TailwindCalendarPanelModule]
     })
   ],
   args: {
@@ -125,7 +126,7 @@ export const Disabled: StoryObj<TailwindCalendarPanel> = {
   parameters: { controls: { disable: true } },
   decorators: [
     moduleMetadata({
-      imports: [ReactiveFormsModule, TailwindCalendarPanel]
+      imports: [ReactiveFormsModule, TailwindCalendarPanelModule]
     })
   ],
   render: () => ({

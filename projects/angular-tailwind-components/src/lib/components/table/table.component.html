@@ -35,7 +35,9 @@
     } @else {
       <div class="tw-table-scroll overflow-x-auto" [class.tw-table-sticky]="stickyHeader()">
         <!-- `table-auto` + `w-max min-w-full`: colonne in base al contenuto; scroll orizzontale se serve. -->
-        <table class="w-max min-w-full table-auto text-sm text-left divide-y divide-border">
+        <table
+          class="w-max min-w-full table-auto text-sm text-left divide-y divide-border"
+          [class.tw-table-flush]="!showPagination()">
           <ng-content select="thead" />
           @for (ctx of rowContexts(); track ctx.dataIndex) {
             <ng-container *ngTemplateOutlet="rowTemplate().templateRef; context: ctx" />
@@ -51,7 +53,7 @@
         </table>
       </div>
 
-      @if (paginated() && totalItems() > 0) {
+      @if (showPagination()) {
         <div class="px-4 py-3">
           <tailwind-pagination
             [totalItems]="totalItems()"

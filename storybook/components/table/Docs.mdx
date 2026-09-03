@@ -45,6 +45,8 @@ The default look of **`<thead>`**, **`<th>`** and **`<td>`** — header backgrou
 
 The table is **not framed like a card**: no outer border, no radius. All the separation lives in the content — one rule between the header and the body, one under every row — so a table drops into a page or a card without adding a second frame around the one already there. It keeps `bg-surface`, which the sticky header needs as an opaque plane.
 
+The rule under the **last row** is dropped whenever no pagination bar follows it — an unpaginated table, or an empty one showing the `emptyMessage` — because there is nothing left for it to separate and it reads as a line hanging under the table. With the pager visible the rule stays, as the divider between the rows and the pager.
+
 The header carries no fill either: it is set apart by type — `0.75rem`, `font-weight: 500`, slight tracking, one step lighter than the body — over the same surface as the rows. `stickyHeader` paints `surface` explicitly, because a sticky header without a fill would let the rows scroll through it; the color is the same either way.
 
 The inner `<table>` uses **`table-layout: auto`**, so columns follow their content. Every **`th`** / **`td`** carries a default **`min-width: 7.5rem` (120px)**, from the **`--tw-table-col-min-width`** CSS variable on the `tailwind-table` host. Only the **table** sits in an **`overflow-x-auto`** wrapper; the **pagination** stays pinned below the last row's rule and never scrolls sideways with the columns.

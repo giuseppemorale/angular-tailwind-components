@@ -108,6 +108,9 @@ export class TailwindTable<T extends object = TailwindTableRow>
     () => this.pagination()?.lengthOptions ?? [...DEFAULT_PAGINATION_LENGTH_OPTIONS]
   );
 
+  /** True when the pager is rendered; the last row keeps its rule only in that case. */
+  protected readonly showPagination = computed(() => this.paginated() && this.totalItems() > 0);
+
   /** Emits the indices of the selected rows **within `data()`** (stable across sort, search and paging). */
   readonly selectionChange = output<Set<number>>();
   /** Column and direction requested through a sortable header. */

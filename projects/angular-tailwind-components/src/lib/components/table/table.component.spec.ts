@@ -458,6 +458,32 @@ describe('TailwindTable', () => {
     expect(classes.some(c => c.startsWith('rounded-'))).toBe(false);
   });
 
+  describe('closing rule', () => {
+    it('should drop the last row rule when there is no pager underneath', () => {
+      const table: HTMLElement = fixture.nativeElement.querySelector('table');
+      expect(table.classList.contains('tw-table-flush')).toBe(true);
+    });
+
+    it('should keep the rule when the pager follows the rows', () => {
+      const paginated = TestBed.createComponent(TableWithToolsHostComponent);
+      paginated.detectChanges();
+
+      const table: HTMLElement = paginated.nativeElement.querySelector('table');
+      expect(paginated.nativeElement.querySelector('tailwind-pagination')).toBeTruthy();
+      expect(table.classList.contains('tw-table-flush')).toBe(false);
+    });
+
+    it('should drop the rule under the empty state', () => {
+      const paginated = TestBed.createComponent(TableWithToolsHostComponent);
+      paginated.componentInstance.rows = [];
+      paginated.detectChanges();
+
+      const table: HTMLElement = paginated.nativeElement.querySelector('table');
+      expect(paginated.nativeElement.querySelector('td[colspan]')).toBeTruthy();
+      expect(table.classList.contains('tw-table-flush')).toBe(true);
+    });
+  });
+
   it('should show all rows when search query is empty', () => {
     const input: HTMLInputElement = fixture.nativeElement.querySelector('tailwind-input input');
     input.value = 'zzz';

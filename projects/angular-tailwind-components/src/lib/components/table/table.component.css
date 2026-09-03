@@ -43,6 +43,11 @@
     vertical-align: middle;
   }
 
+  /* Senza pager sotto, la riga di chiusura resta una linea appesa al vuoto. */
+  :host .tw-table-flush ::ng-deep :where(tbody:last-of-type tr:last-child > td) {
+    border-bottom: 0;
+  }
+
   /*
    * Row hover. Scanning a wide table means tracking one row across many columns, and a highlight
    * that follows the pointer is what keeps the eye on it — the single cheapest readability win a

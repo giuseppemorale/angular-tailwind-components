@@ -27,6 +27,7 @@ import {
   TailwindTableSortHost
 } from './interfaces/tailwind-table-sort-host';
 import type { TailwindTableRow } from './interfaces/table-row.type';
+import type { TailwindTableSort } from './interfaces/table-sort.interface';
 import { TailwindTableRowDirective } from '../../directives/table/tailwind-table-row.directive';
 import { TAILWIND_LABELS, TAILWIND_PAGINATION_SUMMARY } from '../../tokens';
 
@@ -63,6 +64,8 @@ export class TailwindTable<T extends object = TailwindTableRow>
    * `Array.prototype.sort`. Needed for dates and mixed types, which sort wrong as strings.
    */
   readonly sortComparators = input<Partial<Record<string, (a: T, b: T) => number>>>({});
+  /** Column and direction applied on load and whenever the input changes; does not emit `sortChange`. */
+  readonly defaultSort = input<TailwindTableSort | null>(null);
   /** Keeps the header row visible while the body scrolls. */
   readonly stickyHeader = input<boolean>(false);
   /** Shows the search field and filters rows across every value of the row object. */
@@ -114,7 +117,7 @@ export class TailwindTable<T extends object = TailwindTableRow>
   /** Emits the indices of the selected rows **within `data()`** (stable across sort, search and paging). */
   readonly selectionChange = output<Set<number>>();
   /** Column and direction requested through a sortable header. */
-  readonly sortChange = output<{ key: string; direction: 'asc' | 'desc' }>();
+  readonly sortChange = output<TailwindTableSort>();
   /** Emitted whenever the page or page size changes; drives fetching in `serverSide` mode. */
   readonly pageChange = output<{ page: number; pageSize: number }>();
 
@@ -175,6 +178,13 @@ export class TailwindTable<T extends object = TailwindTableRow>
       const fromInput = this.pagination()?.pageSize;
       if (fromInput != null && fromInput > 0) {
         this.pageSize.set(fromInput);
+      }
+    });
+    effect(() => {
+      const initial = this.defaultSort();
+      if (initial?.key) {
+        this.sortKey.set(initial.key);
+        this.sortDir.set(initial.direction);
       }
     });
     effect(() => {

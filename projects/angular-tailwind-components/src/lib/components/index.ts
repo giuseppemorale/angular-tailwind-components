@@ -41,6 +41,7 @@ export * from './tag/tag.component';
 // Batch 3 — Advanced
 export * from './table/interfaces/tailwind-table-sort-host';
 export * from './table/interfaces/table-row.type';
+export * from './table/interfaces/table-sort.interface';
 export * from './table/table.component';
 export * from './calendar-panel/calendar-panel.component';
 export * from './calendar-panel/util/calendar-view';

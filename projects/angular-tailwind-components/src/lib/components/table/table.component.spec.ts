@@ -4,6 +4,7 @@ import { TailwindTableRowDirective } from '../../directives/table/tailwind-table
 import { TailwindSortHeaderDirective } from '../../directives/table/tailwind-sort-header.directive';
 import { TailwindSelectAllHeaderDirective } from '../../directives/table/tailwind-select-all-header.directive';
 import { TailwindTable } from './table.component';
+import type { TailwindTableSort } from './interfaces/table-sort.interface';
 import { DEFAULT_TAILWIND_LABELS, resolveTailwindLabels } from '../../models';
 import { TAILWIND_LABELS } from '../../tokens';
 
@@ -93,7 +94,7 @@ class TableWithToolsHostComponent {
       <thead>
         <tr>
           <th tailwindSortHeader sortKey="name">Name</th>
-          <th tailwindSortHeader sortKey="role">Role</th>
+          <th class="custom-th" tailwindSortHeader sortKey="role">Role</th>
         </tr>
       </thead>
       <tbody *tailwindTableRow="let row">
@@ -194,6 +195,38 @@ class ServerTableHostComponent {
 class SelectableTableHostComponent {
   readonly table = viewChild.required(TailwindTable);
   rows = ROWS;
+}
+
+@Component({
+  imports: [TailwindTable, TailwindTableRowDirective, TailwindSortHeaderDirective],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <tailwind-table
+      [data]="rows"
+      [searchable]="false"
+      [paginated]="false"
+      [serverSide]="serverSide"
+      [defaultSort]="defaultSort"
+      (sortChange)="sortChanges.push($event)">
+      <thead>
+        <tr>
+          <th tailwindSortHeader sortKey="name">Name</th>
+          <th tailwindSortHeader sortKey="role">Role</th>
+        </tr>
+      </thead>
+      <tbody *tailwindTableRow="let row">
+        <tr>
+          <td class="row-name">{{ row.name }}</td>
+        </tr>
+      </tbody>
+    </tailwind-table>
+  `
+})
+class DefaultSortTableHostComponent {
+  rows = [ROWS[1], ROWS[0], ROWS[2]];
+  serverSide = false;
+  defaultSort: TailwindTableSort | null = { key: 'name', direction: 'desc' };
+  sortChanges: TailwindTableSort[] = [];
 }
 
 describe('TailwindTable', () => {
@@ -352,6 +385,18 @@ describe('TailwindTable', () => {
     it('should render a sort indicator icon inside the header', () => {
       expect(header().querySelector('tailwind-icon')).toBeTruthy();
     });
+
+    it('should give only the sorted header a primary background', () => {
+      expect(header(0).classList).not.toContain('bg-primary-50');
+
+      header(1).click();
+      sortFixture.detectChanges();
+
+      expect(header(1).classList).toContain('bg-primary-50');
+      expect(header(0).classList).not.toContain('bg-primary-50');
+      expect(header(1).classList).toContain('cursor-pointer');
+      expect(header(1).classList).toContain('custom-th');
+    });
   });
 
   describe('sorting', () => {
@@ -392,6 +437,63 @@ describe('TailwindTable', () => {
 
       const notes = [...dated.nativeElement.querySelectorAll('.row-note')].map((el: Element) => el.textContent?.trim());
       expect(notes[notes.length - 1]).toBe('');
+    });
+  });
+
+  describe('defaultSort', () => {
+    let sortFixture: ComponentFixture<DefaultSortTableHostComponent>;
+
+    const header = (index: number) =>
+      sortFixture.nativeElement.querySelectorAll('th[data-sort-key]')[index] as HTMLElement;
+    const names = () =>
+      [...sortFixture.nativeElement.querySelectorAll('.row-name')].map((el: Element) => el.textContent?.trim());
+
+    beforeEach(() => {
+      sortFixture = TestBed.createComponent(DefaultSortTableHostComponent);
+    });
+
+    afterEach(() => sortFixture.destroy());
+
+    it('should render rows in the given order and reflect it on the header', () => {
+      sortFixture.detectChanges();
+
+      expect(names()).toEqual(['Carol', 'Bob', 'Alice']);
+      expect(header(0).getAttribute('aria-sort')).toBe('descending');
+      expect(header(1).getAttribute('aria-sort')).toBe('none');
+      expect(header(0).classList).toContain('bg-primary-50');
+    });
+
+    it('should not emit sortChange for the initial sort', () => {
+      sortFixture.detectChanges();
+
+      expect(sortFixture.componentInstance.sortChanges).toEqual([]);
+    });
+
+    it('should toggle from the default direction when the header is clicked', () => {
+      sortFixture.detectChanges();
+
+      header(0).click();
+      sortFixture.detectChanges();
+
+      expect(names()).toEqual(['Alice', 'Bob', 'Carol']);
+      expect(header(0).getAttribute('aria-sort')).toBe('ascending');
+      expect(sortFixture.componentInstance.sortChanges).toEqual([{ key: 'name', direction: 'asc' }]);
+    });
+
+    it('should keep server rows untouched while still marking the sorted header', () => {
+      sortFixture.componentInstance.serverSide = true;
+      sortFixture.detectChanges();
+
+      expect(names()).toEqual(['Bob', 'Alice', 'Carol']);
+      expect(header(0).getAttribute('aria-sort')).toBe('descending');
+    });
+
+    it('should leave the rows unsorted when null', () => {
+      sortFixture.componentInstance.defaultSort = null;
+      sortFixture.detectChanges();
+
+      expect(names()).toEqual(['Bob', 'Alice', 'Carol']);
+      expect(header(0).getAttribute('aria-sort')).toBe('none');
     });
   });
 

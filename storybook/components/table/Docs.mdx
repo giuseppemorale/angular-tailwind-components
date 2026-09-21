@@ -138,7 +138,19 @@ Each iteration produces its own `<tbody>`, which HTML5 allows. For zebra stripin
 
 Only the columns that should sort carry the directive on their **`<th>`**, with the header text as element content and no inner `button`. **`tailwind-table`** intercepts clicks and keystrokes by delegation and applies the sort; no template reference (`#tbl`) and no extra input on the table are needed.
 
+The header of the sorted column — from a click or from `defaultSort` — gets a `primary-50` background; the direction is also exposed through `aria-sort`, so the state never relies on color alone.
+
 On every **`<th>`** inside the projected **`<thead>`**, `tailwind-table` sets **`scope="col"`** automatically, so the template need not declare it. An explicit value such as `scope="row"` is never overwritten.
+
+### Initial sort (`defaultSort`)
+
+Pass `defaultSort` to open the table already sorted: the rows arrive ordered and the matching `tailwindSortHeader` shows the direction (`aria-sort`, icon). The first click on that header flips the direction. The initial sort does **not** emit `sortChange`; in `serverSide` mode it only marks the header, since the server already returned the rows in that order.
+
+<Canvas of={TableStories.DefaultSort} />
+
+```html
+<tailwind-table [data]="rows" [defaultSort]="{ key: 'name', direction: 'desc' }">...</tailwind-table>
+```
 
 ## Loading state
 

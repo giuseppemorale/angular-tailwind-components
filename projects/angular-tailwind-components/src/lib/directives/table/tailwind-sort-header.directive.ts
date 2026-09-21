@@ -30,6 +30,7 @@ import { TAILWIND_LABELS } from '../../tokens';
     class:
       'cursor-pointer whitespace-nowrap text-left select-none hover:text-fg ' +
       'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring',
+    '[class.bg-primary-50]': 'isActive()',
     '[attr.tabindex]': '0',
     // The `th` is operated like a button; without a role, assistive tech announces a plain header.
     '[attr.role]': '"columnheader"',
@@ -56,7 +57,7 @@ export class TailwindSortHeaderDirective {
   private iconRef?: ComponentRef<TailwindIcon>;
 
   /** `true` when this column is the one the table is currently sorted by. */
-  private readonly isActive = computed(() => !!this.table && this.table.sortKey() === this.sortKey());
+  protected readonly isActive = computed(() => !!this.table && this.table.sortKey() === this.sortKey());
   private readonly isAscending = computed(() => this.table?.sortDir() !== 'desc');
 
   protected readonly ariaSort = computed(() =>

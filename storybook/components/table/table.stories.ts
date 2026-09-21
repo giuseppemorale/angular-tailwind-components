@@ -14,7 +14,8 @@ const meta: Meta<TailwindTable> = {
     loading: { control: 'boolean' },
     emptyColspan: { control: 'number' },
     paginated: { control: 'boolean' },
-    pagination: { control: 'object' }
+    pagination: { control: 'object' },
+    defaultSort: { control: 'object' }
   }
 };
 export default meta;
@@ -66,7 +67,8 @@ export const Table: StoryObj<TailwindTable> = {
         emptyMessage="Nessun dato disponibile"
         [emptyColspan]="emptyColspan"
         [paginated]="paginated"
-        [pagination]="pagination">
+        [pagination]="pagination"
+        [defaultSort]="defaultSort">
         <thead>
           <tr>
             <th tailwindSortHeader sortKey="name">Name</th>
@@ -96,6 +98,7 @@ export const Table: StoryObj<TailwindTable> = {
     loading: false,
     emptyColspan: 4,
     paginated: true,
+    defaultSort: null,
     pagination: {
       totalItems: rows.length,
       pageSize: 10,
@@ -155,6 +158,37 @@ export const Loading: StoryObj<TailwindTable> = {
         <tbody *tailwindTableRow="let row">
           <tr>
             <td>{{ row.name }}</td>
+          </tr>
+        </tbody>
+      </tailwind-table>
+    `
+  })
+};
+
+/** Initial sort from `defaultSort`: rows arrive ordered and the header already shows the direction. */
+export const DefaultSort: StoryObj<TailwindTable> = {
+  name: 'Default sort',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    props: { data: rows },
+    template: `
+      <tailwind-table
+        [data]="data"
+        [searchable]="false"
+        [paginated]="false"
+        [defaultSort]="{ key: 'name', direction: 'desc' }">
+        <thead>
+          <tr>
+            <th tailwindSortHeader sortKey="name">Name</th>
+            <th tailwindSortHeader sortKey="email">Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody *tailwindTableRow="let row">
+          <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.email }}</td>
+            <td>{{ row.role }}</td>
           </tr>
         </tbody>
       </tailwind-table>

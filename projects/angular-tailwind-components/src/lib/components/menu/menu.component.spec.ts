@@ -67,6 +67,15 @@ describe('TailwindMenu', () => {
     expect(document.querySelectorAll('.cdk-overlay-container hr').length).toBe(1);
   });
 
+  // The CDK pane is `display: flex` and at least MIN_PANEL_WIDTH_PX wide: a panel that shrinks to its
+  // entries sits at the pane's left edge, so with `align="right"` it no longer ends under the anchor.
+  it('should fill the overlay pane so align="right" ends at the anchor edge', async () => {
+    fixture.componentRef.setInput('align', 'right');
+    await openMenu();
+
+    expect(panel()?.classList).toContain('w-full');
+  });
+
   it('should move focus into the menu on open', async () => {
     await openMenu();
     expect(document.activeElement).toBe(menuItems()[0]);

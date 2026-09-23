@@ -175,6 +175,16 @@ describe('TailwindModal', () => {
     expect(pane?.style.maxWidth).toBe('56rem');
   });
 
+  it('should let an explicit maxWidth override the size', () => {
+    fixture.componentRef.setInput('size', 'xl');
+    fixture.componentRef.setInput('maxWidth', '72rem');
+    component.open();
+    fixture.detectChanges();
+
+    const pane = dialog()?.closest('.cdk-overlay-pane') as HTMLElement | null;
+    expect(pane?.style.maxWidth).toBe('72rem');
+  });
+
   it('should label the close button from TAILWIND_LABELS', async () => {
     await TestBed.resetTestingModule();
     await TestBed.configureTestingModule({

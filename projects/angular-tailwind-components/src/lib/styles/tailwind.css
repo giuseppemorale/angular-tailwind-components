@@ -57,7 +57,7 @@
  * these lines, only default Tailwind palettes (e.g. `bg-neutral-100`) exist → primary buttons look gray.
  */
 /* Surface tokens: same reason as the semantic ones — needed for npm consumers whose build does not scan the FESM bundles. */
-@source inline("{hover:,focus:,}bg-{surface,surface-muted,surface-subtle,surface-raised}");
+@source inline("{hover:,focus:,}bg-{surface,surface-muted,surface-subtle,surface-raised,surface-page}");
 @source inline("{hover:,group-hover:,}text-{fg,fg-muted}");
 @source inline("border-{border,border-strong}");
 @source inline("{focus:,focus-visible:,peer-focus-visible:,}{outline,border,ring}-ring");
@@ -279,6 +279,8 @@
   --color-surface: #ffffff;
   --color-surface-muted: var(--color-neutral-50);
   --color-surface-raised: #ffffff;
+  /* The page behind the panels: one step darker than `surface` in light, one step below it in dark. */
+  --color-surface-page: var(--color-neutral-100);
   /*
    * Chrome fill for header / footer / toolbar zones. Kept apart from `surface-muted`, which is an
    * *interaction* color (row hover, disabled field): a zone tint soft enough to read as modern is
@@ -528,8 +530,10 @@
  * already uses low shades for backgrounds and high shades for text, so flipping the ramp keeps all
  * of those relationships correct without a single template change.
  *
- * `:root.dark` (two classes) deliberately outranks the `:root` rules that
- * `provideTailwindThemeColors` injects at runtime, so a custom brand palette and dark mode compose.
+ * Surfaces, border and text read the mirrored ramp instead of naming slate shades, so they follow
+ * whatever palette `neutral` points at. A custom `COLORS.neutral` is injected at runtime on
+ * `:root[data-tailwind-theme]`, which would outrank the slate mirror below; `buildTailwindThemeCss`
+ * therefore emits its own mirrored ramp for `.dark` at a higher specificity.
  */
 @layer theme {
   :root.dark,
@@ -546,12 +550,13 @@
     --color-neutral-900: var(--color-slate-100);
     --color-neutral-950: var(--color-slate-50);
 
-    --color-surface: var(--color-slate-900);
-    --color-surface-muted: var(--color-slate-800);
-    --color-surface-raised: var(--color-slate-800);
-    --color-border: var(--color-slate-700);
-    --color-fg: var(--color-slate-100);
-    --color-fg-muted: var(--color-slate-400);
+    --color-surface: var(--color-neutral-100);
+    --color-surface-muted: var(--color-neutral-200);
+    --color-surface-raised: var(--color-neutral-200);
+    --color-surface-page: var(--color-neutral-50);
+    --color-border: var(--color-neutral-300);
+    --color-fg: var(--color-neutral-900);
+    --color-fg-muted: var(--color-neutral-500);
 
     color-scheme: dark;
   }
@@ -574,12 +579,13 @@
       --color-neutral-900: var(--color-slate-100);
       --color-neutral-950: var(--color-slate-50);
 
-      --color-surface: var(--color-slate-900);
-      --color-surface-muted: var(--color-slate-800);
-      --color-surface-raised: var(--color-slate-800);
-      --color-border: var(--color-slate-700);
-      --color-fg: var(--color-slate-100);
-      --color-fg-muted: var(--color-slate-400);
+      --color-surface: var(--color-neutral-100);
+      --color-surface-muted: var(--color-neutral-200);
+      --color-surface-raised: var(--color-neutral-200);
+      --color-surface-page: var(--color-neutral-50);
+      --color-border: var(--color-neutral-300);
+      --color-fg: var(--color-neutral-900);
+      --color-fg-muted: var(--color-neutral-500);
 
       color-scheme: dark;
     }

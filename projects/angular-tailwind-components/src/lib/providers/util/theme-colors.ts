@@ -121,6 +121,58 @@ function pushOnShadeVariables(
   }
 }
 
+/**
+ * Dark mode flips the `neutral` ramp (50 ↔ 950, 100 ↔ 900, …) the same way `tailwind.css` does for the
+ * default slate. 400/500 and 600/700 are not a strict mirror: the shades used for muted text and icons
+ * need the extra contrast on a dark surface.
+ */
+const NEUTRAL_DARK_MIRROR: Record<TailwindThemeColorShade, TailwindThemeColorShade> = {
+  '50': '950',
+  '100': '900',
+  '200': '800',
+  '300': '700',
+  '400': '500',
+  '500': '400',
+  '600': '300',
+  '700': '300',
+  '800': '200',
+  '900': '100',
+  '950': '50'
+};
+
+/**
+ * Mirrored `neutral` ramp for dark mode. Without it the custom ramp injected on
+ * `:root[data-tailwind-theme]` outranks the slate mirror in `tailwind.css` and dark mode renders the
+ * light ramp: pale surfaces under pale text.
+ */
+export function buildTailwindNeutralDarkEntries(
+  neutral: TailwindThemeSeverityColor | undefined
+): Array<[string, string]> {
+  if (neutral === undefined) {
+    return [];
+  }
+  const entries: Array<[string, string]> = [];
+  if (typeof neutral === 'string') {
+    const palette = neutral.trim();
+    if (!palette) {
+      return [];
+    }
+    for (const [shade, mirror] of Object.entries(NEUTRAL_DARK_MIRROR)) {
+      entries.push([`--color-neutral-${shade}`, `var(--color-${palette}-${mirror})`]);
+    }
+    return entries;
+  }
+  const { shades } = normalizeSemanticColorObject(neutral);
+  for (const [shade, mirror] of Object.entries(NEUTRAL_DARK_MIRROR)) {
+    const color = shades[mirror];
+    if (color === undefined || color === '') {
+      continue;
+    }
+    entries.push([`--color-neutral-${shade}`, color]);
+  }
+  return entries;
+}
+
 /** Builds `[CSS custom property, value]` pairs for semantic `COLORS`. */
 export function buildTailwindThemeVariableEntries(config: TailwindComponentsConfig): Array<[string, string]> {
   const colors = config.COLORS;
@@ -174,7 +226,20 @@ export function buildTailwindThemeCss(colors: TailwindDefineThemeColors): string
     return '';
   }
   const declarations = entries.map(([prop, val]) => `  ${prop}: ${val};`).join('\n');
-  return `@layer theme {\n  :root[${TAILWIND_THEME_HTML_ATTR}],\n  :host {\n${declarations}\n  }\n}`;
+  const light = `  :root[${TAILWIND_THEME_HTML_ATTR}],\n  :host {\n${declarations}\n  }`;
+
+  const darkEntries = buildTailwindNeutralDarkEntries(colors.neutral);
+  if (darkEntries.length === 0) {
+    return `@layer theme {\n${light}\n}`;
+  }
+  // One class or attribute more than the light rule, so the mirror wins wherever dark mode is on.
+  const root = `:root[${TAILWIND_THEME_HTML_ATTR}]`;
+  const darkDeclarations = (indent: string) => darkEntries.map(([prop, val]) => `${indent}${prop}: ${val};`).join('\n');
+  const dark = `  ${root}.dark,\n  ${root}[data-theme='dark'] {\n${darkDeclarations('    ')}\n  }`;
+  const auto =
+    `  @media (prefers-color-scheme: dark) {\n` +
+    `    ${root}.theme-auto:not(.light):not([data-theme='light']) {\n${darkDeclarations('      ')}\n    }\n  }`;
+  return `@layer theme {\n${light}\n${dark}\n${auto}\n}`;
 }
 
 function stylesheetHasPrimaryUtility(document: Document): boolean {

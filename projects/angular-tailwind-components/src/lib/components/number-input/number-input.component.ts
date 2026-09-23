@@ -89,7 +89,9 @@ export class TailwindNumberInput extends TailwindComponent implements ControlVal
 
   readonly inputClasses = computed(() =>
     [
-      'block',
+      // `min-w-0`: in the flex row a number input keeps its ~20ch intrinsic width and, in a narrow
+      // container, pushes the +/- buttons out of the field.
+      'block min-w-0',
       FIELD_BASE,
       'text-center tabular-nums',
       FIELD_SIZE[this.size()],

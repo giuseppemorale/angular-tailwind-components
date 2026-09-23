@@ -65,6 +65,7 @@ export class TailwindModalService {
       });
 
       modalComp.setInput('size', config.size ?? 'md');
+      modalComp.setInput('maxWidth', config.maxWidth);
       modalComp.setInput('showCloseButton', config.showCloseButton ?? true);
       modalComp.setInput('closeOnBackdrop', config.closeOnBackdrop ?? true);
       modalComp.setInput('closeOnEscape', config.closeOnEscape ?? true);

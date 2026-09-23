@@ -1,4 +1,9 @@
-import { applyTailwindThemeColors, buildTailwindThemeCss, buildTailwindThemeVariableEntries } from './theme-colors';
+import {
+  applyTailwindThemeColors,
+  buildTailwindNeutralDarkEntries,
+  buildTailwindThemeCss,
+  buildTailwindThemeVariableEntries
+} from './theme-colors';
 import { TAILWIND_THEME_STYLE_ID } from '../properties/constant';
 
 describe('buildTailwindThemeVariableEntries', () => {
@@ -106,6 +111,45 @@ describe('buildTailwindThemeCss', () => {
     expect(css).toContain('--color-success-600: #abc;');
     expect(css).toContain('--color-success-700: #def;');
     expect(css).toContain('--color-on-success-600: #ffffff;');
+  });
+
+  it('emits no dark block when neutral is not customised', () => {
+    const css = buildTailwindThemeCss({ primary: 'indigo' });
+    expect(css).not.toContain('.dark');
+    expect(css).not.toContain('prefers-color-scheme');
+  });
+
+  // The light ramp sits on `:root[data-tailwind-theme]` and would beat the slate mirror of `tailwind.css`:
+  // dark mode needs its own mirror of the custom palette, one selector step more specific.
+  it('mirrors a custom neutral palette for dark mode', () => {
+    const css = buildTailwindThemeCss({ neutral: 'zinc' });
+    expect(css).toContain(":root[data-tailwind-theme].dark,\n  :root[data-tailwind-theme][data-theme='dark'] {");
+    expect(css).toContain('    --color-neutral-50: var(--color-zinc-950);');
+    expect(css).toContain('    --color-neutral-100: var(--color-zinc-900);');
+    expect(css).toContain('    --color-neutral-500: var(--color-zinc-400);');
+    expect(css).toContain('    --color-neutral-950: var(--color-zinc-50);');
+  });
+
+  it('follows the OS setting with the same mirror under theme-auto', () => {
+    const css = buildTailwindThemeCss({ neutral: 'zinc' });
+    expect(css).toContain('@media (prefers-color-scheme: dark)');
+    expect(css).toContain(":root[data-tailwind-theme].theme-auto:not(.light):not([data-theme='light'])");
+    expect(css).toContain('      --color-neutral-50: var(--color-zinc-950);');
+  });
+});
+
+describe('buildTailwindNeutralDarkEntries', () => {
+  it('returns nothing without a neutral palette', () => {
+    expect(buildTailwindNeutralDarkEntries(undefined)).toEqual([]);
+    expect(buildTailwindNeutralDarkEntries('  ')).toEqual([]);
+  });
+
+  it('mirrors the shades of a custom object, skipping the missing ones', () => {
+    const entries = buildTailwindNeutralDarkEntries({ 50: '#fafafa', 900: '#18181b', 950: '#09090b' });
+    expect(entries).toContainEqual(['--color-neutral-50', '#09090b']);
+    expect(entries).toContainEqual(['--color-neutral-100', '#18181b']);
+    expect(entries).toContainEqual(['--color-neutral-950', '#fafafa']);
+    expect(entries.find(([k]) => k === '--color-neutral-200')).toBeUndefined();
   });
 });
 

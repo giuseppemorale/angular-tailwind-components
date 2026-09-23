@@ -76,4 +76,12 @@ describe('TailwindModalService', () => {
     expect(pane?.style.maxWidth).toBe('56rem');
     expect(document.querySelector('.cdk-overlay-container tailwind-button')).toBeNull();
   });
+
+  it('should forward maxWidth to the modal', async () => {
+    void service.open(ConfirmDialogComponent, { data: { name: 'x' }, size: 'xl', maxWidth: '72rem' });
+    await new Promise(resolve => setTimeout(resolve, 30));
+
+    const pane = panel()?.closest('.cdk-overlay-pane') as HTMLElement | null;
+    expect(pane?.style.maxWidth).toBe('72rem');
+  });
 });

@@ -27,6 +27,11 @@ describe('TailwindNumberInput', () => {
     expect(component).toBeTruthy();
   });
 
+  // Without it the input keeps its intrinsic width and pushes the +/- buttons out of a narrow field.
+  it('should let the input shrink inside the flex row', () => {
+    expect(field().classList).toContain('min-w-0');
+  });
+
   it('should start empty rather than at zero', () => {
     expect(component.value()).toBeNull();
   });

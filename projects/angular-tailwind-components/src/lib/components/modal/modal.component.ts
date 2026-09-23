@@ -38,6 +38,11 @@ export class TailwindModal extends TailwindComponent {
 
   /** Size variant */
   readonly size = input<TailwindSize>('md');
+  /**
+   * Explicit panel width (any CSS length), for content wider than `xl` such as charts or dense grids.
+   * Overrides `size`; the pane still keeps its 1rem margin from the viewport edges.
+   */
+  readonly maxWidth = input<string | undefined>(undefined);
   /** Whether to show close button in header */
   readonly showCloseButton = input<boolean>(true);
   /** Whether clicking backdrop closes the modal */
@@ -98,7 +103,7 @@ export class TailwindModal extends TailwindComponent {
       backdropClass: ['tailwind-modal-backdrop', 'cdk-overlay-dark-backdrop'],
       panelClass: 'tailwind-modal-pane',
       width: '100%',
-      maxWidth: SIZE_MAX_WIDTH[this.size()]
+      maxWidth: this.maxWidth() ?? SIZE_MAX_WIDTH[this.size()]
     });
 
     this.overlayRef.attach(new TemplatePortal(this.panelTemplate(), this.viewContainerRef));

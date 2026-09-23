@@ -5,6 +5,8 @@ export interface TailwindModalConfig<D = unknown> {
   data?: D;
   /** Size variant */
   size?: TailwindSize;
+  /** Explicit panel width (any CSS length); overrides `size` for content wider than `xl`. */
+  maxWidth?: string;
   /** Show the X close button in header */
   showCloseButton?: boolean;
   /** Click backdrop to close */

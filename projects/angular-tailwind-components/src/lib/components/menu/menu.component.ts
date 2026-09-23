@@ -34,6 +34,8 @@ export class TailwindMenu extends TailwindComponent {
   private anchorEl: HTMLElement | null = null;
   private overlayRef: OverlayRef | null = null;
   private closeSub: Subscription | null = null;
+  /** A mouse or touch open focuses the panel, not the first entry: the focus ring would look like a selection. */
+  private openedByPointer = false;
 
   /** Menu entries; supports `divider` and `disabled`. `tooltip` / `tooltipPosition` are read by `tailwind-toolbar`, not here. */
   readonly items = input<TailwindMenuItem[]>([]);
@@ -62,6 +64,8 @@ export class TailwindMenu extends TailwindComponent {
   open(anchor?: Event | HTMLElement): void {
     if (anchor !== undefined) this.storeAnchor(anchor);
     if (!this.anchorEl || this.isOpen()) return;
+    // Enter / Space on a button dispatch a `click` too, but with `detail === 0`: that is a keyboard open.
+    this.openedByPointer = anchor instanceof MouseEvent && anchor.detail > 0;
     this.attachOverlay();
   }
 
@@ -131,8 +135,9 @@ export class TailwindMenu extends TailwindComponent {
         }
       })
     );
-    // The pattern requires focus to move into the menu once it is on screen.
-    requestAnimationFrame(() => this.focusFirstItem());
+    // The pattern requires focus to move into the menu once it is on screen. From the keyboard it lands on
+    // the first entry; from the pointer on the panel itself, so arrows, Escape and Tab still work.
+    requestAnimationFrame(() => (this.openedByPointer ? this.focusPanel() : this.focusFirstItem()));
   }
 
   private disposeOverlay(): void {
@@ -171,7 +176,9 @@ export class TailwindMenu extends TailwindComponent {
       target = items.length - 1;
     } else if (event.key in step) {
       const current = items.indexOf(this.document.activeElement as HTMLElement);
-      target = (((current + step[event.key]) % items.length) + items.length) % items.length;
+      // Focus on the panel itself (pointer open): ArrowDown enters at the first entry, ArrowUp at the last.
+      if (current === -1) target = step[event.key] > 0 ? 0 : items.length - 1;
+      else target = (((current + step[event.key]) % items.length) + items.length) % items.length;
     } else {
       return;
     }
@@ -189,5 +196,9 @@ export class TailwindMenu extends TailwindComponent {
 
   private focusFirstItem(): void {
     this.focusableItems()[0]?.focus();
+  }
+
+  private focusPanel(): void {
+    this.panelRef()?.nativeElement.focus();
   }
 }

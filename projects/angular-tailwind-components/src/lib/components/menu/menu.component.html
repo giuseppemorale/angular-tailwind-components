@@ -2,7 +2,8 @@
   <div
     #panel
     role="menu"
-    [class]="mergeClasses('w-full bg-surface rounded-overlay border border-border shadow-lg py-1 animate-overlay-in')"
+    tabindex="-1"
+    [class]="mergeClasses('w-full outline-none bg-surface rounded-overlay border border-border shadow-lg py-1 animate-overlay-in')"
     (keydown)="onPanelKeydown($event)">
     @for (item of items(); track $index) {
       @if (item.divider) {

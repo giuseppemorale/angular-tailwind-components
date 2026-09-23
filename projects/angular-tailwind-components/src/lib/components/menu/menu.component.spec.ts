@@ -46,6 +46,17 @@ describe('TailwindMenu', () => {
   /** Opening is deferred one macrotask so the triggering click cannot close it again. */
   async function openMenu(): Promise<void> {
     component.open(anchor);
+    await settle();
+  }
+
+  /** Opens from a real click on the anchor; `detail` is 0 when Enter / Space fired it, > 0 for a pointer. */
+  async function openMenuWithClick(detail: number): Promise<void> {
+    anchor.addEventListener('click', event => component.open(event), { once: true });
+    anchor.dispatchEvent(new MouseEvent('click', { bubbles: true, detail }));
+    await settle();
+  }
+
+  async function settle(): Promise<void> {
     await new Promise(resolve => setTimeout(resolve, 0));
     await new Promise(resolve => requestAnimationFrame(() => resolve(null)));
     fixture.detectChanges();
@@ -79,6 +90,41 @@ describe('TailwindMenu', () => {
   it('should move focus into the menu on open', async () => {
     await openMenu();
     expect(document.activeElement).toBe(menuItems()[0]);
+  });
+
+  it('should focus the first entry when opened from the keyboard', async () => {
+    await openMenuWithClick(0);
+    expect(document.activeElement).toBe(menuItems()[0]);
+  });
+
+  // Focusing the first entry after a mouse click paints the browser focus ring on it, which reads as a
+  // pre-selected choice. The panel takes focus instead, so the keyboard still works from there.
+  it('should focus the panel, not an entry, when opened with the pointer', async () => {
+    await openMenuWithClick(1);
+    expect(document.activeElement).toBe(panel());
+  });
+
+  it('should enter at the first entry with ArrowDown after a pointer open', async () => {
+    await openMenuWithClick(1);
+
+    panel()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    expect(document.activeElement).toBe(menuItems()[0]);
+  });
+
+  it('should enter at the last enabled entry with ArrowUp after a pointer open', async () => {
+    await openMenuWithClick(1);
+
+    panel()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+    expect(document.activeElement).toBe(menuItems()[3]);
+  });
+
+  it('should still close on Escape after a pointer open', async () => {
+    await openMenuWithClick(1);
+
+    panel()?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    fixture.detectChanges();
+
+    expect(panel()).toBeNull();
   });
 
   it('should walk enabled entries with the arrow keys, skipping disabled ones', async () => {

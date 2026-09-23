@@ -17,6 +17,24 @@ class AccordionHostComponent {
   secondDisabled = false;
 }
 
+@Component({
+  imports: [TailwindAccordion, TailwindAccordionItem],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <tailwind-accordion>
+      <tailwind-accordion-item title="Fallback">
+        <span tailwind-accordion-header>
+          <img src="data:," alt="Ada Lovelace" />
+          <strong>Ada</strong> Lovelace
+        </span>
+        Body
+      </tailwind-accordion-item>
+      <tailwind-accordion-item title="Plain">Content</tailwind-accordion-item>
+    </tailwind-accordion>
+  `
+})
+class AccordionSlottedHeaderHostComponent {}
+
 describe('TailwindAccordion', () => {
   let fixture: ComponentFixture<AccordionHostComponent>;
 
@@ -95,5 +113,40 @@ describe('TailwindAccordion', () => {
     disabledFixture.detectChanges();
     expect(second.getAttribute('aria-expanded')).toBe('false');
     disabledFixture.destroy();
+  });
+
+  describe('header slot', () => {
+    let slotted: ComponentFixture<AccordionSlottedHeaderHostComponent>;
+
+    beforeEach(() => {
+      slotted = TestBed.createComponent(AccordionSlottedHeaderHostComponent);
+      slotted.detectChanges();
+    });
+
+    function slottedTriggers(): HTMLButtonElement[] {
+      return Array.from(slotted.nativeElement.querySelectorAll('button'));
+    }
+
+    it('should project the header inside the trigger in place of the title', () => {
+      const trigger = slottedTriggers()[0];
+
+      expect(trigger.querySelector('[tailwind-accordion-header] img')?.getAttribute('alt')).toBe('Ada Lovelace');
+      expect(trigger.querySelector('strong')?.textContent).toBe('Ada');
+      expect(trigger.textContent).not.toContain('Fallback');
+    });
+
+    it('should keep the slotted header out of the panel', () => {
+      slottedTriggers()[0].click();
+      slotted.detectChanges();
+
+      const panel: HTMLElement = slotted.nativeElement.querySelector('[role="region"]');
+      expect(panel.textContent).toContain('Body');
+      expect(panel.querySelector('[tailwind-accordion-header]')).toBeNull();
+      expect(slottedTriggers()[0].getAttribute('aria-expanded')).toBe('true');
+    });
+
+    it('should fall back to the title when nothing is slotted', () => {
+      expect(slottedTriggers()[1].textContent?.trim()).toBe('Plain');
+    });
   });
 });

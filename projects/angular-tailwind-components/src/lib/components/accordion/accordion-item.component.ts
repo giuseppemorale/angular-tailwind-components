@@ -10,8 +10,8 @@ import { TailwindIcon } from '../icon/icon.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TailwindAccordionItem extends TailwindComponent {
-  /** Panel heading. */
-  readonly title = input.required<string>();
+  /** Panel heading; replaced by content projected into `[tailwind-accordion-header]`. */
+  readonly title = input<string>();
   /** When true the panel never expands and ignores toggle attempts. */
   readonly disabled = input<boolean>(false);
   readonly isExpanded = signal(false);

@@ -32,6 +32,40 @@ export const Usage: StoryObj = {
   })
 };
 
+export const CustomHeader: StoryObj = {
+  name: 'Custom header',
+  parameters: { controls: { disable: true } },
+  render: () => ({
+    template: `
+      <tailwind-accordion>
+        <tailwind-accordion-item>
+          <span tailwind-accordion-header>
+            <img src="https://i.pravatar.cc/64?u=ada" alt="" class="size-8 shrink-0 rounded-full" />
+            <span class="flex flex-col">
+              <span class="font-semibold text-neutral-900">Ada Lovelace</span>
+              <span class="text-xs font-normal text-neutral-500">Analytical Engine · 3 notes</span>
+            </span>
+          </span>
+          Wrote the first algorithm intended to be carried out by a machine.
+        </tailwind-accordion-item>
+        <tailwind-accordion-item>
+          <span tailwind-accordion-header>
+            <img src="https://i.pravatar.cc/64?u=grace" alt="" class="size-8 shrink-0 rounded-full" />
+            <span class="flex flex-col">
+              <span class="font-semibold text-neutral-900">Grace Hopper</span>
+              <span class="text-xs font-normal text-neutral-500">COBOL · 5 notes</span>
+            </span>
+            <tailwind-badge color="success" size="sm">New</tailwind-badge>
+          </span>
+          Pioneered machine-independent programming languages.
+        </tailwind-accordion-item>
+        <tailwind-accordion-item title="Plain title">
+          Items without a slotted header keep using <code>title</code>.
+        </tailwind-accordion-item>
+      </tailwind-accordion>`
+  })
+};
+
 export const AccordionItems: StoryObj<AccordionItemsArgs> = {
   render: args => ({
     props: args,

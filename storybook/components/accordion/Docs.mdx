@@ -51,3 +51,29 @@ import { TailwindAccordion, TailwindAccordionItem } from 'angular-tailwind-compo
 })
 export class PageComponent {}
 ```
+
+---
+
+## Custom header
+
+Project content into `[tailwind-accordion-header]` to replace the plain `title`: avatars, thumbnails, badges or custom-formatted text. Items without the slot keep rendering `title`.
+
+<Canvas of={AccordionStories.CustomHeader} />
+
+```html
+<tailwind-accordion-item>
+  <span tailwind-accordion-header>
+    <img src="/avatars/ada.png" alt="" class="size-8 shrink-0 rounded-full" />
+    <span class="flex flex-col">
+      <span class="font-semibold text-neutral-900">Ada Lovelace</span>
+      <span class="text-xs font-normal text-neutral-500">Analytical Engine · 3 notes</span>
+    </span>
+  </span>
+  Wrote the first algorithm intended to be carried out by a machine.
+</tailwind-accordion-item>
+```
+
+The slot is rendered **inside the trigger `<button>`**, so its text becomes the button's accessible name:
+
+- Use phrasing content only (`span`, `strong`, `img`, `tailwind-badge`, …): no links, buttons or other interactive elements.
+- Give meaningful images an `alt`; use `alt=""` for decorative ones already described by the adjacent text.

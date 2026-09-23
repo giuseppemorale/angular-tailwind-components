@@ -4,14 +4,17 @@
     [attr.id]="subId('trigger')"
     [disabled]="disabled()"
     (click)="toggle()"
-    class="flex items-center justify-between w-full px-5 py-4 text-left text-sm font-medium text-neutral-800 hover:bg-neutral-50 transition-colors duration-150 ease-in-out cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+    class="flex items-center justify-between gap-3 w-full px-5 py-4 text-left text-sm font-medium text-neutral-800 hover:bg-neutral-50 transition-colors duration-150 ease-in-out cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
     [attr.aria-expanded]="isExpanded()"
     [attr.aria-controls]="subId('panel')">
-    <span>{{ title() }}</span>
+    <!-- The slot sits inside the button: phrasing content only, no nested interactive elements. -->
+    <span class="flex min-w-0 flex-1 items-center gap-3">
+      <ng-content select="[tailwind-accordion-header]">{{ title() }}</ng-content>
+    </span>
     <tailwind-icon
       icon="chevron-down"
       [size]="16"
-      class="text-neutral-400 transition-transform duration-200"
+      class="shrink-0 text-neutral-400 transition-transform duration-200"
       [class.rotate-180]="isExpanded()" />
   </button>
   @if (isExpanded()) {

@@ -71,9 +71,14 @@ export class TailwindModal extends TailwindComponent {
 
   readonly resolvedCloseLabel = computed(() => this.closeLabel() || this.labels.close);
 
+  /**
+   * The CDK pane is `display: flex` and capped at the viewport: a stretched panel took that capped
+   * height while a taller body spilled out of it, leaving content and footer on the backdrop. The
+   * panel caps itself instead, and only the body scrolls, so header and actions stay in view.
+   */
   readonly panelClasses = computed(() =>
     this.mergeClasses(
-      'relative bg-surface rounded-overlay shadow-2xl animate-overlay-scale',
+      'relative flex max-h-[calc(100vh-2rem)] flex-col bg-surface rounded-overlay shadow-2xl animate-overlay-scale',
       'w-full transform transition-all duration-200',
       this.isVisible() ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
     )

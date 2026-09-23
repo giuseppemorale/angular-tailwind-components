@@ -166,6 +166,19 @@ describe('TailwindModal', () => {
     expect(document.querySelector('.cdk-overlay-container tailwind-button')).toBeNull();
   });
 
+  // A panel stretched by the flex pane kept the pane's capped height while a tall body spilled out of it.
+  it('should cap the panel at the viewport and scroll only the body', () => {
+    component.open();
+    fixture.detectChanges();
+
+    const panel = dialog() as HTMLElement;
+    const body = panel.querySelector('[data-modal-body]') as HTMLElement;
+    expect(panel.classList).toContain('max-h-[calc(100vh-2rem)]');
+    expect(panel.classList).toContain('flex-col');
+    expect(body.classList).toContain('overflow-y-auto');
+    expect(body.classList).toContain('min-h-0');
+  });
+
   it('should size the overlay pane from the size input', () => {
     fixture.componentRef.setInput('size', 'xl');
     component.open();

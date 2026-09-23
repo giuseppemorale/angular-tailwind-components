@@ -604,7 +604,6 @@
 .tailwind-modal-pane {
   margin: 1rem;
   max-height: calc(100vh - 2rem);
-  overflow-y: auto;
 }
 
 .tailwind-modal-backdrop {
